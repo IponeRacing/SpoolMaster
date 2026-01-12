@@ -1,0 +1,820 @@
+// ignore: unused_import
+import 'package:intl/intl.dart' as intl;
+import 'app_localizations.dart';
+
+// ignore_for_file: type=lint
+
+/// The translations for Finnish (`fi`).
+class AppLocalizationsFi extends AppLocalizations {
+  AppLocalizationsFi([String locale = 'fi']) : super(locale);
+
+  @override
+  String get appTitle => 'NFC Anycubic';
+
+  @override
+  String get nfc => 'NFC';
+
+  @override
+  String get stock => 'Varasto';
+
+  @override
+  String get statistics => 'Analytiikka';
+
+  @override
+  String get profile => 'Profiili';
+
+  @override
+  String get readNfcChip => 'Lue NFC-siru';
+
+  @override
+  String get scanHistory => 'Historia';
+
+  @override
+  String get writeNfcChip => 'Kirjoita NFC-siru';
+
+  @override
+  String get nfcNotAvailable => 'NFC ei ole käytettävissä';
+
+  @override
+  String get nfcNotAvailableDesc =>
+      'Laitteesi ei tue NFC:tä tai se on poistettu käytöstä.';
+
+  @override
+  String get nfcNotSupported => 'NFC ei ole tuettu tässä laitteessa';
+
+  @override
+  String get approachNfcChip => 'Lähestytä NFC-sirua...';
+
+  @override
+  String get scanningNfc => 'Skannaa...';
+
+  @override
+  String get nfcDataRead => 'NFC-tiedot luettu onnistuneesti!';
+
+  @override
+  String get errorReadingNfc => 'Virhe NFC:n lukemisessa';
+
+  @override
+  String get scanHistoryTitle => 'Skannaushistoria';
+
+  @override
+  String get noScansRecorded => 'Ei tallennettuja skannauksia';
+
+  @override
+  String get scansWillAppearHere =>
+      'NFC-skannaukset näkyvät täällä automaattisesti';
+
+  @override
+  String get clearAll => 'Tyhjennä kaikki';
+
+  @override
+  String get deleteThisScan => 'Poista tämä skannaus?';
+
+  @override
+  String get actionIrreversible => 'Tämä toiminto on peruuttamaton.';
+
+  @override
+  String get cancel => 'Peruuta';
+
+  @override
+  String get delete => 'Poista';
+
+  @override
+  String get clearAllHistory => 'Tyhjennä koko historia?';
+
+  @override
+  String get allScansWillBeDeleted =>
+      'Kaikki skannaukset poistetaan. Tämä toiminto on peruuttamaton.';
+
+  @override
+  String get scanDeleted => 'Skannaus poistettu';
+
+  @override
+  String get scanDetails => 'Skannauksen tiedot';
+
+  @override
+  String scannedOn(Object date) {
+    return 'Skannattu $date';
+  }
+
+  @override
+  String get bobbinInformation => 'Kelan tiedot';
+
+  @override
+  String get filamentType => 'Filamentin tyyppi';
+
+  @override
+  String get color => 'Väri';
+
+  @override
+  String get weight => 'Paino';
+
+  @override
+  String get manufacturingDate => 'Valmistuspäivä';
+
+  @override
+  String get batchNumber => 'Eränumero';
+
+  @override
+  String get printerSettings => 'Tulostimen asetukset';
+
+  @override
+  String get scanMetadata => 'Skannauksen metatiedot';
+
+  @override
+  String get scanId => 'Skannauksen tunnus';
+
+  @override
+  String get dateAndTime => 'Päivämäärä ja aika';
+
+  @override
+  String get reuseThisData => 'Käytä näitä tietoja uudelleen';
+
+  @override
+  String get writeToNfc => 'Kirjoita NFC:lle';
+
+  @override
+  String get writeDataToChip => 'Kirjoita tiedot siruun';
+
+  @override
+  String get writeSuccess => 'Kirjoitus onnistui!';
+
+  @override
+  String get writeError => 'Kirjoitusvirhe';
+
+  @override
+  String get brand => 'Merkki';
+
+  @override
+  String get selectBrand => 'Valitse merkki';
+
+  @override
+  String get materialType => 'Materiaalityyppi';
+
+  @override
+  String get selectMaterial => 'Valitse materiaali';
+
+  @override
+  String get serialNumber => 'Sarjanumero';
+
+  @override
+  String get serialNumberHint => 'esim.: 001';
+
+  @override
+  String get initialWeight => 'Alkupaino';
+
+  @override
+  String get initialWeightHint => 'esim.: 1000';
+
+  @override
+  String get extruderTempMin => 'Min. suulakkeen lämpö';
+
+  @override
+  String get extruderTempMax => 'Maks. suulakkeen lämpö';
+
+  @override
+  String get bedTempMin => 'Min. alustan lämpö';
+
+  @override
+  String get bedTempMax => 'Maks. alustan lämpö';
+
+  @override
+  String get diameter => 'Filamentin halkaisija';
+
+  @override
+  String get spoolLength => 'Kelan pituus';
+
+  @override
+  String get generatedSku => 'Luotu SKU';
+
+  @override
+  String get approachChipToWrite => 'Lähestytä sirua kirjoittaaksesi...';
+
+  @override
+  String get writing => 'Kirjoitetaan...';
+
+  @override
+  String get chooseColor => 'Valitse väri';
+
+  @override
+  String get required => 'Pakollinen';
+
+  @override
+  String get invalid => 'Virheellinen';
+
+  @override
+  String get advancedSettings => 'Lisäasetukset';
+
+  @override
+  String get opacity => 'Läpinäkyvyys';
+
+  @override
+  String get validate => 'Vahvista';
+
+  @override
+  String get nfcTagInfo =>
+      'Käytä tyhjää ISO14443A NFC-tagia (NTAG213) luodaksesi omat Anycubic-tagit.';
+
+  @override
+  String get stockInventory => 'Kelat varastossa';
+
+  @override
+  String get addSpool => 'Lisää kela';
+
+  @override
+  String get scanSpool => 'Skannaa kela';
+
+  @override
+  String get addManually => 'Lisää manuaalisesti';
+
+  @override
+  String get spoolAdded => 'Kela lisätty';
+
+  @override
+  String get spoolUpdated => 'Kela päivitetty';
+
+  @override
+  String get noSpoolsInStock => 'Ei keloja varastossa';
+
+  @override
+  String get addFirstSpool =>
+      'Lisää ensimmäinen kelasi aloittaaksesi varastosi seurannan';
+
+  @override
+  String lowStockAlert(Object count, Object threshold) {
+    return '$count kela(a) vähissä (< $threshold%)';
+  }
+
+  @override
+  String get edit => 'Muokkaa';
+
+  @override
+  String get bobbinPrice => 'Kelan hinta';
+
+  @override
+  String get price => 'Hinta';
+
+  @override
+  String get priceHint => 'esim.: 25.00';
+
+  @override
+  String get save => 'Tallenna';
+
+  @override
+  String get spoolDetails => 'Kelan tiedot';
+
+  @override
+  String get deleteThisSpool => 'Poista tämä kela?';
+
+  @override
+  String get cannotBeUndone => 'Tätä toimintoa ei voi perua.';
+
+  @override
+  String get addSpoolManually => 'Lisää kela manuaalisesti';
+
+  @override
+  String get editSpool => 'Muokkaa kelaa';
+
+  @override
+  String get customBrand => 'Mukautettu merkki';
+
+  @override
+  String get customBrandHint => 'esim.: Oma merkkini';
+
+  @override
+  String get chooseFromList => 'Valitse listalta';
+
+  @override
+  String get addBrand => '+ Lisää merkki';
+
+  @override
+  String get customMaterial => 'Mukautettu materiaali';
+
+  @override
+  String get customMaterialHint => 'esim.: Oma materiaalini';
+
+  @override
+  String get addMaterial => '+ Lisää materiaali';
+
+  @override
+  String get colorHint => 'esim.: Sininen, Punainen...';
+
+  @override
+  String get enterColor => 'Anna väri';
+
+  @override
+  String get initialWeightG => 'Alkupaino';
+
+  @override
+  String get remainingWeightG => 'Jäljellä oleva paino';
+
+  @override
+  String get enterBrand => 'Anna merkki';
+
+  @override
+  String get selectOrEnterBrand => 'Valitse tai anna merkki';
+
+  @override
+  String get enterMaterial => 'Anna materiaali';
+
+  @override
+  String get selectOrEnterMaterial => 'Valitse tai anna materiaali';
+
+  @override
+  String get enterPrice => 'Anna hinta';
+
+  @override
+  String get enterValidPrice => 'Anna kelvollinen hinta';
+
+  @override
+  String get enterWeight => 'Anna paino';
+
+  @override
+  String get enterValidWeight => 'Anna kelvollinen paino';
+
+  @override
+  String get remainingCannotExceedTotal =>
+      'Jäljellä oleva paino ei voi ylittää kokonaispainoa';
+
+  @override
+  String get overview => 'Yleiskatsaus';
+
+  @override
+  String get spoolsInStock => 'Kelat varastossa';
+
+  @override
+  String get totalValue => 'Kokonaisarvo';
+
+  @override
+  String get lowStockSpools => 'Vähissä';
+
+  @override
+  String get materialDistribution => 'Jakautuminen materiaalin mukaan';
+
+  @override
+  String get brandDistribution => 'Jakautuminen merkin mukaan';
+
+  @override
+  String get noData => 'Ei tietoja';
+
+  @override
+  String get refresh => 'Päivitä';
+
+  @override
+  String get profileSettings => 'Profiiliasetukset';
+
+  @override
+  String get preferences => 'Asetukset';
+
+  @override
+  String get language => 'Kieli';
+
+  @override
+  String get selectLanguage => 'Valitse kieli';
+
+  @override
+  String get french => 'Français';
+
+  @override
+  String get english => 'English';
+
+  @override
+  String get german => 'Deutsch';
+
+  @override
+  String get italian => 'Italiano';
+
+  @override
+  String get romanian => 'Română';
+
+  @override
+  String get hungarian => 'Magyar';
+
+  @override
+  String get greek => 'Ελληνικά';
+
+  @override
+  String get bulgarian => 'Български';
+
+  @override
+  String get croatian => 'Hrvatski';
+
+  @override
+  String get slovak => 'Slovenčina';
+
+  @override
+  String get slovenian => 'Slovenščina';
+
+  @override
+  String get serbian => 'Српски';
+
+  @override
+  String get ukrainian => 'Українська';
+
+  @override
+  String get danish => 'Dansk';
+
+  @override
+  String get norwegian => 'Norsk';
+
+  @override
+  String get finnish => 'Suomi';
+
+  @override
+  String get thai => 'ไทย';
+
+  @override
+  String get vietnamese => 'Tiếng Việt';
+
+  @override
+  String get indonesian => 'Bahasa Indonesia';
+
+  @override
+  String get malay => 'Bahasa Melayu';
+
+  @override
+  String get hindi => 'हिन्दी';
+
+  @override
+  String get currency => 'Valuutta';
+
+  @override
+  String get selectCurrency => 'Valitse valuutta';
+
+  @override
+  String get units => 'Yksiköt';
+
+  @override
+  String get selectUnits => 'Valitse yksiköt';
+
+  @override
+  String get metric => 'Metrinen (mm, g, °C)';
+
+  @override
+  String get imperial => 'Brittiläinen (in, oz, °F)';
+
+  @override
+  String get lowStockThreshold => 'Vähäisen varaston hälytysraja';
+
+  @override
+  String get lowStockThresholdDesc =>
+      'Kela katsotaan vähissä olevaksi, jos jäljellä oleva paino on alle tämän prosentin';
+
+  @override
+  String get authentication => 'Todennus';
+
+  @override
+  String get signInWithGoogle => 'Kirjaudu Googlella';
+
+  @override
+  String get signInWithApple => 'Kirjaudu Applella';
+
+  @override
+  String get comingSoon => 'Tulossa pian';
+
+  @override
+  String get about => 'Tietoja';
+
+  @override
+  String get version => 'Versio';
+
+  @override
+  String get madeWith => 'Tehty ❤️ Anycubic 3D-tulostimille';
+
+  @override
+  String get scanBobbinDirectly => 'Skannaa kela';
+
+  @override
+  String get nfcEncoder => 'NFC-kooderi';
+
+  @override
+  String get length => 'Pituus';
+
+  @override
+  String get tempExtruder => 'Suulakkeen lämpö';
+
+  @override
+  String get tempBed => 'Alustan lämpö';
+
+  @override
+  String get termsOfService => 'Käyttöehdot';
+
+  @override
+  String get privacyPolicy => 'Tietosuojakäytäntö';
+
+  @override
+  String get legal => 'Legal';
+
+  @override
+  String get back => 'Takaisin';
+
+  @override
+  String get retry => 'Yritä uudelleen';
+
+  @override
+  String get signOut => 'Kirjaudu ulos';
+
+  @override
+  String get extruderTempMinHint => 'Esim.: 200';
+
+  @override
+  String get extruderTempMaxHint => 'Esim.: 220';
+
+  @override
+  String get bedTempMinHint => 'Esim.: 50';
+
+  @override
+  String get bedTempMaxHint => 'Esim.: 60';
+
+  @override
+  String get diameterHint => 'Esim.: 1.75';
+
+  @override
+  String get spoolLengthHint => 'Esim.: 330';
+
+  @override
+  String get tabGrid => 'Ruudukko';
+
+  @override
+  String get tabSpectrum => 'Spektri';
+
+  @override
+  String get tabSliders => 'Liukusäätimet';
+
+  @override
+  String get hexCode => 'Hex-koodi';
+
+  @override
+  String get red => 'Punainen';
+
+  @override
+  String get green => 'Vihreä';
+
+  @override
+  String get blue => 'Sininen';
+
+  @override
+  String get metricUnits => 'Metrinen (mm, g, °C)';
+
+  @override
+  String get imperialUnits => 'Brittiläinen (in, oz, °F)';
+
+  @override
+  String get chf => 'Sveitsin frangi (CHF)';
+
+  @override
+  String get eur => 'Euro (€)';
+
+  @override
+  String get usd => 'Yhdysvaltain dollari (\$)';
+
+  @override
+  String get gbp => 'Englannin punta (£)';
+
+  @override
+  String get cad => 'Kanadan dollari (CAD)';
+
+  @override
+  String get filamentsToOrder => 'Tilattavat filamentit';
+
+  @override
+  String get shoppingList => 'Ostoslista';
+
+  @override
+  String get addToShoppingList => 'Lisää listalle';
+
+  @override
+  String get noLowStockFilaments => 'Ei vähissä olevia filamentteja';
+
+  @override
+  String get vipSubscriptionDescription =>
+      'Tätä tilausta käytetään vain mainosten poistamiseen sovelluksessa ja projektin tukemiseen. Ei muita ominaisuuksia.';
+
+  @override
+  String get monthlySubscription => 'Kuukausitilaus';
+
+  @override
+  String get yearlySubscription => 'Vuositilaus';
+
+  @override
+  String get perMonth => '/ kuukausi';
+
+  @override
+  String get perYear => '/ vuosi';
+
+  @override
+  String onlyPerMonth(String price) {
+    return 'Vain $price / kuukausi';
+  }
+
+  @override
+  String get subscribe => 'Tilaa';
+
+  @override
+  String get bestOffer => '✨ PARAS TARJOUS ✨';
+
+  @override
+  String get forAnycubicAce => 'Anycubic Acelle';
+
+  @override
+  String get forBambuLabAms => 'Bambu Lab AMS:lle';
+
+  @override
+  String get scanNfcChip => 'Skannaa NFC-siru';
+
+  @override
+  String get fillForm => 'Täytä lomake';
+
+  @override
+  String get emptyShoppingList => 'Ei filamentteja listalla';
+
+  @override
+  String percentRemaining(String percent) {
+    return '$percent% jäljellä';
+  }
+
+  @override
+  String get markAsOrdered => 'Merkitse tilatuksi';
+
+  @override
+  String get markAsNotOrdered => 'Merkitse tilaamattomaksi';
+
+  @override
+  String get notSignedIn => 'Et ole kirjautunut sisään';
+
+  @override
+  String get signIn => 'Kirjaudu sisään';
+
+  @override
+  String get connection => 'Yhteys';
+
+  @override
+  String get signInToSync => 'Kirjaudu sisään synkronoidaksesi tietosi';
+
+  @override
+  String get continueWithoutAccount => 'Jatka ilman tiliä (paikallinen tila)';
+
+  @override
+  String get privacyNotice =>
+      'Kirjautumalla hyväksyt\nKäyttöehdot ja Tietosuojakäytännön';
+
+  @override
+  String get updateStock => 'Päivitä varasto';
+
+  @override
+  String get scanToUpdateStock => 'Skannaa päivittääksesi';
+
+  @override
+  String get weightUsed => 'Käytetty paino';
+
+  @override
+  String get lengthUsed => 'Käytetty pituus';
+
+  @override
+  String get enterWeightOrLength => 'Syötä käytetty paino tai pituus';
+
+  @override
+  String get weightUsedG => 'Käytetty paino (g)';
+
+  @override
+  String get lengthUsedM => 'Käytetty pituus (m)';
+
+  @override
+  String get stockUpdated => 'Varasto päivitetty';
+
+  @override
+  String get scanSpoolToUpdate => 'Skannaa kela päivittääksesi sen varaston';
+
+  @override
+  String get spoolNotFound => 'Kelaa ei löytynyt varastosta';
+
+  @override
+  String get addSpoolFirstMessage =>
+      'Tätä kelaa ei vielä ole varastossasi. Lisää se ensin \'Lisää kela\' -painikkeella ennen varaston päivittämistä.';
+
+  @override
+  String get ok => 'OK';
+
+  @override
+  String get bambuLabReadOnly => 'Bambu Lab: Vain luku';
+
+  @override
+  String get bambuLabReadOnlyDesc =>
+      'Bambu Lab -tagit käyttävät RSA-salausta, eikä niitä voi muokata. Vain luku.';
+
+  @override
+  String get bambuCloneLibrary => 'Bambu Lab kloonkirjasto';
+
+  @override
+  String get noBambuClones => 'Ei Bambu Lab klooneja';
+
+  @override
+  String get scanBambuToClone =>
+      'Skannaa alkuperäisiä Bambu Lab -tageja luodaksesi kloonkirjastosi';
+
+  @override
+  String get scanTag => 'Skannaa tagi';
+
+  @override
+  String get syncWithCloud => 'Synkronoi pilven kanssa';
+
+  @override
+  String get syncCompleted => 'Synkronointi valmis';
+
+  @override
+  String get deleteClone => 'Poista klooni';
+
+  @override
+  String get renameClone => 'Nimeä klooni uudelleen';
+
+  @override
+  String get rename => 'Nimeä uudelleen';
+
+  @override
+  String get customName => 'Mukautettu nimi';
+
+  @override
+  String get clonedOn => 'Kloonattu';
+
+  @override
+  String get writeThisClone => 'Kirjoita tämä klooni';
+
+  @override
+  String get writeClone => 'Kirjoita klooni';
+
+  @override
+  String get writeOnCUID => 'Kirjoita CUID-kortille';
+
+  @override
+  String get cloneWrittenSuccess => 'Klooni kirjoitettu onnistuneesti!';
+
+  @override
+  String get requiredTagFormat => 'Vaadittu tagin muoto';
+
+  @override
+  String get type => 'Tyyppi';
+
+  @override
+  String get frequency => 'Taajuus';
+
+  @override
+  String get protocol => 'Protokolla';
+
+  @override
+  String get capacity => 'Kapasiteetti';
+
+  @override
+  String get feature => 'Ominaisuus';
+
+  @override
+  String get uidModifiable => 'Lohko 0 (UID) muokattavissa';
+
+  @override
+  String get whereToBuy =>
+      'Etsi \"CUID MiFare Classic 1K\" AliExpressistä, Amazonista tai eBaysta (~\$0.50/kpl)';
+
+  @override
+  String get magicGen2Required =>
+      'Magic Gen2 kortti - MiFare Classic 1K kirjoitettavalla Block 0 (UID)';
+
+  @override
+  String get magicGen2CardType => 'Magic Gen2 (MiFare Classic 1K)';
+
+  @override
+  String get magicGen2Where =>
+      'Etsi \"Magic Gen2 MiFare Classic 1K\" tai \"UID writable\" AliExpressistä, Amazonista tai eBaysta (~\$0.50/kpl)';
+
+  @override
+  String get iphoneWriteDisclaimer =>
+      '⚠️ Varoitus: Kirjoittaminen iPhone NFC:llä ei välttämättä toimi kaikilla Magic Gen2 korteilla. Android NFC Tools Pro sovelluksella tai Proxmark3 laite suositellaan luotettavuuden vuoksi.';
+
+  @override
+  String get step1GetMagicGen2 =>
+      'Hanki tyhjä Magic Gen2 kortti (MiFare Classic 1K kirjoitettavalla UID)';
+
+  @override
+  String get instructions => 'Ohjeet';
+
+  @override
+  String get step1GetCUID => 'Hanki tyhjä CUID-kortti (MiFare Classic 1K)';
+
+  @override
+  String get step2PressWrite => 'Paina alla olevaa \"Kirjoita\"-painiketta';
+
+  @override
+  String get step3HoldPhone => 'Pidä iPhonesi CUID-kortin lähellä';
+
+  @override
+  String get step4WaitConfirm => 'Odota kirjoitusvahvistusta';
+
+  @override
+  String get step5TestClone =>
+      'Testaa kloonattu tagi Bambu Lab -tulostimellasi!';
+
+  @override
+  String get rsaIncluded =>
+      'Klooni sisältää alkuperäisen RSA-allekirjoituksen, tulostin hyväksyy sen!';
+
+  @override
+  String get cloneDeleted => 'Klooni poistettu';
+}

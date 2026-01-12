@@ -1,0 +1,86 @@
+name: nfc_filament
+description: "Application Flutter pour lire/écrire les puces NFC des bobines de filament"
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.10.7
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+
+  # NFC
+  nfc_manager: ^4.1.1
+
+  # Authentication
+  sign_in_with_apple: ^6.1.3
+  google_sign_in: ^6.2.2
+
+  # HTTP & API
+  http: ^1.2.2
+  dio: ^5.7.0
+
+  # Secure Storage
+  flutter_secure_storage: ^9.2.2
+
+  # State Management
+  equatable: ^2.0.5
+  flutter_bloc: ^8.1.6
+
+  # Dependency Injection
+  get_it: ^8.0.2
+  injectable: ^2.6.2
+
+  # Navigation
+  go_router: ^14.6.2
+
+  # Local Storage
+  shared_preferences: ^2.3.4
+  hive_flutter: ^1.1.0
+
+  # Utils
+  freezed_annotation: ^2.4.4
+  json_annotation: ^4.9.0
+  dartz: ^0.10.1
+
+  # UI
+  cupertino_icons: ^1.0.8
+  intl: ^0.20.2
+  url_launcher: ^6.3.1
+
+  # Ads
+  google_mobile_ads: ^7.0.0
+  app_tracking_transparency: ^2.0.6+1
+
+  # In-App Purchases
+  in_app_purchase: ^3.2.0
+  in_app_purchase_storekit: ^0.3.17
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  # Code Generation
+  build_runner: ^2.4.13
+  freezed: ^2.5.8
+  json_serializable: ^6.8.0
+  injectable_generator: ^2.6.2
+
+  # Testing
+  mocktail: ^1.0.4
+  bloc_test: ^9.1.7
+
+  # Linting
+  flutter_lints: ^5.0.0
+  very_good_analysis: ^6.0.0
+
+# For information on the generic Dart part of this file, see the
+# following page: https://dart.dev/tools/pub/pubspec
+
+flutter:
+  uses-material-design: true
+  generate: true

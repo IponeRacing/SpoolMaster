@@ -1,0 +1,29 @@
+# Dependencies
+/vendor/
+composer.lock
+
+# Logs
+/logs/*.log
+/logs/*.txt
+
+# Clés privées
+/keys/*.p8
+/keys/*.pem
+
+# Configuration sensible (ne pas commiter les vraies clés)
+# config/app.php
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Cache
+cache/
+temp/

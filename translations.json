@@ -1,0 +1,38 @@
+{
+  "Espagnol (Espagne)": {
+    "nom": "Spool Master",
+    "soustitre": "Inventario filamento 3D + NFC",
+    "promo": "Gestione su stock de filamentos 3D fácilmente. Escanee etiquetas NFC, siga bobinas, precios y estadísticas. Compatible con Anycubic y Bambu Lab.",
+    "keywords": "NFC,filamento,3D,impresión,bobina,Anycubic,Bambu Lab,stock,inventario,impresora"
+  },
+  "Espagnol (Mexique)": {
+    "nom": "Spool Master",
+    "soustitre": "Inventario filamento 3D + NFC",
+    "promo": "Gestione su stock de filamentos 3D fácilmente. Escanee etiquetas NFC, siga bobinas, precios y estadísticas. Compatible con Anycubic y Bambu Lab.",
+    "keywords": "NFC,filamento,3D,impresión,bobina,Anycubic,Bambu Lab,stock,inventario,impresora"
+  },
+  "Italien": {
+    "nom": "Spool Master",
+    "soustitre": "Inventario filamenti 3D + NFC",
+    "promo": "Gestisci il tuo stock di filamenti 3D facilmente. Scansiona tag NFC, traccia bobine, prezzi e statistiche. Compatibile con Anycubic e Bambu Lab.",
+    "keywords": "NFC,filamento,3D,stampa,bobina,Anycubic,Bambu Lab,stock,inventario,stampante"
+  },
+  "Portugais (Brésil)": {
+    "nom": "Spool Master",
+    "soustitre": "Inventário filamento 3D + NFC",
+    "promo": "Gerencie seu estoque de filamentos 3D facilmente. Escaneie tags NFC, rastreie bobinas, preços e estatísticas. Compatível com Anycubic e Bambu Lab.",
+    "keywords": "NFC,filamento,3D,impressão,bobina,Anycubic,Bambu Lab,estoque,inventário,impressora"
+  },
+  "Portugais (Portugal)": {
+    "nom": "Spool Master",
+    "soustitre": "Inventário filamento 3D + NFC",
+    "promo": "Faça a gestão do seu stock de filamentos 3D facilmente. Digitalize tags NFC, acompanhe bobinas, preços e estatísticas. Compatível com Anycubic e Bambu Lab.",
+    "keywords": "NFC,filamento,3D,impressão,bobina,Anycubic,Bambu Lab,stock,inventário,impressora"
+  },
+  "Français (Canada)": {
+    "nom": "Spool Master",
+    "soustitre": "Inventaire filament 3D + NFC",
+    "promo": "Gérez votre stock de filaments 3D facilement. Scannez vos tags NFC, suivez vos bobines, prix et statistiques. Compatible Anycubic et Bambu Lab.",
+    "keywords": "NFC,filament,3D,impression,bobine,Anycubic,Bambu Lab,stock,inventaire,imprimante"
+  }
+}

@@ -1,0 +1,820 @@
+// ignore: unused_import
+import 'package:intl/intl.dart' as intl;
+import 'app_localizations.dart';
+
+// ignore_for_file: type=lint
+
+/// The translations for Indonesian (`id`).
+class AppLocalizationsId extends AppLocalizations {
+  AppLocalizationsId([String locale = 'id']) : super(locale);
+
+  @override
+  String get appTitle => 'NFC Anycubic';
+
+  @override
+  String get nfc => 'NFC';
+
+  @override
+  String get stock => 'Stok';
+
+  @override
+  String get statistics => 'Analitik';
+
+  @override
+  String get profile => 'Profil';
+
+  @override
+  String get readNfcChip => 'Baca Chip NFC';
+
+  @override
+  String get scanHistory => 'Riwayat';
+
+  @override
+  String get writeNfcChip => 'Tulis Chip NFC';
+
+  @override
+  String get nfcNotAvailable => 'NFC tidak tersedia';
+
+  @override
+  String get nfcNotAvailableDesc =>
+      'Perangkat Anda tidak mendukung NFC atau dinonaktifkan.';
+
+  @override
+  String get nfcNotSupported => 'NFC tidak didukung pada perangkat ini';
+
+  @override
+  String get approachNfcChip => 'Dekatkan chip NFC...';
+
+  @override
+  String get scanningNfc => 'Memindai...';
+
+  @override
+  String get nfcDataRead => 'Data NFC berhasil dibaca!';
+
+  @override
+  String get errorReadingNfc => 'Kesalahan membaca NFC';
+
+  @override
+  String get scanHistoryTitle => 'Riwayat Pemindaian';
+
+  @override
+  String get noScansRecorded => 'Tidak ada pemindaian yang tercatat';
+
+  @override
+  String get scansWillAppearHere =>
+      'Pemindaian NFC akan muncul di sini secara otomatis';
+
+  @override
+  String get clearAll => 'Hapus semua';
+
+  @override
+  String get deleteThisScan => 'Hapus pemindaian ini?';
+
+  @override
+  String get actionIrreversible => 'Tindakan ini tidak dapat dibatalkan.';
+
+  @override
+  String get cancel => 'Batal';
+
+  @override
+  String get delete => 'Hapus';
+
+  @override
+  String get clearAllHistory => 'Hapus semua riwayat?';
+
+  @override
+  String get allScansWillBeDeleted =>
+      'Semua pemindaian akan dihapus. Tindakan ini tidak dapat dibatalkan.';
+
+  @override
+  String get scanDeleted => 'Pemindaian dihapus';
+
+  @override
+  String get scanDetails => 'Detail Pemindaian';
+
+  @override
+  String scannedOn(Object date) {
+    return 'Dipindai pada $date';
+  }
+
+  @override
+  String get bobbinInformation => 'Informasi Gulungan';
+
+  @override
+  String get filamentType => 'Jenis Filamen';
+
+  @override
+  String get color => 'Warna';
+
+  @override
+  String get weight => 'Berat';
+
+  @override
+  String get manufacturingDate => 'Tanggal Produksi';
+
+  @override
+  String get batchNumber => 'Nomor Batch';
+
+  @override
+  String get printerSettings => 'Pengaturan Printer';
+
+  @override
+  String get scanMetadata => 'Metadata Pemindaian';
+
+  @override
+  String get scanId => 'ID Pemindaian';
+
+  @override
+  String get dateAndTime => 'Tanggal dan Waktu';
+
+  @override
+  String get reuseThisData => 'Gunakan kembali data ini';
+
+  @override
+  String get writeToNfc => 'Tulis ke NFC';
+
+  @override
+  String get writeDataToChip => 'Tulis data ke chip';
+
+  @override
+  String get writeSuccess => 'Penulisan berhasil!';
+
+  @override
+  String get writeError => 'Kesalahan penulisan';
+
+  @override
+  String get brand => 'Merek';
+
+  @override
+  String get selectBrand => 'Pilih merek';
+
+  @override
+  String get materialType => 'Jenis Material';
+
+  @override
+  String get selectMaterial => 'Pilih material';
+
+  @override
+  String get serialNumber => 'Nomor Seri';
+
+  @override
+  String get serialNumberHint => 'mis.: 001';
+
+  @override
+  String get initialWeight => 'Berat Awal';
+
+  @override
+  String get initialWeightHint => 'mis.: 1000';
+
+  @override
+  String get extruderTempMin => 'Suhu Ekstruder Min';
+
+  @override
+  String get extruderTempMax => 'Suhu Ekstruder Maks';
+
+  @override
+  String get bedTempMin => 'Suhu Bed Min';
+
+  @override
+  String get bedTempMax => 'Suhu Bed Maks';
+
+  @override
+  String get diameter => 'Diameter Filamen';
+
+  @override
+  String get spoolLength => 'Panjang Gulungan';
+
+  @override
+  String get generatedSku => 'SKU yang Dihasilkan';
+
+  @override
+  String get approachChipToWrite => 'Dekatkan chip untuk menulis...';
+
+  @override
+  String get writing => 'Menulis...';
+
+  @override
+  String get chooseColor => 'Pilih warna';
+
+  @override
+  String get required => 'Wajib';
+
+  @override
+  String get invalid => 'Tidak valid';
+
+  @override
+  String get advancedSettings => 'Pengaturan Lanjutan';
+
+  @override
+  String get opacity => 'Opasitas';
+
+  @override
+  String get validate => 'Validasi';
+
+  @override
+  String get nfcTagInfo =>
+      'Gunakan tag NFC kosong ISO14443A (NTAG213) untuk membuat tag Anycubic Anda sendiri.';
+
+  @override
+  String get stockInventory => 'Spool dalam stok';
+
+  @override
+  String get addSpool => 'Tambah Gulungan';
+
+  @override
+  String get scanSpool => 'Pindai Gulungan';
+
+  @override
+  String get addManually => 'Tambah manual';
+
+  @override
+  String get spoolAdded => 'Gulungan ditambahkan';
+
+  @override
+  String get spoolUpdated => 'Gulungan diperbarui';
+
+  @override
+  String get noSpoolsInStock => 'Tidak ada gulungan dalam stok';
+
+  @override
+  String get addFirstSpool =>
+      'Tambahkan gulungan pertama Anda untuk mulai melacak inventaris';
+
+  @override
+  String lowStockAlert(Object count, Object threshold) {
+    return '$count gulungan stok rendah (< $threshold%)';
+  }
+
+  @override
+  String get edit => 'Edit';
+
+  @override
+  String get bobbinPrice => 'Harga Gulungan';
+
+  @override
+  String get price => 'Harga';
+
+  @override
+  String get priceHint => 'mis.: 25.00';
+
+  @override
+  String get save => 'Simpan';
+
+  @override
+  String get spoolDetails => 'Detail Gulungan';
+
+  @override
+  String get deleteThisSpool => 'Hapus gulungan ini?';
+
+  @override
+  String get cannotBeUndone => 'Tindakan ini tidak dapat dibatalkan.';
+
+  @override
+  String get addSpoolManually => 'Tambah Gulungan Manual';
+
+  @override
+  String get editSpool => 'Edit Gulungan';
+
+  @override
+  String get customBrand => 'Merek Kustom';
+
+  @override
+  String get customBrandHint => 'mis.: Merek Saya';
+
+  @override
+  String get chooseFromList => 'Pilih dari daftar';
+
+  @override
+  String get addBrand => '+ Tambah Merek';
+
+  @override
+  String get customMaterial => 'Material Kustom';
+
+  @override
+  String get customMaterialHint => 'mis.: Material Saya';
+
+  @override
+  String get addMaterial => '+ Tambah Material';
+
+  @override
+  String get colorHint => 'mis.: Biru, Merah...';
+
+  @override
+  String get enterColor => 'Silakan masukkan warna';
+
+  @override
+  String get initialWeightG => 'Berat Awal';
+
+  @override
+  String get remainingWeightG => 'Berat Tersisa';
+
+  @override
+  String get enterBrand => 'Silakan masukkan merek';
+
+  @override
+  String get selectOrEnterBrand => 'Silakan pilih atau masukkan merek';
+
+  @override
+  String get enterMaterial => 'Silakan masukkan material';
+
+  @override
+  String get selectOrEnterMaterial => 'Silakan pilih atau masukkan material';
+
+  @override
+  String get enterPrice => 'Silakan masukkan harga';
+
+  @override
+  String get enterValidPrice => 'Silakan masukkan harga yang valid';
+
+  @override
+  String get enterWeight => 'Silakan masukkan berat';
+
+  @override
+  String get enterValidWeight => 'Silakan masukkan berat yang valid';
+
+  @override
+  String get remainingCannotExceedTotal =>
+      'Berat tersisa tidak boleh melebihi berat total';
+
+  @override
+  String get overview => 'Ringkasan';
+
+  @override
+  String get spoolsInStock => 'Gulungan dalam Stok';
+
+  @override
+  String get totalValue => 'Nilai Total';
+
+  @override
+  String get lowStockSpools => 'Stok Rendah';
+
+  @override
+  String get materialDistribution => 'Distribusi berdasarkan Material';
+
+  @override
+  String get brandDistribution => 'Distribusi berdasarkan Merek';
+
+  @override
+  String get noData => 'Tidak ada data';
+
+  @override
+  String get refresh => 'Segarkan';
+
+  @override
+  String get profileSettings => 'Pengaturan Profil';
+
+  @override
+  String get preferences => 'Preferensi';
+
+  @override
+  String get language => 'Bahasa';
+
+  @override
+  String get selectLanguage => 'Pilih bahasa';
+
+  @override
+  String get french => 'Français';
+
+  @override
+  String get english => 'English';
+
+  @override
+  String get german => 'Deutsch';
+
+  @override
+  String get italian => 'Italiano';
+
+  @override
+  String get romanian => 'Română';
+
+  @override
+  String get hungarian => 'Magyar';
+
+  @override
+  String get greek => 'Ελληνικά';
+
+  @override
+  String get bulgarian => 'Български';
+
+  @override
+  String get croatian => 'Hrvatski';
+
+  @override
+  String get slovak => 'Slovenčina';
+
+  @override
+  String get slovenian => 'Slovenščina';
+
+  @override
+  String get serbian => 'Српски';
+
+  @override
+  String get ukrainian => 'Українська';
+
+  @override
+  String get danish => 'Dansk';
+
+  @override
+  String get norwegian => 'Norsk';
+
+  @override
+  String get finnish => 'Suomi';
+
+  @override
+  String get thai => 'ไทย';
+
+  @override
+  String get vietnamese => 'Tiếng Việt';
+
+  @override
+  String get indonesian => 'Bahasa Indonesia';
+
+  @override
+  String get malay => 'Bahasa Melayu';
+
+  @override
+  String get hindi => 'हिन्दी';
+
+  @override
+  String get currency => 'Mata Uang';
+
+  @override
+  String get selectCurrency => 'Pilih mata uang';
+
+  @override
+  String get units => 'Unit';
+
+  @override
+  String get selectUnits => 'Pilih unit';
+
+  @override
+  String get metric => 'Metrik (mm, g, °C)';
+
+  @override
+  String get imperial => 'Imperial (in, oz, °F)';
+
+  @override
+  String get lowStockThreshold => 'Ambang Batas Peringatan Stok Rendah';
+
+  @override
+  String get lowStockThresholdDesc =>
+      'Sebuah gulungan akan dianggap stok rendah jika berat tersisa kurang dari persentase ini';
+
+  @override
+  String get authentication => 'Autentikasi';
+
+  @override
+  String get signInWithGoogle => 'Masuk dengan Google';
+
+  @override
+  String get signInWithApple => 'Masuk dengan Apple';
+
+  @override
+  String get comingSoon => 'Segera hadir';
+
+  @override
+  String get about => 'Tentang';
+
+  @override
+  String get version => 'Versi';
+
+  @override
+  String get madeWith => 'Dibuat dengan ❤️ untuk Printer 3D Anycubic';
+
+  @override
+  String get scanBobbinDirectly => 'Pindai Gulungan';
+
+  @override
+  String get nfcEncoder => 'Encoder NFC';
+
+  @override
+  String get length => 'Panjang';
+
+  @override
+  String get tempExtruder => 'Suhu Ekstruder';
+
+  @override
+  String get tempBed => 'Suhu Bed';
+
+  @override
+  String get termsOfService => 'Ketentuan Layanan';
+
+  @override
+  String get privacyPolicy => 'Kebijakan Privasi';
+
+  @override
+  String get legal => 'Legal';
+
+  @override
+  String get back => 'Kembali';
+
+  @override
+  String get retry => 'Coba lagi';
+
+  @override
+  String get signOut => 'Keluar';
+
+  @override
+  String get extruderTempMinHint => 'Mis.: 200';
+
+  @override
+  String get extruderTempMaxHint => 'Mis.: 220';
+
+  @override
+  String get bedTempMinHint => 'Mis.: 50';
+
+  @override
+  String get bedTempMaxHint => 'Mis.: 60';
+
+  @override
+  String get diameterHint => 'Mis.: 1.75';
+
+  @override
+  String get spoolLengthHint => 'Mis.: 330';
+
+  @override
+  String get tabGrid => 'Grid';
+
+  @override
+  String get tabSpectrum => 'Spektrum';
+
+  @override
+  String get tabSliders => 'Penggeser';
+
+  @override
+  String get hexCode => 'Kode Hex';
+
+  @override
+  String get red => 'Merah';
+
+  @override
+  String get green => 'Hijau';
+
+  @override
+  String get blue => 'Biru';
+
+  @override
+  String get metricUnits => 'Metrik (mm, g, °C)';
+
+  @override
+  String get imperialUnits => 'Imperial (in, oz, °F)';
+
+  @override
+  String get chf => 'Franc Swiss (CHF)';
+
+  @override
+  String get eur => 'Euro (€)';
+
+  @override
+  String get usd => 'Dolar AS (\$)';
+
+  @override
+  String get gbp => 'Pound Sterling (£)';
+
+  @override
+  String get cad => 'Dolar Kanada (CAD)';
+
+  @override
+  String get filamentsToOrder => 'Filamen untuk Dipesan';
+
+  @override
+  String get shoppingList => 'Daftar Belanja';
+
+  @override
+  String get addToShoppingList => 'Tambah ke Daftar';
+
+  @override
+  String get noLowStockFilaments => 'Tidak ada filamen stok rendah';
+
+  @override
+  String get vipSubscriptionDescription =>
+      'Langganan ini hanya digunakan untuk menonaktifkan iklan dalam aplikasi dan mendukung proyek. Tidak ada fitur lainnya.';
+
+  @override
+  String get monthlySubscription => 'Langganan Bulanan';
+
+  @override
+  String get yearlySubscription => 'Langganan Tahunan';
+
+  @override
+  String get perMonth => '/ bulan';
+
+  @override
+  String get perYear => '/ tahun';
+
+  @override
+  String onlyPerMonth(String price) {
+    return 'Hanya $price / bulan';
+  }
+
+  @override
+  String get subscribe => 'Berlangganan';
+
+  @override
+  String get bestOffer => '✨ PENAWARAN TERBAIK ✨';
+
+  @override
+  String get forAnycubicAce => 'untuk Anycubic Ace';
+
+  @override
+  String get forBambuLabAms => 'untuk Bambu Lab AMS';
+
+  @override
+  String get scanNfcChip => 'Pindai chip NFC';
+
+  @override
+  String get fillForm => 'Isi formulir';
+
+  @override
+  String get emptyShoppingList => 'Tidak ada filamen dalam daftar';
+
+  @override
+  String percentRemaining(String percent) {
+    return '$percent% tersisa';
+  }
+
+  @override
+  String get markAsOrdered => 'Tandai sebagai dipesan';
+
+  @override
+  String get markAsNotOrdered => 'Tandai sebagai belum dipesan';
+
+  @override
+  String get notSignedIn => 'Belum masuk';
+
+  @override
+  String get signIn => 'Masuk';
+
+  @override
+  String get connection => 'Koneksi';
+
+  @override
+  String get signInToSync => 'Masuk untuk menyinkronkan data Anda';
+
+  @override
+  String get continueWithoutAccount => 'Lanjutkan tanpa akun (mode lokal)';
+
+  @override
+  String get privacyNotice =>
+      'Dengan masuk, Anda menerima\nKetentuan Layanan dan Kebijakan Privasi kami';
+
+  @override
+  String get updateStock => 'Perbarui stok';
+
+  @override
+  String get scanToUpdateStock => 'Pindai untuk memperbarui';
+
+  @override
+  String get weightUsed => 'Berat yang digunakan';
+
+  @override
+  String get lengthUsed => 'Panjang yang digunakan';
+
+  @override
+  String get enterWeightOrLength =>
+      'Masukkan berat atau panjang yang digunakan';
+
+  @override
+  String get weightUsedG => 'Berat yang digunakan (g)';
+
+  @override
+  String get lengthUsedM => 'Panjang yang digunakan (m)';
+
+  @override
+  String get stockUpdated => 'Stok diperbarui';
+
+  @override
+  String get scanSpoolToUpdate => 'Pindai gulungan untuk memperbarui stoknya';
+
+  @override
+  String get spoolNotFound => 'Gulungan tidak ditemukan di stok';
+
+  @override
+  String get addSpoolFirstMessage =>
+      'Gulungan ini belum ada di stok Anda. Silakan tambahkan terlebih dahulu menggunakan tombol \'Tambah Gulungan\' sebelum memperbarui stoknya.';
+
+  @override
+  String get ok => 'OK';
+
+  @override
+  String get bambuLabReadOnly => 'Bambu Lab: Hanya baca';
+
+  @override
+  String get bambuLabReadOnlyDesc =>
+      'Tag Bambu Lab menggunakan enkripsi RSA dan tidak dapat dimodifikasi. Hanya baca.';
+
+  @override
+  String get bambuCloneLibrary => 'Perpustakaan Klon Bambu Lab';
+
+  @override
+  String get noBambuClones => 'Tidak ada klon Bambu Lab';
+
+  @override
+  String get scanBambuToClone =>
+      'Pindai tag Bambu Lab asli untuk membuat perpustakaan klon Anda';
+
+  @override
+  String get scanTag => 'Pindai tag';
+
+  @override
+  String get syncWithCloud => 'Sinkronkan dengan cloud';
+
+  @override
+  String get syncCompleted => 'Sinkronisasi selesai';
+
+  @override
+  String get deleteClone => 'Hapus klon';
+
+  @override
+  String get renameClone => 'Ubah nama klon';
+
+  @override
+  String get rename => 'Ubah nama';
+
+  @override
+  String get customName => 'Nama kustom';
+
+  @override
+  String get clonedOn => 'Diklon pada';
+
+  @override
+  String get writeThisClone => 'Tulis klon ini';
+
+  @override
+  String get writeClone => 'Tulis klon';
+
+  @override
+  String get writeOnCUID => 'Tulis di kartu CUID';
+
+  @override
+  String get cloneWrittenSuccess => 'Klon berhasil ditulis!';
+
+  @override
+  String get requiredTagFormat => 'Format tag yang diperlukan';
+
+  @override
+  String get type => 'Tipe';
+
+  @override
+  String get frequency => 'Frekuensi';
+
+  @override
+  String get protocol => 'Protokol';
+
+  @override
+  String get capacity => 'Kapasitas';
+
+  @override
+  String get feature => 'Fitur';
+
+  @override
+  String get uidModifiable => 'Blok 0 (UID) dapat dimodifikasi';
+
+  @override
+  String get whereToBuy =>
+      'Cari \"CUID MiFare Classic 1K\" di AliExpress, Amazon atau eBay (~\$0.50/buah)';
+
+  @override
+  String get magicGen2Required =>
+      'Kartu Magic Gen2 - MiFare Classic 1K dengan Block 0 (UID) yang dapat ditulis';
+
+  @override
+  String get magicGen2CardType => 'Magic Gen2 (MiFare Classic 1K)';
+
+  @override
+  String get magicGen2Where =>
+      'Cari \"Magic Gen2 MiFare Classic 1K\" atau \"UID writable\" di AliExpress, Amazon atau eBay (~\$0.50/buah)';
+
+  @override
+  String get iphoneWriteDisclaimer =>
+      '⚠️ Peringatan: Menulis dengan iPhone NFC mungkin tidak berfungsi pada semua kartu Magic Gen2. Android dengan aplikasi NFC Tools Pro atau perangkat Proxmark3 disarankan untuk keandalan.';
+
+  @override
+  String get step1GetMagicGen2 =>
+      'Dapatkan kartu Magic Gen2 kosong (MiFare Classic 1K dengan UID yang dapat ditulis)';
+
+  @override
+  String get instructions => 'Instruksi';
+
+  @override
+  String get step1GetCUID => 'Dapatkan kartu CUID kosong (MiFare Classic 1K)';
+
+  @override
+  String get step2PressWrite => 'Tekan tombol \"Tulis\" di bawah';
+
+  @override
+  String get step3HoldPhone => 'Tahan iPhone Anda di dekat kartu CUID';
+
+  @override
+  String get step4WaitConfirm => 'Tunggu konfirmasi penulisan';
+
+  @override
+  String get step5TestClone => 'Uji tag yang diklon di printer Bambu Lab Anda!';
+
+  @override
+  String get rsaIncluded =>
+      'Klon mencakup tanda tangan RSA asli, akan diterima oleh printer!';
+
+  @override
+  String get cloneDeleted => 'Klon dihapus';
+}

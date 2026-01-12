@@ -1,0 +1,820 @@
+// ignore: unused_import
+import 'package:intl/intl.dart' as intl;
+import 'app_localizations.dart';
+
+// ignore_for_file: type=lint
+
+/// The translations for Swedish (`sv`).
+class AppLocalizationsSv extends AppLocalizations {
+  AppLocalizationsSv([String locale = 'sv']) : super(locale);
+
+  @override
+  String get appTitle => 'NFC Anycubic';
+
+  @override
+  String get nfc => 'NFC';
+
+  @override
+  String get stock => 'Lager';
+
+  @override
+  String get statistics => 'Statistik';
+
+  @override
+  String get profile => 'Profil';
+
+  @override
+  String get readNfcChip => 'Läs NFC-chip';
+
+  @override
+  String get scanHistory => 'Historik';
+
+  @override
+  String get writeNfcChip => 'Skriv NFC-chip';
+
+  @override
+  String get nfcNotAvailable => 'NFC inte tillgänglig';
+
+  @override
+  String get nfcNotAvailableDesc =>
+      'Din enhet stöder inte NFC eller så är det inaktiverat.';
+
+  @override
+  String get nfcNotSupported => 'NFC stöds inte på denna enhet';
+
+  @override
+  String get approachNfcChip => 'Närma dig ett NFC-chip...';
+
+  @override
+  String get scanningNfc => 'Skannar...';
+
+  @override
+  String get nfcDataRead => 'NFC-data läst framgångsrikt!';
+
+  @override
+  String get errorReadingNfc => 'Fel vid läsning av NFC';
+
+  @override
+  String get scanHistoryTitle => 'Skannhistorik';
+
+  @override
+  String get noScansRecorded => 'Inga skanningar registrerade';
+
+  @override
+  String get scansWillAppearHere =>
+      'NFC-skanningar kommer att visas här automatiskt';
+
+  @override
+  String get clearAll => 'Rensa allt';
+
+  @override
+  String get deleteThisScan => 'Ta bort denna skanning?';
+
+  @override
+  String get actionIrreversible => 'Denna åtgärd är oåterkallelig.';
+
+  @override
+  String get cancel => 'Avbryt';
+
+  @override
+  String get delete => 'Ta bort';
+
+  @override
+  String get clearAllHistory => 'Rensa all historik?';
+
+  @override
+  String get allScansWillBeDeleted =>
+      'Alla skanningar kommer att tas bort. Denna åtgärd är oåterkallelig.';
+
+  @override
+  String get scanDeleted => 'Skanning borttagen';
+
+  @override
+  String get scanDetails => 'Skanndetaljer';
+
+  @override
+  String scannedOn(Object date) {
+    return 'Skannad den $date';
+  }
+
+  @override
+  String get bobbinInformation => 'Bobininformation';
+
+  @override
+  String get filamentType => 'Filamenttyp';
+
+  @override
+  String get color => 'Färg';
+
+  @override
+  String get weight => 'Vikt';
+
+  @override
+  String get manufacturingDate => 'Tillverkningsdatum';
+
+  @override
+  String get batchNumber => 'Batchnummer';
+
+  @override
+  String get printerSettings => 'Skrivarinställningar';
+
+  @override
+  String get scanMetadata => 'Skannmetadata';
+
+  @override
+  String get scanId => 'Skann-ID';
+
+  @override
+  String get dateAndTime => 'Datum och tid';
+
+  @override
+  String get reuseThisData => 'Återanvänd denna data';
+
+  @override
+  String get writeToNfc => 'Skriv till NFC';
+
+  @override
+  String get writeDataToChip => 'Skriv data till chip';
+
+  @override
+  String get writeSuccess => 'Skrivning lyckades!';
+
+  @override
+  String get writeError => 'Skrivfel';
+
+  @override
+  String get brand => 'Märke';
+
+  @override
+  String get selectBrand => 'Välj märke';
+
+  @override
+  String get materialType => 'Materialtyp';
+
+  @override
+  String get selectMaterial => 'Välj material';
+
+  @override
+  String get serialNumber => 'Serienummer';
+
+  @override
+  String get serialNumberHint => 't.ex.: 001';
+
+  @override
+  String get initialWeight => 'Ursprunglig vikt';
+
+  @override
+  String get initialWeightHint => 't.ex.: 1000';
+
+  @override
+  String get extruderTempMin => 'Extruder temp. min';
+
+  @override
+  String get extruderTempMax => 'Extruder temp. max';
+
+  @override
+  String get bedTempMin => 'Bäddtemp. min';
+
+  @override
+  String get bedTempMax => 'Bäddtemp. max';
+
+  @override
+  String get diameter => 'Diameter';
+
+  @override
+  String get spoolLength => 'Längd (m)';
+
+  @override
+  String get generatedSku => 'Genererad SKU';
+
+  @override
+  String get approachChipToWrite => 'Närma chip för att skriva...';
+
+  @override
+  String get writing => 'Skriver...';
+
+  @override
+  String get chooseColor => 'Välj färg';
+
+  @override
+  String get required => 'Obligatorisk';
+
+  @override
+  String get invalid => 'Ogiltig';
+
+  @override
+  String get advancedSettings => 'Avancerade inställningar';
+
+  @override
+  String get opacity => 'Opacitet';
+
+  @override
+  String get validate => 'Validera';
+
+  @override
+  String get nfcTagInfo =>
+      'Använd en tom ISO14443A NFC-tagg (NTAG213) för att skapa dina egna Anycubic-taggar.';
+
+  @override
+  String get stockInventory => 'Rullar i lager';
+
+  @override
+  String get addSpool => 'Lägg till spole';
+
+  @override
+  String get scanSpool => 'Skanna spole';
+
+  @override
+  String get addManually => 'Lägg till manuellt';
+
+  @override
+  String get spoolAdded => 'Spole tillagd';
+
+  @override
+  String get spoolUpdated => 'Spole uppdaterad';
+
+  @override
+  String get noSpoolsInStock => 'Inga spolar i lager';
+
+  @override
+  String get addFirstSpool =>
+      'Lägg till din första spole för att börja spåra ditt lager';
+
+  @override
+  String lowStockAlert(Object count, Object threshold) {
+    return '$count spole/spolar med lågt lager (< $threshold%)';
+  }
+
+  @override
+  String get edit => 'Redigera';
+
+  @override
+  String get bobbinPrice => 'Bobinpris';
+
+  @override
+  String get price => 'Pris';
+
+  @override
+  String get priceHint => 't.ex.: 25.00';
+
+  @override
+  String get save => 'Spara';
+
+  @override
+  String get spoolDetails => 'Spoldetaljer';
+
+  @override
+  String get deleteThisSpool => 'Ta bort denna spole?';
+
+  @override
+  String get cannotBeUndone => 'Denna åtgärd kan inte ångras.';
+
+  @override
+  String get addSpoolManually => 'Lägg till spole manuellt';
+
+  @override
+  String get editSpool => 'Redigera spole';
+
+  @override
+  String get customBrand => 'Anpassat märke';
+
+  @override
+  String get customBrandHint => 't.ex.: Mitt märke';
+
+  @override
+  String get chooseFromList => 'Välj från lista';
+
+  @override
+  String get addBrand => '+ Lägg till märke';
+
+  @override
+  String get customMaterial => 'Anpassat material';
+
+  @override
+  String get customMaterialHint => 't.ex.: Mitt material';
+
+  @override
+  String get addMaterial => '+ Lägg till material';
+
+  @override
+  String get colorHint => 't.ex.: Blå, Röd...';
+
+  @override
+  String get enterColor => 'Vänligen ange en färg';
+
+  @override
+  String get initialWeightG => 'Ursprunglig vikt';
+
+  @override
+  String get remainingWeightG => 'Återstående vikt';
+
+  @override
+  String get enterBrand => 'Vänligen ange ett märke';
+
+  @override
+  String get selectOrEnterBrand => 'Vänligen välj eller ange ett märke';
+
+  @override
+  String get enterMaterial => 'Vänligen ange ett material';
+
+  @override
+  String get selectOrEnterMaterial => 'Vänligen välj eller ange ett material';
+
+  @override
+  String get enterPrice => 'Vänligen ange ett pris';
+
+  @override
+  String get enterValidPrice => 'Vänligen ange ett giltigt pris';
+
+  @override
+  String get enterWeight => 'Vänligen ange en vikt';
+
+  @override
+  String get enterValidWeight => 'Vänligen ange en giltig vikt';
+
+  @override
+  String get remainingCannotExceedTotal =>
+      'Återstående vikt kan inte överstiga total vikt';
+
+  @override
+  String get overview => 'Översikt';
+
+  @override
+  String get spoolsInStock => 'Spolar i lager';
+
+  @override
+  String get totalValue => 'Totalt värde';
+
+  @override
+  String get lowStockSpools => 'Lågt lager';
+
+  @override
+  String get materialDistribution => 'Fördelning per material';
+
+  @override
+  String get brandDistribution => 'Fördelning per märke';
+
+  @override
+  String get noData => 'Ingen data';
+
+  @override
+  String get refresh => 'Uppdatera';
+
+  @override
+  String get profileSettings => 'Profilinställningar';
+
+  @override
+  String get preferences => 'Preferenser';
+
+  @override
+  String get language => 'Språk';
+
+  @override
+  String get selectLanguage => 'Välj språk';
+
+  @override
+  String get french => 'Français';
+
+  @override
+  String get english => 'English';
+
+  @override
+  String get german => 'Deutsch';
+
+  @override
+  String get italian => 'Italiano';
+
+  @override
+  String get romanian => 'Română';
+
+  @override
+  String get hungarian => 'Magyar';
+
+  @override
+  String get greek => 'Ελληνικά';
+
+  @override
+  String get bulgarian => 'Български';
+
+  @override
+  String get croatian => 'Hrvatski';
+
+  @override
+  String get slovak => 'Slovenčina';
+
+  @override
+  String get slovenian => 'Slovenščina';
+
+  @override
+  String get serbian => 'Српски';
+
+  @override
+  String get ukrainian => 'Українська';
+
+  @override
+  String get danish => 'Dansk';
+
+  @override
+  String get norwegian => 'Norsk';
+
+  @override
+  String get finnish => 'Suomi';
+
+  @override
+  String get thai => 'ไทย';
+
+  @override
+  String get vietnamese => 'Tiếng Việt';
+
+  @override
+  String get indonesian => 'Bahasa Indonesia';
+
+  @override
+  String get malay => 'Bahasa Melayu';
+
+  @override
+  String get hindi => 'हिन्दी';
+
+  @override
+  String get currency => 'Valuta';
+
+  @override
+  String get selectCurrency => 'Välj valuta';
+
+  @override
+  String get units => 'Enheter';
+
+  @override
+  String get selectUnits => 'Välj enheter';
+
+  @override
+  String get metric => 'Metrisk (mm, g, °C)';
+
+  @override
+  String get imperial => 'Imperial (tum, oz, °F)';
+
+  @override
+  String get lowStockThreshold => 'Tröskel för låg lagerstatus';
+
+  @override
+  String get lowStockThresholdDesc =>
+      'En spole kommer att anses ha lågt lager om den återstående vikten är mindre än denna procentsats';
+
+  @override
+  String get authentication => 'Autentisering';
+
+  @override
+  String get signInWithGoogle => 'Logga in med Google';
+
+  @override
+  String get signInWithApple => 'Logga in med Apple';
+
+  @override
+  String get comingSoon => 'Kommer snart';
+
+  @override
+  String get about => 'Om';
+
+  @override
+  String get version => 'Version';
+
+  @override
+  String get madeWith => 'Gjord med ❤️ för Anycubic 3D-skrivare';
+
+  @override
+  String get scanBobbinDirectly => 'Skanna bobin';
+
+  @override
+  String get nfcEncoder => 'NFC-kodare';
+
+  @override
+  String get length => 'Längd';
+
+  @override
+  String get tempExtruder => 'Extruder temp.';
+
+  @override
+  String get tempBed => 'Bäddtemp.';
+
+  @override
+  String get termsOfService => 'Användarvillkor';
+
+  @override
+  String get privacyPolicy => 'Sekretesspolicy';
+
+  @override
+  String get legal => 'Legal';
+
+  @override
+  String get back => 'Tillbaka';
+
+  @override
+  String get retry => 'Försök igen';
+
+  @override
+  String get signOut => 'Logga ut';
+
+  @override
+  String get extruderTempMinHint => 't.ex.: 200';
+
+  @override
+  String get extruderTempMaxHint => 't.ex.: 220';
+
+  @override
+  String get bedTempMinHint => 't.ex.: 50';
+
+  @override
+  String get bedTempMaxHint => 't.ex.: 60';
+
+  @override
+  String get diameterHint => 't.ex.: 1.75';
+
+  @override
+  String get spoolLengthHint => 't.ex.: 330';
+
+  @override
+  String get tabGrid => 'Rutnät';
+
+  @override
+  String get tabSpectrum => 'Spektrum';
+
+  @override
+  String get tabSliders => 'Reglage';
+
+  @override
+  String get hexCode => 'Hexadecimal kod';
+
+  @override
+  String get red => 'Röd';
+
+  @override
+  String get green => 'Grön';
+
+  @override
+  String get blue => 'Blå';
+
+  @override
+  String get metricUnits => 'Metrisk (mm, g, °C)';
+
+  @override
+  String get imperialUnits => 'Imperial (tum, oz, °F)';
+
+  @override
+  String get chf => 'Schweizisk franc (CHF)';
+
+  @override
+  String get eur => 'Euro (€)';
+
+  @override
+  String get usd => 'Amerikansk dollar (\$)';
+
+  @override
+  String get gbp => 'Pund sterling (£)';
+
+  @override
+  String get cad => 'Kanadensisk dollar (CAD)';
+
+  @override
+  String get filamentsToOrder => 'Filament att beställa';
+
+  @override
+  String get shoppingList => 'Inköpslista';
+
+  @override
+  String get addToShoppingList => 'Lägg till i listan';
+
+  @override
+  String get noLowStockFilaments => 'Inga filament med lågt lager';
+
+  @override
+  String get vipSubscriptionDescription =>
+      'Denna prenumeration tjänar endast till att inaktivera annonser i appen och stödja projektet. Ingen annan funktionalitet.';
+
+  @override
+  String get monthlySubscription => 'Månadsprenumeration';
+
+  @override
+  String get yearlySubscription => 'Årsprenumeration';
+
+  @override
+  String get perMonth => '/ månad';
+
+  @override
+  String get perYear => '/ år';
+
+  @override
+  String onlyPerMonth(String price) {
+    return 'Endast $price / månad';
+  }
+
+  @override
+  String get subscribe => 'Prenumerera';
+
+  @override
+  String get bestOffer => '✨ BÄSTA ERBJUDANDET ✨';
+
+  @override
+  String get forAnycubicAce => 'för Anycubic Ace';
+
+  @override
+  String get forBambuLabAms => 'för Bambu Lab AMS';
+
+  @override
+  String get scanNfcChip => 'Skanna NFC-chip';
+
+  @override
+  String get fillForm => 'Fyll i formulär';
+
+  @override
+  String get emptyShoppingList => 'Inga filament i listan';
+
+  @override
+  String percentRemaining(String percent) {
+    return '$percent% kvar';
+  }
+
+  @override
+  String get markAsOrdered => 'Markera som beställd';
+
+  @override
+  String get markAsNotOrdered => 'Markera som ej beställd';
+
+  @override
+  String get notSignedIn => 'Inte inloggad';
+
+  @override
+  String get signIn => 'Logga in';
+
+  @override
+  String get connection => 'Inloggning';
+
+  @override
+  String get signInToSync => 'Logga in för att synkronisera dina data';
+
+  @override
+  String get continueWithoutAccount => 'Fortsätt utan konto (lokalt läge)';
+
+  @override
+  String get privacyNotice =>
+      'Genom att logga in accepterar du våra\nAnvändarvillkor och Sekretesspolicy';
+
+  @override
+  String get updateStock => 'Uppdatera lager';
+
+  @override
+  String get scanToUpdateStock => 'Skanna för att uppdatera';
+
+  @override
+  String get weightUsed => 'Använd vikt';
+
+  @override
+  String get lengthUsed => 'Använd längd';
+
+  @override
+  String get enterWeightOrLength => 'Ange använd vikt eller längd';
+
+  @override
+  String get weightUsedG => 'Använd vikt (g)';
+
+  @override
+  String get lengthUsedM => 'Använd längd (m)';
+
+  @override
+  String get stockUpdated => 'Lager uppdaterat';
+
+  @override
+  String get scanSpoolToUpdate => 'Skanna en spole för att uppdatera lagret';
+
+  @override
+  String get spoolNotFound => 'Spole hittades inte i lagret';
+
+  @override
+  String get addSpoolFirstMessage =>
+      'Denna spole finns ännu inte i ditt lager. Lägg först till den med knappen \'Lägg till spole\' innan du uppdaterar lagret.';
+
+  @override
+  String get ok => 'OK';
+
+  @override
+  String get bambuLabReadOnly => 'Bambu Lab: Skrivskyddad';
+
+  @override
+  String get bambuLabReadOnlyDesc =>
+      'Bambu Lab-taggar använder RSA-kryptering och kan inte modifieras. Skrivskyddad.';
+
+  @override
+  String get bambuCloneLibrary => 'Bambu Lab klonbibliotek';
+
+  @override
+  String get noBambuClones => 'Inga Bambu Lab kloner';
+
+  @override
+  String get scanBambuToClone =>
+      'Skanna original Bambu Lab-taggar för att skapa ditt klonbibliotek';
+
+  @override
+  String get scanTag => 'Skanna en tagg';
+
+  @override
+  String get syncWithCloud => 'Synkronisera med molnet';
+
+  @override
+  String get syncCompleted => 'Synkronisering slutförd';
+
+  @override
+  String get deleteClone => 'Ta bort klon';
+
+  @override
+  String get renameClone => 'Byt namn på klon';
+
+  @override
+  String get rename => 'Byt namn';
+
+  @override
+  String get customName => 'Anpassat namn';
+
+  @override
+  String get clonedOn => 'Klonad';
+
+  @override
+  String get writeThisClone => 'Skriv denna klon';
+
+  @override
+  String get writeClone => 'Skriv klon';
+
+  @override
+  String get writeOnCUID => 'Skriv på CUID-kort';
+
+  @override
+  String get cloneWrittenSuccess => 'Klon skriven framgångsrikt!';
+
+  @override
+  String get requiredTagFormat => 'Nödvändigt taggformat';
+
+  @override
+  String get type => 'Typ';
+
+  @override
+  String get frequency => 'Frekvens';
+
+  @override
+  String get protocol => 'Protokoll';
+
+  @override
+  String get capacity => 'Kapacitet';
+
+  @override
+  String get feature => 'Funktion';
+
+  @override
+  String get uidModifiable => 'Block 0 (UID) modifierbart';
+
+  @override
+  String get whereToBuy =>
+      'Sök efter \"CUID MiFare Classic 1K\" på AliExpress, Amazon eller eBay (~\$0.50/styck)';
+
+  @override
+  String get magicGen2Required =>
+      'Magic Gen2 kort - MiFare Classic 1K med skrivbar Block 0 (UID)';
+
+  @override
+  String get magicGen2CardType => 'Magic Gen2 (MiFare Classic 1K)';
+
+  @override
+  String get magicGen2Where =>
+      'Sök efter \"Magic Gen2 MiFare Classic 1K\" eller \"UID writable\" på AliExpress, Amazon eller eBay (~\$0.50/st)';
+
+  @override
+  String get iphoneWriteDisclaimer =>
+      '⚠️ Varning: Skrivning med iPhone NFC kanske inte fungerar på alla Magic Gen2 kort. Android med NFC Tools Pro app eller Proxmark3 enhet rekommenderas för tillförlitlighet.';
+
+  @override
+  String get step1GetMagicGen2 =>
+      'Skaffa ett tomt Magic Gen2 kort (MiFare Classic 1K med skrivbar UID)';
+
+  @override
+  String get instructions => 'Instruktioner';
+
+  @override
+  String get step1GetCUID => 'Skaffa ett tomt CUID-kort (MiFare Classic 1K)';
+
+  @override
+  String get step2PressWrite => 'Tryck på knappen \"Skriv\" nedan';
+
+  @override
+  String get step3HoldPhone => 'Håll din iPhone nära CUID-kortet';
+
+  @override
+  String get step4WaitConfirm => 'Vänta på skrivbekräftelse';
+
+  @override
+  String get step5TestClone =>
+      'Testa den klonade taggen på din Bambu Lab skrivare!';
+
+  @override
+  String get rsaIncluded =>
+      'Klonen inkluderar den ursprungliga RSA-signaturen, den kommer att accepteras av skrivaren!';
+
+  @override
+  String get cloneDeleted => 'Klon borttagen';
+}

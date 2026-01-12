@@ -1,0 +1,816 @@
+// ignore: unused_import
+import 'package:intl/intl.dart' as intl;
+import 'app_localizations.dart';
+
+// ignore_for_file: type=lint
+
+/// The translations for Arabic (`ar`).
+class AppLocalizationsAr extends AppLocalizations {
+  AppLocalizationsAr([String locale = 'ar']) : super(locale);
+
+  @override
+  String get appTitle => 'NFC Anycubic';
+
+  @override
+  String get nfc => 'NFC';
+
+  @override
+  String get stock => 'المخزون';
+
+  @override
+  String get statistics => 'التحليلات';
+
+  @override
+  String get profile => 'الملف الشخصي';
+
+  @override
+  String get readNfcChip => 'قراءة شريحة NFC';
+
+  @override
+  String get scanHistory => 'السجل';
+
+  @override
+  String get writeNfcChip => 'كتابة شريحة NFC';
+
+  @override
+  String get nfcNotAvailable => 'NFC غير متوفر';
+
+  @override
+  String get nfcNotAvailableDesc => 'جهازك لا يدعم NFC أو أنه معطل.';
+
+  @override
+  String get nfcNotSupported => 'NFC غير مدعوم على هذا الجهاز';
+
+  @override
+  String get approachNfcChip => 'اقترب من شريحة NFC...';
+
+  @override
+  String get scanningNfc => 'المسح الضوئي...';
+
+  @override
+  String get nfcDataRead => 'تمت قراءة بيانات NFC بنجاح!';
+
+  @override
+  String get errorReadingNfc => 'خطأ في قراءة NFC';
+
+  @override
+  String get scanHistoryTitle => 'سجل المسح الضوئي';
+
+  @override
+  String get noScansRecorded => 'لا توجد عمليات مسح مسجلة';
+
+  @override
+  String get scansWillAppearHere => 'ستظهر عمليات مسح NFC هنا تلقائيًا';
+
+  @override
+  String get clearAll => 'مسح الكل';
+
+  @override
+  String get deleteThisScan => 'حذف هذا المسح؟';
+
+  @override
+  String get actionIrreversible => 'هذا الإجراء لا رجعة فيه.';
+
+  @override
+  String get cancel => 'إلغاء';
+
+  @override
+  String get delete => 'حذف';
+
+  @override
+  String get clearAllHistory => 'مسح كل السجل؟';
+
+  @override
+  String get allScansWillBeDeleted =>
+      'سيتم حذف جميع عمليات المسح. هذا الإجراء لا رجعة فيه.';
+
+  @override
+  String get scanDeleted => 'تم حذف المسح';
+
+  @override
+  String get scanDetails => 'تفاصيل المسح';
+
+  @override
+  String scannedOn(Object date) {
+    return 'تم المسح في $date';
+  }
+
+  @override
+  String get bobbinInformation => 'معلومات البكرة';
+
+  @override
+  String get filamentType => 'نوع الخيط';
+
+  @override
+  String get color => 'اللون';
+
+  @override
+  String get weight => 'الوزن';
+
+  @override
+  String get manufacturingDate => 'تاريخ التصنيع';
+
+  @override
+  String get batchNumber => 'رقم الدفعة';
+
+  @override
+  String get printerSettings => 'إعدادات الطابعة';
+
+  @override
+  String get scanMetadata => 'بيانات المسح الوصفية';
+
+  @override
+  String get scanId => 'معرف المسح';
+
+  @override
+  String get dateAndTime => 'التاريخ والوقت';
+
+  @override
+  String get reuseThisData => 'إعادة استخدام هذه البيانات';
+
+  @override
+  String get writeToNfc => 'كتابة إلى NFC';
+
+  @override
+  String get writeDataToChip => 'كتابة البيانات إلى الشريحة';
+
+  @override
+  String get writeSuccess => 'نجحت الكتابة!';
+
+  @override
+  String get writeError => 'خطأ في الكتابة';
+
+  @override
+  String get brand => 'العلامة التجارية';
+
+  @override
+  String get selectBrand => 'اختر العلامة التجارية';
+
+  @override
+  String get materialType => 'نوع المادة';
+
+  @override
+  String get selectMaterial => 'اختر المادة';
+
+  @override
+  String get serialNumber => 'الرقم التسلسلي';
+
+  @override
+  String get serialNumberHint => 'مثال: 001';
+
+  @override
+  String get initialWeight => 'الوزن الأولي';
+
+  @override
+  String get initialWeightHint => 'مثال: 1000';
+
+  @override
+  String get extruderTempMin => 'درجة حرارة الطارد الدنيا';
+
+  @override
+  String get extruderTempMax => 'درجة حرارة الطارد القصوى';
+
+  @override
+  String get bedTempMin => 'درجة حرارة السرير الدنيا';
+
+  @override
+  String get bedTempMax => 'درجة حرارة السرير القصوى';
+
+  @override
+  String get diameter => 'قطر الخيط';
+
+  @override
+  String get spoolLength => 'طول البكرة';
+
+  @override
+  String get generatedSku => 'SKU المولد';
+
+  @override
+  String get approachChipToWrite => 'اقترب من الشريحة للكتابة...';
+
+  @override
+  String get writing => 'الكتابة...';
+
+  @override
+  String get chooseColor => 'اختر اللون';
+
+  @override
+  String get required => 'مطلوب';
+
+  @override
+  String get invalid => 'غير صالح';
+
+  @override
+  String get advancedSettings => 'إعدادات متقدمة';
+
+  @override
+  String get opacity => 'الشفافية';
+
+  @override
+  String get validate => 'تأكيد';
+
+  @override
+  String get nfcTagInfo =>
+      'استخدم علامة NFC فارغة ISO14443A (NTAG213) لإنشاء علامات Anycubic الخاصة بك.';
+
+  @override
+  String get stockInventory => 'البكرات في المخزون';
+
+  @override
+  String get addSpool => 'إضافة بكرة';
+
+  @override
+  String get scanSpool => 'مسح بكرة';
+
+  @override
+  String get addManually => 'إضافة يدويًا';
+
+  @override
+  String get spoolAdded => 'تمت إضافة البكرة';
+
+  @override
+  String get spoolUpdated => 'تم تحديث البكرة';
+
+  @override
+  String get noSpoolsInStock => 'لا توجد بكرات في المخزون';
+
+  @override
+  String get addFirstSpool => 'أضف بكرتك الأولى لبدء تتبع مخزونك';
+
+  @override
+  String lowStockAlert(Object count, Object threshold) {
+    return '$count بكرة منخفضة في المخزون (< $threshold%)';
+  }
+
+  @override
+  String get edit => 'تعديل';
+
+  @override
+  String get bobbinPrice => 'سعر البكرة';
+
+  @override
+  String get price => 'السعر';
+
+  @override
+  String get priceHint => 'مثال: 25.00';
+
+  @override
+  String get save => 'حفظ';
+
+  @override
+  String get spoolDetails => 'تفاصيل البكرة';
+
+  @override
+  String get deleteThisSpool => 'حذف هذه البكرة؟';
+
+  @override
+  String get cannotBeUndone => 'لا يمكن التراجع عن هذا الإجراء.';
+
+  @override
+  String get addSpoolManually => 'إضافة بكرة يدويًا';
+
+  @override
+  String get editSpool => 'تعديل البكرة';
+
+  @override
+  String get customBrand => 'علامة تجارية مخصصة';
+
+  @override
+  String get customBrandHint => 'مثال: علامتي التجارية';
+
+  @override
+  String get chooseFromList => 'اختر من القائمة';
+
+  @override
+  String get addBrand => '+ إضافة علامة تجارية';
+
+  @override
+  String get customMaterial => 'مادة مخصصة';
+
+  @override
+  String get customMaterialHint => 'مثال: مادتي';
+
+  @override
+  String get addMaterial => '+ إضافة مادة';
+
+  @override
+  String get colorHint => 'مثال: أزرق، أحمر...';
+
+  @override
+  String get enterColor => 'الرجاء إدخال اللون';
+
+  @override
+  String get initialWeightG => 'الوزن الأولي';
+
+  @override
+  String get remainingWeightG => 'الوزن المتبقي';
+
+  @override
+  String get enterBrand => 'الرجاء إدخال العلامة التجارية';
+
+  @override
+  String get selectOrEnterBrand => 'الرجاء اختيار أو إدخال علامة تجارية';
+
+  @override
+  String get enterMaterial => 'الرجاء إدخال المادة';
+
+  @override
+  String get selectOrEnterMaterial => 'الرجاء اختيار أو إدخال مادة';
+
+  @override
+  String get enterPrice => 'الرجاء إدخال السعر';
+
+  @override
+  String get enterValidPrice => 'الرجاء إدخال سعر صالح';
+
+  @override
+  String get enterWeight => 'الرجاء إدخال الوزن';
+
+  @override
+  String get enterValidWeight => 'الرجاء إدخال وزن صالح';
+
+  @override
+  String get remainingCannotExceedTotal =>
+      'الوزن المتبقي لا يمكن أن يتجاوز الوزن الإجمالي';
+
+  @override
+  String get overview => 'نظرة عامة';
+
+  @override
+  String get spoolsInStock => 'البكرات في المخزون';
+
+  @override
+  String get totalValue => 'القيمة الإجمالية';
+
+  @override
+  String get lowStockSpools => 'مخزون منخفض';
+
+  @override
+  String get materialDistribution => 'التوزيع حسب المادة';
+
+  @override
+  String get brandDistribution => 'التوزيع حسب العلامة التجارية';
+
+  @override
+  String get noData => 'لا توجد بيانات';
+
+  @override
+  String get refresh => 'تحديث';
+
+  @override
+  String get profileSettings => 'إعدادات الملف الشخصي';
+
+  @override
+  String get preferences => 'التفضيلات';
+
+  @override
+  String get language => 'اللغة';
+
+  @override
+  String get selectLanguage => 'اختر اللغة';
+
+  @override
+  String get french => 'Français';
+
+  @override
+  String get english => 'English';
+
+  @override
+  String get german => 'Deutsch';
+
+  @override
+  String get italian => 'Italiano';
+
+  @override
+  String get romanian => 'Română';
+
+  @override
+  String get hungarian => 'Magyar';
+
+  @override
+  String get greek => 'Ελληνικά';
+
+  @override
+  String get bulgarian => 'Български';
+
+  @override
+  String get croatian => 'Hrvatski';
+
+  @override
+  String get slovak => 'Slovenčina';
+
+  @override
+  String get slovenian => 'Slovenščina';
+
+  @override
+  String get serbian => 'Српски';
+
+  @override
+  String get ukrainian => 'Українська';
+
+  @override
+  String get danish => 'Dansk';
+
+  @override
+  String get norwegian => 'Norsk';
+
+  @override
+  String get finnish => 'Suomi';
+
+  @override
+  String get thai => 'ไทย';
+
+  @override
+  String get vietnamese => 'Tiếng Việt';
+
+  @override
+  String get indonesian => 'Bahasa Indonesia';
+
+  @override
+  String get malay => 'Bahasa Melayu';
+
+  @override
+  String get hindi => 'हिन्दी';
+
+  @override
+  String get currency => 'العملة';
+
+  @override
+  String get selectCurrency => 'اختر العملة';
+
+  @override
+  String get units => 'الوحدات';
+
+  @override
+  String get selectUnits => 'اختر الوحدات';
+
+  @override
+  String get metric => 'متري (مم، جم، °م)';
+
+  @override
+  String get imperial => 'إمبراطوري (بوصة، أونصة، °ف)';
+
+  @override
+  String get lowStockThreshold => 'حد تنبيه المخزون المنخفض';
+
+  @override
+  String get lowStockThresholdDesc =>
+      'ستعتبر البكرة منخفضة في المخزون إذا كان الوزن المتبقي أقل من هذه النسبة المئوية';
+
+  @override
+  String get authentication => 'المصادقة';
+
+  @override
+  String get signInWithGoogle => 'تسجيل الدخول بواسطة Google';
+
+  @override
+  String get signInWithApple => 'تسجيل الدخول بواسطة Apple';
+
+  @override
+  String get comingSoon => 'قريبًا';
+
+  @override
+  String get about => 'حول';
+
+  @override
+  String get version => 'الإصدار';
+
+  @override
+  String get madeWith => 'صنع بـ ❤️ لطابعات Anycubic 3D';
+
+  @override
+  String get scanBobbinDirectly => 'مسح البكرة';
+
+  @override
+  String get nfcEncoder => 'مشفر NFC';
+
+  @override
+  String get length => 'الطول';
+
+  @override
+  String get tempExtruder => 'درجة حرارة الطارد';
+
+  @override
+  String get tempBed => 'درجة حرارة السرير';
+
+  @override
+  String get termsOfService => 'شروط الخدمة';
+
+  @override
+  String get privacyPolicy => 'سياسة الخصوصية';
+
+  @override
+  String get legal => 'Legal';
+
+  @override
+  String get back => 'رجوع';
+
+  @override
+  String get retry => 'إعادة المحاولة';
+
+  @override
+  String get signOut => 'تسجيل الخروج';
+
+  @override
+  String get extruderTempMinHint => 'مثال: 200';
+
+  @override
+  String get extruderTempMaxHint => 'مثال: 220';
+
+  @override
+  String get bedTempMinHint => 'مثال: 50';
+
+  @override
+  String get bedTempMaxHint => 'مثال: 60';
+
+  @override
+  String get diameterHint => 'مثال: 1.75';
+
+  @override
+  String get spoolLengthHint => 'مثال: 330';
+
+  @override
+  String get tabGrid => 'شبكة';
+
+  @override
+  String get tabSpectrum => 'طيف';
+
+  @override
+  String get tabSliders => 'منزلقات';
+
+  @override
+  String get hexCode => 'كود Hex';
+
+  @override
+  String get red => 'أحمر';
+
+  @override
+  String get green => 'أخضر';
+
+  @override
+  String get blue => 'أزرق';
+
+  @override
+  String get metricUnits => 'متري (مم، جم، °م)';
+
+  @override
+  String get imperialUnits => 'إمبراطوري (بوصة، أونصة، °ف)';
+
+  @override
+  String get chf => 'فرنك سويسري (CHF)';
+
+  @override
+  String get eur => 'يورو (€)';
+
+  @override
+  String get usd => 'دولار أمريكي (\$)';
+
+  @override
+  String get gbp => 'جنيه إسترليني (£)';
+
+  @override
+  String get cad => 'دولار كندي (CAD)';
+
+  @override
+  String get filamentsToOrder => 'خيوط للطلب';
+
+  @override
+  String get shoppingList => 'قائمة التسوق';
+
+  @override
+  String get addToShoppingList => 'إضافة إلى القائمة';
+
+  @override
+  String get noLowStockFilaments => 'لا توجد خيوط منخفضة المخزون';
+
+  @override
+  String get vipSubscriptionDescription =>
+      'هذا الاشتراك يُستخدم فقط لتعطيل الإعلانات داخل التطبيق ودعم المشروع. لا توجد ميزات أخرى.';
+
+  @override
+  String get monthlySubscription => 'اشتراك شهري';
+
+  @override
+  String get yearlySubscription => 'اشتراك سنوي';
+
+  @override
+  String get perMonth => '/ شهر';
+
+  @override
+  String get perYear => '/ سنة';
+
+  @override
+  String onlyPerMonth(String price) {
+    return 'فقط $price / شهر';
+  }
+
+  @override
+  String get subscribe => 'اشترك';
+
+  @override
+  String get bestOffer => '✨ أفضل عرض ✨';
+
+  @override
+  String get forAnycubicAce => 'لـ Anycubic Ace';
+
+  @override
+  String get forBambuLabAms => 'لـ Bambu Lab AMS';
+
+  @override
+  String get scanNfcChip => 'مسح شريحة NFC';
+
+  @override
+  String get fillForm => 'ملء النموذج';
+
+  @override
+  String get emptyShoppingList => 'لا توجد خيوط في القائمة';
+
+  @override
+  String percentRemaining(String percent) {
+    return '$percent% متبقي';
+  }
+
+  @override
+  String get markAsOrdered => 'وضع علامة كمطلوب';
+
+  @override
+  String get markAsNotOrdered => 'وضع علامة كغير مطلوب';
+
+  @override
+  String get notSignedIn => 'غير مسجل الدخول';
+
+  @override
+  String get signIn => 'تسجيل الدخول';
+
+  @override
+  String get connection => 'تسجيل الدخول';
+
+  @override
+  String get signInToSync => 'سجل الدخول لمزامنة بياناتك';
+
+  @override
+  String get continueWithoutAccount => 'المتابعة بدون حساب (الوضع المحلي)';
+
+  @override
+  String get privacyNotice =>
+      'بتسجيل الدخول، أنت توافق على\nشروط الخدمة وسياسة الخصوصية الخاصة بنا';
+
+  @override
+  String get updateStock => 'تحديث المخزون';
+
+  @override
+  String get scanToUpdateStock => 'مسح للتحديث';
+
+  @override
+  String get weightUsed => 'الوزن المستخدم';
+
+  @override
+  String get lengthUsed => 'الطول المستخدم';
+
+  @override
+  String get enterWeightOrLength => 'أدخل الوزن أو الطول المستخدم';
+
+  @override
+  String get weightUsedG => 'الوزن المستخدم (جم)';
+
+  @override
+  String get lengthUsedM => 'الطول المستخدم (م)';
+
+  @override
+  String get stockUpdated => 'تم تحديث المخزون';
+
+  @override
+  String get scanSpoolToUpdate => 'امسح بكرة لتحديث مخزونها';
+
+  @override
+  String get spoolNotFound => 'البكرة غير موجودة في المخزون';
+
+  @override
+  String get addSpoolFirstMessage =>
+      'هذه البكرة ليست في مخزونك بعد. يرجى إضافتها أولاً باستخدام زر \'إضافة بكرة\' قبل تحديث مخزونها.';
+
+  @override
+  String get ok => 'موافق';
+
+  @override
+  String get bambuLabReadOnly => 'Bambu Lab: للقراءة فقط';
+
+  @override
+  String get bambuLabReadOnlyDesc =>
+      'علامات Bambu Lab تستخدم تشفير RSA ولا يمكن تعديلها. القراءة فقط.';
+
+  @override
+  String get bambuCloneLibrary => 'مكتبة نسخ Bambu Lab';
+
+  @override
+  String get noBambuClones => 'لا توجد نسخ Bambu Lab';
+
+  @override
+  String get scanBambuToClone =>
+      'امسح علامات Bambu Lab الأصلية لإنشاء مكتبة النسخ الخاصة بك';
+
+  @override
+  String get scanTag => 'مسح علامة';
+
+  @override
+  String get syncWithCloud => 'المزامنة مع السحابة';
+
+  @override
+  String get syncCompleted => 'اكتملت المزامنة';
+
+  @override
+  String get deleteClone => 'حذف النسخة';
+
+  @override
+  String get renameClone => 'إعادة تسمية النسخة';
+
+  @override
+  String get rename => 'إعادة تسمية';
+
+  @override
+  String get customName => 'اسم مخصص';
+
+  @override
+  String get clonedOn => 'تم النسخ في';
+
+  @override
+  String get writeThisClone => 'كتابة هذه النسخة';
+
+  @override
+  String get writeClone => 'كتابة النسخة';
+
+  @override
+  String get writeOnCUID => 'الكتابة على بطاقة CUID';
+
+  @override
+  String get cloneWrittenSuccess => 'تمت كتابة النسخة بنجاح!';
+
+  @override
+  String get requiredTagFormat => 'تنسيق العلامة المطلوب';
+
+  @override
+  String get type => 'النوع';
+
+  @override
+  String get frequency => 'التردد';
+
+  @override
+  String get protocol => 'البروتوكول';
+
+  @override
+  String get capacity => 'السعة';
+
+  @override
+  String get feature => 'الميزة';
+
+  @override
+  String get uidModifiable => 'الكتلة 0 (UID) قابلة للتعديل';
+
+  @override
+  String get whereToBuy =>
+      'ابحث عن \"CUID MiFare Classic 1K\" على AliExpress أو Amazon أو eBay (~\$0.50/قطعة)';
+
+  @override
+  String get magicGen2Required =>
+      'بطاقة Magic Gen2 - MiFare Classic 1K مع Block 0 قابل للكتابة (UID)';
+
+  @override
+  String get magicGen2CardType => 'Magic Gen2 (MiFare Classic 1K)';
+
+  @override
+  String get magicGen2Where =>
+      'ابحث عن \"Magic Gen2 MiFare Classic 1K\" أو \"UID writable\" على AliExpress أو Amazon أو eBay (~\$0.50/قطعة)';
+
+  @override
+  String get iphoneWriteDisclaimer =>
+      '⚠️ تحذير: الكتابة بواسطة iPhone NFC قد لا تعمل على جميع بطاقات Magic Gen2. يُنصح باستخدام Android مع تطبيق NFC Tools Pro أو جهاز Proxmark3 للموثوقية.';
+
+  @override
+  String get step1GetMagicGen2 =>
+      'احصل على بطاقة Magic Gen2 فارغة (MiFare Classic 1K مع UID قابل للكتابة)';
+
+  @override
+  String get instructions => 'التعليمات';
+
+  @override
+  String get step1GetCUID => 'احصل على بطاقة CUID فارغة (MiFare Classic 1K)';
+
+  @override
+  String get step2PressWrite => 'اضغط على زر \"كتابة\" أدناه';
+
+  @override
+  String get step3HoldPhone => 'امسك iPhone بالقرب من البطاقة';
+
+  @override
+  String get step4WaitConfirm => 'انتظر تأكيد الكتابة';
+
+  @override
+  String get step5TestClone =>
+      'اختبر العلامة المنسوخة على طابعة Bambu Lab الخاصة بك!';
+
+  @override
+  String get rsaIncluded => 'تتضمن النسخة توقيع RSA الأصلي، وستقبلها الطابعة!';
+
+  @override
+  String get cloneDeleted => 'تم حذف النسخة';
+}

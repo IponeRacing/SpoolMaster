@@ -1,0 +1,821 @@
+// ignore: unused_import
+import 'package:intl/intl.dart' as intl;
+import 'app_localizations.dart';
+
+// ignore_for_file: type=lint
+
+/// The translations for Romanian Moldavian Moldovan (`ro`).
+class AppLocalizationsRo extends AppLocalizations {
+  AppLocalizationsRo([String locale = 'ro']) : super(locale);
+
+  @override
+  String get appTitle => 'NFC Anycubic';
+
+  @override
+  String get nfc => 'NFC';
+
+  @override
+  String get stock => 'Stoc';
+
+  @override
+  String get statistics => 'Statistici';
+
+  @override
+  String get profile => 'Profil';
+
+  @override
+  String get readNfcChip => 'Citește Chip NFC';
+
+  @override
+  String get scanHistory => 'Istoric';
+
+  @override
+  String get writeNfcChip => 'Scrie Chip NFC';
+
+  @override
+  String get nfcNotAvailable => 'NFC indisponibil';
+
+  @override
+  String get nfcNotAvailableDesc =>
+      'Dispozitivul tău nu suportă NFC sau este dezactivat.';
+
+  @override
+  String get nfcNotSupported => 'NFC nu este suportat pe acest dispozitiv';
+
+  @override
+  String get approachNfcChip => 'Apropie un chip NFC...';
+
+  @override
+  String get scanningNfc => 'Scanare...';
+
+  @override
+  String get nfcDataRead => 'Datele NFC au fost citite cu succes!';
+
+  @override
+  String get errorReadingNfc => 'Eroare la citirea NFC';
+
+  @override
+  String get scanHistoryTitle => 'Istoric Scanări';
+
+  @override
+  String get noScansRecorded => 'Nicio scanare înregistrată';
+
+  @override
+  String get scansWillAppearHere => 'Scanările NFC vor apărea aici automat';
+
+  @override
+  String get clearAll => 'Șterge tot';
+
+  @override
+  String get deleteThisScan => 'Ștergi această scanare?';
+
+  @override
+  String get actionIrreversible => 'Această acțiune este ireversibilă.';
+
+  @override
+  String get cancel => 'Anulează';
+
+  @override
+  String get delete => 'Șterge';
+
+  @override
+  String get clearAllHistory => 'Ștergi tot istoricul?';
+
+  @override
+  String get allScansWillBeDeleted =>
+      'Toate scanările vor fi șterse. Această acțiune este ireversibilă.';
+
+  @override
+  String get scanDeleted => 'Scanare ștearsă';
+
+  @override
+  String get scanDetails => 'Detalii Scanare';
+
+  @override
+  String scannedOn(Object date) {
+    return 'Scanat pe $date';
+  }
+
+  @override
+  String get bobbinInformation => 'Informații Bobină';
+
+  @override
+  String get filamentType => 'Tip Filament';
+
+  @override
+  String get color => 'Culoare';
+
+  @override
+  String get weight => 'Greutate';
+
+  @override
+  String get manufacturingDate => 'Data Fabricației';
+
+  @override
+  String get batchNumber => 'Număr Lot';
+
+  @override
+  String get printerSettings => 'Setări imprimantă';
+
+  @override
+  String get scanMetadata => 'Metadate Scanare';
+
+  @override
+  String get scanId => 'ID Scanare';
+
+  @override
+  String get dateAndTime => 'Data și Ora';
+
+  @override
+  String get reuseThisData => 'Refolosește aceste date';
+
+  @override
+  String get writeToNfc => 'Scrie în NFC';
+
+  @override
+  String get writeDataToChip => 'Scrie date pe chip';
+
+  @override
+  String get writeSuccess => 'Scriere reușită!';
+
+  @override
+  String get writeError => 'Eroare la scriere';
+
+  @override
+  String get brand => 'Marcă';
+
+  @override
+  String get selectBrand => 'Selectează marca';
+
+  @override
+  String get materialType => 'Tip Material';
+
+  @override
+  String get selectMaterial => 'Selectează materialul';
+
+  @override
+  String get serialNumber => 'Număr Serie';
+
+  @override
+  String get serialNumberHint => 'ex.: 001';
+
+  @override
+  String get initialWeight => 'Greutate Inițială';
+
+  @override
+  String get initialWeightHint => 'ex.: 1000';
+
+  @override
+  String get extruderTempMin => 'Temp. Extruder Min';
+
+  @override
+  String get extruderTempMax => 'Temp. Extruder Max';
+
+  @override
+  String get bedTempMin => 'Temp. Pat Min';
+
+  @override
+  String get bedTempMax => 'Temp. Pat Max';
+
+  @override
+  String get diameter => 'Diametru';
+
+  @override
+  String get spoolLength => 'Lungime (m)';
+
+  @override
+  String get generatedSku => 'SKU Generat';
+
+  @override
+  String get approachChipToWrite => 'Apropie chip-ul pentru scriere...';
+
+  @override
+  String get writing => 'Se scrie...';
+
+  @override
+  String get chooseColor => 'Alege culoarea';
+
+  @override
+  String get required => 'Obligatoriu';
+
+  @override
+  String get invalid => 'Invalid';
+
+  @override
+  String get advancedSettings => 'Setări Avansate';
+
+  @override
+  String get opacity => 'Opacitate';
+
+  @override
+  String get validate => 'Validează';
+
+  @override
+  String get nfcTagInfo =>
+      'Folosește o etichetă NFC ISO14443A goală (NTAG213) pentru a crea propriile etichete Anycubic.';
+
+  @override
+  String get stockInventory => 'Bobine în stoc';
+
+  @override
+  String get addSpool => 'Adaugă Bobină';
+
+  @override
+  String get scanSpool => 'Scanează Bobină';
+
+  @override
+  String get addManually => 'Adaugă Manual';
+
+  @override
+  String get spoolAdded => 'Bobină adăugată';
+
+  @override
+  String get spoolUpdated => 'Bobină actualizată';
+
+  @override
+  String get noSpoolsInStock => 'Nicio bobină în stoc';
+
+  @override
+  String get addFirstSpool =>
+      'Adaugă prima bobină pentru a începe urmărirea inventarului';
+
+  @override
+  String lowStockAlert(Object count, Object threshold) {
+    return '$count bobină/bobine cu stoc redus (< $threshold%)';
+  }
+
+  @override
+  String get edit => 'Editează';
+
+  @override
+  String get bobbinPrice => 'Preț Bobină';
+
+  @override
+  String get price => 'Preț';
+
+  @override
+  String get priceHint => 'ex.: 25.00';
+
+  @override
+  String get save => 'Salvează';
+
+  @override
+  String get spoolDetails => 'Detalii Bobină';
+
+  @override
+  String get deleteThisSpool => 'Ștergi această bobină?';
+
+  @override
+  String get cannotBeUndone => 'Această acțiune nu poate fi anulată.';
+
+  @override
+  String get addSpoolManually => 'Adaugă Bobină Manual';
+
+  @override
+  String get editSpool => 'Editează Bobină';
+
+  @override
+  String get customBrand => 'Marcă Personalizată';
+
+  @override
+  String get customBrandHint => 'ex.: Marca Mea';
+
+  @override
+  String get chooseFromList => 'Alege din listă';
+
+  @override
+  String get addBrand => '+ Adaugă Marcă';
+
+  @override
+  String get customMaterial => 'Material Personalizat';
+
+  @override
+  String get customMaterialHint => 'ex.: Materialul Meu';
+
+  @override
+  String get addMaterial => '+ Adaugă Material';
+
+  @override
+  String get colorHint => 'ex.: Albastru, Roșu...';
+
+  @override
+  String get enterColor => 'Te rog introdu o culoare';
+
+  @override
+  String get initialWeightG => 'Greutate Inițială';
+
+  @override
+  String get remainingWeightG => 'Greutate Rămasă';
+
+  @override
+  String get enterBrand => 'Te rog introdu o marcă';
+
+  @override
+  String get selectOrEnterBrand => 'Te rog selectează sau introdu o marcă';
+
+  @override
+  String get enterMaterial => 'Te rog introdu un material';
+
+  @override
+  String get selectOrEnterMaterial =>
+      'Te rog selectează sau introdu un material';
+
+  @override
+  String get enterPrice => 'Te rog introdu un preț';
+
+  @override
+  String get enterValidPrice => 'Te rog introdu un preț valid';
+
+  @override
+  String get enterWeight => 'Te rog introdu o greutate';
+
+  @override
+  String get enterValidWeight => 'Te rog introdu o greutate validă';
+
+  @override
+  String get remainingCannotExceedTotal =>
+      'Greutatea rămasă nu poate depăși greutatea totală';
+
+  @override
+  String get overview => 'Prezentare Generală';
+
+  @override
+  String get spoolsInStock => 'Bobine în Stoc';
+
+  @override
+  String get totalValue => 'Valoare Totală';
+
+  @override
+  String get lowStockSpools => 'Stoc Redus';
+
+  @override
+  String get materialDistribution => 'Distribuție pe Material';
+
+  @override
+  String get brandDistribution => 'Distribuție pe Marcă';
+
+  @override
+  String get noData => 'Fără date';
+
+  @override
+  String get refresh => 'Reîmprospătează';
+
+  @override
+  String get profileSettings => 'Setări Profil';
+
+  @override
+  String get preferences => 'Preferințe';
+
+  @override
+  String get language => 'Limba';
+
+  @override
+  String get selectLanguage => 'Selectează limba';
+
+  @override
+  String get french => 'Français';
+
+  @override
+  String get english => 'English';
+
+  @override
+  String get german => 'Deutsch';
+
+  @override
+  String get italian => 'Italiano';
+
+  @override
+  String get romanian => 'Română';
+
+  @override
+  String get hungarian => 'Magyar';
+
+  @override
+  String get greek => 'Ελληνικά';
+
+  @override
+  String get bulgarian => 'Български';
+
+  @override
+  String get croatian => 'Hrvatski';
+
+  @override
+  String get slovak => 'Slovenčina';
+
+  @override
+  String get slovenian => 'Slovenščina';
+
+  @override
+  String get serbian => 'Српски';
+
+  @override
+  String get ukrainian => 'Українська';
+
+  @override
+  String get danish => 'Dansk';
+
+  @override
+  String get norwegian => 'Norsk';
+
+  @override
+  String get finnish => 'Suomi';
+
+  @override
+  String get thai => 'ไทย';
+
+  @override
+  String get vietnamese => 'Tiếng Việt';
+
+  @override
+  String get indonesian => 'Bahasa Indonesia';
+
+  @override
+  String get malay => 'Bahasa Melayu';
+
+  @override
+  String get hindi => 'हिन्दी';
+
+  @override
+  String get currency => 'Monedă';
+
+  @override
+  String get selectCurrency => 'Selectează moneda';
+
+  @override
+  String get units => 'Unități';
+
+  @override
+  String get selectUnits => 'Selectează unitățile';
+
+  @override
+  String get metric => 'Metric (mm, g, °C)';
+
+  @override
+  String get imperial => 'Imperial (in, oz, °F)';
+
+  @override
+  String get lowStockThreshold => 'Prag Alertă Stoc Redus';
+
+  @override
+  String get lowStockThresholdDesc =>
+      'O bobină va fi considerată cu stoc redus dacă greutatea rămasă este mai mică decât acest procent';
+
+  @override
+  String get authentication => 'Autentificare';
+
+  @override
+  String get signInWithGoogle => 'Autentifică-te cu Google';
+
+  @override
+  String get signInWithApple => 'Autentifică-te cu Apple';
+
+  @override
+  String get comingSoon => 'În curând';
+
+  @override
+  String get about => 'Despre';
+
+  @override
+  String get version => 'Versiune';
+
+  @override
+  String get madeWith => 'Făcut cu ❤️ pentru Imprimante 3D Anycubic';
+
+  @override
+  String get scanBobbinDirectly => 'Scanează Bobină';
+
+  @override
+  String get nfcEncoder => 'Encoder NFC';
+
+  @override
+  String get length => 'Lungime';
+
+  @override
+  String get tempExtruder => 'Temp. Extruder';
+
+  @override
+  String get tempBed => 'Temp. Pat';
+
+  @override
+  String get termsOfService => 'Termeni și Condiții';
+
+  @override
+  String get privacyPolicy => 'Politica de Confidențialitate';
+
+  @override
+  String get legal => 'Legal';
+
+  @override
+  String get back => 'Înapoi';
+
+  @override
+  String get retry => 'Reîncearcă';
+
+  @override
+  String get signOut => 'Deconectează-te';
+
+  @override
+  String get extruderTempMinHint => 'ex.: 200';
+
+  @override
+  String get extruderTempMaxHint => 'ex.: 220';
+
+  @override
+  String get bedTempMinHint => 'ex.: 50';
+
+  @override
+  String get bedTempMaxHint => 'ex.: 60';
+
+  @override
+  String get diameterHint => 'ex.: 1.75';
+
+  @override
+  String get spoolLengthHint => 'ex.: 330';
+
+  @override
+  String get tabGrid => 'Grilă';
+
+  @override
+  String get tabSpectrum => 'Spectru';
+
+  @override
+  String get tabSliders => 'Glisoare';
+
+  @override
+  String get hexCode => 'Cod hexazecimal';
+
+  @override
+  String get red => 'Roșu';
+
+  @override
+  String get green => 'Verde';
+
+  @override
+  String get blue => 'Albastru';
+
+  @override
+  String get metricUnits => 'Metric (mm, g, °C)';
+
+  @override
+  String get imperialUnits => 'Imperial (in, oz, °F)';
+
+  @override
+  String get chf => 'Franc elvețian (CHF)';
+
+  @override
+  String get eur => 'Euro (€)';
+
+  @override
+  String get usd => 'Dolar american (\$)';
+
+  @override
+  String get gbp => 'Liră sterlină (£)';
+
+  @override
+  String get cad => 'Dolar canadian (CAD)';
+
+  @override
+  String get filamentsToOrder => 'Filamente de comandat';
+
+  @override
+  String get shoppingList => 'Listă de cumpărături';
+
+  @override
+  String get addToShoppingList => 'Adaugă în listă';
+
+  @override
+  String get noLowStockFilaments => 'Niciun filament cu stoc redus';
+
+  @override
+  String get vipSubscriptionDescription =>
+      'Acest abonament servește doar pentru a dezactiva reclamele din aplicație și a sprijini proiectul. Nicio altă funcționalitate.';
+
+  @override
+  String get monthlySubscription => 'Abonament Lunar';
+
+  @override
+  String get yearlySubscription => 'Abonament Anual';
+
+  @override
+  String get perMonth => '/ lună';
+
+  @override
+  String get perYear => '/ an';
+
+  @override
+  String onlyPerMonth(String price) {
+    return 'Doar $price / lună';
+  }
+
+  @override
+  String get subscribe => 'Abonează-te';
+
+  @override
+  String get bestOffer => '✨ CEA MAI BUNĂ OFERTĂ ✨';
+
+  @override
+  String get forAnycubicAce => 'pentru Anycubic Ace';
+
+  @override
+  String get forBambuLabAms => 'pentru Bambu Lab AMS';
+
+  @override
+  String get scanNfcChip => 'Scanează chip NFC';
+
+  @override
+  String get fillForm => 'Completează formular';
+
+  @override
+  String get emptyShoppingList => 'Niciun filament în listă';
+
+  @override
+  String percentRemaining(String percent) {
+    return '$percent% rămas';
+  }
+
+  @override
+  String get markAsOrdered => 'Marchează ca comandat';
+
+  @override
+  String get markAsNotOrdered => 'Marchează ca necomandat';
+
+  @override
+  String get notSignedIn => 'Neconectat';
+
+  @override
+  String get signIn => 'Conectare';
+
+  @override
+  String get connection => 'Conectare';
+
+  @override
+  String get signInToSync => 'Conectați-vă pentru a sincroniza datele';
+
+  @override
+  String get continueWithoutAccount => 'Continuați fără cont (mod local)';
+
+  @override
+  String get privacyNotice =>
+      'Conectându-vă, acceptați\nTermenii de utilizare și Politica de confidențialitate';
+
+  @override
+  String get updateStock => 'Actualizare stoc';
+
+  @override
+  String get scanToUpdateStock => 'Scanează pentru actualizare';
+
+  @override
+  String get weightUsed => 'Greutate folosită';
+
+  @override
+  String get lengthUsed => 'Lungime folosită';
+
+  @override
+  String get enterWeightOrLength =>
+      'Introduceți greutatea sau lungimea folosită';
+
+  @override
+  String get weightUsedG => 'Greutate folosită (g)';
+
+  @override
+  String get lengthUsedM => 'Lungime folosită (m)';
+
+  @override
+  String get stockUpdated => 'Stoc actualizat';
+
+  @override
+  String get scanSpoolToUpdate => 'Scanează o bobină pentru a actualiza stocul';
+
+  @override
+  String get spoolNotFound => 'Bobina nu a fost găsită în stoc';
+
+  @override
+  String get addSpoolFirstMessage =>
+      'Această bobină nu este încă în stocul dvs. Vă rugăm să o adăugați mai întâi folosind butonul \'Adaugă bobină\' înainte de a actualiza stocul.';
+
+  @override
+  String get ok => 'OK';
+
+  @override
+  String get bambuLabReadOnly => 'Bambu Lab: Doar citire';
+
+  @override
+  String get bambuLabReadOnlyDesc =>
+      'Etichetele Bambu Lab folosesc criptare RSA și nu pot fi modificate. Doar citire.';
+
+  @override
+  String get bambuCloneLibrary => 'Biblioteca de clonă Bambu Lab';
+
+  @override
+  String get noBambuClones => 'Fără clone Bambu Lab';
+
+  @override
+  String get scanBambuToClone =>
+      'Scanați etichetele originale Bambu Lab pentru a crea biblioteca dvs. de clone';
+
+  @override
+  String get scanTag => 'Scanați o etichetă';
+
+  @override
+  String get syncWithCloud => 'Sincronizare cu cloud-ul';
+
+  @override
+  String get syncCompleted => 'Sincronizare finalizată';
+
+  @override
+  String get deleteClone => 'Șterge clona';
+
+  @override
+  String get renameClone => 'Redenumește clona';
+
+  @override
+  String get rename => 'Redenumește';
+
+  @override
+  String get customName => 'Nume personalizat';
+
+  @override
+  String get clonedOn => 'Clonat pe';
+
+  @override
+  String get writeThisClone => 'Scrie această clonă';
+
+  @override
+  String get writeClone => 'Scrie clona';
+
+  @override
+  String get writeOnCUID => 'Scrie pe card CUID';
+
+  @override
+  String get cloneWrittenSuccess => 'Clonă scrisă cu succes!';
+
+  @override
+  String get requiredTagFormat => 'Format etichetă necesar';
+
+  @override
+  String get type => 'Tip';
+
+  @override
+  String get frequency => 'Frecvență';
+
+  @override
+  String get protocol => 'Protocol';
+
+  @override
+  String get capacity => 'Capacitate';
+
+  @override
+  String get feature => 'Caracteristică';
+
+  @override
+  String get uidModifiable => 'Bloc 0 (UID) modificabil';
+
+  @override
+  String get whereToBuy =>
+      'Căutați \"CUID MiFare Classic 1K\" pe AliExpress, Amazon sau eBay (~\$0.50/bucată)';
+
+  @override
+  String get magicGen2Required =>
+      'Card Magic Gen2 - MiFare Classic 1K cu Block 0 (UID) inscriptibil';
+
+  @override
+  String get magicGen2CardType => 'Magic Gen2 (MiFare Classic 1K)';
+
+  @override
+  String get magicGen2Where =>
+      'Căutați \"Magic Gen2 MiFare Classic 1K\" sau \"UID writable\" pe AliExpress, Amazon sau eBay (~\$0.50/bucată)';
+
+  @override
+  String get iphoneWriteDisclaimer =>
+      '⚠️ Avertisment: Scrierea cu NFC iPhone poate să nu funcționeze pe toate cardurile Magic Gen2. Se recomandă Android cu aplicația NFC Tools Pro sau dispozitiv Proxmark3 pentru fiabilitate.';
+
+  @override
+  String get step1GetMagicGen2 =>
+      'Obțineți un card Magic Gen2 gol (MiFare Classic 1K cu UID inscriptibil)';
+
+  @override
+  String get instructions => 'Instrucțiuni';
+
+  @override
+  String get step1GetCUID => 'Procurați un card CUID gol (MiFare Classic 1K)';
+
+  @override
+  String get step2PressWrite => 'Apăsați butonul \"Scrie\" de mai jos';
+
+  @override
+  String get step3HoldPhone => 'Țineți iPhone-ul aproape de cardul CUID';
+
+  @override
+  String get step4WaitConfirm => 'Așteptați confirmarea scrierii';
+
+  @override
+  String get step5TestClone =>
+      'Testați eticheta clonată pe imprimanta Bambu Lab!';
+
+  @override
+  String get rsaIncluded =>
+      'Clona include semnătura RSA originală, va fi acceptată de imprimantă!';
+
+  @override
+  String get cloneDeleted => 'Clonă ștearsă';
+}

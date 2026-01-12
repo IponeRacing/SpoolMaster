@@ -1,0 +1,822 @@
+// ignore: unused_import
+import 'package:intl/intl.dart' as intl;
+import 'app_localizations.dart';
+
+// ignore_for_file: type=lint
+
+/// The translations for Vietnamese (`vi`).
+class AppLocalizationsVi extends AppLocalizations {
+  AppLocalizationsVi([String locale = 'vi']) : super(locale);
+
+  @override
+  String get appTitle => 'NFC Anycubic';
+
+  @override
+  String get nfc => 'NFC';
+
+  @override
+  String get stock => 'Kho';
+
+  @override
+  String get statistics => 'Phân tích';
+
+  @override
+  String get profile => 'Hồ sơ';
+
+  @override
+  String get readNfcChip => 'Đọc chip NFC';
+
+  @override
+  String get scanHistory => 'Lịch sử';
+
+  @override
+  String get writeNfcChip => 'Ghi chip NFC';
+
+  @override
+  String get nfcNotAvailable => 'NFC không khả dụng';
+
+  @override
+  String get nfcNotAvailableDesc =>
+      'Thiết bị của bạn không hỗ trợ NFC hoặc đã bị tắt.';
+
+  @override
+  String get nfcNotSupported => 'NFC không được hỗ trợ trên thiết bị này';
+
+  @override
+  String get approachNfcChip => 'Đưa chip NFC lại gần...';
+
+  @override
+  String get scanningNfc => 'Đang quét...';
+
+  @override
+  String get nfcDataRead => 'Đã đọc dữ liệu NFC thành công!';
+
+  @override
+  String get errorReadingNfc => 'Lỗi đọc NFC';
+
+  @override
+  String get scanHistoryTitle => 'Lịch sử quét';
+
+  @override
+  String get noScansRecorded => 'Không có lượt quét nào được ghi lại';
+
+  @override
+  String get scansWillAppearHere =>
+      'Các lượt quét NFC sẽ tự động xuất hiện ở đây';
+
+  @override
+  String get clearAll => 'Xóa tất cả';
+
+  @override
+  String get deleteThisScan => 'Xóa lượt quét này?';
+
+  @override
+  String get actionIrreversible => 'Hành động này không thể hoàn tác.';
+
+  @override
+  String get cancel => 'Hủy';
+
+  @override
+  String get delete => 'Xóa';
+
+  @override
+  String get clearAllHistory => 'Xóa toàn bộ lịch sử?';
+
+  @override
+  String get allScansWillBeDeleted =>
+      'Tất cả lượt quét sẽ bị xóa. Hành động này không thể hoàn tác.';
+
+  @override
+  String get scanDeleted => 'Đã xóa lượt quét';
+
+  @override
+  String get scanDetails => 'Chi tiết quét';
+
+  @override
+  String scannedOn(Object date) {
+    return 'Đã quét vào $date';
+  }
+
+  @override
+  String get bobbinInformation => 'Thông tin cuộn';
+
+  @override
+  String get filamentType => 'Loại filament';
+
+  @override
+  String get color => 'Màu sắc';
+
+  @override
+  String get weight => 'Trọng lượng';
+
+  @override
+  String get manufacturingDate => 'Ngày sản xuất';
+
+  @override
+  String get batchNumber => 'Số lô';
+
+  @override
+  String get printerSettings => 'Cài đặt máy in';
+
+  @override
+  String get scanMetadata => 'Siêu dữ liệu quét';
+
+  @override
+  String get scanId => 'ID quét';
+
+  @override
+  String get dateAndTime => 'Ngày và giờ';
+
+  @override
+  String get reuseThisData => 'Sử dụng lại dữ liệu này';
+
+  @override
+  String get writeToNfc => 'Ghi vào NFC';
+
+  @override
+  String get writeDataToChip => 'Ghi dữ liệu vào chip';
+
+  @override
+  String get writeSuccess => 'Ghi thành công!';
+
+  @override
+  String get writeError => 'Lỗi ghi';
+
+  @override
+  String get brand => 'Thương hiệu';
+
+  @override
+  String get selectBrand => 'Chọn thương hiệu';
+
+  @override
+  String get materialType => 'Loại vật liệu';
+
+  @override
+  String get selectMaterial => 'Chọn vật liệu';
+
+  @override
+  String get serialNumber => 'Số seri';
+
+  @override
+  String get serialNumberHint => 'vd: 001';
+
+  @override
+  String get initialWeight => 'Trọng lượng ban đầu';
+
+  @override
+  String get initialWeightHint => 'vd: 1000';
+
+  @override
+  String get extruderTempMin => 'Nhiệt độ đầu phun tối thiểu';
+
+  @override
+  String get extruderTempMax => 'Nhiệt độ đầu phun tối đa';
+
+  @override
+  String get bedTempMin => 'Nhiệt độ bàn in tối thiểu';
+
+  @override
+  String get bedTempMax => 'Nhiệt độ bàn in tối đa';
+
+  @override
+  String get diameter => 'Đường kính filament';
+
+  @override
+  String get spoolLength => 'Chiều dài cuộn';
+
+  @override
+  String get generatedSku => 'SKU đã tạo';
+
+  @override
+  String get approachChipToWrite => 'Đưa chip lại gần để ghi...';
+
+  @override
+  String get writing => 'Đang ghi...';
+
+  @override
+  String get chooseColor => 'Chọn màu';
+
+  @override
+  String get required => 'Bắt buộc';
+
+  @override
+  String get invalid => 'Không hợp lệ';
+
+  @override
+  String get advancedSettings => 'Cài đặt nâng cao';
+
+  @override
+  String get opacity => 'Độ mờ';
+
+  @override
+  String get validate => 'Xác nhận';
+
+  @override
+  String get nfcTagInfo =>
+      'Sử dụng thẻ NFC trống ISO14443A (NTAG213) để tạo thẻ Anycubic của riêng bạn.';
+
+  @override
+  String get stockInventory => 'Cuộn dây trong kho';
+
+  @override
+  String get addSpool => 'Thêm cuộn';
+
+  @override
+  String get scanSpool => 'Quét cuộn';
+
+  @override
+  String get addManually => 'Thêm thủ công';
+
+  @override
+  String get spoolAdded => 'Đã thêm cuộn';
+
+  @override
+  String get spoolUpdated => 'Đã cập nhật cuộn';
+
+  @override
+  String get noSpoolsInStock => 'Không có cuộn trong kho';
+
+  @override
+  String get addFirstSpool =>
+      'Thêm cuộn đầu tiên của bạn để bắt đầu theo dõi hàng tồn kho';
+
+  @override
+  String lowStockAlert(Object count, Object threshold) {
+    return '$count cuộn sắp hết (< $threshold%)';
+  }
+
+  @override
+  String get edit => 'Chỉnh sửa';
+
+  @override
+  String get bobbinPrice => 'Giá cuộn';
+
+  @override
+  String get price => 'Giá';
+
+  @override
+  String get priceHint => 'vd: 25.00';
+
+  @override
+  String get save => 'Lưu';
+
+  @override
+  String get spoolDetails => 'Chi tiết cuộn';
+
+  @override
+  String get deleteThisSpool => 'Xóa cuộn này?';
+
+  @override
+  String get cannotBeUndone => 'Hành động này không thể hoàn tác.';
+
+  @override
+  String get addSpoolManually => 'Thêm cuộn thủ công';
+
+  @override
+  String get editSpool => 'Chỉnh sửa cuộn';
+
+  @override
+  String get customBrand => 'Thương hiệu tùy chỉnh';
+
+  @override
+  String get customBrandHint => 'vd: Thương hiệu của tôi';
+
+  @override
+  String get chooseFromList => 'Chọn từ danh sách';
+
+  @override
+  String get addBrand => '+ Thêm thương hiệu';
+
+  @override
+  String get customMaterial => 'Vật liệu tùy chỉnh';
+
+  @override
+  String get customMaterialHint => 'vd: Vật liệu của tôi';
+
+  @override
+  String get addMaterial => '+ Thêm vật liệu';
+
+  @override
+  String get colorHint => 'vd: Xanh, Đỏ...';
+
+  @override
+  String get enterColor => 'Vui lòng nhập màu';
+
+  @override
+  String get initialWeightG => 'Trọng lượng ban đầu';
+
+  @override
+  String get remainingWeightG => 'Trọng lượng còn lại';
+
+  @override
+  String get enterBrand => 'Vui lòng nhập thương hiệu';
+
+  @override
+  String get selectOrEnterBrand => 'Vui lòng chọn hoặc nhập thương hiệu';
+
+  @override
+  String get enterMaterial => 'Vui lòng nhập vật liệu';
+
+  @override
+  String get selectOrEnterMaterial => 'Vui lòng chọn hoặc nhập vật liệu';
+
+  @override
+  String get enterPrice => 'Vui lòng nhập giá';
+
+  @override
+  String get enterValidPrice => 'Vui lòng nhập giá hợp lệ';
+
+  @override
+  String get enterWeight => 'Vui lòng nhập trọng lượng';
+
+  @override
+  String get enterValidWeight => 'Vui lòng nhập trọng lượng hợp lệ';
+
+  @override
+  String get remainingCannotExceedTotal =>
+      'Trọng lượng còn lại không thể vượt quá tổng trọng lượng';
+
+  @override
+  String get overview => 'Tổng quan';
+
+  @override
+  String get spoolsInStock => 'Cuộn trong kho';
+
+  @override
+  String get totalValue => 'Tổng giá trị';
+
+  @override
+  String get lowStockSpools => 'Sắp hết';
+
+  @override
+  String get materialDistribution => 'Phân bổ theo vật liệu';
+
+  @override
+  String get brandDistribution => 'Phân bổ theo thương hiệu';
+
+  @override
+  String get noData => 'Không có dữ liệu';
+
+  @override
+  String get refresh => 'Làm mới';
+
+  @override
+  String get profileSettings => 'Cài đặt hồ sơ';
+
+  @override
+  String get preferences => 'Tùy chọn';
+
+  @override
+  String get language => 'Ngôn ngữ';
+
+  @override
+  String get selectLanguage => 'Chọn ngôn ngữ';
+
+  @override
+  String get french => 'Français';
+
+  @override
+  String get english => 'English';
+
+  @override
+  String get german => 'Deutsch';
+
+  @override
+  String get italian => 'Italiano';
+
+  @override
+  String get romanian => 'Română';
+
+  @override
+  String get hungarian => 'Magyar';
+
+  @override
+  String get greek => 'Ελληνικά';
+
+  @override
+  String get bulgarian => 'Български';
+
+  @override
+  String get croatian => 'Hrvatski';
+
+  @override
+  String get slovak => 'Slovenčina';
+
+  @override
+  String get slovenian => 'Slovenščina';
+
+  @override
+  String get serbian => 'Српски';
+
+  @override
+  String get ukrainian => 'Українська';
+
+  @override
+  String get danish => 'Dansk';
+
+  @override
+  String get norwegian => 'Norsk';
+
+  @override
+  String get finnish => 'Suomi';
+
+  @override
+  String get thai => 'ไทย';
+
+  @override
+  String get vietnamese => 'Tiếng Việt';
+
+  @override
+  String get indonesian => 'Bahasa Indonesia';
+
+  @override
+  String get malay => 'Bahasa Melayu';
+
+  @override
+  String get hindi => 'हिन्दी';
+
+  @override
+  String get currency => 'Tiền tệ';
+
+  @override
+  String get selectCurrency => 'Chọn tiền tệ';
+
+  @override
+  String get units => 'Đơn vị';
+
+  @override
+  String get selectUnits => 'Chọn đơn vị';
+
+  @override
+  String get metric => 'Hệ mét (mm, g, °C)';
+
+  @override
+  String get imperial => 'Hệ Anh (in, oz, °F)';
+
+  @override
+  String get lowStockThreshold => 'Ngưỡng cảnh báo sắp hết';
+
+  @override
+  String get lowStockThresholdDesc =>
+      'Một cuộn sẽ được coi là sắp hết nếu trọng lượng còn lại nhỏ hơn phần trăm này';
+
+  @override
+  String get authentication => 'Xác thực';
+
+  @override
+  String get signInWithGoogle => 'Đăng nhập bằng Google';
+
+  @override
+  String get signInWithApple => 'Đăng nhập bằng Apple';
+
+  @override
+  String get comingSoon => 'Sắp ra mắt';
+
+  @override
+  String get about => 'Giới thiệu';
+
+  @override
+  String get version => 'Phiên bản';
+
+  @override
+  String get madeWith => 'Được tạo với ❤️ cho máy in 3D Anycubic';
+
+  @override
+  String get scanBobbinDirectly => 'Quét cuộn';
+
+  @override
+  String get nfcEncoder => 'Bộ mã hóa NFC';
+
+  @override
+  String get length => 'Chiều dài';
+
+  @override
+  String get tempExtruder => 'Nhiệt độ đầu phun';
+
+  @override
+  String get tempBed => 'Nhiệt độ bàn in';
+
+  @override
+  String get termsOfService => 'Điều khoản dịch vụ';
+
+  @override
+  String get privacyPolicy => 'Chính sách bảo mật';
+
+  @override
+  String get legal => 'Legal';
+
+  @override
+  String get back => 'Quay lại';
+
+  @override
+  String get retry => 'Thử lại';
+
+  @override
+  String get signOut => 'Đăng xuất';
+
+  @override
+  String get extruderTempMinHint => 'VD: 200';
+
+  @override
+  String get extruderTempMaxHint => 'VD: 220';
+
+  @override
+  String get bedTempMinHint => 'VD: 50';
+
+  @override
+  String get bedTempMaxHint => 'VD: 60';
+
+  @override
+  String get diameterHint => 'VD: 1.75';
+
+  @override
+  String get spoolLengthHint => 'VD: 330';
+
+  @override
+  String get tabGrid => 'Lưới';
+
+  @override
+  String get tabSpectrum => 'Quang phổ';
+
+  @override
+  String get tabSliders => 'Thanh trượt';
+
+  @override
+  String get hexCode => 'Mã Hex';
+
+  @override
+  String get red => 'Đỏ';
+
+  @override
+  String get green => 'Xanh lá';
+
+  @override
+  String get blue => 'Xanh dương';
+
+  @override
+  String get metricUnits => 'Hệ mét (mm, g, °C)';
+
+  @override
+  String get imperialUnits => 'Hệ Anh (in, oz, °F)';
+
+  @override
+  String get chf => 'Franc Thụy Sĩ (CHF)';
+
+  @override
+  String get eur => 'Euro (€)';
+
+  @override
+  String get usd => 'Đô la Mỹ (\$)';
+
+  @override
+  String get gbp => 'Bảng Anh (£)';
+
+  @override
+  String get cad => 'Đô la Canada (CAD)';
+
+  @override
+  String get filamentsToOrder => 'Filament cần đặt';
+
+  @override
+  String get shoppingList => 'Danh sách mua sắm';
+
+  @override
+  String get addToShoppingList => 'Thêm vào danh sách';
+
+  @override
+  String get noLowStockFilaments => 'Không có filament sắp hết';
+
+  @override
+  String get vipSubscriptionDescription =>
+      'Gói đăng ký này chỉ được sử dụng để tắt quảng cáo trong ứng dụng và hỗ trợ dự án. Không có tính năng khác.';
+
+  @override
+  String get monthlySubscription => 'Gói đăng ký hàng tháng';
+
+  @override
+  String get yearlySubscription => 'Gói đăng ký hàng năm';
+
+  @override
+  String get perMonth => '/ tháng';
+
+  @override
+  String get perYear => '/ năm';
+
+  @override
+  String onlyPerMonth(String price) {
+    return 'Chỉ $price / tháng';
+  }
+
+  @override
+  String get subscribe => 'Đăng ký';
+
+  @override
+  String get bestOffer => '✨ ƯU ĐÃI TỐT NHẤT ✨';
+
+  @override
+  String get forAnycubicAce => 'cho Anycubic Ace';
+
+  @override
+  String get forBambuLabAms => 'cho Bambu Lab AMS';
+
+  @override
+  String get scanNfcChip => 'Quét chip NFC';
+
+  @override
+  String get fillForm => 'Điền biểu mẫu';
+
+  @override
+  String get emptyShoppingList => 'Không có filament trong danh sách';
+
+  @override
+  String percentRemaining(String percent) {
+    return 'Còn lại $percent%';
+  }
+
+  @override
+  String get markAsOrdered => 'Đánh dấu đã đặt';
+
+  @override
+  String get markAsNotOrdered => 'Đánh dấu chưa đặt';
+
+  @override
+  String get notSignedIn => 'Chưa đăng nhập';
+
+  @override
+  String get signIn => 'Đăng nhập';
+
+  @override
+  String get connection => 'Kết nối';
+
+  @override
+  String get signInToSync => 'Đăng nhập để đồng bộ dữ liệu của bạn';
+
+  @override
+  String get continueWithoutAccount =>
+      'Tiếp tục mà không cần tài khoản (chế độ cục bộ)';
+
+  @override
+  String get privacyNotice =>
+      'Bằng cách đăng nhập, bạn chấp nhận\nĐiều khoản dịch vụ và Chính sách bảo mật của chúng tôi';
+
+  @override
+  String get updateStock => 'Cập nhật kho';
+
+  @override
+  String get scanToUpdateStock => 'Quét để cập nhật';
+
+  @override
+  String get weightUsed => 'Trọng lượng đã sử dụng';
+
+  @override
+  String get lengthUsed => 'Chiều dài đã sử dụng';
+
+  @override
+  String get enterWeightOrLength =>
+      'Nhập trọng lượng hoặc chiều dài đã sử dụng';
+
+  @override
+  String get weightUsedG => 'Trọng lượng đã sử dụng (g)';
+
+  @override
+  String get lengthUsedM => 'Chiều dài đã sử dụng (m)';
+
+  @override
+  String get stockUpdated => 'Đã cập nhật kho';
+
+  @override
+  String get scanSpoolToUpdate => 'Quét cuộn để cập nhật kho';
+
+  @override
+  String get spoolNotFound => 'Không tìm thấy cuộn trong kho';
+
+  @override
+  String get addSpoolFirstMessage =>
+      'Cuộn này chưa có trong kho của bạn. Vui lòng thêm nó trước bằng nút \'Thêm cuộn\' trước khi cập nhật kho.';
+
+  @override
+  String get ok => 'OK';
+
+  @override
+  String get bambuLabReadOnly => 'Bambu Lab: Chỉ đọc';
+
+  @override
+  String get bambuLabReadOnlyDesc =>
+      'Thẻ Bambu Lab sử dụng mã hóa RSA và không thể sửa đổi. Chỉ đọc.';
+
+  @override
+  String get bambuCloneLibrary => 'Thư viện bản sao Bambu Lab';
+
+  @override
+  String get noBambuClones => 'Không có bản sao Bambu Lab';
+
+  @override
+  String get scanBambuToClone =>
+      'Quét thẻ Bambu Lab gốc để tạo thư viện bản sao của bạn';
+
+  @override
+  String get scanTag => 'Quét thẻ';
+
+  @override
+  String get syncWithCloud => 'Đồng bộ với đám mây';
+
+  @override
+  String get syncCompleted => 'Đồng bộ hoàn tất';
+
+  @override
+  String get deleteClone => 'Xóa bản sao';
+
+  @override
+  String get renameClone => 'Đổi tên bản sao';
+
+  @override
+  String get rename => 'Đổi tên';
+
+  @override
+  String get customName => 'Tên tùy chỉnh';
+
+  @override
+  String get clonedOn => 'Đã sao chép vào';
+
+  @override
+  String get writeThisClone => 'Ghi bản sao này';
+
+  @override
+  String get writeClone => 'Ghi bản sao';
+
+  @override
+  String get writeOnCUID => 'Ghi lên thẻ CUID';
+
+  @override
+  String get cloneWrittenSuccess => 'Ghi bản sao thành công!';
+
+  @override
+  String get requiredTagFormat => 'Định dạng thẻ cần thiết';
+
+  @override
+  String get type => 'Loại';
+
+  @override
+  String get frequency => 'Tần số';
+
+  @override
+  String get protocol => 'Giao thức';
+
+  @override
+  String get capacity => 'Dung lượng';
+
+  @override
+  String get feature => 'Tính năng';
+
+  @override
+  String get uidModifiable => 'Khối 0 (UID) có thể sửa đổi';
+
+  @override
+  String get whereToBuy =>
+      'Tìm kiếm \"CUID MiFare Classic 1K\" trên AliExpress, Amazon hoặc eBay (~\$0.50/cái)';
+
+  @override
+  String get magicGen2Required =>
+      'Thẻ Magic Gen2 - MiFare Classic 1K với Block 0 (UID) có thể ghi';
+
+  @override
+  String get magicGen2CardType => 'Magic Gen2 (MiFare Classic 1K)';
+
+  @override
+  String get magicGen2Where =>
+      'Tìm kiếm \"Magic Gen2 MiFare Classic 1K\" hoặc \"UID writable\" trên AliExpress, Amazon hoặc eBay (~\$0.50/cái)';
+
+  @override
+  String get iphoneWriteDisclaimer =>
+      '⚠️ Cảnh báo: Ghi bằng iPhone NFC có thể không hoạt động trên tất cả thẻ Magic Gen2. Khuyến nghị dùng Android với ứng dụng NFC Tools Pro hoặc thiết bị Proxmark3 để đảm bảo độ tin cậy.';
+
+  @override
+  String get step1GetMagicGen2 =>
+      'Lấy thẻ Magic Gen2 trống (MiFare Classic 1K với UID có thể ghi)';
+
+  @override
+  String get instructions => 'Hướng dẫn';
+
+  @override
+  String get step1GetCUID => 'Lấy thẻ CUID trống (MiFare Classic 1K)';
+
+  @override
+  String get step2PressWrite => 'Nhấn nút \"Ghi\" bên dưới';
+
+  @override
+  String get step3HoldPhone => 'Giữ iPhone của bạn gần thẻ CUID';
+
+  @override
+  String get step4WaitConfirm => 'Chờ xác nhận ghi';
+
+  @override
+  String get step5TestClone =>
+      'Kiểm tra thẻ đã sao chép trên máy in Bambu Lab của bạn!';
+
+  @override
+  String get rsaIncluded =>
+      'Bản sao bao gồm chữ ký RSA gốc, nó sẽ được máy in chấp nhận!';
+
+  @override
+  String get cloneDeleted => 'Đã xóa bản sao';
+}

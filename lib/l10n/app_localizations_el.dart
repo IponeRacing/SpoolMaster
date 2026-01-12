@@ -1,0 +1,824 @@
+// ignore: unused_import
+import 'package:intl/intl.dart' as intl;
+import 'app_localizations.dart';
+
+// ignore_for_file: type=lint
+
+/// The translations for Modern Greek (`el`).
+class AppLocalizationsEl extends AppLocalizations {
+  AppLocalizationsEl([String locale = 'el']) : super(locale);
+
+  @override
+  String get appTitle => 'NFC Anycubic';
+
+  @override
+  String get nfc => 'NFC';
+
+  @override
+  String get stock => 'Απόθεμα';
+
+  @override
+  String get statistics => 'Στατιστικά';
+
+  @override
+  String get profile => 'Προφίλ';
+
+  @override
+  String get readNfcChip => 'Ανάγνωση Chip NFC';
+
+  @override
+  String get scanHistory => 'Ιστορικό';
+
+  @override
+  String get writeNfcChip => 'Εγγραφή Chip NFC';
+
+  @override
+  String get nfcNotAvailable => 'Το NFC δεν είναι διαθέσιμο';
+
+  @override
+  String get nfcNotAvailableDesc =>
+      'Η συσκευή σας δεν υποστηρίζει NFC ή είναι απενεργοποιημένο.';
+
+  @override
+  String get nfcNotSupported => 'Το NFC δεν υποστηρίζεται σε αυτήν τη συσκευή';
+
+  @override
+  String get approachNfcChip => 'Πλησιάστε ένα chip NFC...';
+
+  @override
+  String get scanningNfc => 'Σάρωση...';
+
+  @override
+  String get nfcDataRead => 'Τα δεδομένα NFC διαβάστηκαν επιτυχώς!';
+
+  @override
+  String get errorReadingNfc => 'Σφάλμα ανάγνωσης NFC';
+
+  @override
+  String get scanHistoryTitle => 'Ιστορικό Σαρώσεων';
+
+  @override
+  String get noScansRecorded => 'Δεν υπάρχουν καταγεγραμμένες σαρώσεις';
+
+  @override
+  String get scansWillAppearHere =>
+      'Οι σαρώσεις NFC θα εμφανίζονται εδώ αυτόματα';
+
+  @override
+  String get clearAll => 'Διαγραφή όλων';
+
+  @override
+  String get deleteThisScan => 'Διαγραφή αυτής της σάρωσης;';
+
+  @override
+  String get actionIrreversible => 'Αυτή η ενέργεια είναι μη αναστρέψιμη.';
+
+  @override
+  String get cancel => 'Ακύρωση';
+
+  @override
+  String get delete => 'Διαγραφή';
+
+  @override
+  String get clearAllHistory => 'Διαγραφή όλου του ιστορικού;';
+
+  @override
+  String get allScansWillBeDeleted =>
+      'Όλες οι σαρώσεις θα διαγραφούν. Αυτή η ενέργεια είναι μη αναστρέψιμη.';
+
+  @override
+  String get scanDeleted => 'Η σάρωση διαγράφηκε';
+
+  @override
+  String get scanDetails => 'Λεπτομέρειες Σάρωσης';
+
+  @override
+  String scannedOn(Object date) {
+    return 'Σαρώθηκε στις $date';
+  }
+
+  @override
+  String get bobbinInformation => 'Πληροφορίες Καρουλιού';
+
+  @override
+  String get filamentType => 'Τύπος Νήματος';
+
+  @override
+  String get color => 'Χρώμα';
+
+  @override
+  String get weight => 'Βάρος';
+
+  @override
+  String get manufacturingDate => 'Ημερομηνία Κατασκευής';
+
+  @override
+  String get batchNumber => 'Αριθμός Παρτίδας';
+
+  @override
+  String get printerSettings => 'Ρυθμίσεις εκτυπωτή';
+
+  @override
+  String get scanMetadata => 'Μεταδεδομένα Σάρωσης';
+
+  @override
+  String get scanId => 'ID Σάρωσης';
+
+  @override
+  String get dateAndTime => 'Ημερομηνία και Ώρα';
+
+  @override
+  String get reuseThisData => 'Επαναχρησιμοποίηση δεδομένων';
+
+  @override
+  String get writeToNfc => 'Εγγραφή σε NFC';
+
+  @override
+  String get writeDataToChip => 'Εγγραφή δεδομένων στο chip';
+
+  @override
+  String get writeSuccess => 'Επιτυχής εγγραφή!';
+
+  @override
+  String get writeError => 'Σφάλμα εγγραφής';
+
+  @override
+  String get brand => 'Μάρκα';
+
+  @override
+  String get selectBrand => 'Επιλογή μάρκας';
+
+  @override
+  String get materialType => 'Τύπος Υλικού';
+
+  @override
+  String get selectMaterial => 'Επιλογή υλικού';
+
+  @override
+  String get serialNumber => 'Σειριακός Αριθμός';
+
+  @override
+  String get serialNumberHint => 'π.χ.: 001';
+
+  @override
+  String get initialWeight => 'Αρχικό Βάρος';
+
+  @override
+  String get initialWeightHint => 'π.χ.: 1000';
+
+  @override
+  String get extruderTempMin => 'Θερμ. Εξωθητήρα Ελάχ';
+
+  @override
+  String get extruderTempMax => 'Θερμ. Εξωθητήρα Μέγ';
+
+  @override
+  String get bedTempMin => 'Θερμ. Πλατφόρμας Ελάχ';
+
+  @override
+  String get bedTempMax => 'Θερμ. Πλατφόρμας Μέγ';
+
+  @override
+  String get diameter => 'Διάμετρος';
+
+  @override
+  String get spoolLength => 'Μήκος (m)';
+
+  @override
+  String get generatedSku => 'Παραγόμενο SKU';
+
+  @override
+  String get approachChipToWrite => 'Πλησιάστε το chip για εγγραφή...';
+
+  @override
+  String get writing => 'Εγγραφή...';
+
+  @override
+  String get chooseColor => 'Επιλογή χρώματος';
+
+  @override
+  String get required => 'Απαιτείται';
+
+  @override
+  String get invalid => 'Μη έγκυρο';
+
+  @override
+  String get advancedSettings => 'Προηγμένες Ρυθμίσεις';
+
+  @override
+  String get opacity => 'Αδιαφάνεια';
+
+  @override
+  String get validate => 'Επικύρωση';
+
+  @override
+  String get nfcTagInfo =>
+      'Χρησιμοποιήστε μια κενή ετικέτα NFC ISO14443A (NTAG213) για να δημιουργήσετε τις δικές σας ετικέτες Anycubic.';
+
+  @override
+  String get stockInventory => 'Καρούλια σε απόθεμα';
+
+  @override
+  String get addSpool => 'Προσθήκη Καρουλιού';
+
+  @override
+  String get scanSpool => 'Σάρωση Καρουλιού';
+
+  @override
+  String get addManually => 'Χειροκίνητη Προσθήκη';
+
+  @override
+  String get spoolAdded => 'Το καρούλι προστέθηκε';
+
+  @override
+  String get spoolUpdated => 'Το καρούλι ενημερώθηκε';
+
+  @override
+  String get noSpoolsInStock => 'Δεν υπάρχουν καρούλια σε απόθεμα';
+
+  @override
+  String get addFirstSpool =>
+      'Προσθέστε το πρώτο σας καρούλι για να ξεκινήσετε την παρακολούθηση του αποθέματος';
+
+  @override
+  String lowStockAlert(Object count, Object threshold) {
+    return '$count καρούλι/α με χαμηλό απόθεμα (< $threshold%)';
+  }
+
+  @override
+  String get edit => 'Επεξεργασία';
+
+  @override
+  String get bobbinPrice => 'Τιμή Καρουλιού';
+
+  @override
+  String get price => 'Τιμή';
+
+  @override
+  String get priceHint => 'π.χ.: 25.00';
+
+  @override
+  String get save => 'Αποθήκευση';
+
+  @override
+  String get spoolDetails => 'Λεπτομέρειες Καρουλιού';
+
+  @override
+  String get deleteThisSpool => 'Διαγραφή αυτού του καρουλιού;';
+
+  @override
+  String get cannotBeUndone => 'Αυτή η ενέργεια δεν μπορεί να αναιρεθεί.';
+
+  @override
+  String get addSpoolManually => 'Χειροκίνητη Προσθήκη Καρουλιού';
+
+  @override
+  String get editSpool => 'Επεξεργασία Καρουλιού';
+
+  @override
+  String get customBrand => 'Προσαρμοσμένη Μάρκα';
+
+  @override
+  String get customBrandHint => 'π.χ.: Η Μάρκα Μου';
+
+  @override
+  String get chooseFromList => 'Επιλογή από λίστα';
+
+  @override
+  String get addBrand => '+ Προσθήκη Μάρκας';
+
+  @override
+  String get customMaterial => 'Προσαρμοσμένο Υλικό';
+
+  @override
+  String get customMaterialHint => 'π.χ.: Το Υλικό Μου';
+
+  @override
+  String get addMaterial => '+ Προσθήκη Υλικού';
+
+  @override
+  String get colorHint => 'π.χ.: Μπλε, Κόκκινο...';
+
+  @override
+  String get enterColor => 'Παρακαλώ εισάγετε ένα χρώμα';
+
+  @override
+  String get initialWeightG => 'Αρχικό Βάρος';
+
+  @override
+  String get remainingWeightG => 'Υπολειπόμενο Βάρος';
+
+  @override
+  String get enterBrand => 'Παρακαλώ εισάγετε μια μάρκα';
+
+  @override
+  String get selectOrEnterBrand => 'Παρακαλώ επιλέξτε ή εισάγετε μια μάρκα';
+
+  @override
+  String get enterMaterial => 'Παρακαλώ εισάγετε ένα υλικό';
+
+  @override
+  String get selectOrEnterMaterial => 'Παρακαλώ επιλέξτε ή εισάγετε ένα υλικό';
+
+  @override
+  String get enterPrice => 'Παρακαλώ εισάγετε μια τιμή';
+
+  @override
+  String get enterValidPrice => 'Παρακαλώ εισάγετε μια έγκυρη τιμή';
+
+  @override
+  String get enterWeight => 'Παρακαλώ εισάγετε ένα βάρος';
+
+  @override
+  String get enterValidWeight => 'Παρακαλώ εισάγετε ένα έγκυρο βάρος';
+
+  @override
+  String get remainingCannotExceedTotal =>
+      'Το υπολειπόμενο βάρος δεν μπορεί να υπερβαίνει το συνολικό βάρος';
+
+  @override
+  String get overview => 'Επισκόπηση';
+
+  @override
+  String get spoolsInStock => 'Καρούλια σε Απόθεμα';
+
+  @override
+  String get totalValue => 'Συνολική Αξία';
+
+  @override
+  String get lowStockSpools => 'Χαμηλό Απόθεμα';
+
+  @override
+  String get materialDistribution => 'Κατανομή ανά Υλικό';
+
+  @override
+  String get brandDistribution => 'Κατανομή ανά Μάρκα';
+
+  @override
+  String get noData => 'Δεν υπάρχουν δεδομένα';
+
+  @override
+  String get refresh => 'Ανανέωση';
+
+  @override
+  String get profileSettings => 'Ρυθμίσεις Προφίλ';
+
+  @override
+  String get preferences => 'Προτιμήσεις';
+
+  @override
+  String get language => 'Γλώσσα';
+
+  @override
+  String get selectLanguage => 'Επιλογή γλώσσας';
+
+  @override
+  String get french => 'Français';
+
+  @override
+  String get english => 'English';
+
+  @override
+  String get german => 'Deutsch';
+
+  @override
+  String get italian => 'Italiano';
+
+  @override
+  String get romanian => 'Română';
+
+  @override
+  String get hungarian => 'Magyar';
+
+  @override
+  String get greek => 'Ελληνικά';
+
+  @override
+  String get bulgarian => 'Български';
+
+  @override
+  String get croatian => 'Hrvatski';
+
+  @override
+  String get slovak => 'Slovenčina';
+
+  @override
+  String get slovenian => 'Slovenščina';
+
+  @override
+  String get serbian => 'Српски';
+
+  @override
+  String get ukrainian => 'Українська';
+
+  @override
+  String get danish => 'Dansk';
+
+  @override
+  String get norwegian => 'Norsk';
+
+  @override
+  String get finnish => 'Suomi';
+
+  @override
+  String get thai => 'ไทย';
+
+  @override
+  String get vietnamese => 'Tiếng Việt';
+
+  @override
+  String get indonesian => 'Bahasa Indonesia';
+
+  @override
+  String get malay => 'Bahasa Melayu';
+
+  @override
+  String get hindi => 'हिन्दी';
+
+  @override
+  String get currency => 'Νόμισμα';
+
+  @override
+  String get selectCurrency => 'Επιλογή νομίσματος';
+
+  @override
+  String get units => 'Μονάδες';
+
+  @override
+  String get selectUnits => 'Επιλογή μονάδων';
+
+  @override
+  String get metric => 'Μετρικό (mm, g, °C)';
+
+  @override
+  String get imperial => 'Αγγλοσαξονικό (in, oz, °F)';
+
+  @override
+  String get lowStockThreshold => 'Όριο Ειδοποίησης Χαμηλού Αποθέματος';
+
+  @override
+  String get lowStockThresholdDesc =>
+      'Ένα καρούλι θα θεωρείται με χαμηλό απόθεμα αν το υπολειπόμενο βάρος είναι μικρότερο από αυτό το ποσοστό';
+
+  @override
+  String get authentication => 'Πιστοποίηση';
+
+  @override
+  String get signInWithGoogle => 'Σύνδεση με Google';
+
+  @override
+  String get signInWithApple => 'Σύνδεση με Apple';
+
+  @override
+  String get comingSoon => 'Έρχεται Σύντομα';
+
+  @override
+  String get about => 'Σχετικά';
+
+  @override
+  String get version => 'Έκδοση';
+
+  @override
+  String get madeWith => 'Δημιουργήθηκε με ❤️ για Εκτυπωτές 3D Anycubic';
+
+  @override
+  String get scanBobbinDirectly => 'Σάρωση Καρουλιού';
+
+  @override
+  String get nfcEncoder => 'Κωδικοποιητής NFC';
+
+  @override
+  String get length => 'Μήκος';
+
+  @override
+  String get tempExtruder => 'Θερμ. Εξωθητήρα';
+
+  @override
+  String get tempBed => 'Θερμ. Πλατφόρμας';
+
+  @override
+  String get termsOfService => 'Όροι Υπηρεσίας';
+
+  @override
+  String get privacyPolicy => 'Πολιτική Απορρήτου';
+
+  @override
+  String get legal => 'Legal';
+
+  @override
+  String get back => 'Πίσω';
+
+  @override
+  String get retry => 'Επανάληψη';
+
+  @override
+  String get signOut => 'Αποσύνδεση';
+
+  @override
+  String get extruderTempMinHint => 'π.χ.: 200';
+
+  @override
+  String get extruderTempMaxHint => 'π.χ.: 220';
+
+  @override
+  String get bedTempMinHint => 'π.χ.: 50';
+
+  @override
+  String get bedTempMaxHint => 'π.χ.: 60';
+
+  @override
+  String get diameterHint => 'π.χ.: 1.75';
+
+  @override
+  String get spoolLengthHint => 'π.χ.: 330';
+
+  @override
+  String get tabGrid => 'Πλέγμα';
+
+  @override
+  String get tabSpectrum => 'Φάσμα';
+
+  @override
+  String get tabSliders => 'Ρυθμιστικά';
+
+  @override
+  String get hexCode => 'Δεκαεξαδικός Κώδικας';
+
+  @override
+  String get red => 'Κόκκινο';
+
+  @override
+  String get green => 'Πράσινο';
+
+  @override
+  String get blue => 'Μπλε';
+
+  @override
+  String get metricUnits => 'Μετρικό (mm, g, °C)';
+
+  @override
+  String get imperialUnits => 'Αγγλοσαξονικό (in, oz, °F)';
+
+  @override
+  String get chf => 'Ελβετικό Φράγκο (CHF)';
+
+  @override
+  String get eur => 'Ευρώ (€)';
+
+  @override
+  String get usd => 'Δολάριο ΗΠΑ (\$)';
+
+  @override
+  String get gbp => 'Λίρα Στερλίνα (£)';
+
+  @override
+  String get cad => 'Καναδικό Δολάριο (CAD)';
+
+  @override
+  String get filamentsToOrder => 'Φιλαμέντ προς παραγγελία';
+
+  @override
+  String get shoppingList => 'Λίστα αγορών';
+
+  @override
+  String get addToShoppingList => 'Προσθήκη στη λίστα';
+
+  @override
+  String get noLowStockFilaments => 'Δεν υπάρχουν φιλαμέντ με χαμηλό απόθεμα';
+
+  @override
+  String get vipSubscriptionDescription =>
+      'Αυτή η συνδρομή χρησιμεύει μόνο για την απενεργοποίηση διαφημίσεων εντός εφαρμογής και την υποστήριξη του έργου. Καμία άλλη λειτουργία.';
+
+  @override
+  String get monthlySubscription => 'Μηνιαία Συνδρομή';
+
+  @override
+  String get yearlySubscription => 'Ετήσια Συνδρομή';
+
+  @override
+  String get perMonth => '/ μήνα';
+
+  @override
+  String get perYear => '/ έτος';
+
+  @override
+  String onlyPerMonth(String price) {
+    return 'Μόνο $price / μήνα';
+  }
+
+  @override
+  String get subscribe => 'Εγγραφή';
+
+  @override
+  String get bestOffer => '✨ ΚΑΛΥΤΕΡΗ ΠΡΟΣΦΟΡΑ ✨';
+
+  @override
+  String get forAnycubicAce => 'για Anycubic Ace';
+
+  @override
+  String get forBambuLabAms => 'για Bambu Lab AMS';
+
+  @override
+  String get scanNfcChip => 'Σάρωση chip NFC';
+
+  @override
+  String get fillForm => 'Συμπλήρωση φόρμας';
+
+  @override
+  String get emptyShoppingList => 'Δεν υπάρχουν φιλαμέντ στη λίστα';
+
+  @override
+  String percentRemaining(String percent) {
+    return '$percent% απομένει';
+  }
+
+  @override
+  String get markAsOrdered => 'Σήμανση ως παραγγελμένο';
+
+  @override
+  String get markAsNotOrdered => 'Σήμανση ως μη παραγγελμένο';
+
+  @override
+  String get notSignedIn => 'Δεν έχετε συνδεθεί';
+
+  @override
+  String get signIn => 'Σύνδεση';
+
+  @override
+  String get connection => 'Σύνδεση';
+
+  @override
+  String get signInToSync => 'Συνδεθείτε για συγχρονισμό των δεδομένων σας';
+
+  @override
+  String get continueWithoutAccount =>
+      'Συνέχεια χωρίς λογαριασμό (τοπική λειτουργία)';
+
+  @override
+  String get privacyNotice =>
+      'Συνδεόμενοι, αποδέχεστε τους\nΌρους Χρήσης και την Πολιτική Απορρήτου μας';
+
+  @override
+  String get updateStock => 'Ενημέρωση αποθέματος';
+
+  @override
+  String get scanToUpdateStock => 'Σάρωση για ενημέρωση';
+
+  @override
+  String get weightUsed => 'Βάρος που χρησιμοποιήθηκε';
+
+  @override
+  String get lengthUsed => 'Μήκος που χρησιμοποιήθηκε';
+
+  @override
+  String get enterWeightOrLength =>
+      'Εισάγετε το βάρος ή το μήκος που χρησιμοποιήθηκε';
+
+  @override
+  String get weightUsedG => 'Βάρος που χρησιμοποιήθηκε (g)';
+
+  @override
+  String get lengthUsedM => 'Μήκος που χρησιμοποιήθηκε (m)';
+
+  @override
+  String get stockUpdated => 'Το απόθεμα ενημερώθηκε';
+
+  @override
+  String get scanSpoolToUpdate =>
+      'Σαρώστε ένα καρούλι για να ενημερώσετε το απόθεμά του';
+
+  @override
+  String get spoolNotFound => 'Το καρούλι δεν βρέθηκε στο απόθεμα';
+
+  @override
+  String get addSpoolFirstMessage =>
+      'Αυτό το καρούλι δεν υπάρχει ακόμη στο απόθεμά σας. Παρακαλώ προσθέστε το πρώτα χρησιμοποιώντας το κουμπί \'Προσθήκη καρουλιού\' πριν ενημερώσετε το απόθεμά του.';
+
+  @override
+  String get ok => 'OK';
+
+  @override
+  String get bambuLabReadOnly => 'Bambu Lab: Μόνο για ανάγνωση';
+
+  @override
+  String get bambuLabReadOnlyDesc =>
+      'Οι ετικέτες Bambu Lab χρησιμοποιούν κρυπτογράφηση RSA και δεν μπορούν να τροποποιηθούν. Μόνο για ανάγνωση.';
+
+  @override
+  String get bambuCloneLibrary => 'Βιβλιοθήκη κλώνων Bambu Lab';
+
+  @override
+  String get noBambuClones => 'Δεν υπάρχουν κλώνοι Bambu Lab';
+
+  @override
+  String get scanBambuToClone =>
+      'Σαρώστε αυθεντικές ετικέτες Bambu Lab για να δημιουργήσετε τη βιβλιοθήκη κλώνων σας';
+
+  @override
+  String get scanTag => 'Σάρωση ετικέτας';
+
+  @override
+  String get syncWithCloud => 'Συγχρονισμός με το cloud';
+
+  @override
+  String get syncCompleted => 'Ο συγχρονισμός ολοκληρώθηκε';
+
+  @override
+  String get deleteClone => 'Διαγραφή κλώνου';
+
+  @override
+  String get renameClone => 'Μετονομασία κλώνου';
+
+  @override
+  String get rename => 'Μετονομασία';
+
+  @override
+  String get customName => 'Προσαρμοσμένο όνομα';
+
+  @override
+  String get clonedOn => 'Κλωνοποιήθηκε στις';
+
+  @override
+  String get writeThisClone => 'Εγγραφή αυτού του κλώνου';
+
+  @override
+  String get writeClone => 'Εγγραφή κλώνου';
+
+  @override
+  String get writeOnCUID => 'Εγγραφή σε κάρτα CUID';
+
+  @override
+  String get cloneWrittenSuccess => 'Ο κλώνος εγγράφηκε επιτυχώς!';
+
+  @override
+  String get requiredTagFormat => 'Απαιτούμενη μορφή ετικέτας';
+
+  @override
+  String get type => 'Τύπος';
+
+  @override
+  String get frequency => 'Συχνότητα';
+
+  @override
+  String get protocol => 'Πρωτόκολλο';
+
+  @override
+  String get capacity => 'Χωρητικότητα';
+
+  @override
+  String get feature => 'Χαρακτηριστικό';
+
+  @override
+  String get uidModifiable => 'Μπλοκ 0 (UID) τροποποιήσιμο';
+
+  @override
+  String get whereToBuy =>
+      'Αναζητήστε \"CUID MiFare Classic 1K\" στο AliExpress, Amazon ή eBay (~\$0.50/τεμάχιο)';
+
+  @override
+  String get magicGen2Required =>
+      'Κάρτα Magic Gen2 - MiFare Classic 1K με εγγράψιμο Block 0 (UID)';
+
+  @override
+  String get magicGen2CardType => 'Magic Gen2 (MiFare Classic 1K)';
+
+  @override
+  String get magicGen2Where =>
+      'Αναζητήστε \"Magic Gen2 MiFare Classic 1K\" ή \"UID writable\" στο AliExpress, Amazon ή eBay (~\$0.50/τεμάχιο)';
+
+  @override
+  String get iphoneWriteDisclaimer =>
+      '⚠️ Προειδοποίηση: Η εγγραφή με iPhone NFC μπορεί να μην λειτουργεί σε όλες τις κάρτες Magic Gen2. Συνιστάται Android με την εφαρμογή NFC Tools Pro ή συσκευή Proxmark3 για αξιοπιστία.';
+
+  @override
+  String get step1GetMagicGen2 =>
+      'Αποκτήστε μια κενή κάρτα Magic Gen2 (MiFare Classic 1K με εγγράψιμο UID)';
+
+  @override
+  String get instructions => 'Οδηγίες';
+
+  @override
+  String get step1GetCUID =>
+      'Αποκτήστε μια κενή κάρτα CUID (MiFare Classic 1K)';
+
+  @override
+  String get step2PressWrite => 'Πατήστε το κουμπί \"Εγγραφή\" παρακάτω';
+
+  @override
+  String get step3HoldPhone => 'Κρατήστε το iPhone σας κοντά στην κάρτα CUID';
+
+  @override
+  String get step4WaitConfirm => 'Περιμένετε την επιβεβαίωση εγγραφής';
+
+  @override
+  String get step5TestClone =>
+      'Δοκιμάστε την κλωνοποιημένη ετικέτα στον εκτυπωτή Bambu Lab σας!';
+
+  @override
+  String get rsaIncluded =>
+      'Ο κλώνος περιλαμβάνει την αρχική υπογραφή RSA, θα γίνει αποδεκτός από τον εκτυπωτή!';
+
+  @override
+  String get cloneDeleted => 'Ο κλώνος διαγράφηκε';
+}
