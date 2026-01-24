@@ -463,6 +463,12 @@ class AppLocalizationsZh extends AppLocalizations {
   String get signInWithApple => '使用Apple登录';
 
   @override
+  String get continueWithApple => '使用Apple继续';
+
+  @override
+  String get continueWithGoogle => '使用Google继续';
+
+  @override
   String get comingSoon => '即将推出';
 
   @override
@@ -774,7 +780,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get iphoneWriteDisclaimer =>
-      '⚠️ 警告：使用iPhone NFC写入可能无法在所有Magic Gen2卡上工作。建议使用带有NFC Tools Pro应用的Android或Proxmark3设备以确保可靠性。';
+      '⚠️ 警告：使用iPhone NFC写入可能无法在所有Magic Gen2卡上工作。建议使用Proxmark3设备以获得最大可靠性。';
 
   @override
   String get step1GetMagicGen2 => '获取空白Magic Gen2卡（具有可写UID的MiFare Classic 1K）';
@@ -802,6 +808,199 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get cloneDeleted => '克隆已删除';
+
+  @override
+  String get deleteAccount => '删除我的账户';
+
+  @override
+  String get deleteAccountConfirmation => '此操作不可撤销。您的账户和所有数据将在30天内删除。';
+
+  @override
+  String get accountDeletionRequested => '删除请求已登记';
+
+  @override
+  String get clearShoppingList => '清空列表';
+
+  @override
+  String get clearShoppingListConfirmation => '确定要清空整个购物清单吗？此操作无法撤消。';
+
+  @override
+  String get nfcReaderTitle => 'NFC Reader Anycubic';
+
+  @override
+  String get historyTooltip => '历史';
+
+  @override
+  String get retryButton => '重试';
+
+  @override
+  String get readSuccessMessage => '读取成功！';
+
+  @override
+  String get filamentTypeLabel => '耗材类型';
+
+  @override
+  String get scanNfcChipButton => '扫描NFC芯片';
+
+  @override
+  String deleteCloneConfirmation(String name) {
+    return '删除克隆「$name」？';
+  }
+
+  @override
+  String cloneDeletedMessage(String name) {
+    return '克隆「$name」已删除';
+  }
+
+  @override
+  String get extruderLabel => '挤出机';
+
+  @override
+  String get writeThisCloneButton => '写入此克隆';
+
+  @override
+  String get customNameHint => '自定义名称';
+
+  @override
+  String get cloneWriteSuccessMessage => '克隆写入成功！';
+
+  @override
+  String errorPrefix(String error) {
+    return '错误: $error';
+  }
+
+  @override
+  String get writingInProgress => '写入中...';
+
+  @override
+  String get writeOnCUIDButton => '写入CUID卡';
+
+  @override
+  String get diameterLabel => '直径';
+
+  @override
+  String get extruderTempLabel => '挤出机温度';
+
+  @override
+  String get bedTempLabel => '热床温度';
+
+  @override
+  String get nfcFrequency => '13.56 MHz';
+
+  @override
+  String get nfcProtocol => 'ISO14443A';
+
+  @override
+  String get nfcCapacity => '1K字节 (1024字节)';
+
+  @override
+  String get rsaSignatureNote => '克隆包含原始RSA签名，打印机将接受它！';
+
+  @override
+  String get writeBambuLabTagTitle => '写入Bambu Lab标签';
+
+  @override
+  String get bambuLabTagWriteSuccess => 'Bambu Lab标签写入成功！';
+
+  @override
+  String get approachNfcTagMessage => '请靠近NFC标签...';
+
+  @override
+  String get bambuLabFormatMiFare => 'Bambu Lab格式 (MiFare 13.56 MHz)';
+
+  @override
+  String get bambuLabFormat => 'Bambu Lab格式';
+
+  @override
+  String get bambuLabFormatInfo => '此格式使用Bambu Lab材料代码，并以AMS兼容格式存储数据。';
+
+  @override
+  String get brandLabel => '品牌';
+
+  @override
+  String get materialTypeLabel => '材料类型';
+
+  @override
+  String get serialNumber3Digits => '序列号 (3位)';
+
+  @override
+  String get weight250g => '250g';
+
+  @override
+  String get weight500g => '500g';
+
+  @override
+  String get weight1000g => '1000g';
+
+  @override
+  String get weight1000gStandard => '1000g (标准)';
+
+  @override
+  String get weight2000g => '2000g';
+
+  @override
+  String get weight3000g => '3000g';
+
+  @override
+  String get writeBambuLabTagButton => '写入Bambu Lab标签';
+
+  @override
+  String get bambuLabRsaNote => '注意：原装Bambu Lab标签使用RSA加密。此模式以简化的兼容格式写入数据。';
+
+  @override
+  String signInError(String error) {
+    return '登录错误: $error';
+  }
+
+  @override
+  String get subscriptionActivatedMessage => '订阅已激活！';
+
+  @override
+  String get subscriptionFailedMessage => '订阅失败';
+
+  @override
+  String errorMessage(String error) {
+    return '错误: $error';
+  }
+
+  @override
+  String get subscriptionRestoredMessage => '订阅已恢复！';
+
+  @override
+  String get noSubscriptionFoundMessage => '未找到订阅';
+
+  @override
+  String get vipLabel => 'VIP';
+
+  @override
+  String get activeLabel => '活跃';
+
+  @override
+  String get noAdsExperienceMessage => '享受无广告体验！';
+
+  @override
+  String get subscribedLabel => '已订阅';
+
+  @override
+  String get restorePurchasesButton => '恢复购买';
+
+  @override
+  String get cannotExceedRemainingWeight => '不能超过剩余重量';
+
+  @override
+  String get pleaseEnterLength => '请输入长度';
+
+  @override
+  String get pleaseEnterValidLength => '请输入有效长度';
+
+  @override
+  String get spoolLengthNotSetCannotConvert => '未设置线轴长度 - 无法转换';
+
+  @override
+  String get exceedsRemainingWeight => '超过剩余重量';
+
+  @override
+  String get skuLabel => 'SKU';
 }
 
 /// The translations for Chinese, as used in Taiwan (`zh_TW`).
@@ -1263,6 +1462,12 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
   String get signInWithApple => '使用Apple登录';
 
   @override
+  String get continueWithApple => '使用Apple繼續';
+
+  @override
+  String get continueWithGoogle => '使用Google繼續';
+
+  @override
   String get comingSoon => '即将推出';
 
   @override
@@ -1574,7 +1779,7 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String get iphoneWriteDisclaimer =>
-      '⚠️ 警告：使用iPhone NFC写入可能无法在所有Magic Gen2卡上工作。建议使用带有NFC Tools Pro应用的Android或Proxmark3设备以确保可靠性。';
+      '⚠️ 警告：使用iPhone NFC写入可能无法在所有Magic Gen2卡上工作。建议使用Proxmark3设备以获得最大可靠性。';
 
   @override
   String get step1GetMagicGen2 => '获取空白Magic Gen2卡（具有可写UID的MiFare Classic 1K）';
@@ -1601,5 +1806,198 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
   String get rsaIncluded => '克隆包含原始RSA签名，将被打印机接受！';
 
   @override
-  String get cloneDeleted => '克隆已删除';
+  String get cloneDeleted => '克隆已刪除';
+
+  @override
+  String get deleteAccount => '刪除我的帳戶';
+
+  @override
+  String get deleteAccountConfirmation => '此操作不可撤銷。您的帳戶和所有資料將在30天內刪除。';
+
+  @override
+  String get accountDeletionRequested => '刪除請求已登記';
+
+  @override
+  String get clearShoppingList => '清空清單';
+
+  @override
+  String get clearShoppingListConfirmation => '確定要清空整個購物清單嗎？此操作無法撤消。';
+
+  @override
+  String get nfcReaderTitle => 'NFC Reader Anycubic';
+
+  @override
+  String get historyTooltip => '歷史';
+
+  @override
+  String get retryButton => '重試';
+
+  @override
+  String get readSuccessMessage => '讀取成功！';
+
+  @override
+  String get filamentTypeLabel => '耗材類型';
+
+  @override
+  String get scanNfcChipButton => '掃描NFC晶片';
+
+  @override
+  String deleteCloneConfirmation(String name) {
+    return '刪除複製「$name」？';
+  }
+
+  @override
+  String cloneDeletedMessage(String name) {
+    return '複製「$name」已刪除';
+  }
+
+  @override
+  String get extruderLabel => '擠出機';
+
+  @override
+  String get writeThisCloneButton => '寫入此複製';
+
+  @override
+  String get customNameHint => '自訂名稱';
+
+  @override
+  String get cloneWriteSuccessMessage => '複製寫入成功！';
+
+  @override
+  String errorPrefix(String error) {
+    return '錯誤: $error';
+  }
+
+  @override
+  String get writingInProgress => '寫入中...';
+
+  @override
+  String get writeOnCUIDButton => '寫入CUID卡';
+
+  @override
+  String get diameterLabel => '直徑';
+
+  @override
+  String get extruderTempLabel => '擠出機溫度';
+
+  @override
+  String get bedTempLabel => '熱床溫度';
+
+  @override
+  String get nfcFrequency => '13.56 MHz';
+
+  @override
+  String get nfcProtocol => 'ISO14443A';
+
+  @override
+  String get nfcCapacity => '1K位元組 (1024位元組)';
+
+  @override
+  String get rsaSignatureNote => '複製包含原始RSA簽名，印表機將接受它！';
+
+  @override
+  String get writeBambuLabTagTitle => '寫入Bambu Lab標籤';
+
+  @override
+  String get bambuLabTagWriteSuccess => 'Bambu Lab標籤寫入成功！';
+
+  @override
+  String get approachNfcTagMessage => '請靠近NFC標籤...';
+
+  @override
+  String get bambuLabFormatMiFare => 'Bambu Lab格式 (MiFare 13.56 MHz)';
+
+  @override
+  String get bambuLabFormat => 'Bambu Lab格式';
+
+  @override
+  String get bambuLabFormatInfo => '此格式使用Bambu Lab材料代碼，並以AMS相容格式儲存資料。';
+
+  @override
+  String get brandLabel => '品牌';
+
+  @override
+  String get materialTypeLabel => '材料類型';
+
+  @override
+  String get serialNumber3Digits => '序號 (3位)';
+
+  @override
+  String get weight250g => '250g';
+
+  @override
+  String get weight500g => '500g';
+
+  @override
+  String get weight1000g => '1000g';
+
+  @override
+  String get weight1000gStandard => '1000g (標準)';
+
+  @override
+  String get weight2000g => '2000g';
+
+  @override
+  String get weight3000g => '3000g';
+
+  @override
+  String get writeBambuLabTagButton => '寫入Bambu Lab標籤';
+
+  @override
+  String get bambuLabRsaNote => '注意：原裝Bambu Lab標籤使用RSA加密。此模式以簡化的相容格式寫入資料。';
+
+  @override
+  String signInError(String error) {
+    return '登入錯誤: $error';
+  }
+
+  @override
+  String get subscriptionActivatedMessage => '訂閱已啟用！';
+
+  @override
+  String get subscriptionFailedMessage => '訂閱失敗';
+
+  @override
+  String errorMessage(String error) {
+    return '錯誤: $error';
+  }
+
+  @override
+  String get subscriptionRestoredMessage => '訂閱已恢復！';
+
+  @override
+  String get noSubscriptionFoundMessage => '未找到訂閱';
+
+  @override
+  String get vipLabel => 'VIP';
+
+  @override
+  String get activeLabel => '啟用';
+
+  @override
+  String get noAdsExperienceMessage => '享受無廣告體驗！';
+
+  @override
+  String get subscribedLabel => '已訂閱';
+
+  @override
+  String get restorePurchasesButton => '恢復購買';
+
+  @override
+  String get cannotExceedRemainingWeight => '不能超過剩餘重量';
+
+  @override
+  String get pleaseEnterLength => '請輸入長度';
+
+  @override
+  String get pleaseEnterValidLength => '請輸入有效長度';
+
+  @override
+  String get spoolLengthNotSetCannotConvert => '未設定線軸長度 - 無法轉換';
+
+  @override
+  String get exceedsRemainingWeight => '超過剩餘重量';
+
+  @override
+  String get skuLabel => 'SKU';
 }

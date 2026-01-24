@@ -470,6 +470,12 @@ class AppLocalizationsHi extends AppLocalizations {
   String get signInWithApple => 'Apple से साइन इन करें';
 
   @override
+  String get continueWithApple => 'Apple के साथ जारी रखें';
+
+  @override
+  String get continueWithGoogle => 'Google के साथ जारी रखें';
+
+  @override
   String get comingSoon => 'जल्द आ रहा है';
 
   @override
@@ -786,7 +792,7 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get iphoneWriteDisclaimer =>
-      '⚠️ चेतावनी: iPhone NFC से लिखना सभी Magic Gen2 कार्ड पर काम नहीं कर सकता है। विश्वसनीयता के लिए NFC Tools Pro ऐप के साथ Android या Proxmark3 डिवाइस की सिफारिश की जाती है।';
+      '⚠️ चेतावनी: iPhone NFC से लिखना सभी Magic Gen2 कार्ड पर काम नहीं कर सकता है। अधिकतम विश्वसनीयता के लिए Proxmark3 डिवाइस की सिफारिश की जाती है।';
 
   @override
   String get step1GetMagicGen2 =>
@@ -818,4 +824,203 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get cloneDeleted => 'क्लोन हटा दिया गया';
+
+  @override
+  String get deleteAccount => 'मेरा खाता हटाएं';
+
+  @override
+  String get deleteAccountConfirmation =>
+      'यह क्रिया अपरिवर्तनीय है। आपका खाता और सभी डेटा 30 दिनों के भीतर हटा दिया जाएगा।';
+
+  @override
+  String get accountDeletionRequested => 'हटाने का अनुरोध दर्ज किया गया';
+
+  @override
+  String get clearShoppingList => 'सूची साफ़ करें';
+
+  @override
+  String get clearShoppingListConfirmation =>
+      'क्या आप वाकई पूरी खरीदारी सूची साफ़ करना चाहते हैं? यह क्रिया पूर्ववत नहीं की जा सकती।';
+
+  @override
+  String get nfcReaderTitle => 'NFC Reader Anycubic';
+
+  @override
+  String get historyTooltip => 'इतिहास';
+
+  @override
+  String get retryButton => 'पुनः प्रयास करें';
+
+  @override
+  String get readSuccessMessage => 'पढ़ना सफल!';
+
+  @override
+  String get filamentTypeLabel => 'फिलामेंट प्रकार';
+
+  @override
+  String get scanNfcChipButton => 'NFC चिप स्कैन करें';
+
+  @override
+  String deleteCloneConfirmation(String name) {
+    return 'क्लोन \"$name\" हटाएं?';
+  }
+
+  @override
+  String cloneDeletedMessage(String name) {
+    return 'क्लोन \"$name\" हटाया गया';
+  }
+
+  @override
+  String get extruderLabel => 'एक्सट्रूडर';
+
+  @override
+  String get writeThisCloneButton => 'यह क्लोन लिखें';
+
+  @override
+  String get customNameHint => 'कस्टम नाम';
+
+  @override
+  String get cloneWriteSuccessMessage => 'क्लोन सफलतापूर्वक लिखा गया!';
+
+  @override
+  String errorPrefix(String error) {
+    return 'त्रुटि: $error';
+  }
+
+  @override
+  String get writingInProgress => 'लिख रहा है...';
+
+  @override
+  String get writeOnCUIDButton => 'CUID कार्ड पर लिखें';
+
+  @override
+  String get diameterLabel => 'व्यास';
+
+  @override
+  String get extruderTempLabel => 'एक्सट्रूडर तापमान';
+
+  @override
+  String get bedTempLabel => 'बेड तापमान';
+
+  @override
+  String get nfcFrequency => '13.56 MHz';
+
+  @override
+  String get nfcProtocol => 'ISO14443A';
+
+  @override
+  String get nfcCapacity => '1K बाइट्स (1024 बाइट्स)';
+
+  @override
+  String get rsaSignatureNote =>
+      'क्लोन में मूल RSA हस्ताक्षर शामिल है, प्रिंटर इसे स्वीकार करेगा!';
+
+  @override
+  String get writeBambuLabTagTitle => 'Bambu Lab टैग लिखें';
+
+  @override
+  String get bambuLabTagWriteSuccess => 'Bambu Lab टैग सफलतापूर्वक लिखा गया!';
+
+  @override
+  String get approachNfcTagMessage => 'NFC टैग पास लाएं...';
+
+  @override
+  String get bambuLabFormatMiFare => 'Bambu Lab प्रारूप (MiFare 13.56 MHz)';
+
+  @override
+  String get bambuLabFormat => 'Bambu Lab प्रारूप';
+
+  @override
+  String get bambuLabFormatInfo =>
+      'यह प्रारूप Bambu Lab सामग्री कोड का उपयोग करता है और AMS-संगत प्रारूप में डेटा संग्रहीत करता है।';
+
+  @override
+  String get brandLabel => 'ब्रांड';
+
+  @override
+  String get materialTypeLabel => 'सामग्री प्रकार';
+
+  @override
+  String get serialNumber3Digits => 'सीरियल नंबर (3 अंक)';
+
+  @override
+  String get weight250g => '250g';
+
+  @override
+  String get weight500g => '500g';
+
+  @override
+  String get weight1000g => '1000g';
+
+  @override
+  String get weight1000gStandard => '1000g (मानक)';
+
+  @override
+  String get weight2000g => '2000g';
+
+  @override
+  String get weight3000g => '3000g';
+
+  @override
+  String get writeBambuLabTagButton => 'Bambu Lab टैग लिखें';
+
+  @override
+  String get bambuLabRsaNote =>
+      'नोट: मूल Bambu Lab टैग RSA एन्क्रिप्शन का उपयोग करते हैं। यह मोड सरलीकृत संगत प्रारूप में डेटा लिखता है।';
+
+  @override
+  String signInError(String error) {
+    return 'साइन इन त्रुटि: $error';
+  }
+
+  @override
+  String get subscriptionActivatedMessage => 'सदस्यता सफलतापूर्वक सक्रिय!';
+
+  @override
+  String get subscriptionFailedMessage => 'सदस्यता विफल';
+
+  @override
+  String errorMessage(String error) {
+    return 'त्रुटि: $error';
+  }
+
+  @override
+  String get subscriptionRestoredMessage => 'सदस्यता सफलतापूर्वक पुनर्स्थापित!';
+
+  @override
+  String get noSubscriptionFoundMessage => 'कोई सदस्यता नहीं मिली';
+
+  @override
+  String get vipLabel => 'VIP';
+
+  @override
+  String get activeLabel => 'सक्रिय';
+
+  @override
+  String get noAdsExperienceMessage => 'विज्ञापन-मुक्त अनुभव का आनंद लें!';
+
+  @override
+  String get subscribedLabel => 'सदस्य';
+
+  @override
+  String get restorePurchasesButton => 'खरीदारी पुनर्स्थापित करें';
+
+  @override
+  String get cannotExceedRemainingWeight => 'शेष वजन से अधिक नहीं हो सकता';
+
+  @override
+  String get pleaseEnterLength => 'कृपया लंबाई दर्ज करें';
+
+  @override
+  String get pleaseEnterValidLength => 'कृपया वैध लंबाई दर्ज करें';
+
+  @override
+  String get spoolLengthNotSetCannotConvert =>
+      'स्पूल लंबाई सेट नहीं - परिवर्तित नहीं कर सकते';
+
+  @override
+  String get exceedsRemainingWeight => 'शेष वजन से अधिक';
+
+  @override
+  String get skuLabel => 'SKU';
 }

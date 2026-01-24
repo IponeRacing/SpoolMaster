@@ -9,6 +9,7 @@ namespace NfcAnycubic\Controllers;
 
 use NfcAnycubic\Database;
 use NfcAnycubic\JWTHandler;
+use NfcAnycubic\Middleware\RateLimiter;
 
 class AuthController {
 
@@ -18,6 +19,11 @@ class AuthController {
      * Body: { "identityToken": "...", "authorizationCode": "...", "user": {...} }
      */
     public function loginWithApple() {
+        // Rate limiting for authentication attempts
+        if (!RateLimiter::checkSensitive()) {
+            return $this->error('Too many login attempts. Please wait before retrying.', 429);
+        }
+
         $input = json_decode(file_get_contents('php://input'), true);
 
         if (!isset($input['identityToken'])) {
@@ -76,6 +82,11 @@ class AuthController {
      * Body: { "idToken": "..." }
      */
     public function loginWithGoogle() {
+        // Rate limiting for authentication attempts
+        if (!RateLimiter::checkSensitive()) {
+            return $this->error('Too many login attempts. Please wait before retrying.', 429);
+        }
+
         $input = json_decode(file_get_contents('php://input'), true);
 
         if (!isset($input['idToken'])) {
@@ -173,55 +184,259 @@ class AuthController {
     }
 
     /**
-     * Vérifie un token Apple (JWT)
+     * Verify an Apple Identity Token (JWT)
+     * Compliant with Apple Sign In requirements 2025-2026
+     *
+     * @see https://developer.apple.com/documentation/sign_in_with_apple/sign_in_with_apple_rest_api/verifying_a_user
      */
     private function verifyAppleToken(string $identityToken): ?array {
-        // Décoder le JWT sans vérification (pour dev/test)
-        // EN PRODUCTION: vérifier la signature avec les clés publiques Apple
-        $parts = explode('.', $identityToken);
-        if (count($parts) !== 3) {
+        try {
+            $parts = explode('.', $identityToken);
+            if (count($parts) !== 3) {
+                error_log("Apple token: Invalid JWT format (not 3 parts)");
+                return null;
+            }
+
+            // Decode header to get key ID (kid)
+            $header = json_decode(base64_decode(strtr($parts[0], '-_', '+/')), true);
+            if (!$header || !isset($header['kid'])) {
+                error_log("Apple token: No kid in header");
+                return null;
+            }
+
+            // Decode payload first for claim validation
+            $payload = json_decode(base64_decode(strtr($parts[1], '-_', '+/')), true);
+            if (!$payload) {
+                error_log("Apple token: Failed to decode payload");
+                return null;
+            }
+
+            // Get config for validation
+            $config = require __DIR__ . '/../../config/app.php';
+            $expectedClientId = $config['oauth']['apple']['client_id'];
+            $expectedBundleId = $config['oauth']['apple']['bundle_id'];
+
+            // Validate issuer
+            if (!isset($payload['iss']) || $payload['iss'] !== 'https://appleid.apple.com') {
+                error_log("Apple token: Invalid issuer: " . ($payload['iss'] ?? 'not set'));
+                return null;
+            }
+
+            // Validate audience (must match our client_id or bundle_id)
+            if (!isset($payload['aud'])) {
+                error_log("Apple token: Missing audience");
+                return null;
+            }
+
+            // Log for debugging
+            error_log("Apple token: aud=" . $payload['aud'] . ", expected client_id=$expectedClientId, bundle_id=$expectedBundleId");
+
+            // Accept both client_id and bundle_id as valid audience
+            $validAudiences = [$expectedClientId, $expectedBundleId];
+            if (!in_array($payload['aud'], $validAudiences)) {
+                error_log("Apple token: Audience mismatch. Got: " . $payload['aud'] .
+                         ", Expected one of: " . implode(', ', $validAudiences));
+                return null;
+            }
+
+            // Validate expiration
+            if (!isset($payload['exp']) || $payload['exp'] < time()) {
+                error_log("Apple token: Token expired");
+                return null;
+            }
+
+            // Validate issued at (not in the future)
+            if (isset($payload['iat']) && $payload['iat'] > time() + 60) {
+                error_log("Apple token: Token issued in the future");
+                return null;
+            }
+
+            // Fetch Apple's public key and verify signature
+            $cacheDir = __DIR__ . '/../../cache';
+            if (!is_dir($cacheDir)) {
+                mkdir($cacheDir, 0755, true);
+            }
+            $cacheFile = $cacheDir . '/apple_identity_jwks.json';
+
+            $publicKeyPem = \NfcAnycubic\AppleJWKHelper::getApplePublicKeyPem($header['kid'], $cacheFile);
+            if (!$publicKeyPem) {
+                error_log("Apple token: Could not fetch public key for kid: " . $header['kid']);
+                return null;
+            }
+
+            // Verify the signature
+            $dataToVerify = $parts[0] . '.' . $parts[1];
+            $signature = base64_decode(strtr($parts[2], '-_', '+/'));
+
+            // Apple uses ES256 (ECDSA with P-256 and SHA-256)
+            $publicKey = openssl_pkey_get_public($publicKeyPem);
+            if (!$publicKey) {
+                error_log("Apple token: Failed to parse public key");
+                return null;
+            }
+
+            // For ES256, we need to convert the signature from JWS format to DER format
+            $derSignature = $this->convertEs256SignatureToDer($signature);
+            if (!$derSignature) {
+                error_log("Apple token: Failed to convert signature format");
+                return null;
+            }
+
+            $verified = openssl_verify($dataToVerify, $derSignature, $publicKey, OPENSSL_ALGO_SHA256);
+
+            if ($verified !== 1) {
+                error_log("Apple token: Signature verification failed. OpenSSL error: " . openssl_error_string());
+                return null;
+            }
+
+            error_log("Apple token: Successfully verified for sub: " . ($payload['sub'] ?? 'unknown'));
+            return $payload;
+
+        } catch (\Exception $e) {
+            error_log("Apple token verification exception: " . $e->getMessage());
             return null;
         }
-
-        $payload = json_decode(base64_decode(strtr($parts[1], '-_', '+/')), true);
-
-        // TODO EN PRODUCTION: Vérifier la signature avec les clés Apple
-        // https://appleid.apple.com/auth/keys
-
-        return $payload;
     }
 
     /**
-     * Vérifie un token Google
+     * Convert ES256 signature from JWS format (r||s) to DER format
+     * JWS uses raw concatenation of r and s (32 bytes each)
+     * OpenSSL expects DER-encoded signature
+     */
+    private function convertEs256SignatureToDer(string $signature): ?string {
+        if (strlen($signature) !== 64) {
+            error_log("ES256 signature: Invalid length " . strlen($signature) . ", expected 64");
+            return null;
+        }
+
+        $r = substr($signature, 0, 32);
+        $s = substr($signature, 32, 32);
+
+        // Remove leading zeros but keep at least one byte
+        $r = ltrim($r, "\x00");
+        $s = ltrim($s, "\x00");
+
+        // Handle empty case (all zeros - very rare)
+        if (strlen($r) === 0) $r = "\x00";
+        if (strlen($s) === 0) $s = "\x00";
+
+        // Add leading zero if high bit is set (to make it positive)
+        if (ord($r[0]) & 0x80) {
+            $r = "\x00" . $r;
+        }
+        if (ord($s[0]) & 0x80) {
+            $s = "\x00" . $s;
+        }
+
+        // DER encode: SEQUENCE { INTEGER r, INTEGER s }
+        $derR = "\x02" . chr(strlen($r)) . $r;
+        $derS = "\x02" . chr(strlen($s)) . $s;
+        $der = "\x30" . chr(strlen($derR) + strlen($derS)) . $derR . $derS;
+
+        return $der;
+    }
+
+    /**
+     * Verify a Google Identity Token
+     * Uses Google's tokeninfo endpoint for secure verification
+     *
+     * @see https://developers.google.com/identity/sign-in/web/backend-auth
      */
     private function verifyGoogleToken(string $idToken): ?array {
-        // Utiliser Google API Client pour vérifier
-        $config = require __DIR__ . '/../../config/app.php';
-        $acceptedClientIds = $config['oauth']['google']['accepted_client_ids'] ?? [$config['oauth']['google']['client_id']];
+        try {
+            $config = require __DIR__ . '/../../config/app.php';
+            $acceptedClientIds = $config['oauth']['google']['accepted_client_ids'] ?? [];
 
-        // Décoder le JWT
-        $parts = explode('.', $idToken);
-        if (count($parts) !== 3) {
-            error_log('Google token: Invalid JWT format (not 3 parts)');
+            // Add main client_id to accepted list if not empty
+            if (!empty($config['oauth']['google']['client_id'])) {
+                $acceptedClientIds[] = $config['oauth']['google']['client_id'];
+            }
+            $acceptedClientIds = array_unique($acceptedClientIds);
+
+            // Basic format validation
+            $parts = explode('.', $idToken);
+            if (count($parts) !== 3) {
+                error_log('Google token: Invalid JWT format (not 3 parts)');
+                return null;
+            }
+
+            // Verify token using Google's tokeninfo endpoint
+            // This is the recommended approach as it handles key rotation automatically
+            $tokenInfoUrl = 'https://oauth2.googleapis.com/tokeninfo?id_token=' . urlencode($idToken);
+
+            $ch = curl_init($tokenInfoUrl);
+            curl_setopt_array($ch, [
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_TIMEOUT => 10,
+                CURLOPT_SSL_VERIFYPEER => true,
+                CURLOPT_SSL_VERIFYHOST => 2,
+            ]);
+
+            $response = curl_exec($ch);
+            $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            $curlError = curl_error($ch);
+            curl_close($ch);
+
+            if ($curlError) {
+                error_log("Google token: cURL error - $curlError");
+                return null;
+            }
+
+            if ($httpCode !== 200) {
+                error_log("Google token: Verification failed with HTTP $httpCode");
+                return null;
+            }
+
+            $payload = json_decode($response, true);
+            if (!$payload) {
+                error_log("Google token: Failed to decode response");
+                return null;
+            }
+
+            // Check for error in response
+            if (isset($payload['error'])) {
+                error_log("Google token: Error - " . ($payload['error_description'] ?? $payload['error']));
+                return null;
+            }
+
+            // Validate audience
+            if (!isset($payload['aud'])) {
+                error_log("Google token: Missing audience");
+                return null;
+            }
+
+            if (!in_array($payload['aud'], $acceptedClientIds)) {
+                error_log("Google token: Audience mismatch. Got: " . $payload['aud'] .
+                         ", Accepted: " . implode(', ', $acceptedClientIds));
+                return null;
+            }
+
+            // Validate issuer
+            $validIssuers = ['accounts.google.com', 'https://accounts.google.com'];
+            if (!isset($payload['iss']) || !in_array($payload['iss'], $validIssuers)) {
+                error_log("Google token: Invalid issuer: " . ($payload['iss'] ?? 'not set'));
+                return null;
+            }
+
+            // Validate expiration (tokeninfo already validates this, but double-check)
+            if (isset($payload['exp']) && (int)$payload['exp'] < time()) {
+                error_log("Google token: Token expired");
+                return null;
+            }
+
+            // Ensure we have required fields
+            if (!isset($payload['sub'])) {
+                error_log("Google token: Missing subject (sub)");
+                return null;
+            }
+
+            error_log("Google token: Successfully verified for sub: " . $payload['sub']);
+            return $payload;
+
+        } catch (\Exception $e) {
+            error_log("Google token verification exception: " . $e->getMessage());
             return null;
         }
-
-        $payload = json_decode(base64_decode(strtr($parts[1], '-_', '+/')), true);
-
-        error_log('Google token payload: ' . json_encode($payload));
-        error_log('Accepted client_ids: ' . json_encode($acceptedClientIds));
-        error_log('Token aud: ' . ($payload['aud'] ?? 'NOT SET'));
-
-        // Vérifier l'audience - doit correspondre à un des client IDs acceptés
-        if (isset($payload['aud']) && !in_array($payload['aud'], $acceptedClientIds)) {
-            error_log('Google token: Audience mismatch! Token aud not in accepted list');
-            return null;
-        }
-
-        // TODO EN PRODUCTION: Vérifier la signature avec Google
-        // https://www.googleapis.com/oauth2/v3/certs
-
-        return $payload;
     }
 
     /**

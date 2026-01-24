@@ -470,6 +470,12 @@ class AppLocalizationsVi extends AppLocalizations {
   String get signInWithApple => 'Đăng nhập bằng Apple';
 
   @override
+  String get continueWithApple => 'Tiếp tục với Apple';
+
+  @override
+  String get continueWithGoogle => 'Tiếp tục với Google';
+
+  @override
   String get comingSoon => 'Sắp ra mắt';
 
   @override
@@ -788,7 +794,7 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get iphoneWriteDisclaimer =>
-      '⚠️ Cảnh báo: Ghi bằng iPhone NFC có thể không hoạt động trên tất cả thẻ Magic Gen2. Khuyến nghị dùng Android với ứng dụng NFC Tools Pro hoặc thiết bị Proxmark3 để đảm bảo độ tin cậy.';
+      '⚠️ Cảnh báo: Ghi bằng iPhone NFC có thể không hoạt động trên tất cả thẻ Magic Gen2. Khuyến nghị dùng thiết bị Proxmark3 để đảm bảo độ tin cậy tối đa.';
 
   @override
   String get step1GetMagicGen2 =>
@@ -819,4 +825,204 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get cloneDeleted => 'Đã xóa bản sao';
+
+  @override
+  String get deleteAccount => 'Xóa tài khoản của tôi';
+
+  @override
+  String get deleteAccountConfirmation =>
+      'Hành động này không thể hoàn tác. Tài khoản và tất cả dữ liệu sẽ bị xóa trong vòng 30 ngày.';
+
+  @override
+  String get accountDeletionRequested => 'Yêu cầu xóa đã được ghi nhận';
+
+  @override
+  String get clearShoppingList => 'Xóa danh sách';
+
+  @override
+  String get clearShoppingListConfirmation =>
+      'Bạn có chắc chắn muốn xóa toàn bộ danh sách mua sắm không? Hành động này không thể hoàn tác.';
+
+  @override
+  String get nfcReaderTitle => 'NFC Reader Anycubic';
+
+  @override
+  String get historyTooltip => 'Lịch sử';
+
+  @override
+  String get retryButton => 'Thử lại';
+
+  @override
+  String get readSuccessMessage => 'Đọc thành công!';
+
+  @override
+  String get filamentTypeLabel => 'Loại sợi in';
+
+  @override
+  String get scanNfcChipButton => 'Quét chip NFC';
+
+  @override
+  String deleteCloneConfirmation(String name) {
+    return 'Xóa bản sao \"$name\"?';
+  }
+
+  @override
+  String cloneDeletedMessage(String name) {
+    return 'Đã xóa bản sao \"$name\"';
+  }
+
+  @override
+  String get extruderLabel => 'Đầu đùn';
+
+  @override
+  String get writeThisCloneButton => 'Ghi bản sao này';
+
+  @override
+  String get customNameHint => 'Tên tùy chỉnh';
+
+  @override
+  String get cloneWriteSuccessMessage => 'Ghi bản sao thành công!';
+
+  @override
+  String errorPrefix(String error) {
+    return 'Lỗi: $error';
+  }
+
+  @override
+  String get writingInProgress => 'Đang ghi...';
+
+  @override
+  String get writeOnCUIDButton => 'Ghi lên thẻ CUID';
+
+  @override
+  String get diameterLabel => 'Đường kính';
+
+  @override
+  String get extruderTempLabel => 'Nhiệt độ đầu đùn';
+
+  @override
+  String get bedTempLabel => 'Nhiệt độ bàn in';
+
+  @override
+  String get nfcFrequency => '13.56 MHz';
+
+  @override
+  String get nfcProtocol => 'ISO14443A';
+
+  @override
+  String get nfcCapacity => '1K byte (1024 byte)';
+
+  @override
+  String get rsaSignatureNote =>
+      'Bản sao bao gồm chữ ký RSA gốc, máy in sẽ chấp nhận!';
+
+  @override
+  String get writeBambuLabTagTitle => 'Ghi thẻ Bambu Lab';
+
+  @override
+  String get bambuLabTagWriteSuccess => 'Ghi thẻ Bambu Lab thành công!';
+
+  @override
+  String get approachNfcTagMessage => 'Đưa thẻ NFC lại gần...';
+
+  @override
+  String get bambuLabFormatMiFare => 'Định dạng Bambu Lab (MiFare 13.56 MHz)';
+
+  @override
+  String get bambuLabFormat => 'Định dạng Bambu Lab';
+
+  @override
+  String get bambuLabFormatInfo =>
+      'Định dạng này sử dụng mã vật liệu Bambu Lab và lưu trữ dữ liệu ở định dạng tương thích AMS.';
+
+  @override
+  String get brandLabel => 'Thương hiệu';
+
+  @override
+  String get materialTypeLabel => 'Loại vật liệu';
+
+  @override
+  String get serialNumber3Digits => 'Số sê-ri (3 chữ số)';
+
+  @override
+  String get weight250g => '250g';
+
+  @override
+  String get weight500g => '500g';
+
+  @override
+  String get weight1000g => '1000g';
+
+  @override
+  String get weight1000gStandard => '1000g (tiêu chuẩn)';
+
+  @override
+  String get weight2000g => '2000g';
+
+  @override
+  String get weight3000g => '3000g';
+
+  @override
+  String get writeBambuLabTagButton => 'Ghi thẻ Bambu Lab';
+
+  @override
+  String get bambuLabRsaNote =>
+      'Lưu ý: Thẻ Bambu Lab gốc sử dụng mã hóa RSA. Chế độ này ghi dữ liệu ở định dạng đơn giản tương thích.';
+
+  @override
+  String signInError(String error) {
+    return 'Lỗi đăng nhập: $error';
+  }
+
+  @override
+  String get subscriptionActivatedMessage => 'Đăng ký đã được kích hoạt!';
+
+  @override
+  String get subscriptionFailedMessage => 'Đăng ký thất bại';
+
+  @override
+  String errorMessage(String error) {
+    return 'Lỗi: $error';
+  }
+
+  @override
+  String get subscriptionRestoredMessage => 'Đăng ký đã được khôi phục!';
+
+  @override
+  String get noSubscriptionFoundMessage => 'Không tìm thấy đăng ký';
+
+  @override
+  String get vipLabel => 'VIP';
+
+  @override
+  String get activeLabel => 'HOẠT ĐỘNG';
+
+  @override
+  String get noAdsExperienceMessage => 'Tận hưởng trải nghiệm không quảng cáo!';
+
+  @override
+  String get subscribedLabel => 'Đã đăng ký';
+
+  @override
+  String get restorePurchasesButton => 'Khôi phục giao dịch';
+
+  @override
+  String get cannotExceedRemainingWeight =>
+      'Không thể vượt quá trọng lượng còn lại';
+
+  @override
+  String get pleaseEnterLength => 'Vui lòng nhập chiều dài';
+
+  @override
+  String get pleaseEnterValidLength => 'Vui lòng nhập chiều dài hợp lệ';
+
+  @override
+  String get spoolLengthNotSetCannotConvert =>
+      'Chưa đặt chiều dài cuộn - không thể chuyển đổi';
+
+  @override
+  String get exceedsRemainingWeight => 'Vượt quá trọng lượng còn lại';
+
+  @override
+  String get skuLabel => 'SKU';
 }

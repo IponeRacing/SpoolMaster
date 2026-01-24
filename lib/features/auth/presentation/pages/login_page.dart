@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:nfc_filament/l10n/app_localizations.dart';
 import '../../../../core/services/auth_service.dart';
-import '../../../../core/theme/app_theme.dart';
 import '../../../../main.dart' show MainNavigationPage, mainNavigationKey;
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+  const LoginPage({super.key, this.fromProfile = false});
+
+  /// Si true, après login on fait pop() pour retourner à la page précédente
+  /// Si false (défaut), on remplace par MainNavigationPage
+  final bool fromProfile;
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -15,23 +18,27 @@ class _LoginPageState extends State<LoginPage> {
   final AuthService _authService = AuthService();
   bool _isLoading = false;
 
+  void _navigateAfterLogin() {
+    if (!mounted) return;
+
+    if (widget.fromProfile && Navigator.of(context).canPop()) {
+      // Vient de ProfilePage, retourner en arrière
+      Navigator.of(context).pop(true); // true = login successful
+    } else {
+      // Vient de SplashPage ou autre, aller à MainNavigationPage
+      Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute<void>(builder: (_) => MainNavigationPage(key: mainNavigationKey)),
+        (route) => false, // Supprimer toutes les routes précédentes
+      );
+    }
+  }
+
   Future<void> _signInWithApple() async {
     setState(() => _isLoading = true);
 
     try {
       await _authService.signInWithApple();
-
-      if (mounted) {
-        // Si on vient de SplashPage, remplacer par MainNavigationPage
-        // Sinon, juste retourner à la page précédente (ProfilePage)
-        if (ModalRoute.of(context)?.settings.name == null) {
-          Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (_) => MainNavigationPage(key: mainNavigationKey)),
-          );
-        } else {
-          Navigator.of(context).pop();
-        }
-      }
+      _navigateAfterLogin();
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -53,18 +60,7 @@ class _LoginPageState extends State<LoginPage> {
 
     try {
       await _authService.signInWithGoogle();
-
-      if (mounted) {
-        // Si on vient de SplashPage, remplacer par MainNavigationPage
-        // Sinon, juste retourner à la page précédente (ProfilePage)
-        if (ModalRoute.of(context)?.settings.name == null) {
-          Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (_) => MainNavigationPage(key: mainNavigationKey)),
-          );
-        } else {
-          Navigator.of(context).pop();
-        }
-      }
+      _navigateAfterLogin();
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -84,135 +80,107 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              AppTheme.anycubicRed,
-              Color(0xFFD32F2F),
-            ],
-          ),
-        ),
-        child: SafeArea(
-          child: Center(
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.all(24),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  // Logo & Title
-                  Container(
-                    width: 120,
-                    height: 120,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(30),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.2),
-                          blurRadius: 20,
-                          offset: const Offset(0, 10),
+      backgroundColor: isDark ? const Color(0xFF1A1A1A) : Colors.grey[50],
+      body: SafeArea(
+        child: Center(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(24),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                // Logo
+                Image.asset(
+                  'assets/images/logo.png',
+                  width: 180,
+                  height: 180,
+                  fit: BoxFit.contain,
+                ),
+                const SizedBox(height: 48),
+
+                // Login Card
+                Container(
+                  padding: const EdgeInsets.all(32),
+                  decoration: BoxDecoration(
+                    color: isDark ? const Color(0xFF2A2A2A) : Colors.white,
+                    borderRadius: BorderRadius.circular(24),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(isDark ? 0.3 : 0.1),
+                        blurRadius: 30,
+                        offset: const Offset(0, 15),
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    children: [
+                      Text(
+                        localizations.connection,
+                        style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                              fontWeight: FontWeight.bold,
+                            ),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        localizations.signInToSync,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: isDark ? Colors.grey[400] : Colors.grey[600],
+                          fontSize: 14,
+                        ),
+                      ),
+                      const SizedBox(height: 32),
+
+                      // Apple Sign In Button
+                      if (_isLoading)
+                        const CircularProgressIndicator()
+                      else ...[
+                        _AppleSignInButton(
+                          onPressed: _signInWithApple,
+                          label: localizations.continueWithApple,
+                        ),
+                        const SizedBox(height: 16),
+                        _GoogleSignInButton(
+                          onPressed: _signInWithGoogle,
+                          label: localizations.continueWithGoogle,
                         ),
                       ],
-                    ),
-                    child: const Icon(
-                      Icons.nfc,
-                      size: 60,
-                      color: AppTheme.anycubicRed,
-                    ),
-                  ),
-                  const SizedBox(height: 32),
 
-                  Text(
-                    'Spool Master',
-                    style: const TextStyle(
-                      fontSize: 32,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                  ),
-                  const SizedBox(height: 64),
+                      const SizedBox(height: 24),
 
-                  // Login Card
-                  Container(
-                    padding: const EdgeInsets.all(32),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(24),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.1),
-                          blurRadius: 30,
-                          offset: const Offset(0, 15),
-                        ),
-                      ],
-                    ),
-                    child: Column(
-                      children: [
-                        Text(
-                          localizations.connection,
-                          style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                                fontWeight: FontWeight.bold,
-                              ),
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          localizations.signInToSync,
-                          textAlign: TextAlign.center,
+                      // Skip login (mode local only)
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pushReplacement(
+                            MaterialPageRoute<void>(builder: (_) => MainNavigationPage(key: mainNavigationKey)),
+                          );
+                        },
+                        child: Text(
+                          localizations.continueWithoutAccount,
                           style: TextStyle(
-                            color: Colors.grey[600],
+                            color: isDark ? Colors.grey[400] : Colors.grey[600],
                             fontSize: 14,
                           ),
                         ),
-                        const SizedBox(height: 32),
-
-                        // Apple Sign In Button
-                        if (_isLoading)
-                          const CircularProgressIndicator()
-                        else ...[
-                          _AppleSignInButton(onPressed: _signInWithApple),
-                          const SizedBox(height: 16),
-                          _GoogleSignInButton(onPressed: _signInWithGoogle),
-                        ],
-
-                        const SizedBox(height: 24),
-
-                        // Skip login (mode local only)
-                        TextButton(
-                          onPressed: () {
-                            Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(builder: (_) => MainNavigationPage(key: mainNavigationKey)),
-                            );
-                          },
-                          child: Text(
-                            localizations.continueWithoutAccount,
-                            style: TextStyle(
-                              color: Colors.grey[600],
-                              fontSize: 14,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
+                ),
 
-                  const SizedBox(height: 32),
+                const SizedBox(height: 32),
 
-                  // Privacy Note
-                  Text(
-                    localizations.privacyNotice,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Colors.white.withOpacity(0.7),
-                    ),
+                // Privacy Note
+                Text(
+                  localizations.privacyNotice,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: isDark ? Colors.grey[500] : Colors.grey[600],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),
@@ -224,8 +192,9 @@ class _LoginPageState extends State<LoginPage> {
 /// Bouton Apple Sign In personnalisé
 class _AppleSignInButton extends StatelessWidget {
   final VoidCallback onPressed;
+  final String label;
 
-  const _AppleSignInButton({required this.onPressed});
+  const _AppleSignInButton({required this.onPressed, required this.label});
 
   @override
   Widget build(BuildContext context) {
@@ -243,9 +212,9 @@ class _AppleSignInButton extends StatelessWidget {
           elevation: 2,
         ),
         icon: const Icon(Icons.apple, size: 24),
-        label: const Text(
-          'Continuer avec Apple',
-          style: TextStyle(
+        label: Text(
+          label,
+          style: const TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w600,
           ),
@@ -258,8 +227,9 @@ class _AppleSignInButton extends StatelessWidget {
 /// Bouton Google Sign In personnalisé
 class _GoogleSignInButton extends StatelessWidget {
   final VoidCallback onPressed;
+  final String label;
 
-  const _GoogleSignInButton({required this.onPressed});
+  const _GoogleSignInButton({required this.onPressed, required this.label});
 
   @override
   Widget build(BuildContext context) {
@@ -282,9 +252,9 @@ class _GoogleSignInButton extends StatelessWidget {
           height: 24,
           errorBuilder: (_, __, ___) => const Icon(Icons.g_mobiledata, size: 24),
         ),
-        label: const Text(
-          'Continuer avec Google',
-          style: TextStyle(
+        label: Text(
+          label,
+          style: const TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w600,
           ),

@@ -8,6 +8,7 @@ import '../api/api_config.dart';
 import '../models/user_model.dart';
 import 'user_preferences_service.dart';
 import 'sync_service.dart';
+import 'shopping_list_service.dart';
 
 /// Service d'authentification Apple & Google
 class AuthService {
@@ -79,8 +80,12 @@ class AuthService {
           debugPrint('Loading preferences from backend...');
           await UserPreferencesService.loadPreferencesFromBackend();
 
-          debugPrint('Pulling spools from backend...');
-          await SyncService.pullSpoolsFromBackend();
+          debugPrint('Syncing spools with backend (full sync)...');
+          // Full sync: push local changes first, then pull server changes
+          await SyncService.fullSync();
+
+          debugPrint('Syncing shopping list with backend...');
+          await ShoppingListService.fullSync();
 
           debugPrint('Apple Sign In successful (backend mode)');
           return;
@@ -151,8 +156,10 @@ class AuthService {
           await _saveTokens(authResponse);
           // Load user preferences from backend after successful login
           await UserPreferencesService.loadPreferencesFromBackend();
-          // Pull spools from backend
-          await SyncService.pullSpoolsFromBackend();
+          // Full sync: push local changes first, then pull server changes
+          await SyncService.fullSync();
+          // Sync shopping list
+          await ShoppingListService.fullSync();
           debugPrint('Google Sign In successful (backend mode)');
           return;
         } else {

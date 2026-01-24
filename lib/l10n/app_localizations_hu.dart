@@ -470,6 +470,12 @@ class AppLocalizationsHu extends AppLocalizations {
   String get signInWithApple => 'Bejelentkezés Apple-lel';
 
   @override
+  String get continueWithApple => 'Folytatás Apple-lel';
+
+  @override
+  String get continueWithGoogle => 'Folytatás Google-lal';
+
+  @override
   String get comingSoon => 'Hamarosan';
 
   @override
@@ -786,7 +792,7 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String get iphoneWriteDisclaimer =>
-      '⚠️ Figyelmeztetés: Az írás iPhone NFC-vel nem biztos, hogy minden Magic Gen2 kártyán működik. A megbízhatóság érdekében Android NFC Tools Pro alkalmazással vagy Proxmark3 eszköz javasolt.';
+      '⚠️ Figyelmeztetés: Az írás iPhone NFC-vel nem biztos, hogy minden Magic Gen2 kártyán működik. A maximális megbízhatóság érdekében Proxmark3 eszköz javasolt.';
 
   @override
   String get step1GetMagicGen2 =>
@@ -818,4 +824,205 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String get cloneDeleted => 'Klón törölve';
+
+  @override
+  String get deleteAccount => 'Fiókom törlése';
+
+  @override
+  String get deleteAccountConfirmation =>
+      'Ez a művelet visszafordíthatatlan. A fiókod és minden adat 30 napon belül törlődik.';
+
+  @override
+  String get accountDeletionRequested => 'Törlési kérelem rögzítve';
+
+  @override
+  String get clearShoppingList => 'Lista törlése';
+
+  @override
+  String get clearShoppingListConfirmation =>
+      'Biztosan törölni szeretnéd a teljes bevásárlólistát? Ez a művelet nem vonható vissza.';
+
+  @override
+  String get nfcReaderTitle => 'NFC Reader Anycubic';
+
+  @override
+  String get historyTooltip => 'Előzmények';
+
+  @override
+  String get retryButton => 'Újra';
+
+  @override
+  String get readSuccessMessage => 'Sikeres olvasás!';
+
+  @override
+  String get filamentTypeLabel => 'Filament típus';
+
+  @override
+  String get scanNfcChipButton => 'NFC chip szkennelése';
+
+  @override
+  String deleteCloneConfirmation(String name) {
+    return 'Klón \"$name\" törlése?';
+  }
+
+  @override
+  String cloneDeletedMessage(String name) {
+    return 'Klón \"$name\" törölve';
+  }
+
+  @override
+  String get extruderLabel => 'Extruder';
+
+  @override
+  String get writeThisCloneButton => 'Klón írása';
+
+  @override
+  String get customNameHint => 'Egyéni név';
+
+  @override
+  String get cloneWriteSuccessMessage => 'Klón sikeresen írva!';
+
+  @override
+  String errorPrefix(String error) {
+    return 'Hiba: $error';
+  }
+
+  @override
+  String get writingInProgress => 'Írás...';
+
+  @override
+  String get writeOnCUIDButton => 'Írás CUID kártyára';
+
+  @override
+  String get diameterLabel => 'Átmérő';
+
+  @override
+  String get extruderTempLabel => 'Extruder hőmérséklet';
+
+  @override
+  String get bedTempLabel => 'Ágy hőmérséklet';
+
+  @override
+  String get nfcFrequency => '13,56 MHz';
+
+  @override
+  String get nfcProtocol => 'ISO14443A';
+
+  @override
+  String get nfcCapacity => '1K bájt (1024 bájt)';
+
+  @override
+  String get rsaSignatureNote =>
+      'A klón tartalmazza az eredeti RSA aláírást, a nyomtató elfogadja!';
+
+  @override
+  String get writeBambuLabTagTitle => 'Bambu Lab címke írása';
+
+  @override
+  String get bambuLabTagWriteSuccess => 'Bambu Lab címke sikeresen írva!';
+
+  @override
+  String get approachNfcTagMessage => 'Közelítse az NFC címkét...';
+
+  @override
+  String get bambuLabFormatMiFare => 'Bambu Lab formátum (MiFare 13,56 MHz)';
+
+  @override
+  String get bambuLabFormat => 'Bambu Lab formátum';
+
+  @override
+  String get bambuLabFormatInfo =>
+      'Ez a formátum Bambu Lab anyagkódokat használ és AMS-kompatibilis formátumban tárolja az adatokat.';
+
+  @override
+  String get brandLabel => 'Márka';
+
+  @override
+  String get materialTypeLabel => 'Anyag típus';
+
+  @override
+  String get serialNumber3Digits => 'Sorozatszám (3 számjegy)';
+
+  @override
+  String get weight250g => '250g';
+
+  @override
+  String get weight500g => '500g';
+
+  @override
+  String get weight1000g => '1000g';
+
+  @override
+  String get weight1000gStandard => '1000g (standard)';
+
+  @override
+  String get weight2000g => '2000g';
+
+  @override
+  String get weight3000g => '3000g';
+
+  @override
+  String get writeBambuLabTagButton => 'Bambu Lab címke írása';
+
+  @override
+  String get bambuLabRsaNote =>
+      'Megjegyzés: Az eredeti Bambu Lab címkék RSA titkosítást használnak. Ez a mód egyszerűsített kompatibilis formátumban írja az adatokat.';
+
+  @override
+  String signInError(String error) {
+    return 'Bejelentkezési hiba: $error';
+  }
+
+  @override
+  String get subscriptionActivatedMessage => 'Előfizetés sikeresen aktiválva!';
+
+  @override
+  String get subscriptionFailedMessage => 'Előfizetés sikertelen';
+
+  @override
+  String errorMessage(String error) {
+    return 'Hiba: $error';
+  }
+
+  @override
+  String get subscriptionRestoredMessage =>
+      'Előfizetés sikeresen visszaállítva!';
+
+  @override
+  String get noSubscriptionFoundMessage => 'Nem található előfizetés';
+
+  @override
+  String get vipLabel => 'VIP';
+
+  @override
+  String get activeLabel => 'AKTÍV';
+
+  @override
+  String get noAdsExperienceMessage => 'Élvezze a reklámmentes élményt!';
+
+  @override
+  String get subscribedLabel => 'Előfizető';
+
+  @override
+  String get restorePurchasesButton => 'Vásárlások visszaállítása';
+
+  @override
+  String get cannotExceedRemainingWeight =>
+      'Nem haladhatja meg a maradék súlyt';
+
+  @override
+  String get pleaseEnterLength => 'Adja meg a hosszt';
+
+  @override
+  String get pleaseEnterValidLength => 'Adjon meg érvényes hosszt';
+
+  @override
+  String get spoolLengthNotSetCannotConvert =>
+      'Orsó hossz nincs beállítva - nem konvertálható';
+
+  @override
+  String get exceedsRemainingWeight => 'Meghaladja a maradék súlyt';
+
+  @override
+  String get skuLabel => 'SKU';
 }

@@ -470,6 +470,12 @@ class AppLocalizationsFi extends AppLocalizations {
   String get signInWithApple => 'Kirjaudu Applella';
 
   @override
+  String get continueWithApple => 'Jatka Applella';
+
+  @override
+  String get continueWithGoogle => 'Jatka Googlella';
+
+  @override
   String get comingSoon => 'Tulossa pian';
 
   @override
@@ -786,7 +792,7 @@ class AppLocalizationsFi extends AppLocalizations {
 
   @override
   String get iphoneWriteDisclaimer =>
-      '⚠️ Varoitus: Kirjoittaminen iPhone NFC:llä ei välttämättä toimi kaikilla Magic Gen2 korteilla. Android NFC Tools Pro sovelluksella tai Proxmark3 laite suositellaan luotettavuuden vuoksi.';
+      '⚠️ Varoitus: Kirjoittaminen iPhone NFC:llä ei välttämättä toimi kaikilla Magic Gen2 korteilla. Proxmark3 laite suositellaan maksimaalisen luotettavuuden vuoksi.';
 
   @override
   String get step1GetMagicGen2 =>
@@ -817,4 +823,204 @@ class AppLocalizationsFi extends AppLocalizations {
 
   @override
   String get cloneDeleted => 'Klooni poistettu';
+
+  @override
+  String get deleteAccount => 'Poista tilini';
+
+  @override
+  String get deleteAccountConfirmation =>
+      'Tämä toiminto on peruuttamaton. Tilisi ja kaikki tiedot poistetaan 30 päivän kuluessa.';
+
+  @override
+  String get accountDeletionRequested => 'Poistopyyntö rekisteröity';
+
+  @override
+  String get clearShoppingList => 'Tyhjennä lista';
+
+  @override
+  String get clearShoppingListConfirmation =>
+      'Haluatko varmasti tyhjentää koko ostoslistan? Tätä toimintoa ei voi kumota.';
+
+  @override
+  String get nfcReaderTitle => 'NFC Reader Anycubic';
+
+  @override
+  String get historyTooltip => 'Historia';
+
+  @override
+  String get retryButton => 'Yritä uudelleen';
+
+  @override
+  String get readSuccessMessage => 'Luku onnistui!';
+
+  @override
+  String get filamentTypeLabel => 'Filamenttityyppi';
+
+  @override
+  String get scanNfcChipButton => 'Skannaa NFC-siru';
+
+  @override
+  String deleteCloneConfirmation(String name) {
+    return 'Poista klooni \"$name\"?';
+  }
+
+  @override
+  String cloneDeletedMessage(String name) {
+    return 'Klooni \"$name\" poistettu';
+  }
+
+  @override
+  String get extruderLabel => 'Suulake';
+
+  @override
+  String get writeThisCloneButton => 'Kirjoita tämä klooni';
+
+  @override
+  String get customNameHint => 'Mukautettu nimi';
+
+  @override
+  String get cloneWriteSuccessMessage => 'Klooni kirjoitettu!';
+
+  @override
+  String errorPrefix(String error) {
+    return 'Virhe: $error';
+  }
+
+  @override
+  String get writingInProgress => 'Kirjoitetaan...';
+
+  @override
+  String get writeOnCUIDButton => 'Kirjoita CUID-kortille';
+
+  @override
+  String get diameterLabel => 'Halkaisija';
+
+  @override
+  String get extruderTempLabel => 'Suulakelämpötila';
+
+  @override
+  String get bedTempLabel => 'Pedin lämpötila';
+
+  @override
+  String get nfcFrequency => '13,56 MHz';
+
+  @override
+  String get nfcProtocol => 'ISO14443A';
+
+  @override
+  String get nfcCapacity => '1K tavua (1024 tavua)';
+
+  @override
+  String get rsaSignatureNote =>
+      'Klooni sisältää alkuperäisen RSA-allekirjoituksen, tulostin hyväksyy sen!';
+
+  @override
+  String get writeBambuLabTagTitle => 'Kirjoita Bambu Lab -tunniste';
+
+  @override
+  String get bambuLabTagWriteSuccess => 'Bambu Lab -tunniste kirjoitettu!';
+
+  @override
+  String get approachNfcTagMessage => 'Tuo NFC-tunniste lähelle...';
+
+  @override
+  String get bambuLabFormatMiFare => 'Bambu Lab -muoto (MiFare 13,56 MHz)';
+
+  @override
+  String get bambuLabFormat => 'Bambu Lab -muoto';
+
+  @override
+  String get bambuLabFormatInfo =>
+      'Tämä muoto käyttää Bambu Lab -materiaalikoodeja ja tallentaa tiedot AMS-yhteensopivassa muodossa.';
+
+  @override
+  String get brandLabel => 'Merkki';
+
+  @override
+  String get materialTypeLabel => 'Materiaalityyppi';
+
+  @override
+  String get serialNumber3Digits => 'Sarjanumero (3 numeroa)';
+
+  @override
+  String get weight250g => '250g';
+
+  @override
+  String get weight500g => '500g';
+
+  @override
+  String get weight1000g => '1000g';
+
+  @override
+  String get weight1000gStandard => '1000g (vakio)';
+
+  @override
+  String get weight2000g => '2000g';
+
+  @override
+  String get weight3000g => '3000g';
+
+  @override
+  String get writeBambuLabTagButton => 'Kirjoita Bambu Lab -tunniste';
+
+  @override
+  String get bambuLabRsaNote =>
+      'Huom: Alkuperäiset Bambu Lab -tunnisteet käyttävät RSA-salausta. Tämä tila kirjoittaa tiedot yksinkertaistetussa yhteensopivassa muodossa.';
+
+  @override
+  String signInError(String error) {
+    return 'Kirjautumisvirhe: $error';
+  }
+
+  @override
+  String get subscriptionActivatedMessage => 'Tilaus aktivoitu!';
+
+  @override
+  String get subscriptionFailedMessage => 'Tilaus epäonnistui';
+
+  @override
+  String errorMessage(String error) {
+    return 'Virhe: $error';
+  }
+
+  @override
+  String get subscriptionRestoredMessage => 'Tilaus palautettu!';
+
+  @override
+  String get noSubscriptionFoundMessage => 'Tilausta ei löytynyt';
+
+  @override
+  String get vipLabel => 'VIP';
+
+  @override
+  String get activeLabel => 'AKTIIVINEN';
+
+  @override
+  String get noAdsExperienceMessage => 'Nauti mainoksettomasta kokemuksesta!';
+
+  @override
+  String get subscribedLabel => 'Tilaaja';
+
+  @override
+  String get restorePurchasesButton => 'Palauta ostot';
+
+  @override
+  String get cannotExceedRemainingWeight =>
+      'Ei voi ylittää jäljellä olevaa painoa';
+
+  @override
+  String get pleaseEnterLength => 'Anna pituus';
+
+  @override
+  String get pleaseEnterValidLength => 'Anna kelvollinen pituus';
+
+  @override
+  String get spoolLengthNotSetCannotConvert =>
+      'Kelan pituutta ei asetettu - ei voi muuntaa';
+
+  @override
+  String get exceedsRemainingWeight => 'Ylittää jäljellä olevan painon';
+
+  @override
+  String get skuLabel => 'SKU';
 }

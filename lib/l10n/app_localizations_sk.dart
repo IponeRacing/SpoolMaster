@@ -469,6 +469,12 @@ class AppLocalizationsSk extends AppLocalizations {
   String get signInWithApple => 'Prihlásiť sa cez Apple';
 
   @override
+  String get continueWithApple => 'Pokračovať s Apple';
+
+  @override
+  String get continueWithGoogle => 'Pokračovať s Google';
+
+  @override
   String get comingSoon => 'Čoskoro';
 
   @override
@@ -785,7 +791,7 @@ class AppLocalizationsSk extends AppLocalizations {
 
   @override
   String get iphoneWriteDisclaimer =>
-      '⚠️ Upozornenie: Zápis pomocou iPhone NFC nemusí fungovať na všetkých kartách Magic Gen2. Pre spoľahlivosť odporúčame Android s aplikáciou NFC Tools Pro alebo zariadenie Proxmark3.';
+      '⚠️ Upozornenie: Zápis pomocou iPhone NFC nemusí fungovať na všetkých kartách Magic Gen2. Pre maximálnu spoľahlivosť odporúčame zariadenie Proxmark3.';
 
   @override
   String get step1GetMagicGen2 =>
@@ -816,4 +822,204 @@ class AppLocalizationsSk extends AppLocalizations {
 
   @override
   String get cloneDeleted => 'Klon vymazaný';
+
+  @override
+  String get deleteAccount => 'Vymazať môj účet';
+
+  @override
+  String get deleteAccountConfirmation =>
+      'Táto akcia je nezvratná. Váš účet a všetky údaje budú vymazané do 30 dní.';
+
+  @override
+  String get accountDeletionRequested => 'Žiadosť o vymazanie zaregistrovaná';
+
+  @override
+  String get clearShoppingList => 'Vymazať zoznam';
+
+  @override
+  String get clearShoppingListConfirmation =>
+      'Naozaj chcete vymazať celý nákupný zoznam? Túto akciu nie je možné vrátiť späť.';
+
+  @override
+  String get nfcReaderTitle => 'NFC Reader Anycubic';
+
+  @override
+  String get historyTooltip => 'História';
+
+  @override
+  String get retryButton => 'Skúsiť znova';
+
+  @override
+  String get readSuccessMessage => 'Čítanie úspešné!';
+
+  @override
+  String get filamentTypeLabel => 'Typ filamentu';
+
+  @override
+  String get scanNfcChipButton => 'Skenovať NFC čip';
+
+  @override
+  String deleteCloneConfirmation(String name) {
+    return 'Vymazať klon \"$name\"?';
+  }
+
+  @override
+  String cloneDeletedMessage(String name) {
+    return 'Klon \"$name\" vymazaný';
+  }
+
+  @override
+  String get extruderLabel => 'Extrudér';
+
+  @override
+  String get writeThisCloneButton => 'Zapísať tento klon';
+
+  @override
+  String get customNameHint => 'Vlastný názov';
+
+  @override
+  String get cloneWriteSuccessMessage => 'Klon úspešne zapísaný!';
+
+  @override
+  String errorPrefix(String error) {
+    return 'Chyba: $error';
+  }
+
+  @override
+  String get writingInProgress => 'Zapisovanie...';
+
+  @override
+  String get writeOnCUIDButton => 'Zapísať na CUID kartu';
+
+  @override
+  String get diameterLabel => 'Priemer';
+
+  @override
+  String get extruderTempLabel => 'Teplota extrudéra';
+
+  @override
+  String get bedTempLabel => 'Teplota podložky';
+
+  @override
+  String get nfcFrequency => '13,56 MHz';
+
+  @override
+  String get nfcProtocol => 'ISO14443A';
+
+  @override
+  String get nfcCapacity => '1K bajtov (1024 bajtov)';
+
+  @override
+  String get rsaSignatureNote =>
+      'Klon obsahuje pôvodný RSA podpis, bude prijatý tlačiarňou!';
+
+  @override
+  String get writeBambuLabTagTitle => 'Zapísať Bambu Lab štítok';
+
+  @override
+  String get bambuLabTagWriteSuccess => 'Bambu Lab štítok úspešne zapísaný!';
+
+  @override
+  String get approachNfcTagMessage => 'Priložte NFC štítok...';
+
+  @override
+  String get bambuLabFormatMiFare => 'Formát Bambu Lab (MiFare 13,56 MHz)';
+
+  @override
+  String get bambuLabFormat => 'Formát Bambu Lab';
+
+  @override
+  String get bambuLabFormatInfo =>
+      'Tento formát používa materiálové kódy Bambu Lab a ukladá dáta v AMS kompatibilnom formáte.';
+
+  @override
+  String get brandLabel => 'Značka';
+
+  @override
+  String get materialTypeLabel => 'Typ materiálu';
+
+  @override
+  String get serialNumber3Digits => 'Sériové číslo (3 číslice)';
+
+  @override
+  String get weight250g => '250g';
+
+  @override
+  String get weight500g => '500g';
+
+  @override
+  String get weight1000g => '1000g';
+
+  @override
+  String get weight1000gStandard => '1000g (štandardný)';
+
+  @override
+  String get weight2000g => '2000g';
+
+  @override
+  String get weight3000g => '3000g';
+
+  @override
+  String get writeBambuLabTagButton => 'Zapísať Bambu Lab štítok';
+
+  @override
+  String get bambuLabRsaNote =>
+      'Poznámka: Originálne Bambu Lab štítky používajú RSA šifrovanie. Tento režim zapisuje dáta v zjednodušenom kompatibilnom formáte.';
+
+  @override
+  String signInError(String error) {
+    return 'Chyba prihlásenia: $error';
+  }
+
+  @override
+  String get subscriptionActivatedMessage => 'Predplatné úspešne aktivované!';
+
+  @override
+  String get subscriptionFailedMessage => 'Predplatné zlyhalo';
+
+  @override
+  String errorMessage(String error) {
+    return 'Chyba: $error';
+  }
+
+  @override
+  String get subscriptionRestoredMessage => 'Predplatné úspešne obnovené!';
+
+  @override
+  String get noSubscriptionFoundMessage => 'Predplatné nenájdené';
+
+  @override
+  String get vipLabel => 'VIP';
+
+  @override
+  String get activeLabel => 'AKTÍVNE';
+
+  @override
+  String get noAdsExperienceMessage => 'Užite si zážitok bez reklám!';
+
+  @override
+  String get subscribedLabel => 'Predplatiteľ';
+
+  @override
+  String get restorePurchasesButton => 'Obnoviť nákupy';
+
+  @override
+  String get cannotExceedRemainingWeight =>
+      'Nemôže prekročiť zostávajúcu hmotnosť';
+
+  @override
+  String get pleaseEnterLength => 'Zadajte dĺžku';
+
+  @override
+  String get pleaseEnterValidLength => 'Zadajte platnú dĺžku';
+
+  @override
+  String get spoolLengthNotSetCannotConvert =>
+      'Dĺžka cievky nie je nastavená - nie je možné previesť';
+
+  @override
+  String get exceedsRemainingWeight => 'Prekračuje zostávajúcu hmotnosť';
+
+  @override
+  String get skuLabel => 'SKU';
 }

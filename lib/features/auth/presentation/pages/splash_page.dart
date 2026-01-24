@@ -61,63 +61,30 @@ class _SplashPageState extends State<SplashPage> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              AppTheme.anycubicRed,
-              Color(0xFFD32F2F),
-            ],
-          ),
-        ),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              // Logo
-              Container(
-                width: 150,
-                height: 150,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(35),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.3),
-                      blurRadius: 30,
-                      offset: const Offset(0, 15),
-                    ),
-                  ],
-                ),
-                child: const Icon(
-                  Icons.nfc,
-                  size: 80,
-                  color: AppTheme.anycubicRed,
-                ),
-              ),
-              const SizedBox(height: 32),
+      backgroundColor: isDark ? const Color(0xFF1A1A1A) : Colors.white,
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // Logo
+            Image.asset(
+              'assets/images/logo.png',
+              width: 220,
+              height: 220,
+              fit: BoxFit.contain,
+            ),
+            const SizedBox(height: 48),
 
-              // App Name
-              const Text(
-                'Spool Master',
-                style: TextStyle(
-                  fontSize: 36,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                  letterSpacing: 1.5,
-                ),
+            // Loading Indicator
+            CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(
+                isDark ? Colors.white : AppTheme.anycubicRed,
               ),
-              const SizedBox(height: 48),
-
-              // Loading Indicator
-              const CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

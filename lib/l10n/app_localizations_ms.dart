@@ -470,6 +470,12 @@ class AppLocalizationsMs extends AppLocalizations {
   String get signInWithApple => 'Log masuk dengan Apple';
 
   @override
+  String get continueWithApple => 'Teruskan dengan Apple';
+
+  @override
+  String get continueWithGoogle => 'Teruskan dengan Google';
+
+  @override
   String get comingSoon => 'Akan datang';
 
   @override
@@ -787,7 +793,7 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get iphoneWriteDisclaimer =>
-      '⚠️ Amaran: Menulis dengan iPhone NFC mungkin tidak berfungsi pada semua kad Magic Gen2. Android dengan aplikasi NFC Tools Pro atau peranti Proxmark3 disyorkan untuk kebolehpercayaan.';
+      '⚠️ Amaran: Menulis dengan iPhone NFC mungkin tidak berfungsi pada semua kad Magic Gen2. Peranti Proxmark3 disyorkan untuk kebolehpercayaan maksimum.';
 
   @override
   String get step1GetMagicGen2 =>
@@ -818,4 +824,204 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get cloneDeleted => 'Klon dipadam';
+
+  @override
+  String get deleteAccount => 'Padam akaun saya';
+
+  @override
+  String get deleteAccountConfirmation =>
+      'Tindakan ini tidak boleh dibatalkan. Akaun dan semua data anda akan dipadamkan dalam 30 hari.';
+
+  @override
+  String get accountDeletionRequested => 'Permintaan pemadaman didaftarkan';
+
+  @override
+  String get clearShoppingList => 'Kosongkan senarai';
+
+  @override
+  String get clearShoppingListConfirmation =>
+      'Adakah anda pasti mahu mengosongkan seluruh senarai beli-belah? Tindakan ini tidak boleh dibatalkan.';
+
+  @override
+  String get nfcReaderTitle => 'NFC Reader Anycubic';
+
+  @override
+  String get historyTooltip => 'Sejarah';
+
+  @override
+  String get retryButton => 'Cuba lagi';
+
+  @override
+  String get readSuccessMessage => 'Berjaya membaca!';
+
+  @override
+  String get filamentTypeLabel => 'Jenis filamen';
+
+  @override
+  String get scanNfcChipButton => 'Imbas cip NFC';
+
+  @override
+  String deleteCloneConfirmation(String name) {
+    return 'Padam klon \"$name\"?';
+  }
+
+  @override
+  String cloneDeletedMessage(String name) {
+    return 'Klon \"$name\" dipadam';
+  }
+
+  @override
+  String get extruderLabel => 'Ekstruder';
+
+  @override
+  String get writeThisCloneButton => 'Tulis klon ini';
+
+  @override
+  String get customNameHint => 'Nama tersuai';
+
+  @override
+  String get cloneWriteSuccessMessage => 'Klon berjaya ditulis!';
+
+  @override
+  String errorPrefix(String error) {
+    return 'Ralat: $error';
+  }
+
+  @override
+  String get writingInProgress => 'Menulis...';
+
+  @override
+  String get writeOnCUIDButton => 'Tulis pada kad CUID';
+
+  @override
+  String get diameterLabel => 'Diameter';
+
+  @override
+  String get extruderTempLabel => 'Suhu ekstruder';
+
+  @override
+  String get bedTempLabel => 'Suhu katil';
+
+  @override
+  String get nfcFrequency => '13.56 MHz';
+
+  @override
+  String get nfcProtocol => 'ISO14443A';
+
+  @override
+  String get nfcCapacity => '1K bait (1024 bait)';
+
+  @override
+  String get rsaSignatureNote =>
+      'Klon mengandungi tandatangan RSA asal, ia akan diterima oleh pencetak!';
+
+  @override
+  String get writeBambuLabTagTitle => 'Tulis tag Bambu Lab';
+
+  @override
+  String get bambuLabTagWriteSuccess => 'Tag Bambu Lab berjaya ditulis!';
+
+  @override
+  String get approachNfcTagMessage => 'Dekatkan tag NFC...';
+
+  @override
+  String get bambuLabFormatMiFare => 'Format Bambu Lab (MiFare 13.56 MHz)';
+
+  @override
+  String get bambuLabFormat => 'Format Bambu Lab';
+
+  @override
+  String get bambuLabFormatInfo =>
+      'Format ini menggunakan kod bahan Bambu Lab dan menyimpan data dalam format yang serasi dengan AMS.';
+
+  @override
+  String get brandLabel => 'Jenama';
+
+  @override
+  String get materialTypeLabel => 'Jenis bahan';
+
+  @override
+  String get serialNumber3Digits => 'Nombor siri (3 digit)';
+
+  @override
+  String get weight250g => '250g';
+
+  @override
+  String get weight500g => '500g';
+
+  @override
+  String get weight1000g => '1000g';
+
+  @override
+  String get weight1000gStandard => '1000g (standard)';
+
+  @override
+  String get weight2000g => '2000g';
+
+  @override
+  String get weight3000g => '3000g';
+
+  @override
+  String get writeBambuLabTagButton => 'Tulis tag Bambu Lab';
+
+  @override
+  String get bambuLabRsaNote =>
+      'Nota: Tag Bambu Lab asal menggunakan penyulitan RSA. Mod ini menulis data dalam format mudah yang serasi.';
+
+  @override
+  String signInError(String error) {
+    return 'Ralat log masuk: $error';
+  }
+
+  @override
+  String get subscriptionActivatedMessage => 'Langganan berjaya diaktifkan!';
+
+  @override
+  String get subscriptionFailedMessage => 'Langganan gagal';
+
+  @override
+  String errorMessage(String error) {
+    return 'Ralat: $error';
+  }
+
+  @override
+  String get subscriptionRestoredMessage => 'Langganan berjaya dipulihkan!';
+
+  @override
+  String get noSubscriptionFoundMessage => 'Langganan tidak dijumpai';
+
+  @override
+  String get vipLabel => 'VIP';
+
+  @override
+  String get activeLabel => 'AKTIF';
+
+  @override
+  String get noAdsExperienceMessage => 'Nikmati pengalaman tanpa iklan!';
+
+  @override
+  String get subscribedLabel => 'Dilanggan';
+
+  @override
+  String get restorePurchasesButton => 'Pulihkan pembelian';
+
+  @override
+  String get cannotExceedRemainingWeight =>
+      'Tidak boleh melebihi berat yang tinggal';
+
+  @override
+  String get pleaseEnterLength => 'Sila masukkan panjang';
+
+  @override
+  String get pleaseEnterValidLength => 'Sila masukkan panjang yang sah';
+
+  @override
+  String get spoolLengthNotSetCannotConvert =>
+      'Panjang gelendong tidak ditetapkan - tidak dapat menukar';
+
+  @override
+  String get exceedsRemainingWeight => 'Melebihi berat yang tinggal';
+
+  @override
+  String get skuLabel => 'SKU';
 }

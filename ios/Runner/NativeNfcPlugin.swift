@@ -19,6 +19,8 @@ class NativeNfcPlugin: NSObject, FlutterPlugin {
         switch call.method {
         case "startReadSession":
             startReadSession(result: result)
+        case "stopSession":
+            stopSession(result: result)
         case "startWriteSession":
             guard let args = call.arguments as? [String: Any],
                   let pages = args["pages"] as? [[String: Any]] else {
@@ -48,6 +50,23 @@ class NativeNfcPlugin: NSObject, FlutterPlugin {
         session?.begin()
     }
 
+    private func stopSession(result: @escaping FlutterResult) {
+        print("🛑 Arrêt de la session NFC demandé")
+        if let activeSession = session {
+            activeSession.invalidate()
+        }
+        // Notifier le callback en attente si il y en a un
+        if let pendingResult = self.result {
+            pendingResult(FlutterError(code: "USER_CANCELLED", message: "Session arrêtée", details: nil))
+        }
+        self.result = nil
+        self.session = nil
+        self.isBambuLabMode = false
+        self.pagesToWrite = nil
+        self.bambuBlocksToWrite = nil
+        result(true)
+    }
+
     private func startWriteSession(pages: [[String: Any]], result: @escaping FlutterResult) {
         self.result = result
         self.pagesToWrite = pages
@@ -63,7 +82,7 @@ class NativeNfcPlugin: NSObject, FlutterPlugin {
         self.isBambuLabMode = true
 
         session = NFCTagReaderSession(pollingOption: .iso14443, delegate: self)
-        session?.alertMessage = "Maintenez votre téléphone près du tag Bambu Lab"
+        session?.alertMessage = "Maintenez votre téléphone près du tag NFC"
         session?.begin()
     }
 
@@ -83,6 +102,25 @@ extension NativeNfcPlugin: NFCTagReaderSessionDelegate {
     }
 
     func tagReaderSession(_ session: NFCTagReaderSession, didInvalidateWithError error: Error) {
+        // Ignorer si le résultat a déjà été envoyé (invalidation volontaire après succès)
+        guard self.result != nil else {
+            print("ℹ️ Session invalidée (ignorée - résultat déjà envoyé): \(error.localizedDescription)")
+            return
+        }
+
+        // Gérer l'annulation par l'utilisateur
+        let nsError = error as NSError
+        if nsError.domain == "NFCError" && nsError.code == 200 {
+            print("ℹ️ Session annulée par l'utilisateur")
+            // Envoyer une erreur spécifique pour que Flutter sache que c'est une annulation
+            result?(FlutterError(code: "USER_CANCELLED", message: "Scan annulé par l'utilisateur", details: nil))
+            self.result = nil
+            self.isBambuLabMode = false
+            self.pagesToWrite = nil
+            self.bambuBlocksToWrite = nil
+            return
+        }
+
         print("❌ Session invalidée: \(error.localizedDescription)")
         result?(FlutterError(code: "SESSION_ERROR", message: error.localizedDescription, details: nil))
         self.result = nil
@@ -118,7 +156,25 @@ extension NativeNfcPlugin: NFCTagReaderSessionDelegate {
             } else if let bambuBlocks = self.bambuBlocksToWrite {
                 self.writeBambuLabClone(mifareTag: mifareTag, blocks: bambuBlocks, session: session)
             } else if self.isBambuLabMode {
-                self.readBambuLabTag(mifareTag: mifareTag, session: session)
+                // Auto-détection du type de tag basée sur la famille MiFare
+                // MiFare Ultralight (Anycubic/NTAG) vs MiFare Classic (Bambu Lab)
+                let tagFamily = mifareTag.mifareFamily
+                print("🔍 Famille MiFare détectée: \(tagFamily.rawValue)")
+
+                switch tagFamily {
+                case .ultralight:
+                    // C'est un tag Anycubic/NTAG, lire en mode Ultralight et retourner avec flag
+                    print("📖 Tag Ultralight détecté, lecture en mode Anycubic")
+                    self.readAllPagesWithTagType(mifareTag: mifareTag, session: session, tagType: "ultralight")
+                case .plus, .desfire:
+                    // MiFare Classic ou compatible, tenter lecture Bambu Lab
+                    print("📖 Tag Classic/Plus détecté, lecture en mode Bambu Lab")
+                    self.readBambuLabTag(mifareTag: mifareTag, session: session)
+                default:
+                    // Type inconnu, essayer d'abord Ultralight (plus sûr)
+                    print("⚠️ Type MiFare inconnu (\(tagFamily.rawValue)), tentative en mode Ultralight")
+                    self.readAllPagesWithTagType(mifareTag: mifareTag, session: session, tagType: "ultralight")
+                }
             } else {
                 self.readAllPages(mifareTag: mifareTag, session: session)
             }
@@ -128,6 +184,54 @@ extension NativeNfcPlugin: NFCTagReaderSessionDelegate {
     private func readAllPages(mifareTag: NFCMiFareTag, session: NFCTagReaderSession) {
         // Lire toutes les pages séquentiellement
         readPageSequentially(mifareTag: mifareTag, startPage: 0, allData: Data(), session: session)
+    }
+
+    /// Lire toutes les pages avec indication du type de tag détecté
+    private func readAllPagesWithTagType(mifareTag: NFCMiFareTag, session: NFCTagReaderSession, tagType: String) {
+        readPageSequentiallyWithTagType(mifareTag: mifareTag, startPage: 0, allData: Data(), session: session, tagType: tagType)
+    }
+
+    private func readPageSequentiallyWithTagType(mifareTag: NFCMiFareTag, startPage: Int, allData: Data, session: NFCTagReaderSession, tagType: String) {
+        // Si on a fini de lire toutes les pages
+        if startPage >= 40 {
+            let dataString = String(data: allData, encoding: .utf8) ?? ""
+            print("📄 Données complètes: \(dataString)")
+
+            let resultData: [String: Any] = [
+                "data": dataString,
+                "rawBytes": [UInt8](allData),
+                "tagType": tagType  // Retourner le type de tag détecté
+            ]
+
+            session.alertMessage = "Lecture réussie ✓"
+            session.invalidate()
+            self.result?(resultData)
+            self.result = nil
+            self.isBambuLabMode = false
+            return
+        }
+
+        // Commande READ MiFare Ultralight: 0x30 + page number
+        let command = Data([0x30, UInt8(startPage)])
+
+        mifareTag.sendMiFareCommand(commandPacket: command) { data, error in
+            if let error = error {
+                print("⚠️ Erreur lecture page \(startPage): \(error.localizedDescription)")
+                session.invalidate(errorMessage: "Erreur de lecture")
+                self.result?(FlutterError(code: "READ_ERROR", message: error.localizedDescription, details: nil))
+                self.result = nil
+                self.isBambuLabMode = false
+                return
+            }
+
+            print("📦 Pages \(startPage)-\(startPage+3): \(data.map { String(format: "%02x", $0) }.joined(separator: " "))")
+
+            var newData = allData
+            newData.append(data)
+
+            // Lire les 4 pages suivantes
+            self.readPageSequentiallyWithTagType(mifareTag: mifareTag, startPage: startPage + 4, allData: newData, session: session, tagType: tagType)
+        }
     }
 
     private func readPageSequentially(mifareTag: NFCMiFareTag, startPage: Int, allData: Data, session: NFCTagReaderSession) {

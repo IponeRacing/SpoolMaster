@@ -2,6 +2,7 @@ import 'dart:developer' as developer;
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
+import 'package:nfc_filament/core/errors/failures.dart';
 import 'package:nfc_filament/features/nfc_reader/data/models/scan_history_model.dart';
 import 'package:nfc_filament/features/nfc_reader/domain/usecases/check_nfc_availability.dart';
 import 'package:nfc_filament/features/nfc_reader/domain/usecases/read_bobbin_data.dart';
@@ -84,6 +85,13 @@ class NfcReaderBloc extends Bloc<NfcReaderEvent, NfcReaderState> {
 
     await result.fold(
       (failure) async {
+        // Si l'utilisateur a annulé, revenir à l'état disponible sans erreur
+        if (failure is NfcSessionCancelledFailure) {
+          developer.log("ℹ️ [BLOC] Scan annulé par l'utilisateur");
+          emit(const NfcAvailable());
+          return;
+        }
+
         // Log failed scan to backend
         AnalyticsService.logNfcScan(
           scanType: 'scan_nfc',

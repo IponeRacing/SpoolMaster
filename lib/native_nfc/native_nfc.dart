@@ -34,4 +34,9 @@ class NativeNfc {
   static Future<void> startWriteSession(List<Map<String, dynamic>> pages) async {
     await _channel.invokeMethod('startWriteSession', {'pages': pages});
   }
+
+  /// Arrête la session NFC en cours
+  static Future<void> stopSession() async {
+    await _channel.invokeMethod('stopSession');
+  }
 }

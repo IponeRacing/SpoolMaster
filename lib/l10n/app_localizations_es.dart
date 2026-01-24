@@ -471,6 +471,12 @@ class AppLocalizationsEs extends AppLocalizations {
   String get signInWithApple => 'Iniciar sesión con Apple';
 
   @override
+  String get continueWithApple => 'Continuar con Apple';
+
+  @override
+  String get continueWithGoogle => 'Continuar con Google';
+
+  @override
   String get comingSoon => 'Próximamente';
 
   @override
@@ -787,7 +793,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get iphoneWriteDisclaimer =>
-      '⚠️ Advertencia: La escritura con NFC de iPhone puede no funcionar en todas las tarjetas Magic Gen2. Se recomienda Android con la aplicación NFC Tools Pro o dispositivo Proxmark3 para mayor fiabilidad.';
+      '⚠️ Advertencia: La escritura con NFC de iPhone puede no funcionar en todas las tarjetas Magic Gen2. Se recomienda Se recomienda un dispositivo Proxmark3 para una fiabilidad máxima.';
 
   @override
   String get step1GetMagicGen2 =>
@@ -819,4 +825,205 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get cloneDeleted => 'Clon eliminado';
+
+  @override
+  String get deleteAccount => 'Eliminar mi cuenta';
+
+  @override
+  String get deleteAccountConfirmation =>
+      'Esta acción es irreversible. Tu cuenta y todos los datos se eliminarán en 30 días.';
+
+  @override
+  String get accountDeletionRequested => 'Solicitud de eliminación registrada';
+
+  @override
+  String get clearShoppingList => 'Vaciar lista';
+
+  @override
+  String get clearShoppingListConfirmation =>
+      '¿Estás seguro de que quieres vaciar toda la lista de compras? Esta acción no se puede deshacer.';
+
+  @override
+  String get nfcReaderTitle => 'NFC Reader Anycubic';
+
+  @override
+  String get historyTooltip => 'Historial';
+
+  @override
+  String get retryButton => 'Reintentar';
+
+  @override
+  String get readSuccessMessage => '¡Lectura exitosa!';
+
+  @override
+  String get filamentTypeLabel => 'Tipo de filamento';
+
+  @override
+  String get scanNfcChipButton => 'Escanear chip NFC';
+
+  @override
+  String deleteCloneConfirmation(String name) {
+    return '¿Eliminar clon \"$name\"?';
+  }
+
+  @override
+  String cloneDeletedMessage(String name) {
+    return 'Clon \"$name\" eliminado';
+  }
+
+  @override
+  String get extruderLabel => 'Extrusor';
+
+  @override
+  String get writeThisCloneButton => 'Escribir este clon';
+
+  @override
+  String get customNameHint => 'Nombre personalizado';
+
+  @override
+  String get cloneWriteSuccessMessage => '¡Clon escrito con éxito!';
+
+  @override
+  String errorPrefix(String error) {
+    return 'Error: $error';
+  }
+
+  @override
+  String get writingInProgress => 'Escribiendo...';
+
+  @override
+  String get writeOnCUIDButton => 'Escribir en tarjeta CUID';
+
+  @override
+  String get diameterLabel => 'Diámetro';
+
+  @override
+  String get extruderTempLabel => 'Temperatura extrusor';
+
+  @override
+  String get bedTempLabel => 'Temperatura cama';
+
+  @override
+  String get nfcFrequency => '13.56 MHz';
+
+  @override
+  String get nfcProtocol => 'ISO14443A';
+
+  @override
+  String get nfcCapacity => '1K bytes (1024 bytes)';
+
+  @override
+  String get rsaSignatureNote =>
+      '¡El clon incluye la firma RSA original, será aceptado por la impresora!';
+
+  @override
+  String get writeBambuLabTagTitle => 'Escribir tag Bambu Lab';
+
+  @override
+  String get bambuLabTagWriteSuccess => '¡Tag Bambu Lab escrito con éxito!';
+
+  @override
+  String get approachNfcTagMessage => 'Acerque el tag NFC...';
+
+  @override
+  String get bambuLabFormatMiFare => 'Formato Bambu Lab (MiFare 13.56 MHz)';
+
+  @override
+  String get bambuLabFormat => 'Formato Bambu Lab';
+
+  @override
+  String get bambuLabFormatInfo =>
+      'Este formato usa códigos de materiales Bambu Lab y almacena datos en formato compatible con AMS.';
+
+  @override
+  String get brandLabel => 'Marca';
+
+  @override
+  String get materialTypeLabel => 'Tipo de material';
+
+  @override
+  String get serialNumber3Digits => 'Número de serie (3 dígitos)';
+
+  @override
+  String get weight250g => '250g';
+
+  @override
+  String get weight500g => '500g';
+
+  @override
+  String get weight1000g => '1000g';
+
+  @override
+  String get weight1000gStandard => '1000g (estándar)';
+
+  @override
+  String get weight2000g => '2000g';
+
+  @override
+  String get weight3000g => '3000g';
+
+  @override
+  String get writeBambuLabTagButton => 'Escribir tag Bambu Lab';
+
+  @override
+  String get bambuLabRsaNote =>
+      'Nota: Los tags Bambu Lab originales usan cifrado RSA. Este modo escribe datos en formato simplificado compatible.';
+
+  @override
+  String signInError(String error) {
+    return 'Error de inicio de sesión: $error';
+  }
+
+  @override
+  String get subscriptionActivatedMessage => '¡Suscripción activada con éxito!';
+
+  @override
+  String get subscriptionFailedMessage => 'Falló la suscripción';
+
+  @override
+  String errorMessage(String error) {
+    return 'Error: $error';
+  }
+
+  @override
+  String get subscriptionRestoredMessage =>
+      '¡Suscripción restaurada con éxito!';
+
+  @override
+  String get noSubscriptionFoundMessage => 'No se encontró suscripción';
+
+  @override
+  String get vipLabel => 'VIP';
+
+  @override
+  String get activeLabel => 'ACTIVO';
+
+  @override
+  String get noAdsExperienceMessage =>
+      '¡Disfruta de la experiencia sin anuncios!';
+
+  @override
+  String get subscribedLabel => 'Suscrito';
+
+  @override
+  String get restorePurchasesButton => 'Restaurar compras';
+
+  @override
+  String get cannotExceedRemainingWeight => 'No puede exceder el peso restante';
+
+  @override
+  String get pleaseEnterLength => 'Por favor ingrese la longitud';
+
+  @override
+  String get pleaseEnterValidLength => 'Por favor ingrese una longitud válida';
+
+  @override
+  String get spoolLengthNotSetCannotConvert =>
+      'Longitud de bobina no establecida - no se puede convertir';
+
+  @override
+  String get exceedsRemainingWeight => 'Excede el peso restante';
+
+  @override
+  String get skuLabel => 'SKU';
 }

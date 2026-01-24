@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:in_app_purchase_storekit/in_app_purchase_storekit.dart';
 import 'package:in_app_purchase_storekit/store_kit_wrappers.dart';
+import 'package:in_app_purchase_android/in_app_purchase_android.dart';
 import 'package:http/http.dart' as http;
 import 'package:nfc_filament/core/api/api_config.dart';
 import 'package:nfc_filament/core/services/admob_service.dart';
@@ -88,8 +89,9 @@ class SubscriptionService {
     // Vérifier périodiquement le statut (toutes les 10 minutes)
     _startPeriodicStatusCheck();
 
-    // Vérifier et restaurer les achats existants
-    await restorePurchases();
+    // NOTE: restorePurchases() n'est PAS appelé automatiquement
+    // L'utilisateur doit utiliser le bouton "Restaurer achats" dans les réglages
+    // Cela évite de restaurer des achats expirés d'un autre compte Apple/Google
 
     debugPrint('✅ Subscription service initialized - Premium: $_isPremium');
   }
@@ -199,7 +201,7 @@ class SubscriptionService {
   }
 
   /// Vérifie l'achat avec le serveur backend
-  /// Best practice 2025: Validation cryptographique JWS
+  /// Best practice 2025: Validation cryptographique JWS (iOS) ou Google Play (Android)
   Future<bool> _verifyPurchaseWithServer(PurchaseDetails purchaseDetails) async {
     try {
       // Récupérer le JWT token de l'utilisateur
@@ -207,43 +209,51 @@ class SubscriptionService {
       final token = await authService.getAccessToken();
 
       if (token == null) {
-        debugPrint('⚠️ No auth token - skipping server verification');
-        return true; // Si pas connecté, on fait confiance au Store localement
+        debugPrint('❌ No auth token - cannot verify purchase securely');
+        // SECURITY: Require authentication for premium features
+        // User must be logged in to verify and activate subscription
+        return false;
       }
 
-      // Pour iOS StoreKit 2, extraire le signed transaction JWS
       String? signedTransaction;
+      String platform = 'ios';
 
       if (defaultTargetPlatform == TargetPlatform.iOS) {
-        // Pour StoreKit 2, vérifier si c'est un SK2PurchaseDetails
+        // Pour iOS StoreKit 2
         if (purchaseDetails is AppStorePurchaseDetails) {
           final sk2Details = purchaseDetails as AppStorePurchaseDetails;
 
-          // Essayer d'accéder au JWS via skPaymentTransaction
           if (sk2Details.skPaymentTransaction.transactionState == SKPaymentTransactionStateWrapper.purchased ||
               sk2Details.skPaymentTransaction.transactionState == SKPaymentTransactionStateWrapper.restored) {
-            // Le serverVerificationData contient le JWS pour StoreKit 2
-            // ou le PKCS#7 pour StoreKit 1
             signedTransaction = purchaseDetails.verificationData.serverVerificationData;
-
-            debugPrint('📦 Using serverVerificationData (may be PKCS#7 or JWS depending on StoreKit version)');
+            debugPrint('📦 iOS: Using serverVerificationData');
           }
         } else {
-          // Fallback pour autres types
+          signedTransaction = purchaseDetails.verificationData.serverVerificationData;
+        }
+      } else if (defaultTargetPlatform == TargetPlatform.android) {
+        // Pour Android Google Play
+        platform = 'android';
+        if (purchaseDetails is GooglePlayPurchaseDetails) {
+          // Google Play envoie le purchaseToken pour la verification
+          signedTransaction = purchaseDetails.verificationData.serverVerificationData;
+          debugPrint('📦 Android: Using Google Play purchaseToken');
+        } else {
           signedTransaction = purchaseDetails.verificationData.serverVerificationData;
         }
       }
 
       if (signedTransaction == null || signedTransaction.isEmpty) {
-        debugPrint('⚠️ No signed transaction data');
-        return true; // Fallback to local validation
+        debugPrint('❌ No signed transaction data - cannot verify purchase');
+        // SECURITY: Require valid transaction data from Store
+        // Without it, we cannot cryptographically verify the purchase
+        return false;
       }
 
-      // DEBUG: Log format du JWS
+      // DEBUG: Log format
+      debugPrint('📋 Platform: $platform');
       debugPrint('📋 SignedTransaction length: ${signedTransaction.length}');
       debugPrint('📋 SignedTransaction starts with: ${signedTransaction.substring(0, min(50, signedTransaction.length))}');
-      debugPrint('📋 Has dots (JWT format): ${signedTransaction.contains('.')}');
-      debugPrint('📋 Dot count: ${'.'.allMatches(signedTransaction).length}');
 
       // Envoyer au backend pour validation
       final response = await http.post(
@@ -255,6 +265,7 @@ class SubscriptionService {
         body: jsonEncode({
           'signedTransaction': signedTransaction,
           'productId': purchaseDetails.productID,
+          'platform': platform,
         }),
       ).timeout(const Duration(seconds: 10));
 
@@ -369,32 +380,32 @@ class SubscriptionService {
   /// Vérifie le statut d'abonnement actuel
   /// Best practice: Vérifier régulièrement (ex: au démarrage app)
   Future<void> checkSubscriptionStatus() async {
-    if (defaultTargetPlatform != TargetPlatform.iOS) {
-      return;
-    }
-
     try {
-      // Utiliser StoreKit 2 pour vérifier le statut
-      final iosPlatformAddition = _iap.getPlatformAddition<InAppPurchaseStoreKitPlatformAddition>();
+      if (defaultTargetPlatform == TargetPlatform.iOS) {
+        // iOS: Utiliser StoreKit 2 pour vérifier le statut
+        final transactions = await SKPaymentQueueWrapper().transactions();
 
-      // Récupérer toutes les transactions actives
-      final transactions = await SKPaymentQueueWrapper().transactions();
-
-      bool hasActiveSubscription = false;
-      for (final transaction in transactions) {
-        if (transaction.transactionState == SKPaymentTransactionStateWrapper.purchased ||
-            transaction.transactionState == SKPaymentTransactionStateWrapper.restored) {
-          if (_productIds.contains(transaction.payment.productIdentifier)) {
-            hasActiveSubscription = true;
-            break;
+        bool hasActiveSubscription = false;
+        for (final transaction in transactions) {
+          if (transaction.transactionState == SKPaymentTransactionStateWrapper.purchased ||
+              transaction.transactionState == SKPaymentTransactionStateWrapper.restored) {
+            if (_productIds.contains(transaction.payment.productIdentifier)) {
+              hasActiveSubscription = true;
+              break;
+            }
           }
         }
-      }
 
-      if (hasActiveSubscription && !_isPremium) {
-        await _activatePremium();
-      } else if (!hasActiveSubscription && _isPremium) {
-        await _deactivatePremium();
+        if (hasActiveSubscription && !_isPremium) {
+          await _activatePremium();
+        } else if (!hasActiveSubscription && _isPremium) {
+          await _deactivatePremium();
+        }
+      } else if (defaultTargetPlatform == TargetPlatform.android) {
+        // Android: Vérifier via Google Play Billing
+        // Le statut est géré via purchaseStream et syncSubscriptionStatusWithServer
+        // On synchronise simplement avec le serveur
+        await syncSubscriptionStatusWithServer();
       }
     } catch (e) {
       debugPrint('❌ Error checking subscription status: $e');

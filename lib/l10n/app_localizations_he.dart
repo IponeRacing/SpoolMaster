@@ -467,6 +467,12 @@ class AppLocalizationsHe extends AppLocalizations {
   String get signInWithApple => 'התחבר עם Apple';
 
   @override
+  String get continueWithApple => 'המשך עם Apple';
+
+  @override
+  String get continueWithGoogle => 'המשך עם Google';
+
+  @override
   String get comingSoon => 'בקרוב';
 
   @override
@@ -783,7 +789,7 @@ class AppLocalizationsHe extends AppLocalizations {
 
   @override
   String get iphoneWriteDisclaimer =>
-      '⚠️ אזהרה: כתיבה עם iPhone NFC עשויה לא לעבוד על כל כרטיסי Magic Gen2. מומלץ Android עם אפליקציית NFC Tools Pro או מכשיר Proxmark3 לאמינות.';
+      '⚠️ אזהרה: כתיבה עם iPhone NFC עשויה לא לעבוד על כל כרטיסי Magic Gen2. מומלץ מכשיר Proxmark3 לאמינות מרבית.';
 
   @override
   String get step1GetMagicGen2 =>
@@ -813,4 +819,203 @@ class AppLocalizationsHe extends AppLocalizations {
 
   @override
   String get cloneDeleted => 'השכפול נמחק';
+
+  @override
+  String get deleteAccount => 'מחק את החשבון שלי';
+
+  @override
+  String get deleteAccountConfirmation =>
+      'פעולה זו בלתי הפיכה. החשבון וכל הנתונים שלך יימחקו תוך 30 יום.';
+
+  @override
+  String get accountDeletionRequested => 'בקשת המחיקה נרשמה';
+
+  @override
+  String get clearShoppingList => 'נקה רשימה';
+
+  @override
+  String get clearShoppingListConfirmation =>
+      'האם אתה בטוח שברצונך לנקות את כל רשימת הקניות? לא ניתן לבטל פעולה זו.';
+
+  @override
+  String get nfcReaderTitle => 'NFC Reader Anycubic';
+
+  @override
+  String get historyTooltip => 'היסטוריה';
+
+  @override
+  String get retryButton => 'נסה שוב';
+
+  @override
+  String get readSuccessMessage => 'הקריאה הצליחה!';
+
+  @override
+  String get filamentTypeLabel => 'סוג פילמנט';
+
+  @override
+  String get scanNfcChipButton => 'סרוק שבב NFC';
+
+  @override
+  String deleteCloneConfirmation(String name) {
+    return 'למחוק שיבוט \"$name\"?';
+  }
+
+  @override
+  String cloneDeletedMessage(String name) {
+    return 'שיבוט \"$name\" נמחק';
+  }
+
+  @override
+  String get extruderLabel => 'מכבש';
+
+  @override
+  String get writeThisCloneButton => 'כתוב שיבוט זה';
+
+  @override
+  String get customNameHint => 'שם מותאם אישית';
+
+  @override
+  String get cloneWriteSuccessMessage => 'השיבוט נכתב בהצלחה!';
+
+  @override
+  String errorPrefix(String error) {
+    return 'שגיאה: $error';
+  }
+
+  @override
+  String get writingInProgress => 'כותב...';
+
+  @override
+  String get writeOnCUIDButton => 'כתוב על כרטיס CUID';
+
+  @override
+  String get diameterLabel => 'קוטר';
+
+  @override
+  String get extruderTempLabel => 'טמפרטורת מכבש';
+
+  @override
+  String get bedTempLabel => 'טמפרטורת משטח';
+
+  @override
+  String get nfcFrequency => '13.56 MHz';
+
+  @override
+  String get nfcProtocol => 'ISO14443A';
+
+  @override
+  String get nfcCapacity => '1K בייט (1024 בייט)';
+
+  @override
+  String get rsaSignatureNote =>
+      'השיבוט כולל את חתימת RSA המקורית, המדפסת תקבל אותו!';
+
+  @override
+  String get writeBambuLabTagTitle => 'כתוב תגית Bambu Lab';
+
+  @override
+  String get bambuLabTagWriteSuccess => 'תגית Bambu Lab נכתבה בהצלחה!';
+
+  @override
+  String get approachNfcTagMessage => 'קרב תגית NFC...';
+
+  @override
+  String get bambuLabFormatMiFare => 'פורמט Bambu Lab (MiFare 13.56 MHz)';
+
+  @override
+  String get bambuLabFormat => 'פורמט Bambu Lab';
+
+  @override
+  String get bambuLabFormatInfo =>
+      'פורמט זה משתמש בקודי חומרים של Bambu Lab ומאחסן נתונים בפורמט תואם AMS.';
+
+  @override
+  String get brandLabel => 'מותג';
+
+  @override
+  String get materialTypeLabel => 'סוג חומר';
+
+  @override
+  String get serialNumber3Digits => 'מספר סידורי (3 ספרות)';
+
+  @override
+  String get weight250g => '250 גרם';
+
+  @override
+  String get weight500g => '500 גרם';
+
+  @override
+  String get weight1000g => '1000 גרם';
+
+  @override
+  String get weight1000gStandard => '1000 גרם (סטנדרטי)';
+
+  @override
+  String get weight2000g => '2000 גרם';
+
+  @override
+  String get weight3000g => '3000 גרם';
+
+  @override
+  String get writeBambuLabTagButton => 'כתוב תגית Bambu Lab';
+
+  @override
+  String get bambuLabRsaNote =>
+      'הערה: תגיות Bambu Lab מקוריות משתמשות בהצפנת RSA. מצב זה כותב נתונים בפורמט פשוט תואם.';
+
+  @override
+  String signInError(String error) {
+    return 'שגיאת התחברות: $error';
+  }
+
+  @override
+  String get subscriptionActivatedMessage => 'המנוי הופעל בהצלחה!';
+
+  @override
+  String get subscriptionFailedMessage => 'המנוי נכשל';
+
+  @override
+  String errorMessage(String error) {
+    return 'שגיאה: $error';
+  }
+
+  @override
+  String get subscriptionRestoredMessage => 'המנוי שוחזר בהצלחה!';
+
+  @override
+  String get noSubscriptionFoundMessage => 'לא נמצא מנוי';
+
+  @override
+  String get vipLabel => 'VIP';
+
+  @override
+  String get activeLabel => 'פעיל';
+
+  @override
+  String get noAdsExperienceMessage => 'נהנה מחוויה ללא פרסומות!';
+
+  @override
+  String get subscribedLabel => 'מנוי';
+
+  @override
+  String get restorePurchasesButton => 'שחזר רכישות';
+
+  @override
+  String get cannotExceedRemainingWeight => 'לא ניתן לחרוג מהמשקל הנותר';
+
+  @override
+  String get pleaseEnterLength => 'נא להזין אורך';
+
+  @override
+  String get pleaseEnterValidLength => 'נא להזין אורך תקין';
+
+  @override
+  String get spoolLengthNotSetCannotConvert =>
+      'אורך הסליל לא הוגדר - לא ניתן להמיר';
+
+  @override
+  String get exceedsRemainingWeight => 'חורג מהמשקל הנותר';
+
+  @override
+  String get skuLabel => 'מק\"ט';
 }

@@ -470,6 +470,12 @@ class AppLocalizationsSl extends AppLocalizations {
   String get signInWithApple => 'Prijavi se z Apple';
 
   @override
+  String get continueWithApple => 'Nadaljuj z Apple';
+
+  @override
+  String get continueWithGoogle => 'Nadaljuj z Google';
+
+  @override
   String get comingSoon => 'Kmalu';
 
   @override
@@ -786,7 +792,7 @@ class AppLocalizationsSl extends AppLocalizations {
 
   @override
   String get iphoneWriteDisclaimer =>
-      '⚠️ Opozorilo: Pisanje z iPhone NFC morda ne bo delovalo na vseh karticah Magic Gen2. Priporočamo Android z aplikacijo NFC Tools Pro ali napravo Proxmark3 za zanesljivost.';
+      '⚠️ Opozorilo: Pisanje z iPhone NFC morda ne bo delovalo na vseh karticah Magic Gen2. Priporočamo napravo Proxmark3 za maksimalno zanesljivost.';
 
   @override
   String get step1GetMagicGen2 =>
@@ -818,4 +824,203 @@ class AppLocalizationsSl extends AppLocalizations {
 
   @override
   String get cloneDeleted => 'Klon izbrisan';
+
+  @override
+  String get deleteAccount => 'Izbriši moj račun';
+
+  @override
+  String get deleteAccountConfirmation =>
+      'To dejanje je nepovratno. Vaš račun in vsi podatki bodo izbrisani v 30 dneh.';
+
+  @override
+  String get accountDeletionRequested => 'Zahteva za izbris registrirana';
+
+  @override
+  String get clearShoppingList => 'Izprazni seznam';
+
+  @override
+  String get clearShoppingListConfirmation =>
+      'Ali ste prepričani, da želite izprazniti celoten nakupovalni seznam? Tega dejanja ni mogoče razveljaviti.';
+
+  @override
+  String get nfcReaderTitle => 'NFC Reader Anycubic';
+
+  @override
+  String get historyTooltip => 'Zgodovina';
+
+  @override
+  String get retryButton => 'Poskusi znova';
+
+  @override
+  String get readSuccessMessage => 'Branje uspešno!';
+
+  @override
+  String get filamentTypeLabel => 'Tip filamenta';
+
+  @override
+  String get scanNfcChipButton => 'Skeniraj NFC čip';
+
+  @override
+  String deleteCloneConfirmation(String name) {
+    return 'Izbriši klon \"$name\"?';
+  }
+
+  @override
+  String cloneDeletedMessage(String name) {
+    return 'Klon \"$name\" izbrisan';
+  }
+
+  @override
+  String get extruderLabel => 'Ekstruder';
+
+  @override
+  String get writeThisCloneButton => 'Zapiši ta klon';
+
+  @override
+  String get customNameHint => 'Ime po meri';
+
+  @override
+  String get cloneWriteSuccessMessage => 'Klon uspešno zapisan!';
+
+  @override
+  String errorPrefix(String error) {
+    return 'Napaka: $error';
+  }
+
+  @override
+  String get writingInProgress => 'Pisanje...';
+
+  @override
+  String get writeOnCUIDButton => 'Zapiši na CUID kartico';
+
+  @override
+  String get diameterLabel => 'Premer';
+
+  @override
+  String get extruderTempLabel => 'Temperatura ekstruderja';
+
+  @override
+  String get bedTempLabel => 'Temperatura podlage';
+
+  @override
+  String get nfcFrequency => '13,56 MHz';
+
+  @override
+  String get nfcProtocol => 'ISO14443A';
+
+  @override
+  String get nfcCapacity => '1K bajtov (1024 bajtov)';
+
+  @override
+  String get rsaSignatureNote =>
+      'Klon vsebuje izvirni RSA podpis, tiskalnik ga bo sprejel!';
+
+  @override
+  String get writeBambuLabTagTitle => 'Zapiši Bambu Lab oznako';
+
+  @override
+  String get bambuLabTagWriteSuccess => 'Bambu Lab oznaka uspešno zapisana!';
+
+  @override
+  String get approachNfcTagMessage => 'Približaj NFC oznako...';
+
+  @override
+  String get bambuLabFormatMiFare => 'Bambu Lab format (MiFare 13,56 MHz)';
+
+  @override
+  String get bambuLabFormat => 'Bambu Lab format';
+
+  @override
+  String get bambuLabFormatInfo =>
+      'Ta format uporablja kode materialov Bambu Lab in shranjuje podatke v AMS združljivem formatu.';
+
+  @override
+  String get brandLabel => 'Blagovna znamka';
+
+  @override
+  String get materialTypeLabel => 'Tip materiala';
+
+  @override
+  String get serialNumber3Digits => 'Serijska številka (3 številke)';
+
+  @override
+  String get weight250g => '250g';
+
+  @override
+  String get weight500g => '500g';
+
+  @override
+  String get weight1000g => '1000g';
+
+  @override
+  String get weight1000gStandard => '1000g (standardno)';
+
+  @override
+  String get weight2000g => '2000g';
+
+  @override
+  String get weight3000g => '3000g';
+
+  @override
+  String get writeBambuLabTagButton => 'Zapiši Bambu Lab oznako';
+
+  @override
+  String get bambuLabRsaNote =>
+      'Opomba: Originalne Bambu Lab oznake uporabljajo RSA šifriranje. Ta način zapisuje podatke v poenostavljenem združljivem formatu.';
+
+  @override
+  String signInError(String error) {
+    return 'Napaka prijave: $error';
+  }
+
+  @override
+  String get subscriptionActivatedMessage => 'Naročnina uspešno aktivirana!';
+
+  @override
+  String get subscriptionFailedMessage => 'Naročnina ni uspela';
+
+  @override
+  String errorMessage(String error) {
+    return 'Napaka: $error';
+  }
+
+  @override
+  String get subscriptionRestoredMessage => 'Naročnina uspešno obnovljena!';
+
+  @override
+  String get noSubscriptionFoundMessage => 'Naročnina ni najdena';
+
+  @override
+  String get vipLabel => 'VIP';
+
+  @override
+  String get activeLabel => 'AKTIVNO';
+
+  @override
+  String get noAdsExperienceMessage => 'Uživaj v izkušnji brez oglasov!';
+
+  @override
+  String get subscribedLabel => 'Naročnik';
+
+  @override
+  String get restorePurchasesButton => 'Obnovi nakupe';
+
+  @override
+  String get cannotExceedRemainingWeight => 'Ne more preseči preostale teže';
+
+  @override
+  String get pleaseEnterLength => 'Vnesite dolžino';
+
+  @override
+  String get pleaseEnterValidLength => 'Vnesite veljavno dolžino';
+
+  @override
+  String get spoolLengthNotSetCannotConvert =>
+      'Dolžina koluta ni nastavljena - ni mogoče pretvoriti';
+
+  @override
+  String get exceedsRemainingWeight => 'Presega preostalo težo';
+
+  @override
+  String get skuLabel => 'SKU';
 }

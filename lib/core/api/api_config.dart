@@ -25,6 +25,12 @@ class ApiConfig {
   static const String syncPull = '/sync/pull';
   static const String syncHistory = '/sync/history';
 
+  // Endpoints Shopping List
+  static const String shoppingListPush = '/shopping-list/push';
+  static const String shoppingListPull = '/shopping-list/pull';
+  static String deleteShoppingListItem(String id) => '/shopping-list/$id';
+  static String toggleShoppingListOrdered(String id) => '/shopping-list/$id/toggle-ordered';
+
   // Endpoints Analytics
   static const String logEvent = '/analytics/event';
   static const String getScans = '/analytics/scans';

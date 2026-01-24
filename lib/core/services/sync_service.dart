@@ -32,21 +32,23 @@ class SyncService {
         },
         body: jsonEncode({
           'spools': spools.map((spool) => {
-            'id': spool.id,
+            'spool_id': spool.id,
             'brand': spool.brand,
             'material': spool.material,
-            'colorName': spool.colorName,
-            'colorRgb': spool.colorRgb,
+            'color_name': spool.colorName,
+            'color_rgb': spool.colorRgb,
             'price': spool.price,
-            'weight': spool.weight,
-            'remainingWeight': spool.remainingWeight,
-            'addedDate': spool.addedDate.toIso8601String(),
-            'extruderTempMin': spool.extruderTempMin,
-            'extruderTempMax': spool.extruderTempMax,
-            'bedTempMin': spool.bedTempMin,
-            'bedTempMax': spool.bedTempMax,
+            'initial_weight': spool.weight,
+            'remaining_weight': spool.remainingWeight,
+            'added_date': spool.addedDate.toIso8601String(),
+            'extruder_temp_min': spool.extruderTempMin,
+            'extruder_temp_max': spool.extruderTempMax,
+            'bed_temp_min': spool.bedTempMin,
+            'bed_temp_max': spool.bedTempMax,
             'diameter': spool.diameter,
-            'spoolLength': spool.spoolLength,
+            'spool_length': spool.spoolLength,
+            'manufacture_date': spool.manufactureDate?.toIso8601String(),
+            'batch_number': spool.batchNumber,
           }).toList(),
         }),
       ).timeout(ApiConfig.connectTimeout);
@@ -89,9 +91,11 @@ class SyncService {
       debugPrint('Pull spools body: ${response.body}');
 
       if (response.statusCode == 200) {
-        final data = jsonDecode(response.body);
-        debugPrint('Decoded pull data: $data');
+        final responseData = jsonDecode(response.body) as Map<String, dynamic>;
+        debugPrint('Decoded pull data: $responseData');
 
+        // Le backend retourne { success: true, data: { spools: [...] } }
+        final data = (responseData['data'] as Map<String, dynamic>?) ?? responseData;
         if (data['spools'] != null) {
           final spoolsJson = data['spools'] as List<dynamic>;
           debugPrint('Found ${spoolsJson.length} spools in backend response');
@@ -100,23 +104,23 @@ class SyncService {
           final spools = spoolsJson.map((json) {
             debugPrint('Processing spool: $json');
             return SpoolInventoryItem(
-              id: json['id'] as String,
-              brand: json['brand'] as String,
-              material: json['material'] as String,
-              colorName: json['colorName'] as String,
-              colorRgb: json['colorRgb'] as int,
-              price: (json['price'] as num).toDouble(),
-              weight: (json['weight'] as num).toDouble(),
-              remainingWeight: (json['remainingWeight'] as num).toDouble(),
-              addedDate: DateTime.parse(json['addedDate'] as String),
-              extruderTempMin: json['extruderTempMin'] as int?,
-              extruderTempMax: json['extruderTempMax'] as int?,
-              bedTempMin: json['bedTempMin'] as int?,
-              bedTempMax: json['bedTempMax'] as int?,
-              diameter: json['diameter'] != null ? (json['diameter'] as num).toDouble() : null,
-              spoolLength: json['spoolLength'] as int?,
-              manufactureDate: json['manufactureDate'] != null ? DateTime.parse(json['manufactureDate'] as String) : null,
-              batchNumber: json['batchNumber'] as String?,
+              id: (json['spool_id'] ?? json['id']) as String,
+              brand: (json['brand'] ?? '') as String,
+              material: (json['material'] ?? '') as String,
+              colorName: (json['color_name'] ?? json['colorName'] ?? '') as String,
+              colorRgb: (json['color_rgb'] ?? json['colorRgb'] ?? 0) as int,
+              price: json['price'] != null ? (json['price'] as num).toDouble() : 0.0,
+              weight: json['initial_weight'] != null ? (json['initial_weight'] as num).toDouble() : (json['weight'] != null ? (json['weight'] as num).toDouble() : 0.0),
+              remainingWeight: json['remaining_weight'] != null ? (json['remaining_weight'] as num).toDouble() : (json['remainingWeight'] != null ? (json['remainingWeight'] as num).toDouble() : 0.0),
+              addedDate: json['added_date'] != null ? DateTime.parse(json['added_date'] as String) : (json['addedDate'] != null ? DateTime.parse(json['addedDate'] as String) : (json['created_at'] != null ? DateTime.parse(json['created_at'] as String) : DateTime.now())),
+              extruderTempMin: (json['extruder_temp_min'] ?? json['extruderTempMin']) as int?,
+              extruderTempMax: (json['extruder_temp_max'] ?? json['extruderTempMax']) as int?,
+              bedTempMin: (json['bed_temp_min'] ?? json['bedTempMin']) as int?,
+              bedTempMax: (json['bed_temp_max'] ?? json['bedTempMax']) as int?,
+              diameter: (json['diameter'] != null) ? (json['diameter'] as num).toDouble() : null,
+              spoolLength: (json['spool_length'] ?? json['spoolLength']) as int?,
+              manufactureDate: (json['manufacture_date'] ?? json['manufactureDate']) != null ? DateTime.parse((json['manufacture_date'] ?? json['manufactureDate']) as String) : null,
+              batchNumber: (json['batch_number'] ?? json['batchNumber']) as String?,
             );
           }).toList();
 
@@ -151,21 +155,23 @@ class SyncService {
           'Authorization': 'Bearer $accessToken',
         },
         body: jsonEncode({
-          'id': spool.id,
+          'spool_id': spool.id,
           'brand': spool.brand,
           'material': spool.material,
-          'colorName': spool.colorName,
-          'colorRgb': spool.colorRgb,
+          'color_name': spool.colorName,
+          'color_rgb': spool.colorRgb,
           'price': spool.price,
-          'weight': spool.weight,
-          'remainingWeight': spool.remainingWeight,
-          'addedDate': spool.addedDate.toIso8601String(),
-          'extruderTempMin': spool.extruderTempMin,
-          'extruderTempMax': spool.extruderTempMax,
-          'bedTempMin': spool.bedTempMin,
-          'bedTempMax': spool.bedTempMax,
+          'initial_weight': spool.weight,
+          'remaining_weight': spool.remainingWeight,
+          'added_date': spool.addedDate.toIso8601String(),
+          'extruder_temp_min': spool.extruderTempMin,
+          'extruder_temp_max': spool.extruderTempMax,
+          'bed_temp_min': spool.bedTempMin,
+          'bed_temp_max': spool.bedTempMax,
           'diameter': spool.diameter,
-          'spoolLength': spool.spoolLength,
+          'spool_length': spool.spoolLength,
+          'manufacture_date': spool.manufactureDate?.toIso8601String(),
+          'batch_number': spool.batchNumber,
         }),
       ).timeout(ApiConfig.connectTimeout);
 
@@ -202,12 +208,71 @@ class SyncService {
   static Future<void> fullSync() async {
     debugPrint('🔄 Starting full sync...');
 
-    // Push local changes first
-    await pushSpoolsToBackend();
+    // Push ALL local spools (from all keys) to ensure nothing is lost
+    await pushAllLocalSpoolsToBackend();
 
-    // Then pull server changes
+    // Then pull server changes (this will merge/replace local data)
     await pullSpoolsFromBackend();
 
     debugPrint('✅ Full sync completed');
+  }
+
+  /// Push tous les spools locaux (de toutes les clés) vers le backend
+  /// Utilisé lors de la reconnexion pour ne pas perdre de données
+  static Future<void> pushAllLocalSpoolsToBackend() async {
+    try {
+      final accessToken = await _authService.getAccessToken();
+      if (accessToken == null) {
+        debugPrint('⚠️ No access token for full spools sync');
+        return;
+      }
+
+      // Charger TOUS les spools de toutes les clés locales
+      final spools = await SpoolStorageService.loadAllSpools();
+
+      if (spools.isEmpty) {
+        debugPrint('📭 No local spools to push');
+        return;
+      }
+
+      debugPrint('📤 Pushing ${spools.length} spools from all local keys...');
+
+      final response = await http.post(
+        Uri.parse('${ApiConfig.baseUrl}${ApiConfig.syncPush}'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $accessToken',
+        },
+        body: jsonEncode({
+          'spools': spools.map((spool) => {
+            'spool_id': spool.id,
+            'brand': spool.brand,
+            'material': spool.material,
+            'color_name': spool.colorName,
+            'color_rgb': spool.colorRgb,
+            'price': spool.price,
+            'initial_weight': spool.weight,
+            'remaining_weight': spool.remainingWeight,
+            'added_date': spool.addedDate.toIso8601String(),
+            'extruder_temp_min': spool.extruderTempMin,
+            'extruder_temp_max': spool.extruderTempMax,
+            'bed_temp_min': spool.bedTempMin,
+            'bed_temp_max': spool.bedTempMax,
+            'diameter': spool.diameter,
+            'spool_length': spool.spoolLength,
+            'manufacture_date': spool.manufactureDate?.toIso8601String(),
+            'batch_number': spool.batchNumber,
+          }).toList(),
+        }),
+      ).timeout(ApiConfig.connectTimeout);
+
+      if (response.statusCode == 200) {
+        debugPrint('✅ ${spools.length} spools pushed to backend (full sync)');
+      } else {
+        debugPrint('⚠️ Failed to push spools: ${response.statusCode}');
+      }
+    } catch (e) {
+      debugPrint('⚠️ Could not push all spools to backend: $e');
+    }
   }
 }

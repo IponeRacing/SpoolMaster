@@ -10,8 +10,14 @@ composer.lock
 /keys/*.p8
 /keys/*.pem
 
+# Environment files (NEVER commit!)
+.env
+.env.local
+.env.*.local
+
 # Configuration sensible (ne pas commiter les vraies clés)
-# config/app.php
+/config/google-play-service-account.json
+/config/*.json
 
 # IDE
 .idea/

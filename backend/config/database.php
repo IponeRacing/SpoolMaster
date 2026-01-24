@@ -2,13 +2,21 @@
 /**
  * Configuration de la base de données
  * NFC Anycubic Backend API
+ *
+ * SECURITY: Credentials loaded from environment variables
+ * See .env.example for configuration
  */
 
+use NfcAnycubic\EnvLoader;
+
+// Load environment variables
+EnvLoader::load();
+
 return [
-    'host' => 'ly9x5.myd.infomaniak.com',
-    'database' => 'ly9x5_nfcscan',
-    'username' => 'ly9x5_nfcuser',
-    'password' => 'Levent5na@',
+    'host' => EnvLoader::get('DB_HOST', 'localhost'),
+    'database' => EnvLoader::get('DB_DATABASE', 'nfcscan'),
+    'username' => EnvLoader::get('DB_USERNAME', 'nfcuser'),
+    'password' => EnvLoader::getRequired('DB_PASSWORD'),
     'charset' => 'utf8mb4',
     'collation' => 'utf8mb4_unicode_ci',
     'options' => [

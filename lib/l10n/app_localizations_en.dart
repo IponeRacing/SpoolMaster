@@ -469,6 +469,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get signInWithApple => 'Sign in with Apple';
 
   @override
+  String get continueWithApple => 'Continue with Apple';
+
+  @override
+  String get continueWithGoogle => 'Continue with Google';
+
+  @override
   String get comingSoon => 'Coming soon';
 
   @override
@@ -785,7 +791,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get iphoneWriteDisclaimer =>
-      '⚠️ Warning: Writing with iPhone NFC may not work on all Magic Gen2 cards. Android with NFC Tools Pro app or Proxmark3 device recommended for reliability.';
+      '⚠️ Warning: Writing with iPhone NFC may not work on all Magic Gen2 cards. A Proxmark3 device is recommended for maximum reliability.';
 
   @override
   String get step1GetMagicGen2 =>
@@ -815,6 +821,208 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get cloneDeleted => 'Clone deleted';
+
+  @override
+  String get deleteAccount => 'Delete my account';
+
+  @override
+  String get deleteAccountConfirmation =>
+      'This action is irreversible. Your account and all data will be deleted within 30 days.';
+
+  @override
+  String get accountDeletionRequested => 'Account deletion requested';
+
+  @override
+  String get clearShoppingList => 'Clear list';
+
+  @override
+  String get clearShoppingListConfirmation =>
+      'Are you sure you want to clear the entire shopping list? This action cannot be undone.';
+
+  @override
+  String get nfcReaderTitle => 'NFC Reader Anycubic';
+
+  @override
+  String get historyTooltip => 'History';
+
+  @override
+  String get retryButton => 'Retry';
+
+  @override
+  String get readSuccessMessage => 'Read successful!';
+
+  @override
+  String get filamentTypeLabel => 'Filament type';
+
+  @override
+  String get scanNfcChipButton => 'Scan NFC chip';
+
+  @override
+  String deleteCloneConfirmation(String name) {
+    return 'Delete clone \"$name\"?';
+  }
+
+  @override
+  String cloneDeletedMessage(String name) {
+    return 'Clone \"$name\" deleted';
+  }
+
+  @override
+  String get extruderLabel => 'Extruder';
+
+  @override
+  String get writeThisCloneButton => 'Write this clone';
+
+  @override
+  String get customNameHint => 'Custom name';
+
+  @override
+  String get cloneWriteSuccessMessage => 'Clone written successfully!';
+
+  @override
+  String errorPrefix(String error) {
+    return 'Error: $error';
+  }
+
+  @override
+  String get writingInProgress => 'Writing...';
+
+  @override
+  String get writeOnCUIDButton => 'Write on CUID card';
+
+  @override
+  String get diameterLabel => 'Diameter';
+
+  @override
+  String get extruderTempLabel => 'Extruder temperature';
+
+  @override
+  String get bedTempLabel => 'Bed temperature';
+
+  @override
+  String get nfcFrequency => '13.56 MHz';
+
+  @override
+  String get nfcProtocol => 'ISO14443A';
+
+  @override
+  String get nfcCapacity => '1K bytes (1024 bytes)';
+
+  @override
+  String get rsaSignatureNote =>
+      'The clone includes the original RSA signature, it will be accepted by the printer!';
+
+  @override
+  String get writeBambuLabTagTitle => 'Write Bambu Lab tag';
+
+  @override
+  String get bambuLabTagWriteSuccess => 'Bambu Lab tag written successfully!';
+
+  @override
+  String get approachNfcTagMessage => 'Approach NFC tag...';
+
+  @override
+  String get bambuLabFormatMiFare => 'Bambu Lab format (MiFare 13.56 MHz)';
+
+  @override
+  String get bambuLabFormat => 'Bambu Lab format';
+
+  @override
+  String get bambuLabFormatInfo =>
+      'This format uses Bambu Lab material codes and stores data in an AMS-compatible format.';
+
+  @override
+  String get brandLabel => 'Brand';
+
+  @override
+  String get materialTypeLabel => 'Material type';
+
+  @override
+  String get serialNumber3Digits => 'Serial number (3 digits)';
+
+  @override
+  String get weight250g => '250g';
+
+  @override
+  String get weight500g => '500g';
+
+  @override
+  String get weight1000g => '1000g';
+
+  @override
+  String get weight1000gStandard => '1000g (standard)';
+
+  @override
+  String get weight2000g => '2000g';
+
+  @override
+  String get weight3000g => '3000g';
+
+  @override
+  String get writeBambuLabTagButton => 'Write Bambu Lab tag';
+
+  @override
+  String get bambuLabRsaNote =>
+      'Note: Original Bambu Lab tags use RSA encryption. This mode writes data in a simplified compatible format.';
+
+  @override
+  String signInError(String error) {
+    return 'Sign in error: $error';
+  }
+
+  @override
+  String get subscriptionActivatedMessage =>
+      'Subscription activated successfully!';
+
+  @override
+  String get subscriptionFailedMessage => 'Subscription failed';
+
+  @override
+  String errorMessage(String error) {
+    return 'Error: $error';
+  }
+
+  @override
+  String get subscriptionRestoredMessage =>
+      'Subscription restored successfully!';
+
+  @override
+  String get noSubscriptionFoundMessage => 'No subscription found';
+
+  @override
+  String get vipLabel => 'VIP';
+
+  @override
+  String get activeLabel => 'ACTIVE';
+
+  @override
+  String get noAdsExperienceMessage =>
+      'You\'re enjoying the ad-free experience!';
+
+  @override
+  String get subscribedLabel => 'Subscribed';
+
+  @override
+  String get restorePurchasesButton => 'Restore purchases';
+
+  @override
+  String get cannotExceedRemainingWeight => 'Cannot exceed remaining weight';
+
+  @override
+  String get pleaseEnterLength => 'Please enter length';
+
+  @override
+  String get pleaseEnterValidLength => 'Please enter valid length';
+
+  @override
+  String get spoolLengthNotSetCannotConvert =>
+      'Spool length not set - cannot convert';
+
+  @override
+  String get exceedsRemainingWeight => 'Exceeds remaining weight';
+
+  @override
+  String get skuLabel => 'SKU';
 }
 
 /// The translations for English, as used in Australia (`en_AU`).
@@ -1282,6 +1490,12 @@ class AppLocalizationsEnAu extends AppLocalizationsEn {
   String get signInWithApple => 'Sign in with Apple';
 
   @override
+  String get continueWithApple => 'Continue with Apple';
+
+  @override
+  String get continueWithGoogle => 'Continue with Google';
+
+  @override
   String get comingSoon => 'Coming soon';
 
   @override
@@ -1598,7 +1812,7 @@ class AppLocalizationsEnAu extends AppLocalizationsEn {
 
   @override
   String get iphoneWriteDisclaimer =>
-      '⚠️ Warning: Writing with iPhone NFC may not work on all Magic Gen2 cards. Android with NFC Tools Pro app or Proxmark3 device recommended for reliability.';
+      '⚠️ Warning: Writing with iPhone NFC may not work on all Magic Gen2 cards. A Proxmark3 device is recommended for maximum reliability.';
 
   @override
   String get step1GetMagicGen2 =>
@@ -1628,6 +1842,208 @@ class AppLocalizationsEnAu extends AppLocalizationsEn {
 
   @override
   String get cloneDeleted => 'Clone deleted';
+
+  @override
+  String get deleteAccount => 'Delete my account';
+
+  @override
+  String get deleteAccountConfirmation =>
+      'This action is irreversible. Your account and all data will be deleted within 30 days.';
+
+  @override
+  String get accountDeletionRequested => 'Account deletion requested';
+
+  @override
+  String get clearShoppingList => 'Clear list';
+
+  @override
+  String get clearShoppingListConfirmation =>
+      'Are you sure you want to clear the entire shopping list? This action cannot be undone.';
+
+  @override
+  String get nfcReaderTitle => 'NFC Reader Anycubic';
+
+  @override
+  String get historyTooltip => 'History';
+
+  @override
+  String get retryButton => 'Retry';
+
+  @override
+  String get readSuccessMessage => 'Read successful!';
+
+  @override
+  String get filamentTypeLabel => 'Filament type';
+
+  @override
+  String get scanNfcChipButton => 'Scan NFC chip';
+
+  @override
+  String deleteCloneConfirmation(String name) {
+    return 'Delete clone \"$name\"?';
+  }
+
+  @override
+  String cloneDeletedMessage(String name) {
+    return 'Clone \"$name\" deleted';
+  }
+
+  @override
+  String get extruderLabel => 'Extruder';
+
+  @override
+  String get writeThisCloneButton => 'Write this clone';
+
+  @override
+  String get customNameHint => 'Custom name';
+
+  @override
+  String get cloneWriteSuccessMessage => 'Clone written successfully!';
+
+  @override
+  String errorPrefix(String error) {
+    return 'Error: $error';
+  }
+
+  @override
+  String get writingInProgress => 'Writing...';
+
+  @override
+  String get writeOnCUIDButton => 'Write on CUID card';
+
+  @override
+  String get diameterLabel => 'Diameter';
+
+  @override
+  String get extruderTempLabel => 'Extruder temperature';
+
+  @override
+  String get bedTempLabel => 'Bed temperature';
+
+  @override
+  String get nfcFrequency => '13.56 MHz';
+
+  @override
+  String get nfcProtocol => 'ISO14443A';
+
+  @override
+  String get nfcCapacity => '1K bytes (1024 bytes)';
+
+  @override
+  String get rsaSignatureNote =>
+      'The clone includes the original RSA signature, it will be accepted by the printer!';
+
+  @override
+  String get writeBambuLabTagTitle => 'Write Bambu Lab tag';
+
+  @override
+  String get bambuLabTagWriteSuccess => 'Bambu Lab tag written successfully!';
+
+  @override
+  String get approachNfcTagMessage => 'Approach NFC tag...';
+
+  @override
+  String get bambuLabFormatMiFare => 'Bambu Lab format (MiFare 13.56 MHz)';
+
+  @override
+  String get bambuLabFormat => 'Bambu Lab format';
+
+  @override
+  String get bambuLabFormatInfo =>
+      'This format uses Bambu Lab material codes and stores data in an AMS-compatible format.';
+
+  @override
+  String get brandLabel => 'Brand';
+
+  @override
+  String get materialTypeLabel => 'Material type';
+
+  @override
+  String get serialNumber3Digits => 'Serial number (3 digits)';
+
+  @override
+  String get weight250g => '250g';
+
+  @override
+  String get weight500g => '500g';
+
+  @override
+  String get weight1000g => '1000g';
+
+  @override
+  String get weight1000gStandard => '1000g (standard)';
+
+  @override
+  String get weight2000g => '2000g';
+
+  @override
+  String get weight3000g => '3000g';
+
+  @override
+  String get writeBambuLabTagButton => 'Write Bambu Lab tag';
+
+  @override
+  String get bambuLabRsaNote =>
+      'Note: Original Bambu Lab tags use RSA encryption. This mode writes data in a simplified compatible format.';
+
+  @override
+  String signInError(String error) {
+    return 'Sign in error: $error';
+  }
+
+  @override
+  String get subscriptionActivatedMessage =>
+      'Subscription activated successfully!';
+
+  @override
+  String get subscriptionFailedMessage => 'Subscription failed';
+
+  @override
+  String errorMessage(String error) {
+    return 'Error: $error';
+  }
+
+  @override
+  String get subscriptionRestoredMessage =>
+      'Subscription restored successfully!';
+
+  @override
+  String get noSubscriptionFoundMessage => 'No subscription found';
+
+  @override
+  String get vipLabel => 'VIP';
+
+  @override
+  String get activeLabel => 'ACTIVE';
+
+  @override
+  String get noAdsExperienceMessage =>
+      'You\'re enjoying the ad-free experience!';
+
+  @override
+  String get subscribedLabel => 'Subscribed';
+
+  @override
+  String get restorePurchasesButton => 'Restore purchases';
+
+  @override
+  String get cannotExceedRemainingWeight => 'Cannot exceed remaining weight';
+
+  @override
+  String get pleaseEnterLength => 'Please enter length';
+
+  @override
+  String get pleaseEnterValidLength => 'Please enter valid length';
+
+  @override
+  String get spoolLengthNotSetCannotConvert =>
+      'Spool length not set - cannot convert';
+
+  @override
+  String get exceedsRemainingWeight => 'Exceeds remaining weight';
+
+  @override
+  String get skuLabel => 'SKU';
 }
 
 /// The translations for English, as used in Canada (`en_CA`).
@@ -2095,6 +2511,12 @@ class AppLocalizationsEnCa extends AppLocalizationsEn {
   String get signInWithApple => 'Sign in with Apple';
 
   @override
+  String get continueWithApple => 'Continue with Apple';
+
+  @override
+  String get continueWithGoogle => 'Continue with Google';
+
+  @override
   String get comingSoon => 'Coming soon';
 
   @override
@@ -2411,7 +2833,7 @@ class AppLocalizationsEnCa extends AppLocalizationsEn {
 
   @override
   String get iphoneWriteDisclaimer =>
-      '⚠️ Warning: Writing with iPhone NFC may not work on all Magic Gen2 cards. Android with NFC Tools Pro app or Proxmark3 device recommended for reliability.';
+      '⚠️ Warning: Writing with iPhone NFC may not work on all Magic Gen2 cards. A Proxmark3 device is recommended for maximum reliability.';
 
   @override
   String get step1GetMagicGen2 =>
@@ -2441,6 +2863,208 @@ class AppLocalizationsEnCa extends AppLocalizationsEn {
 
   @override
   String get cloneDeleted => 'Clone deleted';
+
+  @override
+  String get deleteAccount => 'Delete my account';
+
+  @override
+  String get deleteAccountConfirmation =>
+      'This action is irreversible. Your account and all data will be deleted within 30 days.';
+
+  @override
+  String get accountDeletionRequested => 'Account deletion requested';
+
+  @override
+  String get clearShoppingList => 'Clear list';
+
+  @override
+  String get clearShoppingListConfirmation =>
+      'Are you sure you want to clear the entire shopping list? This action cannot be undone.';
+
+  @override
+  String get nfcReaderTitle => 'NFC Reader Anycubic';
+
+  @override
+  String get historyTooltip => 'History';
+
+  @override
+  String get retryButton => 'Retry';
+
+  @override
+  String get readSuccessMessage => 'Read successful!';
+
+  @override
+  String get filamentTypeLabel => 'Filament type';
+
+  @override
+  String get scanNfcChipButton => 'Scan NFC chip';
+
+  @override
+  String deleteCloneConfirmation(String name) {
+    return 'Delete clone \"$name\"?';
+  }
+
+  @override
+  String cloneDeletedMessage(String name) {
+    return 'Clone \"$name\" deleted';
+  }
+
+  @override
+  String get extruderLabel => 'Extruder';
+
+  @override
+  String get writeThisCloneButton => 'Write this clone';
+
+  @override
+  String get customNameHint => 'Custom name';
+
+  @override
+  String get cloneWriteSuccessMessage => 'Clone written successfully!';
+
+  @override
+  String errorPrefix(String error) {
+    return 'Error: $error';
+  }
+
+  @override
+  String get writingInProgress => 'Writing...';
+
+  @override
+  String get writeOnCUIDButton => 'Write on CUID card';
+
+  @override
+  String get diameterLabel => 'Diameter';
+
+  @override
+  String get extruderTempLabel => 'Extruder temperature';
+
+  @override
+  String get bedTempLabel => 'Bed temperature';
+
+  @override
+  String get nfcFrequency => '13.56 MHz';
+
+  @override
+  String get nfcProtocol => 'ISO14443A';
+
+  @override
+  String get nfcCapacity => '1K bytes (1024 bytes)';
+
+  @override
+  String get rsaSignatureNote =>
+      'The clone includes the original RSA signature, it will be accepted by the printer!';
+
+  @override
+  String get writeBambuLabTagTitle => 'Write Bambu Lab tag';
+
+  @override
+  String get bambuLabTagWriteSuccess => 'Bambu Lab tag written successfully!';
+
+  @override
+  String get approachNfcTagMessage => 'Approach NFC tag...';
+
+  @override
+  String get bambuLabFormatMiFare => 'Bambu Lab format (MiFare 13.56 MHz)';
+
+  @override
+  String get bambuLabFormat => 'Bambu Lab format';
+
+  @override
+  String get bambuLabFormatInfo =>
+      'This format uses Bambu Lab material codes and stores data in an AMS-compatible format.';
+
+  @override
+  String get brandLabel => 'Brand';
+
+  @override
+  String get materialTypeLabel => 'Material type';
+
+  @override
+  String get serialNumber3Digits => 'Serial number (3 digits)';
+
+  @override
+  String get weight250g => '250g';
+
+  @override
+  String get weight500g => '500g';
+
+  @override
+  String get weight1000g => '1000g';
+
+  @override
+  String get weight1000gStandard => '1000g (standard)';
+
+  @override
+  String get weight2000g => '2000g';
+
+  @override
+  String get weight3000g => '3000g';
+
+  @override
+  String get writeBambuLabTagButton => 'Write Bambu Lab tag';
+
+  @override
+  String get bambuLabRsaNote =>
+      'Note: Original Bambu Lab tags use RSA encryption. This mode writes data in a simplified compatible format.';
+
+  @override
+  String signInError(String error) {
+    return 'Sign in error: $error';
+  }
+
+  @override
+  String get subscriptionActivatedMessage =>
+      'Subscription activated successfully!';
+
+  @override
+  String get subscriptionFailedMessage => 'Subscription failed';
+
+  @override
+  String errorMessage(String error) {
+    return 'Error: $error';
+  }
+
+  @override
+  String get subscriptionRestoredMessage =>
+      'Subscription restored successfully!';
+
+  @override
+  String get noSubscriptionFoundMessage => 'No subscription found';
+
+  @override
+  String get vipLabel => 'VIP';
+
+  @override
+  String get activeLabel => 'ACTIVE';
+
+  @override
+  String get noAdsExperienceMessage =>
+      'You\'re enjoying the ad-free experience!';
+
+  @override
+  String get subscribedLabel => 'Subscribed';
+
+  @override
+  String get restorePurchasesButton => 'Restore purchases';
+
+  @override
+  String get cannotExceedRemainingWeight => 'Cannot exceed remaining weight';
+
+  @override
+  String get pleaseEnterLength => 'Please enter length';
+
+  @override
+  String get pleaseEnterValidLength => 'Please enter valid length';
+
+  @override
+  String get spoolLengthNotSetCannotConvert =>
+      'Spool length not set - cannot convert';
+
+  @override
+  String get exceedsRemainingWeight => 'Exceeds remaining weight';
+
+  @override
+  String get skuLabel => 'SKU';
 }
 
 /// The translations for English, as used in the United Kingdom (`en_GB`).
@@ -2908,6 +3532,12 @@ class AppLocalizationsEnGb extends AppLocalizationsEn {
   String get signInWithApple => 'Sign in with Apple';
 
   @override
+  String get continueWithApple => 'Continue with Apple';
+
+  @override
+  String get continueWithGoogle => 'Continue with Google';
+
+  @override
   String get comingSoon => 'Coming soon';
 
   @override
@@ -3224,7 +3854,7 @@ class AppLocalizationsEnGb extends AppLocalizationsEn {
 
   @override
   String get iphoneWriteDisclaimer =>
-      '⚠️ Warning: Writing with iPhone NFC may not work on all Magic Gen2 cards. Android with NFC Tools Pro app or Proxmark3 device recommended for reliability.';
+      '⚠️ Warning: Writing with iPhone NFC may not work on all Magic Gen2 cards. A Proxmark3 device is recommended for maximum reliability.';
 
   @override
   String get step1GetMagicGen2 =>
@@ -3254,4 +3884,206 @@ class AppLocalizationsEnGb extends AppLocalizationsEn {
 
   @override
   String get cloneDeleted => 'Clone deleted';
+
+  @override
+  String get deleteAccount => 'Delete my account';
+
+  @override
+  String get deleteAccountConfirmation =>
+      'This action is irreversible. Your account and all data will be deleted within 30 days.';
+
+  @override
+  String get accountDeletionRequested => 'Account deletion requested';
+
+  @override
+  String get clearShoppingList => 'Clear list';
+
+  @override
+  String get clearShoppingListConfirmation =>
+      'Are you sure you want to clear the entire shopping list? This action cannot be undone.';
+
+  @override
+  String get nfcReaderTitle => 'NFC Reader Anycubic';
+
+  @override
+  String get historyTooltip => 'History';
+
+  @override
+  String get retryButton => 'Retry';
+
+  @override
+  String get readSuccessMessage => 'Read successful!';
+
+  @override
+  String get filamentTypeLabel => 'Filament type';
+
+  @override
+  String get scanNfcChipButton => 'Scan NFC chip';
+
+  @override
+  String deleteCloneConfirmation(String name) {
+    return 'Delete clone \"$name\"?';
+  }
+
+  @override
+  String cloneDeletedMessage(String name) {
+    return 'Clone \"$name\" deleted';
+  }
+
+  @override
+  String get extruderLabel => 'Extruder';
+
+  @override
+  String get writeThisCloneButton => 'Write this clone';
+
+  @override
+  String get customNameHint => 'Custom name';
+
+  @override
+  String get cloneWriteSuccessMessage => 'Clone written successfully!';
+
+  @override
+  String errorPrefix(String error) {
+    return 'Error: $error';
+  }
+
+  @override
+  String get writingInProgress => 'Writing...';
+
+  @override
+  String get writeOnCUIDButton => 'Write on CUID card';
+
+  @override
+  String get diameterLabel => 'Diameter';
+
+  @override
+  String get extruderTempLabel => 'Extruder temperature';
+
+  @override
+  String get bedTempLabel => 'Bed temperature';
+
+  @override
+  String get nfcFrequency => '13.56 MHz';
+
+  @override
+  String get nfcProtocol => 'ISO14443A';
+
+  @override
+  String get nfcCapacity => '1K bytes (1024 bytes)';
+
+  @override
+  String get rsaSignatureNote =>
+      'The clone includes the original RSA signature, it will be accepted by the printer!';
+
+  @override
+  String get writeBambuLabTagTitle => 'Write Bambu Lab tag';
+
+  @override
+  String get bambuLabTagWriteSuccess => 'Bambu Lab tag written successfully!';
+
+  @override
+  String get approachNfcTagMessage => 'Approach NFC tag...';
+
+  @override
+  String get bambuLabFormatMiFare => 'Bambu Lab format (MiFare 13.56 MHz)';
+
+  @override
+  String get bambuLabFormat => 'Bambu Lab format';
+
+  @override
+  String get bambuLabFormatInfo =>
+      'This format uses Bambu Lab material codes and stores data in an AMS-compatible format.';
+
+  @override
+  String get brandLabel => 'Brand';
+
+  @override
+  String get materialTypeLabel => 'Material type';
+
+  @override
+  String get serialNumber3Digits => 'Serial number (3 digits)';
+
+  @override
+  String get weight250g => '250g';
+
+  @override
+  String get weight500g => '500g';
+
+  @override
+  String get weight1000g => '1000g';
+
+  @override
+  String get weight1000gStandard => '1000g (standard)';
+
+  @override
+  String get weight2000g => '2000g';
+
+  @override
+  String get weight3000g => '3000g';
+
+  @override
+  String get writeBambuLabTagButton => 'Write Bambu Lab tag';
+
+  @override
+  String get bambuLabRsaNote =>
+      'Note: Original Bambu Lab tags use RSA encryption. This mode writes data in a simplified compatible format.';
+
+  @override
+  String signInError(String error) {
+    return 'Sign in error: $error';
+  }
+
+  @override
+  String get subscriptionActivatedMessage =>
+      'Subscription activated successfully!';
+
+  @override
+  String get subscriptionFailedMessage => 'Subscription failed';
+
+  @override
+  String errorMessage(String error) {
+    return 'Error: $error';
+  }
+
+  @override
+  String get subscriptionRestoredMessage =>
+      'Subscription restored successfully!';
+
+  @override
+  String get noSubscriptionFoundMessage => 'No subscription found';
+
+  @override
+  String get vipLabel => 'VIP';
+
+  @override
+  String get activeLabel => 'ACTIVE';
+
+  @override
+  String get noAdsExperienceMessage =>
+      'You\'re enjoying the ad-free experience!';
+
+  @override
+  String get subscribedLabel => 'Subscribed';
+
+  @override
+  String get restorePurchasesButton => 'Restore purchases';
+
+  @override
+  String get cannotExceedRemainingWeight => 'Cannot exceed remaining weight';
+
+  @override
+  String get pleaseEnterLength => 'Please enter length';
+
+  @override
+  String get pleaseEnterValidLength => 'Please enter valid length';
+
+  @override
+  String get spoolLengthNotSetCannotConvert =>
+      'Spool length not set - cannot convert';
+
+  @override
+  String get exceedsRemainingWeight => 'Exceeds remaining weight';
+
+  @override
+  String get skuLabel => 'SKU';
 }

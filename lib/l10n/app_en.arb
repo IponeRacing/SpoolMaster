@@ -150,6 +150,8 @@
   "authentication": "Authentication",
   "signInWithGoogle": "Sign in with Google",
   "signInWithApple": "Sign in with Apple",
+  "continueWithApple": "Continue with Apple",
+  "continueWithGoogle": "Continue with Google",
   "comingSoon": "Coming soon",
   "about": "About",
   "version": "Version",
@@ -266,7 +268,7 @@
   "magicGen2Required": "Magic Gen2 Card - MiFare Classic 1K with writable Block 0 (UID)",
   "magicGen2CardType": "Magic Gen2 (MiFare Classic 1K)",
   "magicGen2Where": "Search for \"Magic Gen2 MiFare Classic 1K\" or \"UID writable\" on AliExpress, Amazon or eBay (~$0.50/piece)",
-  "iphoneWriteDisclaimer": "⚠️ Warning: Writing with iPhone NFC may not work on all Magic Gen2 cards. Android with NFC Tools Pro app or Proxmark3 device recommended for reliability.",
+  "iphoneWriteDisclaimer": "⚠️ Warning: Writing with iPhone NFC may not work on all Magic Gen2 cards. A Proxmark3 device is recommended for maximum reliability.",
   "instructions": "Instructions",
   "step1GetMagicGen2": "Get a blank Magic Gen2 card (MiFare Classic 1K with writable UID)",
   "step1GetCUID": "Get a blank CUID card (MiFare Classic 1K)",
@@ -275,5 +277,91 @@
   "step4WaitConfirm": "Wait for write confirmation",
   "step5TestClone": "Test the cloned tag on your Bambu Lab printer!",
   "rsaIncluded": "The clone includes the original RSA signature, it will be accepted by the printer!",
-  "cloneDeleted": "Clone deleted"
+  "cloneDeleted": "Clone deleted",
+  "deleteAccount": "Delete my account",
+  "deleteAccountConfirmation": "This action is irreversible. Your account and all data will be deleted within 30 days.",
+  "accountDeletionRequested": "Account deletion requested",
+  "clearShoppingList": "Clear list",
+  "clearShoppingListConfirmation": "Are you sure you want to clear the entire shopping list? This action cannot be undone.",
+  "nfcReaderTitle": "NFC Reader Anycubic",
+  "historyTooltip": "History",
+  "retryButton": "Retry",
+  "readSuccessMessage": "Read successful!",
+  "filamentTypeLabel": "Filament type",
+  "scanNfcChipButton": "Scan NFC chip",
+  "deleteCloneConfirmation": "Delete clone \"{name}\"?",
+  "@deleteCloneConfirmation": {
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+  },
+  "cloneDeletedMessage": "Clone \"{name}\" deleted",
+  "@cloneDeletedMessage": {
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+  },
+  "extruderLabel": "Extruder",
+  "writeThisCloneButton": "Write this clone",
+  "customNameHint": "Custom name",
+  "cloneWriteSuccessMessage": "Clone written successfully!",
+  "errorPrefix": "Error: {error}",
+  "@errorPrefix": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "writingInProgress": "Writing...",
+  "writeOnCUIDButton": "Write on CUID card",
+  "diameterLabel": "Diameter",
+  "extruderTempLabel": "Extruder temperature",
+  "bedTempLabel": "Bed temperature",
+  "nfcFrequency": "13.56 MHz",
+  "nfcProtocol": "ISO14443A",
+  "nfcCapacity": "1K bytes (1024 bytes)",
+  "rsaSignatureNote": "The clone includes the original RSA signature, it will be accepted by the printer!",
+  "writeBambuLabTagTitle": "Write Bambu Lab tag",
+  "bambuLabTagWriteSuccess": "Bambu Lab tag written successfully!",
+  "approachNfcTagMessage": "Approach NFC tag...",
+  "bambuLabFormatMiFare": "Bambu Lab format (MiFare 13.56 MHz)",
+  "bambuLabFormat": "Bambu Lab format",
+  "bambuLabFormatInfo": "This format uses Bambu Lab material codes and stores data in an AMS-compatible format.",
+  "brandLabel": "Brand",
+  "materialTypeLabel": "Material type",
+  "serialNumber3Digits": "Serial number (3 digits)",
+  "weight250g": "250g",
+  "weight500g": "500g",
+  "weight1000g": "1000g",
+  "weight1000gStandard": "1000g (standard)",
+  "weight2000g": "2000g",
+  "weight3000g": "3000g",
+  "writeBambuLabTagButton": "Write Bambu Lab tag",
+  "bambuLabRsaNote": "Note: Original Bambu Lab tags use RSA encryption. This mode writes data in a simplified compatible format.",
+  "signInError": "Sign in error: {error}",
+  "@signInError": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "subscriptionActivatedMessage": "Subscription activated successfully!",
+  "subscriptionFailedMessage": "Subscription failed",
+  "errorMessage": "Error: {error}",
+  "@errorMessage": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "subscriptionRestoredMessage": "Subscription restored successfully!",
+  "noSubscriptionFoundMessage": "No subscription found",
+  "vipLabel": "VIP",
+  "activeLabel": "ACTIVE",
+  "noAdsExperienceMessage": "You're enjoying the ad-free experience!",
+  "subscribedLabel": "Subscribed",
+  "restorePurchasesButton": "Restore purchases",
+  "cannotExceedRemainingWeight": "Cannot exceed remaining weight",
+  "pleaseEnterLength": "Please enter length",
+  "pleaseEnterValidLength": "Please enter valid length",
+  "spoolLengthNotSetCannotConvert": "Spool length not set - cannot convert",
+  "exceedsRemainingWeight": "Exceeds remaining weight",
+  "skuLabel": "SKU"
 }

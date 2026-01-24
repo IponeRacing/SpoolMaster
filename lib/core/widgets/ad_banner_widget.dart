@@ -33,7 +33,9 @@ class _AdBannerWidgetState extends State<AdBannerWidget> {
 
   void _loadAd() {
     // Ne charge pas si l'utilisateur est premium
+    debugPrint('📺 AdBannerWidget: shouldShowAds = ${_adMobService.shouldShowAds}');
     if (!_adMobService.shouldShowAds) {
+      debugPrint('📺 AdBannerWidget: Skipping ad load (premium user)');
       return;
     }
 
@@ -66,8 +68,10 @@ class _AdBannerWidgetState extends State<AdBannerWidget> {
   Widget build(BuildContext context) {
     // N'affiche rien si premium
     if (!_adMobService.shouldShowAds) {
+      debugPrint('📺 AdBannerWidget build: Hidden (premium user)');
       return const SizedBox.shrink();
     }
+    debugPrint('📺 AdBannerWidget build: isLoaded=$_isLoaded, bannerAd=${_bannerAd != null}');
 
     // N'affiche rien si pas chargé
     if (!_isLoaded || _bannerAd == null) {

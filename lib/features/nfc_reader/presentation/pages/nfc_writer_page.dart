@@ -1,3 +1,4 @@
+import 'dart:developer' as developer;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nfc_filament/core/services/admob_service.dart';
@@ -260,14 +261,14 @@ class _NfcWriterPageState extends State<NfcWriterPage> {
             body: BlocConsumer<NfcReaderBloc, NfcReaderState>(
           listener: (context, state) {
             if (state is BobbinDataWriteSuccess) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(AppLocalizations.of(context)!.writeSuccess),
-                  backgroundColor: Colors.green,
-                ),
-              );
-              Navigator.of(context).pop();
+              // Fermer TOUS les SnackBars et naviguer SANS afficher de nouveau SnackBar
+              // pour éviter le conflit Hero pendant la navigation
+              ScaffoldMessenger.of(context).clearSnackBars();
+
+              // Pop d'abord, puis afficher le SnackBar sur la page précédente
+              Navigator.of(context).pop(true); // true = succès
             } else if (state is NfcReaderFailure) {
+              ScaffoldMessenger.of(context).clearSnackBars();
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text(state.message),
@@ -725,13 +726,20 @@ class _NfcWriterPageState extends State<NfcWriterPage> {
                     ElevatedButton.icon(
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
+                          final colorCode = _getColorCodeFromRgb(_selectedColor);
+                          final colorRgb = (_selectedColor.r.toInt() << 16) | (_selectedColor.g.toInt() << 8) | _selectedColor.b.toInt();
+                          developer.log(
+                            '📝 Écriture NFC - Couleur sélectionnée: $_selectedColor, '
+                            'Code: $colorCode, RGB: 0x${colorRgb.toRadixString(16).padLeft(6, '0').toUpperCase()}',
+                          );
+
                           final bobbinData = BobbinData(
                             filamentType: _getMaterialType(),
-                            color: _getColorCodeFromRgb(_selectedColor),
+                            color: colorCode,
                             weightGrams: _weight,
                             manufactureDate: DateTime.now(),
                             batchNumber: _generateSKU(),
-                            colorRgb: _selectedColor.value & 0x00FFFFFF,
+                            colorRgb: colorRgb,
                             extruderTempMin: _extruderTempMin,
                             extruderTempMax: _extruderTempMax,
                             bedTempMin: _bedTempMin,

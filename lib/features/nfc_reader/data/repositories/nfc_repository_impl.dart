@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter/services.dart';
 import 'package:injectable/injectable.dart';
 import 'package:nfc_filament/core/errors/failures.dart';
 import 'package:nfc_filament/features/nfc_reader/data/datasources/nfc_datasource.dart';
@@ -44,6 +45,12 @@ class NfcRepositoryImpl implements NfcRepository {
       return Right(bobbinModel.toEntity());
     } on Failure catch (failure) {
       return Left(failure);
+    } on PlatformException catch (e) {
+      // Gérer l'annulation par l'utilisateur
+      if (e.code == 'USER_CANCELLED') {
+        return const Left(NfcSessionCancelledFailure());
+      }
+      return Left(NfcTagReadFailure(e.message ?? 'Erreur NFC'));
     } catch (e) {
       return const Left(NfcTagReadFailure());
     }
@@ -52,13 +59,8 @@ class NfcRepositoryImpl implements NfcRepository {
   @override
   Future<Either<Failure, void>> writeBobbinData(BobbinData data) async {
     try {
-      final bobbinModel = BobbinDataModel(
-        filamentType: data.filamentType,
-        color: data.color,
-        weightGrams: data.weightGrams,
-        manufactureDate: data.manufactureDate,
-        batchNumber: data.batchNumber,
-      );
+      // Utiliser fromEntity pour copier TOUS les champs (colorRgb, températures, etc.)
+      final bobbinModel = BobbinDataModel.fromEntity(data);
       await dataSource.writeBobbinData(bobbinModel);
       return const Right(null);
     } on Failure catch (failure) {

@@ -1069,6 +1069,18 @@ abstract class AppLocalizations {
   /// **'Se connecter avec Apple'**
   String get signInWithApple;
 
+  /// No description provided for @continueWithApple.
+  ///
+  /// In fr, this message translates to:
+  /// **'Continuer avec Apple'**
+  String get continueWithApple;
+
+  /// No description provided for @continueWithGoogle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Continuer avec Google'**
+  String get continueWithGoogle;
+
   /// No description provided for @comingSoon.
   ///
   /// In fr, this message translates to:
@@ -1678,7 +1690,7 @@ abstract class AppLocalizations {
   /// No description provided for @iphoneWriteDisclaimer.
   ///
   /// In fr, this message translates to:
-  /// **'⚠️ Attention : L\'écriture avec le NFC de l\'iPhone peut ne pas fonctionner sur toutes les cartes Magic Gen2. Android avec l\'application NFC Tools Pro ou un appareil Proxmark3 recommandé pour la fiabilité.'**
+  /// **'⚠️ Attention : L\'écriture avec le NFC de l\'iPhone peut ne pas fonctionner sur toutes les cartes Magic Gen2. Un appareil Proxmark3 est recommandé pour une fiabilité maximale.'**
   String get iphoneWriteDisclaimer;
 
   /// No description provided for @step1GetMagicGen2.
@@ -1734,6 +1746,372 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Clone supprimé'**
   String get cloneDeleted;
+
+  /// No description provided for @deleteAccount.
+  ///
+  /// In fr, this message translates to:
+  /// **'Supprimer mon compte'**
+  String get deleteAccount;
+
+  /// No description provided for @deleteAccountConfirmation.
+  ///
+  /// In fr, this message translates to:
+  /// **'Cette action est irréversible. Votre compte et toutes vos données seront supprimés dans un délai de 30 jours.'**
+  String get deleteAccountConfirmation;
+
+  /// No description provided for @accountDeletionRequested.
+  ///
+  /// In fr, this message translates to:
+  /// **'Demande de suppression enregistrée'**
+  String get accountDeletionRequested;
+
+  /// No description provided for @clearShoppingList.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vider la liste'**
+  String get clearShoppingList;
+
+  /// No description provided for @clearShoppingListConfirmation.
+  ///
+  /// In fr, this message translates to:
+  /// **'Voulez-vous vraiment vider la liste de courses ? Cette action est irréversible.'**
+  String get clearShoppingListConfirmation;
+
+  /// No description provided for @nfcReaderTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'NFC Reader Anycubic'**
+  String get nfcReaderTitle;
+
+  /// No description provided for @historyTooltip.
+  ///
+  /// In fr, this message translates to:
+  /// **'Historique'**
+  String get historyTooltip;
+
+  /// No description provided for @retryButton.
+  ///
+  /// In fr, this message translates to:
+  /// **'Réessayer'**
+  String get retryButton;
+
+  /// No description provided for @readSuccessMessage.
+  ///
+  /// In fr, this message translates to:
+  /// **'Lecture réussie !'**
+  String get readSuccessMessage;
+
+  /// No description provided for @filamentTypeLabel.
+  ///
+  /// In fr, this message translates to:
+  /// **'Type de filament'**
+  String get filamentTypeLabel;
+
+  /// No description provided for @scanNfcChipButton.
+  ///
+  /// In fr, this message translates to:
+  /// **'Scanner une puce NFC'**
+  String get scanNfcChipButton;
+
+  /// No description provided for @deleteCloneConfirmation.
+  ///
+  /// In fr, this message translates to:
+  /// **'Supprimer le clone \"{name}\" ?'**
+  String deleteCloneConfirmation(String name);
+
+  /// No description provided for @cloneDeletedMessage.
+  ///
+  /// In fr, this message translates to:
+  /// **'Clone \"{name}\" supprimé'**
+  String cloneDeletedMessage(String name);
+
+  /// No description provided for @extruderLabel.
+  ///
+  /// In fr, this message translates to:
+  /// **'Extrudeur'**
+  String get extruderLabel;
+
+  /// No description provided for @writeThisCloneButton.
+  ///
+  /// In fr, this message translates to:
+  /// **'Écrire ce clone'**
+  String get writeThisCloneButton;
+
+  /// No description provided for @customNameHint.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nom personnalisé'**
+  String get customNameHint;
+
+  /// No description provided for @cloneWriteSuccessMessage.
+  ///
+  /// In fr, this message translates to:
+  /// **'Clone écrit avec succès !'**
+  String get cloneWriteSuccessMessage;
+
+  /// No description provided for @errorPrefix.
+  ///
+  /// In fr, this message translates to:
+  /// **'Erreur: {error}'**
+  String errorPrefix(String error);
+
+  /// No description provided for @writingInProgress.
+  ///
+  /// In fr, this message translates to:
+  /// **'Écriture en cours...'**
+  String get writingInProgress;
+
+  /// No description provided for @writeOnCUIDButton.
+  ///
+  /// In fr, this message translates to:
+  /// **'Écrire sur une carte CUID'**
+  String get writeOnCUIDButton;
+
+  /// No description provided for @diameterLabel.
+  ///
+  /// In fr, this message translates to:
+  /// **'Diamètre'**
+  String get diameterLabel;
+
+  /// No description provided for @extruderTempLabel.
+  ///
+  /// In fr, this message translates to:
+  /// **'Température extrudeur'**
+  String get extruderTempLabel;
+
+  /// No description provided for @bedTempLabel.
+  ///
+  /// In fr, this message translates to:
+  /// **'Température plateau'**
+  String get bedTempLabel;
+
+  /// No description provided for @nfcFrequency.
+  ///
+  /// In fr, this message translates to:
+  /// **'13.56 MHz'**
+  String get nfcFrequency;
+
+  /// No description provided for @nfcProtocol.
+  ///
+  /// In fr, this message translates to:
+  /// **'ISO14443A'**
+  String get nfcProtocol;
+
+  /// No description provided for @nfcCapacity.
+  ///
+  /// In fr, this message translates to:
+  /// **'1K bytes (1024 bytes)'**
+  String get nfcCapacity;
+
+  /// No description provided for @rsaSignatureNote.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le clone inclut la signature RSA originale, il sera accepté par l\'imprimante !'**
+  String get rsaSignatureNote;
+
+  /// No description provided for @writeBambuLabTagTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Écrire un tag Bambu Lab'**
+  String get writeBambuLabTagTitle;
+
+  /// No description provided for @bambuLabTagWriteSuccess.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tag Bambu Lab écrit avec succès!'**
+  String get bambuLabTagWriteSuccess;
+
+  /// No description provided for @approachNfcTagMessage.
+  ///
+  /// In fr, this message translates to:
+  /// **'Approchez le tag NFC...'**
+  String get approachNfcTagMessage;
+
+  /// No description provided for @bambuLabFormatMiFare.
+  ///
+  /// In fr, this message translates to:
+  /// **'Format Bambu Lab (MiFare 13.56 MHz)'**
+  String get bambuLabFormatMiFare;
+
+  /// No description provided for @bambuLabFormat.
+  ///
+  /// In fr, this message translates to:
+  /// **'Format Bambu Lab'**
+  String get bambuLabFormat;
+
+  /// No description provided for @bambuLabFormatInfo.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ce format utilise les codes matériaux Bambu Lab et stocke les données dans un format compatible avec l\'AMS.'**
+  String get bambuLabFormatInfo;
+
+  /// No description provided for @brandLabel.
+  ///
+  /// In fr, this message translates to:
+  /// **'Marque'**
+  String get brandLabel;
+
+  /// No description provided for @materialTypeLabel.
+  ///
+  /// In fr, this message translates to:
+  /// **'Type de matériau'**
+  String get materialTypeLabel;
+
+  /// No description provided for @serialNumber3Digits.
+  ///
+  /// In fr, this message translates to:
+  /// **'Numéro de série (3 chiffres)'**
+  String get serialNumber3Digits;
+
+  /// No description provided for @weight250g.
+  ///
+  /// In fr, this message translates to:
+  /// **'250g'**
+  String get weight250g;
+
+  /// No description provided for @weight500g.
+  ///
+  /// In fr, this message translates to:
+  /// **'500g'**
+  String get weight500g;
+
+  /// No description provided for @weight1000g.
+  ///
+  /// In fr, this message translates to:
+  /// **'1000g'**
+  String get weight1000g;
+
+  /// No description provided for @weight1000gStandard.
+  ///
+  /// In fr, this message translates to:
+  /// **'1000g (standard)'**
+  String get weight1000gStandard;
+
+  /// No description provided for @weight2000g.
+  ///
+  /// In fr, this message translates to:
+  /// **'2000g'**
+  String get weight2000g;
+
+  /// No description provided for @weight3000g.
+  ///
+  /// In fr, this message translates to:
+  /// **'3000g'**
+  String get weight3000g;
+
+  /// No description provided for @writeBambuLabTagButton.
+  ///
+  /// In fr, this message translates to:
+  /// **'Écrire le tag Bambu Lab'**
+  String get writeBambuLabTagButton;
+
+  /// No description provided for @bambuLabRsaNote.
+  ///
+  /// In fr, this message translates to:
+  /// **'Note: Les tags Bambu Lab originaux utilisent un chiffrement RSA. Ce mode écrit les données dans un format simplifié compatible.'**
+  String get bambuLabRsaNote;
+
+  /// No description provided for @signInError.
+  ///
+  /// In fr, this message translates to:
+  /// **'Erreur de connexion: {error}'**
+  String signInError(String error);
+
+  /// No description provided for @subscriptionActivatedMessage.
+  ///
+  /// In fr, this message translates to:
+  /// **'Abonnement activé avec succès !'**
+  String get subscriptionActivatedMessage;
+
+  /// No description provided for @subscriptionFailedMessage.
+  ///
+  /// In fr, this message translates to:
+  /// **'Échec de l\'abonnement'**
+  String get subscriptionFailedMessage;
+
+  /// No description provided for @errorMessage.
+  ///
+  /// In fr, this message translates to:
+  /// **'Erreur: {error}'**
+  String errorMessage(String error);
+
+  /// No description provided for @subscriptionRestoredMessage.
+  ///
+  /// In fr, this message translates to:
+  /// **'Abonnement restauré avec succès !'**
+  String get subscriptionRestoredMessage;
+
+  /// No description provided for @noSubscriptionFoundMessage.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun abonnement trouvé'**
+  String get noSubscriptionFoundMessage;
+
+  /// No description provided for @vipLabel.
+  ///
+  /// In fr, this message translates to:
+  /// **'VIP'**
+  String get vipLabel;
+
+  /// No description provided for @activeLabel.
+  ///
+  /// In fr, this message translates to:
+  /// **'ACTIF'**
+  String get activeLabel;
+
+  /// No description provided for @noAdsExperienceMessage.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vous profitez de l\'expérience sans publicité !'**
+  String get noAdsExperienceMessage;
+
+  /// No description provided for @subscribedLabel.
+  ///
+  /// In fr, this message translates to:
+  /// **'Abonné'**
+  String get subscribedLabel;
+
+  /// No description provided for @restorePurchasesButton.
+  ///
+  /// In fr, this message translates to:
+  /// **'Restaurer les achats'**
+  String get restorePurchasesButton;
+
+  /// No description provided for @cannotExceedRemainingWeight.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le poids ne peut pas dépasser le poids restant'**
+  String get cannotExceedRemainingWeight;
+
+  /// No description provided for @pleaseEnterLength.
+  ///
+  /// In fr, this message translates to:
+  /// **'Veuillez entrer la longueur'**
+  String get pleaseEnterLength;
+
+  /// No description provided for @pleaseEnterValidLength.
+  ///
+  /// In fr, this message translates to:
+  /// **'Veuillez entrer une longueur valide'**
+  String get pleaseEnterValidLength;
+
+  /// No description provided for @spoolLengthNotSetCannotConvert.
+  ///
+  /// In fr, this message translates to:
+  /// **'Longueur de bobine non définie - conversion impossible'**
+  String get spoolLengthNotSetCannotConvert;
+
+  /// No description provided for @exceedsRemainingWeight.
+  ///
+  /// In fr, this message translates to:
+  /// **'Dépasse le poids restant'**
+  String get exceedsRemainingWeight;
+
+  /// No description provided for @skuLabel.
+  ///
+  /// In fr, this message translates to:
+  /// **'SKU'**
+  String get skuLabel;
 }
 
 class _AppLocalizationsDelegate

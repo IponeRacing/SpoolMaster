@@ -30,6 +30,8 @@ class SyncController {
         // Sync des bobines
         if (isset($input['spools']) && is_array($input['spools'])) {
             foreach ($input['spools'] as $spool) {
+                // Normaliser les noms de champs
+                $spool = $this->normalizeFieldNames($spool);
                 $result = $this->syncSpool($userId, $spool);
                 if ($result['synced']) $itemsSynced++;
                 if ($result['conflict']) $conflicts++;
@@ -58,15 +60,20 @@ class SyncController {
 
     /**
      * Pull les données cloud vers le local
-     * POST /sync/pull
-     * Body: { "last_sync": "2025-01-01 00:00:00" }
+     * GET/POST /sync/pull
+     * Query/Body: { "last_sync": "2025-01-01 00:00:00" }
      */
     public function pull() {
         $userId = AuthMiddleware::getUserId();
         if (!$userId) return;
 
-        $input = json_decode(file_get_contents('php://input'), true);
-        $lastSync = $input['last_sync'] ?? null;
+        // Support GET (query params) et POST (body)
+        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            $lastSync = $_GET['last_sync'] ?? null;
+        } else {
+            $input = json_decode(file_get_contents('php://input'), true);
+            $lastSync = $input['last_sync'] ?? null;
+        }
 
         $db = Database::getInstance()->getConnection();
 
@@ -88,7 +95,31 @@ class SyncController {
             $stmt->execute(['user_id' => $userId]);
         }
 
-        $spools = $stmt->fetchAll();
+        $spoolsRaw = $stmt->fetchAll();
+
+        // Mapper les noms de champs pour le client (snake_case)
+        $spools = array_map(function($spool) {
+            return [
+                'spool_id' => $spool['spool_id'],
+                'brand' => $spool['brand'],
+                'material' => $spool['material'],
+                'color_name' => $spool['color_name'],
+                'color_rgb' => (int)$spool['color_rgb'],
+                'price' => (float)$spool['price'],
+                'initial_weight' => (float)$spool['initial_weight'],
+                'remaining_weight' => (float)$spool['remaining_weight'],
+                'diameter' => $spool['diameter'] ? (float)$spool['diameter'] : null,
+                'spool_length' => $spool['spool_length'] ? (int)$spool['spool_length'] : null,
+                'extruder_temp_min' => $spool['extruder_temp_min'] ? (int)$spool['extruder_temp_min'] : null,
+                'extruder_temp_max' => $spool['extruder_temp_max'] ? (int)$spool['extruder_temp_max'] : null,
+                'bed_temp_min' => $spool['bed_temp_min'] ? (int)$spool['bed_temp_min'] : null,
+                'bed_temp_max' => $spool['bed_temp_max'] ? (int)$spool['bed_temp_max'] : null,
+                'manufacture_date' => $spool['manufacture_date'],
+                'batch_number' => $spool['batch_number'],
+                'created_at' => $spool['created_at'],
+                'updated_at' => $spool['updated_at'],
+            ];
+        }, $spoolsRaw);
 
         // Récupérer les préférences
         $stmt = $db->prepare(
@@ -277,5 +308,40 @@ class SyncController {
             'duration_ms' => $duration,
             'status' => $status
         ]);
+    }
+
+    /**
+     * Normalise les noms de champs pour accepter camelCase et snake_case
+     */
+    private function normalizeFieldNames(?array $input): array {
+        if (!$input) return [];
+
+        $mapping = [
+            'colorName' => 'color_name',
+            'colorRgb' => 'color_rgb',
+            'weight' => 'initial_weight',
+            'remainingWeight' => 'remaining_weight',
+            'spoolLength' => 'spool_length',
+            'extruderTempMin' => 'extruder_temp_min',
+            'extruderTempMax' => 'extruder_temp_max',
+            'bedTempMin' => 'bed_temp_min',
+            'bedTempMax' => 'bed_temp_max',
+            'manufactureDate' => 'manufacture_date',
+            'batchNumber' => 'batch_number',
+            'purchaseDate' => 'purchase_date',
+            'addedDate' => 'added_date',
+            'id' => 'spool_id',
+        ];
+
+        $normalized = [];
+        foreach ($input as $key => $value) {
+            $newKey = $mapping[$key] ?? $key;
+            // Ne pas écraser si la version snake_case existe déjà
+            if (!isset($normalized[$newKey])) {
+                $normalized[$newKey] = $value;
+            }
+        }
+
+        return $normalized;
     }
 }

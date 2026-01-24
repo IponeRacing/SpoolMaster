@@ -150,6 +150,8 @@
   "authentication": "Authentifizierung",
   "signInWithGoogle": "Mit Google anmelden",
   "signInWithApple": "Mit Apple anmelden",
+  "continueWithApple": "Weiter mit Apple",
+  "continueWithGoogle": "Weiter mit Google",
   "comingSoon": "Demnächst verfügbar",
   "about": "Über",
   "version": "Version",
@@ -266,7 +268,7 @@
   "magicGen2Required": "Magic Gen2 Karte - MiFare Classic 1K mit beschreibbarem Block 0 (UID)",
   "magicGen2CardType": "Magic Gen2 (MiFare Classic 1K)",
   "magicGen2Where": "Suchen Sie nach \"Magic Gen2 MiFare Classic 1K\" oder \"UID writable\" auf AliExpress, Amazon oder eBay (~$0.50/Stück)",
-  "iphoneWriteDisclaimer": "⚠️ Warnung: Das Schreiben mit iPhone NFC funktioniert möglicherweise nicht bei allen Magic Gen2 Karten. Android mit NFC Tools Pro App oder Proxmark3 Gerät für Zuverlässigkeit empfohlen.",
+  "iphoneWriteDisclaimer": "⚠️ Warnung: Das Schreiben mit iPhone NFC funktioniert möglicherweise nicht bei allen Magic Gen2 Karten. Ein Proxmark3-Gerät wird für maximale Zuverlässigkeit empfohlen.",
   "step1GetMagicGen2": "Besorgen Sie eine leere Magic Gen2 Karte (MiFare Classic 1K mit beschreibbarer UID)",
   "instructions": "Anleitung",
   "step1GetCUID": "Besorgen Sie eine leere CUID-Karte (MiFare Classic 1K)",
@@ -275,5 +277,91 @@
   "step4WaitConfirm": "Warten Sie auf die Schreibbestätigung",
   "step5TestClone": "Testen Sie den geklonten Tag auf Ihrem Bambu Lab Drucker!",
   "rsaIncluded": "Der Klon enthält die Original-RSA-Signatur, er wird vom Drucker akzeptiert!",
-  "cloneDeleted": "Klon gelöscht"
+  "cloneDeleted": "Klon gelöscht",
+  "deleteAccount": "Mein Konto löschen",
+  "deleteAccountConfirmation": "Diese Aktion ist unwiderruflich. Ihr Konto und alle Daten werden innerhalb von 30 Tagen gelöscht.",
+  "accountDeletionRequested": "Löschanfrage registriert",
+  "clearShoppingList": "Liste leeren",
+  "clearShoppingListConfirmation": "Möchten Sie die gesamte Einkaufsliste wirklich leeren? Diese Aktion kann nicht rückgängig gemacht werden.",
+  "nfcReaderTitle": "NFC Reader Anycubic",
+  "historyTooltip": "Verlauf",
+  "retryButton": "Erneut versuchen",
+  "readSuccessMessage": "Erfolgreich gelesen!",
+  "filamentTypeLabel": "Filamenttyp",
+  "scanNfcChipButton": "NFC-Chip scannen",
+  "deleteCloneConfirmation": "Klon \"{name}\" löschen?",
+  "@deleteCloneConfirmation": {
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+  },
+  "cloneDeletedMessage": "Klon \"{name}\" gelöscht",
+  "@cloneDeletedMessage": {
+    "placeholders": {
+      "name": { "type": "String" }
+    }
+  },
+  "extruderLabel": "Extruder",
+  "writeThisCloneButton": "Diesen Klon schreiben",
+  "customNameHint": "Benutzerdefinierter Name",
+  "cloneWriteSuccessMessage": "Klon erfolgreich geschrieben!",
+  "errorPrefix": "Fehler: {error}",
+  "@errorPrefix": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "writingInProgress": "Schreiben...",
+  "writeOnCUIDButton": "Auf CUID-Karte schreiben",
+  "diameterLabel": "Durchmesser",
+  "extruderTempLabel": "Extruder-Temperatur",
+  "bedTempLabel": "Bett-Temperatur",
+  "nfcFrequency": "13,56 MHz",
+  "nfcProtocol": "ISO14443A",
+  "nfcCapacity": "1K Bytes (1024 Bytes)",
+  "rsaSignatureNote": "Der Klon enthält die Original-RSA-Signatur, er wird vom Drucker akzeptiert!",
+  "writeBambuLabTagTitle": "Bambu Lab Tag schreiben",
+  "bambuLabTagWriteSuccess": "Bambu Lab Tag erfolgreich geschrieben!",
+  "approachNfcTagMessage": "NFC-Tag annähern...",
+  "bambuLabFormatMiFare": "Bambu Lab Format (MiFare 13,56 MHz)",
+  "bambuLabFormat": "Bambu Lab Format",
+  "bambuLabFormatInfo": "Dieses Format verwendet Bambu Lab Materialcodes und speichert Daten in einem AMS-kompatiblen Format.",
+  "brandLabel": "Marke",
+  "materialTypeLabel": "Materialtyp",
+  "serialNumber3Digits": "Seriennummer (3 Ziffern)",
+  "weight250g": "250g",
+  "weight500g": "500g",
+  "weight1000g": "1000g",
+  "weight1000gStandard": "1000g (Standard)",
+  "weight2000g": "2000g",
+  "weight3000g": "3000g",
+  "writeBambuLabTagButton": "Bambu Lab Tag schreiben",
+  "bambuLabRsaNote": "Hinweis: Original Bambu Lab Tags verwenden RSA-Verschlüsselung. Dieser Modus schreibt Daten in einem vereinfachten kompatiblen Format.",
+  "signInError": "Anmeldefehler: {error}",
+  "@signInError": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "subscriptionActivatedMessage": "Abonnement erfolgreich aktiviert!",
+  "subscriptionFailedMessage": "Abonnement fehlgeschlagen",
+  "errorMessage": "Fehler: {error}",
+  "@errorMessage": {
+    "placeholders": {
+      "error": { "type": "String" }
+    }
+  },
+  "subscriptionRestoredMessage": "Abonnement erfolgreich wiederhergestellt!",
+  "noSubscriptionFoundMessage": "Kein Abonnement gefunden",
+  "vipLabel": "VIP",
+  "activeLabel": "AKTIV",
+  "noAdsExperienceMessage": "Sie genießen das werbefreie Erlebnis!",
+  "subscribedLabel": "Abonniert",
+  "restorePurchasesButton": "Käufe wiederherstellen",
+  "cannotExceedRemainingWeight": "Kann das Restgewicht nicht überschreiten",
+  "pleaseEnterLength": "Bitte Länge eingeben",
+  "pleaseEnterValidLength": "Bitte gültige Länge eingeben",
+  "spoolLengthNotSetCannotConvert": "Spulenlänge nicht festgelegt - Umrechnung nicht möglich",
+  "exceedsRemainingWeight": "Überschreitet Restgewicht",
+  "skuLabel": "SKU"
 }

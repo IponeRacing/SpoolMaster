@@ -104,6 +104,35 @@ class NfcDataSourceImpl implements NfcDataSource {
       developer.log('🎨 RGB détecté: ($r, $g, $b) [Alpha: $a]');
     }
 
+    // Si le colorRgb est null, 0 (noir mais pas de données), ou semble invalide,
+    // utiliser le mapping basé sur le nom de couleur extrait du SKU
+    // Ceci corrige les cas où la page 20 contient des données résiduelles
+    final colorNameToRgb = {
+      'White': 0xFFFFFF,
+      'Black': 0x000000,
+      'Red': 0xFF0000,
+      'Blue': 0x0000FF,
+      'Green': 0x00FF00,
+      'Yellow': 0xFFFF00,
+      'Orange': 0xFF8000,
+      'Pink': 0xFF69B4,
+      'Gray': 0x808080,
+      'Purple': 0x8000FF,
+      'Brown': 0x8B4513,
+    };
+
+    // Si on a un nom de couleur connu, utiliser son RGB
+    // Ceci garantit que le colorRgb correspond toujours au nom de couleur du SKU
+    if (colorNameToRgb.containsKey(color)) {
+      final expectedRgb = colorNameToRgb[color]!;
+      if (colorRgb != expectedRgb) {
+        developer.log(
+          '🔄 Correction RGB: $colorRgb → $expectedRgb (basé sur couleur "$color")',
+        );
+        colorRgb = expectedRgb;
+      }
+    }
+
     // Parse temperatures and advanced settings
     int? extruderMin, extruderMax, bedMin, bedMax, spoolLength;
     double weight = 1000.0;
@@ -190,10 +219,16 @@ class NfcDataSourceImpl implements NfcDataSource {
     final nfcMode = await UserPreferencesService.getNfcMode();
     developer.log('🔧 Mode NFC: $nfcMode');
 
-    // Si mode Bambu Lab, utiliser le lecteur spécifique
+    // Si mode Bambu Lab explicitement sélectionné, utiliser le lecteur spécifique
     if (nfcMode == 'bambu') {
       developer.log('🏷️ Mode Bambu Lab détecté, utilisation du lecteur Bambu Lab');
-      return await _readBambuLabTag();
+      try {
+        return await _readBambuLabTag();
+      } catch (e) {
+        developer.log('⚠️ Échec lecture Bambu Lab, tentative en mode Anycubic: $e');
+        // Si la lecture Bambu Lab échoue, essayer en mode Anycubic
+        // (le tag pourrait être un Anycubic/NTAG même si le mode est sur Bambu)
+      }
     }
 
     try {

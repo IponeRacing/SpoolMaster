@@ -82,6 +82,9 @@ class SpoolController {
 
         $input = json_decode(file_get_contents('php://input'), true);
 
+        // Normaliser les noms de champs (accepter camelCase et snake_case)
+        $input = $this->normalizeFieldNames($input);
+
         // Validation
         if (!isset($input['material']) || !isset($input['color_name']) || !isset($input['initial_weight'])) {
             return $this->error('Missing required fields', 400);
@@ -150,6 +153,10 @@ class SpoolController {
         }
 
         $input = json_decode(file_get_contents('php://input'), true);
+
+        // Normaliser les noms de champs (accepter camelCase et snake_case)
+        $input = $this->normalizeFieldNames($input);
+
         $db = Database::getInstance()->getConnection();
 
         // Vérifier que la bobine appartient à l'utilisateur
@@ -253,5 +260,40 @@ class SpoolController {
             'success' => false,
             'error' => $message
         ];
+    }
+
+    /**
+     * Normalise les noms de champs pour accepter camelCase et snake_case
+     */
+    private function normalizeFieldNames(?array $input): array {
+        if (!$input) return [];
+
+        $mapping = [
+            'colorName' => 'color_name',
+            'colorRgb' => 'color_rgb',
+            'weight' => 'initial_weight',
+            'remainingWeight' => 'remaining_weight',
+            'spoolLength' => 'spool_length',
+            'extruderTempMin' => 'extruder_temp_min',
+            'extruderTempMax' => 'extruder_temp_max',
+            'bedTempMin' => 'bed_temp_min',
+            'bedTempMax' => 'bed_temp_max',
+            'manufactureDate' => 'manufacture_date',
+            'batchNumber' => 'batch_number',
+            'purchaseDate' => 'purchase_date',
+            'addedDate' => 'added_date',
+            'id' => 'spool_id',
+        ];
+
+        $normalized = [];
+        foreach ($input as $key => $value) {
+            $newKey = $mapping[$key] ?? $key;
+            // Ne pas écraser si la version snake_case existe déjà
+            if (!isset($normalized[$newKey])) {
+                $normalized[$newKey] = $value;
+            }
+        }
+
+        return $normalized;
     }
 }

@@ -64,6 +64,12 @@ void main() async {
   await initializeDateFormatting('ms_MY', null);
   await initializeDateFormatting('hi_IN', null);
 
+  // Lock orientation to portrait mode
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
+
   // Setup Dependency Injection
   await configureDependencies();
 
@@ -259,6 +265,25 @@ class SpoolStorageService {
     final prefs = await SharedPreferences.getInstance();
     final key = await _getStorageKey();
     final String? data = prefs.getString(key);
+
+    // Si pas de données avec la clé scopée, essayer la clé non-scopée (migration)
+    if (data == null && key != _keyPrefix) {
+      final String? legacyData = prefs.getString(_keyPrefix);
+      if (legacyData != null) {
+        debugPrint('📦 Migrating spools from legacy key to user-scoped key');
+        // Migrer les données vers la nouvelle clé
+        await prefs.setString(key, legacyData);
+        // Supprimer l'ancienne clé
+        await prefs.remove(_keyPrefix);
+        final List<dynamic> jsonList = jsonDecode(legacyData) as List<dynamic>;
+        return jsonList
+            .map(
+              (json) => SpoolInventoryItem.fromJson(json as Map<String, dynamic>),
+            )
+            .toList();
+      }
+    }
+
     if (data == null) return [];
 
     final List<dynamic> jsonList = jsonDecode(data) as List<dynamic>;
@@ -267,6 +292,37 @@ class SpoolStorageService {
           (json) => SpoolInventoryItem.fromJson(json as Map<String, dynamic>),
         )
         .toList();
+  }
+
+  /// Charger les spools depuis toutes les clés possibles (pour la migration)
+  static Future<List<SpoolInventoryItem>> loadAllSpools() async {
+    final prefs = await SharedPreferences.getInstance();
+    final allKeys = prefs.getKeys();
+    final spoolKeys = allKeys.where((k) => k.startsWith(_keyPrefix));
+
+    final List<SpoolInventoryItem> allSpools = [];
+    final Set<String> seenIds = {};
+
+    for (final key in spoolKeys) {
+      final String? data = prefs.getString(key);
+      if (data != null) {
+        try {
+          final List<dynamic> jsonList = jsonDecode(data) as List<dynamic>;
+          for (final json in jsonList) {
+            final spool = SpoolInventoryItem.fromJson(json as Map<String, dynamic>);
+            // Éviter les doublons par ID
+            if (!seenIds.contains(spool.id)) {
+              seenIds.add(spool.id);
+              allSpools.add(spool);
+            }
+          }
+        } catch (e) {
+          debugPrint('⚠️ Error parsing spools from key $key: $e');
+        }
+      }
+    }
+
+    return allSpools;
   }
 
   static Future<void> saveSpools(List<SpoolInventoryItem> spools) async {
@@ -1847,6 +1903,11 @@ class _StatisticsPageState extends State<StatisticsPage> {
     await _loadData();
   }
 
+  Future<void> _clearShoppingList() async {
+    await ShoppingListService.clearShoppingList();
+    await _loadData();
+  }
+
   // Calculate statistics
   int get totalSpools => _spools.length;
 
@@ -2053,6 +2114,30 @@ class _StatisticsPageState extends State<StatisticsPage> {
     );
   }
 
+  void _showClearShoppingListDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(AppLocalizations.of(context)!.clearShoppingList),
+        content: Text(AppLocalizations.of(context)!.clearShoppingListConfirmation),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text(AppLocalizations.of(context)!.cancel),
+          ),
+          TextButton(
+            onPressed: () async {
+              Navigator.pop(context);
+              await _clearShoppingList();
+            },
+            style: TextButton.styleFrom(foregroundColor: Colors.red),
+            child: Text(AppLocalizations.of(context)!.clearAll),
+          ),
+        ],
+      ),
+    );
+  }
+
   void _showAddToShoppingListDialog(BuildContext context) {
     showDialog(
       context: context,
@@ -2084,13 +2169,13 @@ class _StatisticsPageState extends State<StatisticsPage> {
                     final spool = SpoolInventoryItem(
                       id: DateTime.now().millisecondsSinceEpoch.toString(),
                       brand: (bobbinData.brand as String?) ?? 'Inconnu',
-                      material: (bobbinData.material as String?) ?? 'Inconnu',
-                      colorName: (bobbinData.colorName as String?) ?? 'Inconnu',
+                      material: (bobbinData.filamentType as String?) ?? 'Inconnu',
+                      colorName: (bobbinData.color as String?) ?? 'Inconnu',
                       colorRgb: (bobbinData.colorRgb as int?) ?? 0xFFFFFFFF,
                       price: 0.0, // Prix par défaut
-                      weight: (bobbinData.weight as num?)?.toDouble() ?? 1000.0,
+                      weight: (bobbinData.weightGrams as num?)?.toDouble() ?? 1000.0,
                       remainingWeight:
-                          (bobbinData.weight as num?)?.toDouble() ?? 1000.0,
+                          (bobbinData.weightGrams as num?)?.toDouble() ?? 1000.0,
                       addedDate: DateTime.now(),
                     );
 
@@ -2194,6 +2279,12 @@ class _StatisticsPageState extends State<StatisticsPage> {
                     ),
                   ),
                 ),
+                if (_shoppingList.isNotEmpty)
+                  IconButton(
+                    icon: Icon(Icons.delete_sweep, color: Colors.red.shade400),
+                    onPressed: () => _showClearShoppingListDialog(context),
+                    tooltip: AppLocalizations.of(context)!.clearShoppingList,
+                  ),
                 IconButton(
                   icon: Icon(Icons.add_circle, color: Colors.blue.shade700),
                   onPressed: () => _showAddToShoppingListDialog(context),

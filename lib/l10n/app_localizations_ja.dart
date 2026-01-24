@@ -464,6 +464,12 @@ class AppLocalizationsJa extends AppLocalizations {
   String get signInWithApple => 'Appleでサインイン';
 
   @override
+  String get continueWithApple => 'Appleで続行';
+
+  @override
+  String get continueWithGoogle => 'Googleで続行';
+
+  @override
   String get comingSoon => '近日公開';
 
   @override
@@ -778,7 +784,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get iphoneWriteDisclaimer =>
-      '⚠️ 警告：iPhone NFCでの書き込みは、すべてのMagic Gen2カードで機能しない可能性があります。信頼性のため、NFC Tools Proアプリを使用したAndroidまたはProxmark3デバイスを推奨します。';
+      '⚠️ 警告：iPhone NFCでの書き込みは、すべてのMagic Gen2カードで機能しない可能性があります。最大限の信頼性を得るため、Proxmark3デバイスを推奨します。';
 
   @override
   String get step1GetMagicGen2 =>
@@ -807,4 +813,200 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get cloneDeleted => 'クローンが削除されました';
+
+  @override
+  String get deleteAccount => 'アカウントを削除';
+
+  @override
+  String get deleteAccountConfirmation =>
+      'この操作は取り消せません。アカウントとすべてのデータは30日以内に削除されます。';
+
+  @override
+  String get accountDeletionRequested => '削除リクエストが登録されました';
+
+  @override
+  String get clearShoppingList => 'リストをクリア';
+
+  @override
+  String get clearShoppingListConfirmation => '買い物リストをすべてクリアしますか？この操作は元に戻せません。';
+
+  @override
+  String get nfcReaderTitle => 'NFC Reader Anycubic';
+
+  @override
+  String get historyTooltip => '履歴';
+
+  @override
+  String get retryButton => '再試行';
+
+  @override
+  String get readSuccessMessage => '読み取り成功！';
+
+  @override
+  String get filamentTypeLabel => 'フィラメントタイプ';
+
+  @override
+  String get scanNfcChipButton => 'NFCチップをスキャン';
+
+  @override
+  String deleteCloneConfirmation(String name) {
+    return 'クローン「$name」を削除しますか？';
+  }
+
+  @override
+  String cloneDeletedMessage(String name) {
+    return 'クローン「$name」を削除しました';
+  }
+
+  @override
+  String get extruderLabel => 'エクストルーダー';
+
+  @override
+  String get writeThisCloneButton => 'このクローンを書き込む';
+
+  @override
+  String get customNameHint => 'カスタム名';
+
+  @override
+  String get cloneWriteSuccessMessage => 'クローンの書き込み成功！';
+
+  @override
+  String errorPrefix(String error) {
+    return 'エラー: $error';
+  }
+
+  @override
+  String get writingInProgress => '書き込み中...';
+
+  @override
+  String get writeOnCUIDButton => 'CUIDカードに書き込む';
+
+  @override
+  String get diameterLabel => '直径';
+
+  @override
+  String get extruderTempLabel => 'エクストルーダー温度';
+
+  @override
+  String get bedTempLabel => 'ベッド温度';
+
+  @override
+  String get nfcFrequency => '13.56 MHz';
+
+  @override
+  String get nfcProtocol => 'ISO14443A';
+
+  @override
+  String get nfcCapacity => '1Kバイト (1024バイト)';
+
+  @override
+  String get rsaSignatureNote => 'クローンには元のRSA署名が含まれており、プリンターに認識されます！';
+
+  @override
+  String get writeBambuLabTagTitle => 'Bambu Labタグを書き込む';
+
+  @override
+  String get bambuLabTagWriteSuccess => 'Bambu Labタグの書き込み成功！';
+
+  @override
+  String get approachNfcTagMessage => 'NFCタグを近づけてください...';
+
+  @override
+  String get bambuLabFormatMiFare => 'Bambu Lab形式 (MiFare 13.56 MHz)';
+
+  @override
+  String get bambuLabFormat => 'Bambu Lab形式';
+
+  @override
+  String get bambuLabFormatInfo =>
+      'この形式はBambu Labマテリアルコードを使用し、AMS互換形式でデータを保存します。';
+
+  @override
+  String get brandLabel => 'ブランド';
+
+  @override
+  String get materialTypeLabel => 'マテリアルタイプ';
+
+  @override
+  String get serialNumber3Digits => 'シリアル番号 (3桁)';
+
+  @override
+  String get weight250g => '250g';
+
+  @override
+  String get weight500g => '500g';
+
+  @override
+  String get weight1000g => '1000g';
+
+  @override
+  String get weight1000gStandard => '1000g (標準)';
+
+  @override
+  String get weight2000g => '2000g';
+
+  @override
+  String get weight3000g => '3000g';
+
+  @override
+  String get writeBambuLabTagButton => 'Bambu Labタグを書き込む';
+
+  @override
+  String get bambuLabRsaNote =>
+      '注意: オリジナルのBambu LabタグはRSA暗号化を使用しています。このモードは簡略化された互換形式でデータを書き込みます。';
+
+  @override
+  String signInError(String error) {
+    return 'ログインエラー: $error';
+  }
+
+  @override
+  String get subscriptionActivatedMessage => 'サブスクリプションが有効になりました！';
+
+  @override
+  String get subscriptionFailedMessage => 'サブスクリプションに失敗しました';
+
+  @override
+  String errorMessage(String error) {
+    return 'エラー: $error';
+  }
+
+  @override
+  String get subscriptionRestoredMessage => 'サブスクリプションが復元されました！';
+
+  @override
+  String get noSubscriptionFoundMessage => 'サブスクリプションが見つかりません';
+
+  @override
+  String get vipLabel => 'VIP';
+
+  @override
+  String get activeLabel => 'アクティブ';
+
+  @override
+  String get noAdsExperienceMessage => '広告なしの体験をお楽しみください！';
+
+  @override
+  String get subscribedLabel => '購読中';
+
+  @override
+  String get restorePurchasesButton => '購入を復元';
+
+  @override
+  String get cannotExceedRemainingWeight => '残りの重量を超えることはできません';
+
+  @override
+  String get pleaseEnterLength => '長さを入力してください';
+
+  @override
+  String get pleaseEnterValidLength => '有効な長さを入力してください';
+
+  @override
+  String get spoolLengthNotSetCannotConvert => 'スプール長が設定されていません - 変換できません';
+
+  @override
+  String get exceedsRemainingWeight => '残りの重量を超えています';
+
+  @override
+  String get skuLabel => 'SKU';
 }

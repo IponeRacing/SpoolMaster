@@ -470,6 +470,12 @@ class AppLocalizationsRo extends AppLocalizations {
   String get signInWithApple => 'Autentifică-te cu Apple';
 
   @override
+  String get continueWithApple => 'Continuă cu Apple';
+
+  @override
+  String get continueWithGoogle => 'Continuă cu Google';
+
+  @override
   String get comingSoon => 'În curând';
 
   @override
@@ -787,7 +793,7 @@ class AppLocalizationsRo extends AppLocalizations {
 
   @override
   String get iphoneWriteDisclaimer =>
-      '⚠️ Avertisment: Scrierea cu NFC iPhone poate să nu funcționeze pe toate cardurile Magic Gen2. Se recomandă Android cu aplicația NFC Tools Pro sau dispozitiv Proxmark3 pentru fiabilitate.';
+      '⚠️ Avertisment: Scrierea cu NFC iPhone poate să nu funcționeze pe toate cardurile Magic Gen2. Se recomandă un dispozitiv Proxmark3 pentru fiabilitate maximă.';
 
   @override
   String get step1GetMagicGen2 =>
@@ -818,4 +824,203 @@ class AppLocalizationsRo extends AppLocalizations {
 
   @override
   String get cloneDeleted => 'Clonă ștearsă';
+
+  @override
+  String get deleteAccount => 'Șterge contul meu';
+
+  @override
+  String get deleteAccountConfirmation =>
+      'Această acțiune este ireversibilă. Contul și toate datele vor fi șterse în 30 de zile.';
+
+  @override
+  String get accountDeletionRequested => 'Cerere de ștergere înregistrată';
+
+  @override
+  String get clearShoppingList => 'Golește lista';
+
+  @override
+  String get clearShoppingListConfirmation =>
+      'Sigur doriți să goliți întreaga listă de cumpărături? Această acțiune nu poate fi anulată.';
+
+  @override
+  String get nfcReaderTitle => 'NFC Reader Anycubic';
+
+  @override
+  String get historyTooltip => 'Istoric';
+
+  @override
+  String get retryButton => 'Reîncearcă';
+
+  @override
+  String get readSuccessMessage => 'Citire reușită!';
+
+  @override
+  String get filamentTypeLabel => 'Tip filament';
+
+  @override
+  String get scanNfcChipButton => 'Scanează cip NFC';
+
+  @override
+  String deleteCloneConfirmation(String name) {
+    return 'Șterge clona \"$name\"?';
+  }
+
+  @override
+  String cloneDeletedMessage(String name) {
+    return 'Clona \"$name\" ștearsă';
+  }
+
+  @override
+  String get extruderLabel => 'Extruder';
+
+  @override
+  String get writeThisCloneButton => 'Scrie această clonă';
+
+  @override
+  String get customNameHint => 'Nume personalizat';
+
+  @override
+  String get cloneWriteSuccessMessage => 'Clonă scrisă cu succes!';
+
+  @override
+  String errorPrefix(String error) {
+    return 'Eroare: $error';
+  }
+
+  @override
+  String get writingInProgress => 'Se scrie...';
+
+  @override
+  String get writeOnCUIDButton => 'Scrie pe card CUID';
+
+  @override
+  String get diameterLabel => 'Diametru';
+
+  @override
+  String get extruderTempLabel => 'Temperatură extruder';
+
+  @override
+  String get bedTempLabel => 'Temperatură pat';
+
+  @override
+  String get nfcFrequency => '13,56 MHz';
+
+  @override
+  String get nfcProtocol => 'ISO14443A';
+
+  @override
+  String get nfcCapacity => '1K octeți (1024 octeți)';
+
+  @override
+  String get rsaSignatureNote =>
+      'Clona include semnătura RSA originală, va fi acceptată de imprimantă!';
+
+  @override
+  String get writeBambuLabTagTitle => 'Scrie etichetă Bambu Lab';
+
+  @override
+  String get bambuLabTagWriteSuccess => 'Etichetă Bambu Lab scrisă cu succes!';
+
+  @override
+  String get approachNfcTagMessage => 'Apropie eticheta NFC...';
+
+  @override
+  String get bambuLabFormatMiFare => 'Format Bambu Lab (MiFare 13,56 MHz)';
+
+  @override
+  String get bambuLabFormat => 'Format Bambu Lab';
+
+  @override
+  String get bambuLabFormatInfo =>
+      'Acest format folosește coduri de materiale Bambu Lab și stochează date în format compatibil AMS.';
+
+  @override
+  String get brandLabel => 'Marcă';
+
+  @override
+  String get materialTypeLabel => 'Tip material';
+
+  @override
+  String get serialNumber3Digits => 'Număr de serie (3 cifre)';
+
+  @override
+  String get weight250g => '250g';
+
+  @override
+  String get weight500g => '500g';
+
+  @override
+  String get weight1000g => '1000g';
+
+  @override
+  String get weight1000gStandard => '1000g (standard)';
+
+  @override
+  String get weight2000g => '2000g';
+
+  @override
+  String get weight3000g => '3000g';
+
+  @override
+  String get writeBambuLabTagButton => 'Scrie etichetă Bambu Lab';
+
+  @override
+  String get bambuLabRsaNote =>
+      'Notă: Etichetele Bambu Lab originale folosesc criptare RSA. Acest mod scrie date în format simplificat compatibil.';
+
+  @override
+  String signInError(String error) {
+    return 'Eroare de conectare: $error';
+  }
+
+  @override
+  String get subscriptionActivatedMessage => 'Abonament activat cu succes!';
+
+  @override
+  String get subscriptionFailedMessage => 'Abonament eșuat';
+
+  @override
+  String errorMessage(String error) {
+    return 'Eroare: $error';
+  }
+
+  @override
+  String get subscriptionRestoredMessage => 'Abonament restaurat cu succes!';
+
+  @override
+  String get noSubscriptionFoundMessage => 'Niciun abonament găsit';
+
+  @override
+  String get vipLabel => 'VIP';
+
+  @override
+  String get activeLabel => 'ACTIV';
+
+  @override
+  String get noAdsExperienceMessage => 'Bucură-te de experiența fără reclame!';
+
+  @override
+  String get subscribedLabel => 'Abonat';
+
+  @override
+  String get restorePurchasesButton => 'Restaurează achizițiile';
+
+  @override
+  String get cannotExceedRemainingWeight => 'Nu poate depăși greutatea rămasă';
+
+  @override
+  String get pleaseEnterLength => 'Introduceți lungimea';
+
+  @override
+  String get pleaseEnterValidLength => 'Introduceți o lungime validă';
+
+  @override
+  String get spoolLengthNotSetCannotConvert =>
+      'Lungimea bobinei nu este setată - nu se poate converti';
+
+  @override
+  String get exceedsRemainingWeight => 'Depășește greutatea rămasă';
+
+  @override
+  String get skuLabel => 'SKU';
 }

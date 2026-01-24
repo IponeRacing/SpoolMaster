@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:nfc_filament/l10n/app_localizations.dart';
+import 'package:nfc_filament/core/api/api_config.dart';
 import 'package:nfc_filament/core/services/user_preferences_service.dart';
 import 'package:nfc_filament/core/services/auth_service.dart';
 import 'package:nfc_filament/core/services/subscription_service.dart';
@@ -146,6 +148,76 @@ class _ProfilePageState extends State<ProfilePage> {
     mainNavigationKey.currentState?.refreshPages();
   }
 
+  Future<void> _showDeleteAccountDialog() async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(AppLocalizations.of(context)!.deleteAccount),
+        content: Text(AppLocalizations.of(context)!.deleteAccountConfirmation),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: Text(AppLocalizations.of(context)!.cancel),
+          ),
+          ElevatedButton(
+            onPressed: () => Navigator.pop(context, true),
+            style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+            child: Text(AppLocalizations.of(context)!.delete),
+          ),
+        ],
+      ),
+    );
+
+    if (confirmed == true) {
+      await _deleteAccount();
+    }
+  }
+
+  Future<void> _deleteAccount() async {
+    try {
+      final authService = AuthService();
+      final accessToken = await authService.getAccessToken();
+
+      if (accessToken == null) {
+        throw Exception('Not authenticated');
+      }
+
+      final response = await http.delete(
+        Uri.parse('${ApiConfig.baseUrl}${ApiConfig.deleteAccount}'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $accessToken',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        // Déconnecter l'utilisateur localement
+        await UserPreferencesService.signOut();
+        await _loadPreferences();
+
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(AppLocalizations.of(context)!.accountDeletionRequested),
+              backgroundColor: Colors.green,
+            ),
+          );
+        }
+      } else {
+        throw Exception('Failed to delete account');
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Erreur: $e'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    }
+  }
+
   String _getCurrencyName(BuildContext context, String currency) {
     switch (currency) {
       case 'CHF':
@@ -228,6 +300,19 @@ class _ProfilePageState extends State<ProfilePage> {
                       label: Text(AppLocalizations.of(context)!.signOut),
                       style: OutlinedButton.styleFrom(
                         minimumSize: const Size(double.infinity, 48),
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    OutlinedButton.icon(
+                      onPressed: _showDeleteAccountDialog,
+                      icon: const Icon(Icons.delete_forever, color: Colors.red),
+                      label: Text(
+                        AppLocalizations.of(context)!.deleteAccount,
+                        style: const TextStyle(color: Colors.red),
+                      ),
+                      style: OutlinedButton.styleFrom(
+                        minimumSize: const Size(double.infinity, 48),
+                        side: const BorderSide(color: Colors.red),
                       ),
                     ),
                   ] else ...[
