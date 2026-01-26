@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:nfc_filament/l10n/app_localizations.dart';
 import 'package:nfc_filament/core/api/api_config.dart';
 import 'package:nfc_filament/core/services/user_preferences_service.dart';
@@ -28,6 +29,16 @@ class _ProfilePageState extends State<ProfilePage> {
   bool _isLoading = true;
   bool _isPremium = false;
   bool _isLoadingSubscription = false;
+  List<ProductDetails> _products = [];
+
+  /// Retourne le prix formaté depuis le store pour un produit donné
+  String _getProductPrice(String productId) {
+    final product = _products.cast<ProductDetails?>().firstWhere(
+      (p) => p?.id == productId,
+      orElse: () => null,
+    );
+    return product?.price ?? '...';
+  }
 
   @override
   void initState() {
@@ -45,6 +56,8 @@ class _ProfilePageState extends State<ProfilePage> {
     _selectedUnits = await UserPreferencesService.getUnits();
     _lowStockThreshold = await UserPreferencesService.getLowStockThreshold();
     _isPremium = await UserPreferencesService.isPremium();
+    // Charger les produits depuis le store pour afficher les prix dynamiques
+    _products = SubscriptionService().products;
     setState(() => _isLoading = false);
   }
 
@@ -736,7 +749,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                   ),
                                   const SizedBox(height: 4),
                                   Text(
-                                    '2 CHF ${AppLocalizations.of(context)!.perMonth}',
+                                    '${_getProductPrice(SubscriptionService.monthlySubscriptionId)} ${AppLocalizations.of(context)!.perMonth}',
                                     style: TextStyle(
                                       color: Colors.amber.shade800,
                                       fontWeight: FontWeight.w600,
@@ -857,7 +870,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                         ),
                                         const SizedBox(height: 4),
                                         Text(
-                                          '8 CHF ${AppLocalizations.of(context)!.perYear}',
+                                          '${_getProductPrice(SubscriptionService.yearlySubscriptionId)} ${AppLocalizations.of(context)!.perYear}',
                                           style: TextStyle(
                                             color: Colors.green.shade800,
                                             fontWeight: FontWeight.w600,
