@@ -64,7 +64,19 @@ void main() async {
   await initializeDateFormatting('ms_MY', null);
   await initializeDateFormatting('hi_IN', null);
 
-  // Lock orientation to portrait mode
+  // Enable edge-to-edge display
+  await SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      statusBarIconBrightness: Brightness.dark,
+      systemNavigationBarColor: Colors.transparent,
+      systemNavigationBarIconBrightness: Brightness.dark,
+      systemNavigationBarContrastEnforced: false,
+    ),
+  );
+
+  // Lock orientation to portrait mode on phones (tablets can rotate)
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,

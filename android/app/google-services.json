@@ -1,0 +1,70 @@
+{
+  "project_info": {
+    "project_number": "1091367332850",
+    "project_id": "spool-master-9f9e0",
+    "storage_bucket": "spool-master-9f9e0.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1091367332850:android:d05009669bc8cea734196b",
+        "android_client_info": {
+          "package_name": "com.engagengine.nfc_anycubic"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1091367332850-128jae1hosg9sp8o049pq7qp6ajug1vc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.engagengine.nfc_anycubic",
+            "certificate_hash": "aedf7e92479a0a45a1feb85212ba1404b45f8291"
+          }
+        },
+        {
+          "client_id": "1091367332850-687ptq0i0nkpnlslhjgf11qjcmq6n8jd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.engagengine.nfc_anycubic",
+            "certificate_hash": "d1291c7b03b5fe89bcc1b30c82979ae0292042e7"
+          }
+        },
+        {
+          "client_id": "1091367332850-pdkei8sf9ggcoi1jhggn59iog96slagl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.engagengine.nfc_anycubic",
+            "certificate_hash": "525a0612a6123b6b301eb2d801c439d51da9c08f"
+          }
+        },
+        {
+          "client_id": "1091367332850-6hgb6firnj5miot7uvqggtcng6uc7qog.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDhcba2vS4v6OXeCfrKt4Lk8gxnoJ6f1pM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1091367332850-6hgb6firnj5miot7uvqggtcng6uc7qog.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1091367332850-0gifhmdht0b35kdg9fif0v3608mhqaju.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.engageengine.nfcfilament"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
