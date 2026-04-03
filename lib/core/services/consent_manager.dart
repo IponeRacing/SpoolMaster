@@ -112,7 +112,11 @@ class ConsentManager {
 
   /// Demande tous les consentements dans le bon ordre
   /// 1. ATT (iOS uniquement)
-  /// 2. UMP (GDPR)
+  /// 2. UMP (GDPR) - uniquement si ATT autorisé ou sur Android
+  ///
+  /// Apple exige que si l'utilisateur refuse ATT, on ne lui redemande pas
+  /// le consentement tracking via un autre dialogue (UMP/GDPR).
+  /// On sert alors des pubs non-personnalisées sans formulaire UMP.
   Future<void> requestAllConsents() async {
     debugPrint('🔐 [CONSENT] Starting consent flow...');
 
@@ -120,9 +124,18 @@ class ConsentManager {
     if (Platform.isIOS) {
       final attGranted = await requestATTConsent();
       debugPrint('🔐 [CONSENT] ATT granted: $attGranted');
+
+      // Si ATT refusé, ne pas afficher le formulaire UMP (Apple guideline 5.1.1iv)
+      // L'utilisateur a déjà refusé le tracking, pas besoin de redemander
+      if (!attGranted) {
+        debugPrint('🔐 [CONSENT] ATT denied - skipping UMP form (non-personalized ads only)');
+        _hasRequestedUMP = true;
+        debugPrint('✅ [CONSENT] Consent flow completed (ATT denied, UMP skipped)');
+        return;
+      }
     }
 
-    // 2. UMP pour GDPR
+    // 2. UMP pour GDPR (Android, ou iOS si ATT autorisé)
     final umpGranted = await requestUMPConsent();
     debugPrint('🔐 [CONSENT] UMP granted: $umpGranted');
 
