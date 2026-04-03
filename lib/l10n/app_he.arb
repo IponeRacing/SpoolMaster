@@ -163,7 +163,7 @@
   "tempBed": "טמפ' משטח",
   "termsOfService": "תנאי שירות",
   "privacyPolicy": "מדיניות פרטיות",
-  "legal": "Legal",
+  "legal": "משפטי",
   "back": "חזרה",
   "retry": "נסה שוב",
   "signOut": "התנתק",
@@ -187,6 +187,18 @@
   "usd": "דולר אמריקאי ($)",
   "gbp": "לירה שטרלינג (£)",
   "cad": "דולר קנדי (CAD)",
+  "aud": "דולר אוסטרלי (A$)",
+  "jpy": "ין יפני (¥)",
+  "cny": "יואן סיני (¥)",
+  "inr": "רופי הודי (₹)",
+  "brl": "ריאל ברזילאי (R$)",
+  "mxn": "פזו מקסיקני (MX$)",
+  "sek": "כתר שוודי (kr)",
+  "nok": "כתר נורווגי (kr)",
+  "dkk": "כתר דני (kr)",
+  "pln": "זלוטי פולני (zł)",
+  "czk": "כתר צ׳כי (Kč)",
+  "nzd": "דולר ניו זילנדי (NZ$)",
   "filamentsToOrder": "חוטים להזמנה",
   "shoppingList": "רשימת קניות",
   "addToShoppingList": "הוסף לרשימה",
@@ -241,6 +253,11 @@
   "ok": "אישור",
   "bambuLabReadOnly": "Bambu Lab: קריאה בלבד",
   "bambuLabReadOnlyDesc": "תגי Bambu Lab משתמשים בהצפנת RSA ולא ניתן לשנותם. קריאה בלבד.",
+  "forPrusaMk4": "עבור Prusa MK4/XL (OpenPrintTag)",
+  "prusaReadWrite": "Prusa: קריאה וכתיבה",
+  "prusaReadWriteDesc": "תגי Prusa משתמשים ב-ISO 15693 (NFC-V) עם פורמט OpenPrintTag. קריאה וכתיבה נתמכות.",
+  "nfcTagInfoPrusa": "השתמש בתג NXP ICODE SLIX2 ריק (ISO 15693) ליצירת תגים תואמים ל-OpenPrintTag עבור Prusa MK4/XL.",
+  "writePrusaTagTitle": "כתוב תג Prusa OpenPrintTag",
   "bambuCloneLibrary": "ספריית שכפולי Bambu Lab",
   "noBambuClones": "אין שכפולי Bambu Lab",
   "scanBambuToClone": "סרוק תגי Bambu Lab מקוריים כדי ליצור את ספריית השכפולים שלך",
@@ -289,15 +306,33 @@
   "filamentTypeLabel": "סוג פילמנט",
   "scanNfcChipButton": "סרוק שבב NFC",
   "deleteCloneConfirmation": "למחוק שיבוט \"{name}\"?",
-  "@deleteCloneConfirmation": {"placeholders": {"name": {"type": "String"}}},
+  "@deleteCloneConfirmation": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "cloneDeletedMessage": "שיבוט \"{name}\" נמחק",
-  "@cloneDeletedMessage": {"placeholders": {"name": {"type": "String"}}},
+  "@cloneDeletedMessage": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "extruderLabel": "מכבש",
   "writeThisCloneButton": "כתוב שיבוט זה",
   "customNameHint": "שם מותאם אישית",
   "cloneWriteSuccessMessage": "השיבוט נכתב בהצלחה!",
   "errorPrefix": "שגיאה: {error}",
-  "@errorPrefix": {"placeholders": {"error": {"type": "String"}}},
+  "@errorPrefix": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "writingInProgress": "כותב...",
   "writeOnCUIDButton": "כתוב על כרטיס CUID",
   "diameterLabel": "קוטר",
@@ -325,11 +360,23 @@
   "writeBambuLabTagButton": "כתוב תגית Bambu Lab",
   "bambuLabRsaNote": "הערה: תגיות Bambu Lab מקוריות משתמשות בהצפנת RSA. מצב זה כותב נתונים בפורמט פשוט תואם.",
   "signInError": "שגיאת התחברות: {error}",
-  "@signInError": {"placeholders": {"error": {"type": "String"}}},
+  "@signInError": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "subscriptionActivatedMessage": "המנוי הופעל בהצלחה!",
   "subscriptionFailedMessage": "המנוי נכשל",
   "errorMessage": "שגיאה: {error}",
-  "@errorMessage": {"placeholders": {"error": {"type": "String"}}},
+  "@errorMessage": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "subscriptionRestoredMessage": "המנוי שוחזר בהצלחה!",
   "noSubscriptionFoundMessage": "לא נמצא מנוי",
   "vipLabel": "VIP",
@@ -342,5 +389,30 @@
   "pleaseEnterValidLength": "נא להזין אורך תקין",
   "spoolLengthNotSetCannotConvert": "אורך הסליל לא הוגדר - לא ניתן להמיר",
   "exceedsRemainingWeight": "חורג מהמשקל הנותר",
-  "skuLabel": "מק\"ט"
+  "skuLabel": "מק\"ט",
+  "helpIdentifyFilament": "עזרו לנו לזהות את הפילמנט הזה",
+  "helpUsImprove": "עזרו לנו להשתפר!",
+  "helpIdentifyDescription": "קראנו את השבב אך לא הצלחנו לזהות אותו. ספרו לנו איזה פילמנט זה כדי שנוכל לשפר את האפליקציה.",
+  "otherBrand": "אחר",
+  "thankYouFeedback": "תודה על המשוב שלך!",
+  "send": "שלח",
+  "optionalDetails": "פרטים אופציונליים",
+  "weightGrams": "משקל (ג)",
+  "diameterMm": "קוטר (מ\"מ)",
+  "spoolLengthM": "אורך סליל (מ)",
+  "batchNumberLabel": "אצווה / SKU",
+  "black": "שחור",
+  "white": "לבן",
+  "yellow": "צהוב",
+  "orange": "כתום",
+  "pink": "ורוד",
+  "purple": "סגול",
+  "gray": "אפור",
+  "brown": "חום",
+  "unknown": "לא ידוע",
+  "contactUs": "צור קשר",
+  "contactUsSubtitle": "שאלות, הצעות או בעיות",
+  "nfcTagNotDetected": "לא זוהה תג NFC",
+  "nfcTagNotDetectedDesc": "לא נמצא תג. ייתכן שהתג פגום, מת או רחוק מדי מהטלפון. ודא שחלקו העליון של הטלפון מונח ישירות על תג ה-NFC.",
+  "nfcTagIncompatible": "זוהה תג NFC לא תואם"
 }

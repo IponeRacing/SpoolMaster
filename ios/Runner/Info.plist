@@ -28,8 +28,12 @@
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>UIRequiredDeviceCapabilities</key>
+	<array>
+		<string>arm64</string>
+	</array>
 	<key>NFCReaderUsageDescription</key>
-	<string>Cette app a besoin d'accéder au NFC pour lire les puces des bobines Anycubic</string>
+	<string>This app uses NFC to read and write filament spool tags (Anycubic, Bambu Lab, Prusa).</string>
 	<key>NSUserTrackingUsageDescription</key>
 	<string>Cette app utilise votre identifiant publicitaire pour vous offrir des publicités personnalisées et améliorer votre expérience.</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
@@ -41,13 +45,6 @@
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-	</array>
-	<key>UISupportedInterfaceOrientations~ipad</key>
-	<array>
-		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationPortraitUpsideDown</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>CFBundleLocalizations</key>
 	<array>

@@ -66,14 +66,10 @@ class UserPreferencesService {
   };
 
   // Devises supportées
-  static const List<String> supportedCurrencies = ['CHF', 'EUR', 'USD', 'GBP', 'CAD'];
-  static const Map<String, String> currencyNames = {
-    'CHF': 'Franc suisse (CHF)',
-    'EUR': 'Euro (€)',
-    'USD': 'Dollar américain (\$)',
-    'GBP': 'Livre sterling (£)',
-    'CAD': 'Dollar canadien (CAD)',
-  };
+  static const List<String> supportedCurrencies = [
+    'CHF', 'EUR', 'USD', 'GBP', 'CAD', 'AUD', 'JPY', 'CNY',
+    'INR', 'BRL', 'MXN', 'SEK', 'NOK', 'DKK', 'PLN', 'CZK', 'NZD'
+  ];
 
   // Systèmes d'unités
   static const String unitsMetric = 'metric';
@@ -188,37 +184,31 @@ class UserPreferencesService {
       final isSignedIn = await UserPreferencesService.isSignedIn();
       if (!isSignedIn) return;
 
-      final authService = AuthService();
-      final accessToken = await authService.getAccessToken();
-      if (accessToken == null) {
-        debugPrint('⚠️ No access token available for sync');
-        return;
-      }
-
       final language = await getLanguage();
       final currency = await getCurrency();
       final units = await getUnits();
       final threshold = await getLowStockThreshold();
 
-      // Try to sync with backend (backend expects snake_case directly, not in preferences object)
-      final http.Response response = await http.put(
-        Uri.parse('${ApiConfig.baseUrl}${ApiConfig.updateUserProfile}'),
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer $accessToken',
-        },
-        body: jsonEncode({
-          'language': language,
-          'currency': currency,
-          'units': units,
-          'low_stock_threshold': threshold,
-        }),
-      ).timeout(ApiConfig.connectTimeout);
+      final response = await AuthService().authenticatedRequest((token) =>
+        http.put(
+          Uri.parse('${ApiConfig.baseUrl}${ApiConfig.updateUserProfile}'),
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer $token',
+          },
+          body: jsonEncode({
+            'language': language,
+            'currency': currency,
+            'units': units,
+            'low_stock_threshold': threshold,
+          }),
+        ).timeout(ApiConfig.connectTimeout),
+      );
 
       if (response.statusCode == 200) {
         debugPrint('✅ Preferences synced to backend');
       } else {
-        debugPrint('⚠️ Failed to sync preferences: ${response.statusCode} - ${response.body}');
+        debugPrint('⚠️ Failed to sync preferences: ${response.statusCode}');
       }
     } catch (e) {
       // Silently fail - preferences are already saved locally
@@ -235,35 +225,27 @@ class UserPreferencesService {
         return;
       }
 
-      final authService = AuthService();
-      final accessToken = await authService.getAccessToken();
-      if (accessToken == null) {
-        debugPrint('⚠️ No access token available to load preferences');
-        return;
-      }
-
       debugPrint('📥 Loading preferences from backend...');
-      final http.Response response = await http.get(
-        Uri.parse('${ApiConfig.baseUrl}${ApiConfig.getUserProfile}'),
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer $accessToken',
-        },
-      ).timeout(ApiConfig.connectTimeout);
+      final response = await AuthService().authenticatedRequest((token) =>
+        http.get(
+          Uri.parse('${ApiConfig.baseUrl}${ApiConfig.getUserProfile}'),
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer $token',
+          },
+        ).timeout(ApiConfig.connectTimeout),
+      );
 
       debugPrint('Load preferences response: ${response.statusCode}');
-      debugPrint('Load preferences body: ${response.body}');
 
       if (response.statusCode == 200) {
         final responseBody = jsonDecode(response.body);
-        debugPrint('Decoded preferences data: $responseBody');
 
         final prefs = await SharedPreferences.getInstance();
 
         // Check if backend returned success
         if (responseBody['success'] == true && responseBody['data'] != null) {
           final data = responseBody['data'] as Map<String, dynamic>;
-          debugPrint('Processing user data: $data');
 
           // Preferences are directly in the data object, not in a nested 'preferences' object
           if (data['language'] != null) {

@@ -162,7 +162,7 @@
   "tempBed": "热床温度",
   "termsOfService": "服务条款",
   "privacyPolicy": "隐私政策",
-  "legal": "Legal",
+  "legal": "法律資訊",
   "back": "返回",
   "retry": "重试",
   "signOut": "退出登录",
@@ -241,6 +241,11 @@
   "ok": "确定",
   "bambuLabReadOnly": "Bambu Lab: 只读",
   "bambuLabReadOnlyDesc": "Bambu Lab标签使用RSA加密，无法修改。只读。",
+  "forPrusaMk4": "適用於 Prusa MK4/XL (OpenPrintTag)",
+  "prusaReadWrite": "Prusa: 讀取和寫入",
+  "prusaReadWriteDesc": "Prusa標籤使用ISO 15693 (NFC-V) OpenPrintTag格式。支持讀取和寫入。",
+  "nfcTagInfoPrusa": "使用空白NXP ICODE SLIX2標籤(ISO 15693)為Prusa MK4/XL創建OpenPrintTag兼容標籤。",
+  "writePrusaTagTitle": "寫入Prusa OpenPrintTag",
   "bambuCloneLibrary": "Bambu Lab克隆库",
   "noBambuClones": "无Bambu Lab克隆",
   "scanBambuToClone": "扫描Bambu Lab原装标签以创建克隆库",
@@ -254,7 +259,6 @@
   "clonedOn": "克隆于",
   "writeThisClone": "写入此克隆",
   "writeClone": "写入克隆",
-  "writing": "写入中...",
   "writeOnCUID": "写入CUID卡",
   "cloneWrittenSuccess": "克隆写入成功！",
   "requiredTagFormat": "所需标签格式",
@@ -290,15 +294,33 @@
   "filamentTypeLabel": "耗材類型",
   "scanNfcChipButton": "掃描NFC晶片",
   "deleteCloneConfirmation": "刪除複製「{name}」？",
-  "@deleteCloneConfirmation": {"placeholders": {"name": {"type": "String"}}},
+  "@deleteCloneConfirmation": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "cloneDeletedMessage": "複製「{name}」已刪除",
-  "@cloneDeletedMessage": {"placeholders": {"name": {"type": "String"}}},
+  "@cloneDeletedMessage": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "extruderLabel": "擠出機",
   "writeThisCloneButton": "寫入此複製",
   "customNameHint": "自訂名稱",
   "cloneWriteSuccessMessage": "複製寫入成功！",
   "errorPrefix": "錯誤: {error}",
-  "@errorPrefix": {"placeholders": {"error": {"type": "String"}}},
+  "@errorPrefix": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "writingInProgress": "寫入中...",
   "writeOnCUIDButton": "寫入CUID卡",
   "diameterLabel": "直徑",
@@ -326,11 +348,23 @@
   "writeBambuLabTagButton": "寫入Bambu Lab標籤",
   "bambuLabRsaNote": "注意：原裝Bambu Lab標籤使用RSA加密。此模式以簡化的相容格式寫入資料。",
   "signInError": "登入錯誤: {error}",
-  "@signInError": {"placeholders": {"error": {"type": "String"}}},
+  "@signInError": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "subscriptionActivatedMessage": "訂閱已啟用！",
   "subscriptionFailedMessage": "訂閱失敗",
   "errorMessage": "錯誤: {error}",
-  "@errorMessage": {"placeholders": {"error": {"type": "String"}}},
+  "@errorMessage": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "subscriptionRestoredMessage": "訂閱已恢復！",
   "noSubscriptionFoundMessage": "未找到訂閱",
   "vipLabel": "VIP",
@@ -343,5 +377,42 @@
   "pleaseEnterValidLength": "請輸入有效長度",
   "spoolLengthNotSetCannotConvert": "未設定線軸長度 - 無法轉換",
   "exceedsRemainingWeight": "超過剩餘重量",
-  "skuLabel": "SKU"
+  "skuLabel": "SKU",
+  "helpIdentifyFilament": "幫助我們辨識這種耗材",
+  "helpUsImprove": "幫助我們改進！",
+  "helpIdentifyDescription": "我們讀取了晶片但無法辨識。請告訴我們這是什麼耗材，以便我們改進應用程式。",
+  "otherBrand": "其他",
+  "thankYouFeedback": "感謝您的回饋！",
+  "send": "傳送",
+  "optionalDetails": "選填詳情",
+  "weightGrams": "重量 (g)",
+  "diameterMm": "直徑 (mm)",
+  "spoolLengthM": "線軸長度 (m)",
+  "batchNumberLabel": "批次 / SKU",
+  "black": "黑色",
+  "white": "白色",
+  "yellow": "黃色",
+  "orange": "橙色",
+  "pink": "粉色",
+  "purple": "紫色",
+  "gray": "灰色",
+  "brown": "棕色",
+  "unknown": "未知",
+  "aud": "AUD",
+  "jpy": "JPY",
+  "cny": "CNY",
+  "inr": "INR",
+  "brl": "BRL",
+  "mxn": "MXN",
+  "sek": "SEK",
+  "nok": "NOK",
+  "dkk": "DKK",
+  "pln": "PLN",
+  "czk": "CZK",
+  "nzd": "NZD",
+  "contactUs": "聯絡我們",
+  "contactUsSubtitle": "問題、建議或回饋",
+  "nfcTagNotDetected": "未偵測到NFC標籤",
+  "nfcTagNotDetectedDesc": "未找到標籤。標籤可能已損壞或距離手機太遠。請確保將手機頂部直接放在NFC標籤上。",
+  "nfcTagIncompatible": "偵測到不相容的NFC標籤"
 }

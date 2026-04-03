@@ -55,8 +55,8 @@
   "extruderTempMax": "Maks. ekstrudertemp.",
   "bedTempMin": "Min. plattetemp.",
   "bedTempMax": "Maks. plattetemp.",
-  "diameter": "Diameter",
-  "spoolLength": "Lengde (m)",
+  "diameter": "Filamentdiameter",
+  "spoolLength": "Spolelengde",
   "generatedSku": "Generert SKU",
   "approachChipToWrite": "Nærm deg brikke for å skrive...",
   "writing": "Skriver...",
@@ -163,21 +163,15 @@
   "tempBed": "Plattetemp.",
   "termsOfService": "Tjenestevilkår",
   "privacyPolicy": "Personvernpolicy",
-  "legal": "Legal",
+  "legal": "Juridisk",
   "back": "Tilbake",
   "retry": "Prøv igjen",
   "signOut": "Logg ut",
-  "extruderTempMin": "Min. ekstrudertemp.",
   "extruderTempMinHint": "F.eks.: 200",
-  "extruderTempMax": "Maks. ekstrudertemp.",
   "extruderTempMaxHint": "F.eks.: 220",
-  "bedTempMin": "Min. plattetemp.",
   "bedTempMinHint": "F.eks.: 50",
-  "bedTempMax": "Maks. plattetemp.",
   "bedTempMaxHint": "F.eks.: 60",
-  "diameter": "Filamentdiameter",
   "diameterHint": "F.eks.: 1.75",
-  "spoolLength": "Spolelengde",
   "spoolLengthHint": "F.eks.: 330",
   "tabGrid": "Rutenett",
   "tabSpectrum": "Spektrum",
@@ -215,7 +209,6 @@
   "forAnycubicAce": "for Anycubic Ace",
   "forBambuLabAms": "for Bambu Lab AMS",
   "scanNfcChip": "Skann en NFC-brikke",
-  "addManually": "Legg til manuelt",
   "fillForm": "Fyll ut skjemaet",
   "emptyShoppingList": "Ingen filamenter i listen",
   "percentRemaining": "{percent}% gjenstår",
@@ -228,8 +221,8 @@
   },
   "markAsOrdered": "Merk som bestilt",
   "markAsNotOrdered": "Merk som ikke bestilt",
-  "spoolNotFound": "Spole ikke funnet på lager",
-  "addSpoolFirstMessage": "Denne spolen er ennå ikke på lager. Legg den til først ved å bruke 'Legg til spole'-knappen før du oppdaterer lageret.",
+  "spoolNotFound": "Spole ikke funnet i lageret",
+  "addSpoolFirstMessage": "Denne spolen er ikke i lageret ennå. Vennligst legg den til først ved å bruke 'Legg til spole'-knappen før du oppdaterer lageret.",
   "ok": "OK",
   "connection": "Tilkobling",
   "signInToSync": "Logg inn for å synkronisere dataene dine",
@@ -248,9 +241,11 @@
   "scanSpoolToUpdate": "Skann spole for å oppdatere lageret",
   "bambuLabReadOnly": "Bambu Lab: Skrivebeskyttet",
   "bambuLabReadOnlyDesc": "Bambu Lab tagger bruker RSA-kryptering og kan ikke endres. Skrivebeskyttet.",
-  "spoolNotFound": "Spole ikke funnet i lageret",
-  "addSpoolFirstMessage": "Denne spolen er ikke i lageret ennå. Vennligst legg den til først ved å bruke 'Legg til spole'-knappen før du oppdaterer lageret.",
-  "ok": "OK",
+  "forPrusaMk4": "for Prusa MK4/XL (OpenPrintTag)",
+  "prusaReadWrite": "Prusa: Les og skriv",
+  "prusaReadWriteDesc": "Prusa-tagger bruker ISO 15693 (NFC-V) med OpenPrintTag-format. Les og skriv støttet.",
+  "nfcTagInfoPrusa": "Bruk et tomt NXP ICODE SLIX2-kort (ISO 15693) for å lage OpenPrintTag-kompatible tagger for Prusa MK4/XL.",
+  "writePrusaTagTitle": "Skriv Prusa OpenPrintTag",
   "bambuCloneLibrary": "Bambu Lab klonbibliotek",
   "noBambuClones": "Ingen Bambu Lab kloner",
   "scanBambuToClone": "Skann originale Bambu Lab-tagger for å opprette klonbiblioteket ditt",
@@ -264,7 +259,6 @@
   "clonedOn": "Klonet",
   "writeThisClone": "Skriv denne klonen",
   "writeClone": "Skriv klon",
-  "writing": "Skriver...",
   "writeOnCUID": "Skriv på CUID-kort",
   "cloneWrittenSuccess": "Klon skrevet vellykket!",
   "requiredTagFormat": "Nødvendig taggformat",
@@ -300,15 +294,33 @@
   "filamentTypeLabel": "Filamenttype",
   "scanNfcChipButton": "Skann NFC-brikke",
   "deleteCloneConfirmation": "Slett klon \"{name}\"?",
-  "@deleteCloneConfirmation": {"placeholders": {"name": {"type": "String"}}},
+  "@deleteCloneConfirmation": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "cloneDeletedMessage": "Klon \"{name}\" slettet",
-  "@cloneDeletedMessage": {"placeholders": {"name": {"type": "String"}}},
+  "@cloneDeletedMessage": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "extruderLabel": "Ekstruder",
   "writeThisCloneButton": "Skriv denne klonen",
   "customNameHint": "Egendefinert navn",
   "cloneWriteSuccessMessage": "Klone skrevet!",
   "errorPrefix": "Feil: {error}",
-  "@errorPrefix": {"placeholders": {"error": {"type": "String"}}},
+  "@errorPrefix": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "writingInProgress": "Skriver...",
   "writeOnCUIDButton": "Skriv på CUID-kort",
   "diameterLabel": "Diameter",
@@ -327,18 +339,36 @@
   "brandLabel": "Merke",
   "materialTypeLabel": "Materialtype",
   "serialNumber3Digits": "Serienummer (3 siffer)",
-  "weight250g": "250g", "weight500g": "500g", "weight1000g": "1000g", "weight1000gStandard": "1000g (standard)", "weight2000g": "2000g", "weight3000g": "3000g",
+  "weight250g": "250g",
+  "weight500g": "500g",
+  "weight1000g": "1000g",
+  "weight1000gStandard": "1000g (standard)",
+  "weight2000g": "2000g",
+  "weight3000g": "3000g",
   "writeBambuLabTagButton": "Skriv Bambu Lab-tagg",
   "bambuLabRsaNote": "Merk: Originale Bambu Lab-tagger bruker RSA-kryptering. Denne modusen skriver data i et forenklet kompatibelt format.",
   "signInError": "Påloggingsfeil: {error}",
-  "@signInError": {"placeholders": {"error": {"type": "String"}}},
+  "@signInError": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "subscriptionActivatedMessage": "Abonnement aktivert!",
   "subscriptionFailedMessage": "Abonnement mislyktes",
   "errorMessage": "Feil: {error}",
-  "@errorMessage": {"placeholders": {"error": {"type": "String"}}},
+  "@errorMessage": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "subscriptionRestoredMessage": "Abonnement gjenopprettet!",
   "noSubscriptionFoundMessage": "Ingen abonnement funnet",
-  "vipLabel": "VIP", "activeLabel": "AKTIV",
+  "vipLabel": "VIP",
+  "activeLabel": "AKTIV",
   "noAdsExperienceMessage": "Nyt reklamefri opplevelse!",
   "subscribedLabel": "Abonnent",
   "restorePurchasesButton": "Gjenopprett kjøp",
@@ -347,5 +377,42 @@
   "pleaseEnterValidLength": "Angi gyldig lengde",
   "spoolLengthNotSetCannotConvert": "Spolllengde ikke angitt - kan ikke konvertere",
   "exceedsRemainingWeight": "Overskrider gjenværende vekt",
-  "skuLabel": "SKU"
+  "skuLabel": "SKU",
+  "helpIdentifyFilament": "Hjelp oss med å identifisere dette filamentet",
+  "helpUsImprove": "Hjelp oss med å forbedre!",
+  "helpIdentifyDescription": "Vi leste brikken, men klarte ikke å identifisere den. Fortell oss hvilket filament dette er slik at vi kan forbedre appen.",
+  "otherBrand": "Annet",
+  "thankYouFeedback": "Takk for tilbakemeldingen!",
+  "send": "Send",
+  "optionalDetails": "Valgfrie detaljer",
+  "weightGrams": "Vekt (g)",
+  "diameterMm": "Diameter (mm)",
+  "spoolLengthM": "Spole lengde (m)",
+  "batchNumberLabel": "Batch / SKU",
+  "black": "Svart",
+  "white": "Hvit",
+  "yellow": "Gul",
+  "orange": "Oransje",
+  "pink": "Rosa",
+  "purple": "Lilla",
+  "gray": "Grå",
+  "brown": "Brun",
+  "unknown": "Ukjent",
+  "aud": "AUD",
+  "jpy": "JPY",
+  "cny": "CNY",
+  "inr": "INR",
+  "brl": "BRL",
+  "mxn": "MXN",
+  "sek": "SEK",
+  "nok": "NOK",
+  "dkk": "DKK",
+  "pln": "PLN",
+  "czk": "CZK",
+  "nzd": "NZD",
+  "contactUs": "Kontakt oss",
+  "contactUsSubtitle": "Spørsmål, forslag eller problemer",
+  "nfcTagNotDetected": "Ingen NFC-brikke oppdaget",
+  "nfcTagNotDetectedDesc": "Ingen brikke ble funnet. Brikken kan være død, skadet eller for langt fra telefonen. Sørg for at toppen av telefonen plasseres direkte på NFC-brikken.",
+  "nfcTagIncompatible": "Inkompatibel NFC-brikke oppdaget"
 }

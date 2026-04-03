@@ -53,10 +53,21 @@ class BobbinDataWriteSuccess extends NfcReaderState {
 }
 
 class NfcReaderFailure extends NfcReaderState {
-  final String message;
+  const NfcReaderFailure(this.message, {this.rawTagData, this.rawBytesCount = 0, this.failureType = NfcFailureType.readError});
 
-  const NfcReaderFailure(this.message);
+  final String message;
+  final String? rawTagData;
+  final int rawBytesCount;
+  final NfcFailureType failureType;
+
+  bool get hasTagData => rawTagData != null && rawBytesCount > 0;
 
   @override
-  List<Object?> get props => [message];
+  List<Object?> get props => [message, rawTagData, rawBytesCount, failureType];
+}
+
+enum NfcFailureType {
+  readError,
+  tagNotDetected,
+  incompatibleTag,
 }

@@ -162,7 +162,7 @@
   "tempBed": "Temp. Pat",
   "termsOfService": "Termeni și Condiții",
   "privacyPolicy": "Politica de Confidențialitate",
-  "legal": "Legal",
+  "legal": "Juridic",
   "back": "Înapoi",
   "retry": "Reîncearcă",
   "signOut": "Deconectează-te",
@@ -192,6 +192,18 @@
   "usd": "Dolar american ($)",
   "gbp": "Liră sterlină (£)",
   "cad": "Dolar canadian (CAD)",
+  "aud": "Dolar australian (A$)",
+  "jpy": "Yen japonez (¥)",
+  "cny": "Yuan chinezesc (¥)",
+  "inr": "Rupie indiană (₹)",
+  "brl": "Real brazilian (R$)",
+  "mxn": "Peso mexican (MX$)",
+  "sek": "Coroană suedeză (kr)",
+  "nok": "Coroană norvegiană (kr)",
+  "dkk": "Coroană daneză (kr)",
+  "pln": "Zlot polonez (zł)",
+  "czk": "Coroană cehă (Kč)",
+  "nzd": "Dolar neozeelandez (NZ$)",
   "filamentsToOrder": "Filamente de comandat",
   "shoppingList": "Listă de cumpărături",
   "addToShoppingList": "Adaugă în listă",
@@ -241,6 +253,11 @@
   "ok": "OK",
   "bambuLabReadOnly": "Bambu Lab: Doar citire",
   "bambuLabReadOnlyDesc": "Etichetele Bambu Lab folosesc criptare RSA și nu pot fi modificate. Doar citire.",
+  "forPrusaMk4": "pentru Prusa MK4/XL (OpenPrintTag)",
+  "prusaReadWrite": "Prusa: Citire și scriere",
+  "prusaReadWriteDesc": "Tag-urile Prusa folosesc ISO 15693 (NFC-V) cu format OpenPrintTag. Citire și scriere sunt suportate.",
+  "nfcTagInfoPrusa": "Utilizați o etichetă goală NXP ICODE SLIX2 (ISO 15693) pentru a crea etichete compatibile cu OpenPrintTag pentru Prusa MK4/XL.",
+  "writePrusaTagTitle": "Scrie OpenPrintTag Prusa",
   "bambuCloneLibrary": "Biblioteca de clonă Bambu Lab",
   "noBambuClones": "Fără clone Bambu Lab",
   "scanBambuToClone": "Scanați etichetele originale Bambu Lab pentru a crea biblioteca dvs. de clone",
@@ -254,7 +271,6 @@
   "clonedOn": "Clonat pe",
   "writeThisClone": "Scrie această clonă",
   "writeClone": "Scrie clona",
-  "writing": "Se scrie...",
   "writeOnCUID": "Scrie pe card CUID",
   "cloneWrittenSuccess": "Clonă scrisă cu succes!",
   "requiredTagFormat": "Format etichetă necesar",
@@ -290,15 +306,33 @@
   "filamentTypeLabel": "Tip filament",
   "scanNfcChipButton": "Scanează cip NFC",
   "deleteCloneConfirmation": "Șterge clona \"{name}\"?",
-  "@deleteCloneConfirmation": {"placeholders": {"name": {"type": "String"}}},
+  "@deleteCloneConfirmation": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "cloneDeletedMessage": "Clona \"{name}\" ștearsă",
-  "@cloneDeletedMessage": {"placeholders": {"name": {"type": "String"}}},
+  "@cloneDeletedMessage": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "extruderLabel": "Extruder",
   "writeThisCloneButton": "Scrie această clonă",
   "customNameHint": "Nume personalizat",
   "cloneWriteSuccessMessage": "Clonă scrisă cu succes!",
   "errorPrefix": "Eroare: {error}",
-  "@errorPrefix": {"placeholders": {"error": {"type": "String"}}},
+  "@errorPrefix": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "writingInProgress": "Se scrie...",
   "writeOnCUIDButton": "Scrie pe card CUID",
   "diameterLabel": "Diametru",
@@ -326,11 +360,23 @@
   "writeBambuLabTagButton": "Scrie etichetă Bambu Lab",
   "bambuLabRsaNote": "Notă: Etichetele Bambu Lab originale folosesc criptare RSA. Acest mod scrie date în format simplificat compatibil.",
   "signInError": "Eroare de conectare: {error}",
-  "@signInError": {"placeholders": {"error": {"type": "String"}}},
+  "@signInError": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "subscriptionActivatedMessage": "Abonament activat cu succes!",
   "subscriptionFailedMessage": "Abonament eșuat",
   "errorMessage": "Eroare: {error}",
-  "@errorMessage": {"placeholders": {"error": {"type": "String"}}},
+  "@errorMessage": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "subscriptionRestoredMessage": "Abonament restaurat cu succes!",
   "noSubscriptionFoundMessage": "Niciun abonament găsit",
   "vipLabel": "VIP",
@@ -343,5 +389,30 @@
   "pleaseEnterValidLength": "Introduceți o lungime validă",
   "spoolLengthNotSetCannotConvert": "Lungimea bobinei nu este setată - nu se poate converti",
   "exceedsRemainingWeight": "Depășește greutatea rămasă",
-  "skuLabel": "SKU"
+  "skuLabel": "SKU",
+  "helpIdentifyFilament": "Ajutați-ne să identificăm acest filament",
+  "helpUsImprove": "Ajutați-ne să ne îmbunătățim!",
+  "helpIdentifyDescription": "Am citit cipul dar nu am putut să-l identificăm. Spuneți-ne ce filament este pentru a îmbunătăți aplicația.",
+  "otherBrand": "Alt brand",
+  "thankYouFeedback": "Mulțumim pentru feedback!",
+  "send": "Trimite",
+  "optionalDetails": "Detalii opționale",
+  "weightGrams": "Greutate (g)",
+  "diameterMm": "Diametru (mm)",
+  "spoolLengthM": "Lungime bobină (m)",
+  "batchNumberLabel": "Lot / SKU",
+  "black": "Negru",
+  "white": "Alb",
+  "yellow": "Galben",
+  "orange": "Portocaliu",
+  "pink": "Roz",
+  "purple": "Violet",
+  "gray": "Gri",
+  "brown": "Maro",
+  "unknown": "Necunoscut",
+  "contactUs": "Contactați-ne",
+  "contactUsSubtitle": "Întrebări, sugestii sau probleme",
+  "nfcTagNotDetected": "Niciun tag NFC detectat",
+  "nfcTagNotDetectedDesc": "Nu a fost găsit niciun tag. Tagul poate fi mort, deteriorat sau prea departe de telefon. Asigurați-vă că partea de sus a telefonului este plasată direct pe tagul NFC.",
+  "nfcTagIncompatible": "Tag NFC incompatibil detectat"
 }

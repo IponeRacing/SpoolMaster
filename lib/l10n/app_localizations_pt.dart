@@ -510,7 +510,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get privacyPolicy => 'Política de Privacidade';
 
   @override
-  String get legal => 'Legal';
+  String get legal => 'Jurídico';
 
   @override
   String get back => 'Voltar';
@@ -561,6 +561,33 @@ class AppLocalizationsPt extends AppLocalizations {
   String get blue => 'Azul';
 
   @override
+  String get black => 'Preto';
+
+  @override
+  String get white => 'Branco';
+
+  @override
+  String get yellow => 'Amarelo';
+
+  @override
+  String get orange => 'Laranja';
+
+  @override
+  String get pink => 'Rosa';
+
+  @override
+  String get purple => 'Roxo';
+
+  @override
+  String get gray => 'Cinza';
+
+  @override
+  String get brown => 'Marrom';
+
+  @override
+  String get unknown => 'Desconhecido';
+
+  @override
   String get metricUnits => 'Métrico (mm, g, °C)';
 
   @override
@@ -580,6 +607,42 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get cad => 'Dólar Canadense (CAD)';
+
+  @override
+  String get aud => 'AUD';
+
+  @override
+  String get jpy => 'JPY';
+
+  @override
+  String get cny => 'CNY';
+
+  @override
+  String get inr => 'INR';
+
+  @override
+  String get brl => 'BRL';
+
+  @override
+  String get mxn => 'MXN';
+
+  @override
+  String get sek => 'SEK';
+
+  @override
+  String get nok => 'NOK';
+
+  @override
+  String get dkk => 'DKK';
+
+  @override
+  String get pln => 'PLN';
+
+  @override
+  String get czk => 'CZK';
+
+  @override
+  String get nzd => 'NZD';
 
   @override
   String get filamentsToOrder => 'Filamentos a encomendar';
@@ -709,6 +772,16 @@ class AppLocalizationsPt extends AppLocalizations {
   @override
   String get bambuLabReadOnlyDesc =>
       'As etiquetas Bambu Lab usam criptografia RSA e não podem ser modificadas. Somente leitura.';
+
+  @override
+  String get forPrusaMk4 => 'para Prusa MK4/XL (OpenPrintTag)';
+
+  @override
+  String get prusaReadWrite => 'Prusa: Leitura e Escrita';
+
+  @override
+  String get prusaReadWriteDesc =>
+      'Os tags Prusa usam ISO 15693 (NFC-V) com formato OpenPrintTag. Leitura e escrita suportadas.';
 
   @override
   String get bambuCloneLibrary => 'Biblioteca de clones Bambu Lab';
@@ -1027,4 +1100,61 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get skuLabel => 'SKU';
+
+  @override
+  String get helpIdentifyFilament => 'Ajude-nos a identificar este filamento';
+
+  @override
+  String get helpUsImprove => 'Ajude-nos a melhorar!';
+
+  @override
+  String get helpIdentifyDescription =>
+      'Lemos o chip mas não conseguimos identificá-lo. Diga-nos qual é este filamento para melhorarmos o aplicativo.';
+
+  @override
+  String get otherBrand => 'Outra';
+
+  @override
+  String get thankYouFeedback => 'Obrigado pelo seu feedback!';
+
+  @override
+  String get send => 'Enviar';
+
+  @override
+  String get optionalDetails => 'Detalhes opcionais';
+
+  @override
+  String get weightGrams => 'Peso (g)';
+
+  @override
+  String get diameterMm => 'Diâmetro (mm)';
+
+  @override
+  String get spoolLengthM => 'Comprimento bobina (m)';
+
+  @override
+  String get batchNumberLabel => 'Lote / SKU';
+
+  @override
+  String get contactUs => 'Contacte-nos';
+
+  @override
+  String get contactUsSubtitle => 'Perguntas, sugestões ou problemas';
+
+  @override
+  String get nfcTagNotDetected => 'Nenhuma etiqueta NFC detectada';
+
+  @override
+  String get nfcTagNotDetectedDesc =>
+      'Nenhuma etiqueta encontrada. A etiqueta pode estar inativa, danificada ou longe demais do telefone. Coloque a parte superior do seu iPhone diretamente sobre a etiqueta NFC.';
+
+  @override
+  String get nfcTagIncompatible => 'Etiqueta NFC incompatível detectada';
+
+  @override
+  String get nfcTagInfoPrusa =>
+      'Use uma etiqueta em branco NXP ICODE SLIX2 (ISO 15693) para criar tags compatíveis com OpenPrintTag para Prusa MK4/XL.';
+
+  @override
+  String get writePrusaTagTitle => 'Escrever Prusa OpenPrintTag';
 }

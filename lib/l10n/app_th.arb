@@ -55,8 +55,8 @@
   "extruderTempMax": "อุณหภูมิหัวพิมพ์สูงสุด",
   "bedTempMin": "อุณหภูมิแท่นพิมพ์ต่ำสุด",
   "bedTempMax": "อุณหภูมิแท่นพิมพ์สูงสุด",
-  "diameter": "เส้นผ่านศูนย์กลาง",
-  "spoolLength": "ความยาว (ม.)",
+  "diameter": "เส้นผ่านศูนย์กลางฟิลาเมนต์",
+  "spoolLength": "ความยาวม้วนใย",
   "generatedSku": "SKU ที่สร้าง",
   "approachChipToWrite": "เข้าใกล้ชิปเพื่อเขียน...",
   "writing": "กำลังเขียน...",
@@ -163,21 +163,15 @@
   "tempBed": "อุณหภูมิแท่นพิมพ์",
   "termsOfService": "ข้อกำหนดการให้บริการ",
   "privacyPolicy": "นโยบายความเป็นส่วนตัว",
-  "legal": "Legal",
+  "legal": "กฎหมาย",
   "back": "ย้อนกลับ",
   "retry": "ลองใหม่",
   "signOut": "ออกจากระบบ",
-  "extruderTempMin": "อุณหภูมิหัวพิมพ์ต่ำสุด",
   "extruderTempMinHint": "เช่น: 200",
-  "extruderTempMax": "อุณหภูมิหัวพิมพ์สูงสุด",
   "extruderTempMaxHint": "เช่น: 220",
-  "bedTempMin": "อุณหภูมิแท่นพิมพ์ต่ำสุด",
   "bedTempMinHint": "เช่น: 50",
-  "bedTempMax": "อุณหภูมิแท่นพิมพ์สูงสุด",
   "bedTempMaxHint": "เช่น: 60",
-  "diameter": "เส้นผ่านศูนย์กลางฟิลาเมนต์",
   "diameterHint": "เช่น: 1.75",
-  "spoolLength": "ความยาวม้วนใย",
   "spoolLengthHint": "เช่น: 330",
   "tabGrid": "ตาราง",
   "tabSpectrum": "สเปกตรัม",
@@ -193,6 +187,18 @@
   "usd": "ดอลลาร์สหรัฐ ($)",
   "gbp": "ปอนด์สเตอร์ลิง (£)",
   "cad": "ดอลลาร์แคนาดา (CAD)",
+  "aud": "ดอลลาร์ออสเตรเลีย (A$)",
+  "jpy": "เยนญี่ปุ่น (¥)",
+  "cny": "หยวนจีน (¥)",
+  "inr": "รูปีอินเดีย (₹)",
+  "brl": "เรียลบราซิล (R$)",
+  "mxn": "เปโซเม็กซิโก (MX$)",
+  "sek": "โครนาสวีเดน (kr)",
+  "nok": "โครนนอร์เวย์ (kr)",
+  "dkk": "โครนเดนมาร์ก (kr)",
+  "pln": "ซลอตีโปแลนด์ (zł)",
+  "czk": "โครูนาเช็ก (Kč)",
+  "nzd": "ดอลลาร์นิวซีแลนด์ (NZ$)",
   "filamentsToOrder": "ฟิลาเมนต์ที่ต้องสั่ง",
   "shoppingList": "รายการช็อปปิ้ง",
   "addToShoppingList": "เพิ่มในรายการ",
@@ -215,7 +221,6 @@
   "forAnycubicAce": "สำหรับ Anycubic Ace",
   "forBambuLabAms": "สำหรับ Bambu Lab AMS",
   "scanNfcChip": "สแกนชิป NFC",
-  "addManually": "เพิ่มด้วยตนเอง",
   "fillForm": "กรอกแบบฟอร์ม",
   "emptyShoppingList": "ไม่มีฟิลาเมนต์ในรายการ",
   "percentRemaining": "เหลือ {percent}%",
@@ -229,7 +234,7 @@
   "markAsOrdered": "ทำเครื่องหมายว่าสั่งแล้ว",
   "markAsNotOrdered": "ทำเครื่องหมายว่ายังไม่ได้สั่ง",
   "spoolNotFound": "ไม่พบม้วนในสต็อก",
-  "addSpoolFirstMessage": "ม้วนนี้ยังไม่อยู่ในสต็อกของคุณ กรุณาเพิ่มก่อนโดยใช้ปุ่ม 'เพิ่มม้วน' ก่อนที่จะอัปเดตสต็อก",
+  "addSpoolFirstMessage": "ม้วนนี้ยังไม่อยู่ในสต็อกของคุณ โปรดเพิ่มก่อนโดยใช้ปุ่ม 'เพิ่มม้วน' ก่อนที่จะอัปเดตสต็อก",
   "ok": "ตกลง",
   "connection": "การเชื่อมต่อ",
   "signInToSync": "เข้าสู่ระบบเพื่อซิงค์ข้อมูลของคุณ",
@@ -248,9 +253,11 @@
   "scanSpoolToUpdate": "สแกนม้วนเพื่ออัปเดตสต็อก",
   "bambuLabReadOnly": "Bambu Lab: อ่านอย่างเดียว",
   "bambuLabReadOnlyDesc": "แท็ก Bambu Lab ใช้การเข้ารหัส RSA และไม่สามารถแก้ไขได้ อ่านอย่างเดียว",
-  "spoolNotFound": "ไม่พบม้วนในสต็อก",
-  "addSpoolFirstMessage": "ม้วนนี้ยังไม่อยู่ในสต็อกของคุณ โปรดเพิ่มก่อนโดยใช้ปุ่ม 'เพิ่มม้วน' ก่อนที่จะอัปเดตสต็อก",
-  "ok": "ตกลง",
+  "forPrusaMk4": "สำหรับ Prusa MK4/XL (OpenPrintTag)",
+  "prusaReadWrite": "Prusa: อ่านและเขียน",
+  "prusaReadWriteDesc": "แท็ก Prusa ใช้ ISO 15693 (NFC-V) ในรูปแบบ OpenPrintTag รองรับการอ่านและเขียน",
+  "nfcTagInfoPrusa": "ใช้การ์ด NXP ICODE SLIX2 เปล่า (ISO 15693) เพื่อสร้างแท็กที่เข้ากันได้กับ OpenPrintTag สำหรับ Prusa MK4/XL",
+  "writePrusaTagTitle": "เขียนแท็ก Prusa OpenPrintTag",
   "bambuCloneLibrary": "คลัง Clone Bambu Lab",
   "noBambuClones": "ไม่มี Clone Bambu Lab",
   "scanBambuToClone": "สแกนแท็กต้นฉบับ Bambu Lab เพื่อสร้างคลัง Clone ของคุณ",
@@ -264,7 +271,6 @@
   "clonedOn": "โคลนเมื่อ",
   "writeThisClone": "เขียน Clone นี้",
   "writeClone": "เขียน Clone",
-  "writing": "กำลังเขียน...",
   "writeOnCUID": "เขียนลงการ์ด CUID",
   "cloneWrittenSuccess": "เขียน Clone สำเร็จ!",
   "requiredTagFormat": "รูปแบบแท็กที่ต้องการ",
@@ -300,15 +306,33 @@
   "filamentTypeLabel": "ประเภทเส้นพลาสติก",
   "scanNfcChipButton": "สแกนชิป NFC",
   "deleteCloneConfirmation": "ลบโคลน \"{name}\"?",
-  "@deleteCloneConfirmation": {"placeholders": {"name": {"type": "String"}}},
+  "@deleteCloneConfirmation": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "cloneDeletedMessage": "ลบโคลน \"{name}\" แล้ว",
-  "@cloneDeletedMessage": {"placeholders": {"name": {"type": "String"}}},
+  "@cloneDeletedMessage": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "extruderLabel": "เครื่องอัดรีด",
   "writeThisCloneButton": "เขียนโคลนนี้",
   "customNameHint": "ชื่อที่กำหนดเอง",
   "cloneWriteSuccessMessage": "เขียนโคลนสำเร็จ!",
   "errorPrefix": "ข้อผิดพลาด: {error}",
-  "@errorPrefix": {"placeholders": {"error": {"type": "String"}}},
+  "@errorPrefix": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "writingInProgress": "กำลังเขียน...",
   "writeOnCUIDButton": "เขียนบนการ์ด CUID",
   "diameterLabel": "เส้นผ่านศูนย์กลาง",
@@ -336,11 +360,23 @@
   "writeBambuLabTagButton": "เขียนแท็ก Bambu Lab",
   "bambuLabRsaNote": "หมายเหตุ: แท็ก Bambu Lab ดั้งเดิมใช้การเข้ารหัส RSA โหมดนี้เขียนข้อมูลในรูปแบบที่เรียบง่ายและเข้ากันได้",
   "signInError": "ข้อผิดพลาดในการเข้าสู่ระบบ: {error}",
-  "@signInError": {"placeholders": {"error": {"type": "String"}}},
+  "@signInError": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "subscriptionActivatedMessage": "เปิดใช้งานการสมัครสมาชิกสำเร็จ!",
   "subscriptionFailedMessage": "การสมัครสมาชิกล้มเหลว",
   "errorMessage": "ข้อผิดพลาด: {error}",
-  "@errorMessage": {"placeholders": {"error": {"type": "String"}}},
+  "@errorMessage": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "subscriptionRestoredMessage": "กู้คืนการสมัครสมาชิกสำเร็จ!",
   "noSubscriptionFoundMessage": "ไม่พบการสมัครสมาชิก",
   "vipLabel": "VIP",
@@ -353,5 +389,30 @@
   "pleaseEnterValidLength": "กรุณาใส่ความยาวที่ถูกต้อง",
   "spoolLengthNotSetCannotConvert": "ไม่ได้ตั้งค่าความยาวม้วน - ไม่สามารถแปลงได้",
   "exceedsRemainingWeight": "เกินน้ำหนักที่เหลือ",
-  "skuLabel": "SKU"
+  "skuLabel": "SKU",
+  "helpIdentifyFilament": "ช่วยเราระบุเส้นพลาสติกนี้",
+  "helpUsImprove": "ช่วยเราปรับปรุง!",
+  "helpIdentifyDescription": "เราอ่านชิปได้แต่ไม่สามารถระบุได้ บอกเราว่าเส้นพลาสติกนี้คืออะไรเพื่อให้เราปรับปรุงแอป",
+  "otherBrand": "อื่นๆ",
+  "thankYouFeedback": "ขอบคุณสำหรับความคิดเห็น!",
+  "send": "ส่ง",
+  "optionalDetails": "รายละเอียดเพิ่มเติม",
+  "weightGrams": "น้ำหนัก (ก.)",
+  "diameterMm": "เส้นผ่านศูนย์กลาง (มม.)",
+  "spoolLengthM": "ความยาวม้วน (ม.)",
+  "batchNumberLabel": "ล็อต / SKU",
+  "black": "ดำ",
+  "white": "ขาว",
+  "yellow": "เหลือง",
+  "orange": "ส้ม",
+  "pink": "ชมพู",
+  "purple": "ม่วง",
+  "gray": "เทา",
+  "brown": "น้ำตาล",
+  "unknown": "ไม่ทราบ",
+  "contactUs": "ติดต่อเรา",
+  "contactUsSubtitle": "คำถาม ข้อเสนอแนะ หรือปัญหา",
+  "nfcTagNotDetected": "ไม่พบแท็ก NFC",
+  "nfcTagNotDetectedDesc": "ไม่พบแท็ก แท็กอาจเสีย เสียหาย หรืออยู่ไกลจากโทรศัพท์เกินไป ตรวจสอบให้แน่ใจว่าส่วนบนของโทรศัพท์วางอยู่บนแท็ก NFC โดยตรง",
+  "nfcTagIncompatible": "ตรวจพบแท็ก NFC ที่ไม่รองรับ"
 }

@@ -50,6 +50,25 @@ class NfcRepositoryImpl implements NfcRepository {
       if (e.code == 'USER_CANCELLED') {
         return const Left(NfcSessionCancelledFailure());
       }
+      // Tag non détecté (timeout)
+      if (e.code == 'TAG_NOT_DETECTED') {
+        return Left(NfcTagNotDetectedFailure(e.message ?? 'Aucun tag NFC détecté'));
+      }
+      // Tag incompatible détecté (ISO 15693, FeliCa, etc.)
+      if (e.code == 'INCOMPATIBLE_TAG') {
+        return Left(NfcTagIncompatibleFailure(
+          e.message ?? 'Tag NFC incompatible',
+          e.details as String?,
+        ));
+      }
+      // Session interrompue par iOS (code 202) - retryable
+      if (e.code == 'SESSION_TERMINATED') {
+        return Left(NfcTagReadFailure(e.message ?? 'Session NFC interrompue. Réessayez.'));
+      }
+      // Système NFC occupé (code 203) - retryable
+      if (e.code == 'SYSTEM_BUSY') {
+        return Left(NfcTagReadFailure(e.message ?? 'Lecteur NFC occupé. Réessayez.'));
+      }
       return Left(NfcTagReadFailure(e.message ?? 'Erreur NFC'));
     } catch (e) {
       return const Left(NfcTagReadFailure());
@@ -57,11 +76,43 @@ class NfcRepositoryImpl implements NfcRepository {
   }
 
   @override
-  Future<Either<Failure, void>> writeBobbinData(BobbinData data) async {
+  Future<Either<Failure, BobbinData>> readBobbinDataAutoDetect() async {
+    try {
+      final bobbinModel = await dataSource.readBobbinDataAutoDetect();
+      return Right(bobbinModel.toEntity());
+    } on Failure catch (failure) {
+      return Left(failure);
+    } on PlatformException catch (e) {
+      if (e.code == 'USER_CANCELLED') {
+        return const Left(NfcSessionCancelledFailure());
+      }
+      if (e.code == 'TAG_NOT_DETECTED') {
+        return Left(NfcTagNotDetectedFailure(e.message ?? 'Aucun tag NFC détecté'));
+      }
+      if (e.code == 'INCOMPATIBLE_TAG') {
+        return Left(NfcTagIncompatibleFailure(
+          e.message ?? 'Tag NFC incompatible',
+          e.details as String?,
+        ));
+      }
+      if (e.code == 'SESSION_TERMINATED') {
+        return Left(NfcTagReadFailure(e.message ?? 'Session NFC interrompue. Réessayez.'));
+      }
+      if (e.code == 'SYSTEM_BUSY') {
+        return Left(NfcTagReadFailure(e.message ?? 'Lecteur NFC occupé. Réessayez.'));
+      }
+      return Left(NfcTagReadFailure(e.message ?? 'Erreur NFC'));
+    } catch (e) {
+      return const Left(NfcTagReadFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> writeBobbinData(BobbinData data, {String tagFormat = 'anycubic'}) async {
     try {
       // Utiliser fromEntity pour copier TOUS les champs (colorRgb, températures, etc.)
       final bobbinModel = BobbinDataModel.fromEntity(data);
-      await dataSource.writeBobbinData(bobbinModel);
+      await dataSource.writeBobbinData(bobbinModel, tagFormat: tagFormat);
       return const Right(null);
     } on Failure catch (failure) {
       return Left(failure);

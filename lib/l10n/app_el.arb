@@ -162,7 +162,7 @@
   "tempBed": "Θερμ. Πλατφόρμας",
   "termsOfService": "Όροι Υπηρεσίας",
   "privacyPolicy": "Πολιτική Απορρήτου",
-  "legal": "Legal",
+  "legal": "Νομικά",
   "back": "Πίσω",
   "retry": "Επανάληψη",
   "signOut": "Αποσύνδεση",
@@ -241,6 +241,11 @@
   "ok": "OK",
   "bambuLabReadOnly": "Bambu Lab: Μόνο για ανάγνωση",
   "bambuLabReadOnlyDesc": "Οι ετικέτες Bambu Lab χρησιμοποιούν κρυπτογράφηση RSA και δεν μπορούν να τροποποιηθούν. Μόνο για ανάγνωση.",
+  "forPrusaMk4": "για Prusa MK4/XL (OpenPrintTag)",
+  "prusaReadWrite": "Prusa: Ανάγνωση και εγγραφή",
+  "prusaReadWriteDesc": "Οι ετικέτες Prusa χρησιμοποιούν ISO 15693 (NFC-V) με μορφή OpenPrintTag. Υποστηρίζονται ανάγνωση και εγγραφή.",
+  "nfcTagInfoPrusa": "Χρησιμοποιήστε κενή ετικέτα NXP ICODE SLIX2 (ISO 15693) για να δημιουργήσετε ετικέτες συμβατές με OpenPrintTag για Prusa MK4/XL.",
+  "writePrusaTagTitle": "Εγγραφή OpenPrintTag Prusa",
   "bambuCloneLibrary": "Βιβλιοθήκη κλώνων Bambu Lab",
   "noBambuClones": "Δεν υπάρχουν κλώνοι Bambu Lab",
   "scanBambuToClone": "Σαρώστε αυθεντικές ετικέτες Bambu Lab για να δημιουργήσετε τη βιβλιοθήκη κλώνων σας",
@@ -254,7 +259,6 @@
   "clonedOn": "Κλωνοποιήθηκε στις",
   "writeThisClone": "Εγγραφή αυτού του κλώνου",
   "writeClone": "Εγγραφή κλώνου",
-  "writing": "Εγγραφή...",
   "writeOnCUID": "Εγγραφή σε κάρτα CUID",
   "cloneWrittenSuccess": "Ο κλώνος εγγράφηκε επιτυχώς!",
   "requiredTagFormat": "Απαιτούμενη μορφή ετικέτας",
@@ -290,15 +294,33 @@
   "filamentTypeLabel": "Τύπος νήματος",
   "scanNfcChipButton": "Σάρωση NFC chip",
   "deleteCloneConfirmation": "Διαγραφή κλώνου \"{name}\";",
-  "@deleteCloneConfirmation": {"placeholders": {"name": {"type": "String"}}},
+  "@deleteCloneConfirmation": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "cloneDeletedMessage": "Ο κλώνος \"{name}\" διαγράφηκε",
-  "@cloneDeletedMessage": {"placeholders": {"name": {"type": "String"}}},
+  "@cloneDeletedMessage": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "extruderLabel": "Εξωθητής",
   "writeThisCloneButton": "Γράψε αυτόν τον κλώνο",
   "customNameHint": "Προσαρμοσμένο όνομα",
   "cloneWriteSuccessMessage": "Ο κλώνος γράφτηκε επιτυχώς!",
   "errorPrefix": "Σφάλμα: {error}",
-  "@errorPrefix": {"placeholders": {"error": {"type": "String"}}},
+  "@errorPrefix": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "writingInProgress": "Εγγραφή...",
   "writeOnCUIDButton": "Γράψε σε κάρτα CUID",
   "diameterLabel": "Διάμετρος",
@@ -326,11 +348,23 @@
   "writeBambuLabTagButton": "Γράψε ετικέτα Bambu Lab",
   "bambuLabRsaNote": "Σημείωση: Οι αρχικές ετικέτες Bambu Lab χρησιμοποιούν κρυπτογράφηση RSA. Αυτή η λειτουργία γράφει δεδομένα σε απλοποιημένη συμβατή μορφή.",
   "signInError": "Σφάλμα σύνδεσης: {error}",
-  "@signInError": {"placeholders": {"error": {"type": "String"}}},
+  "@signInError": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "subscriptionActivatedMessage": "Η συνδρομή ενεργοποιήθηκε επιτυχώς!",
   "subscriptionFailedMessage": "Η συνδρομή απέτυχε",
   "errorMessage": "Σφάλμα: {error}",
-  "@errorMessage": {"placeholders": {"error": {"type": "String"}}},
+  "@errorMessage": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "subscriptionRestoredMessage": "Η συνδρομή επαναφέρθηκε επιτυχώς!",
   "noSubscriptionFoundMessage": "Δεν βρέθηκε συνδρομή",
   "vipLabel": "VIP",
@@ -343,5 +377,42 @@
   "pleaseEnterValidLength": "Εισάγετε έγκυρο μήκος",
   "spoolLengthNotSetCannotConvert": "Το μήκος καρουλιού δεν έχει οριστεί - δεν είναι δυνατή η μετατροπή",
   "exceedsRemainingWeight": "Υπερβαίνει το υπόλοιπο βάρος",
-  "skuLabel": "SKU"
+  "skuLabel": "SKU",
+  "helpIdentifyFilament": "Βοηθήστε μας να αναγνωρίσουμε αυτό το νήμα",
+  "helpUsImprove": "Βοηθήστε μας να βελτιωθούμε!",
+  "helpIdentifyDescription": "Διαβάσαμε το τσιπ αλλά δεν μπορέσαμε να το αναγνωρίσουμε. Πείτε μας ποιο νήμα είναι για να βελτιώσουμε την εφαρμογή.",
+  "otherBrand": "Άλλη",
+  "thankYouFeedback": "Ευχαριστούμε για τα σχόλιά σας!",
+  "send": "Αποστολή",
+  "optionalDetails": "Προαιρετικές λεπτομέρειες",
+  "weightGrams": "Βάρος (g)",
+  "diameterMm": "Διάμετρος (mm)",
+  "spoolLengthM": "Μήκος καρουλιού (m)",
+  "batchNumberLabel": "Παρτίδα / SKU",
+  "black": "Μαύρο",
+  "white": "Λευκό",
+  "yellow": "Κίτρινο",
+  "orange": "Πορτοκαλί",
+  "pink": "Ροζ",
+  "purple": "Μωβ",
+  "gray": "Γκρι",
+  "brown": "Καφέ",
+  "unknown": "Άγνωστο",
+  "aud": "AUD",
+  "jpy": "JPY",
+  "cny": "CNY",
+  "inr": "INR",
+  "brl": "BRL",
+  "mxn": "MXN",
+  "sek": "SEK",
+  "nok": "NOK",
+  "dkk": "DKK",
+  "pln": "PLN",
+  "czk": "CZK",
+  "nzd": "NZD",
+  "contactUs": "Επικοινωνήστε μαζί μας",
+  "contactUsSubtitle": "Ερωτήσεις, προτάσεις ή προβλήματα",
+  "nfcTagNotDetected": "Δεν εντοπίστηκε ετικέτα NFC",
+  "nfcTagNotDetectedDesc": "Δεν βρέθηκε ετικέτα. Η ετικέτα μπορεί να είναι νεκρή, κατεστραμμένη ή πολύ μακριά από το τηλέφωνο. Βεβαιωθείτε ότι το πάνω μέρος του τηλεφώνου σας βρίσκεται απευθείας πάνω στην ετικέτα NFC.",
+  "nfcTagIncompatible": "Εντοπίστηκε μη συμβατή ετικέτα NFC"
 }

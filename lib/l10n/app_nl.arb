@@ -58,7 +58,7 @@
   "spoolLength": "Lengte (m)",
   "generatedSku": "Gegenereerde SKU",
   "approachChipToWrite": "Benader chip om te schrijven...",
-  "writing": "Schrijven...",
+  "writing": "Aan het schrijven...",
   "chooseColor": "Kies kleur",
   "required": "Verplicht",
   "invalid": "Ongeldig",
@@ -162,7 +162,7 @@
   "tempBed": "Bed temp.",
   "termsOfService": "Servicevoorwaarden",
   "privacyPolicy": "Privacybeleid",
-  "legal": "Legal",
+  "legal": "Juridisch",
   "back": "Terug",
   "retry": "Opnieuw proberen",
   "signOut": "Uitloggen",
@@ -192,6 +192,18 @@
   "usd": "Amerikaanse dollar ($)",
   "gbp": "Pond sterling (£)",
   "cad": "Canadese dollar (CAD)",
+  "aud": "Australische dollar (A$)",
+  "jpy": "Japanse yen (¥)",
+  "cny": "Chinese yuan (¥)",
+  "inr": "Indiase roepie (₹)",
+  "brl": "Braziliaanse real (R$)",
+  "mxn": "Mexicaanse peso (MX$)",
+  "sek": "Zweedse kroon (kr)",
+  "nok": "Noorse kroon (kr)",
+  "dkk": "Deense kroon (kr)",
+  "pln": "Poolse zloty (zł)",
+  "czk": "Tsjechische kroon (Kč)",
+  "nzd": "Nieuw-Zeelandse dollar (NZ$)",
   "filamentsToOrder": "Filamenten om te bestellen",
   "shoppingList": "Boodschappenlijst",
   "addToShoppingList": "Toevoegen aan lijst",
@@ -241,6 +253,9 @@
   "ok": "OK",
   "bambuLabReadOnly": "Bambu Lab: Alleen-lezen",
   "bambuLabReadOnlyDesc": "Bambu Lab tags gebruiken RSA-codering en kunnen niet worden gewijzigd. Alleen-lezen.",
+  "forPrusaMk4": "voor Prusa MK4/XL (OpenPrintTag)",
+  "prusaReadWrite": "Prusa: Lezen & Schrijven",
+  "prusaReadWriteDesc": "Prusa tags gebruiken ISO 15693 (NFC-V) met OpenPrintTag formaat. Lezen en schrijven ondersteund.",
   "bambuCloneLibrary": "Bambu Lab kloonbibliotheek",
   "noBambuClones": "Geen Bambu Lab klonen",
   "scanBambuToClone": "Scan originele Bambu Lab tags om je kloonbibliotheek te maken",
@@ -254,7 +269,6 @@
   "clonedOn": "Gekloond op",
   "writeThisClone": "Deze kloon schrijven",
   "writeClone": "Kloon schrijven",
-  "writing": "Aan het schrijven...",
   "writeOnCUID": "Schrijven naar CUID-kaart",
   "cloneWrittenSuccess": "Kloon succesvol geschreven!",
   "requiredTagFormat": "Vereist tag-formaat",
@@ -290,15 +304,33 @@
   "filamentTypeLabel": "Filamenttype",
   "scanNfcChipButton": "NFC-chip scannen",
   "deleteCloneConfirmation": "Kloon \"{name}\" verwijderen?",
-  "@deleteCloneConfirmation": {"placeholders": {"name": {"type": "String"}}},
+  "@deleteCloneConfirmation": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "cloneDeletedMessage": "Kloon \"{name}\" verwijderd",
-  "@cloneDeletedMessage": {"placeholders": {"name": {"type": "String"}}},
+  "@cloneDeletedMessage": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "extruderLabel": "Extruder",
   "writeThisCloneButton": "Deze kloon schrijven",
   "customNameHint": "Aangepaste naam",
   "cloneWriteSuccessMessage": "Kloon succesvol geschreven!",
   "errorPrefix": "Fout: {error}",
-  "@errorPrefix": {"placeholders": {"error": {"type": "String"}}},
+  "@errorPrefix": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "writingInProgress": "Schrijven...",
   "writeOnCUIDButton": "Schrijven op CUID-kaart",
   "diameterLabel": "Diameter",
@@ -326,11 +358,23 @@
   "writeBambuLabTagButton": "Bambu Lab tag schrijven",
   "bambuLabRsaNote": "Let op: Originele Bambu Lab tags gebruiken RSA-encryptie. Deze modus schrijft gegevens in een vereenvoudigd compatibel formaat.",
   "signInError": "Aanmeldfout: {error}",
-  "@signInError": {"placeholders": {"error": {"type": "String"}}},
+  "@signInError": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "subscriptionActivatedMessage": "Abonnement succesvol geactiveerd!",
   "subscriptionFailedMessage": "Abonnement mislukt",
   "errorMessage": "Fout: {error}",
-  "@errorMessage": {"placeholders": {"error": {"type": "String"}}},
+  "@errorMessage": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "subscriptionRestoredMessage": "Abonnement succesvol hersteld!",
   "noSubscriptionFoundMessage": "Geen abonnement gevonden",
   "vipLabel": "VIP",
@@ -343,5 +387,32 @@
   "pleaseEnterValidLength": "Voer een geldige lengte in",
   "spoolLengthNotSetCannotConvert": "Spoellengte niet ingesteld - kan niet converteren",
   "exceedsRemainingWeight": "Overschrijdt resterend gewicht",
-  "skuLabel": "SKU"
+  "skuLabel": "SKU",
+  "helpIdentifyFilament": "Help ons dit filament te identificeren",
+  "helpUsImprove": "Help ons verbeteren!",
+  "helpIdentifyDescription": "We hebben de chip gelezen maar konden het niet identificeren. Vertel ons welk filament dit is zodat we de app kunnen verbeteren.",
+  "otherBrand": "Ander",
+  "thankYouFeedback": "Bedankt voor je feedback!",
+  "send": "Verzenden",
+  "optionalDetails": "Optionele details",
+  "weightGrams": "Gewicht (g)",
+  "diameterMm": "Diameter (mm)",
+  "spoolLengthM": "Spoel lengte (m)",
+  "batchNumberLabel": "Batch / SKU",
+  "black": "Zwart",
+  "white": "Wit",
+  "yellow": "Geel",
+  "orange": "Oranje",
+  "pink": "Roze",
+  "purple": "Paars",
+  "gray": "Grijs",
+  "brown": "Bruin",
+  "unknown": "Onbekend",
+  "contactUs": "Neem contact op",
+  "contactUsSubtitle": "Vragen, suggesties of problemen",
+  "nfcTagNotDetected": "Geen NFC-tag gedetecteerd",
+  "nfcTagNotDetectedDesc": "Geen tag gevonden. De tag kan kapot, beschadigd of te ver van de telefoon verwijderd zijn. Plaats de bovenkant van uw iPhone rechtstreeks op de NFC-tag.",
+  "nfcTagIncompatible": "Oncompatibele NFC-tag gedetecteerd",
+  "nfcTagInfoPrusa": "Gebruik een lege NXP ICODE SLIX2-tag (ISO 15693) om OpenPrintTag-compatibele tags voor Prusa MK4/XL te maken.",
+  "writePrusaTagTitle": "Prusa OpenPrintTag schrijven"
 }

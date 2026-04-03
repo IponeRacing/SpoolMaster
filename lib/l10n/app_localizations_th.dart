@@ -508,7 +508,7 @@ class AppLocalizationsTh extends AppLocalizations {
   String get privacyPolicy => 'นโยบายความเป็นส่วนตัว';
 
   @override
-  String get legal => 'Legal';
+  String get legal => 'กฎหมาย';
 
   @override
   String get back => 'ย้อนกลับ';
@@ -559,6 +559,33 @@ class AppLocalizationsTh extends AppLocalizations {
   String get blue => 'น้ำเงิน';
 
   @override
+  String get black => 'ดำ';
+
+  @override
+  String get white => 'ขาว';
+
+  @override
+  String get yellow => 'เหลือง';
+
+  @override
+  String get orange => 'ส้ม';
+
+  @override
+  String get pink => 'ชมพู';
+
+  @override
+  String get purple => 'ม่วง';
+
+  @override
+  String get gray => 'เทา';
+
+  @override
+  String get brown => 'น้ำตาล';
+
+  @override
+  String get unknown => 'ไม่ทราบ';
+
+  @override
   String get metricUnits => 'เมตริก (มม., ก., °C)';
 
   @override
@@ -578,6 +605,42 @@ class AppLocalizationsTh extends AppLocalizations {
 
   @override
   String get cad => 'ดอลลาร์แคนาดา (CAD)';
+
+  @override
+  String get aud => 'ดอลลาร์ออสเตรเลีย (A\$)';
+
+  @override
+  String get jpy => 'เยนญี่ปุ่น (¥)';
+
+  @override
+  String get cny => 'หยวนจีน (¥)';
+
+  @override
+  String get inr => 'รูปีอินเดีย (₹)';
+
+  @override
+  String get brl => 'เรียลบราซิล (R\$)';
+
+  @override
+  String get mxn => 'เปโซเม็กซิโก (MX\$)';
+
+  @override
+  String get sek => 'โครนาสวีเดน (kr)';
+
+  @override
+  String get nok => 'โครนนอร์เวย์ (kr)';
+
+  @override
+  String get dkk => 'โครนเดนมาร์ก (kr)';
+
+  @override
+  String get pln => 'ซลอตีโปแลนด์ (zł)';
+
+  @override
+  String get czk => 'โครูนาเช็ก (Kč)';
+
+  @override
+  String get nzd => 'ดอลลาร์นิวซีแลนด์ (NZ\$)';
 
   @override
   String get filamentsToOrder => 'ฟิลาเมนต์ที่ต้องสั่ง';
@@ -707,6 +770,16 @@ class AppLocalizationsTh extends AppLocalizations {
   @override
   String get bambuLabReadOnlyDesc =>
       'แท็ก Bambu Lab ใช้การเข้ารหัส RSA และไม่สามารถแก้ไขได้ อ่านอย่างเดียว';
+
+  @override
+  String get forPrusaMk4 => 'สำหรับ Prusa MK4/XL (OpenPrintTag)';
+
+  @override
+  String get prusaReadWrite => 'Prusa: อ่านและเขียน';
+
+  @override
+  String get prusaReadWriteDesc =>
+      'แท็ก Prusa ใช้ ISO 15693 (NFC-V) ในรูปแบบ OpenPrintTag รองรับการอ่านและเขียน';
 
   @override
   String get bambuCloneLibrary => 'คลัง Clone Bambu Lab';
@@ -1022,4 +1095,61 @@ class AppLocalizationsTh extends AppLocalizations {
 
   @override
   String get skuLabel => 'SKU';
+
+  @override
+  String get helpIdentifyFilament => 'ช่วยเราระบุเส้นพลาสติกนี้';
+
+  @override
+  String get helpUsImprove => 'ช่วยเราปรับปรุง!';
+
+  @override
+  String get helpIdentifyDescription =>
+      'เราอ่านชิปได้แต่ไม่สามารถระบุได้ บอกเราว่าเส้นพลาสติกนี้คืออะไรเพื่อให้เราปรับปรุงแอป';
+
+  @override
+  String get otherBrand => 'อื่นๆ';
+
+  @override
+  String get thankYouFeedback => 'ขอบคุณสำหรับความคิดเห็น!';
+
+  @override
+  String get send => 'ส่ง';
+
+  @override
+  String get optionalDetails => 'รายละเอียดเพิ่มเติม';
+
+  @override
+  String get weightGrams => 'น้ำหนัก (ก.)';
+
+  @override
+  String get diameterMm => 'เส้นผ่านศูนย์กลาง (มม.)';
+
+  @override
+  String get spoolLengthM => 'ความยาวม้วน (ม.)';
+
+  @override
+  String get batchNumberLabel => 'ล็อต / SKU';
+
+  @override
+  String get contactUs => 'ติดต่อเรา';
+
+  @override
+  String get contactUsSubtitle => 'คำถาม ข้อเสนอแนะ หรือปัญหา';
+
+  @override
+  String get nfcTagNotDetected => 'ไม่พบแท็ก NFC';
+
+  @override
+  String get nfcTagNotDetectedDesc =>
+      'ไม่พบแท็ก แท็กอาจเสีย เสียหาย หรืออยู่ไกลจากโทรศัพท์เกินไป ตรวจสอบให้แน่ใจว่าส่วนบนของโทรศัพท์วางอยู่บนแท็ก NFC โดยตรง';
+
+  @override
+  String get nfcTagIncompatible => 'ตรวจพบแท็ก NFC ที่ไม่รองรับ';
+
+  @override
+  String get nfcTagInfoPrusa =>
+      'ใช้การ์ด NXP ICODE SLIX2 เปล่า (ISO 15693) เพื่อสร้างแท็กที่เข้ากันได้กับ OpenPrintTag สำหรับ Prusa MK4/XL';
+
+  @override
+  String get writePrusaTagTitle => 'เขียนแท็ก Prusa OpenPrintTag';
 }

@@ -435,13 +435,15 @@ class SubscriptionController
                 }
             }
 
-            // Check for active subscriptions (expires_date > NOW() OR expires_date IS NULL for Sandbox PKCS#7)
+            // Check for active subscriptions with valid expiration date
+            // SECURITY: Do NOT accept expires_date IS NULL as valid premium
+            // (This would allow unverified PKCS#7 receipts to grant premium indefinitely)
             $stmt = $this->db->prepare("
                 SELECT product_id, status, expires_date, auto_renew_enabled, environment
                 FROM subscriptions
                 WHERE user_id = ?
                     AND status IN ('active', 'grace_period')
-                    AND (expires_date > NOW() OR expires_date IS NULL)
+                    AND expires_date > NOW()
                 ORDER BY expires_date DESC
                 LIMIT 1
             ");

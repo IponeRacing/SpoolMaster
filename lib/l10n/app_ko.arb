@@ -162,7 +162,7 @@
   "tempBed": "베드 온도",
   "termsOfService": "서비스 약관",
   "privacyPolicy": "개인정보 처리방침",
-  "legal": "Legal",
+  "legal": "법적 정보",
   "back": "뒤로",
   "retry": "다시 시도",
   "signOut": "로그아웃",
@@ -192,6 +192,18 @@
   "usd": "미국 달러 ($)",
   "gbp": "영국 파운드 (£)",
   "cad": "캐나다 달러 (CAD)",
+  "aud": "호주 달러 (A$)",
+  "jpy": "일본 엔 (¥)",
+  "cny": "중국 위안 (¥)",
+  "inr": "인도 루피 (₹)",
+  "brl": "브라질 헤알 (R$)",
+  "mxn": "멕시코 페소 (MX$)",
+  "sek": "스웨덴 크로나 (kr)",
+  "nok": "노르웨이 크로네 (kr)",
+  "dkk": "덴마크 크로네 (kr)",
+  "pln": "폴란드 즈워티 (zł)",
+  "czk": "체코 코루나 (Kč)",
+  "nzd": "뉴질랜드 달러 (NZ$)",
   "filamentsToOrder": "주문할 필라멘트",
   "shoppingList": "쇼핑 목록",
   "addToShoppingList": "목록에 추가",
@@ -241,6 +253,11 @@
   "ok": "확인",
   "bambuLabReadOnly": "Bambu Lab: 읽기 전용",
   "bambuLabReadOnlyDesc": "Bambu Lab 태그는 RSA 암호화를 사용하며 수정할 수 없습니다. 읽기 전용입니다.",
+  "forPrusaMk4": "Prusa MK4/XL용 (OpenPrintTag)",
+  "prusaReadWrite": "Prusa: 읽기 및 쓰기",
+  "prusaReadWriteDesc": "Prusa 태그는 OpenPrintTag 형식의 ISO 15693 (NFC-V)을 사용합니다. 읽기 및 쓰기를 지원합니다.",
+  "nfcTagInfoPrusa": "빈 NXP ICODE SLIX2 태그 (ISO 15693)를 사용하여 Prusa MK4/XL용 OpenPrintTag 호환 태그를 만드세요.",
+  "writePrusaTagTitle": "Prusa OpenPrintTag 쓰기",
   "bambuCloneLibrary": "Bambu Lab 클론 라이브러리",
   "noBambuClones": "Bambu Lab 클론 없음",
   "scanBambuToClone": "Bambu Lab 정품 태그를 스캔하여 클론 라이브러리 생성",
@@ -254,7 +271,6 @@
   "clonedOn": "클론 생성일",
   "writeThisClone": "이 클론 쓰기",
   "writeClone": "클론 쓰기",
-  "writing": "쓰는 중...",
   "writeOnCUID": "CUID 카드에 쓰기",
   "cloneWrittenSuccess": "클론이 성공적으로 작성되었습니다!",
   "requiredTagFormat": "필요한 태그 형식",
@@ -290,15 +306,33 @@
   "filamentTypeLabel": "필라멘트 유형",
   "scanNfcChipButton": "NFC 칩 스캔",
   "deleteCloneConfirmation": "클론 \"{name}\"을(를) 삭제하시겠습니까?",
-  "@deleteCloneConfirmation": {"placeholders": {"name": {"type": "String"}}},
+  "@deleteCloneConfirmation": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "cloneDeletedMessage": "클론 \"{name}\" 삭제됨",
-  "@cloneDeletedMessage": {"placeholders": {"name": {"type": "String"}}},
+  "@cloneDeletedMessage": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "extruderLabel": "익스트루더",
   "writeThisCloneButton": "이 클론 쓰기",
   "customNameHint": "사용자 지정 이름",
   "cloneWriteSuccessMessage": "클론 쓰기 성공!",
   "errorPrefix": "오류: {error}",
-  "@errorPrefix": {"placeholders": {"error": {"type": "String"}}},
+  "@errorPrefix": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "writingInProgress": "쓰는 중...",
   "writeOnCUIDButton": "CUID 카드에 쓰기",
   "diameterLabel": "직경",
@@ -326,11 +360,23 @@
   "writeBambuLabTagButton": "Bambu Lab 태그 쓰기",
   "bambuLabRsaNote": "참고: 원본 Bambu Lab 태그는 RSA 암호화를 사용합니다. 이 모드는 단순화된 호환 형식으로 데이터를 씁니다.",
   "signInError": "로그인 오류: {error}",
-  "@signInError": {"placeholders": {"error": {"type": "String"}}},
+  "@signInError": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "subscriptionActivatedMessage": "구독이 활성화되었습니다!",
   "subscriptionFailedMessage": "구독 실패",
   "errorMessage": "오류: {error}",
-  "@errorMessage": {"placeholders": {"error": {"type": "String"}}},
+  "@errorMessage": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "subscriptionRestoredMessage": "구독이 복원되었습니다!",
   "noSubscriptionFoundMessage": "구독을 찾을 수 없습니다",
   "vipLabel": "VIP",
@@ -343,5 +389,30 @@
   "pleaseEnterValidLength": "유효한 길이를 입력하세요",
   "spoolLengthNotSetCannotConvert": "스풀 길이가 설정되지 않음 - 변환 불가",
   "exceedsRemainingWeight": "남은 무게 초과",
-  "skuLabel": "SKU"
+  "skuLabel": "SKU",
+  "helpIdentifyFilament": "이 필라멘트 식별을 도와주세요",
+  "helpUsImprove": "개선에 도움을 주세요!",
+  "helpIdentifyDescription": "태그를 읽었지만 식별할 수 없었습니다. 어떤 필라멘트인지 알려주시면 앱을 개선할 수 있습니다.",
+  "otherBrand": "기타",
+  "thankYouFeedback": "피드백 감사합니다!",
+  "send": "보내기",
+  "optionalDetails": "선택적 세부사항",
+  "weightGrams": "무게 (g)",
+  "diameterMm": "직경 (mm)",
+  "spoolLengthM": "스풀 길이 (m)",
+  "batchNumberLabel": "배치 / SKU",
+  "black": "블랙",
+  "white": "화이트",
+  "yellow": "옐로우",
+  "orange": "오렌지",
+  "pink": "핑크",
+  "purple": "퍼플",
+  "gray": "그레이",
+  "brown": "브라운",
+  "unknown": "알 수 없음",
+  "contactUs": "문의하기",
+  "contactUsSubtitle": "질문, 제안 또는 문제",
+  "nfcTagNotDetected": "NFC 태그가 감지되지 않음",
+  "nfcTagNotDetectedDesc": "태그를 찾을 수 없습니다. 태그가 고장났거나 손상되었거나 전화기에서 너무 멀리 있을 수 있습니다. iPhone 상단을 NFC 태그 위에 직접 놓으세요.",
+  "nfcTagIncompatible": "호환되지 않는 NFC 태그 감지됨"
 }

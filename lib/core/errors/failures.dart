@@ -19,7 +19,15 @@ class NfcNotAvailableFailure extends Failure {
 class NfcTagReadFailure extends Failure {
   const NfcTagReadFailure([
     super.message = 'Erreur lors de la lecture de la puce NFC',
+    this.rawTagData,
+    this.rawBytesCount = 0,
   ]);
+
+  final String? rawTagData;
+  final int rawBytesCount;
+
+  @override
+  List<Object?> get props => [message, rawTagData, rawBytesCount];
 }
 
 class NfcTagWriteFailure extends Failure {
@@ -36,6 +44,24 @@ class NfcPermissionDeniedFailure extends Failure {
 
 class NfcSessionCancelledFailure extends Failure {
   const NfcSessionCancelledFailure([super.message = 'Scan NFC annulé']);
+}
+
+class NfcTagNotDetectedFailure extends Failure {
+  const NfcTagNotDetectedFailure([
+    super.message = 'Aucun tag NFC détecté',
+  ]);
+}
+
+class NfcTagIncompatibleFailure extends Failure {
+  const NfcTagIncompatibleFailure([
+    super.message = 'Tag NFC incompatible détecté',
+    this.tagType,
+  ]);
+
+  final String? tagType;
+
+  @override
+  List<Object?> get props => [message, tagType];
 }
 
 // Generic Failures

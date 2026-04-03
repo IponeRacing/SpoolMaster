@@ -13,6 +13,9 @@ abstract class NfcRepository {
   /// Read an NFC tag and parse bobbin data
   Future<Either<Failure, BobbinData>> readBobbinData();
 
+  /// Read an NFC tag with auto-detection of tag type
+  Future<Either<Failure, BobbinData>> readBobbinDataAutoDetect();
+
   /// Write bobbin data to an NFC tag
-  Future<Either<Failure, void>> writeBobbinData(BobbinData data);
+  Future<Either<Failure, void>> writeBobbinData(BobbinData data, {String tagFormat = 'anycubic'});
 }

@@ -187,6 +187,18 @@
   "usd": "US Dollar ($)",
   "gbp": "Pound Sterling (£)",
   "cad": "Canadian Dollar (CAD)",
+  "aud": "Australian Dollar (A$)",
+  "jpy": "Japanese Yen (¥)",
+  "cny": "Chinese Yuan (¥)",
+  "inr": "Indian Rupee (₹)",
+  "brl": "Brazilian Real (R$)",
+  "mxn": "Mexican Peso (MX$)",
+  "sek": "Swedish Krona (kr)",
+  "nok": "Norwegian Krone (kr)",
+  "dkk": "Danish Krone (kr)",
+  "pln": "Polish Zloty (zł)",
+  "czk": "Czech Koruna (Kč)",
+  "nzd": "New Zealand Dollar (NZ$)",
   "filamentsToOrder": "Filaments to Order",
   "shoppingList": "Shopping List",
   "addToShoppingList": "Add to List",
@@ -241,6 +253,11 @@
   "ok": "OK",
   "bambuLabReadOnly": "Bambu Lab: Read only",
   "bambuLabReadOnlyDesc": "Bambu Lab tags use RSA encryption and cannot be modified. Reading only.",
+  "forPrusaMk4": "for Prusa MK4/XL (OpenPrintTag)",
+  "prusaReadWrite": "Prusa: Read & Write",
+  "prusaReadWriteDesc": "Prusa tags use ISO 15693 (NFC-V) with OpenPrintTag format. Read and write supported.",
+  "nfcTagInfoPrusa": "Use a blank NXP ICODE SLIX2 tag (ISO 15693) to create OpenPrintTag compatible tags for Prusa MK4/XL.",
+  "writePrusaTagTitle": "Write Prusa OpenPrintTag",
   "bambuCloneLibrary": "Bambu Lab Clone Library",
   "noBambuClones": "No Bambu Lab clones",
   "scanBambuToClone": "Scan Bambu Lab original tags to create your clone library",
@@ -254,7 +271,6 @@
   "clonedOn": "Cloned on",
   "writeThisClone": "Write this clone",
   "writeClone": "Write clone",
-  "writing": "Writing...",
   "writeOnCUID": "Write on CUID card",
   "cloneWrittenSuccess": "Clone written successfully!",
   "requiredTagFormat": "Required tag format",
@@ -290,15 +306,33 @@
   "filamentTypeLabel": "Filament type",
   "scanNfcChipButton": "Scan NFC chip",
   "deleteCloneConfirmation": "Delete clone \"{name}\"?",
-  "@deleteCloneConfirmation": {"placeholders": {"name": {"type": "String"}}},
+  "@deleteCloneConfirmation": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "cloneDeletedMessage": "Clone \"{name}\" deleted",
-  "@cloneDeletedMessage": {"placeholders": {"name": {"type": "String"}}},
+  "@cloneDeletedMessage": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "extruderLabel": "Extruder",
   "writeThisCloneButton": "Write this clone",
   "customNameHint": "Custom name",
   "cloneWriteSuccessMessage": "Clone written successfully!",
   "errorPrefix": "Error: {error}",
-  "@errorPrefix": {"placeholders": {"error": {"type": "String"}}},
+  "@errorPrefix": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "writingInProgress": "Writing...",
   "writeOnCUIDButton": "Write on CUID card",
   "diameterLabel": "Diameter",
@@ -326,11 +360,23 @@
   "writeBambuLabTagButton": "Write Bambu Lab tag",
   "bambuLabRsaNote": "Note: Original Bambu Lab tags use RSA encryption. This mode writes data in a simplified compatible format.",
   "signInError": "Sign in error: {error}",
-  "@signInError": {"placeholders": {"error": {"type": "String"}}},
+  "@signInError": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "subscriptionActivatedMessage": "Subscription activated successfully!",
   "subscriptionFailedMessage": "Subscription failed",
   "errorMessage": "Error: {error}",
-  "@errorMessage": {"placeholders": {"error": {"type": "String"}}},
+  "@errorMessage": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "subscriptionRestoredMessage": "Subscription restored successfully!",
   "noSubscriptionFoundMessage": "No subscription found",
   "vipLabel": "VIP",
@@ -343,5 +389,30 @@
   "pleaseEnterValidLength": "Please enter valid length",
   "spoolLengthNotSetCannotConvert": "Spool length not set - cannot convert",
   "exceedsRemainingWeight": "Exceeds remaining weight",
-  "skuLabel": "SKU"
+  "skuLabel": "SKU",
+  "helpIdentifyFilament": "Help us identify this filament",
+  "helpUsImprove": "Help us improve!",
+  "helpIdentifyDescription": "We read the tag but couldn't identify it. Tell us what filament this is so we can improve the app.",
+  "otherBrand": "Other",
+  "thankYouFeedback": "Thank you for your feedback!",
+  "send": "Send",
+  "optionalDetails": "Optional details",
+  "weightGrams": "Weight (g)",
+  "diameterMm": "Diameter (mm)",
+  "spoolLengthM": "Spool length (m)",
+  "batchNumberLabel": "Batch / SKU",
+  "black": "Black",
+  "white": "White",
+  "yellow": "Yellow",
+  "orange": "Orange",
+  "pink": "Pink",
+  "purple": "Purple",
+  "gray": "Gray",
+  "brown": "Brown",
+  "unknown": "Unknown",
+  "contactUs": "Contact Us",
+  "contactUsSubtitle": "Questions, suggestions or issues",
+  "nfcTagNotDetected": "No NFC tag detected",
+  "nfcTagNotDetectedDesc": "No tag was found. The tag may be dead, damaged, or too far from the phone. Make sure the top of your iPhone is placed directly on the NFC tag.",
+  "nfcTagIncompatible": "Incompatible NFC tag detected"
 }

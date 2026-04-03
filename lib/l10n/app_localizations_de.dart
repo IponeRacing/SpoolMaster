@@ -511,7 +511,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get privacyPolicy => 'Datenschutzrichtlinie';
 
   @override
-  String get legal => 'Legal';
+  String get legal => 'Rechtliches';
 
   @override
   String get back => 'Zurück';
@@ -562,6 +562,33 @@ class AppLocalizationsDe extends AppLocalizations {
   String get blue => 'Blau';
 
   @override
+  String get black => 'Schwarz';
+
+  @override
+  String get white => 'Weiß';
+
+  @override
+  String get yellow => 'Gelb';
+
+  @override
+  String get orange => 'Orange';
+
+  @override
+  String get pink => 'Rosa';
+
+  @override
+  String get purple => 'Lila';
+
+  @override
+  String get gray => 'Grau';
+
+  @override
+  String get brown => 'Braun';
+
+  @override
+  String get unknown => 'Unbekannt';
+
+  @override
   String get metricUnits => 'Metrisch (mm, g, °C)';
 
   @override
@@ -581,6 +608,42 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get cad => 'Kanadischer Dollar (CAD)';
+
+  @override
+  String get aud => 'Australischer Dollar (A\$)';
+
+  @override
+  String get jpy => 'Japanischer Yen (¥)';
+
+  @override
+  String get cny => 'Chinesischer Yuan (¥)';
+
+  @override
+  String get inr => 'Indische Rupie (₹)';
+
+  @override
+  String get brl => 'Brasilianischer Real (R\$)';
+
+  @override
+  String get mxn => 'Mexikanischer Peso (MX\$)';
+
+  @override
+  String get sek => 'Schwedische Krone (kr)';
+
+  @override
+  String get nok => 'Norwegische Krone (kr)';
+
+  @override
+  String get dkk => 'Dänische Krone (kr)';
+
+  @override
+  String get pln => 'Polnischer Zloty (zł)';
+
+  @override
+  String get czk => 'Tschechische Krone (Kč)';
+
+  @override
+  String get nzd => 'Neuseeland-Dollar (NZ\$)';
 
   @override
   String get filamentsToOrder => 'Zu bestellende Filamente';
@@ -712,6 +775,16 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get bambuLabReadOnlyDesc =>
       'Bambu Lab Tags verwenden RSA-Verschlüsselung und können nicht geändert werden. Nur Lesezugriff.';
+
+  @override
+  String get forPrusaMk4 => 'für Prusa MK4/XL (OpenPrintTag)';
+
+  @override
+  String get prusaReadWrite => 'Prusa: Lesen & Schreiben';
+
+  @override
+  String get prusaReadWriteDesc =>
+      'Prusa Tags verwenden ISO 15693 (NFC-V) mit OpenPrintTag-Format. Lesen und Schreiben werden unterstützt.';
 
   @override
   String get bambuCloneLibrary => 'Bambu Lab Klon-Bibliothek';
@@ -1034,4 +1107,62 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get skuLabel => 'SKU';
+
+  @override
+  String get helpIdentifyFilament =>
+      'Helfen Sie uns, dieses Filament zu identifizieren';
+
+  @override
+  String get helpUsImprove => 'Helfen Sie uns, uns zu verbessern!';
+
+  @override
+  String get helpIdentifyDescription =>
+      'Wir haben den Chip gelesen, konnten ihn aber nicht identifizieren. Sagen Sie uns, welches Filament es ist, damit wir die App verbessern können.';
+
+  @override
+  String get otherBrand => 'Andere';
+
+  @override
+  String get thankYouFeedback => 'Vielen Dank für Ihr Feedback!';
+
+  @override
+  String get send => 'Senden';
+
+  @override
+  String get optionalDetails => 'Optionale Details';
+
+  @override
+  String get weightGrams => 'Gewicht (g)';
+
+  @override
+  String get diameterMm => 'Durchmesser (mm)';
+
+  @override
+  String get spoolLengthM => 'Spulenlänge (m)';
+
+  @override
+  String get batchNumberLabel => 'Charge / SKU';
+
+  @override
+  String get contactUs => 'Kontaktieren Sie uns';
+
+  @override
+  String get contactUsSubtitle => 'Fragen, Vorschläge oder Probleme';
+
+  @override
+  String get nfcTagNotDetected => 'Kein NFC-Tag erkannt';
+
+  @override
+  String get nfcTagNotDetectedDesc =>
+      'Es wurde kein Tag gefunden. Der Tag ist möglicherweise defekt, beschädigt oder zu weit vom Telefon entfernt. Legen Sie die Oberseite Ihres iPhones direkt auf den NFC-Tag.';
+
+  @override
+  String get nfcTagIncompatible => 'Inkompatibles NFC-Tag erkannt';
+
+  @override
+  String get nfcTagInfoPrusa =>
+      'Verwenden Sie einen leeren NXP ICODE SLIX2-Tag (ISO 15693), um OpenPrintTag-kompatible Tags für Prusa MK4/XL zu erstellen.';
+
+  @override
+  String get writePrusaTagTitle => 'Prusa OpenPrintTag schreiben';
 }

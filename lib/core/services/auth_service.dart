@@ -12,6 +12,11 @@ import 'shopping_list_service.dart';
 
 /// Service d'authentification Apple & Google
 class AuthService {
+  // Singleton
+  static final AuthService _instance = AuthService._internal();
+  factory AuthService() => _instance;
+  AuthService._internal();
+
   final GoogleSignIn _googleSignIn = GoogleSignIn(
     scopes: ['email', 'profile'],
   );
@@ -55,11 +60,9 @@ class AuthService {
         ).timeout(ApiConfig.connectTimeout);
 
         debugPrint('Apple backend response: ${response.statusCode}');
-        debugPrint('Apple backend body: ${response.body}');
 
         if (response.statusCode == 200) {
           final responseBody = jsonDecode(response.body);
-          debugPrint('Decoded response: $responseBody');
 
           if (responseBody == null) {
             throw Exception('Backend returned null response');
@@ -74,23 +77,15 @@ class AuthService {
             responseBody as Map<String, dynamic>,
           );
 
-          debugPrint('Saving tokens...');
           await _saveTokens(authResponse);
-
-          debugPrint('Loading preferences from backend...');
           await UserPreferencesService.loadPreferencesFromBackend();
-
-          debugPrint('Syncing spools with backend (full sync)...');
-          // Full sync: push local changes first, then pull server changes
           await SyncService.fullSync();
-
-          debugPrint('Syncing shopping list with backend...');
           await ShoppingListService.fullSync();
 
-          debugPrint('Apple Sign In successful (backend mode)');
+          debugPrint('✅ Apple Sign In successful (backend mode)');
           return;
         } else {
-          debugPrint('Backend error: ${response.statusCode} - ${response.body}');
+          debugPrint('❌ Backend error: ${response.statusCode}');
         }
       } catch (e, stackTrace) {
         debugPrint('Backend unavailable, using local mode: $e');
@@ -135,17 +130,14 @@ class AuthService {
         ).timeout(ApiConfig.connectTimeout);
 
         debugPrint('Google backend response: ${response.statusCode}');
-        debugPrint('Google backend body: ${response.body}');
 
         if (response.statusCode == 200) {
           final responseBody = jsonDecode(response.body);
-          debugPrint('Decoded response: $responseBody');
 
           if (responseBody == null) {
             throw Exception('Backend returned null response');
           }
 
-          // Check if backend returned success
           if (responseBody['success'] == false) {
             throw Exception('Backend error: ${responseBody['error'] ?? 'Unknown error'}');
           }
@@ -154,16 +146,13 @@ class AuthService {
             responseBody as Map<String, dynamic>,
           );
           await _saveTokens(authResponse);
-          // Load user preferences from backend after successful login
           await UserPreferencesService.loadPreferencesFromBackend();
-          // Full sync: push local changes first, then pull server changes
           await SyncService.fullSync();
-          // Sync shopping list
           await ShoppingListService.fullSync();
-          debugPrint('Google Sign In successful (backend mode)');
+          debugPrint('✅ Google Sign In successful (backend mode)');
           return;
         } else {
-          debugPrint('Backend error: ${response.statusCode} - ${response.body}');
+          debugPrint('❌ Backend error: ${response.statusCode}');
         }
       } catch (e, stackTrace) {
         debugPrint('Backend unavailable, using local mode: $e');
@@ -265,10 +254,12 @@ class AuthService {
       Uri.parse('${ApiConfig.baseUrl}${ApiConfig.refreshToken}'),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({'refresh_token': refreshToken}),
-    );
+    ).timeout(ApiConfig.connectTimeout);
 
     if (response.statusCode != 200) {
-      throw Exception('Token refresh failed');
+      // Refresh token expired or invalid - force logout
+      await _clearTokens();
+      throw Exception('Token refresh failed - logged out');
     }
 
     final data = jsonDecode(response.body)['data'];
@@ -280,6 +271,31 @@ class AuthService {
       key: _keyRefreshToken,
       value: data['refresh_token'] as String,
     );
+  }
+
+  /// Execute an authenticated HTTP request with automatic 401 retry
+  Future<http.Response> authenticatedRequest(
+    Future<http.Response> Function(String token) request,
+  ) async {
+    var token = await getAccessToken();
+    if (token == null) throw Exception('Not authenticated');
+
+    var response = await request(token);
+
+    if (response.statusCode == 401) {
+      // Token expired, try refresh
+      try {
+        await refreshAccessToken();
+        token = await getAccessToken();
+        if (token == null) throw Exception('Token refresh returned null');
+        response = await request(token);
+      } catch (e) {
+        debugPrint('❌ Token refresh failed: $e');
+        rethrow;
+      }
+    }
+
+    return response;
   }
 
   /// Sauvegarder les tokens

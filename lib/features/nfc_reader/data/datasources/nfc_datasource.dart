@@ -11,6 +11,9 @@ abstract class NfcDataSource {
   /// Read bobbin data from NFC tag
   Future<BobbinDataModel> readBobbinData();
 
+  /// Read bobbin data with auto-detection of tag type
+  Future<BobbinDataModel> readBobbinDataAutoDetect();
+
   /// Write bobbin data to NFC tag
-  Future<void> writeBobbinData(BobbinDataModel data);
+  Future<void> writeBobbinData(BobbinDataModel data, {String tagFormat = 'anycubic'});
 }

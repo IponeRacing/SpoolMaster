@@ -509,7 +509,7 @@ class AppLocalizationsSv extends AppLocalizations {
   String get privacyPolicy => 'Sekretesspolicy';
 
   @override
-  String get legal => 'Legal';
+  String get legal => 'Juridiskt';
 
   @override
   String get back => 'Tillbaka';
@@ -560,6 +560,33 @@ class AppLocalizationsSv extends AppLocalizations {
   String get blue => 'Blå';
 
   @override
+  String get black => 'Svart';
+
+  @override
+  String get white => 'Vit';
+
+  @override
+  String get yellow => 'Gul';
+
+  @override
+  String get orange => 'Orange';
+
+  @override
+  String get pink => 'Rosa';
+
+  @override
+  String get purple => 'Lila';
+
+  @override
+  String get gray => 'Grå';
+
+  @override
+  String get brown => 'Brun';
+
+  @override
+  String get unknown => 'Okänd';
+
+  @override
   String get metricUnits => 'Metrisk (mm, g, °C)';
 
   @override
@@ -579,6 +606,42 @@ class AppLocalizationsSv extends AppLocalizations {
 
   @override
   String get cad => 'Kanadensisk dollar (CAD)';
+
+  @override
+  String get aud => 'Australisk dollar (A\$)';
+
+  @override
+  String get jpy => 'Japansk yen (¥)';
+
+  @override
+  String get cny => 'Kinesisk yuan (¥)';
+
+  @override
+  String get inr => 'Indisk rupie (₹)';
+
+  @override
+  String get brl => 'Brasiliansk real (R\$)';
+
+  @override
+  String get mxn => 'Mexikansk peso (MX\$)';
+
+  @override
+  String get sek => 'Svensk krona (kr)';
+
+  @override
+  String get nok => 'Norsk krone (kr)';
+
+  @override
+  String get dkk => 'Dansk krone (kr)';
+
+  @override
+  String get pln => 'Polsk zloty (zł)';
+
+  @override
+  String get czk => 'Tjeckisk koruna (Kč)';
+
+  @override
+  String get nzd => 'Nyzeeländsk dollar (NZ\$)';
 
   @override
   String get filamentsToOrder => 'Filament att beställa';
@@ -707,6 +770,16 @@ class AppLocalizationsSv extends AppLocalizations {
   @override
   String get bambuLabReadOnlyDesc =>
       'Bambu Lab-taggar använder RSA-kryptering och kan inte modifieras. Skrivskyddad.';
+
+  @override
+  String get forPrusaMk4 => 'för Prusa MK4/XL (OpenPrintTag)';
+
+  @override
+  String get prusaReadWrite => 'Prusa: Läs och skriv';
+
+  @override
+  String get prusaReadWriteDesc =>
+      'Prusa-taggar använder ISO 15693 (NFC-V) med OpenPrintTag-format. Läsning och skrivning stöds.';
 
   @override
   String get bambuCloneLibrary => 'Bambu Lab klonbibliotek';
@@ -1023,4 +1096,61 @@ class AppLocalizationsSv extends AppLocalizations {
 
   @override
   String get skuLabel => 'SKU';
+
+  @override
+  String get helpIdentifyFilament => 'Hjälp oss att identifiera detta filament';
+
+  @override
+  String get helpUsImprove => 'Hjälp oss att förbättra!';
+
+  @override
+  String get helpIdentifyDescription =>
+      'Vi läste chippet men kunde inte identifiera det. Berätta för oss vilket filament det är så att vi kan förbättra appen.';
+
+  @override
+  String get otherBrand => 'Annat';
+
+  @override
+  String get thankYouFeedback => 'Tack för din feedback!';
+
+  @override
+  String get send => 'Skicka';
+
+  @override
+  String get optionalDetails => 'Valfria detaljer';
+
+  @override
+  String get weightGrams => 'Vikt (g)';
+
+  @override
+  String get diameterMm => 'Diameter (mm)';
+
+  @override
+  String get spoolLengthM => 'Spole längd (m)';
+
+  @override
+  String get batchNumberLabel => 'Batch / SKU';
+
+  @override
+  String get contactUs => 'Kontakta oss';
+
+  @override
+  String get contactUsSubtitle => 'Frågor, förslag eller problem';
+
+  @override
+  String get nfcTagNotDetected => 'Ingen NFC-tagg hittades';
+
+  @override
+  String get nfcTagNotDetectedDesc =>
+      'Ingen tagg hittades. Taggen kan vara död, skadad eller för långt från telefonen. Se till att toppen av din telefon placeras direkt på NFC-taggen.';
+
+  @override
+  String get nfcTagIncompatible => 'Inkompatibel NFC-tagg hittades';
+
+  @override
+  String get nfcTagInfoPrusa =>
+      'Använd en tom NXP ICODE SLIX2-tagg (ISO 15693) för att skapa OpenPrintTag-kompatibla taggar för Prusa MK4/XL.';
+
+  @override
+  String get writePrusaTagTitle => 'Skriv Prusa OpenPrintTag';
 }

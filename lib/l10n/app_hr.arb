@@ -55,8 +55,8 @@
   "extruderTempMax": "Maks. temp. ekstrudera",
   "bedTempMin": "Min. temp. podloge",
   "bedTempMax": "Maks. temp. podloge",
-  "diameter": "Promjer",
-  "spoolLength": "Duljina (m)",
+  "diameter": "Promjer filamenta",
+  "spoolLength": "Duljina kalema",
   "generatedSku": "Generirani SKU",
   "approachChipToWrite": "Približite čip za zapis...",
   "writing": "Zapisivanje...",
@@ -163,21 +163,15 @@
   "tempBed": "Temp. podloge",
   "termsOfService": "Uvjeti korištenja",
   "privacyPolicy": "Politika privatnosti",
-  "legal": "Legal",
+  "legal": "Pravno",
   "back": "Natrag",
   "retry": "Pokušaj ponovno",
   "signOut": "Odjavi se",
-  "extruderTempMin": "Min. temp. ekstrudera",
   "extruderTempMinHint": "Npr.: 200",
-  "extruderTempMax": "Maks. temp. ekstrudera",
   "extruderTempMaxHint": "Npr.: 220",
-  "bedTempMin": "Min. temp. podloge",
   "bedTempMinHint": "Npr.: 50",
-  "bedTempMax": "Maks. temp. podloge",
   "bedTempMaxHint": "Npr.: 60",
-  "diameter": "Promjer filamenta",
   "diameterHint": "Npr.: 1.75",
-  "spoolLength": "Duljina kalema",
   "spoolLengthHint": "Npr.: 330",
   "tabGrid": "Mreža",
   "tabSpectrum": "Spektar",
@@ -193,6 +187,18 @@
   "usd": "Američki dolar ($)",
   "gbp": "Funta sterlinga (£)",
   "cad": "Kanadski dolar (CAD)",
+  "aud": "Australski dolar (A$)",
+  "jpy": "Japanski jen (¥)",
+  "cny": "Kineski juan (¥)",
+  "inr": "Indijska rupija (₹)",
+  "brl": "Brazilski real (R$)",
+  "mxn": "Meksički peso (MX$)",
+  "sek": "Švedska kruna (kr)",
+  "nok": "Norveška kruna (kr)",
+  "dkk": "Danska kruna (kr)",
+  "pln": "Poljski zlot (zł)",
+  "czk": "Češka kruna (Kč)",
+  "nzd": "Novozelandski dolar (NZ$)",
   "filamentsToOrder": "Filamenti za narudžbu",
   "shoppingList": "Popis za kupnju",
   "addToShoppingList": "Dodaj na popis",
@@ -215,7 +221,6 @@
   "forAnycubicAce": "za Anycubic Ace",
   "forBambuLabAms": "za Bambu Lab AMS",
   "scanNfcChip": "Skeniraj NFC čip",
-  "addManually": "Dodaj ručno",
   "fillForm": "Ispuni obrazac",
   "emptyShoppingList": "Nema filamenata na popisu",
   "percentRemaining": "{percent}% preostalo",
@@ -228,9 +233,9 @@
   },
   "markAsOrdered": "Označi kao naručeno",
   "markAsNotOrdered": "Označi kao nenaručeno",
-  "spoolNotFound": "Kalem nije pronađen na zalihama",
-  "addSpoolFirstMessage": "Ovaj kalem još nije na vašim zalihama. Molimo prvo ga dodajte koristeći gumb 'Dodaj kalem' prije ažuriranja zaliha.",
-  "ok": "OK",
+  "spoolNotFound": "Kalup nije pronađen na zalihi",
+  "addSpoolFirstMessage": "Ovaj kalup još nije u vašoj zalihi. Molimo prvo ga dodajte pomoću gumba 'Dodaj kalup' prije ažuriranja zalihe.",
+  "ok": "U redu",
   "connection": "Povezivanje",
   "signInToSync": "Prijavite se za sinkronizaciju podataka",
   "continueWithoutAccount": "Nastavi bez računa (lokalni način)",
@@ -248,9 +253,11 @@
   "scanSpoolToUpdate": "Skenirajte kalup za ažuriranje zalihe",
   "bambuLabReadOnly": "Bambu Lab: Samo za čitanje",
   "bambuLabReadOnlyDesc": "Bambu Lab oznake koriste RSA enkripciju i ne mogu se mijenjati. Samo za čitanje.",
-  "spoolNotFound": "Kalup nije pronađen na zalihi",
-  "addSpoolFirstMessage": "Ovaj kalup još nije u vašoj zalihi. Molimo prvo ga dodajte pomoću gumba 'Dodaj kalup' prije ažuriranja zalihe.",
-  "ok": "U redu",
+  "forPrusaMk4": "za Prusa MK4/XL (OpenPrintTag)",
+  "prusaReadWrite": "Prusa: Čitanje i pisanje",
+  "prusaReadWriteDesc": "Prusa tagovi koriste ISO 15693 (NFC-V) s OpenPrintTag formatom. Čitanje i pisanje su podržani.",
+  "nfcTagInfoPrusa": "Koristite praznu NXP ICODE SLIX2 oznaku (ISO 15693) za stvaranje OpenPrintTag kompatibilnih oznaka za Prusa MK4/XL.",
+  "writePrusaTagTitle": "Zapiši Prusa OpenPrintTag",
   "bambuCloneLibrary": "Biblioteka klonova Bambu Lab",
   "noBambuClones": "Nema Bambu Lab klonova",
   "scanBambuToClone": "Skenirajte originalne Bambu Lab oznake da biste stvorili svoju biblioteku klonova",
@@ -264,7 +271,6 @@
   "clonedOn": "Klonirano",
   "writeThisClone": "Zapiši ovaj klon",
   "writeClone": "Zapiši klon",
-  "writing": "Zapisivanje...",
   "writeOnCUID": "Zapiši na CUID karticu",
   "cloneWrittenSuccess": "Klon uspješno zapisan!",
   "requiredTagFormat": "Potreban format oznake",
@@ -300,15 +306,33 @@
   "filamentTypeLabel": "Vrsta filamenta",
   "scanNfcChipButton": "Skeniraj NFC čip",
   "deleteCloneConfirmation": "Obrisati klon \"{name}\"?",
-  "@deleteCloneConfirmation": {"placeholders": {"name": {"type": "String"}}},
+  "@deleteCloneConfirmation": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "cloneDeletedMessage": "Klon \"{name}\" obrisan",
-  "@cloneDeletedMessage": {"placeholders": {"name": {"type": "String"}}},
+  "@cloneDeletedMessage": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "extruderLabel": "Ekstruder",
   "writeThisCloneButton": "Zapiši ovaj klon",
   "customNameHint": "Prilagođeno ime",
   "cloneWriteSuccessMessage": "Klon uspješno zapisan!",
   "errorPrefix": "Greška: {error}",
-  "@errorPrefix": {"placeholders": {"error": {"type": "String"}}},
+  "@errorPrefix": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "writingInProgress": "Pisanje...",
   "writeOnCUIDButton": "Zapiši na CUID karticu",
   "diameterLabel": "Promjer",
@@ -336,11 +360,23 @@
   "writeBambuLabTagButton": "Zapiši Bambu Lab oznaku",
   "bambuLabRsaNote": "Napomena: Originalne Bambu Lab oznake koriste RSA enkripciju. Ovaj način zapisuje podatke u pojednostavljenom kompatibilnom formatu.",
   "signInError": "Greška prijave: {error}",
-  "@signInError": {"placeholders": {"error": {"type": "String"}}},
+  "@signInError": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "subscriptionActivatedMessage": "Pretplata uspješno aktivirana!",
   "subscriptionFailedMessage": "Pretplata nije uspjela",
   "errorMessage": "Greška: {error}",
-  "@errorMessage": {"placeholders": {"error": {"type": "String"}}},
+  "@errorMessage": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "subscriptionRestoredMessage": "Pretplata uspješno obnovljena!",
   "noSubscriptionFoundMessage": "Pretplata nije pronađena",
   "vipLabel": "VIP",
@@ -353,5 +389,30 @@
   "pleaseEnterValidLength": "Unesite valjanu duljinu",
   "spoolLengthNotSetCannotConvert": "Duljina namotaja nije postavljena - nije moguće pretvoriti",
   "exceedsRemainingWeight": "Premašuje preostalu težinu",
-  "skuLabel": "SKU"
+  "skuLabel": "SKU",
+  "helpIdentifyFilament": "Pomozite nam identificirati ovaj filament",
+  "helpUsImprove": "Pomozite nam da se poboljšamo!",
+  "helpIdentifyDescription": "Pročitali smo čip, ali ga nismo mogli identificirati. Recite nam koji je to filament kako bismo poboljšali aplikaciju.",
+  "otherBrand": "Drugi",
+  "thankYouFeedback": "Hvala na povratnim informacijama!",
+  "send": "Pošalji",
+  "optionalDetails": "Neobavezni detalji",
+  "weightGrams": "Težina (g)",
+  "diameterMm": "Promjer (mm)",
+  "spoolLengthM": "Duljina kalema (m)",
+  "batchNumberLabel": "Serija / SKU",
+  "black": "Crna",
+  "white": "Bijela",
+  "yellow": "Žuta",
+  "orange": "Narančasta",
+  "pink": "Ružičasta",
+  "purple": "Ljubičasta",
+  "gray": "Siva",
+  "brown": "Smeđa",
+  "unknown": "Nepoznato",
+  "contactUs": "Kontaktirajte nas",
+  "contactUsSubtitle": "Pitanja, prijedlozi ili problemi",
+  "nfcTagNotDetected": "NFC oznaka nije otkrivena",
+  "nfcTagNotDetectedDesc": "Oznaka nije pronađena. Oznaka je možda mrtva, oštećena ili predaleko od telefona. Provjerite je li gornji dio telefona postavljen izravno na NFC oznaku.",
+  "nfcTagIncompatible": "Otkrivena nekompatibilna NFC oznaka"
 }

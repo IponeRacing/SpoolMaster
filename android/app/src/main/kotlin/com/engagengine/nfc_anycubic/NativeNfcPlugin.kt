@@ -9,7 +9,10 @@ import android.nfc.Tag
 import android.nfc.tech.MifareClassic
 import android.nfc.tech.MifareUltralight
 import android.nfc.tech.NfcA
+import android.nfc.tech.NfcV
 import android.os.Build
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodCall
@@ -63,13 +66,21 @@ class NativeNfcPlugin private constructor(
     private var bambuBlocksToWrite: Map<String, List<Int>>? = null
 
     private val coroutineScope = CoroutineScope(Dispatchers.IO + SupervisorJob())
+    private val mainHandler = Handler(Looper.getMainLooper())
+    private var timeoutRunnable: Runnable? = null
+    private val SCAN_TIMEOUT_MS = 30_000L // 30 seconds timeout
+
+    private var openPrintTagDataToWrite: ByteArray? = null
 
     enum class NfcMode {
         IDLE,
         READ_SESSION,
         WRITE_SESSION,
         READ_BAMBU_LAB,
-        WRITE_BAMBU_CLONE
+        WRITE_BAMBU_CLONE,
+        READ_OPEN_PRINT_TAG,
+        WRITE_OPEN_PRINT_TAG,
+        AUTO_DETECT
     }
 
     init {
@@ -83,6 +94,10 @@ class NativeNfcPlugin private constructor(
         Log.d(TAG, "Method called: ${call.method}")
 
         when (call.method) {
+            "checkNfcAvailability" -> {
+                val adapter = NfcAdapter.getDefaultAdapter(activity)
+                result.success(adapter != null && adapter.isEnabled)
+            }
             "startReadSession" -> startReadSession(result)
             "stopSession" -> stopSession(result)
             "startWriteSession" -> {
@@ -96,6 +111,8 @@ class NativeNfcPlugin private constructor(
                 startWriteSession(pages, result)
             }
             "readBambuLabTag" -> startBambuLabReadSession(result)
+            "readOpenPrintTag" -> startOpenPrintTagReadSession(result)
+            "startAutoDetectReadSession" -> startAutoDetectReadSession(result)
             "writeBambuLabClone" -> {
                 val args = call.arguments as? Map<*, *>
                 @Suppress("UNCHECKED_CAST")
@@ -105,6 +122,16 @@ class NativeNfcPlugin private constructor(
                     return
                 }
                 startBambuLabWriteSession(blocks, result)
+            }
+            "writeOpenPrintTag" -> {
+                val args = call.arguments as? Map<*, *>
+                @Suppress("UNCHECKED_CAST")
+                val data = args?.get("data") as? List<Int>
+                if (data == null) {
+                    result.error("INVALID_ARGS", "Missing data argument", null)
+                    return
+                }
+                startOpenPrintTagWriteSession(data.map { it.toByte() }.toByteArray(), result)
             }
             else -> result.notImplemented()
         }
@@ -165,6 +192,61 @@ class NativeNfcPlugin private constructor(
         enableReaderMode()
     }
 
+    private fun startOpenPrintTagReadSession(result: MethodChannel.Result) {
+        Log.d(TAG, "Starting OpenPrintTag read session")
+
+        if (nfcAdapter == null) {
+            result.error("NFC_NOT_AVAILABLE", "NFC is not available", null)
+            return
+        }
+
+        if (!nfcAdapter!!.isEnabled) {
+            result.error("NFC_DISABLED", "NFC is disabled", null)
+            return
+        }
+
+        pendingResult = result
+        currentMode = NfcMode.READ_OPEN_PRINT_TAG
+        enableReaderMode()
+    }
+
+    private fun startAutoDetectReadSession(result: MethodChannel.Result) {
+        Log.d(TAG, "Starting auto-detect read session")
+
+        if (nfcAdapter == null) {
+            result.error("NFC_NOT_AVAILABLE", "NFC is not available", null)
+            return
+        }
+
+        if (!nfcAdapter!!.isEnabled) {
+            result.error("NFC_DISABLED", "NFC is disabled", null)
+            return
+        }
+
+        pendingResult = result
+        currentMode = NfcMode.AUTO_DETECT
+        enableReaderMode()
+    }
+
+    private fun startOpenPrintTagWriteSession(data: ByteArray, result: MethodChannel.Result) {
+        Log.d(TAG, "Starting OpenPrintTag write session: ${data.size} bytes")
+
+        if (nfcAdapter == null) {
+            result.error("NFC_NOT_AVAILABLE", "NFC is not available", null)
+            return
+        }
+
+        if (!nfcAdapter!!.isEnabled) {
+            result.error("NFC_DISABLED", "NFC is disabled", null)
+            return
+        }
+
+        pendingResult = result
+        openPrintTagDataToWrite = data
+        currentMode = NfcMode.WRITE_OPEN_PRINT_TAG
+        enableReaderMode()
+    }
+
     private fun startBambuLabWriteSession(blocks: Map<String, List<Int>>, result: MethodChannel.Result) {
         Log.d(TAG, "Starting Bambu Lab write session")
 
@@ -187,6 +269,8 @@ class NativeNfcPlugin private constructor(
     private fun stopSession(result: MethodChannel.Result) {
         Log.d(TAG, "Stopping NFC session")
 
+        cancelTimeout()
+
         // Notify pending result if any
         pendingResult?.error("USER_CANCELLED", "Session arrêtée", null)
         pendingResult = null
@@ -196,6 +280,7 @@ class NativeNfcPlugin private constructor(
         currentMode = NfcMode.IDLE
         pagesToWrite = null
         bambuBlocksToWrite = null
+        openPrintTagDataToWrite = null
 
         result.success(true)
     }
@@ -203,22 +288,59 @@ class NativeNfcPlugin private constructor(
     private fun enableReaderMode() {
         val flags = NfcAdapter.FLAG_READER_NFC_A or
                    NfcAdapter.FLAG_READER_NFC_B or
+                   NfcAdapter.FLAG_READER_NFC_V or
                    NfcAdapter.FLAG_READER_SKIP_NDEF_CHECK
 
         nfcAdapter?.enableReaderMode(activity, this, flags, null)
-        Log.d(TAG, "Reader mode enabled")
+        startTimeout()
+        Log.d(TAG, "Reader mode enabled (NFC-A, NFC-B, NFC-V)")
     }
 
     private fun disableReaderMode() {
+        cancelTimeout()
         nfcAdapter?.disableReaderMode(activity)
         Log.d(TAG, "Reader mode disabled")
     }
 
+    private fun startTimeout() {
+        cancelTimeout()
+        timeoutRunnable = Runnable {
+            Log.w(TAG, "⏱️ NFC scan timeout after ${SCAN_TIMEOUT_MS}ms")
+            if (pendingResult != null) {
+                pendingResult?.error("TAG_NOT_DETECTED", "Aucun tag NFC détecté après ${SCAN_TIMEOUT_MS / 1000}s. Le tag est peut-être mort ou incompatible.", null)
+                pendingResult = null
+            }
+            disableReaderMode()
+            currentMode = NfcMode.IDLE
+            pagesToWrite = null
+            bambuBlocksToWrite = null
+            openPrintTagDataToWrite = null
+        }
+        mainHandler.postDelayed(timeoutRunnable!!, SCAN_TIMEOUT_MS)
+    }
+
+    private fun cancelTimeout() {
+        timeoutRunnable?.let { mainHandler.removeCallbacks(it) }
+        timeoutRunnable = null
+    }
+
     override fun onTagDiscovered(tag: Tag?) {
         Log.d(TAG, "Tag discovered: ${tag?.techList?.joinToString()}")
+        cancelTimeout() // Tag found, cancel the timeout
 
         if (tag == null) {
             sendError("NO_TAG", "No tag detected")
+            return
+        }
+
+        // Detect NFC-V (ISO 15693) tags - e.g. Prusa OpenPrintTag
+        val nfcV = NfcV.get(tag)
+        if (nfcV != null && currentMode != NfcMode.READ_OPEN_PRINT_TAG && currentMode != NfcMode.AUTO_DETECT && currentMode != NfcMode.WRITE_OPEN_PRINT_TAG) {
+            val techList = tag.techList.joinToString(", ")
+            val tagId = tag.id?.joinToString(":") { String.format("%02x", it) } ?: "unknown"
+            Log.w(TAG, "📡 NFC-V (ISO 15693) tag detected - ID: $tagId, techs: $techList")
+            sendError("INCOMPATIBLE_TAG",
+                "Tag NFC détecté mais de type ISO 15693 (NFC-V). Ce type est utilisé par Prusa (OpenPrintTag) et n'est pas encore supporté dans ce mode. Sélectionnez le mode Prusa.")
             return
         }
 
@@ -229,6 +351,9 @@ class NativeNfcPlugin private constructor(
                     NfcMode.WRITE_SESSION -> handleWriteSession(tag)
                     NfcMode.READ_BAMBU_LAB -> handleBambuLabRead(tag)
                     NfcMode.WRITE_BAMBU_CLONE -> handleBambuLabWrite(tag)
+                    NfcMode.READ_OPEN_PRINT_TAG -> handleOpenPrintTagRead(tag)
+                    NfcMode.WRITE_OPEN_PRINT_TAG -> handleOpenPrintTagWrite(tag)
+                    NfcMode.AUTO_DETECT -> handleAutoDetectRead(tag)
                     NfcMode.IDLE -> { /* Do nothing */ }
                 }
             } catch (e: Exception) {
@@ -743,6 +868,272 @@ class NativeNfcPlugin private constructor(
         }
 
         return result
+    }
+
+    // ==================== OPEN PRINT TAG READ (ISO 15693 / NFC-V) ====================
+
+    private suspend fun handleOpenPrintTagRead(tag: Tag) {
+        Log.d(TAG, "Handling OpenPrintTag read")
+
+        val nfcV = NfcV.get(tag)
+        if (nfcV == null) {
+            sendError("INVALID_TAG", "Tag is not ISO 15693 (NFC-V)")
+            return
+        }
+
+        try {
+            nfcV.connect()
+            Log.d(TAG, "Connected to NFC-V tag")
+
+            val allData = mutableListOf<Byte>()
+            val maxBlocks = 64 // Read up to 256 bytes (4 bytes/block)
+
+            for (blockNum in 0 until maxBlocks) {
+                try {
+                    // ISO 15693 Read Single Block command
+                    // Flags: 0x02 (high data rate)
+                    // Command: 0x20 (READ_SINGLE_BLOCK)
+                    // Block number
+                    val cmd = byteArrayOf(0x02, 0x20, blockNum.toByte())
+                    val response = nfcV.transceive(cmd)
+
+                    if (response != null && response.size > 1) {
+                        // First byte is status flags, rest is data
+                        val blockData = response.drop(1)
+                        allData.addAll(blockData.toList())
+
+                        Log.d(TAG, "Block $blockNum: ${blockData.toByteArray().joinToString(" ") { String.format("%02x", it) }}")
+
+                        // Check for NDEF terminator (0xFE) after CC bytes
+                        if (blockNum > 4 && blockData.any { it == 0xFE.toByte() }) {
+                            Log.d(TAG, "NDEF terminator found at block $blockNum")
+                            break
+                        }
+                    }
+                } catch (e: IOException) {
+                    // End of readable memory
+                    Log.d(TAG, "End of readable memory at block $blockNum")
+                    break
+                }
+            }
+
+            nfcV.close()
+
+            Log.d(TAG, "OpenPrintTag: ${allData.size} bytes read")
+
+            val rawBytes = allData.map { it.toInt() and 0xFF }
+            val resultData = mapOf("rawBytes" to rawBytes)
+
+            sendSuccess(resultData)
+
+        } catch (e: Exception) {
+            Log.e(TAG, "Error reading NFC-V tag", e)
+            try { nfcV.close() } catch (_: Exception) {}
+            sendError("READ_ERROR", e.message ?: "Read failed")
+        }
+    }
+
+    // ==================== OPEN PRINT TAG WRITE (ISO 15693 / NFC-V) ====================
+
+    private suspend fun handleOpenPrintTagWrite(tag: Tag) {
+        Log.d(TAG, "Handling OpenPrintTag write")
+
+        val data = openPrintTagDataToWrite
+        if (data == null || data.isEmpty()) {
+            sendError("INVALID_ARGS", "No data to write")
+            return
+        }
+
+        val nfcV = NfcV.get(tag)
+        if (nfcV == null) {
+            sendError("INVALID_TAG", "Tag is not ISO 15693 (NFC-V). Use an NXP ICODE SLIX2 tag.")
+            return
+        }
+
+        try {
+            nfcV.connect()
+            Log.d(TAG, "Connected to NFC-V tag for writing")
+
+            // Write data in 4-byte blocks
+            val totalBlocks = (data.size + 3) / 4
+            Log.d(TAG, "Writing $totalBlocks blocks (${data.size} bytes)")
+
+            for (blockNum in 0 until totalBlocks) {
+                val offset = blockNum * 4
+                val blockData = ByteArray(4)
+                for (i in 0 until 4) {
+                    blockData[i] = if (offset + i < data.size) data[offset + i] else 0x00
+                }
+
+                // ISO 15693 Write Single Block command
+                // Flags: 0x02 (high data rate)
+                // Command: 0x21 (WRITE_SINGLE_BLOCK)
+                // Block number
+                // Data: 4 bytes
+                val cmd = byteArrayOf(0x02, 0x21, blockNum.toByte()) + blockData
+                nfcV.transceive(cmd)
+
+                Log.d(TAG, "Written block $blockNum: ${blockData.joinToString(" ") { String.format("%02X", it) }}")
+            }
+
+            nfcV.close()
+            openPrintTagDataToWrite = null
+            Log.d(TAG, "OpenPrintTag write complete: $totalBlocks blocks written")
+            sendSuccess(true)
+
+        } catch (e: Exception) {
+            Log.e(TAG, "Error writing NFC-V tag", e)
+            try { nfcV.close() } catch (_: Exception) {}
+            openPrintTagDataToWrite = null
+            sendError("WRITE_ERROR", e.message ?: "Write failed")
+        }
+    }
+
+    // ==================== AUTO-DETECT READ ====================
+
+    private suspend fun handleAutoDetectRead(tag: Tag) {
+        Log.d(TAG, "Handling auto-detect read")
+
+        // 1. Check for NFC-V (ISO 15693) - Prusa OpenPrintTag
+        val nfcV = NfcV.get(tag)
+        if (nfcV != null) {
+            Log.d(TAG, "Auto-detect: NFC-V (Prusa) tag detected")
+            handleOpenPrintTagReadWithTagType(tag)
+            return
+        }
+
+        // 2. Check for MiFare Classic - Bambu Lab
+        val techList = tag.techList
+        if (techList.contains(MifareClassic::class.java.name)) {
+            val classic = MifareClassic.get(tag)
+            if (classic != null) {
+                Log.d(TAG, "Auto-detect: MiFare Classic (Bambu Lab) tag detected")
+                readMifareClassicWithTagType(classic, "bambu")
+                return
+            }
+        }
+
+        // 3. Check for MiFare Ultralight - Anycubic
+        if (techList.contains(MifareUltralight::class.java.name)) {
+            val ultralight = MifareUltralight.get(tag)
+            if (ultralight != null) {
+                Log.d(TAG, "Auto-detect: MiFare Ultralight (Anycubic) tag detected")
+                readMifareUltralightWithTagType(ultralight, "anycubic")
+                return
+            }
+        }
+
+        // 4. Fallback to NfcA with SAK-based detection
+        val nfcA = NfcA.get(tag)
+        if (nfcA != null) {
+            val sak = nfcA.sak
+            Log.d(TAG, "Auto-detect: NfcA tag, SAK=$sak")
+            when {
+                sak.toInt() == 0x00 -> readWithNfcATagType(nfcA, "anycubic")
+                sak.toInt() == 0x08 || sak.toInt() == 0x18 -> readMifareClassicWithNfcA(nfcA)
+                else -> readWithNfcATagType(nfcA, "anycubic")
+            }
+            return
+        }
+
+        sendError("INVALID_TAG", "Tag not supported")
+    }
+
+    private suspend fun handleOpenPrintTagReadWithTagType(tag: Tag) {
+        val nfcV = NfcV.get(tag) ?: run {
+            sendError("INVALID_TAG", "Tag is not ISO 15693 (NFC-V)")
+            return
+        }
+
+        try {
+            nfcV.connect()
+            Log.d(TAG, "Connected to NFC-V tag (auto-detect)")
+
+            val allData = mutableListOf<Byte>()
+            val maxBlocks = 64
+
+            for (blockNum in 0 until maxBlocks) {
+                try {
+                    val cmd = byteArrayOf(0x02, 0x20, blockNum.toByte())
+                    val response = nfcV.transceive(cmd)
+
+                    if (response != null && response.size > 1) {
+                        val blockData = response.drop(1)
+                        allData.addAll(blockData.toList())
+
+                        if (blockNum > 4 && blockData.any { it == 0xFE.toByte() }) {
+                            break
+                        }
+                    }
+                } catch (e: IOException) {
+                    break
+                }
+            }
+
+            nfcV.close()
+
+            val rawBytes = allData.map { it.toInt() and 0xFF }
+            val resultData = mapOf(
+                "rawBytes" to rawBytes,
+                "tagType" to "prusa"
+            )
+
+            sendSuccess(resultData)
+
+        } catch (e: Exception) {
+            Log.e(TAG, "Error reading NFC-V tag (auto-detect)", e)
+            try { nfcV.close() } catch (_: Exception) {}
+            sendError("READ_ERROR", e.message ?: "Read failed")
+        }
+    }
+
+    private suspend fun readMifareClassicWithTagType(classic: MifareClassic, tagType: String) {
+        try {
+            classic.connect()
+            Log.d(TAG, "Connected to MiFare Classic (auto-detect)")
+
+            val blockData = mutableMapOf<Int, ByteArray>()
+
+            for (sector in 0 until classic.sectorCount) {
+                val authSuccess = try {
+                    classic.authenticateSectorWithKeyA(sector, DEFAULT_KEY)
+                } catch (e: Exception) {
+                    try {
+                        classic.authenticateSectorWithKeyB(sector, DEFAULT_KEY)
+                    } catch (e2: Exception) {
+                        false
+                    }
+                }
+
+                if (!authSuccess) continue
+
+                val firstBlock = classic.sectorToBlock(sector)
+                val blockCount = classic.getBlockCountInSector(sector)
+
+                for (i in 0 until blockCount - 1) {
+                    val blockIndex = firstBlock + i
+                    try {
+                        val data = classic.readBlock(blockIndex)
+                        if (data != null) {
+                            blockData[blockIndex] = data
+                        }
+                    } catch (e: IOException) {
+                        Log.w(TAG, "Error reading block $blockIndex: ${e.message}")
+                    }
+                }
+            }
+
+            classic.close()
+
+            val parsedData = parseBambuLabData(blockData).toMutableMap()
+            parsedData["tagType"] = tagType
+            sendSuccess(parsedData)
+
+        } catch (e: Exception) {
+            Log.e(TAG, "Error reading MiFare Classic (auto-detect)", e)
+            try { classic.close() } catch (_: Exception) {}
+            sendError("READ_ERROR", e.message ?: "Read failed")
+        }
     }
 
     // ==================== BAMBU LAB WRITE (CUID Cards) ====================

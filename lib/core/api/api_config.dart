@@ -1,3 +1,7 @@
+import 'dart:async';
+import 'package:flutter/foundation.dart';
+import 'package:http/http.dart' as http;
+
 /// Configuration de l'API backend
 class ApiConfig {
   static const String baseUrl = 'https://api.engageengine.ch';
@@ -43,4 +47,22 @@ class ApiConfig {
   // Timeouts
   static const Duration connectTimeout = Duration(seconds: 30);
   static const Duration receiveTimeout = Duration(seconds: 30);
+
+  /// Execute an HTTP request with retry and exponential backoff
+  static Future<http.Response> withRetry(
+    Future<http.Response> Function() request, {
+    int maxRetries = 2,
+  }) async {
+    for (var i = 0; i <= maxRetries; i++) {
+      try {
+        return await request();
+      } catch (e) {
+        if (i == maxRetries) rethrow;
+        final delay = Duration(milliseconds: 500 * (i + 1));
+        debugPrint('⚠️ Request failed (attempt ${i + 1}/$maxRetries), retrying in ${delay.inMilliseconds}ms...');
+        await Future<void>.delayed(delay);
+      }
+    }
+    throw Exception('Unreachable');
+  }
 }

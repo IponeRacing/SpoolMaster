@@ -509,7 +509,7 @@ class AppLocalizationsRo extends AppLocalizations {
   String get privacyPolicy => 'Politica de Confidențialitate';
 
   @override
-  String get legal => 'Legal';
+  String get legal => 'Juridic';
 
   @override
   String get back => 'Înapoi';
@@ -560,6 +560,33 @@ class AppLocalizationsRo extends AppLocalizations {
   String get blue => 'Albastru';
 
   @override
+  String get black => 'Negru';
+
+  @override
+  String get white => 'Alb';
+
+  @override
+  String get yellow => 'Galben';
+
+  @override
+  String get orange => 'Portocaliu';
+
+  @override
+  String get pink => 'Roz';
+
+  @override
+  String get purple => 'Violet';
+
+  @override
+  String get gray => 'Gri';
+
+  @override
+  String get brown => 'Maro';
+
+  @override
+  String get unknown => 'Necunoscut';
+
+  @override
   String get metricUnits => 'Metric (mm, g, °C)';
 
   @override
@@ -579,6 +606,42 @@ class AppLocalizationsRo extends AppLocalizations {
 
   @override
   String get cad => 'Dolar canadian (CAD)';
+
+  @override
+  String get aud => 'Dolar australian (A\$)';
+
+  @override
+  String get jpy => 'Yen japonez (¥)';
+
+  @override
+  String get cny => 'Yuan chinezesc (¥)';
+
+  @override
+  String get inr => 'Rupie indiană (₹)';
+
+  @override
+  String get brl => 'Real brazilian (R\$)';
+
+  @override
+  String get mxn => 'Peso mexican (MX\$)';
+
+  @override
+  String get sek => 'Coroană suedeză (kr)';
+
+  @override
+  String get nok => 'Coroană norvegiană (kr)';
+
+  @override
+  String get dkk => 'Coroană daneză (kr)';
+
+  @override
+  String get pln => 'Zlot polonez (zł)';
+
+  @override
+  String get czk => 'Coroană cehă (Kč)';
+
+  @override
+  String get nzd => 'Dolar neozeelandez (NZ\$)';
 
   @override
   String get filamentsToOrder => 'Filamente de comandat';
@@ -708,6 +771,16 @@ class AppLocalizationsRo extends AppLocalizations {
   @override
   String get bambuLabReadOnlyDesc =>
       'Etichetele Bambu Lab folosesc criptare RSA și nu pot fi modificate. Doar citire.';
+
+  @override
+  String get forPrusaMk4 => 'pentru Prusa MK4/XL (OpenPrintTag)';
+
+  @override
+  String get prusaReadWrite => 'Prusa: Citire și scriere';
+
+  @override
+  String get prusaReadWriteDesc =>
+      'Tag-urile Prusa folosesc ISO 15693 (NFC-V) cu format OpenPrintTag. Citire și scriere sunt suportate.';
 
   @override
   String get bambuCloneLibrary => 'Biblioteca de clonă Bambu Lab';
@@ -1023,4 +1096,61 @@ class AppLocalizationsRo extends AppLocalizations {
 
   @override
   String get skuLabel => 'SKU';
+
+  @override
+  String get helpIdentifyFilament => 'Ajutați-ne să identificăm acest filament';
+
+  @override
+  String get helpUsImprove => 'Ajutați-ne să ne îmbunătățim!';
+
+  @override
+  String get helpIdentifyDescription =>
+      'Am citit cipul dar nu am putut să-l identificăm. Spuneți-ne ce filament este pentru a îmbunătăți aplicația.';
+
+  @override
+  String get otherBrand => 'Alt brand';
+
+  @override
+  String get thankYouFeedback => 'Mulțumim pentru feedback!';
+
+  @override
+  String get send => 'Trimite';
+
+  @override
+  String get optionalDetails => 'Detalii opționale';
+
+  @override
+  String get weightGrams => 'Greutate (g)';
+
+  @override
+  String get diameterMm => 'Diametru (mm)';
+
+  @override
+  String get spoolLengthM => 'Lungime bobină (m)';
+
+  @override
+  String get batchNumberLabel => 'Lot / SKU';
+
+  @override
+  String get contactUs => 'Contactați-ne';
+
+  @override
+  String get contactUsSubtitle => 'Întrebări, sugestii sau probleme';
+
+  @override
+  String get nfcTagNotDetected => 'Niciun tag NFC detectat';
+
+  @override
+  String get nfcTagNotDetectedDesc =>
+      'Nu a fost găsit niciun tag. Tagul poate fi mort, deteriorat sau prea departe de telefon. Asigurați-vă că partea de sus a telefonului este plasată direct pe tagul NFC.';
+
+  @override
+  String get nfcTagIncompatible => 'Tag NFC incompatibil detectat';
+
+  @override
+  String get nfcTagInfoPrusa =>
+      'Utilizați o etichetă goală NXP ICODE SLIX2 (ISO 15693) pentru a crea etichete compatibile cu OpenPrintTag pentru Prusa MK4/XL.';
+
+  @override
+  String get writePrusaTagTitle => 'Scrie OpenPrintTag Prusa';
 }

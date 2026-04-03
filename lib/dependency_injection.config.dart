@@ -37,6 +37,8 @@ import 'package:nfc_filament/features/nfc_reader/domain/usecases/get_scan_histor
     as _i416;
 import 'package:nfc_filament/features/nfc_reader/domain/usecases/read_bobbin_data.dart'
     as _i313;
+import 'package:nfc_filament/features/nfc_reader/domain/usecases/read_bobbin_data_auto_detect.dart'
+    as _i916;
 import 'package:nfc_filament/features/nfc_reader/domain/usecases/read_nfc_tag.dart'
     as _i221;
 import 'package:nfc_filament/features/nfc_reader/domain/usecases/save_scan_to_history.dart'
@@ -72,6 +74,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i221.ReadNfcTag>(
       () => _i221.ReadNfcTag(gh<_i1053.NfcRepository>()),
     );
+    gh.lazySingleton<_i916.ReadBobbinDataAutoDetect>(
+      () => _i916.ReadBobbinDataAutoDetect(gh<_i1053.NfcRepository>()),
+    );
     gh.lazySingleton<_i1023.ScanHistoryLocalDataSource>(
       () =>
           _i1024.ScanHistoryLocalDataSourceImpl(gh<_i460.SharedPreferences>()),
@@ -100,6 +105,7 @@ extension GetItInjectableX on _i174.GetIt {
         readBobbinData: gh<_i313.ReadBobbinData>(),
         writeBobbinData: gh<_i906.WriteBobbinData>(),
         saveScanToHistory: gh<_i787.SaveScanToHistory>(),
+        readBobbinDataAutoDetect: gh<_i916.ReadBobbinDataAutoDetect>(),
       ),
     );
     gh.factory<_i780.ScanHistoryBloc>(

@@ -509,7 +509,7 @@ class AppLocalizationsMs extends AppLocalizations {
   String get privacyPolicy => 'Dasar Privasi';
 
   @override
-  String get legal => 'Legal';
+  String get legal => 'Undang-undang';
 
   @override
   String get back => 'Kembali';
@@ -560,6 +560,33 @@ class AppLocalizationsMs extends AppLocalizations {
   String get blue => 'Biru';
 
   @override
+  String get black => 'Hitam';
+
+  @override
+  String get white => 'Putih';
+
+  @override
+  String get yellow => 'Kuning';
+
+  @override
+  String get orange => 'Oren';
+
+  @override
+  String get pink => 'Merah Jambu';
+
+  @override
+  String get purple => 'Ungu';
+
+  @override
+  String get gray => 'Kelabu';
+
+  @override
+  String get brown => 'Perang';
+
+  @override
+  String get unknown => 'Tidak Diketahui';
+
+  @override
   String get metricUnits => 'Metrik (mm, g, °C)';
 
   @override
@@ -579,6 +606,42 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get cad => 'Dolar Kanada (CAD)';
+
+  @override
+  String get aud => 'Dolar Australia (A\$)';
+
+  @override
+  String get jpy => 'Yen Jepun (¥)';
+
+  @override
+  String get cny => 'Yuan China (¥)';
+
+  @override
+  String get inr => 'Rupee India (₹)';
+
+  @override
+  String get brl => 'Real Brazil (R\$)';
+
+  @override
+  String get mxn => 'Peso Mexico (MX\$)';
+
+  @override
+  String get sek => 'Krona Sweden (kr)';
+
+  @override
+  String get nok => 'Krone Norway (kr)';
+
+  @override
+  String get dkk => 'Krone Denmark (kr)';
+
+  @override
+  String get pln => 'Zloty Poland (zł)';
+
+  @override
+  String get czk => 'Koruna Czech (Kč)';
+
+  @override
+  String get nzd => 'Dolar New Zealand (NZ\$)';
 
   @override
   String get filamentsToOrder => 'Filamen untuk Dipesan';
@@ -708,6 +771,16 @@ class AppLocalizationsMs extends AppLocalizations {
   @override
   String get bambuLabReadOnlyDesc =>
       'Tag Bambu Lab menggunakan penyulitan RSA dan tidak boleh diubah suai. Hanya baca.';
+
+  @override
+  String get forPrusaMk4 => 'untuk Prusa MK4/XL (OpenPrintTag)';
+
+  @override
+  String get prusaReadWrite => 'Prusa: Baca dan Tulis';
+
+  @override
+  String get prusaReadWriteDesc =>
+      'Tag Prusa menggunakan ISO 15693 (NFC-V) dengan format OpenPrintTag. Baca dan tulis disokong.';
 
   @override
   String get bambuCloneLibrary => 'Perpustakaan Klon Bambu Lab';
@@ -1024,4 +1097,61 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get skuLabel => 'SKU';
+
+  @override
+  String get helpIdentifyFilament => 'Bantu kami mengenal pasti filamen ini';
+
+  @override
+  String get helpUsImprove => 'Bantu kami meningkatkan!';
+
+  @override
+  String get helpIdentifyDescription =>
+      'Kami membaca cip tetapi tidak dapat mengenal pastinya. Beritahu kami filamen apa ini supaya kami boleh meningkatkan aplikasi.';
+
+  @override
+  String get otherBrand => 'Lain-lain';
+
+  @override
+  String get thankYouFeedback => 'Terima kasih atas maklum balas anda!';
+
+  @override
+  String get send => 'Hantar';
+
+  @override
+  String get optionalDetails => 'Butiran pilihan';
+
+  @override
+  String get weightGrams => 'Berat (g)';
+
+  @override
+  String get diameterMm => 'Diameter (mm)';
+
+  @override
+  String get spoolLengthM => 'Panjang gelendong (m)';
+
+  @override
+  String get batchNumberLabel => 'Kelompok / SKU';
+
+  @override
+  String get contactUs => 'Hubungi Kami';
+
+  @override
+  String get contactUsSubtitle => 'Soalan, cadangan atau masalah';
+
+  @override
+  String get nfcTagNotDetected => 'Tiada tag NFC dikesan';
+
+  @override
+  String get nfcTagNotDetectedDesc =>
+      'Tiada tag ditemui. Tag mungkin rosak atau terlalu jauh dari telefon. Pastikan bahagian atas telefon anda diletakkan terus pada tag NFC.';
+
+  @override
+  String get nfcTagIncompatible => 'Tag NFC tidak serasi dikesan';
+
+  @override
+  String get nfcTagInfoPrusa =>
+      'Gunakan kad NXP ICODE SLIX2 kosong (ISO 15693) untuk mencipta tag yang serasi dengan OpenPrintTag untuk Prusa MK4/XL.';
+
+  @override
+  String get writePrusaTagTitle => 'Tulis Tag Prusa OpenPrintTag';
 }

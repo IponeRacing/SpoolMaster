@@ -34,7 +34,7 @@ class _NfcReaderView extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(
+                MaterialPageRoute<void>(
                   builder: (context) => const ScanHistoryPage(),
                 ),
               );

@@ -509,7 +509,7 @@ class AppLocalizationsBg extends AppLocalizations {
   String get privacyPolicy => 'Политика за поверителност';
 
   @override
-  String get legal => 'Legal';
+  String get legal => 'Правно';
 
   @override
   String get back => 'Назад';
@@ -560,6 +560,33 @@ class AppLocalizationsBg extends AppLocalizations {
   String get blue => 'Синьо';
 
   @override
+  String get black => 'Черно';
+
+  @override
+  String get white => 'Бяло';
+
+  @override
+  String get yellow => 'Жълто';
+
+  @override
+  String get orange => 'Оранжево';
+
+  @override
+  String get pink => 'Розово';
+
+  @override
+  String get purple => 'Лилаво';
+
+  @override
+  String get gray => 'Сиво';
+
+  @override
+  String get brown => 'Кафяво';
+
+  @override
+  String get unknown => 'Неизвестно';
+
+  @override
   String get metricUnits => 'Метрични (мм, г, °C)';
 
   @override
@@ -579,6 +606,42 @@ class AppLocalizationsBg extends AppLocalizations {
 
   @override
   String get cad => 'Канадски долар (CAD)';
+
+  @override
+  String get aud => 'Австралийски долар (A\$)';
+
+  @override
+  String get jpy => 'Японска йена (¥)';
+
+  @override
+  String get cny => 'Китайски юан (¥)';
+
+  @override
+  String get inr => 'Индийска рупия (₹)';
+
+  @override
+  String get brl => 'Бразилски реал (R\$)';
+
+  @override
+  String get mxn => 'Мексиканско песо (MX\$)';
+
+  @override
+  String get sek => 'Шведска крона (kr)';
+
+  @override
+  String get nok => 'Норвежка крона (kr)';
+
+  @override
+  String get dkk => 'Датска крона (kr)';
+
+  @override
+  String get pln => 'Полска злота (zł)';
+
+  @override
+  String get czk => 'Чешка крона (Kč)';
+
+  @override
+  String get nzd => 'Новозеландски долар (NZ\$)';
 
   @override
   String get filamentsToOrder => 'Филаменти за поръчка';
@@ -708,6 +771,16 @@ class AppLocalizationsBg extends AppLocalizations {
   @override
   String get bambuLabReadOnlyDesc =>
       'Etiketite Bambu Lab използват RSA криптиране и не могат да бъдат променяни. Само за четене.';
+
+  @override
+  String get forPrusaMk4 => 'за Prusa MK4/XL (OpenPrintTag)';
+
+  @override
+  String get prusaReadWrite => 'Prusa: Четене и запис';
+
+  @override
+  String get prusaReadWriteDesc =>
+      'Prusa таговете използват ISO 15693 (NFC-V) с формат OpenPrintTag. Поддържа се четене и запис.';
 
   @override
   String get bambuCloneLibrary => 'Библиотека клонове Bambu Lab';
@@ -1026,4 +1099,61 @@ class AppLocalizationsBg extends AppLocalizations {
 
   @override
   String get skuLabel => 'SKU';
+
+  @override
+  String get helpIdentifyFilament => 'Помогнете ни да разпознаем този филамент';
+
+  @override
+  String get helpUsImprove => 'Помогнете ни да се подобрим!';
+
+  @override
+  String get helpIdentifyDescription =>
+      'Прочетохме чипа, но не успяхме да го разпознаем. Кажете ни какъв е този филамент, за да подобрим приложението.';
+
+  @override
+  String get otherBrand => 'Друга';
+
+  @override
+  String get thankYouFeedback => 'Благодарим за обратната връзка!';
+
+  @override
+  String get send => 'Изпрати';
+
+  @override
+  String get optionalDetails => 'Допълнителни детайли';
+
+  @override
+  String get weightGrams => 'Тегло (г)';
+
+  @override
+  String get diameterMm => 'Диаметър (мм)';
+
+  @override
+  String get spoolLengthM => 'Дължина на макарата (м)';
+
+  @override
+  String get batchNumberLabel => 'Партида / SKU';
+
+  @override
+  String get contactUs => 'Свържете се с нас';
+
+  @override
+  String get contactUsSubtitle => 'Въпроси, предложения или проблеми';
+
+  @override
+  String get nfcTagNotDetected => 'Не е открит NFC таг';
+
+  @override
+  String get nfcTagNotDetectedDesc =>
+      'Не е намерен таг. Тагът може да е повреден или твърде далеч от телефона. Уверете се, че горната част на телефона е поставена директно върху NFC тага.';
+
+  @override
+  String get nfcTagIncompatible => 'Открит е несъвместим NFC таг';
+
+  @override
+  String get nfcTagInfoPrusa =>
+      'Използвайте празна етикета NXP ICODE SLIX2 (ISO 15693) за създаване на OpenPrintTag съвместими етикети за Prusa MK4/XL.';
+
+  @override
+  String get writePrusaTagTitle => 'Запиши Prusa OpenPrintTag';
 }

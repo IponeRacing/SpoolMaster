@@ -16,42 +16,38 @@ class SyncService {
       final isSignedIn = await UserPreferencesService.isSignedIn();
       if (!isSignedIn) return;
 
-      final accessToken = await _authService.getAccessToken();
-      if (accessToken == null) {
-        debugPrint('⚠️ No access token for spools sync');
-        return;
-      }
-
       final spools = await SpoolStorageService.loadSpools();
 
-      final response = await http.post(
-        Uri.parse('${ApiConfig.baseUrl}${ApiConfig.syncPush}'),
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer $accessToken',
-        },
-        body: jsonEncode({
-          'spools': spools.map((spool) => {
-            'spool_id': spool.id,
-            'brand': spool.brand,
-            'material': spool.material,
-            'color_name': spool.colorName,
-            'color_rgb': spool.colorRgb,
-            'price': spool.price,
-            'initial_weight': spool.weight,
-            'remaining_weight': spool.remainingWeight,
-            'added_date': spool.addedDate.toIso8601String(),
-            'extruder_temp_min': spool.extruderTempMin,
-            'extruder_temp_max': spool.extruderTempMax,
-            'bed_temp_min': spool.bedTempMin,
-            'bed_temp_max': spool.bedTempMax,
-            'diameter': spool.diameter,
-            'spool_length': spool.spoolLength,
-            'manufacture_date': spool.manufactureDate?.toIso8601String(),
-            'batch_number': spool.batchNumber,
-          }).toList(),
-        }),
-      ).timeout(ApiConfig.connectTimeout);
+      final response = await _authService.authenticatedRequest((token) =>
+        http.post(
+          Uri.parse('${ApiConfig.baseUrl}${ApiConfig.syncPush}'),
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer $token',
+          },
+          body: jsonEncode({
+            'spools': spools.map((spool) => {
+              'spool_id': spool.id,
+              'brand': spool.brand,
+              'material': spool.material,
+              'color_name': spool.colorName,
+              'color_rgb': spool.colorRgb,
+              'price': spool.price,
+              'initial_weight': spool.weight,
+              'remaining_weight': spool.remainingWeight,
+              'added_date': spool.addedDate.toIso8601String(),
+              'extruder_temp_min': spool.extruderTempMin,
+              'extruder_temp_max': spool.extruderTempMax,
+              'bed_temp_min': spool.bedTempMin,
+              'bed_temp_max': spool.bedTempMax,
+              'diameter': spool.diameter,
+              'spool_length': spool.spoolLength,
+              'manufacture_date': spool.manufactureDate?.toIso8601String(),
+              'batch_number': spool.batchNumber,
+            }).toList(),
+          }),
+        ).timeout(ApiConfig.connectTimeout),
+      );
 
       if (response.statusCode == 200) {
         debugPrint('✅ ${spools.length} spools synced to backend');
@@ -72,27 +68,21 @@ class SyncService {
         return;
       }
 
-      final accessToken = await _authService.getAccessToken();
-      if (accessToken == null) {
-        debugPrint('⚠️ No access token to pull spools');
-        return;
-      }
-
       debugPrint('📥 Pulling spools from backend...');
-      final response = await http.get(
-        Uri.parse('${ApiConfig.baseUrl}${ApiConfig.syncPull}'),
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer $accessToken',
-        },
-      ).timeout(ApiConfig.connectTimeout);
+      final response = await _authService.authenticatedRequest((token) =>
+        http.get(
+          Uri.parse('${ApiConfig.baseUrl}${ApiConfig.syncPull}'),
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer $token',
+          },
+        ).timeout(ApiConfig.connectTimeout),
+      );
 
       debugPrint('Pull spools response: ${response.statusCode}');
-      debugPrint('Pull spools body: ${response.body}');
 
       if (response.statusCode == 200) {
         final responseData = jsonDecode(response.body) as Map<String, dynamic>;
-        debugPrint('Decoded pull data: $responseData');
 
         // Le backend retourne { success: true, data: { spools: [...] } }
         final data = (responseData['data'] as Map<String, dynamic>?) ?? responseData;
@@ -102,7 +92,6 @@ class SyncService {
 
           // Clear local spools and replace with backend data
           final spools = spoolsJson.map((json) {
-            debugPrint('Processing spool: $json');
             return SpoolInventoryItem(
               id: (json['spool_id'] ?? json['id']) as String,
               brand: (json['brand'] ?? '') as String,
@@ -145,35 +134,34 @@ class SyncService {
       final isSignedIn = await UserPreferencesService.isSignedIn();
       if (!isSignedIn) return;
 
-      final accessToken = await _authService.getAccessToken();
-      if (accessToken == null) return;
-
-      await http.put(
-        Uri.parse('${ApiConfig.baseUrl}${ApiConfig.updateSpool(spool.id)}'),
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer $accessToken',
-        },
-        body: jsonEncode({
-          'spool_id': spool.id,
-          'brand': spool.brand,
-          'material': spool.material,
-          'color_name': spool.colorName,
-          'color_rgb': spool.colorRgb,
-          'price': spool.price,
-          'initial_weight': spool.weight,
-          'remaining_weight': spool.remainingWeight,
-          'added_date': spool.addedDate.toIso8601String(),
-          'extruder_temp_min': spool.extruderTempMin,
-          'extruder_temp_max': spool.extruderTempMax,
-          'bed_temp_min': spool.bedTempMin,
-          'bed_temp_max': spool.bedTempMax,
-          'diameter': spool.diameter,
-          'spool_length': spool.spoolLength,
-          'manufacture_date': spool.manufactureDate?.toIso8601String(),
-          'batch_number': spool.batchNumber,
-        }),
-      ).timeout(ApiConfig.connectTimeout);
+      await _authService.authenticatedRequest((token) =>
+        http.put(
+          Uri.parse('${ApiConfig.baseUrl}${ApiConfig.updateSpool(spool.id)}'),
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer $token',
+          },
+          body: jsonEncode({
+            'spool_id': spool.id,
+            'brand': spool.brand,
+            'material': spool.material,
+            'color_name': spool.colorName,
+            'color_rgb': spool.colorRgb,
+            'price': spool.price,
+            'initial_weight': spool.weight,
+            'remaining_weight': spool.remainingWeight,
+            'added_date': spool.addedDate.toIso8601String(),
+            'extruder_temp_min': spool.extruderTempMin,
+            'extruder_temp_max': spool.extruderTempMax,
+            'bed_temp_min': spool.bedTempMin,
+            'bed_temp_max': spool.bedTempMax,
+            'diameter': spool.diameter,
+            'spool_length': spool.spoolLength,
+            'manufacture_date': spool.manufactureDate?.toIso8601String(),
+            'batch_number': spool.batchNumber,
+          }),
+        ).timeout(ApiConfig.connectTimeout),
+      );
 
       debugPrint('✅ Spool ${spool.id} synced to backend');
     } catch (e) {
@@ -187,16 +175,15 @@ class SyncService {
       final isSignedIn = await UserPreferencesService.isSignedIn();
       if (!isSignedIn) return;
 
-      final accessToken = await _authService.getAccessToken();
-      if (accessToken == null) return;
-
-      await http.delete(
-        Uri.parse('${ApiConfig.baseUrl}${ApiConfig.deleteSpool(spoolId)}'),
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer $accessToken',
-        },
-      ).timeout(ApiConfig.connectTimeout);
+      await _authService.authenticatedRequest((token) =>
+        http.delete(
+          Uri.parse('${ApiConfig.baseUrl}${ApiConfig.deleteSpool(spoolId)}'),
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer $token',
+          },
+        ).timeout(ApiConfig.connectTimeout),
+      );
 
       debugPrint('✅ Spool $spoolId deleted from backend');
     } catch (e) {
@@ -221,12 +208,6 @@ class SyncService {
   /// Utilisé lors de la reconnexion pour ne pas perdre de données
   static Future<void> pushAllLocalSpoolsToBackend() async {
     try {
-      final accessToken = await _authService.getAccessToken();
-      if (accessToken == null) {
-        debugPrint('⚠️ No access token for full spools sync');
-        return;
-      }
-
       // Charger TOUS les spools de toutes les clés locales
       final spools = await SpoolStorageService.loadAllSpools();
 
@@ -237,34 +218,36 @@ class SyncService {
 
       debugPrint('📤 Pushing ${spools.length} spools from all local keys...');
 
-      final response = await http.post(
-        Uri.parse('${ApiConfig.baseUrl}${ApiConfig.syncPush}'),
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer $accessToken',
-        },
-        body: jsonEncode({
-          'spools': spools.map((spool) => {
-            'spool_id': spool.id,
-            'brand': spool.brand,
-            'material': spool.material,
-            'color_name': spool.colorName,
-            'color_rgb': spool.colorRgb,
-            'price': spool.price,
-            'initial_weight': spool.weight,
-            'remaining_weight': spool.remainingWeight,
-            'added_date': spool.addedDate.toIso8601String(),
-            'extruder_temp_min': spool.extruderTempMin,
-            'extruder_temp_max': spool.extruderTempMax,
-            'bed_temp_min': spool.bedTempMin,
-            'bed_temp_max': spool.bedTempMax,
-            'diameter': spool.diameter,
-            'spool_length': spool.spoolLength,
-            'manufacture_date': spool.manufactureDate?.toIso8601String(),
-            'batch_number': spool.batchNumber,
-          }).toList(),
-        }),
-      ).timeout(ApiConfig.connectTimeout);
+      final response = await _authService.authenticatedRequest((token) =>
+        http.post(
+          Uri.parse('${ApiConfig.baseUrl}${ApiConfig.syncPush}'),
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer $token',
+          },
+          body: jsonEncode({
+            'spools': spools.map((spool) => {
+              'spool_id': spool.id,
+              'brand': spool.brand,
+              'material': spool.material,
+              'color_name': spool.colorName,
+              'color_rgb': spool.colorRgb,
+              'price': spool.price,
+              'initial_weight': spool.weight,
+              'remaining_weight': spool.remainingWeight,
+              'added_date': spool.addedDate.toIso8601String(),
+              'extruder_temp_min': spool.extruderTempMin,
+              'extruder_temp_max': spool.extruderTempMax,
+              'bed_temp_min': spool.bedTempMin,
+              'bed_temp_max': spool.bedTempMax,
+              'diameter': spool.diameter,
+              'spool_length': spool.spoolLength,
+              'manufacture_date': spool.manufactureDate?.toIso8601String(),
+              'batch_number': spool.batchNumber,
+            }).toList(),
+          }),
+        ).timeout(ApiConfig.connectTimeout),
+      );
 
       if (response.statusCode == 200) {
         debugPrint('✅ ${spools.length} spools pushed to backend (full sync)');

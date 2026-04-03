@@ -162,7 +162,7 @@
   "tempBed": "Темп. стола",
   "termsOfService": "Условия использования",
   "privacyPolicy": "Политика конфиденциальности",
-  "legal": "Legal",
+  "legal": "Правовая информация",
   "back": "Назад",
   "retry": "Повторить",
   "signOut": "Выйти",
@@ -192,6 +192,18 @@
   "usd": "Доллар США ($)",
   "gbp": "Фунт стерлингов (£)",
   "cad": "Канадский доллар (CAD)",
+  "aud": "Австралийский доллар (A$)",
+  "jpy": "Японская иена (¥)",
+  "cny": "Китайский юань (¥)",
+  "inr": "Индийская рупия (₹)",
+  "brl": "Бразильский реал (R$)",
+  "mxn": "Мексиканское песо (MX$)",
+  "sek": "Шведская крона (kr)",
+  "nok": "Норвежская крона (kr)",
+  "dkk": "Датская крона (kr)",
+  "pln": "Польский злотый (zł)",
+  "czk": "Чешская крона (Kč)",
+  "nzd": "Новозеландский доллар (NZ$)",
   "filamentsToOrder": "Филаменты для заказа",
   "shoppingList": "Список покупок",
   "addToShoppingList": "Добавить в список",
@@ -241,6 +253,9 @@
   "ok": "ОК",
   "bambuLabReadOnly": "Bambu Lab: Только чтение",
   "bambuLabReadOnlyDesc": "Метки Bambu Lab используют шифрование RSA и не могут быть изменены. Только чтение.",
+  "forPrusaMk4": "для Prusa MK4/XL (OpenPrintTag)",
+  "prusaReadWrite": "Prusa: Чтение и Запись",
+  "prusaReadWriteDesc": "Теги Prusa используют ISO 15693 (NFC-V) с форматом OpenPrintTag. Чтение и запись поддерживаются.",
   "bambuCloneLibrary": "Библиотека клонов Bambu Lab",
   "noBambuClones": "Нет клонов Bambu Lab",
   "scanBambuToClone": "Отсканируйте оригинальные метки Bambu Lab, чтобы создать библиотеку клонов",
@@ -254,7 +269,6 @@
   "clonedOn": "Клонировано",
   "writeThisClone": "Записать этот клон",
   "writeClone": "Записать клон",
-  "writing": "Запись...",
   "writeOnCUID": "Записать на карту CUID",
   "cloneWrittenSuccess": "Клон успешно записан!",
   "requiredTagFormat": "Требуемый формат метки",
@@ -290,15 +304,33 @@
   "filamentTypeLabel": "Тип филамента",
   "scanNfcChipButton": "Сканировать NFC-чип",
   "deleteCloneConfirmation": "Удалить клон \"{name}\"?",
-  "@deleteCloneConfirmation": {"placeholders": {"name": {"type": "String"}}},
+  "@deleteCloneConfirmation": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "cloneDeletedMessage": "Клон \"{name}\" удалён",
-  "@cloneDeletedMessage": {"placeholders": {"name": {"type": "String"}}},
+  "@cloneDeletedMessage": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "extruderLabel": "Экструдер",
   "writeThisCloneButton": "Записать этот клон",
   "customNameHint": "Пользовательское имя",
   "cloneWriteSuccessMessage": "Клон успешно записан!",
   "errorPrefix": "Ошибка: {error}",
-  "@errorPrefix": {"placeholders": {"error": {"type": "String"}}},
+  "@errorPrefix": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "writingInProgress": "Запись...",
   "writeOnCUIDButton": "Записать на карту CUID",
   "diameterLabel": "Диаметр",
@@ -326,11 +358,23 @@
   "writeBambuLabTagButton": "Записать тег Bambu Lab",
   "bambuLabRsaNote": "Примечание: Оригинальные теги Bambu Lab используют шифрование RSA. Этот режим записывает данные в упрощённом совместимом формате.",
   "signInError": "Ошибка входа: {error}",
-  "@signInError": {"placeholders": {"error": {"type": "String"}}},
+  "@signInError": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "subscriptionActivatedMessage": "Подписка успешно активирована!",
   "subscriptionFailedMessage": "Не удалось оформить подписку",
   "errorMessage": "Ошибка: {error}",
-  "@errorMessage": {"placeholders": {"error": {"type": "String"}}},
+  "@errorMessage": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "subscriptionRestoredMessage": "Подписка успешно восстановлена!",
   "noSubscriptionFoundMessage": "Подписка не найдена",
   "vipLabel": "VIP",
@@ -343,5 +387,32 @@
   "pleaseEnterValidLength": "Введите корректную длину",
   "spoolLengthNotSetCannotConvert": "Длина катушки не задана - невозможно преобразовать",
   "exceedsRemainingWeight": "Превышает оставшийся вес",
-  "skuLabel": "Артикул"
+  "skuLabel": "Артикул",
+  "helpIdentifyFilament": "Помогите нам определить этот филамент",
+  "helpUsImprove": "Помогите нам стать лучше!",
+  "helpIdentifyDescription": "Мы прочитали чип, но не смогли его распознать. Расскажите нам, какой это филамент, чтобы мы могли улучшить приложение.",
+  "otherBrand": "Другой",
+  "thankYouFeedback": "Спасибо за ваш отзыв!",
+  "send": "Отправить",
+  "optionalDetails": "Дополнительные данные",
+  "weightGrams": "Вес (г)",
+  "diameterMm": "Диаметр (мм)",
+  "spoolLengthM": "Длина катушки (м)",
+  "batchNumberLabel": "Партия / SKU",
+  "black": "Чёрный",
+  "white": "Белый",
+  "yellow": "Жёлтый",
+  "orange": "Оранжевый",
+  "pink": "Розовый",
+  "purple": "Фиолетовый",
+  "gray": "Серый",
+  "brown": "Коричневый",
+  "unknown": "Неизвестно",
+  "contactUs": "Связаться с нами",
+  "contactUsSubtitle": "Вопросы, предложения или проблемы",
+  "nfcTagNotDetected": "Тег NFC не обнаружен",
+  "nfcTagNotDetectedDesc": "Тег не найден. Тег может быть неисправен, повреждён или слишком далеко от телефона. Поместите верхнюю часть iPhone прямо на NFC-тег.",
+  "nfcTagIncompatible": "Обнаружен несовместимый NFC-тег",
+  "nfcTagInfoPrusa": "Используйте пустой тег NXP ICODE SLIX2 (ISO 15693) для создания тегов, совместимых с OpenPrintTag, для Prusa MK4/XL.",
+  "writePrusaTagTitle": "Записать Prusa OpenPrintTag"
 }

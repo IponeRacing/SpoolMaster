@@ -163,7 +163,7 @@
   "tempBed": "درجة حرارة السرير",
   "termsOfService": "شروط الخدمة",
   "privacyPolicy": "سياسة الخصوصية",
-  "legal": "Legal",
+  "legal": "قانوني",
   "back": "رجوع",
   "retry": "إعادة المحاولة",
   "signOut": "تسجيل الخروج",
@@ -187,6 +187,18 @@
   "usd": "دولار أمريكي ($)",
   "gbp": "جنيه إسترليني (£)",
   "cad": "دولار كندي (CAD)",
+  "aud": "دولار أسترالي (A$)",
+  "jpy": "ين ياباني (¥)",
+  "cny": "يوان صيني (¥)",
+  "inr": "روبية هندية (₹)",
+  "brl": "ريال برازيلي (R$)",
+  "mxn": "بيزو مكسيكي (MX$)",
+  "sek": "كرونة سويدية (kr)",
+  "nok": "كرونة نرويجية (kr)",
+  "dkk": "كرونة دنماركية (kr)",
+  "pln": "زلوتي بولندي (zł)",
+  "czk": "كرونة تشيكية (Kč)",
+  "nzd": "دولار نيوزيلندي (NZ$)",
   "filamentsToOrder": "خيوط للطلب",
   "shoppingList": "قائمة التسوق",
   "addToShoppingList": "إضافة إلى القائمة",
@@ -241,6 +253,11 @@
   "ok": "موافق",
   "bambuLabReadOnly": "Bambu Lab: للقراءة فقط",
   "bambuLabReadOnlyDesc": "علامات Bambu Lab تستخدم تشفير RSA ولا يمكن تعديلها. القراءة فقط.",
+  "forPrusaMk4": "لـ Prusa MK4/XL (OpenPrintTag)",
+  "prusaReadWrite": "Prusa: قراءة وكتابة",
+  "prusaReadWriteDesc": "تستخدم علامات Prusa معيار ISO 15693 (NFC-V) بتنسيق OpenPrintTag. القراءة والكتابة مدعومة.",
+  "nfcTagInfoPrusa": "استخدم بطاقة NXP ICODE SLIX2 فارغة (ISO 15693) لإنشاء علامات متوافقة مع OpenPrintTag لـ Prusa MK4/XL.",
+  "writePrusaTagTitle": "كتابة Prusa OpenPrintTag",
   "bambuCloneLibrary": "مكتبة نسخ Bambu Lab",
   "noBambuClones": "لا توجد نسخ Bambu Lab",
   "scanBambuToClone": "امسح علامات Bambu Lab الأصلية لإنشاء مكتبة النسخ الخاصة بك",
@@ -289,15 +306,33 @@
   "filamentTypeLabel": "نوع الفيلامنت",
   "scanNfcChipButton": "مسح شريحة NFC",
   "deleteCloneConfirmation": "حذف النسخة \"{name}\"؟",
-  "@deleteCloneConfirmation": {"placeholders": {"name": {"type": "String"}}},
+  "@deleteCloneConfirmation": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "cloneDeletedMessage": "تم حذف النسخة \"{name}\"",
-  "@cloneDeletedMessage": {"placeholders": {"name": {"type": "String"}}},
+  "@cloneDeletedMessage": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "extruderLabel": "الطارد",
   "writeThisCloneButton": "كتابة هذه النسخة",
   "customNameHint": "اسم مخصص",
   "cloneWriteSuccessMessage": "تم كتابة النسخة بنجاح!",
   "errorPrefix": "خطأ: {error}",
-  "@errorPrefix": {"placeholders": {"error": {"type": "String"}}},
+  "@errorPrefix": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "writingInProgress": "جاري الكتابة...",
   "writeOnCUIDButton": "الكتابة على بطاقة CUID",
   "diameterLabel": "القطر",
@@ -325,11 +360,23 @@
   "writeBambuLabTagButton": "كتابة علامة Bambu Lab",
   "bambuLabRsaNote": "ملاحظة: تستخدم علامات Bambu Lab الأصلية تشفير RSA. يكتب هذا الوضع البيانات بتنسيق مبسط متوافق.",
   "signInError": "خطأ في تسجيل الدخول: {error}",
-  "@signInError": {"placeholders": {"error": {"type": "String"}}},
+  "@signInError": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "subscriptionActivatedMessage": "تم تفعيل الاشتراك بنجاح!",
   "subscriptionFailedMessage": "فشل الاشتراك",
   "errorMessage": "خطأ: {error}",
-  "@errorMessage": {"placeholders": {"error": {"type": "String"}}},
+  "@errorMessage": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "subscriptionRestoredMessage": "تم استعادة الاشتراك بنجاح!",
   "noSubscriptionFoundMessage": "لم يتم العثور على اشتراك",
   "vipLabel": "VIP",
@@ -342,5 +389,30 @@
   "pleaseEnterValidLength": "يرجى إدخال طول صالح",
   "spoolLengthNotSetCannotConvert": "لم يتم تعيين طول البكرة - لا يمكن التحويل",
   "exceedsRemainingWeight": "يتجاوز الوزن المتبقي",
-  "skuLabel": "SKU"
+  "skuLabel": "SKU",
+  "helpIdentifyFilament": "ساعدنا في التعرف على هذا الفيلامنت",
+  "helpUsImprove": "ساعدنا على التحسين!",
+  "helpIdentifyDescription": "قرأنا الشريحة لكن لم نتمكن من التعرف عليها. أخبرنا ما هو هذا الفيلامنت لتحسين التطبيق.",
+  "otherBrand": "أخرى",
+  "thankYouFeedback": "شكراً لملاحظاتك!",
+  "send": "إرسال",
+  "optionalDetails": "تفاصيل اختيارية",
+  "weightGrams": "الوزن (غ)",
+  "diameterMm": "القطر (مم)",
+  "spoolLengthM": "طول البكرة (م)",
+  "batchNumberLabel": "رقم الدفعة / SKU",
+  "black": "أسود",
+  "white": "أبيض",
+  "yellow": "أصفر",
+  "orange": "برتقالي",
+  "pink": "وردي",
+  "purple": "بنفسجي",
+  "gray": "رمادي",
+  "brown": "بني",
+  "unknown": "غير معروف",
+  "contactUs": "اتصل بنا",
+  "contactUsSubtitle": "أسئلة أو اقتراحات أو مشاكل",
+  "nfcTagNotDetected": "لم يتم اكتشاف أي علامة NFC",
+  "nfcTagNotDetectedDesc": "لم يتم العثور على أي علامة. قد تكون العلامة تالفة أو بعيدة جداً عن الهاتف. تأكد من وضع الجزء العلوي من هاتفك مباشرة على علامة NFC.",
+  "nfcTagIncompatible": "تم اكتشاف علامة NFC غير متوافقة"
 }

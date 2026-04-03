@@ -163,7 +163,7 @@
   "tempBed": "Bett Temp.",
   "termsOfService": "Nutzungsbedingungen",
   "privacyPolicy": "Datenschutzrichtlinie",
-  "legal": "Legal",
+  "legal": "Rechtliches",
   "back": "Zurück",
   "retry": "Wiederholen",
   "signOut": "Abmelden",
@@ -178,6 +178,15 @@
   "tabSliders": "Schieberegler",
   "hexCode": "Hex-Code",
   "red": "Rot",
+  "black": "Schwarz",
+  "white": "Weiß",
+  "yellow": "Gelb",
+  "orange": "Orange",
+  "pink": "Rosa",
+  "purple": "Lila",
+  "gray": "Grau",
+  "brown": "Braun",
+  "unknown": "Unbekannt",
   "green": "Grün",
   "blue": "Blau",
   "metricUnits": "Metrisch (mm, g, °C)",
@@ -187,6 +196,18 @@
   "usd": "US-Dollar ($)",
   "gbp": "Pfund Sterling (£)",
   "cad": "Kanadischer Dollar (CAD)",
+  "aud": "Australischer Dollar (A$)",
+  "jpy": "Japanischer Yen (¥)",
+  "cny": "Chinesischer Yuan (¥)",
+  "inr": "Indische Rupie (₹)",
+  "brl": "Brasilianischer Real (R$)",
+  "mxn": "Mexikanischer Peso (MX$)",
+  "sek": "Schwedische Krone (kr)",
+  "nok": "Norwegische Krone (kr)",
+  "dkk": "Dänische Krone (kr)",
+  "pln": "Polnischer Zloty (zł)",
+  "czk": "Tschechische Krone (Kč)",
+  "nzd": "Neuseeland-Dollar (NZ$)",
   "filamentsToOrder": "Zu bestellende Filamente",
   "shoppingList": "Einkaufsliste",
   "addToShoppingList": "Zur Liste hinzufügen",
@@ -241,6 +262,9 @@
   "ok": "OK",
   "bambuLabReadOnly": "Bambu Lab: Nur Lesezugriff",
   "bambuLabReadOnlyDesc": "Bambu Lab Tags verwenden RSA-Verschlüsselung und können nicht geändert werden. Nur Lesezugriff.",
+  "forPrusaMk4": "für Prusa MK4/XL (OpenPrintTag)",
+  "prusaReadWrite": "Prusa: Lesen & Schreiben",
+  "prusaReadWriteDesc": "Prusa Tags verwenden ISO 15693 (NFC-V) mit OpenPrintTag-Format. Lesen und Schreiben werden unterstützt.",
   "bambuCloneLibrary": "Bambu Lab Klon-Bibliothek",
   "noBambuClones": "Keine Bambu Lab Klone",
   "scanBambuToClone": "Scannen Sie originale Bambu Lab Tags, um Ihre Klon-Bibliothek zu erstellen",
@@ -254,7 +278,6 @@
   "clonedOn": "Geklont am",
   "writeThisClone": "Diesen Klon schreiben",
   "writeClone": "Klon schreiben",
-  "writing": "Schreiben...",
   "writeOnCUID": "Auf CUID-Karte schreiben",
   "cloneWrittenSuccess": "Klon erfolgreich geschrieben!",
   "requiredTagFormat": "Erforderliches Tag-Format",
@@ -292,13 +315,17 @@
   "deleteCloneConfirmation": "Klon \"{name}\" löschen?",
   "@deleteCloneConfirmation": {
     "placeholders": {
-      "name": { "type": "String" }
+      "name": {
+        "type": "String"
+      }
     }
   },
   "cloneDeletedMessage": "Klon \"{name}\" gelöscht",
   "@cloneDeletedMessage": {
     "placeholders": {
-      "name": { "type": "String" }
+      "name": {
+        "type": "String"
+      }
     }
   },
   "extruderLabel": "Extruder",
@@ -308,7 +335,9 @@
   "errorPrefix": "Fehler: {error}",
   "@errorPrefix": {
     "placeholders": {
-      "error": { "type": "String" }
+      "error": {
+        "type": "String"
+      }
     }
   },
   "writingInProgress": "Schreiben...",
@@ -340,7 +369,9 @@
   "signInError": "Anmeldefehler: {error}",
   "@signInError": {
     "placeholders": {
-      "error": { "type": "String" }
+      "error": {
+        "type": "String"
+      }
     }
   },
   "subscriptionActivatedMessage": "Abonnement erfolgreich aktiviert!",
@@ -348,7 +379,9 @@
   "errorMessage": "Fehler: {error}",
   "@errorMessage": {
     "placeholders": {
-      "error": { "type": "String" }
+      "error": {
+        "type": "String"
+      }
     }
   },
   "subscriptionRestoredMessage": "Abonnement erfolgreich wiederhergestellt!",
@@ -363,5 +396,23 @@
   "pleaseEnterValidLength": "Bitte gültige Länge eingeben",
   "spoolLengthNotSetCannotConvert": "Spulenlänge nicht festgelegt - Umrechnung nicht möglich",
   "exceedsRemainingWeight": "Überschreitet Restgewicht",
-  "skuLabel": "SKU"
+  "skuLabel": "SKU",
+  "helpIdentifyFilament": "Helfen Sie uns, dieses Filament zu identifizieren",
+  "helpUsImprove": "Helfen Sie uns, uns zu verbessern!",
+  "helpIdentifyDescription": "Wir haben den Chip gelesen, konnten ihn aber nicht identifizieren. Sagen Sie uns, welches Filament es ist, damit wir die App verbessern können.",
+  "otherBrand": "Andere",
+  "thankYouFeedback": "Vielen Dank für Ihr Feedback!",
+  "send": "Senden",
+  "optionalDetails": "Optionale Details",
+  "weightGrams": "Gewicht (g)",
+  "diameterMm": "Durchmesser (mm)",
+  "spoolLengthM": "Spulenlänge (m)",
+  "batchNumberLabel": "Charge / SKU",
+  "contactUs": "Kontaktieren Sie uns",
+  "contactUsSubtitle": "Fragen, Vorschläge oder Probleme",
+  "nfcTagNotDetected": "Kein NFC-Tag erkannt",
+  "nfcTagNotDetectedDesc": "Es wurde kein Tag gefunden. Der Tag ist möglicherweise defekt, beschädigt oder zu weit vom Telefon entfernt. Legen Sie die Oberseite Ihres iPhones direkt auf den NFC-Tag.",
+  "nfcTagIncompatible": "Inkompatibles NFC-Tag erkannt",
+  "nfcTagInfoPrusa": "Verwenden Sie einen leeren NXP ICODE SLIX2-Tag (ISO 15693), um OpenPrintTag-kompatible Tags für Prusa MK4/XL zu erstellen.",
+  "writePrusaTagTitle": "Prusa OpenPrintTag schreiben"
 }

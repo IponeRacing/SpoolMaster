@@ -168,12 +168,6 @@ class ShoppingListService {
       final isSignedIn = await UserPreferencesService.isSignedIn();
       if (!isSignedIn) return;
 
-      final accessToken = await _authService.getAccessToken();
-      if (accessToken == null) {
-        debugPrint('⚠️ No access token for shopping list sync');
-        return;
-      }
-
       final items = await loadAllShoppingLists();
       final orderedIds = await loadOrderedIds();
 
@@ -184,17 +178,19 @@ class ShoppingListService {
 
       debugPrint('📤 Pushing ${items.length} shopping list items...');
 
-      final response = await http.post(
-        Uri.parse('${ApiConfig.baseUrl}${ApiConfig.shoppingListPush}'),
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer $accessToken',
-        },
-        body: json.encode({
-          'items': items.map((item) => item.toJson()).toList(),
-          'ordered_ids': orderedIds.toList(),
-        }),
-      ).timeout(ApiConfig.connectTimeout);
+      final response = await _authService.authenticatedRequest((token) =>
+        http.post(
+          Uri.parse('${ApiConfig.baseUrl}${ApiConfig.shoppingListPush}'),
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer $token',
+          },
+          body: json.encode({
+            'items': items.map((item) => item.toJson()).toList(),
+            'ordered_ids': orderedIds.toList(),
+          }),
+        ).timeout(ApiConfig.connectTimeout),
+      );
 
       if (response.statusCode == 200) {
         debugPrint('✅ Shopping list pushed to backend');
@@ -215,20 +211,16 @@ class ShoppingListService {
         return;
       }
 
-      final accessToken = await _authService.getAccessToken();
-      if (accessToken == null) {
-        debugPrint('⚠️ No access token to pull shopping list');
-        return;
-      }
-
       debugPrint('📥 Pulling shopping list from backend...');
-      final response = await http.get(
-        Uri.parse('${ApiConfig.baseUrl}${ApiConfig.shoppingListPull}'),
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer $accessToken',
-        },
-      ).timeout(ApiConfig.connectTimeout);
+      final response = await _authService.authenticatedRequest((token) =>
+        http.get(
+          Uri.parse('${ApiConfig.baseUrl}${ApiConfig.shoppingListPull}'),
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer $token',
+          },
+        ).timeout(ApiConfig.connectTimeout),
+      );
 
       if (response.statusCode == 200) {
         final responseData = json.decode(response.body) as Map<String, dynamic>;

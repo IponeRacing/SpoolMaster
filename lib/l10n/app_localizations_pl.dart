@@ -508,7 +508,7 @@ class AppLocalizationsPl extends AppLocalizations {
   String get privacyPolicy => 'Polityka prywatności';
 
   @override
-  String get legal => 'Legal';
+  String get legal => 'Prawne';
 
   @override
   String get back => 'Wstecz';
@@ -559,6 +559,33 @@ class AppLocalizationsPl extends AppLocalizations {
   String get blue => 'Niebieski';
 
   @override
+  String get black => 'Czarny';
+
+  @override
+  String get white => 'Biały';
+
+  @override
+  String get yellow => 'Żółty';
+
+  @override
+  String get orange => 'Pomarańczowy';
+
+  @override
+  String get pink => 'Różowy';
+
+  @override
+  String get purple => 'Fioletowy';
+
+  @override
+  String get gray => 'Szary';
+
+  @override
+  String get brown => 'Brązowy';
+
+  @override
+  String get unknown => 'Nieznany';
+
+  @override
   String get metricUnits => 'Metryczne (mm, g, °C)';
 
   @override
@@ -578,6 +605,42 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get cad => 'Dolar kanadyjski (CAD)';
+
+  @override
+  String get aud => 'Dolar australijski (A\$)';
+
+  @override
+  String get jpy => 'Jen japoński (¥)';
+
+  @override
+  String get cny => 'Juan chiński (¥)';
+
+  @override
+  String get inr => 'Rupia indyjska (₹)';
+
+  @override
+  String get brl => 'Real brazylijski (R\$)';
+
+  @override
+  String get mxn => 'Peso meksykańskie (MX\$)';
+
+  @override
+  String get sek => 'Korona szwedzka (kr)';
+
+  @override
+  String get nok => 'Korona norweska (kr)';
+
+  @override
+  String get dkk => 'Korona duńska (kr)';
+
+  @override
+  String get pln => 'Złoty polski (zł)';
+
+  @override
+  String get czk => 'Korona czeska (Kč)';
+
+  @override
+  String get nzd => 'Dolar nowozelandzki (NZ\$)';
 
   @override
   String get filamentsToOrder => 'Filamenty do zamówienia';
@@ -706,6 +769,16 @@ class AppLocalizationsPl extends AppLocalizations {
   @override
   String get bambuLabReadOnlyDesc =>
       'Tagi Bambu Lab używają szyfrowania RSA i nie mogą być modyfikowane. Tylko do odczytu.';
+
+  @override
+  String get forPrusaMk4 => 'dla Prusa MK4/XL (OpenPrintTag)';
+
+  @override
+  String get prusaReadWrite => 'Prusa: Odczyt i Zapis';
+
+  @override
+  String get prusaReadWriteDesc =>
+      'Tagi Prusa używają ISO 15693 (NFC-V) z formatem OpenPrintTag. Odczyt i zapis obsługiwane.';
 
   @override
   String get bambuCloneLibrary => 'Biblioteka klonów Bambu Lab';
@@ -1024,4 +1097,61 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get skuLabel => 'SKU';
+
+  @override
+  String get helpIdentifyFilament => 'Pomóż nam zidentyfikować ten filament';
+
+  @override
+  String get helpUsImprove => 'Pomóż nam się poprawić!';
+
+  @override
+  String get helpIdentifyDescription =>
+      'Odczytaliśmy chip, ale nie mogliśmy go zidentyfikować. Powiedz nam, jaki to filament, abyśmy mogli ulepszyć aplikację.';
+
+  @override
+  String get otherBrand => 'Inna';
+
+  @override
+  String get thankYouFeedback => 'Dziękujemy za opinię!';
+
+  @override
+  String get send => 'Wyślij';
+
+  @override
+  String get optionalDetails => 'Opcjonalne szczegóły';
+
+  @override
+  String get weightGrams => 'Waga (g)';
+
+  @override
+  String get diameterMm => 'Średnica (mm)';
+
+  @override
+  String get spoolLengthM => 'Długość szpuli (m)';
+
+  @override
+  String get batchNumberLabel => 'Partia / SKU';
+
+  @override
+  String get contactUs => 'Skontaktuj się';
+
+  @override
+  String get contactUsSubtitle => 'Pytania, sugestie lub problemy';
+
+  @override
+  String get nfcTagNotDetected => 'Nie wykryto tagu NFC';
+
+  @override
+  String get nfcTagNotDetectedDesc =>
+      'Nie znaleziono tagu. Tag może być uszkodzony, zniszczony lub zbyt daleko od telefonu. Umieść górę iPhone\'a bezpośrednio na tagu NFC.';
+
+  @override
+  String get nfcTagIncompatible => 'Wykryto niezgodny tag NFC';
+
+  @override
+  String get nfcTagInfoPrusa =>
+      'Użyj pustego tagu NXP ICODE SLIX2 (ISO 15693), aby utworzyć tagi kompatybilne z OpenPrintTag dla Prusa MK4/XL.';
+
+  @override
+  String get writePrusaTagTitle => 'Zapisz Prusa OpenPrintTag';
 }

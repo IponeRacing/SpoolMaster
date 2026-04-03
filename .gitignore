@@ -48,3 +48,8 @@ ACNext*.exe
 acnext_extracted/
 OpenBL-main/
 Rinkhals-*/
+
+# Fastlane
+ios/vendor/
+ios/fastlane/metadata/
+ios/.bundle/

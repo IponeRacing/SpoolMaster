@@ -509,7 +509,7 @@ class AppLocalizationsHu extends AppLocalizations {
   String get privacyPolicy => 'Adatvédelmi Szabályzat';
 
   @override
-  String get legal => 'Legal';
+  String get legal => 'Jogi';
 
   @override
   String get back => 'Vissza';
@@ -560,6 +560,33 @@ class AppLocalizationsHu extends AppLocalizations {
   String get blue => 'Kék';
 
   @override
+  String get black => 'Fekete';
+
+  @override
+  String get white => 'Fehér';
+
+  @override
+  String get yellow => 'Sárga';
+
+  @override
+  String get orange => 'Narancssárga';
+
+  @override
+  String get pink => 'Rózsaszín';
+
+  @override
+  String get purple => 'Lila';
+
+  @override
+  String get gray => 'Szürke';
+
+  @override
+  String get brown => 'Barna';
+
+  @override
+  String get unknown => 'Ismeretlen';
+
+  @override
   String get metricUnits => 'Metrikus (mm, g, °C)';
 
   @override
@@ -579,6 +606,42 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String get cad => 'Kanadai dollár (CAD)';
+
+  @override
+  String get aud => 'Ausztrál dollár (A\$)';
+
+  @override
+  String get jpy => 'Japán jen (¥)';
+
+  @override
+  String get cny => 'Kínai jüan (¥)';
+
+  @override
+  String get inr => 'Indiai rúpia (₹)';
+
+  @override
+  String get brl => 'Brazil real (R\$)';
+
+  @override
+  String get mxn => 'Mexikói peso (MX\$)';
+
+  @override
+  String get sek => 'Svéd korona (kr)';
+
+  @override
+  String get nok => 'Norvég korona (kr)';
+
+  @override
+  String get dkk => 'Dán korona (kr)';
+
+  @override
+  String get pln => 'Lengyel zloty (zł)';
+
+  @override
+  String get czk => 'Cseh korona (Kč)';
+
+  @override
+  String get nzd => 'Új-zélandi dollár (NZ\$)';
 
   @override
   String get filamentsToOrder => 'Rendelendő filamentek';
@@ -707,6 +770,16 @@ class AppLocalizationsHu extends AppLocalizations {
   @override
   String get bambuLabReadOnlyDesc =>
       'A Bambu Lab címkék RSA titkosítást használnak és nem módosíthatók. Csak olvasható.';
+
+  @override
+  String get forPrusaMk4 => 'Prusa MK4/XL-hez (OpenPrintTag)';
+
+  @override
+  String get prusaReadWrite => 'Prusa: Olvasás és írás';
+
+  @override
+  String get prusaReadWriteDesc =>
+      'A Prusa címkék ISO 15693 (NFC-V) formátumot használnak OpenPrintTag-gel. Olvasás és írás támogatott.';
 
   @override
   String get bambuCloneLibrary => 'Bambu Lab klón könyvtár';
@@ -1025,4 +1098,61 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String get skuLabel => 'SKU';
+
+  @override
+  String get helpIdentifyFilament => 'Segítsen azonosítani ezt a filamentet';
+
+  @override
+  String get helpUsImprove => 'Segítsen nekünk fejlődni!';
+
+  @override
+  String get helpIdentifyDescription =>
+      'Olvastuk a chipet, de nem tudtuk azonosítani. Mondja el, milyen filament ez, hogy javíthassuk az alkalmazást.';
+
+  @override
+  String get otherBrand => 'Egyéb';
+
+  @override
+  String get thankYouFeedback => 'Köszönjük a visszajelzését!';
+
+  @override
+  String get send => 'Küldés';
+
+  @override
+  String get optionalDetails => 'Opcionális részletek';
+
+  @override
+  String get weightGrams => 'Súly (g)';
+
+  @override
+  String get diameterMm => 'Átmérő (mm)';
+
+  @override
+  String get spoolLengthM => 'Orsóhossz (m)';
+
+  @override
+  String get batchNumberLabel => 'Tétel / SKU';
+
+  @override
+  String get contactUs => 'Kapcsolat';
+
+  @override
+  String get contactUsSubtitle => 'Kérdések, javaslatok vagy problémák';
+
+  @override
+  String get nfcTagNotDetected => 'Nem található NFC címke';
+
+  @override
+  String get nfcTagNotDetectedDesc =>
+      'Nem található címke. A címke halott, sérült vagy túl messze lehet a telefontól. Győződjön meg arról, hogy a telefon teteje közvetlenül az NFC címkén van.';
+
+  @override
+  String get nfcTagIncompatible => 'Nem kompatibilis NFC címke észlelve';
+
+  @override
+  String get nfcTagInfoPrusa =>
+      'Üres NXP ICODE SLIX2 címkét (ISO 15693) használjon OpenPrintTag kompatibilis címkék létrehozásához Prusa MK4/XL-hez.';
+
+  @override
+  String get writePrusaTagTitle => 'Prusa OpenPrintTag írása';
 }

@@ -55,11 +55,11 @@
   "extruderTempMax": "Макс. темп. екструдера",
   "bedTempMin": "Мін. темп. столу",
   "bedTempMax": "Макс. темп. столу",
-  "diameter": "Діаметр",
-  "spoolLength": "Довжина (м)",
+  "diameter": "Діаметр філаменту",
+  "spoolLength": "Довжина котушки",
   "generatedSku": "Згенерований SKU",
   "approachChipToWrite": "Наблизьте чіп для запису...",
-  "writing": "Записування...",
+  "writing": "Запис...",
   "chooseColor": "Виберіть колір",
   "required": "Обов'язково",
   "invalid": "Недійсно",
@@ -163,21 +163,15 @@
   "tempBed": "Темп. столу",
   "termsOfService": "Умови використання",
   "privacyPolicy": "Політика конфіденційності",
-  "legal": "Legal",
+  "legal": "Юридична інформація",
   "back": "Назад",
   "retry": "Спробувати знову",
   "signOut": "Вийти",
-  "extruderTempMin": "Мін. темп. екструдера",
   "extruderTempMinHint": "Напр.: 200",
-  "extruderTempMax": "Макс. темп. екструдера",
   "extruderTempMaxHint": "Напр.: 220",
-  "bedTempMin": "Мін. темп. столу",
   "bedTempMinHint": "Напр.: 50",
-  "bedTempMax": "Макс. темп. столу",
   "bedTempMaxHint": "Напр.: 60",
-  "diameter": "Діаметр філаменту",
   "diameterHint": "Напр.: 1.75",
-  "spoolLength": "Довжина котушки",
   "spoolLengthHint": "Напр.: 330",
   "tabGrid": "Сітка",
   "tabSpectrum": "Спектр",
@@ -193,6 +187,18 @@
   "usd": "Долар США ($)",
   "gbp": "Фунт стерлінгів (£)",
   "cad": "Канадський долар (CAD)",
+  "aud": "Австралійський долар (A$)",
+  "jpy": "Японська єна (¥)",
+  "cny": "Китайський юань (¥)",
+  "inr": "Індійська рупія (₹)",
+  "brl": "Бразильський реал (R$)",
+  "mxn": "Мексиканське песо (MX$)",
+  "sek": "Шведська крона (kr)",
+  "nok": "Норвезька крона (kr)",
+  "dkk": "Данська крона (kr)",
+  "pln": "Польський злотий (zł)",
+  "czk": "Чеська крона (Kč)",
+  "nzd": "Новозеландський долар (NZ$)",
   "filamentsToOrder": "Філаменти для замовлення",
   "shoppingList": "Список покупок",
   "addToShoppingList": "Додати до списку",
@@ -215,7 +221,6 @@
   "forAnycubicAce": "для Anycubic Ace",
   "forBambuLabAms": "для Bambu Lab AMS",
   "scanNfcChip": "Сканувати NFC чіп",
-  "addManually": "Додати вручну",
   "fillForm": "Заповнити форму",
   "emptyShoppingList": "Немає філаментів у списку",
   "percentRemaining": "{percent}% залишилось",
@@ -228,9 +233,9 @@
   },
   "markAsOrdered": "Позначити як замовлено",
   "markAsNotOrdered": "Позначити як незамовлено",
-  "spoolNotFound": "Котушку не знайдено на складі",
-  "addSpoolFirstMessage": "Цієї котушки ще немає на вашому складі. Будь ласка, спочатку додайте її за допомогою кнопки 'Додати котушку', перш ніж оновлювати запаси.",
-  "ok": "ОК",
+  "spoolNotFound": "Котушку не знайдено в запасах",
+  "addSpoolFirstMessage": "Цієї котушки ще немає у ваших запасах. Будь ласка, спочатку додайте її за допомогою кнопки 'Додати котушку', перш ніж оновлювати запаси.",
+  "ok": "OK",
   "connection": "З'єднання",
   "signInToSync": "Увійдіть, щоб синхронізувати дані",
   "continueWithoutAccount": "Продовжити без облікового запису (локальний режим)",
@@ -248,9 +253,11 @@
   "scanSpoolToUpdate": "Скануйте котушку, щоб оновити запаси",
   "bambuLabReadOnly": "Bambu Lab: Тільки для читання",
   "bambuLabReadOnlyDesc": "Мітки Bambu Lab використовують шифрування RSA і не можуть бути змінені. Тільки для читання.",
-  "spoolNotFound": "Котушку не знайдено в запасах",
-  "addSpoolFirstMessage": "Цієї котушки ще немає у ваших запасах. Будь ласка, спочатку додайте її за допомогою кнопки 'Додати котушку', перш ніж оновлювати запаси.",
-  "ok": "OK",
+  "forPrusaMk4": "для Prusa MK4/XL (OpenPrintTag)",
+  "prusaReadWrite": "Prusa: Читання та запис",
+  "prusaReadWriteDesc": "Теги Prusa використовують ISO 15693 (NFC-V) з форматом OpenPrintTag. Підтримка читання та запису.",
+  "nfcTagInfoPrusa": "Використовуйте пусту карту NXP ICODE SLIX2 (ISO 15693) для створення тегів, сумісних з OpenPrintTag, для Prusa MK4/XL.",
+  "writePrusaTagTitle": "Записати тег Prusa OpenPrintTag",
   "bambuCloneLibrary": "Бібліотека клонів Bambu Lab",
   "noBambuClones": "Немає клонів Bambu Lab",
   "scanBambuToClone": "Скануйте оригінальні мітки Bambu Lab, щоб створити бібліотеку клонів",
@@ -264,7 +271,6 @@
   "clonedOn": "Клоновано",
   "writeThisClone": "Записати цей клон",
   "writeClone": "Записати клон",
-  "writing": "Запис...",
   "writeOnCUID": "Записати на картку CUID",
   "cloneWrittenSuccess": "Клон успішно записано!",
   "requiredTagFormat": "Необхідний формат мітки",
@@ -300,15 +306,33 @@
   "filamentTypeLabel": "Тип філаменту",
   "scanNfcChipButton": "Сканувати NFC-чіп",
   "deleteCloneConfirmation": "Видалити клон \"{name}\"?",
-  "@deleteCloneConfirmation": {"placeholders": {"name": {"type": "String"}}},
+  "@deleteCloneConfirmation": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "cloneDeletedMessage": "Клон \"{name}\" видалено",
-  "@cloneDeletedMessage": {"placeholders": {"name": {"type": "String"}}},
+  "@cloneDeletedMessage": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "extruderLabel": "Екструдер",
   "writeThisCloneButton": "Записати цей клон",
   "customNameHint": "Власна назва",
   "cloneWriteSuccessMessage": "Клон успішно записано!",
   "errorPrefix": "Помилка: {error}",
-  "@errorPrefix": {"placeholders": {"error": {"type": "String"}}},
+  "@errorPrefix": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "writingInProgress": "Запис...",
   "writeOnCUIDButton": "Записати на картку CUID",
   "diameterLabel": "Діаметр",
@@ -327,18 +351,36 @@
   "brandLabel": "Бренд",
   "materialTypeLabel": "Тип матеріалу",
   "serialNumber3Digits": "Серійний номер (3 цифри)",
-  "weight250g": "250г", "weight500g": "500г", "weight1000g": "1000г", "weight1000gStandard": "1000г (стандарт)", "weight2000g": "2000г", "weight3000g": "3000г",
+  "weight250g": "250г",
+  "weight500g": "500г",
+  "weight1000g": "1000г",
+  "weight1000gStandard": "1000г (стандарт)",
+  "weight2000g": "2000г",
+  "weight3000g": "3000г",
   "writeBambuLabTagButton": "Записати тег Bambu Lab",
   "bambuLabRsaNote": "Примітка: Оригінальні теги Bambu Lab використовують шифрування RSA. Цей режим записує дані у спрощеному сумісному форматі.",
   "signInError": "Помилка входу: {error}",
-  "@signInError": {"placeholders": {"error": {"type": "String"}}},
+  "@signInError": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "subscriptionActivatedMessage": "Підписку успішно активовано!",
   "subscriptionFailedMessage": "Не вдалося оформити підписку",
   "errorMessage": "Помилка: {error}",
-  "@errorMessage": {"placeholders": {"error": {"type": "String"}}},
+  "@errorMessage": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "subscriptionRestoredMessage": "Підписку успішно відновлено!",
   "noSubscriptionFoundMessage": "Підписку не знайдено",
-  "vipLabel": "VIP", "activeLabel": "АКТИВНО",
+  "vipLabel": "VIP",
+  "activeLabel": "АКТИВНО",
   "noAdsExperienceMessage": "Насолоджуйтесь версією без реклами!",
   "subscribedLabel": "Підписник",
   "restorePurchasesButton": "Відновити покупки",
@@ -347,5 +389,30 @@
   "pleaseEnterValidLength": "Введіть коректну довжину",
   "spoolLengthNotSetCannotConvert": "Довжина котушки не задана - неможливо перетворити",
   "exceedsRemainingWeight": "Перевищує залишкову вагу",
-  "skuLabel": "Артикул"
+  "skuLabel": "Артикул",
+  "helpIdentifyFilament": "Допоможіть нам визначити цей філамент",
+  "helpUsImprove": "Допоможіть нам покращитися!",
+  "helpIdentifyDescription": "Ми прочитали чіп, але не змогли його розпізнати. Розкажіть нам, який це філамент, щоб ми могли покращити додаток.",
+  "otherBrand": "Інший",
+  "thankYouFeedback": "Дякуємо за ваш відгук!",
+  "send": "Надіслати",
+  "optionalDetails": "Додаткові дані",
+  "weightGrams": "Вага (г)",
+  "diameterMm": "Діаметр (мм)",
+  "spoolLengthM": "Довжина котушки (м)",
+  "batchNumberLabel": "Партія / SKU",
+  "black": "Чорний",
+  "white": "Білий",
+  "yellow": "Жовтий",
+  "orange": "Помаранчевий",
+  "pink": "Рожевий",
+  "purple": "Фіолетовий",
+  "gray": "Сірий",
+  "brown": "Коричневий",
+  "unknown": "Невідомо",
+  "contactUs": "Зв'яжіться з нами",
+  "contactUsSubtitle": "Питання, пропозиції або проблеми",
+  "nfcTagNotDetected": "NFC мітку не виявлено",
+  "nfcTagNotDetectedDesc": "Мітку не знайдено. Мітка може бути несправною, пошкодженою або занадто далеко від телефону. Переконайтеся, що верхня частина телефону розміщена безпосередньо на NFC мітці.",
+  "nfcTagIncompatible": "Виявлено несумісну NFC мітку"
 }

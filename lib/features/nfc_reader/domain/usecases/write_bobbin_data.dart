@@ -10,7 +10,7 @@ class WriteBobbinData {
 
   WriteBobbinData(this.repository);
 
-  Future<Either<Failure, void>> call(BobbinData bobbinData) async {
-    return await repository.writeBobbinData(bobbinData);
+  Future<Either<Failure, void>> call(BobbinData bobbinData, {String tagFormat = 'anycubic'}) async {
+    return await repository.writeBobbinData(bobbinData, tagFormat: tagFormat);
   }
 }

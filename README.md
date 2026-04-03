@@ -1,6 +1,15 @@
 # nfc_anycubic
 
-A new Flutter project.
+Spool Master - NFC Filament Manager
+
+## App Identifiers
+
+| Plateforme | Package ID | Notes |
+|------------|------------|-------|
+| Android | `com.engagengine.nfc_anycubic` | Publié sur Play Store - NE PAS MODIFIER |
+| iOS | `com.engageengine.nfcfilament` | Publié sur App Store |
+
+> ⚠️ Les identifiants sont différents (faute de frappe historique côté Android). C'est intentionnel et ne doit pas être corrigé.
 
 ## Getting Started
 

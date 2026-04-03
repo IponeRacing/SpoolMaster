@@ -162,7 +162,7 @@
   "tempBed": "Tárgyasztal Hőm.",
   "termsOfService": "Szolgáltatási Feltételek",
   "privacyPolicy": "Adatvédelmi Szabályzat",
-  "legal": "Legal",
+  "legal": "Jogi",
   "back": "Vissza",
   "retry": "Újra",
   "signOut": "Kijelentkezés",
@@ -192,6 +192,18 @@
   "usd": "Amerikai dollár ($)",
   "gbp": "Font sterling (£)",
   "cad": "Kanadai dollár (CAD)",
+  "aud": "Ausztrál dollár (A$)",
+  "jpy": "Japán jen (¥)",
+  "cny": "Kínai jüan (¥)",
+  "inr": "Indiai rúpia (₹)",
+  "brl": "Brazil real (R$)",
+  "mxn": "Mexikói peso (MX$)",
+  "sek": "Svéd korona (kr)",
+  "nok": "Norvég korona (kr)",
+  "dkk": "Dán korona (kr)",
+  "pln": "Lengyel zloty (zł)",
+  "czk": "Cseh korona (Kč)",
+  "nzd": "Új-zélandi dollár (NZ$)",
   "filamentsToOrder": "Rendelendő filamentek",
   "shoppingList": "Bevásárlólista",
   "addToShoppingList": "Hozzáadás a listához",
@@ -241,6 +253,11 @@
   "ok": "OK",
   "bambuLabReadOnly": "Bambu Lab: Csak olvasható",
   "bambuLabReadOnlyDesc": "A Bambu Lab címkék RSA titkosítást használnak és nem módosíthatók. Csak olvasható.",
+  "forPrusaMk4": "Prusa MK4/XL-hez (OpenPrintTag)",
+  "prusaReadWrite": "Prusa: Olvasás és írás",
+  "prusaReadWriteDesc": "A Prusa címkék ISO 15693 (NFC-V) formátumot használnak OpenPrintTag-gel. Olvasás és írás támogatott.",
+  "nfcTagInfoPrusa": "Üres NXP ICODE SLIX2 címkét (ISO 15693) használjon OpenPrintTag kompatibilis címkék létrehozásához Prusa MK4/XL-hez.",
+  "writePrusaTagTitle": "Prusa OpenPrintTag írása",
   "bambuCloneLibrary": "Bambu Lab klón könyvtár",
   "noBambuClones": "Nincsenek Bambu Lab klónok",
   "scanBambuToClone": "Olvassa be az eredeti Bambu Lab címkéket a klón könyvtár létrehozásához",
@@ -254,7 +271,6 @@
   "clonedOn": "Klónozva",
   "writeThisClone": "Klón írása",
   "writeClone": "Klón írása",
-  "writing": "Írás...",
   "writeOnCUID": "Írás CUID kártyára",
   "cloneWrittenSuccess": "Klón sikeresen írva!",
   "requiredTagFormat": "Szükséges címke formátum",
@@ -290,15 +306,33 @@
   "filamentTypeLabel": "Filament típus",
   "scanNfcChipButton": "NFC chip szkennelése",
   "deleteCloneConfirmation": "Klón \"{name}\" törlése?",
-  "@deleteCloneConfirmation": {"placeholders": {"name": {"type": "String"}}},
+  "@deleteCloneConfirmation": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "cloneDeletedMessage": "Klón \"{name}\" törölve",
-  "@cloneDeletedMessage": {"placeholders": {"name": {"type": "String"}}},
+  "@cloneDeletedMessage": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "extruderLabel": "Extruder",
   "writeThisCloneButton": "Klón írása",
   "customNameHint": "Egyéni név",
   "cloneWriteSuccessMessage": "Klón sikeresen írva!",
   "errorPrefix": "Hiba: {error}",
-  "@errorPrefix": {"placeholders": {"error": {"type": "String"}}},
+  "@errorPrefix": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "writingInProgress": "Írás...",
   "writeOnCUIDButton": "Írás CUID kártyára",
   "diameterLabel": "Átmérő",
@@ -326,11 +360,23 @@
   "writeBambuLabTagButton": "Bambu Lab címke írása",
   "bambuLabRsaNote": "Megjegyzés: Az eredeti Bambu Lab címkék RSA titkosítást használnak. Ez a mód egyszerűsített kompatibilis formátumban írja az adatokat.",
   "signInError": "Bejelentkezési hiba: {error}",
-  "@signInError": {"placeholders": {"error": {"type": "String"}}},
+  "@signInError": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "subscriptionActivatedMessage": "Előfizetés sikeresen aktiválva!",
   "subscriptionFailedMessage": "Előfizetés sikertelen",
   "errorMessage": "Hiba: {error}",
-  "@errorMessage": {"placeholders": {"error": {"type": "String"}}},
+  "@errorMessage": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "subscriptionRestoredMessage": "Előfizetés sikeresen visszaállítva!",
   "noSubscriptionFoundMessage": "Nem található előfizetés",
   "vipLabel": "VIP",
@@ -343,5 +389,30 @@
   "pleaseEnterValidLength": "Adjon meg érvényes hosszt",
   "spoolLengthNotSetCannotConvert": "Orsó hossz nincs beállítva - nem konvertálható",
   "exceedsRemainingWeight": "Meghaladja a maradék súlyt",
-  "skuLabel": "SKU"
+  "skuLabel": "SKU",
+  "helpIdentifyFilament": "Segítsen azonosítani ezt a filamentet",
+  "helpUsImprove": "Segítsen nekünk fejlődni!",
+  "helpIdentifyDescription": "Olvastuk a chipet, de nem tudtuk azonosítani. Mondja el, milyen filament ez, hogy javíthassuk az alkalmazást.",
+  "otherBrand": "Egyéb",
+  "thankYouFeedback": "Köszönjük a visszajelzését!",
+  "send": "Küldés",
+  "optionalDetails": "Opcionális részletek",
+  "weightGrams": "Súly (g)",
+  "diameterMm": "Átmérő (mm)",
+  "spoolLengthM": "Orsóhossz (m)",
+  "batchNumberLabel": "Tétel / SKU",
+  "black": "Fekete",
+  "white": "Fehér",
+  "yellow": "Sárga",
+  "orange": "Narancssárga",
+  "pink": "Rózsaszín",
+  "purple": "Lila",
+  "gray": "Szürke",
+  "brown": "Barna",
+  "unknown": "Ismeretlen",
+  "contactUs": "Kapcsolat",
+  "contactUsSubtitle": "Kérdések, javaslatok vagy problémák",
+  "nfcTagNotDetected": "Nem található NFC címke",
+  "nfcTagNotDetectedDesc": "Nem található címke. A címke halott, sérült vagy túl messze lehet a telefontól. Győződjön meg arról, hogy a telefon teteje közvetlenül az NFC címkén van.",
+  "nfcTagIncompatible": "Nem kompatibilis NFC címke észlelve"
 }

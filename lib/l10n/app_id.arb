@@ -55,8 +55,8 @@
   "extruderTempMax": "Suhu Ekstruder Maks",
   "bedTempMin": "Suhu Bed Min",
   "bedTempMax": "Suhu Bed Maks",
-  "diameter": "Diameter",
-  "spoolLength": "Panjang (m)",
+  "diameter": "Diameter Filamen",
+  "spoolLength": "Panjang Gulungan",
   "generatedSku": "SKU yang Dihasilkan",
   "approachChipToWrite": "Dekatkan chip untuk menulis...",
   "writing": "Menulis...",
@@ -70,7 +70,7 @@
   "stockInventory": "Spool dalam stok",
   "addSpool": "Tambah Gulungan",
   "scanSpool": "Pindai Gulungan",
-  "addManually": "Tambah Manual",
+  "addManually": "Tambah manual",
   "spoolAdded": "Gulungan ditambahkan",
   "spoolUpdated": "Gulungan diperbarui",
   "noSpoolsInStock": "Tidak ada gulungan dalam stok",
@@ -163,21 +163,15 @@
   "tempBed": "Suhu Bed",
   "termsOfService": "Ketentuan Layanan",
   "privacyPolicy": "Kebijakan Privasi",
-  "legal": "Legal",
+  "legal": "Hukum",
   "back": "Kembali",
   "retry": "Coba lagi",
   "signOut": "Keluar",
-  "extruderTempMin": "Suhu Ekstruder Min",
   "extruderTempMinHint": "Mis.: 200",
-  "extruderTempMax": "Suhu Ekstruder Maks",
   "extruderTempMaxHint": "Mis.: 220",
-  "bedTempMin": "Suhu Bed Min",
   "bedTempMinHint": "Mis.: 50",
-  "bedTempMax": "Suhu Bed Maks",
   "bedTempMaxHint": "Mis.: 60",
-  "diameter": "Diameter Filamen",
   "diameterHint": "Mis.: 1.75",
-  "spoolLength": "Panjang Gulungan",
   "spoolLengthHint": "Mis.: 330",
   "tabGrid": "Grid",
   "tabSpectrum": "Spektrum",
@@ -193,6 +187,18 @@
   "usd": "Dolar AS ($)",
   "gbp": "Pound Sterling (£)",
   "cad": "Dolar Kanada (CAD)",
+  "aud": "Dolar Australia (A$)",
+  "jpy": "Yen Jepang (¥)",
+  "cny": "Yuan Tiongkok (¥)",
+  "inr": "Rupee India (₹)",
+  "brl": "Real Brasil (R$)",
+  "mxn": "Peso Meksiko (MX$)",
+  "sek": "Krona Swedia (kr)",
+  "nok": "Krone Norwegia (kr)",
+  "dkk": "Krone Denmark (kr)",
+  "pln": "Zloty Polandia (zł)",
+  "czk": "Koruna Ceko (Kč)",
+  "nzd": "Dolar Selandia Baru (NZ$)",
   "filamentsToOrder": "Filamen untuk Dipesan",
   "shoppingList": "Daftar Belanja",
   "addToShoppingList": "Tambah ke Daftar",
@@ -215,7 +221,6 @@
   "forAnycubicAce": "untuk Anycubic Ace",
   "forBambuLabAms": "untuk Bambu Lab AMS",
   "scanNfcChip": "Pindai chip NFC",
-  "addManually": "Tambah manual",
   "fillForm": "Isi formulir",
   "emptyShoppingList": "Tidak ada filamen dalam daftar",
   "percentRemaining": "{percent}% tersisa",
@@ -228,8 +233,8 @@
   },
   "markAsOrdered": "Tandai sebagai dipesan",
   "markAsNotOrdered": "Tandai sebagai belum dipesan",
-  "spoolNotFound": "Gulungan tidak ditemukan dalam stok",
-  "addSpoolFirstMessage": "Gulungan ini belum ada dalam stok Anda. Silakan tambahkan terlebih dahulu menggunakan tombol 'Tambah Gulungan' sebelum memperbarui stok.",
+  "spoolNotFound": "Gulungan tidak ditemukan di stok",
+  "addSpoolFirstMessage": "Gulungan ini belum ada di stok Anda. Silakan tambahkan terlebih dahulu menggunakan tombol 'Tambah Gulungan' sebelum memperbarui stoknya.",
   "ok": "OK",
   "connection": "Koneksi",
   "signInToSync": "Masuk untuk menyinkronkan data Anda",
@@ -248,9 +253,11 @@
   "scanSpoolToUpdate": "Pindai gulungan untuk memperbarui stoknya",
   "bambuLabReadOnly": "Bambu Lab: Hanya baca",
   "bambuLabReadOnlyDesc": "Tag Bambu Lab menggunakan enkripsi RSA dan tidak dapat dimodifikasi. Hanya baca.",
-  "spoolNotFound": "Gulungan tidak ditemukan di stok",
-  "addSpoolFirstMessage": "Gulungan ini belum ada di stok Anda. Silakan tambahkan terlebih dahulu menggunakan tombol 'Tambah Gulungan' sebelum memperbarui stoknya.",
-  "ok": "OK",
+  "forPrusaMk4": "untuk Prusa MK4/XL (OpenPrintTag)",
+  "prusaReadWrite": "Prusa: Baca dan Tulis",
+  "prusaReadWriteDesc": "Tag Prusa menggunakan ISO 15693 (NFC-V) dengan format OpenPrintTag. Baca dan tulis didukung.",
+  "nfcTagInfoPrusa": "Gunakan kartu NXP ICODE SLIX2 kosong (ISO 15693) untuk membuat tag yang kompatibel dengan OpenPrintTag untuk Prusa MK4/XL.",
+  "writePrusaTagTitle": "Tulis Tag Prusa OpenPrintTag",
   "bambuCloneLibrary": "Perpustakaan Klon Bambu Lab",
   "noBambuClones": "Tidak ada klon Bambu Lab",
   "scanBambuToClone": "Pindai tag Bambu Lab asli untuk membuat perpustakaan klon Anda",
@@ -264,7 +271,6 @@
   "clonedOn": "Diklon pada",
   "writeThisClone": "Tulis klon ini",
   "writeClone": "Tulis klon",
-  "writing": "Menulis...",
   "writeOnCUID": "Tulis di kartu CUID",
   "cloneWrittenSuccess": "Klon berhasil ditulis!",
   "requiredTagFormat": "Format tag yang diperlukan",
@@ -300,15 +306,33 @@
   "filamentTypeLabel": "Jenis filamen",
   "scanNfcChipButton": "Pindai chip NFC",
   "deleteCloneConfirmation": "Hapus klon \"{name}\"?",
-  "@deleteCloneConfirmation": {"placeholders": {"name": {"type": "String"}}},
+  "@deleteCloneConfirmation": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "cloneDeletedMessage": "Klon \"{name}\" dihapus",
-  "@cloneDeletedMessage": {"placeholders": {"name": {"type": "String"}}},
+  "@cloneDeletedMessage": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "extruderLabel": "Ekstruder",
   "writeThisCloneButton": "Tulis klon ini",
   "customNameHint": "Nama kustom",
   "cloneWriteSuccessMessage": "Klon berhasil ditulis!",
   "errorPrefix": "Kesalahan: {error}",
-  "@errorPrefix": {"placeholders": {"error": {"type": "String"}}},
+  "@errorPrefix": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "writingInProgress": "Menulis...",
   "writeOnCUIDButton": "Tulis ke kartu CUID",
   "diameterLabel": "Diameter",
@@ -336,11 +360,23 @@
   "writeBambuLabTagButton": "Tulis tag Bambu Lab",
   "bambuLabRsaNote": "Catatan: Tag Bambu Lab asli menggunakan enkripsi RSA. Mode ini menulis data dalam format sederhana yang kompatibel.",
   "signInError": "Kesalahan masuk: {error}",
-  "@signInError": {"placeholders": {"error": {"type": "String"}}},
+  "@signInError": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "subscriptionActivatedMessage": "Langganan berhasil diaktifkan!",
   "subscriptionFailedMessage": "Langganan gagal",
   "errorMessage": "Kesalahan: {error}",
-  "@errorMessage": {"placeholders": {"error": {"type": "String"}}},
+  "@errorMessage": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "subscriptionRestoredMessage": "Langganan berhasil dipulihkan!",
   "noSubscriptionFoundMessage": "Langganan tidak ditemukan",
   "vipLabel": "VIP",
@@ -353,5 +389,30 @@
   "pleaseEnterValidLength": "Silakan masukkan panjang yang valid",
   "spoolLengthNotSetCannotConvert": "Panjang gulungan tidak diatur - tidak dapat mengonversi",
   "exceedsRemainingWeight": "Melebihi berat tersisa",
-  "skuLabel": "SKU"
+  "skuLabel": "SKU",
+  "helpIdentifyFilament": "Bantu kami mengidentifikasi filamen ini",
+  "helpUsImprove": "Bantu kami meningkatkan!",
+  "helpIdentifyDescription": "Kami membaca chip tetapi tidak dapat mengidentifikasinya. Beri tahu kami filamen apa ini agar kami dapat meningkatkan aplikasi.",
+  "otherBrand": "Lainnya",
+  "thankYouFeedback": "Terima kasih atas masukan Anda!",
+  "send": "Kirim",
+  "optionalDetails": "Detail opsional",
+  "weightGrams": "Berat (g)",
+  "diameterMm": "Diameter (mm)",
+  "spoolLengthM": "Panjang gulungan (m)",
+  "batchNumberLabel": "Batch / SKU",
+  "black": "Hitam",
+  "white": "Putih",
+  "yellow": "Kuning",
+  "orange": "Oranye",
+  "pink": "Merah Muda",
+  "purple": "Ungu",
+  "gray": "Abu-abu",
+  "brown": "Cokelat",
+  "unknown": "Tidak Diketahui",
+  "contactUs": "Hubungi Kami",
+  "contactUsSubtitle": "Pertanyaan, saran, atau masalah",
+  "nfcTagNotDetected": "Tag NFC tidak terdeteksi",
+  "nfcTagNotDetectedDesc": "Tag tidak ditemukan. Tag mungkin mati, rusak, atau terlalu jauh dari ponsel. Pastikan bagian atas ponsel Anda ditempatkan langsung di tag NFC.",
+  "nfcTagIncompatible": "Tag NFC tidak kompatibel terdeteksi"
 }

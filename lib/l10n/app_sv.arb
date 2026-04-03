@@ -162,7 +162,7 @@
   "tempBed": "Bäddtemp.",
   "termsOfService": "Användarvillkor",
   "privacyPolicy": "Sekretesspolicy",
-  "legal": "Legal",
+  "legal": "Juridiskt",
   "back": "Tillbaka",
   "retry": "Försök igen",
   "signOut": "Logga ut",
@@ -192,6 +192,18 @@
   "usd": "Amerikansk dollar ($)",
   "gbp": "Pund sterling (£)",
   "cad": "Kanadensisk dollar (CAD)",
+  "aud": "Australisk dollar (A$)",
+  "jpy": "Japansk yen (¥)",
+  "cny": "Kinesisk yuan (¥)",
+  "inr": "Indisk rupie (₹)",
+  "brl": "Brasiliansk real (R$)",
+  "mxn": "Mexikansk peso (MX$)",
+  "sek": "Svensk krona (kr)",
+  "nok": "Norsk krone (kr)",
+  "dkk": "Dansk krone (kr)",
+  "pln": "Polsk zloty (zł)",
+  "czk": "Tjeckisk koruna (Kč)",
+  "nzd": "Nyzeeländsk dollar (NZ$)",
   "filamentsToOrder": "Filament att beställa",
   "shoppingList": "Inköpslista",
   "addToShoppingList": "Lägg till i listan",
@@ -241,6 +253,11 @@
   "ok": "OK",
   "bambuLabReadOnly": "Bambu Lab: Skrivskyddad",
   "bambuLabReadOnlyDesc": "Bambu Lab-taggar använder RSA-kryptering och kan inte modifieras. Skrivskyddad.",
+  "forPrusaMk4": "för Prusa MK4/XL (OpenPrintTag)",
+  "prusaReadWrite": "Prusa: Läs och skriv",
+  "prusaReadWriteDesc": "Prusa-taggar använder ISO 15693 (NFC-V) med OpenPrintTag-format. Läsning och skrivning stöds.",
+  "nfcTagInfoPrusa": "Använd en tom NXP ICODE SLIX2-tagg (ISO 15693) för att skapa OpenPrintTag-kompatibla taggar för Prusa MK4/XL.",
+  "writePrusaTagTitle": "Skriv Prusa OpenPrintTag",
   "bambuCloneLibrary": "Bambu Lab klonbibliotek",
   "noBambuClones": "Inga Bambu Lab kloner",
   "scanBambuToClone": "Skanna original Bambu Lab-taggar för att skapa ditt klonbibliotek",
@@ -254,7 +271,6 @@
   "clonedOn": "Klonad",
   "writeThisClone": "Skriv denna klon",
   "writeClone": "Skriv klon",
-  "writing": "Skriver...",
   "writeOnCUID": "Skriv på CUID-kort",
   "cloneWrittenSuccess": "Klon skriven framgångsrikt!",
   "requiredTagFormat": "Nödvändigt taggformat",
@@ -290,15 +306,33 @@
   "filamentTypeLabel": "Filamenttyp",
   "scanNfcChipButton": "Skanna NFC-chip",
   "deleteCloneConfirmation": "Ta bort klon \"{name}\"?",
-  "@deleteCloneConfirmation": {"placeholders": {"name": {"type": "String"}}},
+  "@deleteCloneConfirmation": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "cloneDeletedMessage": "Klon \"{name}\" borttagen",
-  "@cloneDeletedMessage": {"placeholders": {"name": {"type": "String"}}},
+  "@cloneDeletedMessage": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "extruderLabel": "Extruder",
   "writeThisCloneButton": "Skriv denna klon",
   "customNameHint": "Anpassat namn",
   "cloneWriteSuccessMessage": "Klon skriven!",
   "errorPrefix": "Fel: {error}",
-  "@errorPrefix": {"placeholders": {"error": {"type": "String"}}},
+  "@errorPrefix": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "writingInProgress": "Skriver...",
   "writeOnCUIDButton": "Skriv på CUID-kort",
   "diameterLabel": "Diameter",
@@ -317,18 +351,36 @@
   "brandLabel": "Märke",
   "materialTypeLabel": "Materialtyp",
   "serialNumber3Digits": "Serienummer (3 siffror)",
-  "weight250g": "250g", "weight500g": "500g", "weight1000g": "1000g", "weight1000gStandard": "1000g (standard)", "weight2000g": "2000g", "weight3000g": "3000g",
+  "weight250g": "250g",
+  "weight500g": "500g",
+  "weight1000g": "1000g",
+  "weight1000gStandard": "1000g (standard)",
+  "weight2000g": "2000g",
+  "weight3000g": "3000g",
   "writeBambuLabTagButton": "Skriv Bambu Lab-tagg",
   "bambuLabRsaNote": "Obs: Originala Bambu Lab-taggar använder RSA-kryptering. Detta läge skriver data i ett förenklat kompatibelt format.",
   "signInError": "Inloggningsfel: {error}",
-  "@signInError": {"placeholders": {"error": {"type": "String"}}},
+  "@signInError": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "subscriptionActivatedMessage": "Prenumeration aktiverad!",
   "subscriptionFailedMessage": "Prenumeration misslyckades",
   "errorMessage": "Fel: {error}",
-  "@errorMessage": {"placeholders": {"error": {"type": "String"}}},
+  "@errorMessage": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "subscriptionRestoredMessage": "Prenumeration återställd!",
   "noSubscriptionFoundMessage": "Ingen prenumeration hittades",
-  "vipLabel": "VIP", "activeLabel": "AKTIV",
+  "vipLabel": "VIP",
+  "activeLabel": "AKTIV",
   "noAdsExperienceMessage": "Njut av reklamfri upplevelse!",
   "subscribedLabel": "Prenumerant",
   "restorePurchasesButton": "Återställ köp",
@@ -337,5 +389,30 @@
   "pleaseEnterValidLength": "Ange giltig längd",
   "spoolLengthNotSetCannotConvert": "Spollängd ej angiven - kan inte konvertera",
   "exceedsRemainingWeight": "Överskrider kvarvarande vikt",
-  "skuLabel": "SKU"
+  "skuLabel": "SKU",
+  "helpIdentifyFilament": "Hjälp oss att identifiera detta filament",
+  "helpUsImprove": "Hjälp oss att förbättra!",
+  "helpIdentifyDescription": "Vi läste chippet men kunde inte identifiera det. Berätta för oss vilket filament det är så att vi kan förbättra appen.",
+  "otherBrand": "Annat",
+  "thankYouFeedback": "Tack för din feedback!",
+  "send": "Skicka",
+  "optionalDetails": "Valfria detaljer",
+  "weightGrams": "Vikt (g)",
+  "diameterMm": "Diameter (mm)",
+  "spoolLengthM": "Spole längd (m)",
+  "batchNumberLabel": "Batch / SKU",
+  "black": "Svart",
+  "white": "Vit",
+  "yellow": "Gul",
+  "orange": "Orange",
+  "pink": "Rosa",
+  "purple": "Lila",
+  "gray": "Grå",
+  "brown": "Brun",
+  "unknown": "Okänd",
+  "contactUs": "Kontakta oss",
+  "contactUsSubtitle": "Frågor, förslag eller problem",
+  "nfcTagNotDetected": "Ingen NFC-tagg hittades",
+  "nfcTagNotDetectedDesc": "Ingen tagg hittades. Taggen kan vara död, skadad eller för långt från telefonen. Se till att toppen av din telefon placeras direkt på NFC-taggen.",
+  "nfcTagIncompatible": "Inkompatibel NFC-tagg hittades"
 }

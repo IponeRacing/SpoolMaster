@@ -166,16 +166,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get initialWeightHint => 'e.g.: 1000';
 
   @override
-  String get extruderTempMin => 'Extruder Temp Min';
+  String get extruderTempMin => 'Extruder min (°C)';
 
   @override
-  String get extruderTempMax => 'Extruder Temp Max';
+  String get extruderTempMax => 'Extruder max (°C)';
 
   @override
-  String get bedTempMin => 'Bed Temp Min';
+  String get bedTempMin => 'Bed min (°C)';
 
   @override
-  String get bedTempMax => 'Bed Temp Max';
+  String get bedTempMax => 'Bed max (°C)';
 
   @override
   String get diameter => 'Filament Diameter';
@@ -559,6 +559,33 @@ class AppLocalizationsEn extends AppLocalizations {
   String get blue => 'Blue';
 
   @override
+  String get black => 'Black';
+
+  @override
+  String get white => 'White';
+
+  @override
+  String get yellow => 'Yellow';
+
+  @override
+  String get orange => 'Orange';
+
+  @override
+  String get pink => 'Pink';
+
+  @override
+  String get purple => 'Purple';
+
+  @override
+  String get gray => 'Gray';
+
+  @override
+  String get brown => 'Brown';
+
+  @override
+  String get unknown => 'Unknown';
+
+  @override
   String get metricUnits => 'Metric (mm, g, °C)';
 
   @override
@@ -578,6 +605,42 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get cad => 'Canadian Dollar (CAD)';
+
+  @override
+  String get aud => 'Australian Dollar (A\$)';
+
+  @override
+  String get jpy => 'Japanese Yen (¥)';
+
+  @override
+  String get cny => 'Chinese Yuan (¥)';
+
+  @override
+  String get inr => 'Indian Rupee (₹)';
+
+  @override
+  String get brl => 'Brazilian Real (R\$)';
+
+  @override
+  String get mxn => 'Mexican Peso (MX\$)';
+
+  @override
+  String get sek => 'Swedish Krona (kr)';
+
+  @override
+  String get nok => 'Norwegian Krone (kr)';
+
+  @override
+  String get dkk => 'Danish Krone (kr)';
+
+  @override
+  String get pln => 'Polish Zloty (zł)';
+
+  @override
+  String get czk => 'Czech Koruna (Kč)';
+
+  @override
+  String get nzd => 'New Zealand Dollar (NZ\$)';
 
   @override
   String get filamentsToOrder => 'Filaments to Order';
@@ -706,6 +769,16 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get bambuLabReadOnlyDesc =>
       'Bambu Lab tags use RSA encryption and cannot be modified. Reading only.';
+
+  @override
+  String get forPrusaMk4 => 'for Prusa MK4/XL (OpenPrintTag)';
+
+  @override
+  String get prusaReadWrite => 'Prusa: Read & Write';
+
+  @override
+  String get prusaReadWriteDesc =>
+      'Prusa tags use ISO 15693 (NFC-V) with OpenPrintTag format. Read and write supported.';
 
   @override
   String get bambuCloneLibrary => 'Bambu Lab Clone Library';
@@ -1023,6 +1096,63 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get skuLabel => 'SKU';
+
+  @override
+  String get helpIdentifyFilament => 'Help us identify this filament';
+
+  @override
+  String get helpUsImprove => 'Help us improve!';
+
+  @override
+  String get helpIdentifyDescription =>
+      'We read the tag but couldn\'t identify it. Tell us what filament this is so we can improve the app.';
+
+  @override
+  String get otherBrand => 'Other';
+
+  @override
+  String get thankYouFeedback => 'Thank you for your feedback!';
+
+  @override
+  String get send => 'Send';
+
+  @override
+  String get optionalDetails => 'Optional details';
+
+  @override
+  String get weightGrams => 'Weight (g)';
+
+  @override
+  String get diameterMm => 'Diameter (mm)';
+
+  @override
+  String get spoolLengthM => 'Spool length (m)';
+
+  @override
+  String get batchNumberLabel => 'Batch / SKU';
+
+  @override
+  String get contactUs => 'Contact Us';
+
+  @override
+  String get contactUsSubtitle => 'Questions, suggestions or issues';
+
+  @override
+  String get nfcTagNotDetected => 'No NFC tag detected';
+
+  @override
+  String get nfcTagNotDetectedDesc =>
+      'No tag was found. The tag may be dead, damaged, or too far from the phone. Make sure the top of your iPhone is placed directly on the NFC tag.';
+
+  @override
+  String get nfcTagIncompatible => 'Incompatible NFC tag detected';
+
+  @override
+  String get nfcTagInfoPrusa =>
+      'Use a blank NXP ICODE SLIX2 tag (ISO 15693) to create OpenPrintTag compatible tags for Prusa MK4/XL.';
+
+  @override
+  String get writePrusaTagTitle => 'Write Prusa OpenPrintTag';
 }
 
 /// The translations for English, as used in Australia (`en_AU`).
@@ -1580,6 +1710,33 @@ class AppLocalizationsEnAu extends AppLocalizationsEn {
   String get blue => 'Blue';
 
   @override
+  String get black => 'Black';
+
+  @override
+  String get white => 'White';
+
+  @override
+  String get yellow => 'Yellow';
+
+  @override
+  String get orange => 'Orange';
+
+  @override
+  String get pink => 'Pink';
+
+  @override
+  String get purple => 'Purple';
+
+  @override
+  String get gray => 'Grey';
+
+  @override
+  String get brown => 'Brown';
+
+  @override
+  String get unknown => 'Unknown';
+
+  @override
   String get metricUnits => 'Metric (mm, g, °C)';
 
   @override
@@ -1599,6 +1756,42 @@ class AppLocalizationsEnAu extends AppLocalizationsEn {
 
   @override
   String get cad => 'Canadian Dollar (CAD)';
+
+  @override
+  String get aud => 'Australian Dollar (A\$)';
+
+  @override
+  String get jpy => 'Japanese Yen (¥)';
+
+  @override
+  String get cny => 'Chinese Yuan (¥)';
+
+  @override
+  String get inr => 'Indian Rupee (₹)';
+
+  @override
+  String get brl => 'Brazilian Real (R\$)';
+
+  @override
+  String get mxn => 'Mexican Peso (MX\$)';
+
+  @override
+  String get sek => 'Swedish Krona (kr)';
+
+  @override
+  String get nok => 'Norwegian Krone (kr)';
+
+  @override
+  String get dkk => 'Danish Krone (kr)';
+
+  @override
+  String get pln => 'Polish Zloty (zł)';
+
+  @override
+  String get czk => 'Czech Koruna (Kč)';
+
+  @override
+  String get nzd => 'New Zealand Dollar (NZ\$)';
 
   @override
   String get filamentsToOrder => 'Filaments to Order';
@@ -1727,6 +1920,16 @@ class AppLocalizationsEnAu extends AppLocalizationsEn {
   @override
   String get bambuLabReadOnlyDesc =>
       'Bambu Lab tags use RSA encryption and cannot be modified. Reading only.';
+
+  @override
+  String get forPrusaMk4 => 'for Prusa MK4/XL (OpenPrintTag)';
+
+  @override
+  String get prusaReadWrite => 'Prusa: Read & Write';
+
+  @override
+  String get prusaReadWriteDesc =>
+      'Prusa tags use ISO 15693 (NFC-V) with OpenPrintTag format. Read and write supported.';
 
   @override
   String get bambuCloneLibrary => 'Bambu Lab Clone Library';
@@ -2044,6 +2247,63 @@ class AppLocalizationsEnAu extends AppLocalizationsEn {
 
   @override
   String get skuLabel => 'SKU';
+
+  @override
+  String get helpIdentifyFilament => 'Help us identify this filament';
+
+  @override
+  String get helpUsImprove => 'Help us improve!';
+
+  @override
+  String get helpIdentifyDescription =>
+      'We read the tag but couldn\'t identify it. Tell us what filament this is so we can improve the app.';
+
+  @override
+  String get otherBrand => 'Other';
+
+  @override
+  String get thankYouFeedback => 'Thank you for your feedback!';
+
+  @override
+  String get send => 'Send';
+
+  @override
+  String get optionalDetails => 'Optional details';
+
+  @override
+  String get weightGrams => 'Weight (g)';
+
+  @override
+  String get diameterMm => 'Diameter (mm)';
+
+  @override
+  String get spoolLengthM => 'Spool length (m)';
+
+  @override
+  String get batchNumberLabel => 'Batch / SKU';
+
+  @override
+  String get contactUs => 'Contact Us';
+
+  @override
+  String get contactUsSubtitle => 'Questions, suggestions or issues';
+
+  @override
+  String get nfcTagNotDetected => 'No NFC tag detected';
+
+  @override
+  String get nfcTagNotDetectedDesc =>
+      'No tag was found. The tag may be dead, damaged, or too far from the phone. Make sure the top of your iPhone is placed directly on the NFC tag.';
+
+  @override
+  String get nfcTagIncompatible => 'Incompatible NFC tag detected';
+
+  @override
+  String get nfcTagInfoPrusa =>
+      'Use a blank NXP ICODE SLIX2 tag (ISO 15693) to create OpenPrintTag compatible tags for Prusa MK4/XL.';
+
+  @override
+  String get writePrusaTagTitle => 'Write Prusa OpenPrintTag';
 }
 
 /// The translations for English, as used in Canada (`en_CA`).
@@ -2601,6 +2861,33 @@ class AppLocalizationsEnCa extends AppLocalizationsEn {
   String get blue => 'Blue';
 
   @override
+  String get black => 'Black';
+
+  @override
+  String get white => 'White';
+
+  @override
+  String get yellow => 'Yellow';
+
+  @override
+  String get orange => 'Orange';
+
+  @override
+  String get pink => 'Pink';
+
+  @override
+  String get purple => 'Purple';
+
+  @override
+  String get gray => 'Gray';
+
+  @override
+  String get brown => 'Brown';
+
+  @override
+  String get unknown => 'Unknown';
+
+  @override
   String get metricUnits => 'Metric (mm, g, °C)';
 
   @override
@@ -2620,6 +2907,42 @@ class AppLocalizationsEnCa extends AppLocalizationsEn {
 
   @override
   String get cad => 'Canadian Dollar (CAD)';
+
+  @override
+  String get aud => 'Australian Dollar (A\$)';
+
+  @override
+  String get jpy => 'Japanese Yen (¥)';
+
+  @override
+  String get cny => 'Chinese Yuan (¥)';
+
+  @override
+  String get inr => 'Indian Rupee (₹)';
+
+  @override
+  String get brl => 'Brazilian Real (R\$)';
+
+  @override
+  String get mxn => 'Mexican Peso (MX\$)';
+
+  @override
+  String get sek => 'Swedish Krona (kr)';
+
+  @override
+  String get nok => 'Norwegian Krone (kr)';
+
+  @override
+  String get dkk => 'Danish Krone (kr)';
+
+  @override
+  String get pln => 'Polish Zloty (zł)';
+
+  @override
+  String get czk => 'Czech Koruna (Kč)';
+
+  @override
+  String get nzd => 'New Zealand Dollar (NZ\$)';
 
   @override
   String get filamentsToOrder => 'Filaments to Order';
@@ -2748,6 +3071,16 @@ class AppLocalizationsEnCa extends AppLocalizationsEn {
   @override
   String get bambuLabReadOnlyDesc =>
       'Bambu Lab tags use RSA encryption and cannot be modified. Reading only.';
+
+  @override
+  String get forPrusaMk4 => 'for Prusa MK4/XL (OpenPrintTag)';
+
+  @override
+  String get prusaReadWrite => 'Prusa: Read & Write';
+
+  @override
+  String get prusaReadWriteDesc =>
+      'Prusa tags use ISO 15693 (NFC-V) with OpenPrintTag format. Read and write supported.';
 
   @override
   String get bambuCloneLibrary => 'Bambu Lab Clone Library';
@@ -3065,6 +3398,63 @@ class AppLocalizationsEnCa extends AppLocalizationsEn {
 
   @override
   String get skuLabel => 'SKU';
+
+  @override
+  String get helpIdentifyFilament => 'Help us identify this filament';
+
+  @override
+  String get helpUsImprove => 'Help us improve!';
+
+  @override
+  String get helpIdentifyDescription =>
+      'We read the tag but couldn\'t identify it. Tell us what filament this is so we can improve the app.';
+
+  @override
+  String get otherBrand => 'Other';
+
+  @override
+  String get thankYouFeedback => 'Thank you for your feedback!';
+
+  @override
+  String get send => 'Send';
+
+  @override
+  String get optionalDetails => 'Optional details';
+
+  @override
+  String get weightGrams => 'Weight (g)';
+
+  @override
+  String get diameterMm => 'Diameter (mm)';
+
+  @override
+  String get spoolLengthM => 'Spool length (m)';
+
+  @override
+  String get batchNumberLabel => 'Batch / SKU';
+
+  @override
+  String get contactUs => 'Contact Us';
+
+  @override
+  String get contactUsSubtitle => 'Questions, suggestions or issues';
+
+  @override
+  String get nfcTagNotDetected => 'No NFC tag detected';
+
+  @override
+  String get nfcTagNotDetectedDesc =>
+      'No tag was found. The tag may be dead, damaged, or too far from the phone. Make sure the top of your iPhone is placed directly on the NFC tag.';
+
+  @override
+  String get nfcTagIncompatible => 'Incompatible NFC tag detected';
+
+  @override
+  String get nfcTagInfoPrusa =>
+      'Use a blank NXP ICODE SLIX2 tag (ISO 15693) to create OpenPrintTag compatible tags for Prusa MK4/XL.';
+
+  @override
+  String get writePrusaTagTitle => 'Write Prusa OpenPrintTag';
 }
 
 /// The translations for English, as used in the United Kingdom (`en_GB`).
@@ -3622,6 +4012,33 @@ class AppLocalizationsEnGb extends AppLocalizationsEn {
   String get blue => 'Blue';
 
   @override
+  String get black => 'Black';
+
+  @override
+  String get white => 'White';
+
+  @override
+  String get yellow => 'Yellow';
+
+  @override
+  String get orange => 'Orange';
+
+  @override
+  String get pink => 'Pink';
+
+  @override
+  String get purple => 'Purple';
+
+  @override
+  String get gray => 'Grey';
+
+  @override
+  String get brown => 'Brown';
+
+  @override
+  String get unknown => 'Unknown';
+
+  @override
   String get metricUnits => 'Metric (mm, g, °C)';
 
   @override
@@ -3641,6 +4058,42 @@ class AppLocalizationsEnGb extends AppLocalizationsEn {
 
   @override
   String get cad => 'Canadian Dollar (CAD)';
+
+  @override
+  String get aud => 'Australian Dollar (A\$)';
+
+  @override
+  String get jpy => 'Japanese Yen (¥)';
+
+  @override
+  String get cny => 'Chinese Yuan (¥)';
+
+  @override
+  String get inr => 'Indian Rupee (₹)';
+
+  @override
+  String get brl => 'Brazilian Real (R\$)';
+
+  @override
+  String get mxn => 'Mexican Peso (MX\$)';
+
+  @override
+  String get sek => 'Swedish Krona (kr)';
+
+  @override
+  String get nok => 'Norwegian Krone (kr)';
+
+  @override
+  String get dkk => 'Danish Krone (kr)';
+
+  @override
+  String get pln => 'Polish Zloty (zł)';
+
+  @override
+  String get czk => 'Czech Koruna (Kč)';
+
+  @override
+  String get nzd => 'New Zealand Dollar (NZ\$)';
 
   @override
   String get filamentsToOrder => 'Filaments to Order';
@@ -3769,6 +4222,16 @@ class AppLocalizationsEnGb extends AppLocalizationsEn {
   @override
   String get bambuLabReadOnlyDesc =>
       'Bambu Lab tags use RSA encryption and cannot be modified. Reading only.';
+
+  @override
+  String get forPrusaMk4 => 'for Prusa MK4/XL (OpenPrintTag)';
+
+  @override
+  String get prusaReadWrite => 'Prusa: Read & Write';
+
+  @override
+  String get prusaReadWriteDesc =>
+      'Prusa tags use ISO 15693 (NFC-V) with OpenPrintTag format. Read and write supported.';
 
   @override
   String get bambuCloneLibrary => 'Bambu Lab Clone Library';
@@ -4086,4 +4549,61 @@ class AppLocalizationsEnGb extends AppLocalizationsEn {
 
   @override
   String get skuLabel => 'SKU';
+
+  @override
+  String get helpIdentifyFilament => 'Help us identify this filament';
+
+  @override
+  String get helpUsImprove => 'Help us improve!';
+
+  @override
+  String get helpIdentifyDescription =>
+      'We read the tag but couldn\'t identify it. Tell us what filament this is so we can improve the app.';
+
+  @override
+  String get otherBrand => 'Other';
+
+  @override
+  String get thankYouFeedback => 'Thank you for your feedback!';
+
+  @override
+  String get send => 'Send';
+
+  @override
+  String get optionalDetails => 'Optional details';
+
+  @override
+  String get weightGrams => 'Weight (g)';
+
+  @override
+  String get diameterMm => 'Diameter (mm)';
+
+  @override
+  String get spoolLengthM => 'Spool length (m)';
+
+  @override
+  String get batchNumberLabel => 'Batch / SKU';
+
+  @override
+  String get contactUs => 'Contact Us';
+
+  @override
+  String get contactUsSubtitle => 'Questions, suggestions or issues';
+
+  @override
+  String get nfcTagNotDetected => 'No NFC tag detected';
+
+  @override
+  String get nfcTagNotDetectedDesc =>
+      'No tag was found. The tag may be dead, damaged, or too far from the phone. Make sure the top of your iPhone is placed directly on the NFC tag.';
+
+  @override
+  String get nfcTagIncompatible => 'Incompatible NFC tag detected';
+
+  @override
+  String get nfcTagInfoPrusa =>
+      'Use a blank NXP ICODE SLIX2 tag (ISO 15693) to create OpenPrintTag compatible tags for Prusa MK4/XL.';
+
+  @override
+  String get writePrusaTagTitle => 'Write Prusa OpenPrintTag';
 }

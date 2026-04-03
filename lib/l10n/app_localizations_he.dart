@@ -506,7 +506,7 @@ class AppLocalizationsHe extends AppLocalizations {
   String get privacyPolicy => 'מדיניות פרטיות';
 
   @override
-  String get legal => 'Legal';
+  String get legal => 'משפטי';
 
   @override
   String get back => 'חזרה';
@@ -557,6 +557,33 @@ class AppLocalizationsHe extends AppLocalizations {
   String get blue => 'כחול';
 
   @override
+  String get black => 'שחור';
+
+  @override
+  String get white => 'לבן';
+
+  @override
+  String get yellow => 'צהוב';
+
+  @override
+  String get orange => 'כתום';
+
+  @override
+  String get pink => 'ורוד';
+
+  @override
+  String get purple => 'סגול';
+
+  @override
+  String get gray => 'אפור';
+
+  @override
+  String get brown => 'חום';
+
+  @override
+  String get unknown => 'לא ידוע';
+
+  @override
   String get metricUnits => 'מטרי (מ\"מ, גרם, °C)';
 
   @override
@@ -576,6 +603,42 @@ class AppLocalizationsHe extends AppLocalizations {
 
   @override
   String get cad => 'דולר קנדי (CAD)';
+
+  @override
+  String get aud => 'דולר אוסטרלי (A\$)';
+
+  @override
+  String get jpy => 'ין יפני (¥)';
+
+  @override
+  String get cny => 'יואן סיני (¥)';
+
+  @override
+  String get inr => 'רופי הודי (₹)';
+
+  @override
+  String get brl => 'ריאל ברזילאי (R\$)';
+
+  @override
+  String get mxn => 'פזו מקסיקני (MX\$)';
+
+  @override
+  String get sek => 'כתר שוודי (kr)';
+
+  @override
+  String get nok => 'כתר נורווגי (kr)';
+
+  @override
+  String get dkk => 'כתר דני (kr)';
+
+  @override
+  String get pln => 'זלוטי פולני (zł)';
+
+  @override
+  String get czk => 'כתר צ׳כי (Kč)';
+
+  @override
+  String get nzd => 'דולר ניו זילנדי (NZ\$)';
 
   @override
   String get filamentsToOrder => 'חוטים להזמנה';
@@ -704,6 +767,16 @@ class AppLocalizationsHe extends AppLocalizations {
   @override
   String get bambuLabReadOnlyDesc =>
       'תגי Bambu Lab משתמשים בהצפנת RSA ולא ניתן לשנותם. קריאה בלבד.';
+
+  @override
+  String get forPrusaMk4 => 'עבור Prusa MK4/XL (OpenPrintTag)';
+
+  @override
+  String get prusaReadWrite => 'Prusa: קריאה וכתיבה';
+
+  @override
+  String get prusaReadWriteDesc =>
+      'תגי Prusa משתמשים ב-ISO 15693 (NFC-V) עם פורמט OpenPrintTag. קריאה וכתיבה נתמכות.';
 
   @override
   String get bambuCloneLibrary => 'ספריית שכפולי Bambu Lab';
@@ -1018,4 +1091,61 @@ class AppLocalizationsHe extends AppLocalizations {
 
   @override
   String get skuLabel => 'מק\"ט';
+
+  @override
+  String get helpIdentifyFilament => 'עזרו לנו לזהות את הפילמנט הזה';
+
+  @override
+  String get helpUsImprove => 'עזרו לנו להשתפר!';
+
+  @override
+  String get helpIdentifyDescription =>
+      'קראנו את השבב אך לא הצלחנו לזהות אותו. ספרו לנו איזה פילמנט זה כדי שנוכל לשפר את האפליקציה.';
+
+  @override
+  String get otherBrand => 'אחר';
+
+  @override
+  String get thankYouFeedback => 'תודה על המשוב שלך!';
+
+  @override
+  String get send => 'שלח';
+
+  @override
+  String get optionalDetails => 'פרטים אופציונליים';
+
+  @override
+  String get weightGrams => 'משקל (ג)';
+
+  @override
+  String get diameterMm => 'קוטר (מ\"מ)';
+
+  @override
+  String get spoolLengthM => 'אורך סליל (מ)';
+
+  @override
+  String get batchNumberLabel => 'אצווה / SKU';
+
+  @override
+  String get contactUs => 'צור קשר';
+
+  @override
+  String get contactUsSubtitle => 'שאלות, הצעות או בעיות';
+
+  @override
+  String get nfcTagNotDetected => 'לא זוהה תג NFC';
+
+  @override
+  String get nfcTagNotDetectedDesc =>
+      'לא נמצא תג. ייתכן שהתג פגום, מת או רחוק מדי מהטלפון. ודא שחלקו העליון של הטלפון מונח ישירות על תג ה-NFC.';
+
+  @override
+  String get nfcTagIncompatible => 'זוהה תג NFC לא תואם';
+
+  @override
+  String get nfcTagInfoPrusa =>
+      'השתמש בתג NXP ICODE SLIX2 ריק (ISO 15693) ליצירת תגים תואמים ל-OpenPrintTag עבור Prusa MK4/XL.';
+
+  @override
+  String get writePrusaTagTitle => 'כתוב תג Prusa OpenPrintTag';
 }

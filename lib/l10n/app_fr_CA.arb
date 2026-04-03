@@ -187,6 +187,18 @@
   "usd": "Dollar américain ($)",
   "gbp": "Livre sterling (£)",
   "cad": "Dollar canadien (CAD)",
+  "aud": "Dollar australien (A$)",
+  "jpy": "Yen japonais (¥)",
+  "cny": "Yuan chinois (¥)",
+  "inr": "Roupie indienne (₹)",
+  "brl": "Réal brésilien (R$)",
+  "mxn": "Peso mexicain (MX$)",
+  "sek": "Couronne suédoise (kr)",
+  "nok": "Couronne norvégienne (kr)",
+  "dkk": "Couronne danoise (kr)",
+  "pln": "Zloty polonais (zł)",
+  "czk": "Couronne tchèque (Kč)",
+  "nzd": "Dollar néo-zélandais (NZ$)",
   "filamentsToOrder": "Filaments à commander",
   "shoppingList": "Liste de courses",
   "addToShoppingList": "Ajouter à la liste",
@@ -241,6 +253,11 @@
   "ok": "OK",
   "bambuLabReadOnly": "Bambu Lab: Lecture seule",
   "bambuLabReadOnlyDesc": "Les tags Bambu Lab utilisent le chiffrement RSA et ne peuvent pas être modifiés. Lecture seule.",
+  "forPrusaMk4": "pour Prusa MK4/XL (OpenPrintTag)",
+  "prusaReadWrite": "Prusa : Lecture et écriture",
+  "prusaReadWriteDesc": "Les tags Prusa utilisent ISO 15693 (NFC-V) au format OpenPrintTag. Lecture et écriture prises en charge.",
+  "nfcTagInfoPrusa": "Utilisez une balise NXP ICODE SLIX2 vierge (ISO 15693) pour créer des balises compatibles avec OpenPrintTag pour Prusa MK4/XL.",
+  "writePrusaTagTitle": "Écrire Prusa OpenPrintTag",
   "bambuCloneLibrary": "Bibliothèque de clones Bambu Lab",
   "noBambuClones": "Aucun clone Bambu Lab",
   "scanBambuToClone": "Scannez des tags originaux Bambu Lab pour créer votre bibliothèque de clones",
@@ -254,7 +271,6 @@
   "clonedOn": "Cloné le",
   "writeThisClone": "Écrire ce clone",
   "writeClone": "Écrire le clone",
-  "writing": "Écriture...",
   "writeOnCUID": "Écrire sur carte CUID",
   "cloneWrittenSuccess": "Clone écrit avec succès !",
   "requiredTagFormat": "Format de tag requis",
@@ -290,15 +306,33 @@
   "filamentTypeLabel": "Type de filament",
   "scanNfcChipButton": "Scanner une puce NFC",
   "deleteCloneConfirmation": "Supprimer le clone « {name} » ?",
-  "@deleteCloneConfirmation": {"placeholders": {"name": {"type": "String"}}},
+  "@deleteCloneConfirmation": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "cloneDeletedMessage": "Clone « {name} » supprimé",
-  "@cloneDeletedMessage": {"placeholders": {"name": {"type": "String"}}},
+  "@cloneDeletedMessage": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "extruderLabel": "Extrudeur",
   "writeThisCloneButton": "Écrire ce clone",
   "customNameHint": "Nom personnalisé",
   "cloneWriteSuccessMessage": "Clone écrit avec succès !",
   "errorPrefix": "Erreur : {error}",
-  "@errorPrefix": {"placeholders": {"error": {"type": "String"}}},
+  "@errorPrefix": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "writingInProgress": "Écriture en cours...",
   "writeOnCUIDButton": "Écrire sur une carte CUID",
   "diameterLabel": "Diamètre",
@@ -326,11 +360,23 @@
   "writeBambuLabTagButton": "Écrire l'étiquette Bambu Lab",
   "bambuLabRsaNote": "Remarque : Les étiquettes Bambu Lab originales utilisent un chiffrement RSA. Ce mode écrit les données dans un format simplifié compatible.",
   "signInError": "Erreur de connexion : {error}",
-  "@signInError": {"placeholders": {"error": {"type": "String"}}},
+  "@signInError": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "subscriptionActivatedMessage": "Abonnement activé avec succès !",
   "subscriptionFailedMessage": "Échec de l'abonnement",
   "errorMessage": "Erreur : {error}",
-  "@errorMessage": {"placeholders": {"error": {"type": "String"}}},
+  "@errorMessage": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "subscriptionRestoredMessage": "Abonnement restauré avec succès !",
   "noSubscriptionFoundMessage": "Aucun abonnement trouvé",
   "vipLabel": "VIP",
@@ -343,5 +389,30 @@
   "pleaseEnterValidLength": "Veuillez entrer une longueur valide",
   "spoolLengthNotSetCannotConvert": "Longueur de bobine non définie - conversion impossible",
   "exceedsRemainingWeight": "Dépasse le poids restant",
-  "skuLabel": "SKU"
+  "skuLabel": "SKU",
+  "helpIdentifyFilament": "Aidez-nous à identifier ce filament",
+  "helpUsImprove": "Aidez-nous à nous améliorer!",
+  "helpIdentifyDescription": "Nous avons lu la puce mais n'avons pas pu l'identifier. Dites-nous quel filament c'est pour améliorer l'application.",
+  "otherBrand": "Autre",
+  "thankYouFeedback": "Merci pour votre retour!",
+  "send": "Envoyer",
+  "optionalDetails": "Détails optionnels",
+  "weightGrams": "Poids (g)",
+  "diameterMm": "Diamètre (mm)",
+  "spoolLengthM": "Longueur bobine (m)",
+  "batchNumberLabel": "Lot / SKU",
+  "black": "Noir",
+  "white": "Blanc",
+  "yellow": "Jaune",
+  "orange": "Orange",
+  "pink": "Rose",
+  "purple": "Violet",
+  "gray": "Gris",
+  "brown": "Brun",
+  "unknown": "Inconnu",
+  "contactUs": "Nous contacter",
+  "contactUsSubtitle": "Questions, suggestions ou problèmes",
+  "nfcTagNotDetected": "Aucun tag NFC détecté",
+  "nfcTagNotDetectedDesc": "Aucun tag n'a été trouvé. Le tag est peut-être mort, endommagé ou trop éloigné du téléphone. Placez bien le haut de votre iPhone directement sur le tag NFC.",
+  "nfcTagIncompatible": "Tag NFC incompatible détecté"
 }

@@ -34,18 +34,83 @@ class AnalyticsController {
              VALUES (:user_id, :event_type, :event_data, :device_platform, :app_version)"
         );
 
+        $eventDataJson = isset($input['event_data']) ? json_encode($input['event_data']) : null;
+
         $stmt->execute([
             'user_id' => $userId,
             'event_type' => $input['event_type'],
-            'event_data' => isset($input['event_data']) ? json_encode($input['event_data']) : null,
+            'event_data' => $eventDataJson,
             'device_platform' => $input['device_platform'] ?? 'ios',
             'app_version' => $input['app_version'] ?? null
         ]);
 
+        $eventId = $db->lastInsertId();
+
+        // Envoyer un mail quand un scan echoue ou qu'un user soumet un feedback
+        $eventData = $input['event_data'] ?? [];
+        $platform = $input['device_platform'] ?? 'ios';
+        $appVersion = $input['app_version'] ?? '?';
+
+        if (
+            ($input['event_type'] === 'scan_nfc' && isset($eventData['success']) && $eventData['success'] === false && !empty($eventData['raw_tag_data']))
+            || $input['event_type'] === 'scan_feedback'
+        ) {
+            $this->notifyUnmatchedScan($userId, $eventData, $platform, $appVersion, $input['event_type']);
+        }
+
         return [
             'success' => true,
-            'data' => ['event_id' => $db->lastInsertId()]
+            'data' => ['event_id' => $eventId]
         ];
+    }
+
+    /**
+     * Envoie un mail unique contenant les raw data ET le feedback utilisateur
+     */
+    private function notifyUnmatchedScan(int $userId, array $eventData, string $platform, string $appVersion, string $eventType): void {
+        $to = 'info@engageengine.ch';
+        $isFeedback = $eventType === 'scan_feedback';
+        $subject = $isFeedback
+            ? '[Spool Master] Scan NFC non reconnu + feedback utilisateur'
+            : '[Spool Master] Scan NFC non reconnu';
+
+        $nfcMode = $eventData['nfc_mode'] ?? 'unknown';
+        $error = $eventData['error_message'] ?? 'N/A';
+        $rawData = $eventData['raw_tag_data'] ?? 'N/A';
+        $bytesCount = $eventData['raw_bytes_count'] ?? 'N/A';
+        $timestamp = $eventData['timestamp'] ?? date('c');
+
+        $body = "Un utilisateur a scanne un tag NFC non reconnu.\n\n";
+        $body .= "User ID: $userId\n";
+        $body .= "Platform: $platform\n";
+        $body .= "App version: $appVersion\n";
+        $body .= "NFC mode: $nfcMode\n";
+        $body .= "Timestamp: $timestamp\n";
+        $body .= "Error: $error\n";
+        $body .= "Raw bytes count: $bytesCount\n\n";
+        $body .= "--- RAW TAG DATA ---\n$rawData\n\n";
+
+        if ($isFeedback) {
+            $body .= "--- INFOS SAISIES PAR L'UTILISATEUR ---\n";
+            $body .= "Marque: " . ($eventData['brand'] ?? 'N/A') . "\n";
+            $body .= "Materiau: " . ($eventData['material'] ?? 'N/A') . "\n";
+            $body .= "Couleur: " . ($eventData['color'] ?? 'N/A') . "\n";
+            if (!empty($eventData['weight'])) $body .= "Poids: {$eventData['weight']}g\n";
+            if (!empty($eventData['diameter'])) $body .= "Diametre: {$eventData['diameter']}mm\n";
+            if (!empty($eventData['extruder_temp_min']) || !empty($eventData['extruder_temp_max'])) {
+                $body .= "Temp extrudeur: " . ($eventData['extruder_temp_min'] ?? '?') . "-" . ($eventData['extruder_temp_max'] ?? '?') . "°C\n";
+            }
+            if (!empty($eventData['bed_temp_min']) || !empty($eventData['bed_temp_max'])) {
+                $body .= "Temp plateau: " . ($eventData['bed_temp_min'] ?? '?') . "-" . ($eventData['bed_temp_max'] ?? '?') . "°C\n";
+            }
+            if (!empty($eventData['spool_length'])) $body .= "Longueur bobine: {$eventData['spool_length']}m\n";
+            if (!empty($eventData['batch_number'])) $body .= "Numero de lot: {$eventData['batch_number']}\n";
+        }
+
+        $headers = "From: noreply@engageengine.ch\r\n";
+        $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
+
+        @mail($to, $subject, $body, $headers);
     }
 
     /**

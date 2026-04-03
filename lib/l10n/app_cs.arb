@@ -162,7 +162,7 @@
   "tempBed": "Teplota podložky",
   "termsOfService": "Podmínky služby",
   "privacyPolicy": "Zásady ochrany osobních údajů",
-  "legal": "Legal",
+  "legal": "Právní",
   "back": "Zpět",
   "retry": "Zkusit znovu",
   "signOut": "Odhlásit se",
@@ -192,6 +192,18 @@
   "usd": "Americký dolar ($)",
   "gbp": "Britská libra (£)",
   "cad": "Kanadský dolar (CAD)",
+  "aud": "Australský dolar (A$)",
+  "jpy": "Japonský jen (¥)",
+  "cny": "Čínský jüan (¥)",
+  "inr": "Indická rupie (₹)",
+  "brl": "Brazilský real (R$)",
+  "mxn": "Mexické peso (MX$)",
+  "sek": "Švédská koruna (kr)",
+  "nok": "Norská koruna (kr)",
+  "dkk": "Dánská koruna (kr)",
+  "pln": "Polský zlotý (zł)",
+  "czk": "Česká koruna (Kč)",
+  "nzd": "Novozélandský dolar (NZ$)",
   "filamentsToOrder": "Filamenty k objednání",
   "shoppingList": "Nákupní seznam",
   "addToShoppingList": "Přidat do seznamu",
@@ -241,6 +253,9 @@
   "ok": "OK",
   "bambuLabReadOnly": "Bambu Lab: Pouze čtení",
   "bambuLabReadOnlyDesc": "Značky Bambu Lab používají šifrování RSA a nelze je upravovat. Pouze čtení.",
+  "forPrusaMk4": "pro Prusa MK4/XL (OpenPrintTag)",
+  "prusaReadWrite": "Prusa: Čtení a Zápis",
+  "prusaReadWriteDesc": "Prusa tagy používají ISO 15693 (NFC-V) s formátem OpenPrintTag. Čtení i zápis podporovány.",
   "bambuCloneLibrary": "Knihovna klonů Bambu Lab",
   "noBambuClones": "Žádné klony Bambu Lab",
   "scanBambuToClone": "Naskenujte originální značky Bambu Lab pro vytvoření knihovny klonů",
@@ -254,7 +269,6 @@
   "clonedOn": "Klonováno",
   "writeThisClone": "Zapsat tento klon",
   "writeClone": "Zapsat klon",
-  "writing": "Zapisování...",
   "writeOnCUID": "Zapsat na kartu CUID",
   "cloneWrittenSuccess": "Klon úspěšně zapsán!",
   "requiredTagFormat": "Požadovaný formát značky",
@@ -290,15 +304,33 @@
   "filamentTypeLabel": "Typ filamentu",
   "scanNfcChipButton": "Naskenovat NFC čip",
   "deleteCloneConfirmation": "Smazat klon \"{name}\"?",
-  "@deleteCloneConfirmation": {"placeholders": {"name": {"type": "String"}}},
+  "@deleteCloneConfirmation": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "cloneDeletedMessage": "Klon \"{name}\" smazán",
-  "@cloneDeletedMessage": {"placeholders": {"name": {"type": "String"}}},
+  "@cloneDeletedMessage": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "extruderLabel": "Extruder",
   "writeThisCloneButton": "Zapsat tento klon",
   "customNameHint": "Vlastní název",
   "cloneWriteSuccessMessage": "Klon úspěšně zapsán!",
   "errorPrefix": "Chyba: {error}",
-  "@errorPrefix": {"placeholders": {"error": {"type": "String"}}},
+  "@errorPrefix": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "writingInProgress": "Zapisování...",
   "writeOnCUIDButton": "Zapsat na kartu CUID",
   "diameterLabel": "Průměr",
@@ -326,11 +358,23 @@
   "writeBambuLabTagButton": "Zapsat Bambu Lab štítek",
   "bambuLabRsaNote": "Poznámka: Originální Bambu Lab štítky používají RSA šifrování. Tento režim zapisuje data ve zjednodušeném kompatibilním formátu.",
   "signInError": "Chyba přihlášení: {error}",
-  "@signInError": {"placeholders": {"error": {"type": "String"}}},
+  "@signInError": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "subscriptionActivatedMessage": "Předplatné úspěšně aktivováno!",
   "subscriptionFailedMessage": "Předplatné se nezdařilo",
   "errorMessage": "Chyba: {error}",
-  "@errorMessage": {"placeholders": {"error": {"type": "String"}}},
+  "@errorMessage": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "subscriptionRestoredMessage": "Předplatné úspěšně obnoveno!",
   "noSubscriptionFoundMessage": "Předplatné nenalezeno",
   "vipLabel": "VIP",
@@ -343,5 +387,32 @@
   "pleaseEnterValidLength": "Zadejte platnou délku",
   "spoolLengthNotSetCannotConvert": "Délka cívky není nastavena - nelze převést",
   "exceedsRemainingWeight": "Překračuje zbývající váhu",
-  "skuLabel": "SKU"
+  "skuLabel": "SKU",
+  "helpIdentifyFilament": "Pomozte nám identifikovat tento filament",
+  "helpUsImprove": "Pomozte nám se zlepšit!",
+  "helpIdentifyDescription": "Přečetli jsme čip, ale nedokázali jsme ho identifikovat. Řekněte nám, jaký je to filament, abychom mohli vylepšit aplikaci.",
+  "otherBrand": "Jiná",
+  "thankYouFeedback": "Děkujeme za vaši zpětnou vazbu!",
+  "send": "Odeslat",
+  "optionalDetails": "Volitelné detaily",
+  "weightGrams": "Hmotnost (g)",
+  "diameterMm": "Průměr (mm)",
+  "spoolLengthM": "Délka cívky (m)",
+  "batchNumberLabel": "Šarže / SKU",
+  "black": "Černá",
+  "white": "Bílá",
+  "yellow": "Žlutá",
+  "orange": "Oranžová",
+  "pink": "Růžová",
+  "purple": "Fialová",
+  "gray": "Šedá",
+  "brown": "Hnědá",
+  "unknown": "Neznámá",
+  "contactUs": "Kontaktujte nás",
+  "contactUsSubtitle": "Dotazy, návrhy nebo problémy",
+  "nfcTagNotDetected": "Nebyla detekována žádná NFC značka",
+  "nfcTagNotDetectedDesc": "Nenalezena žádná značka. Značka může být mrtvá, poškozená nebo příliš daleko od telefonu. Umístěte horní část iPhonu přímo na NFC značku.",
+  "nfcTagIncompatible": "Detekována nekompatibilní NFC značka",
+  "nfcTagInfoPrusa": "Použijte prázdnou značku NXP ICODE SLIX2 (ISO 15693) k vytvoření značek kompatibilních s OpenPrintTag pro Prusa MK4/XL.",
+  "writePrusaTagTitle": "Zapsat Prusa OpenPrintTag"
 }

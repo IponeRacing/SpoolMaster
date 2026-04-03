@@ -1,9 +1,9 @@
 Langue,Nom (18),Sous titre (30),Texte promotionnel (170),Description (4000),Mots-clés (100)
-Français,Spool Master,Inventaire filament 3D + NFC,"Gérez votre stock de filaments 3D facilement. Scannez vos tags NFC, suivez vos bobines, prix et statistiques. Compatible Anycubic et Bambu Lab.","Spool Master - L'application complète pour gérer votre stock de filaments d'impression 3D
+Français,Spool Master,Inventaire filament 3D + NFC,"Gérez votre stock de filaments 3D facilement. Scannez vos tags NFC, suivez vos bobines, prix et statistiques. Compatible Anycubic, Bambu Lab et Prusa.","Spool Master - L'application complète pour gérer votre stock de filaments d'impression 3D
 
 🎯 FONCTIONNALITÉS PRINCIPALES
 
-📱 Lecture et écriture NFC • Lisez les puces NFC des bobines Anycubic et Bambu Lab • Écrivez vos propres tags NFC personnalisés • Clonez des tags NFC pour réutilisation • Compatible avec tous les formats de tags NFC
+📱 Lecture et écriture NFC • Lisez les puces NFC des bobines Anycubic, Bambu Lab et Prusa • Écrivez vos propres tags NFC personnalisés • Clonez des tags NFC pour réutilisation • Compatible avec tous les formats de tags NFC
 
 📊 Gestion d'inventaire complète • Ajoutez vos bobines par scan NFC ou manuellement • Suivez le poids restant de chaque bobine • Gérez vos prix et calculez la valeur totale • Organisez par marque, matériau et couleur • Alertes automatiques de stock bas
 
@@ -15,7 +15,7 @@ Français,Spool Master,Inventaire filament 3D + NFC,"Gérez votre stock de filam
 
 🌡️ Paramètres d'impression • Températures d'extrudeuse (min/max) • Températures de plateau (min/max) • Diamètre du filament • Longueur de la bobine
 
-🔧 COMPATIBILITÉ • Anycubic : Lecture et écriture complètes • Bambu Lab : Lecture et écriture des tags RFID • Tags NFC génériques : Écriture personnalisée • Support de 21 marques de filament • Support de 25 types de matériaux (PLA, PETG, ABS, TPU, etc.)
+🔧 COMPATIBILITÉ • Anycubic : Lecture et écriture complètes • Bambu Lab : Lecture et écriture des tags RFID • Prusa : Lecture et écriture des tags OpenPrintTag (NFC-V) • Tags NFC génériques : Écriture personnalisée • Support de 21 marques de filament • Support de 25 types de matériaux (PLA, PETG, ABS, TPU, etc.)
 
 🌍 MULTILINGUE Application disponible en 31 langues
 
@@ -23,18 +23,20 @@ Français,Spool Master,Inventaire filament 3D + NFC,"Gérez votre stock de filam
 
 💰 UNITÉS ET DEVISES • Support de multiples devises • Unités métriques ou impériales • Conversion automatique
 
-📱 INTERFACE MODERNE • Mode sombre et clair • Design Material 3 • Navigation intuitive • Statistiques visuelles
+📱 INTERFACE MODERNE • Mode sombre et clair • Design élégant • Navigation intuitive • Statistiques visuelles
 
 🔒 SÉCURITÉ ET CONFIDENTIALITÉ • Vos données restent privées • Stockage local sécurisé
 
 ⭐ VERSION PREMIUM DISPONIBLE • Synchronisation cloud • Sans publicité • Support prioritaire
 
-Que vous soyez un maker amateur ou un professionnel de l'impression 3D, Spool Master vous aide à optimiser la gestion de vos filaments, réduire le gaspillage et maîtriser vos dépenses. Téléchargez maintenant et prenez le contrôle de votre inventaire de filaments !","NFC,filament,3D,impression,bobine,Anycubic,Bambu Lab,stock,inventaire,imprimante"
-Allemand,Spool Master,3D-Filament Inventar + NFC,"Verwalten Sie Ihren 3D-Filamentbestand einfach. Scannen Sie NFC-Tags, verfolgen Sie Spulen, Preise und Statistiken. Kompatibel mit Anycubic und Bambu Lab.","Spool Master - Die komplette App zur Verwaltung Ihres 3D-Druckfilament-Bestands
+Que vous soyez un maker amateur ou un professionnel de l'impression 3D, Spool Master vous aide à optimiser la gestion de vos filaments, réduire le gaspillage et maîtriser vos dépenses. Téléchargez maintenant et prenez le contrôle de votre inventaire de filaments !
+
+https://www.apple.com/legal/internet-services/itunes/dev/stdeula/","NFC,filament,3D,impression,bobine,Anycubic,Bambu Lab,Prusa,stock,inventaire"
+Allemand,Spool Master,3D-Filament Inventar + NFC,"Verwalten Sie Ihren 3D-Filamentbestand einfach. Scannen Sie NFC-Tags, verfolgen Sie Spulen, Preise und Statistiken. Kompatibel mit Anycubic, Bambu Lab und Prusa.","Spool Master - Die komplette App zur Verwaltung Ihres 3D-Druckfilament-Bestands
 
 🎯 HAUPTFUNKTIONEN
 
-📱 NFC-Lesen und -Schreiben • Lesen Sie NFC-Chips von Anycubic- und Bambu Lab-Spulen • Schreiben Sie Ihre eigenen benutzerdefinierten NFC-Tags • Klonen Sie NFC-Tags zur Wiederverwendung • Kompatibel mit allen NFC-Tag-Formaten
+📱 NFC-Lesen und -Schreiben • Lesen Sie NFC-Chips von Anycubic-, Bambu Lab- und Prusa-Spulen • Schreiben Sie Ihre eigenen benutzerdefinierten NFC-Tags • Klonen Sie NFC-Tags zur Wiederverwendung • Kompatibel mit allen NFC-Tag-Formaten
 
 📊 Vollständige Bestandsverwaltung • Fügen Sie Spulen per NFC-Scan oder manuell hinzu • Verfolgen Sie das Restgewicht jeder Spule • Verwalten Sie Preise und berechnen Sie den Gesamtwert • Organisieren Sie nach Marke, Material und Farbe • Automatische Warnungen bei niedrigem Bestand
 
@@ -46,7 +48,7 @@ Allemand,Spool Master,3D-Filament Inventar + NFC,"Verwalten Sie Ihren 3D-Filamen
 
 🌡️ Druckeinstellungen • Extrudertemperaturen (min/max) • Betttemperaturen (min/max) • Filamentdurchmesser • Spulenlänge
 
-🔧 KOMPATIBILITÄT • Anycubic: Vollständiges Lesen und Schreiben • Bambu Lab: Lesen und Schreiben von RFID-Tags • Generische NFC-Tags: Benutzerdefiniertes Schreiben • Unterstützung für 21 Filamentmarken • Unterstützung für 25 Materialarten (PLA, PETG, ABS, TPU usw.)
+🔧 KOMPATIBILITÄT • Anycubic: Vollständiges Lesen und Schreiben • Bambu Lab: Lesen und Schreiben von RFID-Tags • Prusa: OpenPrintTag Lesen und Schreiben (NFC-V) • Generische NFC-Tags: Benutzerdefiniertes Schreiben • Unterstützung für 21 Filamentmarken • Unterstützung für 25 Materialarten (PLA, PETG, ABS, TPU usw.)
 
 🌍 MEHRSPRACHIG App verfügbar in 31 Sprachen
 
@@ -54,18 +56,20 @@ Allemand,Spool Master,3D-Filament Inventar + NFC,"Verwalten Sie Ihren 3D-Filamen
 
 💰 EINHEITEN UND WÄHRUNGEN • Unterstützung mehrerer Währungen • Metrische oder imperiale Einheiten • Automatische Umrechnung
 
-📱 MODERNE OBERFLÄCHE • Dunkler und heller Modus • Material 3 Design • Intuitive Navigation • Visuelle Statistiken
+📱 MODERNE OBERFLÄCHE • Dunkler und heller Modus • Elegantes Design • Intuitive Navigation • Visuelle Statistiken
 
 🔒 SICHERHEIT UND DATENSCHUTZ • Ihre Daten bleiben privat • Sichere lokale Speicherung
 
 ⭐ PREMIUM-VERSION VERFÜGBAR • Cloud-Synchronisierung • Werbefrei • Prioritäts-Support
 
-Ob Sie ein Hobby-Maker oder ein professioneller 3D-Drucker sind, Spool Master hilft Ihnen, Ihre Filamentverwaltung zu optimieren, Verschwendung zu reduzieren und Ihre Ausgaben zu kontrollieren. Jetzt herunterladen und die Kontrolle über Ihr Filamentinventar übernehmen!","NFC,Filament,3D,Druck,Spule,Anycubic,Bambu Lab,Bestand,Inventar,Drucker"
-Anglais (Australie),Spool Master,3D Filament Inventory + NFC,"Manage your 3D filament stock easily. Scan NFC tags, track spools, prices and statistics. Compatible with Anycubic and Bambu Lab.","Spool Master - The complete app to manage your 3D printing filament stock
+Ob Sie ein Hobby-Maker oder ein professioneller 3D-Drucker sind, Spool Master hilft Ihnen, Ihre Filamentverwaltung zu optimieren, Verschwendung zu reduzieren und Ihre Ausgaben zu kontrollieren. Jetzt herunterladen und die Kontrolle über Ihr Filamentinventar übernehmen!
+
+https://www.apple.com/legal/internet-services/itunes/dev/stdeula/","NFC,Filament,3D,Druck,Spule,Anycubic,Bambu Lab,Prusa,Bestand,Inventar"
+Anglais (Australie),Spool Master,3D Filament Inventory + NFC,"Manage your 3D filament stock easily. Scan NFC tags, track spools, prices and statistics. Compatible with Anycubic, Bambu Lab and Prusa.","Spool Master - The complete app to manage your 3D printing filament stock
 
 🎯 MAIN FEATURES
 
-📱 NFC Reading and Writing • Read NFC chips from Anycubic and Bambu Lab spools • Write your own custom NFC tags • Clone NFC tags for reuse • Compatible with all NFC tag formats
+📱 NFC Reading and Writing • Read NFC chips from Anycubic, Bambu Lab and Prusa spools • Write your own custom NFC tags • Clone NFC tags for reuse • Compatible with all NFC tag formats
 
 📊 Complete Inventory Management • Add spools by NFC scan or manually • Track remaining weight of each spool • Manage prices and calculate total value • Organize by brand, material and color • Automatic low stock alerts
 
@@ -77,7 +81,7 @@ Anglais (Australie),Spool Master,3D Filament Inventory + NFC,"Manage your 3D fil
 
 🌡️ Print Settings • Extruder temperatures (min/max) • Bed temperatures (min/max) • Filament diameter • Spool length
 
-🔧 COMPATIBILITY • Anycubic: Full reading and writing • Bambu Lab: RFID tag reading and writing • Generic NFC tags: Custom writing • Support for 21 filament brands • Support for 25 material types (PLA, PETG, ABS, TPU, etc.)
+🔧 COMPATIBILITY • Anycubic: Full reading and writing • Bambu Lab: RFID tag reading and writing • Prusa: OpenPrintTag reading and writing (NFC-V) • Generic NFC tags: Custom writing • Support for 21 filament brands • Support for 25 material types (PLA, PETG, ABS, TPU, etc.)
 
 🌍 MULTILINGUAL App available in 31 languages
 
@@ -85,18 +89,20 @@ Anglais (Australie),Spool Master,3D Filament Inventory + NFC,"Manage your 3D fil
 
 💰 UNITS AND CURRENCIES • Multiple currency support • Metric or imperial units • Automatic conversion
 
-📱 MODERN INTERFACE • Dark and light mode • Material 3 design • Intuitive navigation • Visual statistics
+📱 MODERN INTERFACE • Dark and light mode • Sleek design • Intuitive navigation • Visual statistics
 
 🔒 SECURITY AND PRIVACY • Your data remains private • Secure local storage
 
 ⭐ PREMIUM VERSION AVAILABLE • Cloud synchronization • Ad-free • Priority support
 
-Whether you're a hobby maker or a professional 3D printer, Spool Master helps you optimize your filament management, reduce waste and control your expenses. Download now and take control of your filament inventory!","NFC,filament,3D,printing,spool,Anycubic,Bambu Lab,stock,inventory,printer"
-Anglais (Canada),Spool Master,3D Filament Inventory + NFC,"Manage your 3D filament stock easily. Scan NFC tags, track spools, prices and statistics. Compatible with Anycubic and Bambu Lab.","Spool Master - The complete app to manage your 3D printing filament stock
+Whether you're a hobby maker or a professional 3D printer, Spool Master helps you optimize your filament management, reduce waste and control your expenses. Download now and take control of your filament inventory!
+
+https://www.apple.com/legal/internet-services/itunes/dev/stdeula/","NFC,filament,3D,printing,spool,Anycubic,Bambu Lab,Prusa,stock,inventory"
+Anglais (Canada),Spool Master,3D Filament Inventory + NFC,"Manage your 3D filament stock easily. Scan NFC tags, track spools, prices and statistics. Compatible with Anycubic, Bambu Lab and Prusa.","Spool Master - The complete app to manage your 3D printing filament stock
 
 🎯 MAIN FEATURES
 
-📱 NFC Reading and Writing • Read NFC chips from Anycubic and Bambu Lab spools • Write your own custom NFC tags • Clone NFC tags for reuse • Compatible with all NFC tag formats
+📱 NFC Reading and Writing • Read NFC chips from Anycubic, Bambu Lab and Prusa spools • Write your own custom NFC tags • Clone NFC tags for reuse • Compatible with all NFC tag formats
 
 📊 Complete Inventory Management • Add spools by NFC scan or manually • Track remaining weight of each spool • Manage prices and calculate total value • Organize by brand, material and color • Automatic low stock alerts
 
@@ -108,7 +114,7 @@ Anglais (Canada),Spool Master,3D Filament Inventory + NFC,"Manage your 3D filame
 
 🌡️ Print Settings • Extruder temperatures (min/max) • Bed temperatures (min/max) • Filament diameter • Spool length
 
-🔧 COMPATIBILITY • Anycubic: Full reading and writing • Bambu Lab: RFID tag reading and writing • Generic NFC tags: Custom writing • Support for 21 filament brands • Support for 25 material types (PLA, PETG, ABS, TPU, etc.)
+🔧 COMPATIBILITY • Anycubic: Full reading and writing • Bambu Lab: RFID tag reading and writing • Prusa: OpenPrintTag reading and writing (NFC-V) • Generic NFC tags: Custom writing • Support for 21 filament brands • Support for 25 material types (PLA, PETG, ABS, TPU, etc.)
 
 🌍 MULTILINGUAL App available in 31 languages
 
@@ -116,18 +122,20 @@ Anglais (Canada),Spool Master,3D Filament Inventory + NFC,"Manage your 3D filame
 
 💰 UNITS AND CURRENCIES • Multiple currency support • Metric or imperial units • Automatic conversion
 
-📱 MODERN INTERFACE • Dark and light mode • Material 3 design • Intuitive navigation • Visual statistics
+📱 MODERN INTERFACE • Dark and light mode • Sleek design • Intuitive navigation • Visual statistics
 
 🔒 SECURITY AND PRIVACY • Your data remains private • Secure local storage
 
 ⭐ PREMIUM VERSION AVAILABLE • Cloud synchronization • Ad-free • Priority support
 
-Whether you're a hobby maker or a professional 3D printer, Spool Master helps you optimize your filament management, reduce waste and control your expenses. Download now and take control of your filament inventory!","NFC,filament,3D,printing,spool,Anycubic,Bambu Lab,stock,inventory,printer"
-Anglais (États-Unis),Spool Master,3D Filament Inventory + NFC,"Manage your 3D filament stock easily. Scan NFC tags, track spools, prices and statistics. Compatible with Anycubic and Bambu Lab.","Spool Master - The complete app to manage your 3D printing filament stock
+Whether you're a hobby maker or a professional 3D printer, Spool Master helps you optimize your filament management, reduce waste and control your expenses. Download now and take control of your filament inventory!
+
+https://www.apple.com/legal/internet-services/itunes/dev/stdeula/","NFC,filament,3D,printing,spool,Anycubic,Bambu Lab,Prusa,stock,inventory"
+Anglais (États-Unis),Spool Master,3D Filament Inventory + NFC,"Manage your 3D filament stock easily. Scan NFC tags, track spools, prices and statistics. Compatible with Anycubic, Bambu Lab and Prusa.","Spool Master - The complete app to manage your 3D printing filament stock
 
 🎯 MAIN FEATURES
 
-📱 NFC Reading and Writing • Read NFC chips from Anycubic and Bambu Lab spools • Write your own custom NFC tags • Clone NFC tags for reuse • Compatible with all NFC tag formats
+📱 NFC Reading and Writing • Read NFC chips from Anycubic, Bambu Lab and Prusa spools • Write your own custom NFC tags • Clone NFC tags for reuse • Compatible with all NFC tag formats
 
 📊 Complete Inventory Management • Add spools by NFC scan or manually • Track remaining weight of each spool • Manage prices and calculate total value • Organize by brand, material and color • Automatic low stock alerts
 
@@ -139,7 +147,7 @@ Anglais (États-Unis),Spool Master,3D Filament Inventory + NFC,"Manage your 3D f
 
 🌡️ Print Settings • Extruder temperatures (min/max) • Bed temperatures (min/max) • Filament diameter • Spool length
 
-🔧 COMPATIBILITY • Anycubic: Full reading and writing • Bambu Lab: RFID tag reading and writing • Generic NFC tags: Custom writing • Support for 21 filament brands • Support for 25 material types (PLA, PETG, ABS, TPU, etc.)
+🔧 COMPATIBILITY • Anycubic: Full reading and writing • Bambu Lab: RFID tag reading and writing • Prusa: OpenPrintTag reading and writing (NFC-V) • Generic NFC tags: Custom writing • Support for 21 filament brands • Support for 25 material types (PLA, PETG, ABS, TPU, etc.)
 
 🌍 MULTILINGUAL App available in 31 languages
 
@@ -147,18 +155,20 @@ Anglais (États-Unis),Spool Master,3D Filament Inventory + NFC,"Manage your 3D f
 
 💰 UNITS AND CURRENCIES • Multiple currency support • Metric or imperial units • Automatic conversion
 
-📱 MODERN INTERFACE • Dark and light mode • Material 3 design • Intuitive navigation • Visual statistics
+📱 MODERN INTERFACE • Dark and light mode • Sleek design • Intuitive navigation • Visual statistics
 
 🔒 SECURITY AND PRIVACY • Your data remains private • Secure local storage
 
 ⭐ PREMIUM VERSION AVAILABLE • Cloud synchronization • Ad-free • Priority support
 
-Whether you're a hobby maker or a professional 3D printer, Spool Master helps you optimize your filament management, reduce waste and control your expenses. Download now and take control of your filament inventory!","NFC,filament,3D,printing,spool,Anycubic,Bambu Lab,stock,inventory,printer"
-Anglais (Royaume-Uni),Spool Master,3D Filament Inventory + NFC,"Manage your 3D filament stock easily. Scan NFC tags, track spools, prices and statistics. Compatible with Anycubic and Bambu Lab.","Spool Master - The complete app to manage your 3D printing filament stock
+Whether you're a hobby maker or a professional 3D printer, Spool Master helps you optimize your filament management, reduce waste and control your expenses. Download now and take control of your filament inventory!
+
+https://www.apple.com/legal/internet-services/itunes/dev/stdeula/","NFC,filament,3D,printing,spool,Anycubic,Bambu Lab,Prusa,stock,inventory"
+Anglais (Royaume-Uni),Spool Master,3D Filament Inventory + NFC,"Manage your 3D filament stock easily. Scan NFC tags, track spools, prices and statistics. Compatible with Anycubic, Bambu Lab and Prusa.","Spool Master - The complete app to manage your 3D printing filament stock
 
 🎯 MAIN FEATURES
 
-📱 NFC Reading and Writing • Read NFC chips from Anycubic and Bambu Lab spools • Write your own custom NFC tags • Clone NFC tags for reuse • Compatible with all NFC tag formats
+📱 NFC Reading and Writing • Read NFC chips from Anycubic, Bambu Lab and Prusa spools • Write your own custom NFC tags • Clone NFC tags for reuse • Compatible with all NFC tag formats
 
 📊 Complete Inventory Management • Add spools by NFC scan or manually • Track remaining weight of each spool • Manage prices and calculate total value • Organize by brand, material and color • Automatic low stock alerts
 
@@ -170,7 +180,7 @@ Anglais (Royaume-Uni),Spool Master,3D Filament Inventory + NFC,"Manage your 3D f
 
 🌡️ Print Settings • Extruder temperatures (min/max) • Bed temperatures (min/max) • Filament diameter • Spool length
 
-🔧 COMPATIBILITY • Anycubic: Full reading and writing • Bambu Lab: RFID tag reading and writing • Generic NFC tags: Custom writing • Support for 21 filament brands • Support for 25 material types (PLA, PETG, ABS, TPU, etc.)
+🔧 COMPATIBILITY • Anycubic: Full reading and writing • Bambu Lab: RFID tag reading and writing • Prusa: OpenPrintTag reading and writing (NFC-V) • Generic NFC tags: Custom writing • Support for 21 filament brands • Support for 25 material types (PLA, PETG, ABS, TPU, etc.)
 
 🌍 MULTILINGUAL App available in 31 languages
 
@@ -178,18 +188,20 @@ Anglais (Royaume-Uni),Spool Master,3D Filament Inventory + NFC,"Manage your 3D f
 
 💰 UNITS AND CURRENCIES • Multiple currency support • Metric or imperial units • Automatic conversion
 
-📱 MODERN INTERFACE • Dark and light mode • Material 3 design • Intuitive navigation • Visual statistics
+📱 MODERN INTERFACE • Dark and light mode • Sleek design • Intuitive navigation • Visual statistics
 
 🔒 SECURITY AND PRIVACY • Your data remains private • Secure local storage
 
 ⭐ PREMIUM VERSION AVAILABLE • Cloud synchronization • Ad-free • Priority support
 
-Whether you're a hobby maker or a professional 3D printer, Spool Master helps you optimize your filament management, reduce waste and control your expenses. Download now and take control of your filament inventory!","NFC,filament,3D,printing,spool,Anycubic,Bambu Lab,stock,inventory,printer"
-Espagnol (Espagne),Spool Master,Inventario filamento 3D + NFC,"Gestione su stock de filamentos 3D fácilmente. Escanee etiquetas NFC, siga bobinas, precios y estadísticas. Compatible con Anycubic y Bambu Lab.","Spool Master - La aplicación completa para gestionar su stock de filamentos de impresión 3D
+Whether you're a hobby maker or a professional 3D printer, Spool Master helps you optimize your filament management, reduce waste and control your expenses. Download now and take control of your filament inventory!
+
+https://www.apple.com/legal/internet-services/itunes/dev/stdeula/","NFC,filament,3D,printing,spool,Anycubic,Bambu Lab,Prusa,stock,inventory"
+Espagnol (Espagne),Spool Master,Inventario filamento 3D + NFC,"Gestione su stock de filamentos 3D fácilmente. Escanee etiquetas NFC, siga bobinas, precios y estadísticas. Compatible con Anycubic, Bambu Lab y Prusa.","Spool Master - La aplicación completa para gestionar su stock de filamentos de impresión 3D
 
 🎯 CARACTERÍSTICAS PRINCIPALES
 
-📱 Lectura y escritura NFC • Lea chips NFC de bobinas Anycubic y Bambu Lab • Escriba sus propias etiquetas NFC personalizadas • Clone etiquetas NFC para reutilización • Compatible con todos los formatos de etiquetas NFC
+📱 Lectura y escritura NFC • Lea chips NFC de bobinas Anycubic, Bambu Lab y Prusa • Escriba sus propias etiquetas NFC personalizadas • Clone etiquetas NFC para reutilización • Compatible con todos los formatos de etiquetas NFC
 
 📊 Gestión de inventario completa • Añada bobinas por escaneo NFC o manualmente • Siga el peso restante de cada bobina • Gestione precios y calcule el valor total • Organice por marca, material y color • Alertas automáticas de stock bajo
 
@@ -201,7 +213,7 @@ Espagnol (Espagne),Spool Master,Inventario filamento 3D + NFC,"Gestione su stock
 
 🌡️ Configuración de impresión • Temperaturas del extrusor (min/max) • Temperaturas de la cama (min/max) • Diámetro del filamento • Longitud de la bobina
 
-🔧 COMPATIBILIDAD • Anycubic: Lectura y escritura completas • Bambu Lab: Lectura y escritura de etiquetas RFID • Etiquetas NFC genéricas: Escritura personalizada • Soporte para 21 marcas de filamento • Soporte para 25 tipos de materiales (PLA, PETG, ABS, TPU, etc.)
+🔧 COMPATIBILIDAD • Anycubic: Lectura y escritura completas • Bambu Lab: Lectura y escritura de etiquetas RFID • Prusa: Lectura y escritura de tags OpenPrintTag (NFC-V) • Etiquetas NFC genéricas: Escritura personalizada • Soporte para 21 marcas de filamento • Soporte para 25 tipos de materiales (PLA, PETG, ABS, TPU, etc.)
 
 🌍 MULTILINGÜE Aplicación disponible en 31 idiomas
 
@@ -209,18 +221,20 @@ Espagnol (Espagne),Spool Master,Inventario filamento 3D + NFC,"Gestione su stock
 
 💰 UNIDADES Y MONEDAS • Soporte de múltiples monedas • Unidades métricas o imperiales • Conversión automática
 
-📱 INTERFAZ MODERNA • Modo oscuro y claro • Diseño Material 3 • Navegación intuitiva • Estadísticas visuales
+📱 INTERFAZ MODERNA • Modo oscuro y claro • Diseño elegante • Navegación intuitiva • Estadísticas visuales
 
 🔒 SEGURIDAD Y PRIVACIDAD • Sus datos permanecen privados • Almacenamiento local seguro
 
 ⭐ VERSIÓN PREMIUM DISPONIBLE • Sincronización en la nube • Sin publicidad • Soporte prioritario
 
-Ya sea un maker aficionado o un profesional de la impresión 3D, Spool Master le ayuda a optimizar la gestión de sus filamentos, reducir el desperdicio y controlar sus gastos. ¡Descargue ahora y tome el control de su inventario de filamentos!","NFC,filamento,3D,impresión,bobina,Anycubic,Bambu Lab,stock,inventario,impresora"
-Espagnol (Mexique),Spool Master,Inventario filamento 3D + NFC,"Gestione su stock de filamentos 3D fácilmente. Escanee etiquetas NFC, siga bobinas, precios y estadísticas. Compatible con Anycubic y Bambu Lab.","Spool Master - La aplicación completa para gestionar su stock de filamentos de impresión 3D
+Ya sea un maker aficionado o un profesional de la impresión 3D, Spool Master le ayuda a optimizar la gestión de sus filamentos, reducir el desperdicio y controlar sus gastos. ¡Descargue ahora y tome el control de su inventario de filamentos!
+
+https://www.apple.com/legal/internet-services/itunes/dev/stdeula/","NFC,filamento,3D,impresión,bobina,Anycubic,Bambu Lab,Prusa,stock,inventario"
+Espagnol (Mexique),Spool Master,Inventario filamento 3D + NFC,"Gestione su stock de filamentos 3D fácilmente. Escanee etiquetas NFC, siga bobinas, precios y estadísticas. Compatible con Anycubic, Bambu Lab y Prusa.","Spool Master - La aplicación completa para gestionar su stock de filamentos de impresión 3D
 
 🎯 CARACTERÍSTICAS PRINCIPALES
 
-📱 Lectura y escritura NFC • Lea chips NFC de bobinas Anycubic y Bambu Lab • Escriba sus propias etiquetas NFC personalizadas • Clone etiquetas NFC para reutilización • Compatible con todos los formatos de etiquetas NFC
+📱 Lectura y escritura NFC • Lea chips NFC de bobinas Anycubic, Bambu Lab y Prusa • Escriba sus propias etiquetas NFC personalizadas • Clone etiquetas NFC para reutilización • Compatible con todos los formatos de etiquetas NFC
 
 📊 Gestión de inventario completa • Añada bobinas por escaneo NFC o manualmente • Siga el peso restante de cada bobina • Gestione precios y calcule el valor total • Organice por marca, material y color • Alertas automáticas de stock bajo
 
@@ -232,7 +246,7 @@ Espagnol (Mexique),Spool Master,Inventario filamento 3D + NFC,"Gestione su stock
 
 🌡️ Configuración de impresión • Temperaturas del extrusor (min/max) • Temperaturas de la cama (min/max) • Diámetro del filamento • Longitud de la bobina
 
-🔧 COMPATIBILIDAD • Anycubic: Lectura y escritura completas • Bambu Lab: Lectura y escritura de etiquetas RFID • Etiquetas NFC genéricas: Escritura personalizada • Soporte para 21 marcas de filamento • Soporte para 25 tipos de materiales (PLA, PETG, ABS, TPU, etc.)
+🔧 COMPATIBILIDAD • Anycubic: Lectura y escritura completas • Bambu Lab: Lectura y escritura de etiquetas RFID • Prusa: Lectura y escritura de tags OpenPrintTag (NFC-V) • Etiquetas NFC genéricas: Escritura personalizada • Soporte para 21 marcas de filamento • Soporte para 25 tipos de materiales (PLA, PETG, ABS, TPU, etc.)
 
 🌍 MULTILINGÜE Aplicación disponible en 31 idiomas
 
@@ -240,18 +254,20 @@ Espagnol (Mexique),Spool Master,Inventario filamento 3D + NFC,"Gestione su stock
 
 💰 UNIDADES Y MONEDAS • Soporte de múltiples monedas • Unidades métricas o imperiales • Conversión automática
 
-📱 INTERFAZ MODERNA • Modo oscuro y claro • Diseño Material 3 • Navegación intuitiva • Estadísticas visuales
+📱 INTERFAZ MODERNA • Modo oscuro y claro • Diseño elegante • Navegación intuitiva • Estadísticas visuales
 
 🔒 SEGURIDAD Y PRIVACIDAD • Sus datos permanecen privados • Almacenamiento local seguro
 
 ⭐ VERSIÓN PREMIUM DISPONIBLE • Sincronización en la nube • Sin publicidad • Soporte prioritario
 
-Ya sea un maker aficionado o un profesional de la impresión 3D, Spool Master le ayuda a optimizar la gestión de sus filamentos, reducir el desperdicio y controlar sus gastos. ¡Descargue ahora y tome el control de su inventario de filamentos!","NFC,filamento,3D,impresión,bobina,Anycubic,Bambu Lab,stock,inventario,impresora"
-Italien,Spool Master,Inventario filamenti 3D + NFC,"Gestisci il tuo stock di filamenti 3D facilmente. Scansiona tag NFC, traccia bobine, prezzi e statistiche. Compatibile con Anycubic e Bambu Lab.","Spool Master - L'app completa per gestire il tuo stock di filamenti per stampa 3D
+Ya sea un maker aficionado o un profesional de la impresión 3D, Spool Master le ayuda a optimizar la gestión de sus filamentos, reducir el desperdicio y controlar sus gastos. ¡Descargue ahora y tome el control de su inventario de filamentos!
+
+https://www.apple.com/legal/internet-services/itunes/dev/stdeula/","NFC,filamento,3D,impresión,bobina,Anycubic,Bambu Lab,Prusa,stock,inventario"
+Italien,Spool Master,Inventario filamenti 3D + NFC,"Gestisci il tuo stock di filamenti 3D facilmente. Scansiona tag NFC, traccia bobine, prezzi e statistiche. Compatibile con Anycubic, Bambu Lab e Prusa.","Spool Master - L'app completa per gestire il tuo stock di filamenti per stampa 3D
 
 🎯 CARATTERISTICHE PRINCIPALI
 
-📱 Lettura e scrittura NFC • Leggi chip NFC dalle bobine Anycubic e Bambu Lab • Scrivi i tuoi tag NFC personalizzati • Clona tag NFC per il riutilizzo • Compatibile con tutti i formati di tag NFC
+📱 Lettura e scrittura NFC • Leggi chip NFC dalle bobine Anycubic, Bambu Lab e Prusa • Scrivi i tuoi tag NFC personalizzati • Clona tag NFC per il riutilizzo • Compatibile con tutti i formati di tag NFC
 
 📊 Gestione inventario completa • Aggiungi bobine tramite scansione NFC o manualmente • Traccia il peso rimanente di ogni bobina • Gestisci prezzi e calcola il valore totale • Organizza per marca, materiale e colore • Avvisi automatici di scorte basse
 
@@ -263,7 +279,7 @@ Italien,Spool Master,Inventario filamenti 3D + NFC,"Gestisci il tuo stock di fil
 
 🌡️ Impostazioni di stampa • Temperature estrusore (min/max) • Temperature piano (min/max) • Diametro filamento • Lunghezza bobina
 
-🔧 COMPATIBILITÀ • Anycubic: Lettura e scrittura complete • Bambu Lab: Lettura e scrittura tag RFID • Tag NFC generici: Scrittura personalizzata • Supporto per 21 marche di filamento • Supporto per 25 tipi di materiali (PLA, PETG, ABS, TPU, ecc.)
+🔧 COMPATIBILITÀ • Anycubic: Lettura e scrittura complete • Bambu Lab: Lettura e scrittura tag RFID • Prusa: Lettura e scrittura tag OpenPrintTag (NFC-V) • Tag NFC generici: Scrittura personalizzata • Supporto per 21 marche di filamento • Supporto per 25 tipi di materiali (PLA, PETG, ABS, TPU, ecc.)
 
 🌍 MULTILINGUE App disponibile in 31 lingue
 
@@ -271,18 +287,20 @@ Italien,Spool Master,Inventario filamenti 3D + NFC,"Gestisci il tuo stock di fil
 
 💰 UNITÀ E VALUTE • Supporto valute multiple • Unità metriche o imperiali • Conversione automatica
 
-📱 INTERFACCIA MODERNA • Modalità scura e chiara • Design Material 3 • Navigazione intuitiva • Statistiche visive
+📱 INTERFACCIA MODERNA • Modalità scura e chiara • Design elegante • Navigazione intuitiva • Statistiche visive
 
 🔒 SICUREZZA E PRIVACY • I tuoi dati rimangono privati • Archiviazione locale sicura
 
 ⭐ VERSIONE PREMIUM DISPONIBILE • Sincronizzazione cloud • Senza pubblicità • Supporto prioritario
 
-Che tu sia un maker hobbista o un professionista della stampa 3D, Spool Master ti aiuta a ottimizzare la gestione dei tuoi filamenti, ridurre gli sprechi e controllare le tue spese. Scarica ora e prendi il controllo del tuo inventario di filamenti!","NFC,filamento,3D,stampa,bobina,Anycubic,Bambu Lab,stock,inventario,stampante"
-Portugais (Brésil),Spool Master,Inventário filamento 3D + NFC,"Gerencie seu estoque de filamentos 3D facilmente. Escaneie tags NFC, rastreie bobinas, preços e estatísticas. Compatível com Anycubic e Bambu Lab.","Spool Master - O aplicativo completo para gerenciar seu estoque de filamentos de impressão 3D
+Che tu sia un maker hobbista o un professionista della stampa 3D, Spool Master ti aiuta a ottimizzare la gestione dei tuoi filamenti, ridurre gli sprechi e controllare le tue spese. Scarica ora e prendi il controllo del tuo inventario di filamenti!
+
+https://www.apple.com/legal/internet-services/itunes/dev/stdeula/","NFC,filamento,3D,stampa,bobina,Anycubic,Bambu Lab,Prusa,stock,inventario"
+Portugais (Brésil),Spool Master,Inventário filamento 3D + NFC,"Gerencie seu estoque de filamentos 3D facilmente. Escaneie tags NFC, rastreie bobinas, preços e estatísticas. Compatível com Anycubic, Bambu Lab e Prusa.","Spool Master - O aplicativo completo para gerenciar seu estoque de filamentos de impressão 3D
 
 🎯 RECURSOS PRINCIPAIS
 
-📱 Leitura e gravação NFC • Leia chips NFC de bobinas Anycubic e Bambu Lab • Escreva suas próprias tags NFC personalizadas • Clone tags NFC para reutilização • Compatível com todos os formatos de tags NFC
+📱 Leitura e gravação NFC • Leia chips NFC de bobinas Anycubic, Bambu Lab e Prusa • Escreva suas próprias tags NFC personalizadas • Clone tags NFC para reutilização • Compatível com todos os formatos de tags NFC
 
 📊 Gerenciamento completo de inventário • Adicione bobinas por escaneamento NFC ou manualmente • Acompanhe o peso restante de cada bobina • Gerencie preços e calcule o valor total • Organize por marca, material e cor • Alertas automáticos de estoque baixo
 
@@ -294,7 +312,7 @@ Portugais (Brésil),Spool Master,Inventário filamento 3D + NFC,"Gerencie seu es
 
 🌡️ Configurações de impressão • Temperaturas da extrusora (min/max) • Temperaturas da mesa (min/max) • Diâmetro do filamento • Comprimento da bobina
 
-🔧 COMPATIBILIDADE • Anycubic: Leitura e gravação completas • Bambu Lab: Leitura e gravação de tags RFID • Tags NFC genéricas: Gravação personalizada • Suporte para 21 marcas de filamento • Suporte para 25 tipos de materiais (PLA, PETG, ABS, TPU, etc.)
+🔧 COMPATIBILIDADE • Anycubic: Leitura e gravação completas • Bambu Lab: Leitura e gravação de tags RFID • Prusa: Leitura e gravação de tags OpenPrintTag (NFC-V) • Tags NFC genéricas: Gravação personalizada • Suporte para 21 marcas de filamento • Suporte para 25 tipos de materiais (PLA, PETG, ABS, TPU, etc.)
 
 🌍 MULTILÍNGUE Aplicativo disponível em 31 idiomas
 
@@ -302,18 +320,20 @@ Portugais (Brésil),Spool Master,Inventário filamento 3D + NFC,"Gerencie seu es
 
 💰 UNIDADES E MOEDAS • Suporte para várias moedas • Unidades métricas ou imperiais • Conversão automática
 
-📱 INTERFACE MODERNA • Modo escuro e claro • Design Material 3 • Navegação intuitiva • Estatísticas visuais
+📱 INTERFACE MODERNA • Modo escuro e claro • Design elegante • Navegação intuitiva • Estatísticas visuais
 
 🔒 SEGURANÇA E PRIVACIDADE • Seus dados permanecem privados • Armazenamento local seguro
 
 ⭐ VERSÃO PREMIUM DISPONÍVEL • Sincronização em nuvem • Sem anúncios • Suporte prioritário
 
-Seja você um maker amador ou um profissional de impressão 3D, o Spool Master ajuda você a otimizar o gerenciamento dos seus filamentos, reduzir o desperdício e controlar suas despesas. Baixe agora e assuma o controle do seu inventário de filamentos!","NFC,filamento,3D,impressão,bobina,Anycubic,Bambu Lab,estoque,inventário,impressora"
-Portugais (Portugal),Spool Master,Inventário filamento 3D + NFC,"Faça a gestão do seu stock de filamentos 3D facilmente. Digitalize tags NFC, acompanhe bobinas, preços e estatísticas. Compatível com Anycubic e Bambu Lab.","Spool Master - A aplicação completa para gerir o seu stock de filamentos de impressão 3D
+Seja você um maker amador ou um profissional de impressão 3D, o Spool Master ajuda você a otimizar o gerenciamento dos seus filamentos, reduzir o desperdício e controlar suas despesas. Baixe agora e assuma o controle do seu inventário de filamentos!
+
+https://www.apple.com/legal/internet-services/itunes/dev/stdeula/","NFC,filamento,3D,impressão,bobina,Anycubic,Bambu Lab,Prusa,estoque,inventário"
+Portugais (Portugal),Spool Master,Inventário filamento 3D + NFC,"Faça a gestão do seu stock de filamentos 3D facilmente. Digitalize tags NFC, acompanhe bobinas, preços e estatísticas. Compatível com Anycubic, Bambu Lab e Prusa.","Spool Master - A aplicação completa para gerir o seu stock de filamentos de impressão 3D
 
 🎯 FUNCIONALIDADES PRINCIPAIS
 
-📱 Leitura e escrita NFC • Leia chips NFC das bobinas Anycubic e Bambu Lab • Escreva as suas próprias etiquetas NFC personalizadas • Clone etiquetas NFC para reutilização • Compatível com todos os formatos de etiquetas NFC
+📱 Leitura e escrita NFC • Leia chips NFC das bobinas Anycubic, Bambu Lab e Prusa • Escreva as suas próprias etiquetas NFC personalizadas • Clone etiquetas NFC para reutilização • Compatível com todos os formatos de etiquetas NFC
 
 📊 Gestão de inventário completa • Adicione bobinas por digitalização NFC ou manualmente • Acompanhe o peso restante de cada bobina • Faça a gestão de preços e calcule o valor total • Organize por marca, material e cor • Alertas automáticos de stock baixo
 
@@ -325,7 +345,7 @@ Portugais (Portugal),Spool Master,Inventário filamento 3D + NFC,"Faça a gestã
 
 🌡️ Definições de impressão • Temperaturas da extrusora (min/max) • Temperaturas da base (min/max) • Diâmetro do filamento • Comprimento da bobina
 
-🔧 COMPATIBILIDADE • Anycubic: Leitura e escrita completas • Bambu Lab: Leitura e escrita de etiquetas RFID • Etiquetas NFC genéricas: Escrita personalizada • Suporte para 21 marcas de filamento • Suporte para 25 tipos de materiais (PLA, PETG, ABS, TPU, etc.)
+🔧 COMPATIBILIDADE • Anycubic: Leitura e escrita completas • Bambu Lab: Leitura e escrita de etiquetas RFID • Prusa: Leitura e escrita de etiquetas OpenPrintTag (NFC-V) • Etiquetas NFC genéricas: Escrita personalizada • Suporte para 21 marcas de filamento • Suporte para 25 tipos de materiais (PLA, PETG, ABS, TPU, etc.)
 
 🌍 MULTILINGUE Aplicação disponível em 31 idiomas
 
@@ -333,18 +353,20 @@ Portugais (Portugal),Spool Master,Inventário filamento 3D + NFC,"Faça a gestã
 
 💰 UNIDADES E MOEDAS • Suporte para várias moedas • Unidades métricas ou imperiais • Conversão automática
 
-📱 INTERFACE MODERNA • Modo escuro e claro • Design Material 3 • Navegação intuitiva • Estatísticas visuais
+📱 INTERFACE MODERNA • Modo escuro e claro • Design elegante • Navegação intuitiva • Estatísticas visuais
 
 🔒 SEGURANÇA E PRIVACIDADE • Os seus dados permanecem privados • Armazenamento local seguro
 
 ⭐ VERSÃO PREMIUM DISPONÍVEL • Sincronização na nuvem • Sem publicidade • Suporte prioritário
 
-Quer seja um maker amador ou um profissional de impressão 3D, o Spool Master ajuda-o a optimizar a gestão dos seus filamentos, reduzir o desperdício e controlar as suas despesas. Descarregue agora e assuma o controlo do seu inventário de filamentos!","NFC,filamento,3D,impressão,bobina,Anycubic,Bambu Lab,stock,inventário,impressora"
-Français (Canada),Spool Master,Inventaire filament 3D + NFC,"Gérez votre stock de filaments 3D facilement. Scannez vos tags NFC, suivez vos bobines, prix et statistiques. Compatible Anycubic et Bambu Lab.","Spool Master - L'application complète pour gérer votre stock de filaments d'impression 3D
+Quer seja um maker amador ou um profissional de impressão 3D, o Spool Master ajuda-o a optimizar a gestão dos seus filamentos, reduzir o desperdício e controlar as suas despesas. Descarregue agora e assuma o controlo do seu inventário de filamentos!
+
+https://www.apple.com/legal/internet-services/itunes/dev/stdeula/","NFC,filamento,3D,impressão,bobina,Anycubic,Bambu Lab,Prusa,stock,inventário"
+Français (Canada),Spool Master,Inventaire filament 3D + NFC,"Gérez votre stock de filaments 3D facilement. Scannez vos tags NFC, suivez vos bobines, prix et statistiques. Compatible Anycubic, Bambu Lab et Prusa.","Spool Master - L'application complète pour gérer votre stock de filaments d'impression 3D
 
 🎯 FONCTIONNALITÉS PRINCIPALES
 
-📱 Lecture et écriture NFC • Lisez les puces NFC des bobines Anycubic et Bambu Lab • Écrivez vos propres tags NFC personnalisés • Clonez des tags NFC pour réutilisation • Compatible avec tous les formats de tags NFC
+📱 Lecture et écriture NFC • Lisez les puces NFC des bobines Anycubic, Bambu Lab et Prusa • Écrivez vos propres tags NFC personnalisés • Clonez des tags NFC pour réutilisation • Compatible avec tous les formats de tags NFC
 
 📊 Gestion d'inventaire complète • Ajoutez vos bobines par scan NFC ou manuellement • Suivez le poids restant de chaque bobine • Gérez vos prix et calculez la valeur totale • Organisez par marque, matériau et couleur • Alertes automatiques de stock bas
 
@@ -356,7 +378,7 @@ Français (Canada),Spool Master,Inventaire filament 3D + NFC,"Gérez votre stock
 
 🌡️ Paramètres d'impression • Températures d'extrudeuse (min/max) • Températures de plateau (min/max) • Diamètre du filament • Longueur de la bobine
 
-🔧 COMPATIBILITÉ • Anycubic : Lecture et écriture complètes • Bambu Lab : Lecture et écriture des tags RFID • Tags NFC génériques : Écriture personnalisée • Support de 21 marques de filament • Support de 25 types de matériaux (PLA, PETG, ABS, TPU, etc.)
+🔧 COMPATIBILITÉ • Anycubic : Lecture et écriture complètes • Bambu Lab : Lecture et écriture des tags RFID • Prusa : Lecture et écriture des tags OpenPrintTag (NFC-V) • Tags NFC génériques : Écriture personnalisée • Support de 21 marques de filament • Support de 25 types de matériaux (PLA, PETG, ABS, TPU, etc.)
 
 🌍 MULTILINGUE Application disponible en 31 langues
 
@@ -364,10 +386,1519 @@ Français (Canada),Spool Master,Inventaire filament 3D + NFC,"Gérez votre stock
 
 💰 UNITÉS ET DEVISES • Support de multiples devises • Unités métriques ou impériales • Conversion automatique
 
-📱 INTERFACE MODERNE • Mode sombre et clair • Design Material 3 • Navigation intuitive • Statistiques visuelles
+📱 INTERFACE MODERNE • Mode sombre et clair • Design élégant • Navigation intuitive • Statistiques visuelles
 
 🔒 SÉCURITÉ ET CONFIDENTIALITÉ • Vos données restent privées • Stockage local sécurisé
 
 ⭐ VERSION PREMIUM DISPONIBLE • Synchronisation cloud • Sans publicité • Support prioritaire
 
-Que vous soyez un maker amateur ou un professionnel de l'impression 3D, Spool Master vous aide à optimiser la gestion de vos filaments, réduire le gaspillage et maîtriser vos dépenses. Téléchargez maintenant et prenez le contrôle de votre inventaire de filaments !","NFC,filament,3D,impression,bobine,Anycubic,Bambu Lab,stock,inventaire,imprimante"
+Que vous soyez un maker amateur ou un professionnel de l'impression 3D, Spool Master vous aide à optimiser la gestion de vos filaments, réduire le gaspillage et maîtriser vos dépenses. Téléchargez maintenant et prenez le contrôle de votre inventaire de filaments !
+
+https://www.apple.com/legal/internet-services/itunes/dev/stdeula/","NFC,filament,3D,impression,bobine,Anycubic,Bambu Lab,Prusa,stock,inventaire"
+Arabe,Spool Master,مخزون خيوط ثلاثية الأبعاد + NFC,إدارة مخزون خيوط الطباعة ثلاثية الأبعاد بسهولة. مسح علامات NFC وتتبع البكرات والأسعار والإحصائيات. متوافق مع Anycubic وBambu Lab وPrusa.,"Spool Master - التطبيق الشامل لإدارة مخزون خيوط الطباعة ثلاثية الأبعاد
+
+🎯 الميزات الرئيسية
+
+📱 قراءة وكتابة NFC
+• قراءة شرائح NFC من بكرات Anycubic وBambu Lab وPrusa
+• كتابة علامات NFC مخصصة خاصة بك
+• استنساخ علامات NFC لإعادة الاستخدام
+• متوافق مع جميع تنسيقات علامات NFC
+
+📊 إدارة مخزون شاملة
+• إضافة البكرات عن طريق مسح NFC أو يدوياً
+• تتبع الوزن المتبقي لكل بكرة
+• إدارة الأسعار وحساب القيمة الإجمالية
+• التنظيم حسب العلامة التجارية والمادة واللون
+• تنبيهات تلقائية عند انخفاض المخزون
+
+📈 إحصائيات مفصلة
+• نظرة عامة على مخزونك
+• القيمة الإجمالية لمخزونك
+• عدد المواد والألوان والعلامات التجارية
+• قائمة تسوق تلقائية
+
+🛒 قائمة تسوق ذكية
+• إضافة تلقائية للبكرات منخفضة المخزون
+• تحديد الخيوط المطلوبة
+• الإضافة يدوياً أو عن طريق مسح NFC
+
+🎨 منتقي ألوان متقدم
+• لوحة كاملة مع أشرطة تمرير RGB
+• دعم الشفافية
+• معاينة في الوقت الفعلي
+
+🌡️ إعدادات الطباعة
+• درجات حرارة الطارد (حد أدنى/أقصى)
+• درجات حرارة السرير (حد أدنى/أقصى)
+• قطر الخيط
+• طول البكرة
+
+🔧 التوافق
+• Anycubic: قراءة وكتابة كاملة
+• Bambu Lab: قراءة وكتابة علامات RFID
+• Prusa: قراءة وكتابة OpenPrintTag (NFC-V)
+• علامات NFC عامة: كتابة مخصصة
+• دعم 21 علامة تجارية للخيوط
+• دعم 25 نوعاً من المواد (PLA، PETG، ABS، TPU، إلخ.)
+
+🌍 متعدد اللغات
+التطبيق متوفر بـ 31 لغة
+
+☁️ المزامنة
+• مزامنة متعددة الأجهزة
+• وضع عدم الاتصال متوفر
+
+💰 الوحدات والعملات
+• دعم عملات متعددة
+• وحدات مترية أو إمبراطورية
+• تحويل تلقائي
+
+📱 واجهة حديثة
+• الوضع الداكن والفاتح
+• تصميم أنيق
+• تنقل بديهي
+• إحصائيات مرئية
+
+🔒 الأمان والخصوصية
+• بياناتك تبقى خاصة
+• تخزين محلي آمن
+
+⭐ نسخة مميزة متوفرة
+• مزامنة سحابية
+• بدون إعلانات
+• دعم ذو أولوية
+
+سواء كنت هاوياً أو محترفاً في الطباعة ثلاثية الأبعاد، يساعدك Spool Master على تحسين إدارة خيوطك وتقليل الهدر والتحكم في نفقاتك. حمّل الآن وتحكم في مخزون خيوطك!
+
+https://www.apple.com/legal/internet-services/itunes/dev/stdeula/",NFC,خيوط,طباعة,ثلاثية الأبعاد,بكرة,Anycubic,Bambu Lab,Prusa,مخزون,إدارة
+Catalan,Spool Master,Inventari filament 3D + NFC,"Gestiona el teu estoc de filament 3D fàcilment. Escaneja etiquetes NFC, fes seguiment de bobines, preus i estadístiques. Compatible amb Anycubic, Bambu Lab i Prusa.","Spool Master - L'aplicació completa per gestionar el teu estoc de filament d'impressió 3D
+
+🎯 FUNCIONS PRINCIPALS
+
+📱 Lectura i escriptura NFC
+• Llegeix xips NFC de bobines Anycubic, Bambu Lab i Prusa
+• Escriu les teves pròpies etiquetes NFC personalitzades
+• Clona etiquetes NFC per reutilitzar-les
+• Compatible amb tots els formats d'etiquetes NFC
+
+📊 Gestió d'inventari completa
+• Afegeix bobines per escaneig NFC o manualment
+• Fes seguiment del pes restant de cada bobina
+• Gestiona preus i calcula el valor total
+• Organitza per marca, material i color
+• Alertes automàtiques d'estoc baix
+
+📈 Estadístiques detallades
+• Visió general del teu inventari
+• Valor total del teu estoc
+• Nombre de materials, colors i marques
+• Llista de compra automàtica
+
+🛒 Llista de compra intel·ligent
+• Addició automàtica de bobines amb estoc baix
+• Marca els filaments demanats
+• Afegeix manualment o per escaneig NFC
+
+🎨 Selector de colors avançat
+• Paleta completa amb controls RGB
+• Suport d'opacitat
+• Previsualització en temps real
+
+🌡️ Configuració d'impressió
+• Temperatures de l'extrusor (mín/màx)
+• Temperatures del llit (mín/màx)
+• Diàmetre del filament
+• Longitud de la bobina
+
+🔧 COMPATIBILITAT
+• Anycubic: Lectura i escriptura completa
+• Bambu Lab: Lectura i escriptura d'etiquetes RFID
+• Prusa: Lectura i escriptura OpenPrintTag (NFC-V)
+• Etiquetes NFC genèriques: Escriptura personalitzada
+• Suport per a 21 marques de filament
+• Suport per a 25 tipus de materials (PLA, PETG, ABS, TPU, etc.)
+
+🌍 MULTILINGÜE
+Aplicació disponible en 31 idiomes
+
+☁️ SINCRONITZACIÓ
+• Sincronització multidispositiu
+• Mode fora de línia disponible
+
+💰 UNITATS I MONEDES
+• Suport per a múltiples monedes
+• Unitats mètriques o imperials
+• Conversió automàtica
+
+📱 INTERFÍCIE MODERNA
+• Mode fosc i clar
+• Disseny elegant
+• Navegació intuïtiva
+• Estadístiques visuals
+
+🔒 SEGURETAT I PRIVACITAT
+• Les teves dades romanen privades
+• Emmagatzematge local segur
+
+⭐ VERSIÓ PREMIUM DISPONIBLE
+• Sincronització al núvol
+• Sense anuncis
+• Suport prioritari
+
+Tant si ets un creador aficionat com un professional de la impressió 3D, Spool Master t'ajuda a optimitzar la gestió dels teus filaments, reduir el malbaratament i controlar les teves despeses. Descarrega ara i pren el control del teu inventari de filaments!
+
+https://www.apple.com/legal/internet-services/itunes/dev/stdeula/",NFC,filament,3D,impressió,bobina,Anycubic,Bambu Lab,Prusa,estoc,inventari
+Chinois (simplifié),Spool Master,3D耗材库存管理 + NFC,轻松管理您的3D打印耗材库存。扫描NFC标签，追踪线轴、价格和统计数据。兼容Anycubic、Bambu Lab和Prusa。,"Spool Master - 管理3D打印耗材库存的完整应用
+
+🎯 主要功能
+
+📱 NFC读写
+• 读取Anycubic、Bambu Lab和Prusa线轴的NFC芯片
+• 写入您自定义的NFC标签
+• 克隆NFC标签以重复使用
+• 兼容所有NFC标签格式
+
+📊 完整库存管理
+• 通过NFC扫描或手动添加线轴
+• 追踪每个线轴的剩余重量
+• 管理价格并计算总价值
+• 按品牌、材料和颜色分类
+• 库存不足自动提醒
+
+📈 详细统计
+• 库存总览
+• 库存总价值
+• 材料、颜色和品牌数量
+• 自动购物清单
+
+🛒 智能购物清单
+• 自动添加库存不足的线轴
+• 标记已订购的耗材
+• 手动添加或通过NFC扫描添加
+
+🎨 高级颜色选择器
+• 完整调色板配RGB滑块
+• 支持透明度
+• 实时预览
+
+🌡️ 打印设置
+• 挤出机温度（最低/最高）
+• 热床温度（最低/最高）
+• 耗材直径
+• 线轴长度
+
+🔧 兼容性
+• Anycubic：完整读写
+• Bambu Lab：RFID标签读写
+• Prusa：OpenPrintTag读取和写入（NFC-V）
+• 通用NFC标签：自定义写入
+• 支持21个耗材品牌
+• 支持25种材料类型（PLA、PETG、ABS、TPU等）
+
+🌍 多语言
+应用提供31种语言
+
+☁️ 同步
+• 多设备同步
+• 离线模式可用
+
+💰 单位和货币
+• 支持多种货币
+• 公制或英制单位
+• 自动转换
+
+📱 现代界面
+• 深色和浅色模式
+• 精美设计
+• 直观导航
+• 可视化统计
+
+🔒 安全与隐私
+• 您的数据保持私密
+• 安全本地存储
+
+⭐ 高级版本可用
+• 云同步
+• 无广告
+• 优先支持
+
+无论您是业余创客还是专业3D打印用户，Spool Master都能帮助您优化耗材管理、减少浪费并控制开支。立即下载，掌控您的耗材库存！
+
+https://www.apple.com/legal/internet-services/itunes/dev/stdeula/",NFC,耗材,3D,打印,线轴,Anycubic,Bambu Lab,Prusa,库存,管理
+Chinois (traditionnel),Spool Master,3D耗材庫存管理 + NFC,輕鬆管理您的3D列印耗材庫存。掃描NFC標籤，追蹤線軸、價格和統計數據。相容Anycubic、Bambu Lab和Prusa。,"Spool Master - 管理3D列印耗材庫存的完整應用程式
+
+🎯 主要功能
+
+📱 NFC讀寫
+• 讀取Anycubic、Bambu Lab和Prusa線軸的NFC晶片
+• 寫入您自訂的NFC標籤
+• 複製NFC標籤以重複使用
+• 相容所有NFC標籤格式
+
+📊 完整庫存管理
+• 透過NFC掃描或手動新增線軸
+• 追蹤每個線軸的剩餘重量
+• 管理價格並計算總價值
+• 按品牌、材料和顏色分類
+• 庫存不足自動提醒
+
+📈 詳細統計
+• 庫存總覽
+• 庫存總價值
+• 材料、顏色和品牌數量
+• 自動購物清單
+
+🛒 智慧購物清單
+• 自動新增庫存不足的線軸
+• 標記已訂購的耗材
+• 手動新增或透過NFC掃描新增
+
+🎨 進階顏色選擇器
+• 完整調色盤配RGB滑桿
+• 支援透明度
+• 即時預覽
+
+🌡️ 列印設定
+• 擠出機溫度（最低/最高）
+• 熱床溫度（最低/最高）
+• 耗材直徑
+• 線軸長度
+
+🔧 相容性
+• Anycubic：完整讀寫
+• Bambu Lab：RFID標籤讀寫
+• Prusa：OpenPrintTag讀取和寫入（NFC-V）
+• 通用NFC標籤：自訂寫入
+• 支援21個耗材品牌
+• 支援25種材料類型（PLA、PETG、ABS、TPU等）
+
+🌍 多語言
+應用程式提供31種語言
+
+☁️ 同步
+• 多裝置同步
+• 離線模式可用
+
+💰 單位和貨幣
+• 支援多種貨幣
+• 公制或英制單位
+• 自動轉換
+
+📱 現代介面
+• 深色和淺色模式
+• 精美設計
+• 直覺導航
+• 視覺化統計
+
+🔒 安全與隱私
+• 您的資料保持私密
+• 安全本地儲存
+
+⭐ 進階版本可用
+• 雲端同步
+• 無廣告
+• 優先支援
+
+無論您是業餘創客還是專業3D列印使用者，Spool Master都能幫助您優化耗材管理、減少浪費並控制開支。立即下載，掌控您的耗材庫存！
+
+https://www.apple.com/legal/internet-services/itunes/dev/stdeula/",NFC,耗材,3D,列印,線軸,Anycubic,Bambu Lab,Prusa,庫存,管理
+Coréen,Spool Master,3D 필라멘트 재고 + NFC,"3D 필라멘트 재고를 쉽게 관리하세요. NFC 태그 스캔, 스풀 추적, 가격 및 통계. Anycubic, Bambu Lab, Prusa 호환.","Spool Master - 3D 프린팅 필라멘트 재고를 관리하는 완벽한 앱
+
+🎯 주요 기능
+
+📱 NFC 읽기 및 쓰기
+• Anycubic, Bambu Lab, Prusa 스풀의 NFC 칩 읽기
+• 나만의 맞춤 NFC 태그 쓰기
+• 재사용을 위한 NFC 태그 복제
+• 모든 NFC 태그 형식 호환
+
+📊 완벽한 재고 관리
+• NFC 스캔 또는 수동으로 스풀 추가
+• 각 스풀의 잔여 무게 추적
+• 가격 관리 및 총 가치 계산
+• 브랜드, 소재, 색상별 정리
+• 재고 부족 자동 알림
+
+📈 상세 통계
+• 재고 개요
+• 재고 총 가치
+• 소재, 색상, 브랜드 수
+• 자동 쇼핑 목록
+
+🛒 스마트 쇼핑 목록
+• 재고 부족 스풀 자동 추가
+• 주문한 필라멘트 표시
+• 수동 추가 또는 NFC 스캔으로 추가
+
+🎨 고급 색상 선택기
+• RGB 슬라이더가 있는 전체 팔레트
+• 불투명도 지원
+• 실시간 미리보기
+
+🌡️ 프린트 설정
+• 압출기 온도 (최소/최대)
+• 베드 온도 (최소/최대)
+• 필라멘트 직경
+• 스풀 길이
+
+🔧 호환성
+• Anycubic: 전체 읽기 및 쓰기
+• Bambu Lab: RFID 태그 읽기 및 쓰기
+• Prusa: OpenPrintTag 읽기 및 쓰기 (NFC-V)
+• 일반 NFC 태그: 맞춤 쓰기
+• 21개 필라멘트 브랜드 지원
+• 25가지 소재 유형 지원 (PLA, PETG, ABS, TPU 등)
+
+🌍 다국어
+31개 언어로 제공
+
+☁️ 동기화
+• 다중 기기 동기화
+• 오프라인 모드 지원
+
+💰 단위 및 통화
+• 다중 통화 지원
+• 미터법 또는 야드파운드법
+• 자동 변환
+
+📱 현대적인 인터페이스
+• 다크 및 라이트 모드
+• 세련된 디자인
+• 직관적인 탐색
+• 시각적 통계
+
+🔒 보안 및 개인정보 보호
+• 데이터는 비공개로 유지
+• 안전한 로컬 저장
+
+⭐ 프리미엄 버전 제공
+• 클라우드 동기화
+• 광고 없음
+• 우선 지원
+
+취미 제작자든 전문 3D 프린터 사용자든, Spool Master는 필라멘트 관리를 최적화하고 낭비를 줄이며 비용을 통제하는 데 도움을 줍니다. 지금 다운로드하고 필라멘트 재고를 관리하세요!
+
+https://www.apple.com/legal/internet-services/itunes/dev/stdeula/",NFC,필라멘트,3D,프린팅,스풀,Anycubic,Bambu Lab,Prusa,재고,관리
+Croate,Spool Master,3D filament inventar + NFC,"Jednostavno upravljajte zalihama 3D filamenta. Skenirajte NFC oznake, pratite kaleme, cijene i statistiku. Kompatibilno s Anycubic, Bambu Lab i Prusa.","Spool Master - Kompletna aplikacija za upravljanje zalihama filamenta za 3D ispis
+
+🎯 GLAVNE ZNAČAJKE
+
+📱 NFC čitanje i pisanje
+• Čitanje NFC čipova s kalema Anycubic, Bambu Lab i Prusa
+• Pisanje vlastitih prilagođenih NFC oznaka
+• Kloniranje NFC oznaka za ponovnu upotrebu
+• Kompatibilno sa svim formatima NFC oznaka
+
+📊 Kompletno upravljanje inventarom
+• Dodavanje kalema NFC skeniranjem ili ručno
+• Praćenje preostale težine svakog kalema
+• Upravljanje cijenama i izračun ukupne vrijednosti
+• Organizacija po marki, materijalu i boji
+• Automatska upozorenja o niskim zalihama
+
+📈 Detaljne statistike
+• Pregled vašeg inventara
+• Ukupna vrijednost zaliha
+• Broj materijala, boja i marki
+• Automatski popis za kupnju
+
+🛒 Pametni popis za kupnju
+• Automatsko dodavanje kalema s niskim zalihama
+• Označavanje naručenih filamenata
+• Ručno dodavanje ili NFC skeniranjem
+
+🎨 Napredni birač boja
+• Kompletna paleta s RGB klizačima
+• Podrška za prozirnost
+• Pregled u stvarnom vremenu
+
+🌡️ Postavke ispisa
+• Temperature ekstrudera (min/maks)
+• Temperature podloge (min/maks)
+• Promjer filamenta
+• Duljina kalema
+
+🔧 KOMPATIBILNOST
+• Anycubic: Potpuno čitanje i pisanje
+• Bambu Lab: Čitanje i pisanje RFID oznaka
+• Prusa: Čitanje i pisanje OpenPrintTag (NFC-V)
+• Generičke NFC oznake: Prilagođeno pisanje
+• Podrška za 21 marku filamenta
+• Podrška za 25 vrsta materijala (PLA, PETG, ABS, TPU itd.)
+
+🌍 VIŠEJEZIČNO
+Aplikacija dostupna na 31 jeziku
+
+☁️ SINKRONIZACIJA
+• Sinkronizacija na više uređaja
+• Dostupan izvanmrežni način rada
+
+💰 JEDINICE I VALUTE
+• Podrška za više valuta
+• Metrične ili imperijalne jedinice
+• Automatska pretvorba
+
+📱 MODERNO SUČELJE
+• Tamni i svijetli način rada
+• Elegantan dizajn
+• Intuitivna navigacija
+• Vizualne statistike
+
+🔒 SIGURNOST I PRIVATNOST
+• Vaši podaci ostaju privatni
+• Sigurna lokalna pohrana
+
+⭐ PREMIUM VERZIJA DOSTUPNA
+• Sinkronizacija u oblaku
+• Bez reklama
+• Prioritetna podrška
+
+Bilo da ste hobist ili profesionalni 3D ispisivač, Spool Master vam pomaže optimizirati upravljanje filamentom, smanjiti otpad i kontrolirati troškove. Preuzmite sada i preuzmite kontrolu nad zalihama filamenta!
+
+https://www.apple.com/legal/internet-services/itunes/dev/stdeula/",NFC,filament,3D,ispis,kalem,Anycubic,Bambu Lab,Prusa,zalihe,inventar
+Danois,Spool Master,3D filament lager + NFC,"Administrer dit 3D filamentlager nemt. Scan NFC-tags, spor spoler, priser og statistik. Kompatibel med Anycubic, Bambu Lab og Prusa.","Spool Master - Den komplette app til at administrere dit 3D-print filamentlager
+
+🎯 HOVEDFUNKTIONER
+
+📱 NFC læsning og skrivning
+• Læs NFC-chips fra Anycubic, Bambu Lab og Prusa spoler
+• Skriv dine egne tilpassede NFC-tags
+• Klon NFC-tags til genbrug
+• Kompatibel med alle NFC-tagformater
+
+📊 Komplet lagerstyring
+• Tilføj spoler via NFC-scanning eller manuelt
+• Spor resterende vægt for hver spole
+• Administrer priser og beregn samlet værdi
+• Organiser efter mærke, materiale og farve
+• Automatiske advarsler ved lav lagerbeholdning
+
+📈 Detaljeret statistik
+• Overblik over dit lager
+• Samlet værdi af dit lager
+• Antal materialer, farver og mærker
+• Automatisk indkøbsliste
+
+🛒 Smart indkøbsliste
+• Automatisk tilføjelse af spoler med lav lagerbeholdning
+• Markér bestilte filamenter
+• Tilføj manuelt eller via NFC-scanning
+
+🎨 Avanceret farvevælger
+• Fuld palette med RGB-skydere
+• Understøttelse af gennemsigtighed
+• Forhåndsvisning i realtid
+
+🌡️ Printindstillinger
+• Ekstrudertemperaturer (min/maks)
+• Sengetemperaturer (min/maks)
+• Filamentdiameter
+• Spolelængde
+
+🔧 KOMPATIBILITET
+• Anycubic: Fuld læsning og skrivning
+• Bambu Lab: RFID-tag læsning og skrivning
+• Prusa: OpenPrintTag læsning og skrivning (NFC-V)
+• Generiske NFC-tags: Tilpasset skrivning
+• Understøttelse af 21 filamentmærker
+• Understøttelse af 25 materialetyper (PLA, PETG, ABS, TPU osv.)
+
+🌍 FLERSPROGET
+App tilgængelig på 31 sprog
+
+☁️ SYNKRONISERING
+• Synkronisering på tværs af enheder
+• Offlinetilstand tilgængelig
+
+💰 ENHEDER OG VALUTAER
+• Understøttelse af flere valutaer
+• Metriske eller imperiale enheder
+• Automatisk konvertering
+
+📱 MODERNE BRUGERFLADE
+• Mørk og lys tilstand
+• Elegant design
+• Intuitiv navigation
+• Visuel statistik
+
+🔒 SIKKERHED OG PRIVATLIV
+• Dine data forbliver private
+• Sikker lokal lagring
+
+⭐ PREMIUMVERSION TILGÆNGELIG
+• Skysynkronisering
+• Reklamefri
+• Prioriteret support
+
+Uanset om du er hobbyskaber eller professionel 3D-printer, hjælper Spool Master dig med at optimere din filamentstyring, reducere spild og kontrollere dine udgifter. Download nu og tag kontrol over dit filamentlager!
+
+https://www.apple.com/legal/internet-services/itunes/dev/stdeula/",NFC,filament,3D,print,spole,Anycubic,Bambu Lab,Prusa,lager,lagerstyring
+Finnois,Spool Master,3D-filamenttien hallinta + NFC,"Hallitse 3D-filamenttivarastoasi helposti. Skannaa NFC-tageja, seuraa keloja, hintoja ja tilastoja. Yhteensopiva Anycubic, Bambu Lab ja Prusa kanssa.","Spool Master - Täydellinen sovellus 3D-tulostusfilamenttivarastosi hallintaan
+
+🎯 PÄÄOMINAISUUDET
+
+📱 NFC:n luku ja kirjoitus • Lue NFC-siruja Anycubic, Bambu Lab ja Prusa -keloista • Kirjoita omia mukautettuja NFC-tageja • Kloonaa NFC-tageja uudelleenkäyttöä varten • Yhteensopiva kaikkien NFC-tagimuotojen kanssa
+
+📊 Täydellinen varastonhallinta • Lisää keloja NFC-skannauksella tai manuaalisesti • Seuraa jokaisen kelan jäljellä olevaa painoa • Hallitse hintoja ja laske kokonaisarvo • Järjestä merkin, materiaalin ja värin mukaan • Automaattiset vähäisen varaston hälytykset
+
+📈 Yksityiskohtaiset tilastot • Yleiskatsaus varastoosi • Varastosi kokonaisarvo • Materiaalien, värien ja merkkien lukumäärä • Automaattinen ostoslista
+
+🛒 Älykäs ostoslista • Vähäisen varaston kelojen automaattinen lisäys • Merkitse tilatut filamentit • Lisää manuaalisesti tai NFC-skannauksella
+
+🎨 Edistynyt värinvalitsin • Täysi paletti RGB-liukusäätimillä • Läpinäkyvyyden tuki • Reaaliaikainen esikatselu
+
+🌡️ Tulostusasetukset • Suuttimen lämpötilat (min/max) • Alustan lämpötilat (min/max) • Filamentin halkaisija • Kelan pituus
+
+🔧 YHTEENSOPIVUUS • Anycubic: Täysi luku ja kirjoitus • Bambu Lab: RFID-tagin luku ja kirjoitus • Prusa: OpenPrintTag-luku ja -kirjoitus (NFC-V) • Yleiset NFC-tagit: Mukautettu kirjoitus • Tuki 21 filamenttimerkille • Tuki 25 materiaalityypille (PLA, PETG, ABS, TPU jne.)
+
+🌍 MONIKIELINEN Sovellus saatavilla 31 kielellä
+
+☁️ SYNKRONOINTI • Monilaitesynkronointi • Offline-tila saatavilla
+
+💰 YKSIKÖT JA VALUUTAT • Usean valuutan tuki • Metriset tai imperiaaliset yksiköt • Automaattinen muunnos
+
+📱 MODERNI KÄYTTÖLIITTYMÄ • Tumma ja vaalea tila • Tyylikäs muotoilu • Intuitiivinen navigointi • Visuaaliset tilastot
+
+🔒 TURVALLISUUS JA YKSITYISYYS • Tietosi pysyvät yksityisinä • Turvallinen paikallinen tallennus
+
+⭐ PREMIUM-VERSIO SAATAVILLA • Pilvisynkronointi • Mainokseton • Prioriteettituki
+
+Oletpa harrastaja tai ammattimainen 3D-tulostaja, Spool Master auttaa sinua optimoimaan filamenttien hallinnan, vähentämään hukkaa ja hallitsemaan kulujasi. Lataa nyt ja ota filamenttivarastosi hallintaan!
+
+https://www.apple.com/legal/internet-services/itunes/dev/stdeula/",NFC,filamentti,3D,tulostus,kela,Anycubic,Bambu Lab,Prusa,varasto,inventaario
+Grec,Spool Master,Διαχείριση νημάτων 3D + NFC,"Διαχειριστείτε εύκολα το απόθεμα νημάτων 3D. Σαρώστε ετικέτες NFC, παρακολουθήστε καρούλια, τιμές και στατιστικά. Συμβατό με Anycubic, Bambu Lab και Prusa.","Spool Master - Η πλήρης εφαρμογή για τη διαχείριση του αποθέματος νημάτων 3D εκτύπωσης
+
+🎯 ΚΥΡΙΕΣ ΛΕΙΤΟΥΡΓΙΕΣ
+
+📱 Ανάγνωση και εγγραφή NFC • Ανάγνωση τσιπ NFC από καρούλια Anycubic, Bambu Lab και Prusa • Εγγραφή δικών σας προσαρμοσμένων ετικετών NFC • Κλωνοποίηση ετικετών NFC για επαναχρησιμοποίηση • Συμβατό με όλες τις μορφές ετικετών NFC
+
+📊 Πλήρης διαχείριση αποθέματος • Προσθήκη καρουλιών με σάρωση NFC ή χειροκίνητα • Παρακολούθηση εναπομείναντος βάρους κάθε καρουλιού • Διαχείριση τιμών και υπολογισμός συνολικής αξίας • Οργάνωση ανά μάρκα, υλικό και χρώμα • Αυτόματες ειδοποιήσεις χαμηλού αποθέματος
+
+📈 Λεπτομερή στατιστικά • Επισκόπηση του αποθέματός σας • Συνολική αξία αποθέματος • Αριθμός υλικών, χρωμάτων και μαρκών • Αυτόματη λίστα αγορών
+
+🛒 Έξυπνη λίστα αγορών • Αυτόματη προσθήκη καρουλιών χαμηλού αποθέματος • Σημείωση παραγγελθέντων νημάτων • Προσθήκη χειροκίνητα ή με σάρωση NFC
+
+🎨 Προηγμένος επιλογέας χρώματος • Πλήρης παλέτα με ρυθμιστικά RGB • Υποστήριξη αδιαφάνειας • Προεπισκόπηση σε πραγματικό χρόνο
+
+🌡️ Ρυθμίσεις εκτύπωσης • Θερμοκρασίες εξωθητήρα (min/max) • Θερμοκρασίες κλίνης (min/max) • Διάμετρος νήματος • Μήκος καρουλιού
+
+🔧 ΣΥΜΒΑΤΟΤΗΤΑ • Anycubic: Πλήρης ανάγνωση και εγγραφή • Bambu Lab: Ανάγνωση και εγγραφή ετικετών RFID • Prusa: Ανάγνωση και εγγραφή OpenPrintTag (NFC-V) • Γενικές ετικέτες NFC: Προσαρμοσμένη εγγραφή • Υποστήριξη 21 μαρκών νημάτων • Υποστήριξη 25 τύπων υλικών (PLA, PETG, ABS, TPU κ.λπ.)
+
+🌍 ΠΟΛΥΓΛΩΣΣΟ Εφαρμογή διαθέσιμη σε 31 γλώσσες
+
+☁️ ΣΥΓΧΡΟΝΙΣΜΟΣ • Συγχρονισμός πολλαπλών συσκευών • Διαθέσιμη λειτουργία εκτός σύνδεσης
+
+💰 ΜΟΝΑΔΕΣ ΚΑΙ ΝΟΜΙΣΜΑΤΑ • Υποστήριξη πολλαπλών νομισμάτων • Μετρικές ή αυτοκρατορικές μονάδες • Αυτόματη μετατροπή
+
+📱 ΣΥΓΧΡΟΝΗ ΔΙΕΠΑΦΗ • Σκοτεινή και φωτεινή λειτουργία • Κομψός σχεδιασμός • Διαισθητική πλοήγηση • Οπτικά στατιστικά
+
+🔒 ΑΣΦΑΛΕΙΑ ΚΑΙ ΑΠΟΡΡΗΤΟ • Τα δεδομένα σας παραμένουν ιδιωτικά • Ασφαλής τοπική αποθήκευση
+
+⭐ ΕΚΔΟΣΗ PREMIUM ΔΙΑΘΕΣΙΜΗ • Συγχρονισμός στο cloud • Χωρίς διαφημίσεις • Υποστήριξη προτεραιότητας
+
+Είτε είστε ερασιτέχνης είτε επαγγελματίας 3D εκτύπωσης, το Spool Master σας βοηθά να βελτιστοποιήσετε τη διαχείριση νημάτων, να μειώσετε τη σπατάλη και να ελέγξετε τα έξοδά σας. Κατεβάστε τώρα και πάρτε τον έλεγχο του αποθέματός σας!
+
+https://www.apple.com/legal/internet-services/itunes/dev/stdeula/",NFC,νήμα,3D,εκτύπωση,καρούλι,Anycubic,Bambu Lab,Prusa,απόθεμα,διαχείριση
+Hébreu,Spool Master,ניהול פילמנט תלת-ממד + NFC,"נהלו את מלאי הפילמנט לתלת-ממד בקלות. סרקו תגי NFC, עקבו אחר סלילים, מחירים וסטטיסטיקות. תואם Anycubic, Bambu Lab ו-Prusa.","Spool Master - האפליקציה המלאה לניהול מלאי פילמנט להדפסת תלת-ממד
+
+🎯 תכונות עיקריות
+
+📱 קריאה וכתיבה של NFC • קריאת שבבי NFC מסלילי Anycubic, Bambu Lab ו-Prusa • כתיבת תגי NFC מותאמים אישית • שכפול תגי NFC לשימוש חוזר • תואם לכל פורמטי תגי NFC
+
+📊 ניהול מלאי מלא • הוספת סלילים באמצעות סריקת NFC או ידנית • מעקב אחר משקל נותר של כל סליל • ניהול מחירים וחישוב ערך כולל • ארגון לפי מותג, חומר וצבע • התראות אוטומטיות על מלאי נמוך
+
+📈 סטטיסטיקות מפורטות • סקירה כללית של המלאי שלך • ערך כולל של המלאי • מספר חומרים, צבעים ומותגים • רשימת קניות אוטומטית
+
+🛒 רשימת קניות חכמה • הוספה אוטומטית של סלילים במלאי נמוך • סימון פילמנטים שהוזמנו • הוספה ידנית או באמצעות סריקת NFC
+
+🎨 בורר צבעים מתקדם • פלטה מלאה עם מחווני RGB • תמיכה בשקיפות • תצוגה מקדימה בזמן אמת
+
+🌡️ הגדרות הדפסה • טמפרטורות מכבש (מינימום/מקסימום) • טמפרטורות מיטה (מינימום/מקסימום) • קוטר פילמנט • אורך סליל
+
+🔧 תאימות • Anycubic: קריאה וכתיבה מלאה • Bambu Lab: קריאה וכתיבה של תגי RFID • Prusa: קריאה וכתיבה OpenPrintTag (NFC-V) • תגי NFC גנריים: כתיבה מותאמת אישית • תמיכה ב-21 מותגי פילמנט • תמיכה ב-25 סוגי חומרים (PLA, PETG, ABS, TPU ועוד)
+
+🌍 רב-לשוני אפליקציה זמינה ב-31 שפות
+
+☁️ סנכרון • סנכרון בין מכשירים מרובים • מצב לא מקוון זמין
+
+💰 יחידות ומטבעות • תמיכה במטבעות מרובים • יחידות מטריות או אימפריאליות • המרה אוטומטית
+
+📱 ממשק מודרני • מצב כהה ובהיר • עיצוב אלגנטי • ניווט אינטואיטיבי • סטטיסטיקות ויזואליות
+
+🔒 אבטחה ופרטיות • הנתונים שלך נשארים פרטיים • אחסון מקומי מאובטח
+
+⭐ גרסת פרימיום זמינה • סנכרון ענן • ללא פרסומות • תמיכה בעדיפות
+
+בין אם אתם חובבים או מדפיסי תלת-ממד מקצועיים, Spool Master עוזר לכם לייעל את ניהול הפילמנט, לצמצם בזבוז ולשלוט בהוצאות. הורידו עכשיו וקחו שליטה על מלאי הפילמנט שלכם!
+
+https://www.apple.com/legal/internet-services/itunes/dev/stdeula/",NFC,פילמנט,תלת-ממד,הדפסה,סליל,Anycubic,Bambu Lab,Prusa,מלאי,ניהול
+Hindi,Spool Master,3D फिलामेंट इन्वेंटरी + NFC,"अपने 3D फिलामेंट स्टॉक को आसानी से प्रबंधित करें। NFC टैग स्कैन करें, स्पूल, कीमतों और आंकड़ों को ट्रैक करें। Anycubic, Bambu Lab और Prusa के साथ संगत।","Spool Master - आपके 3D प्रिंटिंग फिलामेंट स्टॉक को प्रबंधित करने के लिए संपूर्ण ऐप
+
+🎯 मुख्य विशेषताएं
+
+📱 NFC रीडिंग और राइटिंग • Anycubic, Bambu Lab और Prusa स्पूल से NFC चिप पढ़ें • अपने कस्टम NFC टैग लिखें • पुन: उपयोग के लिए NFC टैग क्लोन करें • सभी NFC टैग फॉर्मेट के साथ संगत
+
+📊 संपूर्ण इन्वेंटरी प्रबंधन • NFC स्कैन या मैन्युअल रूप से स्पूल जोड़ें • प्रत्येक स्पूल का शेष वजन ट्रैक करें • कीमतें प्रबंधित करें और कुल मूल्य की गणना करें • ब्रांड, सामग्री और रंग के अनुसार व्यवस्थित करें • स्वचालित कम स्टॉक अलर्ट
+
+📈 विस्तृत आंकड़े • आपकी इन्वेंटरी का अवलोकन • आपके स्टॉक का कुल मूल्य • सामग्री, रंगों और ब्रांडों की संख्या • स्वचालित खरीदारी सूची
+
+🛒 स्मार्ट खरीदारी सूची • कम स्टॉक वाले स्पूल की स्वचालित जोड़ • ऑर्डर किए गए फिलामेंट को चिह्नित करें • मैन्युअल रूप से या NFC स्कैन से जोड़ें
+
+🎨 उन्नत रंग चयनकर्ता • RGB स्लाइडर के साथ पूर्ण पैलेट • अपारदर्शिता सपोर्ट • रीयल-टाइम पूर्वावलोकन
+
+🌡️ प्रिंट सेटिंग्स • एक्सट्रूडर तापमान (न्यूनतम/अधिकतम) • बेड तापमान (न्यूनतम/अधिकतम) • फिलामेंट व्यास • स्पूल लंबाई
+
+🔧 संगतता • Anycubic: पूर्ण रीडिंग और राइटिंग • Bambu Lab: RFID टैग रीडिंग और राइटिंग • Prusa: OpenPrintTag रीडिंग और राइटिंग (NFC-V) • जेनेरिक NFC टैग: कस्टम राइटिंग • 21 फिलामेंट ब्रांडों का सपोर्ट • 25 सामग्री प्रकारों का सपोर्ट (PLA, PETG, ABS, TPU आदि)
+
+🌍 बहुभाषी ऐप 31 भाषाओं में उपलब्ध
+
+☁️ सिंक्रोनाइज़ेशन • मल्टी-डिवाइस सिंक्रोनाइज़ेशन • ऑफ़लाइन मोड उपलब्ध
+
+💰 इकाइयाँ और मुद्राएँ • एकाधिक मुद्रा सपोर्ट • मीट्रिक या इम्पीरियल इकाइयाँ • स्वचालित रूपांतरण
+
+📱 आधुनिक इंटरफ़ेस • डार्क और लाइट मोड • आकर्षक डिज़ाइन • सहज नेविगेशन • विज़ुअल आंकड़े
+
+🔒 सुरक्षा और गोपनीयता • आपका डेटा निजी रहता है • सुरक्षित स्थानीय संग्रहण
+
+⭐ प्रीमियम संस्करण उपलब्ध • क्लाउड सिंक्रोनाइज़ेशन • विज्ञापन-मुक्त • प्राथमिकता सपोर्ट
+
+चाहे आप शौकिया मेकर हों या पेशेवर 3D प्रिंटर, Spool Master आपको फिलामेंट प्रबंधन को अनुकूलित करने, बर्बादी कम करने और खर्चों को नियंत्रित करने में मदद करता है। अभी डाउनलोड करें और अपनी फिलामेंट इन्वेंटरी पर नियंत्रण रखें!
+
+https://www.apple.com/legal/internet-services/itunes/dev/stdeula/",NFC,फिलामेंट,3D,प्रिंटिंग,स्पूल,Anycubic,Bambu Lab,Prusa,स्टॉक,इन्वेंटरी
+Hongrois,Spool Master,3D filament készlet + NFC,"Kezelje könnyedén 3D filament készletét. Szkenneljen NFC címkéket, kövesse nyomon orsókat, árakat és statisztikákat. Kompatibilis Anycubic, Bambu Lab és Prusa.","Spool Master - A teljes alkalmazás a 3D nyomtatási filament készlet kezeléséhez
+
+🎯 FŐ FUNKCIÓK
+
+📱 NFC olvasás és írás • NFC chipek olvasása Anycubic, Bambu Lab és Prusa orsókról • Saját egyéni NFC címkék írása • NFC címkék klónozása újrafelhasználáshoz • Kompatibilis az összes NFC címkeformátummal
+
+📊 Teljes készletkezelés • Orsók hozzáadása NFC szkenneléssel vagy manuálisan • Minden orsó maradék súlyának nyomon követése • Árak kezelése és összérték kiszámítása • Rendezés márka, anyag és szín szerint • Automatikus alacsony készlet figyelmeztetések
+
+📈 Részletes statisztikák • Készlet áttekintése • Készlet összértéke • Anyagok, színek és márkák száma • Automatikus bevásárlólista
+
+🛒 Intelligens bevásárlólista • Alacsony készletű orsók automatikus hozzáadása • Megrendelt filamentek jelölése • Hozzáadás manuálisan vagy NFC szkenneléssel
+
+🎨 Fejlett színválasztó • Teljes paletta RGB csúszkákkal • Átlátszóság támogatás • Valós idejű előnézet
+
+🌡️ Nyomtatási beállítások • Extruder hőmérsékletek (min/max) • Ágy hőmérsékletek (min/max) • Filament átmérő • Orsó hossz
+
+🔧 KOMPATIBILITÁS • Anycubic: Teljes olvasás és írás • Bambu Lab: RFID címke olvasás és írás • Prusa: OpenPrintTag olvasás és írás (NFC-V) • Általános NFC címkék: Egyéni írás • 21 filament márka támogatása • 25 anyagtípus támogatása (PLA, PETG, ABS, TPU stb.)
+
+🌍 TÖBBNYELVŰ Alkalmazás 31 nyelven elérhető
+
+☁️ SZINKRONIZÁLÁS • Több eszközös szinkronizálás • Offline mód elérhető
+
+💰 MÉRTÉKEGYSÉGEK ÉS PÉNZNEMEK • Többféle pénznem támogatás • Metrikus vagy angolszász mértékegységek • Automatikus átváltás
+
+📱 MODERN FELÜLET • Sötét és világos mód • Elegáns dizájn • Intuitív navigáció • Vizuális statisztikák
+
+🔒 BIZTONSÁG ÉS ADATVÉDELEM • Adatai magánjellegűek maradnak • Biztonságos helyi tárolás
+
+⭐ PRÉMIUM VERZIÓ ELÉRHETŐ • Felhő szinkronizálás • Reklámmentes • Kiemelt támogatás
+
+Akár hobbi alkotó, akár professzionális 3D nyomtató, a Spool Master segít optimalizálni a filament kezelést, csökkenteni a pazarlást és kontrollálni a kiadásokat. Töltse le most és vegye kézbe filament készletének kezelését!
+
+https://www.apple.com/legal/internet-services/itunes/dev/stdeula/",NFC,filament,3D,nyomtatás,orsó,Anycubic,Bambu Lab,Prusa,készlet,leltár
+Indonésien,Spool Master,Inventaris Filamen 3D + NFC,"Kelola stok filamen 3D Anda dengan mudah. Pindai tag NFC, lacak spool, harga, dan statistik. Kompatibel dengan Anycubic, Bambu Lab, dan Prusa.","Spool Master - Aplikasi lengkap untuk mengelola stok filamen pencetakan 3D Anda
+
+🎯 FITUR UTAMA
+
+📱 Membaca dan menulis NFC • Membaca chip NFC dari spool Anycubic, Bambu Lab, dan Prusa • Menulis tag NFC kustom Anda sendiri • Mengkloning tag NFC untuk digunakan kembali • Kompatibel dengan semua format tag NFC
+
+📊 Manajemen inventaris lengkap • Tambahkan spool dengan pemindaian NFC atau secara manual • Lacak berat sisa setiap spool • Kelola harga dan hitung nilai total • Atur berdasarkan merek, bahan, dan warna • Peringatan stok rendah otomatis
+
+📈 Statistik terperinci • Tinjauan inventaris Anda • Nilai total stok Anda • Jumlah bahan, warna, dan merek • Daftar belanja otomatis
+
+🛒 Daftar belanja pintar • Penambahan otomatis spool stok rendah • Tandai filamen yang sudah dipesan • Tambahkan secara manual atau dengan pemindaian NFC
+
+🎨 Pemilih warna canggih • Palet lengkap dengan slider RGB • Dukungan opasitas • Pratinjau waktu nyata
+
+🌡️ Pengaturan cetak • Suhu ekstruder (min/maks) • Suhu bed (min/maks) • Diameter filamen • Panjang spool
+
+🔧 KOMPATIBILITAS • Anycubic: Membaca dan menulis penuh • Bambu Lab: Membaca dan menulis tag RFID • Prusa: Membaca dan menulis OpenPrintTag (NFC-V) • Tag NFC generik: Penulisan kustom • Dukungan untuk 21 merek filamen • Dukungan untuk 25 jenis bahan (PLA, PETG, ABS, TPU, dll.)
+
+🌍 MULTIBAHASA Aplikasi tersedia dalam 31 bahasa
+
+☁️ SINKRONISASI • Sinkronisasi multi-perangkat • Mode offline tersedia
+
+💰 UNIT DAN MATA UANG • Dukungan multi mata uang • Unit metrik atau imperial • Konversi otomatis
+
+📱 ANTARMUKA MODERN • Mode gelap dan terang • Desain elegan • Navigasi intuitif • Statistik visual
+
+🔒 KEAMANAN DAN PRIVASI • Data Anda tetap pribadi • Penyimpanan lokal yang aman
+
+⭐ VERSI PREMIUM TERSEDIA • Sinkronisasi cloud • Bebas iklan • Dukungan prioritas
+
+Baik Anda pembuat hobi atau pencetak 3D profesional, Spool Master membantu Anda mengoptimalkan manajemen filamen, mengurangi limbah, dan mengontrol pengeluaran. Unduh sekarang dan kendalikan inventaris filamen Anda!
+
+https://www.apple.com/legal/internet-services/itunes/dev/stdeula/",NFC,filamen,3D,cetak,spool,Anycubic,Bambu Lab,Prusa,stok,inventaris
+Japonais,Spool Master,3Dフィラメント管理 + NFC,3Dフィラメント在庫を簡単に管理。NFCタグをスキャンし、スプール、価格、統計を追跡。Anycubic、Bambu Lab、Prusaに対応。,"Spool Master - 3Dプリント用フィラメント在庫を管理する完全なアプリ
+
+🎯 主な機能
+
+📱 NFC読み取りと書き込み • Anycubic、Bambu Lab、PrusaスプールのNFCチップを読み取り • 独自のカスタムNFCタグを書き込み • NFCタグをクローンして再利用 • すべてのNFCタグフォーマットに対応
+
+📊 完全な在庫管理 • NFCスキャンまたは手動でスプールを追加 • 各スプールの残量を追跡 • 価格を管理し合計値を計算 • ブランド、素材、色で整理 • 在庫低下の自動アラート
+
+📈 詳細な統計 • 在庫の概要 • 在庫の合計値 • 素材、色、ブランドの数 • 自動買い物リスト
+
+🛒 スマート買い物リスト • 在庫の少ないスプールを自動追加 • 注文済みフィラメントをマーク • 手動またはNFCスキャンで追加
+
+🎨 高度なカラーピッカー • RGBスライダー付きフルパレット • 不透明度サポート • リアルタイムプレビュー
+
+🌡️ プリント設定 • エクストルーダー温度（最小/最大） • ベッド温度（最小/最大） • フィラメント径 • スプール長さ
+
+🔧 互換性 • Anycubic：完全な読み取りと書き込み • Bambu Lab：RFIDタグの読み取りと書き込み • Prusa：OpenPrintTag読み書き（NFC-V） • 汎用NFCタグ：カスタム書き込み • 21のフィラメントブランドに対応 • 25の素材タイプに対応（PLA、PETG、ABS、TPUなど）
+
+🌍 多言語対応 31言語で利用可能
+
+☁️ 同期 • マルチデバイス同期 • オフラインモード対応
+
+💰 単位と通貨 • 複数通貨サポート • メートル法またはヤード・ポンド法 • 自動変換
+
+📱 モダンなインターフェース • ダークモードとライトモード • 洗練されたデザイン • 直感的なナビゲーション • ビジュアル統計
+
+🔒 セキュリティとプライバシー • データはプライベートに保護 • 安全なローカルストレージ
+
+⭐ プレミアム版あり • クラウド同期 • 広告なし • 優先サポート
+
+趣味のメーカーでもプロの3Dプリンターでも、Spool Masterはフィラメント管理の最適化、無駄の削減、経費の管理をサポートします。今すぐダウンロードして、フィラメント在庫を管理しましょう！
+
+https://www.apple.com/legal/internet-services/itunes/dev/stdeula/",NFC,フィラメント,3D,印刷,スプール,Anycubic,Bambu Lab,Prusa,在庫,管理
+Malais,Spool Master,Inventori Filamen 3D + NFC,"Urus stok filamen 3D anda dengan mudah. Imbas tag NFC, jejak spool, harga dan statistik. Serasi dengan Anycubic, Bambu Lab dan Prusa.","Spool Master - Aplikasi lengkap untuk mengurus stok filamen percetakan 3D anda
+
+🎯 CIRI-CIRI UTAMA
+
+📱 Pembacaan dan Penulisan NFC
+• Baca cip NFC daripada spool Anycubic, Bambu Lab dan Prusa
+• Tulis tag NFC tersuai anda sendiri
+• Klon tag NFC untuk guna semula
+• Serasi dengan semua format tag NFC
+
+📊 Pengurusan Inventori Lengkap
+• Tambah spool melalui imbasan NFC atau secara manual
+• Jejak berat baki setiap spool
+• Urus harga dan kira jumlah nilai
+• Susun mengikut jenama, bahan dan warna
+• Amaran stok rendah automatik
+
+📈 Statistik Terperinci
+• Gambaran keseluruhan inventori anda
+• Jumlah nilai stok anda
+• Bilangan bahan, warna dan jenama
+• Senarai beli-belah automatik
+
+🛒 Senarai Beli-Belah Pintar
+• Penambahan automatik spool stok rendah
+• Tandakan filamen yang telah ditempah
+• Tambah secara manual atau melalui imbasan NFC
+
+🎨 Pemilih Warna Lanjutan
+• Palet penuh dengan peluncur RGB
+• Sokongan kelegapan
+• Pratonton masa nyata
+
+🌡️ Tetapan Cetakan
+• Suhu penyemperit (min/maks)
+• Suhu katil (min/maks)
+• Diameter filamen
+• Panjang spool
+
+🔧 KESERASIAN
+• Anycubic: Pembacaan dan penulisan penuh
+• Bambu Lab: Pembacaan dan penulisan tag RFID
+• Prusa: Pembacaan dan penulisan OpenPrintTag (NFC-V)
+• Tag NFC generik: Penulisan tersuai
+• Sokongan untuk 21 jenama filamen
+• Sokongan untuk 25 jenis bahan (PLA, PETG, ABS, TPU, dll.)
+
+🌍 PELBAGAI BAHASA
+Aplikasi tersedia dalam 31 bahasa
+
+☁️ PENYEGERAKAN
+• Penyegerakan pelbagai peranti
+• Mod luar talian tersedia
+
+💰 UNIT DAN MATA WANG
+• Sokongan pelbagai mata wang
+• Unit metrik atau imperial
+• Penukaran automatik
+
+📱 ANTARA MUKA MODEN
+• Mod gelap dan cerah
+• Reka bentuk anggun
+• Navigasi intuitif
+• Statistik visual
+
+🔒 KESELAMATAN DAN PRIVASI
+• Data anda kekal peribadi
+• Storan tempatan selamat
+
+⭐ VERSI PREMIUM TERSEDIA
+• Penyegerakan awan
+• Tanpa iklan
+• Sokongan keutamaan
+
+Sama ada anda pembuat hobi atau pencetak 3D profesional, Spool Master membantu anda mengoptimumkan pengurusan filamen, mengurangkan pembaziran dan mengawal perbelanjaan anda. Muat turun sekarang dan kawal inventori filamen anda!
+
+https://www.apple.com/legal/internet-services/itunes/dev/stdeula/",NFC,filamen,3D,cetakan,spool,Anycubic,Bambu Lab,Prusa,stok,inventori,pengurusan
+Néerlandais,Spool Master,3D Filament Inventaris + NFC,"Beheer je 3D filamentvoorraad eenvoudig. Scan NFC-tags, volg spoelen, prijzen en statistieken. Compatibel met Anycubic, Bambu Lab en Prusa.","Spool Master - De complete app om je 3D-printfilamentvoorraad te beheren
+
+🎯 BELANGRIJKSTE FUNCTIES
+
+📱 NFC Lezen en Schrijven
+• Lees NFC-chips van Anycubic, Bambu Lab en Prusa spoelen
+• Schrijf je eigen aangepaste NFC-tags
+• Kloon NFC-tags voor hergebruik
+• Compatibel met alle NFC-tagformaten
+
+📊 Volledig Voorraadbeheer
+• Voeg spoelen toe via NFC-scan of handmatig
+• Volg het resterende gewicht van elke spoel
+• Beheer prijzen en bereken de totale waarde
+• Organiseer op merk, materiaal en kleur
+• Automatische waarschuwingen bij lage voorraad
+
+📈 Gedetailleerde Statistieken
+• Overzicht van je inventaris
+• Totale waarde van je voorraad
+• Aantal materialen, kleuren en merken
+• Automatische boodschappenlijst
+
+🛒 Slimme Boodschappenlijst
+• Automatische toevoeging van spoelen met lage voorraad
+• Markeer bestelde filamenten
+• Handmatig of via NFC-scan toevoegen
+
+🎨 Geavanceerde Kleurkiezer
+• Volledig palet met RGB-schuifregelaars
+• Ondersteuning voor dekking
+• Realtime voorbeeld
+
+🌡️ Printinstellingen
+• Extrudertemperaturen (min/max)
+• Bedtemperaturen (min/max)
+• Filamentdiameter
+• Spoellengte
+
+🔧 COMPATIBILITEIT
+• Anycubic: Volledig lezen en schrijven
+• Bambu Lab: RFID-tag lezen en schrijven
+• Prusa: OpenPrintTag lezen en schrijven (NFC-V)
+• Generieke NFC-tags: Aangepast schrijven
+• Ondersteuning voor 21 filamentmerken
+• Ondersteuning voor 25 materiaalsoorten (PLA, PETG, ABS, TPU, enz.)
+
+🌍 MEERTALIG
+App beschikbaar in 31 talen
+
+☁️ SYNCHRONISATIE
+• Synchronisatie tussen meerdere apparaten
+• Offlinemodus beschikbaar
+
+💰 EENHEDEN EN VALUTA
+• Ondersteuning voor meerdere valuta
+• Metrische of imperiale eenheden
+• Automatische conversie
+
+📱 MODERNE INTERFACE
+• Donkere en lichte modus
+• Strak ontwerp
+• Intuïtieve navigatie
+• Visuele statistieken
+
+🔒 BEVEILIGING EN PRIVACY
+• Je gegevens blijven privé
+• Veilige lokale opslag
+
+⭐ PREMIUMVERSIE BESCHIKBAAR
+• Cloudsynchronisatie
+• Zonder advertenties
+• Prioritaire ondersteuning
+
+Of je nu een hobbymaker of een professionele 3D-printer bent, Spool Master helpt je om je filamentbeheer te optimaliseren, verspilling te verminderen en je uitgaven te beheersen. Download nu en neem controle over je filamentinventaris!
+
+https://www.apple.com/legal/internet-services/itunes/dev/stdeula/",NFC,filament,3D,printen,spoel,Anycubic,Bambu Lab,Prusa,voorraad,inventaris,beheer
+Norvégien,Spool Master,3D Filament Inventar + NFC,"Administrer 3D-filamentlageret ditt enkelt. Skann NFC-tagger, spor spoler, priser og statistikk. Kompatibel med Anycubic, Bambu Lab og Prusa.","Spool Master - Den komplette appen for å administrere lageret av 3D-utskriftsfilament
+
+🎯 HOVEDFUNKSJONER
+
+📱 NFC Lesing og Skriving
+• Les NFC-brikker fra Anycubic, Bambu Lab og Prusa spoler
+• Skriv dine egne tilpassede NFC-tagger
+• Klon NFC-tagger for gjenbruk
+• Kompatibel med alle NFC-tagformater
+
+📊 Komplett Lagerstyring
+• Legg til spoler via NFC-skanning eller manuelt
+• Spor gjenværende vekt for hver spole
+• Administrer priser og beregn totalverdi
+• Organiser etter merke, materiale og farge
+• Automatiske varsler ved lavt lager
+
+📈 Detaljert Statistikk
+• Oversikt over lageret ditt
+• Total verdi av lageret ditt
+• Antall materialer, farger og merker
+• Automatisk handleliste
+
+🛒 Smart Handleliste
+• Automatisk tillegg av spoler med lavt lager
+• Merk bestilte filamenter
+• Legg til manuelt eller via NFC-skanning
+
+🎨 Avansert Fargevelger
+• Fullt palett med RGB-glidebrytere
+• Støtte for gjennomsiktighet
+• Sanntidsforhåndsvisning
+
+🌡️ Utskriftsinnstillinger
+• Ekstrudertemperaturer (min/maks)
+• Sengtemperaturer (min/maks)
+• Filamentdiameter
+• Spolelengde
+
+🔧 KOMPATIBILITET
+• Anycubic: Full lesing og skriving
+• Bambu Lab: RFID-tag lesing og skriving
+• Prusa: OpenPrintTag lesing og skriving (NFC-V)
+• Generiske NFC-tagger: Tilpasset skriving
+• Støtte for 21 filamentmerker
+• Støtte for 25 materialtyper (PLA, PETG, ABS, TPU, osv.)
+
+🌍 FLERSPRÅKLIG
+App tilgjengelig på 31 språk
+
+☁️ SYNKRONISERING
+• Synkronisering mellom flere enheter
+• Frakoblet modus tilgjengelig
+
+💰 ENHETER OG VALUTA
+• Støtte for flere valutaer
+• Metriske eller imperiale enheter
+• Automatisk konvertering
+
+📱 MODERNE GRENSESNITT
+• Mørk og lys modus
+• Elegant design
+• Intuitiv navigasjon
+• Visuell statistikk
+
+🔒 SIKKERHET OG PERSONVERN
+• Dataene dine forblir private
+• Sikker lokal lagring
+
+⭐ PREMIUMVERSJON TILGJENGELIG
+• Skysynkronisering
+• Reklamefri
+• Prioritert støtte
+
+Enten du er en hobbymaker eller en profesjonell 3D-printer, hjelper Spool Master deg med å optimalisere filamentadministrasjonen, redusere avfall og kontrollere utgiftene dine. Last ned nå og ta kontroll over filamentlageret ditt!
+
+https://www.apple.com/legal/internet-services/itunes/dev/stdeula/",NFC,filament,3D,utskrift,spole,Anycubic,Bambu Lab,Prusa,lager,inventar,styring
+Polonais,Spool Master,Inwentarz Filamentu 3D + NFC,"Zarządzaj zapasami filamentu 3D z łatwością. Skanuj tagi NFC, śledź szpule, ceny i statystyki. Kompatybilny z Anycubic, Bambu Lab i Prusa.","Spool Master - Kompletna aplikacja do zarządzania zapasami filamentu do druku 3D
+
+🎯 GŁÓWNE FUNKCJE
+
+📱 Odczyt i Zapis NFC
+• Odczyt chipów NFC ze szpul Anycubic, Bambu Lab i Prusa
+• Zapisuj własne niestandardowe tagi NFC
+• Klonuj tagi NFC do ponownego użycia
+• Kompatybilny ze wszystkimi formatami tagów NFC
+
+📊 Kompletne Zarządzanie Inwentarzem
+• Dodawaj szpule przez skan NFC lub ręcznie
+• Śledź pozostałą wagę każdej szpuli
+• Zarządzaj cenami i obliczaj łączną wartość
+• Organizuj według marki, materiału i koloru
+• Automatyczne alerty niskiego stanu
+
+📈 Szczegółowe Statystyki
+• Przegląd Twojego inwentarza
+• Łączna wartość Twoich zapasów
+• Liczba materiałów, kolorów i marek
+• Automatyczna lista zakupów
+
+🛒 Inteligentna Lista Zakupów
+• Automatyczne dodawanie szpul o niskim stanie
+• Oznaczaj zamówione filamenty
+• Dodawaj ręcznie lub przez skan NFC
+
+🎨 Zaawansowany Selektor Kolorów
+• Pełna paleta z suwakami RGB
+• Obsługa przezroczystości
+• Podgląd w czasie rzeczywistym
+
+🌡️ Ustawienia Druku
+• Temperatury ekstrudera (min/maks)
+• Temperatury stołu (min/maks)
+• Średnica filamentu
+• Długość szpuli
+
+🔧 KOMPATYBILNOŚĆ
+• Anycubic: Pełny odczyt i zapis
+• Bambu Lab: Odczyt i zapis tagów RFID
+• Prusa: Odczyt i zapis OpenPrintTag (NFC-V)
+• Generyczne tagi NFC: Niestandardowy zapis
+• Obsługa 21 marek filamentu
+• Obsługa 25 rodzajów materiałów (PLA, PETG, ABS, TPU, itp.)
+
+🌍 WIELOJĘZYCZNOŚĆ
+Aplikacja dostępna w 31 językach
+
+☁️ SYNCHRONIZACJA
+• Synchronizacja między wieloma urządzeniami
+• Tryb offline dostępny
+
+💰 JEDNOSTKI I WALUTY
+• Obsługa wielu walut
+• Jednostki metryczne lub imperialne
+• Automatyczna konwersja
+
+📱 NOWOCZESNY INTERFEJS
+• Tryb ciemny i jasny
+• Elegancki design
+• Intuicyjna nawigacja
+• Wizualne statystyki
+
+🔒 BEZPIECZEŃSTWO I PRYWATNOŚĆ
+• Twoje dane pozostają prywatne
+• Bezpieczna lokalna pamięć
+
+⭐ WERSJA PREMIUM DOSTĘPNA
+• Synchronizacja w chmurze
+• Bez reklam
+• Priorytetowe wsparcie
+
+Niezależnie od tego, czy jesteś hobbystą czy profesjonalnym drukarzem 3D, Spool Master pomoże Ci zoptymalizować zarządzanie filamentem, zmniejszyć odpady i kontrolować wydatki. Pobierz teraz i przejmij kontrolę nad swoim inwentarzem filamentu!
+
+https://www.apple.com/legal/internet-services/itunes/dev/stdeula/",NFC,filament,3D,druk,szpula,Anycubic,Bambu Lab,Prusa,zapasy,inwentarz,zarządzanie
+Roumain,Spool Master,Inventar Filament 3D + NFC,"Gestionați stocul de filament 3D cu ușurință. Scanați etichete NFC, urmăriți bobine, prețuri și statistici. Compatibil cu Anycubic, Bambu Lab și Prusa.","Spool Master - Aplicația completă pentru gestionarea stocului de filament pentru imprimare 3D
+
+🎯 FUNCȚII PRINCIPALE
+
+📱 Citire și Scriere NFC
+• Citiți cipuri NFC de pe bobinele Anycubic, Bambu Lab și Prusa
+• Scrieți propriile etichete NFC personalizate
+• Clonați etichete NFC pentru reutilizare
+• Compatibil cu toate formatele de etichete NFC
+
+📊 Gestionare Completă a Inventarului
+• Adăugați bobine prin scanare NFC sau manual
+• Urmăriți greutatea rămasă a fiecărei bobine
+• Gestionați prețurile și calculați valoarea totală
+• Organizați după marcă, material și culoare
+• Alerte automate de stoc scăzut
+
+📈 Statistici Detaliate
+• Prezentare generală a inventarului dvs.
+• Valoarea totală a stocului dvs.
+• Numărul de materiale, culori și mărci
+• Listă de cumpărături automată
+
+🛒 Listă de Cumpărături Inteligentă
+• Adăugare automată a bobinelor cu stoc scăzut
+• Marcați filamentele comandate
+• Adăugați manual sau prin scanare NFC
+
+🎨 Selector de Culori Avansat
+• Paletă completă cu glisoare RGB
+• Suport pentru opacitate
+• Previzualizare în timp real
+
+🌡️ Setări de Imprimare
+• Temperaturi extruder (min/max)
+• Temperaturi pat (min/max)
+• Diametrul filamentului
+• Lungimea bobinei
+
+🔧 COMPATIBILITATE
+• Anycubic: Citire și scriere completă
+• Bambu Lab: Citire și scriere etichete RFID
+• Prusa: Citire și scriere OpenPrintTag (NFC-V)
+• Etichete NFC generice: Scriere personalizată
+• Suport pentru 21 de mărci de filament
+• Suport pentru 25 de tipuri de materiale (PLA, PETG, ABS, TPU, etc.)
+
+🌍 MULTILINGV
+Aplicație disponibilă în 31 de limbi
+
+☁️ SINCRONIZARE
+• Sincronizare pe mai multe dispozitive
+• Mod offline disponibil
+
+💰 UNITĂȚI ȘI MONEDE
+• Suport pentru mai multe monede
+• Unități metrice sau imperiale
+• Conversie automată
+
+📱 INTERFAȚĂ MODERNĂ
+• Mod întunecat și luminos
+• Design elegant
+• Navigare intuitivă
+• Statistici vizuale
+
+🔒 SECURITATE ȘI CONFIDENȚIALITATE
+• Datele dvs. rămân private
+• Stocare locală securizată
+
+⭐ VERSIUNE PREMIUM DISPONIBILĂ
+• Sincronizare în cloud
+• Fără reclame
+• Suport prioritar
+
+Fie că sunteți un creator hobbyist sau un profesionist în imprimarea 3D, Spool Master vă ajută să optimizați gestionarea filamentului, să reduceți risipa și să vă controlați cheltuielile. Descărcați acum și preluați controlul inventarului dvs. de filament!
+
+https://www.apple.com/legal/internet-services/itunes/dev/stdeula/",NFC,filament,3D,imprimare,bobină,Anycubic,Bambu Lab,Prusa,stoc,inventar,gestionare
+Russe,Spool Master,Учёт 3D Филамента + NFC,"Управляйте запасами 3D филамента легко. Сканируйте NFC метки, отслеживайте катушки, цены и статистику. Совместимо с Anycubic, Bambu Lab и Prusa.","Spool Master - Полное приложение для управления запасами филамента для 3D-печати
+
+🎯 ОСНОВНЫЕ ФУНКЦИИ
+
+📱 Чтение и Запись NFC
+• Чтение NFC чипов с катушек Anycubic, Bambu Lab и Prusa
+• Запись собственных пользовательских NFC меток
+• Клонирование NFC меток для повторного использования
+• Совместимость со всеми форматами NFC меток
+
+📊 Полное Управление Инвентарём
+• Добавление катушек через сканирование NFC или вручную
+• Отслеживание остаточного веса каждой катушки
+• Управление ценами и расчёт общей стоимости
+• Организация по бренду, материалу и цвету
+• Автоматические оповещения о низком запасе
+
+📈 Подробная Статистика
+• Обзор вашего инвентаря
+• Общая стоимость вашего запаса
+• Количество материалов, цветов и брендов
+• Автоматический список покупок
+
+🛒 Умный Список Покупок
+• Автоматическое добавление катушек с низким запасом
+• Отмечайте заказанные филаменты
+• Добавляйте вручную или через сканирование NFC
+
+🎨 Расширенный Выбор Цвета
+• Полная палитра с ползунками RGB
+• Поддержка прозрачности
+• Предварительный просмотр в реальном времени
+
+🌡️ Настройки Печати
+• Температуры экструдера (мин/макс)
+• Температуры стола (мин/макс)
+• Диаметр филамента
+• Длина катушки
+
+🔧 СОВМЕСТИМОСТЬ
+• Anycubic: Полное чтение и запись
+• Bambu Lab: Чтение и запись RFID меток
+• Prusa: Чтение и запись OpenPrintTag (NFC-V)
+• Обычные NFC метки: Пользовательская запись
+• Поддержка 21 бренда филамента
+• Поддержка 25 типов материалов (PLA, PETG, ABS, TPU и др.)
+
+🌍 МНОГОЯЗЫЧНОСТЬ
+Приложение доступно на 31 языке
+
+☁️ СИНХРОНИЗАЦИЯ
+• Синхронизация между несколькими устройствами
+• Автономный режим доступен
+
+💰 ЕДИНИЦЫ И ВАЛЮТЫ
+• Поддержка нескольких валют
+• Метрические или имперские единицы
+• Автоматическая конвертация
+
+📱 СОВРЕМЕННЫЙ ИНТЕРФЕЙС
+• Тёмная и светлая тема
+• Элегантный дизайн
+• Интуитивная навигация
+• Визуальная статистика
+
+🔒 БЕЗОПАСНОСТЬ И КОНФИДЕНЦИАЛЬНОСТЬ
+• Ваши данные остаются приватными
+• Безопасное локальное хранилище
+
+⭐ ПРЕМИУМ ВЕРСИЯ ДОСТУПНА
+• Облачная синхронизация
+• Без рекламы
+• Приоритетная поддержка
+
+Будь вы любителем или профессионалом в области 3D-печати, Spool Master поможет вам оптимизировать управление филаментом, сократить отходы и контролировать расходы. Скачайте сейчас и возьмите под контроль свой инвентарь филамента!
+
+https://www.apple.com/legal/internet-services/itunes/dev/stdeula/",NFC,филамент,3D,печать,катушка,Anycubic,Bambu Lab,Prusa,запас,инвентарь,управление
+Slovaque,Spool Master,Inventár 3D Filamentu + NFC,"Spravujte zásoby 3D filamentu jednoducho. Skenujte NFC štítky, sledujte cievky, ceny a štatistiky. Kompatibilné s Anycubic, Bambu Lab a Prusa.","Spool Master - Kompletná aplikácia na správu zásob filamentu pre 3D tlač
+
+🎯 HLAVNÉ FUNKCIE
+
+📱 Čítanie a Zápis NFC
+• Čítanie NFC čipov z cievok Anycubic, Bambu Lab a Prusa
+• Zápis vlastných prispôsobených NFC štítkov
+• Klonovanie NFC štítkov na opakované použitie
+• Kompatibilné so všetkými formátmi NFC štítkov
+
+📊 Kompletná Správa Inventára
+• Pridávajte cievky cez NFC skenovanie alebo manuálne
+• Sledujte zostávajúcu hmotnosť každej cievky
+• Spravujte ceny a vypočítajte celkovú hodnotu
+• Organizujte podľa značky, materiálu a farby
+• Automatické upozornenia na nízky stav zásob
+
+📈 Podrobné Štatistiky
+• Prehľad vášho inventára
+• Celková hodnota vašich zásob
+• Počet materiálov, farieb a značiek
+• Automatický nákupný zoznam
+
+🛒 Inteligentný Nákupný Zoznam
+• Automatické pridanie cievok s nízkym stavom
+• Označte objednané filamenty
+• Pridávajte manuálne alebo cez NFC skenovanie
+
+🎨 Pokročilý Výber Farieb
+• Kompletná paleta s RGB posuvníkmi
+• Podpora priehľadnosti
+• Náhľad v reálnom čase
+
+🌡️ Nastavenia Tlače
+• Teploty extrudéra (min/max)
+• Teploty podložky (min/max)
+• Priemer filamentu
+• Dĺžka cievky
+
+🔧 KOMPATIBILITA
+• Anycubic: Plné čítanie a zápis
+• Bambu Lab: Čítanie a zápis RFID štítkov
+• Prusa: Čítanie a zápis OpenPrintTag (NFC-V)
+• Generické NFC štítky: Vlastný zápis
+• Podpora 21 značiek filamentu
+• Podpora 25 typov materiálov (PLA, PETG, ABS, TPU, atď.)
+
+🌍 VIACJAZYČNOSŤ
+Aplikácia dostupná v 31 jazykoch
+
+☁️ SYNCHRONIZÁCIA
+• Synchronizácia medzi viacerými zariadeniami
+• Offline režim dostupný
+
+💰 JEDNOTKY A MENY
+• Podpora viacerých mien
+• Metrické alebo imperiálne jednotky
+• Automatický prepočet
+
+📱 MODERNÉ ROZHRANIE
+• Tmavý a svetlý režim
+• Elegantný dizajn
+• Intuitívna navigácia
+• Vizuálne štatistiky
+
+🔒 BEZPEČNOSŤ A SÚKROMIE
+• Vaše údaje zostávajú súkromné
+• Bezpečné lokálne úložisko
+
+⭐ PRÉMIOVÁ VERZIA DOSTUPNÁ
+• Cloudová synchronizácia
+• Bez reklám
+• Prioritná podpora
+
+Či už ste hobby tvorca alebo profesionálny 3D tlačiar, Spool Master vám pomôže optimalizovať správu filamentu, znížiť odpad a kontrolovať vaše výdavky. Stiahnite si teraz a prevezmite kontrolu nad svojím inventárom filamentu!
+
+https://www.apple.com/legal/internet-services/itunes/dev/stdeula/",NFC,filament,3D,tlač,cievka,Anycubic,Bambu Lab,Prusa,zásoby,inventár,správa
+Suédois,Spool Master,3D-filament inventering + NFC,"Hantera ditt 3D-filamentlager enkelt. Skanna NFC-taggar, spåra spolar, priser och statistik. Kompatibel med Anycubic, Bambu Lab och Prusa.","Spool Master - Den kompletta appen för att hantera ditt lager av 3D-skrivarfilament
+
+🎯 HUVUDFUNKTIONER
+
+📱 NFC-läsning och -skrivning • Läs NFC-chip från Anycubic-, Bambu Lab- och Prusa-spolar • Skriv dina egna anpassade NFC-taggar • Klona NFC-taggar för återanvändning • Kompatibel med alla NFC-taggformat
+
+📊 Komplett lagerhantering • Lägg till spolar via NFC-skanning eller manuellt • Spåra återstående vikt för varje spole • Hantera priser och beräkna totalt värde • Organisera efter märke, material och färg • Automatiska varningar vid lågt lager
+
+📈 Detaljerad statistik • Översikt av ditt lager • Totalt värde av ditt lager • Antal material, färger och märken • Automatisk inköpslista
+
+🛒 Smart inköpslista • Automatiskt tillägg av spolar med lågt lager • Markera beställda filament • Lägg till manuellt eller via NFC-skanning
+
+🎨 Avancerad färgväljare • Komplett palett med RGB-reglage • Stöd för opacitet • Förhandsgranskning i realtid
+
+🌡️ Skrivarinställningar • Extrudertemperaturer (min/max) • Bäddtemperaturer (min/max) • Filamentdiameter • Spollängd
+
+🔧 KOMPATIBILITET • Anycubic: Fullständig läsning och skrivning • Bambu Lab: Läsning och skrivning av RFID-taggar • Prusa: OpenPrintTag-läsning och -skrivning (NFC-V) • Generiska NFC-taggar: Anpassad skrivning • Stöd för 21 filamentmärken • Stöd för 25 materialtyper (PLA, PETG, ABS, TPU, etc.)
+
+🌍 FLERSPRÅKIG App tillgänglig på 31 språk
+
+☁️ SYNKRONISERING • Synkronisering mellan flera enheter • Offlineläge tillgängligt
+
+💰 ENHETER OCH VALUTOR • Stöd för flera valutor • Metriska eller imperiala enheter • Automatisk konvertering
+
+📱 MODERNT GRÄNSSNITT • Mörkt och ljust läge • Elegant design • Intuitiv navigering • Visuell statistik
+
+🔒 SÄKERHET OCH INTEGRITET • Dina data förblir privata • Säker lokal lagring
+
+⭐ PREMIUMVERSION TILLGÄNGLIG • Molnsynkronisering • Reklamfri • Prioriterad support
+
+Oavsett om du är en hobbymaker eller en professionell 3D-skrivare, hjälper Spool Master dig att optimera din filamenthantering, minska avfallet och kontrollera dina utgifter. Ladda ner nu och ta kontroll över ditt filamentlager!
+
+https://www.apple.com/legal/internet-services/itunes/dev/stdeula/","NFC,filament,3D,skrivare,spole,Anycubic,Bambu Lab,Prusa,lager,inventering"
+Tchèque,Spool Master,3D filament inventář + NFC,"Spravujte zásoby 3D filamentů snadno. Skenujte NFC tagy, sledujte cívky, ceny a statistiky. Kompatibilní s Anycubic, Bambu Lab a Prusa.","Spool Master - Kompletní aplikace pro správu vašich zásob 3D tiskového filamentu
+
+🎯 HLAVNÍ FUNKCE
+
+📱 Čtení a zápis NFC • Čtěte NFC čipy z cívek Anycubic, Bambu Lab a Prusa • Zapisujte vlastní přizpůsobené NFC tagy • Klonujte NFC tagy pro opakované použití • Kompatibilní se všemi formáty NFC tagů
+
+📊 Kompletní správa inventáře • Přidávejte cívky skenováním NFC nebo ručně • Sledujte zbývající hmotnost každé cívky • Spravujte ceny a vypočítejte celkovou hodnotu • Organizujte podle značky, materiálu a barvy • Automatická upozornění na nízké zásoby
+
+📈 Podrobné statistiky • Přehled vašeho inventáře • Celková hodnota vašich zásob • Počet materiálů, barev a značek • Automatický nákupní seznam
+
+🛒 Chytrý nákupní seznam • Automatické přidání cívek s nízkými zásobami • Označte objednané filamenty • Přidejte ručně nebo skenováním NFC
+
+🎨 Pokročilý výběr barev • Kompletní paleta s RGB posuvníky • Podpora průhlednosti • Náhled v reálném čase
+
+🌡️ Nastavení tisku • Teploty extruderu (min/max) • Teploty podložky (min/max) • Průměr filamentu • Délka cívky
+
+🔧 KOMPATIBILITA • Anycubic: Úplné čtení a zápis • Bambu Lab: Čtení a zápis RFID tagů • Prusa: Čtení a zápis tagů OpenPrintTag (NFC-V) • Generické NFC tagy: Vlastní zápis • Podpora 21 značek filamentů • Podpora 25 typů materiálů (PLA, PETG, ABS, TPU atd.)
+
+🌍 VÍCEJAZYČNÁ Aplikace dostupná ve 31 jazycích
+
+☁️ SYNCHRONIZACE • Synchronizace mezi více zařízeními • Offline režim dostupný
+
+💰 JEDNOTKY A MĚNY • Podpora více měn • Metrické nebo imperiální jednotky • Automatický převod
+
+📱 MODERNÍ ROZHRANÍ • Tmavý a světlý režim • Elegantní design • Intuitivní navigace • Vizuální statistiky
+
+🔒 BEZPEČNOST A SOUKROMÍ • Vaše data zůstávají soukromá • Bezpečné lokální úložiště
+
+⭐ PRÉMIOVÁ VERZE K DISPOZICI • Cloudová synchronizace • Bez reklam • Prioritní podpora
+
+Ať už jste amatérský tvůrce nebo profesionální 3D tiskař, Spool Master vám pomůže optimalizovat správu filamentů, snížit plýtvání a kontrolovat vaše výdaje. Stáhněte si nyní a převezměte kontrolu nad svým inventářem filamentů!
+
+https://www.apple.com/legal/internet-services/itunes/dev/stdeula/","NFC,filament,3D,tisk,cívka,Anycubic,Bambu Lab,Prusa,zásoby,inventář"
+Thaï,Spool Master,จัดการฟิลาเมนต์ 3D + NFC,"จัดการสต็อกฟิลาเมนต์ 3D ของคุณอย่างง่ายดาย สแกนแท็ก NFC ติดตามม้วน ราคา และสถิติ รองรับ Anycubic, Bambu Lab และ Prusa","Spool Master - แอปครบวงจรสำหรับจัดการสต็อกฟิลาเมนต์สำหรับการพิมพ์ 3D ของคุณ
+
+🎯 ฟีเจอร์หลัก
+
+📱 การอ่านและเขียน NFC • อ่านชิป NFC จากม้วน Anycubic, Bambu Lab และ Prusa • เขียนแท็ก NFC แบบกำหนดเองของคุณ • โคลนแท็ก NFC เพื่อใช้ซ้ำ • รองรับแท็ก NFC ทุกรูปแบบ
+
+📊 การจัดการสต็อกครบถ้วน • เพิ่มม้วนโดยการสแกน NFC หรือเพิ่มเอง • ติดตามน้ำหนักคงเหลือของแต่ละม้วน • จัดการราคาและคำนวณมูลค่ารวม • จัดระเบียบตามยี่ห้อ วัสดุ และสี • แจ้งเตือนอัตโนมัติเมื่อสต็อกต่ำ
+
+📈 สถิติโดยละเอียด • ภาพรวมสต็อกของคุณ • มูลค่ารวมของสต็อก • จำนวนวัสดุ สี และยี่ห้อ • รายการช้อปปิ้งอัตโนมัติ
+
+🛒 รายการช้อปปิ้งอัจฉริยะ • เพิ่มม้วนที่สต็อกต่ำอัตโนมัติ • ทำเครื่องหมายฟิลาเมนต์ที่สั่งซื้อแล้ว • เพิ่มเองหรือโดยการสแกน NFC
+
+🎨 ตัวเลือกสีขั้นสูง • พาเลทครบถ้วนพร้อมตัวเลื่อน RGB • รองรับความทึบแสง • ดูตัวอย่างแบบเรียลไทม์
+
+🌡️ การตั้งค่าการพิมพ์ • อุณหภูมิหัวฉีด (ต่ำสุด/สูงสุด) • อุณหภูมิฐาน (ต่ำสุด/สูงสุด) • เส้นผ่านศูนย์กลางฟิลาเมนต์ • ความยาวม้วน
+
+🔧 ความเข้ากันได้ • Anycubic: อ่านและเขียนได้ครบถ้วน • Bambu Lab: อ่านและเขียนแท็ก RFID • Prusa: อ่านและเขียนแท็ก OpenPrintTag (NFC-V) • แท็ก NFC ทั่วไป: เขียนแบบกำหนดเอง • รองรับ 21 ยี่ห้อฟิลาเมนต์ • รองรับ 25 ประเภทวัสดุ (PLA, PETG, ABS, TPU ฯลฯ)
+
+🌍 หลายภาษา แอปพร้อมใช้งานใน 31 ภาษา
+
+☁️ การซิงค์ข้อมูล • ซิงค์หลายอุปกรณ์ • โหมดออฟไลน์พร้อมใช้งาน
+
+💰 หน่วยและสกุลเงิน • รองรับหลายสกุลเงิน • หน่วยเมตริกหรืออิมพีเรียล • แปลงอัตโนมัติ
+
+📱 อินเทอร์เฟซทันสมัย • โหมดมืดและสว่าง • ดีไซน์สวยงาม • การนำทางใช้งานง่าย • สถิติแบบภาพ
+
+🔒 ความปลอดภัยและความเป็นส่วนตัว • ข้อมูลของคุณยังคงเป็นส่วนตัว • จัดเก็บข้อมูลในเครื่องอย่างปลอดภัย
+
+⭐ เวอร์ชันพรีเมียม • ซิงค์ข้อมูลบนคลาวด์ • ไม่มีโฆษณา • การสนับสนุนแบบเร่งด่วน
+
+ไม่ว่าคุณจะเป็นนักสร้างมือสมัครเล่นหรือช่างพิมพ์ 3D มืออาชีพ Spool Master ช่วยให้คุณจัดการฟิลาเมนต์ได้อย่างเหมาะสม ลดของเสีย และควบคุมค่าใช้จ่าย ดาวน์โหลดตอนนี้และควบคุมสต็อกฟิลาเมนต์ของคุณ!
+
+https://www.apple.com/legal/internet-services/itunes/dev/stdeula/","NFC,ฟิลาเมนต์,3D,พิมพ์,ม้วน,Anycubic,Bambu Lab,Prusa,สต็อก,คลัง"
+Turc,Spool Master,3D Filament Envanter + NFC,"3D filament stokunuzu kolayca yönetin. NFC etiketlerini tarayın, makaraları, fiyatları ve istatistikleri takip edin. Anycubic, Bambu Lab ve Prusa ile uyumlu.","Spool Master - 3D baskı filament stokunuzu yönetmek için eksiksiz uygulama
+
+🎯 ANA ÖZELLİKLER
+
+📱 NFC Okuma ve Yazma • Anycubic, Bambu Lab ve Prusa makaralarındaki NFC çiplerini okuyun • Kendi özel NFC etiketlerinizi yazın • NFC etiketlerini yeniden kullanım için klonlayın • Tüm NFC etiket formatlarıyla uyumlu
+
+📊 Eksiksiz Envanter Yönetimi • NFC tarama veya manuel olarak makara ekleyin • Her makaranın kalan ağırlığını takip edin • Fiyatları yönetin ve toplam değeri hesaplayın • Marka, malzeme ve renge göre düzenleyin • Düşük stok için otomatik uyarılar
+
+📈 Ayrıntılı İstatistikler • Envanterinize genel bakış • Stokunuzun toplam değeri • Malzeme, renk ve marka sayısı • Otomatik alışveriş listesi
+
+🛒 Akıllı Alışveriş Listesi • Düşük stoklu makaraların otomatik eklenmesi • Sipariş edilen filamentleri işaretleyin • Manuel veya NFC tarama ile ekleyin
+
+🎨 Gelişmiş Renk Seçici • RGB kaydırıcılarla tam palet • Opaklık desteği • Gerçek zamanlı önizleme
+
+🌡️ Baskı Ayarları • Ekstruder sıcaklıkları (min/maks) • Tabla sıcaklıkları (min/maks) • Filament çapı • Makara uzunluğu
+
+🔧 UYUMLULUK • Anycubic: Tam okuma ve yazma • Bambu Lab: RFID etiket okuma ve yazma • Prusa: OpenPrintTag okuma ve yazma (NFC-V) • Genel NFC etiketleri: Özel yazma • 21 filament markası desteği • 25 malzeme türü desteği (PLA, PETG, ABS, TPU vb.)
+
+🌍 ÇOK DİLLİ Uygulama 31 dilde mevcut
+
+☁️ SENKRONİZASYON • Çoklu cihaz senkronizasyonu • Çevrimdışı mod mevcut
+
+💰 BİRİMLER VE PARA BİRİMLERİ • Çoklu para birimi desteği • Metrik veya İngiliz birimleri • Otomatik dönüşüm
+
+📱 MODERN ARAYÜZ • Karanlık ve aydınlık mod • Şık tasarım • Sezgisel gezinme • Görsel istatistikler
+
+🔒 GÜVENLİK VE GİZLİLİK • Verileriniz gizli kalır • Güvenli yerel depolama
+
+⭐ PREMİUM SÜRÜM MEVCUT • Bulut senkronizasyonu • Reklamsız • Öncelikli destek
+
+İster hobi amaçlı bir maker ister profesyonel bir 3D baskıcı olun, Spool Master filament yönetiminizi optimize etmenize, israfı azaltmanıza ve harcamalarınızı kontrol etmenize yardımcı olur. Şimdi indirin ve filament envanterinizin kontrolünü elinize alın!
+
+https://www.apple.com/legal/internet-services/itunes/dev/stdeula/","NFC,filament,3D,baskı,makara,Anycubic,Bambu Lab,Prusa,stok,envanter"
+Ukrainien,Spool Master,Облік 3D філаменту + NFC,"Легко керуйте запасами 3D філаменту. Скануйте NFC-мітки, відстежуйте котушки, ціни та статистику. Сумісно з Anycubic, Bambu Lab та Prusa.","Spool Master - Повний додаток для управління запасами філаменту для 3D-друку
+
+🎯 ОСНОВНІ ФУНКЦІЇ
+
+📱 Читання та запис NFC • Зчитуйте NFC-чіпи з котушок Anycubic, Bambu Lab та Prusa • Записуйте власні NFC-мітки • Клонуйте NFC-мітки для повторного використання • Сумісно з усіма форматами NFC-міток
+
+📊 Повне управління запасами • Додавайте котушки скануванням NFC або вручну • Відстежуйте залишкову вагу кожної котушки • Керуйте цінами та розраховуйте загальну вартість • Організовуйте за брендом, матеріалом та кольором • Автоматичні сповіщення про низький запас
+
+📈 Детальна статистика • Огляд вашого інвентарю • Загальна вартість вашого запасу • Кількість матеріалів, кольорів та брендів • Автоматичний список покупок
+
+🛒 Розумний список покупок • Автоматичне додавання котушок з низьким запасом • Позначайте замовлені філаменти • Додавайте вручну або скануванням NFC
+
+🎨 Розширений вибір кольорів • Повна палітра з RGB-повзунками • Підтримка прозорості • Попередній перегляд у реальному часі
+
+🌡️ Налаштування друку • Температури екструдера (мін/макс) • Температури столу (мін/макс) • Діаметр філаменту • Довжина котушки
+
+🔧 СУМІСНІСТЬ • Anycubic: Повне читання та запис • Bambu Lab: Читання та запис RFID-міток • Prusa: Читання та запис міток OpenPrintTag (NFC-V) • Загальні NFC-мітки: Власний запис • Підтримка 21 бренду філаменту • Підтримка 25 типів матеріалів (PLA, PETG, ABS, TPU тощо)
+
+🌍 БАГАТОМОВНИЙ Додаток доступний 31 мовою
+
+☁️ СИНХРОНІЗАЦІЯ • Синхронізація між кількома пристроями • Офлайн-режим доступний
+
+💰 ОДИНИЦІ ТА ВАЛЮТИ • Підтримка кількох валют • Метричні або імперські одиниці • Автоматичне перетворення
+
+📱 СУЧАСНИЙ ІНТЕРФЕЙС • Темний та світлий режим • Елегантний дизайн • Інтуїтивна навігація • Візуальна статистика
+
+🔒 БЕЗПЕКА ТА КОНФІДЕНЦІЙНІСТЬ • Ваші дані залишаються приватними • Безпечне локальне зберігання
+
+⭐ ПРЕМІУМ-ВЕРСІЯ ДОСТУПНА • Хмарна синхронізація • Без реклами • Пріоритетна підтримка
+
+Незалежно від того, чи ви любитель-мейкер чи професійний 3D-друкар, Spool Master допоможе вам оптимізувати управління філаментами, зменшити відходи та контролювати витрати. Завантажте зараз і візьміть під контроль свій інвентар філаменту!
+
+https://www.apple.com/legal/internet-services/itunes/dev/stdeula/","NFC,філамент,3D,друк,котушка,Anycubic,Bambu Lab,Prusa,запас,інвентар"
+Vietnamien,Spool Master,Quản lý filament 3D + NFC,"Quản lý kho filament 3D dễ dàng. Quét thẻ NFC, theo dõi cuộn, giá cả và thống kê. Tương thích với Anycubic, Bambu Lab và Prusa.","Spool Master - Ứng dụng hoàn chỉnh để quản lý kho filament in 3D của bạn
+
+🎯 TÍNH NĂNG CHÍNH
+
+📱 Đọc và ghi NFC • Đọc chip NFC từ cuộn Anycubic, Bambu Lab và Prusa • Ghi thẻ NFC tùy chỉnh của riêng bạn • Sao chép thẻ NFC để tái sử dụng • Tương thích với mọi định dạng thẻ NFC
+
+📊 Quản lý tồn kho đầy đủ • Thêm cuộn bằng quét NFC hoặc thủ công • Theo dõi trọng lượng còn lại của mỗi cuộn • Quản lý giá và tính tổng giá trị • Sắp xếp theo thương hiệu, vật liệu và màu sắc • Cảnh báo tự động khi tồn kho thấp
+
+📈 Thống kê chi tiết • Tổng quan kho hàng của bạn • Tổng giá trị tồn kho • Số lượng vật liệu, màu sắc và thương hiệu • Danh sách mua sắm tự động
+
+🛒 Danh sách mua sắm thông minh • Tự động thêm cuộn tồn kho thấp • Đánh dấu filament đã đặt hàng • Thêm thủ công hoặc bằng quét NFC
+
+🎨 Bộ chọn màu nâng cao • Bảng màu đầy đủ với thanh trượt RGB • Hỗ trợ độ mờ • Xem trước theo thời gian thực
+
+🌡️ Cài đặt in • Nhiệt độ đầu đùn (tối thiểu/tối đa) • Nhiệt độ bàn in (tối thiểu/tối đa) • Đường kính filament • Chiều dài cuộn
+
+🔧 TƯƠNG THÍCH • Anycubic: Đọc và ghi đầy đủ • Bambu Lab: Đọc và ghi thẻ RFID • Prusa: Đọc và ghi thẻ OpenPrintTag (NFC-V) • Thẻ NFC chung: Ghi tùy chỉnh • Hỗ trợ 21 thương hiệu filament • Hỗ trợ 25 loại vật liệu (PLA, PETG, ABS, TPU, v.v.)
+
+🌍 ĐA NGÔN NGỮ Ứng dụng có sẵn bằng 31 ngôn ngữ
+
+☁️ ĐỒNG BỘ HÓA • Đồng bộ nhiều thiết bị • Chế độ ngoại tuyến khả dụng
+
+💰 ĐƠN VỊ VÀ TIỀN TỆ • Hỗ trợ nhiều loại tiền tệ • Đơn vị hệ mét hoặc hệ Anh • Chuyển đổi tự động
+
+📱 GIAO DIỆN HIỆN ĐẠI • Chế độ tối và sáng • Thiết kế tinh tế • Điều hướng trực quan • Thống kê trực quan
+
+🔒 BẢO MẬT VÀ QUYỀN RIÊNG TƯ • Dữ liệu của bạn được giữ riêng tư • Lưu trữ cục bộ an toàn
+
+⭐ PHIÊN BẢN PREMIUM • Đồng bộ đám mây • Không quảng cáo • Hỗ trợ ưu tiên
+
+Dù bạn là người sáng tạo nghiệp dư hay thợ in 3D chuyên nghiệp, Spool Master giúp bạn tối ưu hóa quản lý filament, giảm lãng phí và kiểm soát chi tiêu. Tải xuống ngay và kiểm soát kho filament của bạn!
+
+https://www.apple.com/legal/internet-services/itunes/dev/stdeula/","NFC,filament,3D,in,cuộn,Anycubic,Bambu Lab,Prusa,kho,tồn kho"

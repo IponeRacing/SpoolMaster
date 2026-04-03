@@ -55,8 +55,8 @@
   "extruderTempMax": "अधिकतम एक्सट्रूडर तापमान",
   "bedTempMin": "न्यूनतम बेड तापमान",
   "bedTempMax": "अधिकतम बेड तापमान",
-  "diameter": "व्यास",
-  "spoolLength": "लंबाई (मी)",
+  "diameter": "फिलामेंट व्यास",
+  "spoolLength": "स्पूल लंबाई",
   "generatedSku": "उत्पन्न SKU",
   "approachChipToWrite": "लिखने के लिए चिप के पास लाएं...",
   "writing": "लिख रहे हैं...",
@@ -163,21 +163,15 @@
   "tempBed": "बेड तापमान",
   "termsOfService": "सेवा की शर्तें",
   "privacyPolicy": "गोपनीयता नीति",
-  "legal": "Legal",
+  "legal": "कानूनी",
   "back": "पीछे",
   "retry": "पुन: प्रयास करें",
   "signOut": "साइन आउट करें",
-  "extruderTempMin": "न्यूनतम एक्सट्रूडर तापमान",
   "extruderTempMinHint": "उदा.: 200",
-  "extruderTempMax": "अधिकतम एक्सट्रूडर तापमान",
   "extruderTempMaxHint": "उदा.: 220",
-  "bedTempMin": "न्यूनतम बेड तापमान",
   "bedTempMinHint": "उदा.: 50",
-  "bedTempMax": "अधिकतम बेड तापमान",
   "bedTempMaxHint": "उदा.: 60",
-  "diameter": "फिलामेंट व्यास",
   "diameterHint": "उदा.: 1.75",
-  "spoolLength": "स्पूल लंबाई",
   "spoolLengthHint": "उदा.: 330",
   "tabGrid": "ग्रिड",
   "tabSpectrum": "स्पेक्ट्रम",
@@ -193,6 +187,18 @@
   "usd": "अमेरिकी डॉलर ($)",
   "gbp": "पाउंड स्टर्लिंग (£)",
   "cad": "कैनेडियन डॉलर (CAD)",
+  "aud": "ऑस्ट्रेलियाई डॉलर (A$)",
+  "jpy": "जापानी येन (¥)",
+  "cny": "चीनी युआन (¥)",
+  "inr": "भारतीय रुपया (₹)",
+  "brl": "ब्राज़ीलियाई रियाल (R$)",
+  "mxn": "मैक्सिकन पेसो (MX$)",
+  "sek": "स्वीडिश क्रोना (kr)",
+  "nok": "नॉर्वेजियन क्रोन (kr)",
+  "dkk": "डेनिश क्रोन (kr)",
+  "pln": "पोलिश ज़्लॉटी (zł)",
+  "czk": "चेक कोरुना (Kč)",
+  "nzd": "न्यूज़ीलैंड डॉलर (NZ$)",
   "filamentsToOrder": "ऑर्डर करने के लिए फिलामेंट",
   "shoppingList": "शॉपिंग सूची",
   "addToShoppingList": "सूची में जोड़ें",
@@ -215,7 +221,6 @@
   "forAnycubicAce": "Anycubic Ace के लिए",
   "forBambuLabAms": "Bambu Lab AMS के लिए",
   "scanNfcChip": "NFC चिप स्कैन करें",
-  "addManually": "मैन्युअल रूप से जोड़ें",
   "fillForm": "फॉर्म भरें",
   "emptyShoppingList": "सूची में कोई फिलामेंट नहीं",
   "percentRemaining": "{percent}% शेष",
@@ -229,7 +234,7 @@
   "markAsOrdered": "ऑर्डर किए गए के रूप में चिह्नित करें",
   "markAsNotOrdered": "ऑर्डर नहीं किए गए के रूप में चिह्नित करें",
   "spoolNotFound": "स्टॉक में स्पूल नहीं मिला",
-  "addSpoolFirstMessage": "यह स्पूल अभी तक आपके स्टॉक में नहीं है। कृपया इसके स्टॉक को अपडेट करने से पहले 'स्पूल जोड़ें' बटन का उपयोग करके इसे पहले जोड़ें।",
+  "addSpoolFirstMessage": "यह स्पूल अभी तक आपके स्टॉक में नहीं है। कृपया स्टॉक अपडेट करने से पहले 'स्पूल जोड़ें' बटन का उपयोग करके इसे पहले जोड़ें।",
   "ok": "ठीक है",
   "connection": "कनेक्शन",
   "signInToSync": "अपने डेटा को सिंक करने के लिए साइन इन करें",
@@ -248,9 +253,11 @@
   "scanSpoolToUpdate": "स्टॉक अपडेट करने के लिए स्पूल स्कैन करें",
   "bambuLabReadOnly": "Bambu Lab: केवल पढ़ें",
   "bambuLabReadOnlyDesc": "Bambu Lab टैग RSA एन्क्रिप्शन का उपयोग करते हैं और संशोधित नहीं किए जा सकते। केवल पढ़ें।",
-  "spoolNotFound": "स्टॉक में स्पूल नहीं मिला",
-  "addSpoolFirstMessage": "यह स्पूल अभी तक आपके स्टॉक में नहीं है। कृपया स्टॉक अपडेट करने से पहले 'स्पूल जोड़ें' बटन का उपयोग करके इसे पहले जोड़ें।",
-  "ok": "ठीक है",
+  "forPrusaMk4": "Prusa MK4/XL के लिए (OpenPrintTag)",
+  "prusaReadWrite": "Prusa: पढ़ें और लिखें",
+  "prusaReadWriteDesc": "Prusa टैग ISO 15693 (NFC-V) OpenPrintTag प्रारूप का उपयोग करते हैं। पढ़ने और लिखने दोनों समर्थित।",
+  "nfcTagInfoPrusa": "OpenPrintTag संगत टैग बनाने के लिए Prusa MK4/XL के लिए एक खाली NXP ICODE SLIX2 टैग (ISO 15693) का उपयोग करें।",
+  "writePrusaTagTitle": "Prusa OpenPrintTag लिखें",
   "bambuCloneLibrary": "Bambu Lab क्लोन लाइब्रेरी",
   "noBambuClones": "कोई Bambu Lab क्लोन नहीं",
   "scanBambuToClone": "अपनी क्लोन लाइब्रेरी बनाने के लिए Bambu Lab मूल टैग स्कैन करें",
@@ -264,7 +271,6 @@
   "clonedOn": "क्लोन किया गया",
   "writeThisClone": "इस क्लोन को लिखें",
   "writeClone": "क्लोन लिखें",
-  "writing": "लिख रहे हैं...",
   "writeOnCUID": "CUID कार्ड पर लिखें",
   "cloneWrittenSuccess": "क्लोन सफलतापूर्वक लिखा गया!",
   "requiredTagFormat": "आवश्यक टैग प्रारूप",
@@ -300,15 +306,33 @@
   "filamentTypeLabel": "फिलामेंट प्रकार",
   "scanNfcChipButton": "NFC चिप स्कैन करें",
   "deleteCloneConfirmation": "क्लोन \"{name}\" हटाएं?",
-  "@deleteCloneConfirmation": {"placeholders": {"name": {"type": "String"}}},
+  "@deleteCloneConfirmation": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "cloneDeletedMessage": "क्लोन \"{name}\" हटाया गया",
-  "@cloneDeletedMessage": {"placeholders": {"name": {"type": "String"}}},
+  "@cloneDeletedMessage": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "extruderLabel": "एक्सट्रूडर",
   "writeThisCloneButton": "यह क्लोन लिखें",
   "customNameHint": "कस्टम नाम",
   "cloneWriteSuccessMessage": "क्लोन सफलतापूर्वक लिखा गया!",
   "errorPrefix": "त्रुटि: {error}",
-  "@errorPrefix": {"placeholders": {"error": {"type": "String"}}},
+  "@errorPrefix": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "writingInProgress": "लिख रहा है...",
   "writeOnCUIDButton": "CUID कार्ड पर लिखें",
   "diameterLabel": "व्यास",
@@ -336,11 +360,23 @@
   "writeBambuLabTagButton": "Bambu Lab टैग लिखें",
   "bambuLabRsaNote": "नोट: मूल Bambu Lab टैग RSA एन्क्रिप्शन का उपयोग करते हैं। यह मोड सरलीकृत संगत प्रारूप में डेटा लिखता है।",
   "signInError": "साइन इन त्रुटि: {error}",
-  "@signInError": {"placeholders": {"error": {"type": "String"}}},
+  "@signInError": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "subscriptionActivatedMessage": "सदस्यता सफलतापूर्वक सक्रिय!",
   "subscriptionFailedMessage": "सदस्यता विफल",
   "errorMessage": "त्रुटि: {error}",
-  "@errorMessage": {"placeholders": {"error": {"type": "String"}}},
+  "@errorMessage": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "subscriptionRestoredMessage": "सदस्यता सफलतापूर्वक पुनर्स्थापित!",
   "noSubscriptionFoundMessage": "कोई सदस्यता नहीं मिली",
   "vipLabel": "VIP",
@@ -353,5 +389,30 @@
   "pleaseEnterValidLength": "कृपया वैध लंबाई दर्ज करें",
   "spoolLengthNotSetCannotConvert": "स्पूल लंबाई सेट नहीं - परिवर्तित नहीं कर सकते",
   "exceedsRemainingWeight": "शेष वजन से अधिक",
-  "skuLabel": "SKU"
+  "skuLabel": "SKU",
+  "helpIdentifyFilament": "इस फिलामेंट की पहचान करने में हमारी मदद करें",
+  "helpUsImprove": "हमें बेहतर बनाने में मदद करें!",
+  "helpIdentifyDescription": "हमने टैग पढ़ा लेकिन इसे पहचान नहीं पाए। हमें बताएं कि यह कौन सा फिलामेंट है ताकि हम ऐप को बेहतर बना सकें।",
+  "otherBrand": "अन्य",
+  "thankYouFeedback": "आपकी प्रतिक्रिया के लिए धन्यवाद!",
+  "send": "भेजें",
+  "optionalDetails": "वैकल्पिक विवरण",
+  "weightGrams": "वज़न (ग्रा)",
+  "diameterMm": "व्यास (मिमी)",
+  "spoolLengthM": "स्पूल लंबाई (मी)",
+  "batchNumberLabel": "बैच / SKU",
+  "black": "काला",
+  "white": "सफ़ेद",
+  "yellow": "पीला",
+  "orange": "नारंगी",
+  "pink": "गुलाबी",
+  "purple": "बैंगनी",
+  "gray": "स्लेटी",
+  "brown": "भूरा",
+  "unknown": "अज्ञात",
+  "contactUs": "हमसे संपर्क करें",
+  "contactUsSubtitle": "प्रश्न, सुझाव या समस्याएँ",
+  "nfcTagNotDetected": "कोई NFC टैग नहीं मिला",
+  "nfcTagNotDetectedDesc": "कोई टैग नहीं मिला। टैग खराब, क्षतिग्रस्त या फोन से बहुत दूर हो सकता है। सुनिश्चित करें कि आपके फोन का ऊपरी हिस्सा सीधे NFC टैग पर रखा गया है।",
+  "nfcTagIncompatible": "असंगत NFC टैग मिला"
 }

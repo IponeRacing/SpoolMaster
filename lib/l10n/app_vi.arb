@@ -55,8 +55,8 @@
   "extruderTempMax": "Nhiệt độ đầu phun tối đa",
   "bedTempMin": "Nhiệt độ bàn in tối thiểu",
   "bedTempMax": "Nhiệt độ bàn in tối đa",
-  "diameter": "Đường kính",
-  "spoolLength": "Chiều dài (m)",
+  "diameter": "Đường kính filament",
+  "spoolLength": "Chiều dài cuộn",
   "generatedSku": "SKU đã tạo",
   "approachChipToWrite": "Đưa chip lại gần để ghi...",
   "writing": "Đang ghi...",
@@ -163,21 +163,15 @@
   "tempBed": "Nhiệt độ bàn in",
   "termsOfService": "Điều khoản dịch vụ",
   "privacyPolicy": "Chính sách bảo mật",
-  "legal": "Legal",
+  "legal": "Pháp lý",
   "back": "Quay lại",
   "retry": "Thử lại",
   "signOut": "Đăng xuất",
-  "extruderTempMin": "Nhiệt độ đầu phun tối thiểu",
   "extruderTempMinHint": "VD: 200",
-  "extruderTempMax": "Nhiệt độ đầu phun tối đa",
   "extruderTempMaxHint": "VD: 220",
-  "bedTempMin": "Nhiệt độ bàn in tối thiểu",
   "bedTempMinHint": "VD: 50",
-  "bedTempMax": "Nhiệt độ bàn in tối đa",
   "bedTempMaxHint": "VD: 60",
-  "diameter": "Đường kính filament",
   "diameterHint": "VD: 1.75",
-  "spoolLength": "Chiều dài cuộn",
   "spoolLengthHint": "VD: 330",
   "tabGrid": "Lưới",
   "tabSpectrum": "Quang phổ",
@@ -193,6 +187,18 @@
   "usd": "Đô la Mỹ ($)",
   "gbp": "Bảng Anh (£)",
   "cad": "Đô la Canada (CAD)",
+  "aud": "Đô la Úc (A$)",
+  "jpy": "Yên Nhật (¥)",
+  "cny": "Nhân dân tệ (¥)",
+  "inr": "Rupee Ấn Độ (₹)",
+  "brl": "Real Brazil (R$)",
+  "mxn": "Peso Mexico (MX$)",
+  "sek": "Krona Thụy Điển (kr)",
+  "nok": "Krone Na Uy (kr)",
+  "dkk": "Krone Đan Mạch (kr)",
+  "pln": "Zloty Ba Lan (zł)",
+  "czk": "Koruna Séc (Kč)",
+  "nzd": "Đô la New Zealand (NZ$)",
   "filamentsToOrder": "Filament cần đặt",
   "shoppingList": "Danh sách mua sắm",
   "addToShoppingList": "Thêm vào danh sách",
@@ -215,7 +221,6 @@
   "forAnycubicAce": "cho Anycubic Ace",
   "forBambuLabAms": "cho Bambu Lab AMS",
   "scanNfcChip": "Quét chip NFC",
-  "addManually": "Thêm thủ công",
   "fillForm": "Điền biểu mẫu",
   "emptyShoppingList": "Không có filament trong danh sách",
   "percentRemaining": "Còn lại {percent}%",
@@ -229,7 +234,7 @@
   "markAsOrdered": "Đánh dấu đã đặt",
   "markAsNotOrdered": "Đánh dấu chưa đặt",
   "spoolNotFound": "Không tìm thấy cuộn trong kho",
-  "addSpoolFirstMessage": "Cuộn này chưa có trong kho của bạn. Vui lòng thêm nó trước bằng cách sử dụng nút 'Thêm cuộn' trước khi cập nhật kho.",
+  "addSpoolFirstMessage": "Cuộn này chưa có trong kho của bạn. Vui lòng thêm nó trước bằng nút 'Thêm cuộn' trước khi cập nhật kho.",
   "ok": "OK",
   "connection": "Kết nối",
   "signInToSync": "Đăng nhập để đồng bộ dữ liệu của bạn",
@@ -248,9 +253,11 @@
   "scanSpoolToUpdate": "Quét cuộn để cập nhật kho",
   "bambuLabReadOnly": "Bambu Lab: Chỉ đọc",
   "bambuLabReadOnlyDesc": "Thẻ Bambu Lab sử dụng mã hóa RSA và không thể sửa đổi. Chỉ đọc.",
-  "spoolNotFound": "Không tìm thấy cuộn trong kho",
-  "addSpoolFirstMessage": "Cuộn này chưa có trong kho của bạn. Vui lòng thêm nó trước bằng nút 'Thêm cuộn' trước khi cập nhật kho.",
-  "ok": "OK",
+  "forPrusaMk4": "cho Prusa MK4/XL (OpenPrintTag)",
+  "prusaReadWrite": "Prusa: Đọc và ghi",
+  "prusaReadWriteDesc": "Thẻ Prusa sử dụng ISO 15693 (NFC-V) với định dạng OpenPrintTag. Hỗ trợ đọc và ghi.",
+  "nfcTagInfoPrusa": "Sử dụng thẻ NXP ICODE SLIX2 trống (ISO 15693) để tạo thẻ tương thích OpenPrintTag cho Prusa MK4/XL.",
+  "writePrusaTagTitle": "Ghi thẻ Prusa OpenPrintTag",
   "bambuCloneLibrary": "Thư viện bản sao Bambu Lab",
   "noBambuClones": "Không có bản sao Bambu Lab",
   "scanBambuToClone": "Quét thẻ Bambu Lab gốc để tạo thư viện bản sao của bạn",
@@ -264,7 +271,6 @@
   "clonedOn": "Đã sao chép vào",
   "writeThisClone": "Ghi bản sao này",
   "writeClone": "Ghi bản sao",
-  "writing": "Đang ghi...",
   "writeOnCUID": "Ghi lên thẻ CUID",
   "cloneWrittenSuccess": "Ghi bản sao thành công!",
   "requiredTagFormat": "Định dạng thẻ cần thiết",
@@ -300,15 +306,33 @@
   "filamentTypeLabel": "Loại sợi in",
   "scanNfcChipButton": "Quét chip NFC",
   "deleteCloneConfirmation": "Xóa bản sao \"{name}\"?",
-  "@deleteCloneConfirmation": {"placeholders": {"name": {"type": "String"}}},
+  "@deleteCloneConfirmation": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "cloneDeletedMessage": "Đã xóa bản sao \"{name}\"",
-  "@cloneDeletedMessage": {"placeholders": {"name": {"type": "String"}}},
+  "@cloneDeletedMessage": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "extruderLabel": "Đầu đùn",
   "writeThisCloneButton": "Ghi bản sao này",
   "customNameHint": "Tên tùy chỉnh",
   "cloneWriteSuccessMessage": "Ghi bản sao thành công!",
   "errorPrefix": "Lỗi: {error}",
-  "@errorPrefix": {"placeholders": {"error": {"type": "String"}}},
+  "@errorPrefix": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "writingInProgress": "Đang ghi...",
   "writeOnCUIDButton": "Ghi lên thẻ CUID",
   "diameterLabel": "Đường kính",
@@ -336,11 +360,23 @@
   "writeBambuLabTagButton": "Ghi thẻ Bambu Lab",
   "bambuLabRsaNote": "Lưu ý: Thẻ Bambu Lab gốc sử dụng mã hóa RSA. Chế độ này ghi dữ liệu ở định dạng đơn giản tương thích.",
   "signInError": "Lỗi đăng nhập: {error}",
-  "@signInError": {"placeholders": {"error": {"type": "String"}}},
+  "@signInError": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "subscriptionActivatedMessage": "Đăng ký đã được kích hoạt!",
   "subscriptionFailedMessage": "Đăng ký thất bại",
   "errorMessage": "Lỗi: {error}",
-  "@errorMessage": {"placeholders": {"error": {"type": "String"}}},
+  "@errorMessage": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "subscriptionRestoredMessage": "Đăng ký đã được khôi phục!",
   "noSubscriptionFoundMessage": "Không tìm thấy đăng ký",
   "vipLabel": "VIP",
@@ -353,5 +389,30 @@
   "pleaseEnterValidLength": "Vui lòng nhập chiều dài hợp lệ",
   "spoolLengthNotSetCannotConvert": "Chưa đặt chiều dài cuộn - không thể chuyển đổi",
   "exceedsRemainingWeight": "Vượt quá trọng lượng còn lại",
-  "skuLabel": "SKU"
+  "skuLabel": "SKU",
+  "helpIdentifyFilament": "Giúp chúng tôi nhận diện sợi nhựa này",
+  "helpUsImprove": "Giúp chúng tôi cải thiện!",
+  "helpIdentifyDescription": "Chúng tôi đã đọc chip nhưng không thể nhận diện. Hãy cho chúng tôi biết đây là sợi nhựa gì để cải thiện ứng dụng.",
+  "otherBrand": "Khác",
+  "thankYouFeedback": "Cảm ơn phản hồi của bạn!",
+  "send": "Gửi",
+  "optionalDetails": "Chi tiết tùy chọn",
+  "weightGrams": "Trọng lượng (g)",
+  "diameterMm": "Đường kính (mm)",
+  "spoolLengthM": "Chiều dài cuộn (m)",
+  "batchNumberLabel": "Lô / SKU",
+  "black": "Đen",
+  "white": "Trắng",
+  "yellow": "Vàng",
+  "orange": "Cam",
+  "pink": "Hồng",
+  "purple": "Tím",
+  "gray": "Xám",
+  "brown": "Nâu",
+  "unknown": "Không xác định",
+  "contactUs": "Liên hệ với chúng tôi",
+  "contactUsSubtitle": "Câu hỏi, đề xuất hoặc vấn đề",
+  "nfcTagNotDetected": "Không phát hiện thẻ NFC",
+  "nfcTagNotDetectedDesc": "Không tìm thấy thẻ. Thẻ có thể đã hỏng, bị hư hoặc quá xa điện thoại. Hãy đảm bảo đặt phần trên của điện thoại trực tiếp lên thẻ NFC.",
+  "nfcTagIncompatible": "Phát hiện thẻ NFC không tương thích"
 }

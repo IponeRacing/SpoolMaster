@@ -22,11 +22,16 @@ class ReadBobbinDataEvent extends NfcReaderEvent {
 
 class WriteBobbinDataEvent extends NfcReaderEvent {
   final BobbinData bobbinData;
+  final String tagFormat;
 
-  const WriteBobbinDataEvent(this.bobbinData);
+  const WriteBobbinDataEvent(this.bobbinData, {this.tagFormat = 'anycubic'});
 
   @override
-  List<Object?> get props => [bobbinData];
+  List<Object?> get props => [bobbinData, tagFormat];
+}
+
+class ReadBobbinDataAutoDetectEvent extends NfcReaderEvent {
+  const ReadBobbinDataAutoDetectEvent();
 }
 
 class StopNfcScanEvent extends NfcReaderEvent {

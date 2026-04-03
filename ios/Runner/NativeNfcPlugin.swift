@@ -13,10 +13,16 @@ class NativeNfcPlugin: NSObject, FlutterPlugin {
     private var result: FlutterResult?
     private var pagesToWrite: [[String: Any]]?
     private var isBambuLabMode = false
+    private var isOpenPrintTagMode = false
+    private var isAutoDetectMode = false
+    private var isOpenPrintTagWriteMode = false
+    private var openPrintTagDataToWrite: [UInt8]?
     private var bambuBlocksToWrite: [String: [UInt8]]?
 
     func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
         switch call.method {
+        case "checkNfcAvailability":
+            result(NFCTagReaderSession.readingAvailable)
         case "startReadSession":
             startReadSession(result: result)
         case "stopSession":
@@ -30,6 +36,10 @@ class NativeNfcPlugin: NSObject, FlutterPlugin {
             startWriteSession(pages: pages, result: result)
         case "readBambuLabTag":
             startBambuLabReadSession(result: result)
+        case "readOpenPrintTag":
+            startOpenPrintTagReadSession(result: result)
+        case "startAutoDetectReadSession":
+            startAutoDetectReadSession(result: result)
         case "writeBambuLabClone":
             guard let args = call.arguments as? [String: Any],
                   let blocks = args["blocks"] as? [String: [UInt8]] else {
@@ -37,6 +47,13 @@ class NativeNfcPlugin: NSObject, FlutterPlugin {
                 return
             }
             startBambuLabWriteSession(blocks: blocks, result: result)
+        case "writeOpenPrintTag":
+            guard let args = call.arguments as? [String: Any],
+                  let data = args["data"] as? [Int] else {
+                result(FlutterError(code: "INVALID_ARGS", message: "Missing data argument", details: nil))
+                return
+            }
+            startOpenPrintTagWriteSession(data: data.map { UInt8($0 & 0xFF) }, result: result)
         default:
             result(FlutterMethodNotImplemented)
         }
@@ -62,8 +79,12 @@ class NativeNfcPlugin: NSObject, FlutterPlugin {
         self.result = nil
         self.session = nil
         self.isBambuLabMode = false
+        self.isOpenPrintTagMode = false
+        self.isAutoDetectMode = false
+        self.isOpenPrintTagWriteMode = false
         self.pagesToWrite = nil
         self.bambuBlocksToWrite = nil
+        self.openPrintTagDataToWrite = nil
         result(true)
     }
 
@@ -83,6 +104,34 @@ class NativeNfcPlugin: NSObject, FlutterPlugin {
 
         session = NFCTagReaderSession(pollingOption: .iso14443, delegate: self)
         session?.alertMessage = "Maintenez votre téléphone près du tag NFC"
+        session?.begin()
+    }
+
+    private func startOpenPrintTagReadSession(result: @escaping FlutterResult) {
+        self.result = result
+        self.isOpenPrintTagMode = true
+
+        session = NFCTagReaderSession(pollingOption: [.iso15693], delegate: self)
+        session?.alertMessage = "Maintenez votre téléphone près du tag NFC Prusa"
+        session?.begin()
+    }
+
+    private func startAutoDetectReadSession(result: @escaping FlutterResult) {
+        self.result = result
+        self.isAutoDetectMode = true
+
+        session = NFCTagReaderSession(pollingOption: [.iso14443, .iso15693], delegate: self)
+        session?.alertMessage = "Maintenez votre téléphone près du tag NFC"
+        session?.begin()
+    }
+
+    private func startOpenPrintTagWriteSession(data: [UInt8], result: @escaping FlutterResult) {
+        self.result = result
+        self.openPrintTagDataToWrite = data
+        self.isOpenPrintTagWriteMode = true
+
+        session = NFCTagReaderSession(pollingOption: [.iso15693], delegate: self)
+        session?.alertMessage = "Maintenez votre téléphone près du tag NFC ISO 15693 vierge"
         session?.begin()
     }
 
@@ -108,20 +157,61 @@ extension NativeNfcPlugin: NFCTagReaderSessionDelegate {
             return
         }
 
-        // Gérer l'annulation par l'utilisateur
         let nsError = error as NSError
+
+        // Code 200: Annulation par l'utilisateur
         if nsError.domain == "NFCError" && nsError.code == 200 {
             print("ℹ️ Session annulée par l'utilisateur")
-            // Envoyer une erreur spécifique pour que Flutter sache que c'est une annulation
             result?(FlutterError(code: "USER_CANCELLED", message: "Scan annulé par l'utilisateur", details: nil))
             self.result = nil
             self.isBambuLabMode = false
+            self.isOpenPrintTagMode = false
+            self.isAutoDetectMode = false
             self.pagesToWrite = nil
             self.bambuBlocksToWrite = nil
             return
         }
 
-        print("❌ Session invalidée: \(error.localizedDescription)")
+        // Code 201: Timeout - aucun tag détecté dans le délai
+        if nsError.domain == "NFCError" && nsError.code == 201 {
+            print("⏱️ Session timeout - aucun tag NFC détecté")
+            result?(FlutterError(code: "TAG_NOT_DETECTED", message: "Aucun tag NFC détecté. Le tag est peut-être mort ou incompatible.", details: nil))
+            self.result = nil
+            self.isBambuLabMode = false
+            self.isOpenPrintTagMode = false
+            self.isAutoDetectMode = false
+            self.pagesToWrite = nil
+            self.bambuBlocksToWrite = nil
+            return
+        }
+
+        // Code 202: Session terminée de façon inattendue (iOS 26+ peut forcer l'arrêt)
+        if nsError.domain == "NFCError" && nsError.code == 202 {
+            print("⚠️ Session NFC interrompue par le système (code 202)")
+            result?(FlutterError(code: "SESSION_TERMINATED", message: "Session NFC interrompue par le système. Réessayez.", details: nil))
+            self.result = nil
+            self.isBambuLabMode = false
+            self.isOpenPrintTagMode = false
+            self.isAutoDetectMode = false
+            self.pagesToWrite = nil
+            self.bambuBlocksToWrite = nil
+            return
+        }
+
+        // Code 203: Système occupé
+        if nsError.domain == "NFCError" && nsError.code == 203 {
+            print("⚠️ Système NFC occupé")
+            result?(FlutterError(code: "SYSTEM_BUSY", message: "Le lecteur NFC est occupé. Réessayez.", details: nil))
+            self.result = nil
+            self.isBambuLabMode = false
+            self.isOpenPrintTagMode = false
+            self.isAutoDetectMode = false
+            self.pagesToWrite = nil
+            self.bambuBlocksToWrite = nil
+            return
+        }
+
+        print("❌ Session invalidée: \(error.localizedDescription) (domain: \(nsError.domain), code: \(nsError.code))")
         result?(FlutterError(code: "SESSION_ERROR", message: error.localizedDescription, details: nil))
         self.result = nil
     }
@@ -129,6 +219,60 @@ extension NativeNfcPlugin: NFCTagReaderSessionDelegate {
     func tagReaderSession(_ session: NFCTagReaderSession, didDetect tags: [NFCTag]) {
         guard let tag = tags.first else {
             result?(FlutterError(code: "NO_TAG", message: "Aucun tag détecté", details: nil))
+            return
+        }
+
+        // Détecter les tags ISO 15693 (NFC-V) - ex: Prusa OpenPrintTag
+        if case let .iso15693(iso15693Tag) = tag {
+            print("📡 Tag ISO 15693 (NFC-V) détecté - identifier: \(iso15693Tag.identifier.map { String(format: "%02x", $0) }.joined(separator: ":"))")
+
+            // Si on est en mode écriture OpenPrintTag
+            if self.isOpenPrintTagWriteMode, let dataToWrite = self.openPrintTagDataToWrite {
+                session.connect(to: tag) { error in
+                    if let error = error {
+                        print("❌ Erreur connexion ISO 15693: \(error.localizedDescription)")
+                        session.invalidate(errorMessage: "Erreur de connexion au tag")
+                        self.result?(FlutterError(code: "CONNECTION_ERROR", message: error.localizedDescription, details: nil))
+                        self.result = nil
+                        self.isOpenPrintTagWriteMode = false
+                        self.openPrintTagDataToWrite = nil
+                        return
+                    }
+                    self.writeOpenPrintTag(iso15693Tag: iso15693Tag, data: dataToWrite, session: session)
+                }
+                return
+            }
+
+            // Si on est en mode OpenPrintTag ou Auto-Detect, lire le tag ISO 15693
+            if self.isOpenPrintTagMode || self.isAutoDetectMode {
+                session.connect(to: tag) { error in
+                    if let error = error {
+                        print("❌ Erreur connexion ISO 15693: \(error.localizedDescription)")
+                        session.invalidate(errorMessage: "Erreur de connexion au tag")
+                        self.result?(FlutterError(code: "CONNECTION_ERROR", message: error.localizedDescription, details: nil))
+                        self.result = nil
+                        self.isOpenPrintTagMode = false
+                        return
+                    }
+                    self.readOpenPrintTag(iso15693Tag: iso15693Tag, session: session)
+                }
+                return
+            }
+
+            // Sinon, signaler un tag incompatible
+            let tagInfo = "ISO 15693 (NFC-V) - ID: \(iso15693Tag.identifier.map { String(format: "%02x", $0) }.joined(separator: ":"))"
+            session.invalidate(errorMessage: "Tag ISO 15693 détecté (non compatible)")
+            self.result?(FlutterError(
+                code: "INCOMPATIBLE_TAG",
+                message: "Tag NFC détecté mais de type ISO 15693 (NFC-V). Ce type est utilisé par Prusa (OpenPrintTag) et n'est pas encore supporté dans ce mode. Sélectionnez le mode Prusa.",
+                details: tagInfo
+            ))
+            self.result = nil
+            self.isBambuLabMode = false
+            self.isOpenPrintTagMode = false
+            self.isAutoDetectMode = false
+            self.pagesToWrite = nil
+            self.bambuBlocksToWrite = nil
             return
         }
 
@@ -145,8 +289,26 @@ extension NativeNfcPlugin: NFCTagReaderSessionDelegate {
 
             // Vérifier que c'est un tag MiFare
             guard case let .miFare(mifareTag) = tag else {
-                session.invalidate(errorMessage: "Tag non compatible")
-                self.result?(FlutterError(code: "INVALID_TAG", message: "Tag non MiFare", details: nil))
+                // Tag détecté mais pas MiFare (pourrait être ISO 7816, FeliCa, etc.)
+                var tagTypeDesc = "inconnu"
+                switch tag {
+                case .iso7816:
+                    tagTypeDesc = "ISO 7816 (carte à puce)"
+                case .feliCa:
+                    tagTypeDesc = "FeliCa (Sony)"
+                default:
+                    tagTypeDesc = "non identifié"
+                }
+                print("⚠️ Tag détecté mais type non supporté: \(tagTypeDesc)")
+                session.invalidate(errorMessage: "Tag de type \(tagTypeDesc) non compatible")
+                self.result?(FlutterError(
+                    code: "INCOMPATIBLE_TAG",
+                    message: "Tag NFC détecté mais de type \(tagTypeDesc). L'app supporte les tags MiFare (Anycubic, Bambu Lab, Creality).",
+                    details: tagTypeDesc
+                ))
+                self.result = nil
+                self.isBambuLabMode = false
+                self.isAutoDetectMode = false
                 return
             }
 
@@ -155,7 +317,7 @@ extension NativeNfcPlugin: NFCTagReaderSessionDelegate {
                 self.writePages(mifareTag: mifareTag, pages: pages, session: session)
             } else if let bambuBlocks = self.bambuBlocksToWrite {
                 self.writeBambuLabClone(mifareTag: mifareTag, blocks: bambuBlocks, session: session)
-            } else if self.isBambuLabMode {
+            } else if self.isBambuLabMode || self.isAutoDetectMode {
                 // Auto-détection du type de tag basée sur la famille MiFare
                 // MiFare Ultralight (Anycubic/NTAG) vs MiFare Classic (Bambu Lab)
                 let tagFamily = mifareTag.mifareFamily
@@ -178,6 +340,185 @@ extension NativeNfcPlugin: NFCTagReaderSessionDelegate {
             } else {
                 self.readAllPages(mifareTag: mifareTag, session: session)
             }
+        }
+    }
+
+    // MARK: - OpenPrintTag ISO 15693 Writing
+
+    private func writeOpenPrintTag(iso15693Tag: NFCISO15693Tag, data: [UInt8], session: NFCTagReaderSession) {
+        print("✍️ Écriture OpenPrintTag ISO 15693: \(data.count) bytes")
+
+        // ISO 15693 blocks are 4 bytes each
+        let blockSize = 4
+        let totalBlocks = (data.count + blockSize - 1) / blockSize
+
+        // Pad data to fill the last block
+        var paddedData = data
+        while paddedData.count % blockSize != 0 {
+            paddedData.append(0x00)
+        }
+
+        writeISO15693BlocksSequentially(
+            iso15693Tag: iso15693Tag,
+            data: paddedData,
+            blockSize: blockSize,
+            totalBlocks: totalBlocks,
+            currentBlock: 0,
+            session: session
+        )
+    }
+
+    private func writeISO15693BlocksSequentially(
+        iso15693Tag: NFCISO15693Tag,
+        data: [UInt8],
+        blockSize: Int,
+        totalBlocks: Int,
+        currentBlock: Int,
+        session: NFCTagReaderSession
+    ) {
+        if currentBlock >= totalBlocks {
+            print("✅ Écriture OpenPrintTag terminée: \(totalBlocks) blocs écrits")
+            session.alertMessage = "Écriture OpenPrintTag réussie ✓"
+            session.invalidate()
+            self.result?(true)
+            self.result = nil
+            self.isOpenPrintTagWriteMode = false
+            self.openPrintTagDataToWrite = nil
+            return
+        }
+
+        let startIdx = currentBlock * blockSize
+        let blockData = Data(data[startIdx..<(startIdx + blockSize)])
+
+        iso15693Tag.writeSingleBlock(requestFlags: [.highDataRate, .address], blockNumber: UInt8(currentBlock), dataBlock: blockData) { error in
+            if let error = error {
+                print("❌ Erreur écriture bloc \(currentBlock): \(error.localizedDescription)")
+                session.invalidate(errorMessage: "Erreur écriture bloc \(currentBlock)")
+                self.result?(FlutterError(code: "WRITE_ERROR", message: "Erreur écriture bloc \(currentBlock): \(error.localizedDescription)", details: nil))
+                self.result = nil
+                self.isOpenPrintTagWriteMode = false
+                self.openPrintTagDataToWrite = nil
+                return
+            }
+
+            print("📤 Bloc \(currentBlock)/\(totalBlocks-1) écrit: \(blockData.map { String(format: "%02x", $0) }.joined(separator: " "))")
+
+            self.writeISO15693BlocksSequentially(
+                iso15693Tag: iso15693Tag,
+                data: data,
+                blockSize: blockSize,
+                totalBlocks: totalBlocks,
+                currentBlock: currentBlock + 1,
+                session: session
+            )
+        }
+    }
+
+    // MARK: - OpenPrintTag ISO 15693 Reading
+
+    private func readOpenPrintTag(iso15693Tag: NFCISO15693Tag, session: NFCTagReaderSession) {
+        print("📖 Lecture OpenPrintTag ISO 15693...")
+
+        // Read blocks sequentially (4 bytes per block for ISO 15693)
+        // Read up to 64 blocks (256 bytes) to cover NDEF + OpenPrintTag data
+        readISO15693BlocksSequentially(
+            iso15693Tag: iso15693Tag,
+            currentBlock: 0,
+            maxBlocks: 64,
+            allData: Data(),
+            session: session
+        )
+    }
+
+    private func readISO15693BlocksSequentially(
+        iso15693Tag: NFCISO15693Tag,
+        currentBlock: Int,
+        maxBlocks: Int,
+        allData: Data,
+        session: NFCTagReaderSession
+    ) {
+        if currentBlock >= maxBlocks {
+            // Done reading, return raw bytes
+            print("📄 OpenPrintTag: \(allData.count) bytes lus")
+            print("🔍 Hex: \(allData.map { String(format: "%02x", $0) }.joined(separator: " "))")
+
+            var resultData: [String: Any] = [
+                "rawBytes": [UInt8](allData)
+            ]
+            if self.isAutoDetectMode {
+                resultData["tagType"] = "prusa"
+            }
+
+            session.alertMessage = "Lecture Prusa réussie ✓"
+            session.invalidate()
+            self.result?(resultData)
+            self.result = nil
+            self.isOpenPrintTagMode = false
+            self.isAutoDetectMode = false
+            return
+        }
+
+        iso15693Tag.readSingleBlock(requestFlags: [.highDataRate, .address], blockNumber: UInt8(currentBlock)) { data, error in
+            if let error = error {
+                // If we get an error on a block, we've reached the end of readable memory
+                if currentBlock > 0 {
+                    print("📄 OpenPrintTag: fin de lecture au bloc \(currentBlock), \(allData.count) bytes lus")
+                    print("🔍 Hex: \(allData.map { String(format: "%02x", $0) }.joined(separator: " "))")
+
+                    let resultData: [String: Any] = [
+                        "rawBytes": [UInt8](allData)
+                    ]
+
+                    session.alertMessage = "Lecture Prusa réussie ✓"
+                    session.invalidate()
+                    self.result?(resultData)
+                    self.result = nil
+                    self.isOpenPrintTagMode = false
+                    return
+                }
+
+                // Error on first block
+                print("❌ Erreur lecture ISO 15693 bloc \(currentBlock): \(error.localizedDescription)")
+                session.invalidate(errorMessage: "Erreur de lecture ISO 15693")
+                self.result?(FlutterError(code: "READ_ERROR", message: error.localizedDescription, details: nil))
+                self.result = nil
+                self.isOpenPrintTagMode = false
+                self.isAutoDetectMode = false
+                return
+            }
+
+            var newData = allData
+            newData.append(data)
+
+            // Check for NDEF terminator TLV (0xFE)
+            if data.contains(0xFE) && currentBlock > 4 {
+                print("📄 OpenPrintTag: terminateur NDEF trouvé au bloc \(currentBlock)")
+                print("🔍 Hex: \(newData.map { String(format: "%02x", $0) }.joined(separator: " "))")
+
+                var resultData: [String: Any] = [
+                    "rawBytes": [UInt8](newData)
+                ]
+                if self.isAutoDetectMode {
+                    resultData["tagType"] = "prusa"
+                }
+
+                session.alertMessage = "Lecture Prusa réussie ✓"
+                session.invalidate()
+                self.result?(resultData)
+                self.result = nil
+                self.isOpenPrintTagMode = false
+                self.isAutoDetectMode = false
+                return
+            }
+
+            // Read next block
+            self.readISO15693BlocksSequentially(
+                iso15693Tag: iso15693Tag,
+                currentBlock: currentBlock + 1,
+                maxBlocks: maxBlocks,
+                allData: newData,
+                session: session
+            )
         }
     }
 
@@ -208,6 +549,7 @@ extension NativeNfcPlugin: NFCTagReaderSessionDelegate {
             self.result?(resultData)
             self.result = nil
             self.isBambuLabMode = false
+            self.isAutoDetectMode = false
             return
         }
 
@@ -220,7 +562,9 @@ extension NativeNfcPlugin: NFCTagReaderSessionDelegate {
                 session.invalidate(errorMessage: "Erreur de lecture")
                 self.result?(FlutterError(code: "READ_ERROR", message: error.localizedDescription, details: nil))
                 self.result = nil
+                self.isAutoDetectMode = false
                 self.isBambuLabMode = false
+                self.isAutoDetectMode = false
                 return
             }
 
@@ -369,12 +713,16 @@ extension NativeNfcPlugin: NFCTagReaderSessionDelegate {
     ) {
         // If we've read all blocks, parse and return data
         if currentIndex >= blocks.count {
-            let parsedData = parseBambuLabData(blockData: blockData)
+            var parsedData = parseBambuLabData(blockData: blockData)
+            if self.isAutoDetectMode {
+                parsedData["tagType"] = "bambu"
+            }
             session.alertMessage = "Lecture Bambu Lab réussie ✓"
             session.invalidate()
             self.result?(parsedData)
             self.result = nil
             self.isBambuLabMode = false
+            self.isAutoDetectMode = false
             return
         }
 
@@ -397,6 +745,7 @@ extension NativeNfcPlugin: NFCTagReaderSessionDelegate {
                 ))
                 self.result = nil
                 self.isBambuLabMode = false
+                self.isAutoDetectMode = false
                 return
             }
 

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:in_app_purchase/in_app_purchase.dart';
-import 'package:nfc_filament/l10n/app_localizations.dart';
 import 'package:nfc_filament/core/api/api_config.dart';
-import 'package:nfc_filament/core/services/user_preferences_service.dart';
 import 'package:nfc_filament/core/services/auth_service.dart';
 import 'package:nfc_filament/core/services/subscription_service.dart';
-import 'package:nfc_filament/core/services/admob_service.dart';
+import 'package:nfc_filament/core/services/user_preferences_service.dart';
 import 'package:nfc_filament/features/auth/presentation/pages/login_page.dart';
+import 'package:nfc_filament/l10n/app_localizations.dart';
 import 'package:nfc_filament/main.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -30,6 +30,7 @@ class _ProfilePageState extends State<ProfilePage> {
   bool _isPremium = false;
   bool _isLoadingSubscription = false;
   List<ProductDetails> _products = [];
+  String _appVersion = '';
 
   /// Retourne le prix formaté depuis le store pour un produit donné
   String _getProductPrice(String productId) {
@@ -58,6 +59,8 @@ class _ProfilePageState extends State<ProfilePage> {
     _isPremium = await UserPreferencesService.isPremium();
     // Charger les produits depuis le store pour afficher les prix dynamiques
     _products = SubscriptionService().products;
+    final packageInfo = await PackageInfo.fromPlatform();
+    _appVersion = '${packageInfo.version} (${packageInfo.buildNumber})';
     setState(() => _isLoading = false);
   }
 
@@ -142,7 +145,15 @@ class _ProfilePageState extends State<ProfilePage> {
     setState(() => _selectedLanguage = language);
 
     // Mettre à jour la locale de l'app via la GlobalKey
-    myAppKey.currentState?.setLocale(Locale(language));
+    // Parser les codes de langue avec pays (ex: en_AU, fr_CA, zh_TW)
+    Locale locale;
+    if (language.contains('_')) {
+      final parts = language.split('_');
+      locale = Locale(parts[0], parts[1]);
+    } else {
+      locale = Locale(language);
+    }
+    myAppKey.currentState?.setLocale(locale);
   }
 
   Future<void> _saveCurrency(String currency) async {
@@ -232,17 +243,42 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   String _getCurrencyName(BuildContext context, String currency) {
+    final l10n = AppLocalizations.of(context)!;
     switch (currency) {
       case 'CHF':
-        return AppLocalizations.of(context)!.chf;
+        return l10n.chf;
       case 'EUR':
-        return AppLocalizations.of(context)!.eur;
+        return l10n.eur;
       case 'USD':
-        return AppLocalizations.of(context)!.usd;
+        return l10n.usd;
       case 'GBP':
-        return AppLocalizations.of(context)!.gbp;
+        return l10n.gbp;
       case 'CAD':
-        return AppLocalizations.of(context)!.cad;
+        return l10n.cad;
+      case 'AUD':
+        return l10n.aud;
+      case 'JPY':
+        return l10n.jpy;
+      case 'CNY':
+        return l10n.cny;
+      case 'INR':
+        return l10n.inr;
+      case 'BRL':
+        return l10n.brl;
+      case 'MXN':
+        return l10n.mxn;
+      case 'SEK':
+        return l10n.sek;
+      case 'NOK':
+        return l10n.nok;
+      case 'DKK':
+        return l10n.dkk;
+      case 'PLN':
+        return l10n.pln;
+      case 'CZK':
+        return l10n.czk;
+      case 'NZD':
+        return l10n.nzd;
       default:
         return currency;
     }
@@ -334,7 +370,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     OutlinedButton.icon(
                       onPressed: () async {
                         await Navigator.of(context).push(
-                          MaterialPageRoute(builder: (_) => const LoginPage()),
+                          MaterialPageRoute<void>(builder: (_) => const LoginPage()),
                         );
                         // Recharger les préférences après retour de la page de login
                         await _loadPreferences();
@@ -377,7 +413,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                     trailing: const Icon(Icons.chevron_right),
                     onTap: () {
-                      showDialog(
+                      showDialog<void>(
                         context: context,
                         builder: (context) => AlertDialog(
                           title: Text(
@@ -421,7 +457,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                     trailing: const Icon(Icons.chevron_right),
                     onTap: () {
-                      showDialog(
+                      showDialog<void>(
                         context: context,
                         builder: (context) => AlertDialog(
                           title: Text(
@@ -467,7 +503,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                     trailing: const Icon(Icons.chevron_right),
                     onTap: () {
-                      showDialog(
+                      showDialog<void>(
                         context: context,
                         builder: (context) => AlertDialog(
                           title: Text(
@@ -519,7 +555,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     subtitle: Text('$_lowStockThreshold%'),
                     trailing: const Icon(Icons.chevron_right),
                     onTap: () {
-                      showDialog(
+                      showDialog<void>(
                         context: context,
                         builder: (context) {
                           // Clamp threshold between slider min/max to prevent crash
@@ -924,12 +960,46 @@ class _ProfilePageState extends State<ProfilePage> {
                       child: TextButton.icon(
                         onPressed: _isLoadingSubscription ? null : _restorePurchases,
                         icon: const Icon(Icons.restore, size: 18),
-                        label: const Text('Restaurer les achats'),
+                        label: Text(AppLocalizations.of(context)!.restorePurchasesButton),
                         style: TextButton.styleFrom(
                           foregroundColor: Colors.blue.shade700,
                         ),
                       ),
                     ),
+                  // Liens légaux pour abonnements (Apple requirement)
+                  const SizedBox(height: 12),
+                  Center(
+                    child: Wrap(
+                      alignment: WrapAlignment.center,
+                      children: [
+                        TextButton(
+                          onPressed: () async {
+                            final uri = Uri.parse('https://api.engageengine.ch/terms-of-service.php');
+                            if (await canLaunchUrl(uri)) {
+                              await launchUrl(uri, mode: LaunchMode.externalApplication);
+                            }
+                          },
+                          child: Text(
+                            AppLocalizations.of(context)!.termsOfService,
+                            style: TextStyle(fontSize: 12, color: Colors.grey.shade600),
+                          ),
+                        ),
+                        Text(' • ', style: TextStyle(color: Colors.grey.shade400)),
+                        TextButton(
+                          onPressed: () async {
+                            final uri = Uri.parse('https://api.engageengine.ch/privacy-policy.php');
+                            if (await canLaunchUrl(uri)) {
+                              await launchUrl(uri, mode: LaunchMode.externalApplication);
+                            }
+                          },
+                          child: Text(
+                            AppLocalizations.of(context)!.privacyPolicy,
+                            style: TextStyle(fontSize: 12, color: Colors.grey.shade600),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -950,6 +1020,17 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                   ),
                   const SizedBox(height: 8),
+                  ListTile(
+                    leading: const Icon(Icons.mail_outline),
+                    title: Text(AppLocalizations.of(context)!.contactUs),
+                    subtitle: Text(AppLocalizations.of(context)!.contactUsSubtitle),
+                    trailing: const Icon(Icons.open_in_new),
+                    onTap: () async {
+                      final uri = Uri.parse('mailto:info@engageengine.ch?subject=Spool Master Feedback');
+                      await launchUrl(uri);
+                    },
+                  ),
+                  const Divider(),
                   ListTile(
                     leading: const Icon(Icons.privacy_tip_outlined),
                     title: Text(AppLocalizations.of(context)!.privacyPolicy),
@@ -978,7 +1059,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   ListTile(
                     leading: const Icon(Icons.info_outline),
                     title: Text(AppLocalizations.of(context)!.version),
-                    subtitle: const Text('1.0.0'),
+                    subtitle: Text(_appVersion),
                   ),
                 ],
               ),

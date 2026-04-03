@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nfc_filament/core/theme/app_theme.dart';
+import 'package:nfc_filament/core/utils/color_translator.dart';
 import 'package:nfc_filament/dependency_injection.dart';
 import 'package:nfc_filament/features/nfc_reader/domain/entities/bobbin_data.dart';
 import 'package:nfc_filament/features/nfc_reader/presentation/bloc/nfc_reader_bloc.dart';
@@ -21,7 +22,7 @@ class NfcStockUpdatePage extends StatelessWidget {
       create: (_) =>
           getIt<NfcReaderBloc>()
             ..add(const CheckNfcAvailabilityEvent())
-            ..add(const ReadBobbinDataEvent()),
+            ..add(const ReadBobbinDataAutoDetectEvent()),
       child: const _NfcStockUpdateView(),
     );
   }
@@ -134,7 +135,7 @@ class _NfcStockUpdateView extends StatelessWidget {
                           ElevatedButton(
                             onPressed: () {
                               context.read<NfcReaderBloc>().add(
-                                const ReadBobbinDataEvent(),
+                                const ReadBobbinDataAutoDetectEvent(),
                               );
                             },
                             child: Text(AppLocalizations.of(context)!.retry),
@@ -231,7 +232,7 @@ class _NfcStockUpdateView extends StatelessWidget {
     if (matchingSpool == null) {
       debugPrint('❌ [DIALOG] No matching spool found, showing error dialog');
       // No matching spool found - show dialog to add it first
-      await showDialog(
+      await showDialog<void>(
         context: context,
         builder: (context) => AlertDialog(
           title: Text(AppLocalizations.of(context)!.spoolNotFound),
@@ -284,7 +285,7 @@ class _NfcStockUpdateView extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    spool.colorName,
+                    translateColorName(context, spool.colorName),
                     style: TextStyle(color: Colors.grey.shade600),
                   ),
                   const SizedBox(height: 16),
@@ -459,6 +460,10 @@ class _NfcStockUpdateView extends StatelessWidget {
         Navigator.pop(context, true);
       }
     }
+
+    // Dispose controllers to prevent memory leak
+    weightController.dispose();
+    lengthController.dispose();
   }
 
 }

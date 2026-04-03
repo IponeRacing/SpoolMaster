@@ -1,7 +1,11 @@
 import 'dart:convert';
 
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
+import 'package:nfc_filament/firebase_options.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:nfc_filament/core/services/user_preferences_service.dart';
@@ -12,6 +16,7 @@ import 'package:nfc_filament/core/services/admob_service.dart';
 import 'package:nfc_filament/core/services/subscription_service.dart';
 import 'package:nfc_filament/core/services/auth_service.dart';
 import 'package:nfc_filament/core/theme/app_theme.dart';
+import 'package:nfc_filament/core/utils/color_translator.dart';
 import 'package:nfc_filament/core/widgets/ad_banner_widget.dart';
 import 'package:nfc_filament/core/widgets/formatted_value_widgets.dart';
 import 'package:nfc_filament/core/services/brands_materials_service.dart';
@@ -30,39 +35,41 @@ import 'package:nfc_filament/l10n/app_localizations.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Initialize all locales for date formatting
-  await initializeDateFormatting('fr_FR', null);
-  await initializeDateFormatting('en_US', null);
-  await initializeDateFormatting('de_DE', null);
-  await initializeDateFormatting('it_IT', null);
-  await initializeDateFormatting('es_ES', null);
-  await initializeDateFormatting('nl_NL', null);
-  await initializeDateFormatting('pl_PL', null);
-  await initializeDateFormatting('cs_CZ', null);
-  await initializeDateFormatting('pt_PT', null);
-  await initializeDateFormatting('ru_RU', null);
-  await initializeDateFormatting('ja_JP', null);
-  await initializeDateFormatting('ko_KR', null);
-  await initializeDateFormatting('zh_CN', null);
-  await initializeDateFormatting('sv_SE', null);
-  await initializeDateFormatting('tr_TR', null);
-  await initializeDateFormatting('ro_RO', null);
-  await initializeDateFormatting('hu_HU', null);
-  await initializeDateFormatting('el_GR', null);
-  await initializeDateFormatting('bg_BG', null);
-  await initializeDateFormatting('hr_HR', null);
-  await initializeDateFormatting('sk_SK', null);
-  await initializeDateFormatting('sl_SI', null);
-  await initializeDateFormatting('sr_RS', null);
-  await initializeDateFormatting('uk_UA', null);
-  await initializeDateFormatting('da_DK', null);
-  await initializeDateFormatting('nb_NO', null);
-  await initializeDateFormatting('fi_FI', null);
-  await initializeDateFormatting('th_TH', null);
-  await initializeDateFormatting('vi_VN', null);
-  await initializeDateFormatting('id_ID', null);
-  await initializeDateFormatting('ms_MY', null);
-  await initializeDateFormatting('hi_IN', null);
+  // Initialize all locales for date formatting (parallelized)
+  await Future.wait([
+    initializeDateFormatting('fr_FR', null),
+    initializeDateFormatting('en_US', null),
+    initializeDateFormatting('de_DE', null),
+    initializeDateFormatting('it_IT', null),
+    initializeDateFormatting('es_ES', null),
+    initializeDateFormatting('nl_NL', null),
+    initializeDateFormatting('pl_PL', null),
+    initializeDateFormatting('cs_CZ', null),
+    initializeDateFormatting('pt_PT', null),
+    initializeDateFormatting('ru_RU', null),
+    initializeDateFormatting('ja_JP', null),
+    initializeDateFormatting('ko_KR', null),
+    initializeDateFormatting('zh_CN', null),
+    initializeDateFormatting('sv_SE', null),
+    initializeDateFormatting('tr_TR', null),
+    initializeDateFormatting('ro_RO', null),
+    initializeDateFormatting('hu_HU', null),
+    initializeDateFormatting('el_GR', null),
+    initializeDateFormatting('bg_BG', null),
+    initializeDateFormatting('hr_HR', null),
+    initializeDateFormatting('sk_SK', null),
+    initializeDateFormatting('sl_SI', null),
+    initializeDateFormatting('sr_RS', null),
+    initializeDateFormatting('uk_UA', null),
+    initializeDateFormatting('da_DK', null),
+    initializeDateFormatting('nb_NO', null),
+    initializeDateFormatting('fi_FI', null),
+    initializeDateFormatting('th_TH', null),
+    initializeDateFormatting('vi_VN', null),
+    initializeDateFormatting('id_ID', null),
+    initializeDateFormatting('ms_MY', null),
+    initializeDateFormatting('hi_IN', null),
+  ]);
 
   // Enable edge-to-edge display
   await SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
@@ -82,13 +89,26 @@ void main() async {
     DeviceOrientation.portraitDown,
   ]);
 
-  // Setup Dependency Injection
-  await configureDependencies();
+  // Firebase + Crashlytics
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
+  WidgetsBinding.instance.platformDispatcher.onError =
+      (Object error, StackTrace stack) {
+    FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+    return true;
+  };
 
-  // Initialize AdMob
-  await AdMobService().initialize();
+  // DI + AdMob en parallele (independants)
+  await Future.wait([
+    configureDependencies(),
+    AdMobService().initialize(),
+  ]);
 
-  // Initialize Subscription Service and sync premium status
+  AdMobService().preloadInterstitial();
+
+  // Subscription + premium status (depend de DI)
   await SubscriptionService().initialize();
   final isPremium = await UserPreferencesService.isPremium();
   AdMobService().setUserPremiumStatus(isPremium);
@@ -118,7 +138,13 @@ class _MyAppState extends State<MyApp> {
   Future<void> _loadLocale() async {
     final languageCode = await UserPreferencesService.getLanguage();
     setState(() {
-      _locale = Locale(languageCode);
+      // Parser les codes de langue avec pays (ex: en_AU, fr_CA, zh_TW)
+      if (languageCode.contains('_')) {
+        final parts = languageCode.split('_');
+        _locale = Locale(parts[0], parts[1]);
+      } else {
+        _locale = Locale(languageCode);
+      }
     });
   }
 
@@ -176,6 +202,14 @@ class _MyAppState extends State<MyApp> {
         Locale('id'),
         Locale('ms'),
         Locale('hi'),
+        Locale('ar'),
+        Locale('ca'),
+        Locale('he'),
+        Locale.fromSubtags(languageCode: 'en', countryCode: 'AU'),
+        Locale.fromSubtags(languageCode: 'en', countryCode: 'CA'),
+        Locale.fromSubtags(languageCode: 'en', countryCode: 'GB'),
+        Locale.fromSubtags(languageCode: 'fr', countryCode: 'CA'),
+        Locale.fromSubtags(languageCode: 'zh', scriptCode: 'Hant', countryCode: 'TW'),
       ],
       home: const SplashPage(),
     );
@@ -214,7 +248,7 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
               // Pré-charger la page d'écriture invisible
               Offstage(
                 child: Navigator(
-                  onGenerateRoute: (settings) => MaterialPageRoute(
+                  onGenerateRoute: (settings) => MaterialPageRoute<void>(
                     builder: (context) => const NfcWriterPage(),
                   ),
                 ),
@@ -633,7 +667,7 @@ class _StockListPageState extends State<StockListPage> {
             onPressed: () {
               Navigator.of(
                 context,
-              ).push(MaterialPageRoute(builder: (_) => const ProfilePage()));
+              ).push(MaterialPageRoute<void>(builder: (_) => const ProfilePage()));
             },
           ),
         ],
@@ -806,7 +840,7 @@ class _StockListPageState extends State<StockListPage> {
                 onPressed: () async {
                   final result = await Navigator.push(
                     context,
-                    MaterialPageRoute(
+                    MaterialPageRoute<bool>(
                       builder: (context) => const NfcStockUpdatePage(),
                     ),
                   );
@@ -888,7 +922,7 @@ class _StockListPageState extends State<StockListPage> {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      spool.colorName,
+                      translateColorName(context, spool.colorName),
                       style: TextStyle(
                         fontSize: 14,
                         color: Colors.grey.shade600,
@@ -962,7 +996,7 @@ class _StockListPageState extends State<StockListPage> {
   }
 
   void _showAddBobbinDialog(BuildContext context) {
-    showDialog(
+    showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
         title: Text(AppLocalizations.of(context)!.addSpool),
@@ -998,7 +1032,7 @@ class _StockListPageState extends State<StockListPage> {
     // Naviguer vers la page de scan direct
     final result = await Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => const DirectScanPage()),
+      MaterialPageRoute<dynamic>(builder: (context) => const DirectScanPage()),
     );
 
     // Si des données ont été scannées
@@ -1020,7 +1054,7 @@ class _StockListPageState extends State<StockListPage> {
 
     if (!mounted) return;
 
-    showDialog(
+    showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
         title: Text(AppLocalizations.of(context)!.bobbinPrice),
@@ -1840,7 +1874,6 @@ class _StatisticsPageState extends State<StatisticsPage> {
   List<SpoolInventoryItem> _spools = [];
   List<SpoolInventoryItem> _shoppingList = [];
   bool _isLoading = true;
-  int _lowStockThreshold = 20;
   Set<String> _orderedSpoolIds = {};
 
   @override
@@ -1873,7 +1906,6 @@ class _StatisticsPageState extends State<StatisticsPage> {
     setState(() => _isLoading = true);
     final spools = await SpoolStorageService.loadSpools();
     final threshold = await UserPreferencesService.getLowStockThreshold();
-    final shoppingList = await ShoppingListService.loadShoppingList();
     final orderedIds = await ShoppingListService.loadOrderedIds();
 
     // Ajouter automatiquement les filaments en stock bas à la liste de courses
@@ -1891,7 +1923,6 @@ class _StatisticsPageState extends State<StatisticsPage> {
 
     setState(() {
       _spools = spools;
-      _lowStockThreshold = threshold;
       _shoppingList = updatedShoppingList;
       _orderedSpoolIds = orderedIds;
       _isLoading = false;
@@ -1908,11 +1939,6 @@ class _StatisticsPageState extends State<StatisticsPage> {
     setState(() {
       _orderedSpoolIds = orderedIds;
     });
-  }
-
-  Future<void> _removeFromShoppingList(String spoolId) async {
-    await ShoppingListService.removeFromShoppingList(spoolId);
-    await _loadData();
   }
 
   Future<void> _clearShoppingList() async {
@@ -1953,7 +1979,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
             onPressed: () {
               Navigator.of(
                 context,
-              ).push(MaterialPageRoute(builder: (_) => const ProfilePage()));
+              ).push(MaterialPageRoute<void>(builder: (_) => const ProfilePage()));
             },
           ),
         ],
@@ -2127,7 +2153,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
   }
 
   void _showClearShoppingListDialog(BuildContext context) {
-    showDialog(
+    showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
         title: Text(AppLocalizations.of(context)!.clearShoppingList),
@@ -2151,7 +2177,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
   }
 
   void _showAddToShoppingListDialog(BuildContext context) {
-    showDialog(
+    showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
         title: Text(AppLocalizations.of(context)!.addToShoppingList),
@@ -2170,7 +2196,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
                 Navigator.pop(context);
                 // Lancer le scan direct
                 final result = await Navigator.of(context).push(
-                  MaterialPageRoute(builder: (_) => const DirectScanPage()),
+                  MaterialPageRoute<dynamic>(builder: (_) => const DirectScanPage()),
                 );
 
                 // Si on a scanné des données, les ajouter à la liste
@@ -2408,7 +2434,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            spool.colorName,
+            translateColorName(context, spool.colorName),
             style: TextStyle(
               fontSize: 12,
               decoration: isOrdered ? TextDecoration.lineThrough : null,

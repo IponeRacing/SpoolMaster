@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:math';
 import 'package:flutter/foundation.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:in_app_purchase_storekit/in_app_purchase_storekit.dart';
@@ -77,7 +76,7 @@ class SubscriptionService {
     _subscription = _iap.purchaseStream.listen(
       _handlePurchaseUpdates,
       onDone: () => _subscription?.cancel(),
-      onError: (error) => debugPrint('❌ Purchase stream error: $error'),
+      onError: (Object error) => debugPrint('❌ Purchase stream error: $error'),
     );
 
     // Charger les produits
@@ -205,8 +204,7 @@ class SubscriptionService {
   Future<bool> _verifyPurchaseWithServer(PurchaseDetails purchaseDetails) async {
     try {
       // Récupérer le JWT token de l'utilisateur
-      final authService = AuthService();
-      final token = await authService.getAccessToken();
+      final token = await AuthService().getAccessToken();
 
       if (token == null) {
         debugPrint('❌ No auth token - cannot verify purchase securely');
@@ -221,10 +219,8 @@ class SubscriptionService {
       if (defaultTargetPlatform == TargetPlatform.iOS) {
         // Pour iOS StoreKit 2
         if (purchaseDetails is AppStorePurchaseDetails) {
-          final sk2Details = purchaseDetails as AppStorePurchaseDetails;
-
-          if (sk2Details.skPaymentTransaction.transactionState == SKPaymentTransactionStateWrapper.purchased ||
-              sk2Details.skPaymentTransaction.transactionState == SKPaymentTransactionStateWrapper.restored) {
+          if (purchaseDetails.skPaymentTransaction.transactionState == SKPaymentTransactionStateWrapper.purchased ||
+              purchaseDetails.skPaymentTransaction.transactionState == SKPaymentTransactionStateWrapper.restored) {
             signedTransaction = purchaseDetails.verificationData.serverVerificationData;
             debugPrint('📦 iOS: Using serverVerificationData');
           }
@@ -250,10 +246,7 @@ class SubscriptionService {
         return false;
       }
 
-      // DEBUG: Log format
-      debugPrint('📋 Platform: $platform');
-      debugPrint('📋 SignedTransaction length: ${signedTransaction.length}');
-      debugPrint('📋 SignedTransaction starts with: ${signedTransaction.substring(0, min(50, signedTransaction.length))}');
+      debugPrint('📋 Verifying purchase on $platform (${signedTransaction.length} bytes)');
 
       // Envoyer au backend pour validation
       final response = await http.post(
@@ -292,23 +285,16 @@ class SubscriptionService {
   /// Appelé au démarrage et périodiquement
   Future<void> syncSubscriptionStatusWithServer() async {
     try {
-      // Récupérer le JWT token
-      final authService = AuthService();
-      final token = await authService.getAccessToken();
-
-      if (token == null) {
-        debugPrint('⚠️ No auth token - skipping server sync');
-        return;
-      }
-
       // Demander le statut au serveur
-      final response = await http.get(
-        Uri.parse('${ApiConfig.baseUrl}${ApiConfig.getSubscriptionStatus}'),
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer $token',
-        },
-      ).timeout(const Duration(seconds: 10));
+      final response = await AuthService().authenticatedRequest((token) =>
+        http.get(
+          Uri.parse('${ApiConfig.baseUrl}${ApiConfig.getSubscriptionStatus}'),
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer $token',
+          },
+        ).timeout(const Duration(seconds: 10)),
+      );
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);

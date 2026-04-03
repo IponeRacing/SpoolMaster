@@ -4,15 +4,14 @@ import 'package:nfc_filament/core/services/admob_service.dart';
 
 /// Widget de bannière publicitaire réutilisable
 /// Gère le chargement, l'affichage et le dispose automatique
+/// Utilise des adaptive banners pour un meilleur fill rate
 class AdBannerWidget extends StatefulWidget {
   final String adUnitId;
-  final AdSize adSize;
   final EdgeInsets margin;
 
   const AdBannerWidget({
     super.key,
     required this.adUnitId,
-    this.adSize = AdSize.banner,
     this.margin = const EdgeInsets.symmetric(vertical: 8),
   });
 
@@ -26,12 +25,14 @@ class _AdBannerWidgetState extends State<AdBannerWidget> {
   final AdMobService _adMobService = AdMobService();
 
   @override
-  void initState() {
-    super.initState();
-    _loadAd();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (_bannerAd == null) {
+      _loadAd();
+    }
   }
 
-  void _loadAd() {
+  Future<void> _loadAd() async {
     // Ne charge pas si l'utilisateur est premium
     debugPrint('📺 AdBannerWidget: shouldShowAds = ${_adMobService.shouldShowAds}');
     if (!_adMobService.shouldShowAds) {
@@ -39,14 +40,24 @@ class _AdBannerWidgetState extends State<AdBannerWidget> {
       return;
     }
 
+    // Adaptive banner basé sur la largeur de l'écran
+    final width = MediaQuery.of(context).size.width.truncate();
+    final adaptiveSize = await AdSize.getAnchoredAdaptiveBannerAdSize(
+      Orientation.portrait,
+      width,
+    );
+    final adSize = adaptiveSize ?? AdSize.banner;
+
     _bannerAd = _adMobService.createBannerAd(
       adUnitId: widget.adUnitId,
-      adSize: widget.adSize,
+      adSize: adSize,
       listener: BannerAdListener(
         onAdLoaded: (ad) {
-          setState(() {
-            _isLoaded = true;
-          });
+          if (mounted) {
+            setState(() {
+              _isLoaded = true;
+            });
+          }
         },
         onAdFailedToLoad: (ad, error) {
           debugPrint('❌ Banner ad failed to load: $error');
@@ -55,7 +66,7 @@ class _AdBannerWidgetState extends State<AdBannerWidget> {
       ),
     );
 
-    _bannerAd?.load();
+    await _bannerAd?.load();
   }
 
   @override
@@ -68,10 +79,8 @@ class _AdBannerWidgetState extends State<AdBannerWidget> {
   Widget build(BuildContext context) {
     // N'affiche rien si premium
     if (!_adMobService.shouldShowAds) {
-      debugPrint('📺 AdBannerWidget build: Hidden (premium user)');
       return const SizedBox.shrink();
     }
-    debugPrint('📺 AdBannerWidget build: isLoaded=$_isLoaded, bannerAd=${_bannerAd != null}');
 
     // N'affiche rien si pas chargé
     if (!_isLoaded || _bannerAd == null) {

@@ -55,8 +55,8 @@
   "extruderTempMax": "Макс. темп. екструдер",
   "bedTempMin": "Мин. темп. легло",
   "bedTempMax": "Макс. темп. легло",
-  "diameter": "Диаметър",
-  "spoolLength": "Дължина (м)",
+  "diameter": "Диаметър на филамента",
+  "spoolLength": "Дължина на макарата",
   "generatedSku": "Генериран SKU",
   "approachChipToWrite": "Приближете чип за запис...",
   "writing": "Записване...",
@@ -163,21 +163,15 @@
   "tempBed": "Темп. легло",
   "termsOfService": "Условия за ползване",
   "privacyPolicy": "Политика за поверителност",
-  "legal": "Legal",
+  "legal": "Правно",
   "back": "Назад",
   "retry": "Опитай отново",
   "signOut": "Изход",
-  "extruderTempMin": "Мин. темп. екструдер",
   "extruderTempMinHint": "Напр.: 200",
-  "extruderTempMax": "Макс. темп. екструдер",
   "extruderTempMaxHint": "Напр.: 220",
-  "bedTempMin": "Мин. темп. легло",
   "bedTempMinHint": "Напр.: 50",
-  "bedTempMax": "Макс. темп. легло",
   "bedTempMaxHint": "Напр.: 60",
-  "diameter": "Диаметър на филамента",
   "diameterHint": "Напр.: 1.75",
-  "spoolLength": "Дължина на макарата",
   "spoolLengthHint": "Напр.: 330",
   "tabGrid": "Мрежа",
   "tabSpectrum": "Спектър",
@@ -193,6 +187,18 @@
   "usd": "Американски долар ($)",
   "gbp": "Британска лира (£)",
   "cad": "Канадски долар (CAD)",
+  "aud": "Австралийски долар (A$)",
+  "jpy": "Японска йена (¥)",
+  "cny": "Китайски юан (¥)",
+  "inr": "Индийска рупия (₹)",
+  "brl": "Бразилски реал (R$)",
+  "mxn": "Мексиканско песо (MX$)",
+  "sek": "Шведска крона (kr)",
+  "nok": "Норвежка крона (kr)",
+  "dkk": "Датска крона (kr)",
+  "pln": "Полска злота (zł)",
+  "czk": "Чешка крона (Kč)",
+  "nzd": "Новозеландски долар (NZ$)",
   "filamentsToOrder": "Филаменти за поръчка",
   "shoppingList": "Списък за пазаруване",
   "addToShoppingList": "Добави в списъка",
@@ -215,7 +221,6 @@
   "forAnycubicAce": "за Anycubic Ace",
   "forBambuLabAms": "за Bambu Lab AMS",
   "scanNfcChip": "Сканирай NFC чип",
-  "addManually": "Добави ръчно",
   "fillForm": "Попълни формуляра",
   "emptyShoppingList": "Няма филаменти в списъка",
   "percentRemaining": "{percent}% остават",
@@ -228,8 +233,8 @@
   },
   "markAsOrdered": "Маркирай като поръчано",
   "markAsNotOrdered": "Маркирай като непоръчано",
-  "spoolNotFound": "Макарата не е намерена в наличността",
-  "addSpoolFirstMessage": "Тази макара все още не е в наличността ви. Моля, първо я добавете, като използвате бутона 'Добави макара', преди да актуализирате наличността ѝ.",
+  "spoolNotFound": "Ролката не е намерена в наличностите",
+  "addSpoolFirstMessage": "Тази ролка все още не е във вашите наличности. Моля, първо я добавете с бутона 'Добави ролка', преди да актуализирате наличността.",
   "ok": "OK",
   "connection": "Свързване",
   "signInToSync": "Влезте, за да синхронизирате данните си",
@@ -248,9 +253,11 @@
   "scanSpoolToUpdate": "Сканирайте ролка, за да актуализирате наличността ѝ",
   "bambuLabReadOnly": "Bambu Lab: Само за четене",
   "bambuLabReadOnlyDesc": "Etiketite Bambu Lab използват RSA криптиране и не могат да бъдат променяни. Само за четене.",
-  "spoolNotFound": "Ролката не е намерена в наличностите",
-  "addSpoolFirstMessage": "Тази ролка все още не е във вашите наличности. Моля, първо я добавете с бутона 'Добави ролка', преди да актуализирате наличността.",
-  "ok": "OK",
+  "forPrusaMk4": "за Prusa MK4/XL (OpenPrintTag)",
+  "prusaReadWrite": "Prusa: Четене и запис",
+  "prusaReadWriteDesc": "Prusa таговете използват ISO 15693 (NFC-V) с формат OpenPrintTag. Поддържа се четене и запис.",
+  "nfcTagInfoPrusa": "Използвайте празна етикета NXP ICODE SLIX2 (ISO 15693) за създаване на OpenPrintTag съвместими етикети за Prusa MK4/XL.",
+  "writePrusaTagTitle": "Запиши Prusa OpenPrintTag",
   "bambuCloneLibrary": "Библиотека клонове Bambu Lab",
   "noBambuClones": "Няма клонове Bambu Lab",
   "scanBambuToClone": "Сканирайте оригинални етикети Bambu Lab, за да създадете библиотека с клонове",
@@ -264,7 +271,6 @@
   "clonedOn": "Клониран на",
   "writeThisClone": "Запиши този клон",
   "writeClone": "Запиши клон",
-  "writing": "Записване...",
   "writeOnCUID": "Запиши на CUID карта",
   "cloneWrittenSuccess": "Клонът е записан успешно!",
   "requiredTagFormat": "Изискван формат на етикет",
@@ -300,15 +306,33 @@
   "filamentTypeLabel": "Тип филамент",
   "scanNfcChipButton": "Сканирай NFC чип",
   "deleteCloneConfirmation": "Изтриване на клонинг \"{name}\"?",
-  "@deleteCloneConfirmation": {"placeholders": {"name": {"type": "String"}}},
+  "@deleteCloneConfirmation": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "cloneDeletedMessage": "Клонинг \"{name}\" изтрит",
-  "@cloneDeletedMessage": {"placeholders": {"name": {"type": "String"}}},
+  "@cloneDeletedMessage": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "extruderLabel": "Екструдер",
   "writeThisCloneButton": "Запиши този клонинг",
   "customNameHint": "Персонализирано име",
   "cloneWriteSuccessMessage": "Клонингът е записан успешно!",
   "errorPrefix": "Грешка: {error}",
-  "@errorPrefix": {"placeholders": {"error": {"type": "String"}}},
+  "@errorPrefix": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "writingInProgress": "Записване...",
   "writeOnCUIDButton": "Запиши на CUID карта",
   "diameterLabel": "Диаметър",
@@ -336,11 +360,23 @@
   "writeBambuLabTagButton": "Запиши Bambu Lab етикет",
   "bambuLabRsaNote": "Забележка: Оригиналните етикети на Bambu Lab използват RSA криптиране. Този режим записва данни в опростен съвместим формат.",
   "signInError": "Грешка при влизане: {error}",
-  "@signInError": {"placeholders": {"error": {"type": "String"}}},
+  "@signInError": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "subscriptionActivatedMessage": "Абонаментът е активиран успешно!",
   "subscriptionFailedMessage": "Абонаментът е неуспешен",
   "errorMessage": "Грешка: {error}",
-  "@errorMessage": {"placeholders": {"error": {"type": "String"}}},
+  "@errorMessage": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "subscriptionRestoredMessage": "Абонаментът е възстановен успешно!",
   "noSubscriptionFoundMessage": "Не е намерен абонамент",
   "vipLabel": "VIP",
@@ -353,5 +389,30 @@
   "pleaseEnterValidLength": "Моля, въведете валидна дължина",
   "spoolLengthNotSetCannotConvert": "Дължината на макарата не е зададена - не може да се преобразува",
   "exceedsRemainingWeight": "Надвишава оставащото тегло",
-  "skuLabel": "SKU"
+  "skuLabel": "SKU",
+  "helpIdentifyFilament": "Помогнете ни да разпознаем този филамент",
+  "helpUsImprove": "Помогнете ни да се подобрим!",
+  "helpIdentifyDescription": "Прочетохме чипа, но не успяхме да го разпознаем. Кажете ни какъв е този филамент, за да подобрим приложението.",
+  "otherBrand": "Друга",
+  "thankYouFeedback": "Благодарим за обратната връзка!",
+  "send": "Изпрати",
+  "optionalDetails": "Допълнителни детайли",
+  "weightGrams": "Тегло (г)",
+  "diameterMm": "Диаметър (мм)",
+  "spoolLengthM": "Дължина на макарата (м)",
+  "batchNumberLabel": "Партида / SKU",
+  "black": "Черно",
+  "white": "Бяло",
+  "yellow": "Жълто",
+  "orange": "Оранжево",
+  "pink": "Розово",
+  "purple": "Лилаво",
+  "gray": "Сиво",
+  "brown": "Кафяво",
+  "unknown": "Неизвестно",
+  "contactUs": "Свържете се с нас",
+  "contactUsSubtitle": "Въпроси, предложения или проблеми",
+  "nfcTagNotDetected": "Не е открит NFC таг",
+  "nfcTagNotDetectedDesc": "Не е намерен таг. Тагът може да е повреден или твърде далеч от телефона. Уверете се, че горната част на телефона е поставена директно върху NFC тага.",
+  "nfcTagIncompatible": "Открит е несъвместим NFC таг"
 }

@@ -55,8 +55,8 @@
   "extruderTempMax": "Maks. suulakkeen lämpö",
   "bedTempMin": "Min. alustan lämpö",
   "bedTempMax": "Maks. alustan lämpö",
-  "diameter": "Halkaisija",
-  "spoolLength": "Pituus (m)",
+  "diameter": "Filamentin halkaisija",
+  "spoolLength": "Kelan pituus",
   "generatedSku": "Luotu SKU",
   "approachChipToWrite": "Lähestytä sirua kirjoittaaksesi...",
   "writing": "Kirjoitetaan...",
@@ -163,21 +163,15 @@
   "tempBed": "Alustan lämpö",
   "termsOfService": "Käyttöehdot",
   "privacyPolicy": "Tietosuojakäytäntö",
-  "legal": "Legal",
+  "legal": "Lakisääteinen",
   "back": "Takaisin",
   "retry": "Yritä uudelleen",
   "signOut": "Kirjaudu ulos",
-  "extruderTempMin": "Min. suulakkeen lämpö",
   "extruderTempMinHint": "Esim.: 200",
-  "extruderTempMax": "Maks. suulakkeen lämpö",
   "extruderTempMaxHint": "Esim.: 220",
-  "bedTempMin": "Min. alustan lämpö",
   "bedTempMinHint": "Esim.: 50",
-  "bedTempMax": "Maks. alustan lämpö",
   "bedTempMaxHint": "Esim.: 60",
-  "diameter": "Filamentin halkaisija",
   "diameterHint": "Esim.: 1.75",
-  "spoolLength": "Kelan pituus",
   "spoolLengthHint": "Esim.: 330",
   "tabGrid": "Ruudukko",
   "tabSpectrum": "Spektri",
@@ -193,6 +187,18 @@
   "usd": "Yhdysvaltain dollari ($)",
   "gbp": "Englannin punta (£)",
   "cad": "Kanadan dollari (CAD)",
+  "aud": "Australian dollari (A$)",
+  "jpy": "Japanin jeni (¥)",
+  "cny": "Kiinan yuan (¥)",
+  "inr": "Intian rupia (₹)",
+  "brl": "Brasilian real (R$)",
+  "mxn": "Meksikon peso (MX$)",
+  "sek": "Ruotsin kruunu (kr)",
+  "nok": "Norjan kruunu (kr)",
+  "dkk": "Tanskan kruunu (kr)",
+  "pln": "Puolan zloty (zł)",
+  "czk": "Tšekin koruna (Kč)",
+  "nzd": "Uuden-Seelannin dollari (NZ$)",
   "filamentsToOrder": "Tilattavat filamentit",
   "shoppingList": "Ostoslista",
   "addToShoppingList": "Lisää listalle",
@@ -215,7 +221,6 @@
   "forAnycubicAce": "Anycubic Acelle",
   "forBambuLabAms": "Bambu Lab AMS:lle",
   "scanNfcChip": "Skannaa NFC-siru",
-  "addManually": "Lisää manuaalisesti",
   "fillForm": "Täytä lomake",
   "emptyShoppingList": "Ei filamentteja listalla",
   "percentRemaining": "{percent}% jäljellä",
@@ -229,7 +234,7 @@
   "markAsOrdered": "Merkitse tilatuksi",
   "markAsNotOrdered": "Merkitse tilaamattomaksi",
   "spoolNotFound": "Kelaa ei löytynyt varastosta",
-  "addSpoolFirstMessage": "Tämä kela ei ole vielä varastossasi. Lisää se ensin painikkeella 'Lisää kela' ennen kuin päivität varastoa.",
+  "addSpoolFirstMessage": "Tätä kelaa ei vielä ole varastossasi. Lisää se ensin 'Lisää kela' -painikkeella ennen varaston päivittämistä.",
   "ok": "OK",
   "connection": "Yhteys",
   "signInToSync": "Kirjaudu sisään synkronoidaksesi tietosi",
@@ -248,9 +253,11 @@
   "scanSpoolToUpdate": "Skannaa kela päivittääksesi sen varaston",
   "bambuLabReadOnly": "Bambu Lab: Vain luku",
   "bambuLabReadOnlyDesc": "Bambu Lab -tagit käyttävät RSA-salausta, eikä niitä voi muokata. Vain luku.",
-  "spoolNotFound": "Kelaa ei löytynyt varastosta",
-  "addSpoolFirstMessage": "Tätä kelaa ei vielä ole varastossasi. Lisää se ensin 'Lisää kela' -painikkeella ennen varaston päivittämistä.",
-  "ok": "OK",
+  "forPrusaMk4": "Prusa MK4/XL:lle (OpenPrintTag)",
+  "prusaReadWrite": "Prusa: Luku ja kirjoitus",
+  "prusaReadWriteDesc": "Prusa-tunnisteet käyttävät ISO 15693 (NFC-V) -standardia OpenPrintTag-muodossa. Luku ja kirjoitus tuettu.",
+  "nfcTagInfoPrusa": "Käytä tyhjää NXP ICODE SLIX2 -korttia (ISO 15693) OpenPrintTag-yhteensopivien tunnisteiden luomiseen Prusa MK4/XL:lle.",
+  "writePrusaTagTitle": "Kirjoita Prusa OpenPrintTag",
   "bambuCloneLibrary": "Bambu Lab kloonkirjasto",
   "noBambuClones": "Ei Bambu Lab klooneja",
   "scanBambuToClone": "Skannaa alkuperäisiä Bambu Lab -tageja luodaksesi kloonkirjastosi",
@@ -264,7 +271,6 @@
   "clonedOn": "Kloonattu",
   "writeThisClone": "Kirjoita tämä klooni",
   "writeClone": "Kirjoita klooni",
-  "writing": "Kirjoitetaan...",
   "writeOnCUID": "Kirjoita CUID-kortille",
   "cloneWrittenSuccess": "Klooni kirjoitettu onnistuneesti!",
   "requiredTagFormat": "Vaadittu tagin muoto",
@@ -300,15 +306,33 @@
   "filamentTypeLabel": "Filamenttityyppi",
   "scanNfcChipButton": "Skannaa NFC-siru",
   "deleteCloneConfirmation": "Poista klooni \"{name}\"?",
-  "@deleteCloneConfirmation": {"placeholders": {"name": {"type": "String"}}},
+  "@deleteCloneConfirmation": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "cloneDeletedMessage": "Klooni \"{name}\" poistettu",
-  "@cloneDeletedMessage": {"placeholders": {"name": {"type": "String"}}},
+  "@cloneDeletedMessage": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "extruderLabel": "Suulake",
   "writeThisCloneButton": "Kirjoita tämä klooni",
   "customNameHint": "Mukautettu nimi",
   "cloneWriteSuccessMessage": "Klooni kirjoitettu!",
   "errorPrefix": "Virhe: {error}",
-  "@errorPrefix": {"placeholders": {"error": {"type": "String"}}},
+  "@errorPrefix": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "writingInProgress": "Kirjoitetaan...",
   "writeOnCUIDButton": "Kirjoita CUID-kortille",
   "diameterLabel": "Halkaisija",
@@ -327,18 +351,36 @@
   "brandLabel": "Merkki",
   "materialTypeLabel": "Materiaalityyppi",
   "serialNumber3Digits": "Sarjanumero (3 numeroa)",
-  "weight250g": "250g", "weight500g": "500g", "weight1000g": "1000g", "weight1000gStandard": "1000g (vakio)", "weight2000g": "2000g", "weight3000g": "3000g",
+  "weight250g": "250g",
+  "weight500g": "500g",
+  "weight1000g": "1000g",
+  "weight1000gStandard": "1000g (vakio)",
+  "weight2000g": "2000g",
+  "weight3000g": "3000g",
   "writeBambuLabTagButton": "Kirjoita Bambu Lab -tunniste",
   "bambuLabRsaNote": "Huom: Alkuperäiset Bambu Lab -tunnisteet käyttävät RSA-salausta. Tämä tila kirjoittaa tiedot yksinkertaistetussa yhteensopivassa muodossa.",
   "signInError": "Kirjautumisvirhe: {error}",
-  "@signInError": {"placeholders": {"error": {"type": "String"}}},
+  "@signInError": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "subscriptionActivatedMessage": "Tilaus aktivoitu!",
   "subscriptionFailedMessage": "Tilaus epäonnistui",
   "errorMessage": "Virhe: {error}",
-  "@errorMessage": {"placeholders": {"error": {"type": "String"}}},
+  "@errorMessage": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "subscriptionRestoredMessage": "Tilaus palautettu!",
   "noSubscriptionFoundMessage": "Tilausta ei löytynyt",
-  "vipLabel": "VIP", "activeLabel": "AKTIIVINEN",
+  "vipLabel": "VIP",
+  "activeLabel": "AKTIIVINEN",
   "noAdsExperienceMessage": "Nauti mainoksettomasta kokemuksesta!",
   "subscribedLabel": "Tilaaja",
   "restorePurchasesButton": "Palauta ostot",
@@ -347,5 +389,30 @@
   "pleaseEnterValidLength": "Anna kelvollinen pituus",
   "spoolLengthNotSetCannotConvert": "Kelan pituutta ei asetettu - ei voi muuntaa",
   "exceedsRemainingWeight": "Ylittää jäljellä olevan painon",
-  "skuLabel": "SKU"
+  "skuLabel": "SKU",
+  "helpIdentifyFilament": "Auta meitä tunnistamaan tämä filamentti",
+  "helpUsImprove": "Auta meitä parantamaan!",
+  "helpIdentifyDescription": "Luimme sirun, mutta emme pystyneet tunnistamaan sitä. Kerro meille mikä filamentti tämä on, jotta voimme parantaa sovellusta.",
+  "otherBrand": "Muu",
+  "thankYouFeedback": "Kiitos palautteestasi!",
+  "send": "Lähetä",
+  "optionalDetails": "Valinnaiset tiedot",
+  "weightGrams": "Paino (g)",
+  "diameterMm": "Halkaisija (mm)",
+  "spoolLengthM": "Kelan pituus (m)",
+  "batchNumberLabel": "Erä / SKU",
+  "black": "Musta",
+  "white": "Valkoinen",
+  "yellow": "Keltainen",
+  "orange": "Oranssi",
+  "pink": "Vaaleanpunainen",
+  "purple": "Violetti",
+  "gray": "Harmaa",
+  "brown": "Ruskea",
+  "unknown": "Tuntematon",
+  "contactUs": "Ota yhteyttä",
+  "contactUsSubtitle": "Kysymyksiä, ehdotuksia tai ongelmia",
+  "nfcTagNotDetected": "NFC-tagia ei havaittu",
+  "nfcTagNotDetectedDesc": "Tagia ei löytynyt. Tagi voi olla kuollut, vaurioitunut tai liian kaukana puhelimesta. Varmista, että puhelimen yläosa on suoraan NFC-tagin päällä.",
+  "nfcTagIncompatible": "Yhteensopimaton NFC-tagi havaittu"
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nfc_filament/core/services/admob_service.dart';
+import 'package:nfc_filament/core/services/analytics_service.dart';
 import 'package:nfc_filament/core/services/user_preferences_service.dart';
 import 'package:nfc_filament/core/widgets/ad_banner_widget.dart';
 import 'package:nfc_filament/l10n/app_localizations.dart';
@@ -41,7 +42,7 @@ class _NfcReaderView extends StatefulWidget {
 }
 
 class _NfcReaderViewState extends State<_NfcReaderView> {
-  String _nfcMode = 'anycubic'; // 'anycubic' ou 'bambu'
+  String _nfcMode = 'anycubic'; // 'anycubic', 'bambu', ou 'prusa'
 
   @override
   void initState() {
@@ -63,6 +64,337 @@ class _NfcReaderViewState extends State<_NfcReaderView> {
     });
   }
 
+  void _showModeInfoDialog(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
+    final String title;
+    final String description;
+
+    if (_nfcMode == 'bambu') {
+      title = localizations.bambuLabReadOnly;
+      description = localizations.bambuLabReadOnlyDesc;
+    } else {
+      title = localizations.prusaReadWrite;
+      description = localizations.prusaReadWriteDesc;
+    }
+
+    showDialog<void>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Row(
+          children: [
+            Icon(Icons.info_outline, color: Colors.blue.shade700),
+            const SizedBox(width: 8),
+            Expanded(child: Text(title, style: const TextStyle(fontSize: 16))),
+          ],
+        ),
+        content: Text(description),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx),
+            child: const Text('OK'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> _showFeedbackDialog(BuildContext context, NfcReaderFailure state) async {
+    final localizations = AppLocalizations.of(context)!;
+    var selectedBrand = 'Anycubic';
+    var customBrand = '';
+    var selectedMaterial = 'PLA';
+    var colorText = '';
+    var showOptional = false;
+    var weightText = '';
+    var extruderMinText = '';
+    var extruderMaxText = '';
+    var bedMinText = '';
+    var bedMaxText = '';
+    var diameterText = '';
+    var spoolLengthText = '';
+    var batchNumberText = '';
+
+    final materials = [
+      'PLA', 'PLA+', 'PLA Silk', 'PLA Matte', 'PLA Glow',
+      'PETG', 'ABS', 'ASA', 'TPU',
+      'Nylon', 'PC', 'HIPS', 'PVA',
+    ];
+
+    final result = await showDialog<bool>(
+      context: context,
+      builder: (dialogContext) => StatefulBuilder(
+        builder: (dialogContext, setDialogState) => AlertDialog(
+          title: Text(localizations.helpUsImprove),
+          content: SizedBox(
+            width: double.maxFinite,
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    localizations.helpIdentifyDescription,
+                    style: Theme.of(dialogContext).textTheme.bodySmall,
+                  ),
+                  const SizedBox(height: 16),
+                  // Brand
+                  Text(
+                    localizations.brandLabel,
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 8),
+                  RadioListTile<String>(
+                    title: const Text('Anycubic'),
+                    value: 'Anycubic',
+                    groupValue: selectedBrand,
+                    dense: true,
+                    contentPadding: EdgeInsets.zero,
+                    onChanged: (v) => setDialogState(() => selectedBrand = v!),
+                  ),
+                  RadioListTile<String>(
+                    title: const Text('Bambu Lab'),
+                    value: 'Bambu Lab',
+                    groupValue: selectedBrand,
+                    dense: true,
+                    contentPadding: EdgeInsets.zero,
+                    onChanged: (v) => setDialogState(() => selectedBrand = v!),
+                  ),
+                  RadioListTile<String>(
+                    title: const Text('Prusa'),
+                    value: 'Prusa',
+                    groupValue: selectedBrand,
+                    dense: true,
+                    contentPadding: EdgeInsets.zero,
+                    onChanged: (v) => setDialogState(() => selectedBrand = v!),
+                  ),
+                  RadioListTile<String>(
+                    title: Row(
+                      children: [
+                        Text('${localizations.otherBrand}: '),
+                        Expanded(
+                          child: TextField(
+                            decoration: const InputDecoration(
+                              isDense: true,
+                              contentPadding: EdgeInsets.symmetric(
+                                horizontal: 8,
+                                vertical: 8,
+                              ),
+                            ),
+                            onChanged: (v) {
+                              customBrand = v;
+                              setDialogState(() => selectedBrand = 'other');
+                            },
+                            onTap: () => setDialogState(() => selectedBrand = 'other'),
+                          ),
+                        ),
+                      ],
+                    ),
+                    value: 'other',
+                    groupValue: selectedBrand,
+                    dense: true,
+                    contentPadding: EdgeInsets.zero,
+                    onChanged: (v) => setDialogState(() => selectedBrand = v!),
+                  ),
+                  const SizedBox(height: 16),
+                  // Material
+                  Text(
+                    localizations.selectMaterial,
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 8),
+                  DropdownButtonFormField<String>(
+                    value: selectedMaterial,
+                    isExpanded: true,
+                    items: materials.map((m) => DropdownMenuItem(
+                      value: m,
+                      child: Text(m),
+                    )).toList(),
+                    onChanged: (v) => setDialogState(() => selectedMaterial = v!),
+                  ),
+                  const SizedBox(height: 16),
+                  // Color
+                  Text(
+                    localizations.color,
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 8),
+                  TextField(
+                    decoration: const InputDecoration(
+                      hintText: 'Red, Blue, Black...',
+                      isDense: true,
+                      contentPadding: EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 10,
+                      ),
+                    ),
+                    onChanged: (v) => colorText = v,
+                  ),
+                  const SizedBox(height: 16),
+                  // Section optionnelle dépliable
+                  InkWell(
+                    onTap: () => setDialogState(() => showOptional = !showOptional),
+                    child: Row(
+                      children: [
+                        Icon(
+                          showOptional ? Icons.expand_less : Icons.expand_more,
+                          size: 20,
+                        ),
+                        const SizedBox(width: 4),
+                        Text(
+                          localizations.optionalDetails,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.grey.shade600,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  if (showOptional) ...[
+                    const SizedBox(height: 12),
+                    TextField(
+                      decoration: InputDecoration(
+                        labelText: localizations.weightGrams,
+                        isDense: true,
+                      ),
+                      keyboardType: TextInputType.number,
+                      onChanged: (v) => weightText = v,
+                    ),
+                    const SizedBox(height: 8),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: TextField(
+                            decoration: InputDecoration(
+                              labelText: localizations.extruderTempMin,
+                              isDense: true,
+                            ),
+                            keyboardType: TextInputType.number,
+                            onChanged: (v) => extruderMinText = v,
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: TextField(
+                            decoration: InputDecoration(
+                              labelText: localizations.extruderTempMax,
+                              isDense: true,
+                            ),
+                            keyboardType: TextInputType.number,
+                            onChanged: (v) => extruderMaxText = v,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 8),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: TextField(
+                            decoration: InputDecoration(
+                              labelText: localizations.bedTempMin,
+                              isDense: true,
+                            ),
+                            keyboardType: TextInputType.number,
+                            onChanged: (v) => bedMinText = v,
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: TextField(
+                            decoration: InputDecoration(
+                              labelText: localizations.bedTempMax,
+                              isDense: true,
+                            ),
+                            keyboardType: TextInputType.number,
+                            onChanged: (v) => bedMaxText = v,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 8),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: TextField(
+                            decoration: InputDecoration(
+                              labelText: localizations.diameterMm,
+                              isDense: true,
+                            ),
+                            keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                            onChanged: (v) => diameterText = v,
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: TextField(
+                            decoration: InputDecoration(
+                              labelText: localizations.spoolLengthM,
+                              isDense: true,
+                            ),
+                            keyboardType: TextInputType.number,
+                            onChanged: (v) => spoolLengthText = v,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 8),
+                    TextField(
+                      decoration: InputDecoration(
+                        labelText: localizations.batchNumberLabel,
+                        isDense: true,
+                      ),
+                      onChanged: (v) => batchNumberText = v,
+                    ),
+                  ],
+                ],
+              ),
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(dialogContext, false),
+              child: Text(localizations.cancel),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                final brand = selectedBrand == 'other' ? customBrand : selectedBrand;
+                AnalyticsService.logScanFeedback(
+                  brand: brand,
+                  material: selectedMaterial,
+                  color: colorText,
+                  rawTagData: state.rawTagData,
+                  rawBytesCount: state.rawBytesCount,
+                  errorMessage: state.message,
+                  nfcMode: _nfcMode,
+                  weight: weightText,
+                  extruderTempMin: extruderMinText,
+                  extruderTempMax: extruderMaxText,
+                  bedTempMin: bedMinText,
+                  bedTempMax: bedMaxText,
+                  diameter: diameterText,
+                  spoolLength: spoolLengthText,
+                  batchNumber: batchNumberText,
+                );
+                Navigator.pop(dialogContext, true);
+              },
+              child: Text(localizations.send),
+            ),
+          ],
+        ),
+      ),
+    );
+
+    if (result == true && context.mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(localizations.thankYouFeedback),
+          backgroundColor: Colors.green,
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,7 +405,7 @@ class _NfcReaderViewState extends State<_NfcReaderView> {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(
+              MaterialPageRoute<void>(
                 builder: (context) => const ScanHistoryPage(),
               ),
             );
@@ -90,7 +422,7 @@ class _NfcReaderViewState extends State<_NfcReaderView> {
             onPressed: () {
               Navigator.of(
                 context,
-              ).push(MaterialPageRoute(builder: (_) => const ProfilePage()));
+              ).push(MaterialPageRoute<void>(builder: (_) => const ProfilePage()));
             },
           ),
         ],
@@ -129,23 +461,57 @@ class _NfcReaderViewState extends State<_NfcReaderView> {
           }
 
           if (state is NfcReaderFailure) {
+            // Icône et messages selon le type d'erreur
+            final IconData failureIcon;
+            final Color failureColor;
+            final String failureTitle;
+            final String? failureDetail;
+
+            switch (state.failureType) {
+              case NfcFailureType.tagNotDetected:
+                failureIcon = Icons.nfc_outlined;
+                failureColor = Colors.orange;
+                failureTitle = AppLocalizations.of(context)!.nfcTagNotDetected;
+                failureDetail = AppLocalizations.of(context)!.nfcTagNotDetectedDesc;
+              case NfcFailureType.incompatibleTag:
+                failureIcon = Icons.warning_amber_rounded;
+                failureColor = Colors.amber;
+                failureTitle = AppLocalizations.of(context)!.nfcTagIncompatible;
+                failureDetail = state.message;
+              case NfcFailureType.readError:
+                failureIcon = Icons.error_outline;
+                failureColor = AppTheme.anycubicRed;
+                failureTitle = AppLocalizations.of(context)!.errorReadingNfc;
+                failureDetail = null;
+            }
+
             return Center(
               child: Padding(
                 padding: const EdgeInsets.all(24),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Icon(
-                      Icons.error_outline,
+                    Icon(
+                      failureIcon,
                       size: 64,
-                      color: AppTheme.anycubicRed,
+                      color: failureColor,
                     ),
                     const SizedBox(height: 16),
                     Text(
-                      AppLocalizations.of(context)!.errorReadingNfc,
+                      failureTitle,
                       textAlign: TextAlign.center,
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
+                    if (failureDetail != null) ...[
+                      const SizedBox(height: 12),
+                      Text(
+                        failureDetail,
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          color: Colors.grey.shade600,
+                        ),
+                      ),
+                    ],
                     const SizedBox(height: 24),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -169,6 +535,16 @@ class _NfcReaderViewState extends State<_NfcReaderView> {
                         ),
                       ],
                     ),
+                    if (state.hasTagData) ...[
+                      const SizedBox(height: 24),
+                      OutlinedButton.icon(
+                        onPressed: () => _showFeedbackDialog(context, state),
+                        icon: const Icon(Icons.help_outline),
+                        label: Text(
+                          AppLocalizations.of(context)!.helpIdentifyFilament,
+                        ),
+                      ),
+                    ],
                   ],
                 ),
               ),
@@ -418,11 +794,14 @@ class _NfcReaderViewState extends State<_NfcReaderView> {
           }
 
           // NfcAvailable OU NfcReaderInitial - Menu principal
-          return Center(
-            child: Padding(
-              padding: const EdgeInsets.all(24),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+          return LayoutBuilder(
+            builder: (context, constraints) => SingleChildScrollView(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(minHeight: constraints.maxHeight),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const NfcLogo(size: 120),
                   const SizedBox(height: 32),
@@ -434,20 +813,46 @@ class _NfcReaderViewState extends State<_NfcReaderView> {
                     ),
                   ),
                   const SizedBox(height: 4),
-                  Text(
-                    _nfcMode == 'anycubic'
-                        ? AppLocalizations.of(context)!.forAnycubicAce
-                        : AppLocalizations.of(context)!.forBambuLabAms,
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: Colors.grey.shade600,
-                      fontStyle: FontStyle.italic,
-                    ),
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        _nfcMode == 'prusa'
+                            ? AppLocalizations.of(context)!.forPrusaMk4
+                            : _nfcMode == 'anycubic'
+                                ? AppLocalizations.of(context)!.forAnycubicAce
+                                : AppLocalizations.of(context)!.forBambuLabAms,
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: Colors.grey.shade600,
+                          fontStyle: FontStyle.italic,
+                        ),
+                      ),
+                      if (_nfcMode == 'bambu' || _nfcMode == 'prusa') ...[
+                        const SizedBox(width: 6),
+                        GestureDetector(
+                          onTap: () => _showModeInfoDialog(context),
+                          child: Container(
+                            width: 20,
+                            height: 20,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.blue.withOpacity(0.15),
+                            ),
+                            child: Icon(
+                              Icons.info_outline,
+                              size: 14,
+                              color: Colors.blue.shade700,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ],
                   ),
                   const SizedBox(height: 24),
-                  // Slider pour choisir entre Anycubic et Bambu Lab
+                  // Slider pour choisir entre Anycubic, Bambu Lab et Prusa
                   Container(
-                    width: 280,
+                    width: 320,
                     padding: const EdgeInsets.all(4),
                     decoration: BoxDecoration(
                       color: Colors.grey.shade200,
@@ -471,6 +876,7 @@ class _NfcReaderViewState extends State<_NfcReaderView> {
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
+                                  fontSize: 13,
                                   color: _nfcMode == 'anycubic'
                                       ? Colors.white
                                       : Colors.grey.shade700,
@@ -499,6 +905,7 @@ class _NfcReaderViewState extends State<_NfcReaderView> {
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
+                                      fontSize: 13,
                                       color: _nfcMode == 'bambu'
                                           ? Colors.white
                                           : Colors.grey.shade700,
@@ -516,6 +923,56 @@ class _NfcReaderViewState extends State<_NfcReaderView> {
                                     ),
                                     child: const Text(
                                       'EXPERIMENTAL',
+                                      style: TextStyle(
+                                        fontSize: 9,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 4),
+                        Expanded(
+                          child: GestureDetector(
+                            onTap: () => _setNfcMode('prusa'),
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(vertical: 12),
+                              decoration: BoxDecoration(
+                                color: _nfcMode == 'prusa'
+                                    ? AppTheme.anycubicRed
+                                    : Colors.transparent,
+                                borderRadius: BorderRadius.circular(6),
+                              ),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    'Prusa',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 13,
+                                      color: _nfcMode == 'prusa'
+                                          ? Colors.white
+                                          : Colors.grey.shade700,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 2),
+                                  Container(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 6,
+                                      vertical: 2,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: Colors.green.shade600,
+                                      borderRadius: BorderRadius.circular(4),
+                                    ),
+                                    child: const Text(
+                                      'NEW',
                                       style: TextStyle(
                                         fontSize: 9,
                                         fontWeight: FontWeight.bold,
@@ -553,15 +1010,15 @@ class _NfcReaderViewState extends State<_NfcReaderView> {
                       ),
                     ),
                   ),
-                  // Bouton d'écriture NFC (seulement pour Anycubic)
-                  if (_nfcMode == 'anycubic') ...[
+                  // Bouton d'écriture NFC (Anycubic et Prusa)
+                  if (_nfcMode == 'anycubic' || _nfcMode == 'prusa') ...[
                     const SizedBox(height: 16),
                     SizedBox(
                       width: 280,
                       child: ElevatedButton.icon(
                         onPressed: () {
                           Navigator.of(context).push(
-                            MaterialPageRoute(
+                            MaterialPageRoute<void>(
                               builder: (_) => const NfcWriterPage(),
                             ),
                           );
@@ -589,7 +1046,7 @@ class _NfcReaderViewState extends State<_NfcReaderView> {
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(
+                            MaterialPageRoute<void>(
                               builder: (context) => const BambuCloneLibraryPage(),
                             ),
                           );
@@ -602,56 +1059,16 @@ class _NfcReaderViewState extends State<_NfcReaderView> {
                           ),
                         ),
                         icon: const Icon(Icons.library_books),
-                        label: const Text(
-                          'Bibliothèque de clones',
-                          style: TextStyle(fontSize: 18),
+                        label: Text(
+                          AppLocalizations.of(context)!.bambuCloneLibrary,
+                          style: const TextStyle(fontSize: 18),
                         ),
                       ),
                     ),
                   ],
-                  // Message d'info pour Bambu Lab (lecture seule)
-                  if (_nfcMode == 'bambu') ...[
-                    const SizedBox(height: 16),
-                    Container(
-                      width: 280,
-                      padding: const EdgeInsets.all(16),
-                      decoration: BoxDecoration(
-                        color: Colors.blue.withOpacity(0.1),
-                        borderRadius: BorderRadius.circular(8),
-                        border: Border.all(color: Colors.blue.withOpacity(0.3)),
-                      ),
-                      child: Row(
-                        children: [
-                          Icon(Icons.info_outline, color: Colors.blue),
-                          const SizedBox(width: 12),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  AppLocalizations.of(context)!.bambuLabReadOnly,
-                                  style: TextStyle(
-                                    color: Colors.blue.shade900,
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                const SizedBox(height: 4),
-                                Text(
-                                  AppLocalizations.of(context)!.bambuLabReadOnlyDesc,
-                                  style: TextStyle(
-                                    color: Colors.blue.shade700,
-                                    fontSize: 11,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ],
+                    ],
+                  ),
+                ),
               ),
             ),
           );

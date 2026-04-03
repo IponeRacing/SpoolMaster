@@ -313,7 +313,7 @@ class ScanDetailPage extends StatelessWidget {
   void _navigateToWriter(BuildContext context) {
     Navigator.push(
       context,
-      MaterialPageRoute(
+      MaterialPageRoute<void>(
         builder: (context) => NfcWriterPage(prefilledData: scan.bobbinData),
       ),
     );

@@ -508,7 +508,7 @@ class AppLocalizationsNl extends AppLocalizations {
   String get privacyPolicy => 'Privacybeleid';
 
   @override
-  String get legal => 'Legal';
+  String get legal => 'Juridisch';
 
   @override
   String get back => 'Terug';
@@ -559,6 +559,33 @@ class AppLocalizationsNl extends AppLocalizations {
   String get blue => 'Blauw';
 
   @override
+  String get black => 'Zwart';
+
+  @override
+  String get white => 'Wit';
+
+  @override
+  String get yellow => 'Geel';
+
+  @override
+  String get orange => 'Oranje';
+
+  @override
+  String get pink => 'Roze';
+
+  @override
+  String get purple => 'Paars';
+
+  @override
+  String get gray => 'Grijs';
+
+  @override
+  String get brown => 'Bruin';
+
+  @override
+  String get unknown => 'Onbekend';
+
+  @override
   String get metricUnits => 'Metrisch (mm, g, °C)';
 
   @override
@@ -578,6 +605,42 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get cad => 'Canadese dollar (CAD)';
+
+  @override
+  String get aud => 'Australische dollar (A\$)';
+
+  @override
+  String get jpy => 'Japanse yen (¥)';
+
+  @override
+  String get cny => 'Chinese yuan (¥)';
+
+  @override
+  String get inr => 'Indiase roepie (₹)';
+
+  @override
+  String get brl => 'Braziliaanse real (R\$)';
+
+  @override
+  String get mxn => 'Mexicaanse peso (MX\$)';
+
+  @override
+  String get sek => 'Zweedse kroon (kr)';
+
+  @override
+  String get nok => 'Noorse kroon (kr)';
+
+  @override
+  String get dkk => 'Deense kroon (kr)';
+
+  @override
+  String get pln => 'Poolse zloty (zł)';
+
+  @override
+  String get czk => 'Tsjechische kroon (Kč)';
+
+  @override
+  String get nzd => 'Nieuw-Zeelandse dollar (NZ\$)';
 
   @override
   String get filamentsToOrder => 'Filamenten om te bestellen';
@@ -706,6 +769,16 @@ class AppLocalizationsNl extends AppLocalizations {
   @override
   String get bambuLabReadOnlyDesc =>
       'Bambu Lab tags gebruiken RSA-codering en kunnen niet worden gewijzigd. Alleen-lezen.';
+
+  @override
+  String get forPrusaMk4 => 'voor Prusa MK4/XL (OpenPrintTag)';
+
+  @override
+  String get prusaReadWrite => 'Prusa: Lezen & Schrijven';
+
+  @override
+  String get prusaReadWriteDesc =>
+      'Prusa tags gebruiken ISO 15693 (NFC-V) met OpenPrintTag formaat. Lezen en schrijven ondersteund.';
 
   @override
   String get bambuCloneLibrary => 'Bambu Lab kloonbibliotheek';
@@ -1023,4 +1096,61 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get skuLabel => 'SKU';
+
+  @override
+  String get helpIdentifyFilament => 'Help ons dit filament te identificeren';
+
+  @override
+  String get helpUsImprove => 'Help ons verbeteren!';
+
+  @override
+  String get helpIdentifyDescription =>
+      'We hebben de chip gelezen maar konden het niet identificeren. Vertel ons welk filament dit is zodat we de app kunnen verbeteren.';
+
+  @override
+  String get otherBrand => 'Ander';
+
+  @override
+  String get thankYouFeedback => 'Bedankt voor je feedback!';
+
+  @override
+  String get send => 'Verzenden';
+
+  @override
+  String get optionalDetails => 'Optionele details';
+
+  @override
+  String get weightGrams => 'Gewicht (g)';
+
+  @override
+  String get diameterMm => 'Diameter (mm)';
+
+  @override
+  String get spoolLengthM => 'Spoel lengte (m)';
+
+  @override
+  String get batchNumberLabel => 'Batch / SKU';
+
+  @override
+  String get contactUs => 'Neem contact op';
+
+  @override
+  String get contactUsSubtitle => 'Vragen, suggesties of problemen';
+
+  @override
+  String get nfcTagNotDetected => 'Geen NFC-tag gedetecteerd';
+
+  @override
+  String get nfcTagNotDetectedDesc =>
+      'Geen tag gevonden. De tag kan kapot, beschadigd of te ver van de telefoon verwijderd zijn. Plaats de bovenkant van uw iPhone rechtstreeks op de NFC-tag.';
+
+  @override
+  String get nfcTagIncompatible => 'Oncompatibele NFC-tag gedetecteerd';
+
+  @override
+  String get nfcTagInfoPrusa =>
+      'Gebruik een lege NXP ICODE SLIX2-tag (ISO 15693) om OpenPrintTag-compatibele tags voor Prusa MK4/XL te maken.';
+
+  @override
+  String get writePrusaTagTitle => 'Prusa OpenPrintTag schrijven';
 }

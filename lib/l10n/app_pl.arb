@@ -162,7 +162,7 @@
   "tempBed": "Temp. stołu",
   "termsOfService": "Warunki usługi",
   "privacyPolicy": "Polityka prywatności",
-  "legal": "Legal",
+  "legal": "Prawne",
   "back": "Wstecz",
   "retry": "Ponów",
   "signOut": "Wyloguj",
@@ -192,6 +192,18 @@
   "usd": "Dolar amerykański ($)",
   "gbp": "Funt szterling (£)",
   "cad": "Dolar kanadyjski (CAD)",
+  "aud": "Dolar australijski (A$)",
+  "jpy": "Jen japoński (¥)",
+  "cny": "Juan chiński (¥)",
+  "inr": "Rupia indyjska (₹)",
+  "brl": "Real brazylijski (R$)",
+  "mxn": "Peso meksykańskie (MX$)",
+  "sek": "Korona szwedzka (kr)",
+  "nok": "Korona norweska (kr)",
+  "dkk": "Korona duńska (kr)",
+  "pln": "Złoty polski (zł)",
+  "czk": "Korona czeska (Kč)",
+  "nzd": "Dolar nowozelandzki (NZ$)",
   "filamentsToOrder": "Filamenty do zamówienia",
   "shoppingList": "Lista zakupów",
   "addToShoppingList": "Dodaj do listy",
@@ -241,6 +253,9 @@
   "ok": "OK",
   "bambuLabReadOnly": "Bambu Lab: Tylko do odczytu",
   "bambuLabReadOnlyDesc": "Tagi Bambu Lab używają szyfrowania RSA i nie mogą być modyfikowane. Tylko do odczytu.",
+  "forPrusaMk4": "dla Prusa MK4/XL (OpenPrintTag)",
+  "prusaReadWrite": "Prusa: Odczyt i Zapis",
+  "prusaReadWriteDesc": "Tagi Prusa używają ISO 15693 (NFC-V) z formatem OpenPrintTag. Odczyt i zapis obsługiwane.",
   "bambuCloneLibrary": "Biblioteka klonów Bambu Lab",
   "noBambuClones": "Brak klonów Bambu Lab",
   "scanBambuToClone": "Zeskanuj oryginalne tagi Bambu Lab, aby stworzyć bibliotekę klonów",
@@ -254,7 +269,6 @@
   "clonedOn": "Sklonowano",
   "writeThisClone": "Zapisz ten klon",
   "writeClone": "Zapisz klon",
-  "writing": "Zapisywanie...",
   "writeOnCUID": "Zapisz na kartę CUID",
   "cloneWrittenSuccess": "Klon zapisany pomyślnie!",
   "requiredTagFormat": "Wymagany format tagu",
@@ -290,15 +304,33 @@
   "filamentTypeLabel": "Typ filamentu",
   "scanNfcChipButton": "Skanuj chip NFC",
   "deleteCloneConfirmation": "Usunąć klon \"{name}\"?",
-  "@deleteCloneConfirmation": {"placeholders": {"name": {"type": "String"}}},
+  "@deleteCloneConfirmation": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "cloneDeletedMessage": "Klon \"{name}\" usunięty",
-  "@cloneDeletedMessage": {"placeholders": {"name": {"type": "String"}}},
+  "@cloneDeletedMessage": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "extruderLabel": "Ekstruder",
   "writeThisCloneButton": "Zapisz ten klon",
   "customNameHint": "Nazwa własna",
   "cloneWriteSuccessMessage": "Klon zapisany pomyślnie!",
   "errorPrefix": "Błąd: {error}",
-  "@errorPrefix": {"placeholders": {"error": {"type": "String"}}},
+  "@errorPrefix": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "writingInProgress": "Zapisywanie...",
   "writeOnCUIDButton": "Zapisz na karcie CUID",
   "diameterLabel": "Średnica",
@@ -326,11 +358,23 @@
   "writeBambuLabTagButton": "Zapisz tag Bambu Lab",
   "bambuLabRsaNote": "Uwaga: Oryginalne tagi Bambu Lab używają szyfrowania RSA. Ten tryb zapisuje dane w uproszczonym kompatybilnym formacie.",
   "signInError": "Błąd logowania: {error}",
-  "@signInError": {"placeholders": {"error": {"type": "String"}}},
+  "@signInError": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "subscriptionActivatedMessage": "Subskrypcja aktywowana pomyślnie!",
   "subscriptionFailedMessage": "Subskrypcja nie powiodła się",
   "errorMessage": "Błąd: {error}",
-  "@errorMessage": {"placeholders": {"error": {"type": "String"}}},
+  "@errorMessage": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "subscriptionRestoredMessage": "Subskrypcja przywrócona pomyślnie!",
   "noSubscriptionFoundMessage": "Nie znaleziono subskrypcji",
   "vipLabel": "VIP",
@@ -343,5 +387,32 @@
   "pleaseEnterValidLength": "Wprowadź prawidłową długość",
   "spoolLengthNotSetCannotConvert": "Długość szpuli nie ustawiona - nie można przeliczyć",
   "exceedsRemainingWeight": "Przekracza pozostałą wagę",
-  "skuLabel": "SKU"
+  "skuLabel": "SKU",
+  "helpIdentifyFilament": "Pomóż nam zidentyfikować ten filament",
+  "helpUsImprove": "Pomóż nam się poprawić!",
+  "helpIdentifyDescription": "Odczytaliśmy chip, ale nie mogliśmy go zidentyfikować. Powiedz nam, jaki to filament, abyśmy mogli ulepszyć aplikację.",
+  "otherBrand": "Inna",
+  "thankYouFeedback": "Dziękujemy za opinię!",
+  "send": "Wyślij",
+  "optionalDetails": "Opcjonalne szczegóły",
+  "weightGrams": "Waga (g)",
+  "diameterMm": "Średnica (mm)",
+  "spoolLengthM": "Długość szpuli (m)",
+  "batchNumberLabel": "Partia / SKU",
+  "black": "Czarny",
+  "white": "Biały",
+  "yellow": "Żółty",
+  "orange": "Pomarańczowy",
+  "pink": "Różowy",
+  "purple": "Fioletowy",
+  "gray": "Szary",
+  "brown": "Brązowy",
+  "unknown": "Nieznany",
+  "contactUs": "Skontaktuj się",
+  "contactUsSubtitle": "Pytania, sugestie lub problemy",
+  "nfcTagNotDetected": "Nie wykryto tagu NFC",
+  "nfcTagNotDetectedDesc": "Nie znaleziono tagu. Tag może być uszkodzony, zniszczony lub zbyt daleko od telefonu. Umieść górę iPhone'a bezpośrednio na tagu NFC.",
+  "nfcTagIncompatible": "Wykryto niezgodny tag NFC",
+  "nfcTagInfoPrusa": "Użyj pustego tagu NXP ICODE SLIX2 (ISO 15693), aby utworzyć tagi kompatybilne z OpenPrintTag dla Prusa MK4/XL.",
+  "writePrusaTagTitle": "Zapisz Prusa OpenPrintTag"
 }

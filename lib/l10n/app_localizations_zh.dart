@@ -502,7 +502,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get privacyPolicy => '隐私政策';
 
   @override
-  String get legal => 'Legal';
+  String get legal => '法律信息';
 
   @override
   String get back => '返回';
@@ -553,6 +553,33 @@ class AppLocalizationsZh extends AppLocalizations {
   String get blue => '蓝色';
 
   @override
+  String get black => '黑色';
+
+  @override
+  String get white => '白色';
+
+  @override
+  String get yellow => '黄色';
+
+  @override
+  String get orange => '橙色';
+
+  @override
+  String get pink => '粉色';
+
+  @override
+  String get purple => '紫色';
+
+  @override
+  String get gray => '灰色';
+
+  @override
+  String get brown => '棕色';
+
+  @override
+  String get unknown => '未知';
+
+  @override
   String get metricUnits => '公制 (mm, g, °C)';
 
   @override
@@ -572,6 +599,42 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get cad => '加元 (CAD)';
+
+  @override
+  String get aud => '澳元 (A\$)';
+
+  @override
+  String get jpy => '日元 (¥)';
+
+  @override
+  String get cny => '人民币 (¥)';
+
+  @override
+  String get inr => '印度卢比 (₹)';
+
+  @override
+  String get brl => '巴西雷亚尔 (R\$)';
+
+  @override
+  String get mxn => '墨西哥比索 (MX\$)';
+
+  @override
+  String get sek => '瑞典克朗 (kr)';
+
+  @override
+  String get nok => '挪威克朗 (kr)';
+
+  @override
+  String get dkk => '丹麦克朗 (kr)';
+
+  @override
+  String get pln => '波兰兹罗提 (zł)';
+
+  @override
+  String get czk => '捷克克朗 (Kč)';
+
+  @override
+  String get nzd => '新西兰元 (NZ\$)';
 
   @override
   String get filamentsToOrder => '待订购耗材';
@@ -696,6 +759,16 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get bambuLabReadOnlyDesc => 'Bambu Lab标签使用RSA加密，无法修改。只读。';
+
+  @override
+  String get forPrusaMk4 => '适用于 Prusa MK4/XL (OpenPrintTag)';
+
+  @override
+  String get prusaReadWrite => 'Prusa: 读取和写入';
+
+  @override
+  String get prusaReadWriteDesc =>
+      'Prusa标签使用ISO 15693 (NFC-V) OpenPrintTag格式。支持读取和写入。';
 
   @override
   String get bambuCloneLibrary => 'Bambu Lab克隆库';
@@ -1001,6 +1074,62 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get skuLabel => 'SKU';
+
+  @override
+  String get helpIdentifyFilament => '帮助我们识别这种耗材';
+
+  @override
+  String get helpUsImprove => '帮助我们改进！';
+
+  @override
+  String get helpIdentifyDescription => '我们读取了芯片但无法识别。请告诉我们这是什么耗材，以便我们改进应用。';
+
+  @override
+  String get otherBrand => '其他';
+
+  @override
+  String get thankYouFeedback => '感谢您的反馈！';
+
+  @override
+  String get send => '发送';
+
+  @override
+  String get optionalDetails => '可选详情';
+
+  @override
+  String get weightGrams => '重量 (g)';
+
+  @override
+  String get diameterMm => '直径 (mm)';
+
+  @override
+  String get spoolLengthM => '线轴长度 (m)';
+
+  @override
+  String get batchNumberLabel => '批次 / SKU';
+
+  @override
+  String get contactUs => '联系我们';
+
+  @override
+  String get contactUsSubtitle => '问题、建议或反馈';
+
+  @override
+  String get nfcTagNotDetected => '未检测到NFC标签';
+
+  @override
+  String get nfcTagNotDetectedDesc =>
+      '未找到标签。标签可能已损坏或距离手机太远。请确保将手机顶部直接放在NFC标签上。';
+
+  @override
+  String get nfcTagIncompatible => '检测到不兼容的NFC标签';
+
+  @override
+  String get nfcTagInfoPrusa =>
+      '使用空白NXP ICODE SLIX2标签(ISO 15693)为Prusa MK4/XL创建OpenPrintTag兼容标签。';
+
+  @override
+  String get writePrusaTagTitle => '写入Prusa OpenPrintTag';
 }
 
 /// The translations for Chinese, as used in Taiwan (`zh_TW`).
@@ -1501,7 +1630,7 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
   String get privacyPolicy => '隐私政策';
 
   @override
-  String get legal => 'Legal';
+  String get legal => '法律資訊';
 
   @override
   String get back => '返回';
@@ -1552,6 +1681,33 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
   String get blue => '蓝色';
 
   @override
+  String get black => '黑色';
+
+  @override
+  String get white => '白色';
+
+  @override
+  String get yellow => '黃色';
+
+  @override
+  String get orange => '橙色';
+
+  @override
+  String get pink => '粉色';
+
+  @override
+  String get purple => '紫色';
+
+  @override
+  String get gray => '灰色';
+
+  @override
+  String get brown => '棕色';
+
+  @override
+  String get unknown => '未知';
+
+  @override
   String get metricUnits => '公制 (mm, g, °C)';
 
   @override
@@ -1571,6 +1727,42 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String get cad => '加元 (CAD)';
+
+  @override
+  String get aud => 'AUD';
+
+  @override
+  String get jpy => 'JPY';
+
+  @override
+  String get cny => 'CNY';
+
+  @override
+  String get inr => 'INR';
+
+  @override
+  String get brl => 'BRL';
+
+  @override
+  String get mxn => 'MXN';
+
+  @override
+  String get sek => 'SEK';
+
+  @override
+  String get nok => 'NOK';
+
+  @override
+  String get dkk => 'DKK';
+
+  @override
+  String get pln => 'PLN';
+
+  @override
+  String get czk => 'CZK';
+
+  @override
+  String get nzd => 'NZD';
 
   @override
   String get filamentsToOrder => '待订购耗材';
@@ -1695,6 +1887,16 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String get bambuLabReadOnlyDesc => 'Bambu Lab标签使用RSA加密，无法修改。只读。';
+
+  @override
+  String get forPrusaMk4 => '適用於 Prusa MK4/XL (OpenPrintTag)';
+
+  @override
+  String get prusaReadWrite => 'Prusa: 讀取和寫入';
+
+  @override
+  String get prusaReadWriteDesc =>
+      'Prusa標籤使用ISO 15693 (NFC-V) OpenPrintTag格式。支持讀取和寫入。';
 
   @override
   String get bambuCloneLibrary => 'Bambu Lab克隆库';
@@ -2000,4 +2202,60 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String get skuLabel => 'SKU';
+
+  @override
+  String get helpIdentifyFilament => '幫助我們辨識這種耗材';
+
+  @override
+  String get helpUsImprove => '幫助我們改進！';
+
+  @override
+  String get helpIdentifyDescription => '我們讀取了晶片但無法辨識。請告訴我們這是什麼耗材，以便我們改進應用程式。';
+
+  @override
+  String get otherBrand => '其他';
+
+  @override
+  String get thankYouFeedback => '感謝您的回饋！';
+
+  @override
+  String get send => '傳送';
+
+  @override
+  String get optionalDetails => '選填詳情';
+
+  @override
+  String get weightGrams => '重量 (g)';
+
+  @override
+  String get diameterMm => '直徑 (mm)';
+
+  @override
+  String get spoolLengthM => '線軸長度 (m)';
+
+  @override
+  String get batchNumberLabel => '批次 / SKU';
+
+  @override
+  String get contactUs => '聯絡我們';
+
+  @override
+  String get contactUsSubtitle => '問題、建議或回饋';
+
+  @override
+  String get nfcTagNotDetected => '未偵測到NFC標籤';
+
+  @override
+  String get nfcTagNotDetectedDesc =>
+      '未找到標籤。標籤可能已損壞或距離手機太遠。請確保將手機頂部直接放在NFC標籤上。';
+
+  @override
+  String get nfcTagIncompatible => '偵測到不相容的NFC標籤';
+
+  @override
+  String get nfcTagInfoPrusa =>
+      '使用空白NXP ICODE SLIX2標籤(ISO 15693)為Prusa MK4/XL創建OpenPrintTag兼容標籤。';
+
+  @override
+  String get writePrusaTagTitle => '寫入Prusa OpenPrintTag';
 }

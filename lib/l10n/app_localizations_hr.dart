@@ -509,7 +509,7 @@ class AppLocalizationsHr extends AppLocalizations {
   String get privacyPolicy => 'Politika privatnosti';
 
   @override
-  String get legal => 'Legal';
+  String get legal => 'Pravno';
 
   @override
   String get back => 'Natrag';
@@ -560,6 +560,33 @@ class AppLocalizationsHr extends AppLocalizations {
   String get blue => 'Plava';
 
   @override
+  String get black => 'Crna';
+
+  @override
+  String get white => 'Bijela';
+
+  @override
+  String get yellow => 'Žuta';
+
+  @override
+  String get orange => 'Narančasta';
+
+  @override
+  String get pink => 'Ružičasta';
+
+  @override
+  String get purple => 'Ljubičasta';
+
+  @override
+  String get gray => 'Siva';
+
+  @override
+  String get brown => 'Smeđa';
+
+  @override
+  String get unknown => 'Nepoznato';
+
+  @override
   String get metricUnits => 'Metrički (mm, g, °C)';
 
   @override
@@ -579,6 +606,42 @@ class AppLocalizationsHr extends AppLocalizations {
 
   @override
   String get cad => 'Kanadski dolar (CAD)';
+
+  @override
+  String get aud => 'Australski dolar (A\$)';
+
+  @override
+  String get jpy => 'Japanski jen (¥)';
+
+  @override
+  String get cny => 'Kineski juan (¥)';
+
+  @override
+  String get inr => 'Indijska rupija (₹)';
+
+  @override
+  String get brl => 'Brazilski real (R\$)';
+
+  @override
+  String get mxn => 'Meksički peso (MX\$)';
+
+  @override
+  String get sek => 'Švedska kruna (kr)';
+
+  @override
+  String get nok => 'Norveška kruna (kr)';
+
+  @override
+  String get dkk => 'Danska kruna (kr)';
+
+  @override
+  String get pln => 'Poljski zlot (zł)';
+
+  @override
+  String get czk => 'Češka kruna (Kč)';
+
+  @override
+  String get nzd => 'Novozelandski dolar (NZ\$)';
 
   @override
   String get filamentsToOrder => 'Filamenti za narudžbu';
@@ -707,6 +770,16 @@ class AppLocalizationsHr extends AppLocalizations {
   @override
   String get bambuLabReadOnlyDesc =>
       'Bambu Lab oznake koriste RSA enkripciju i ne mogu se mijenjati. Samo za čitanje.';
+
+  @override
+  String get forPrusaMk4 => 'za Prusa MK4/XL (OpenPrintTag)';
+
+  @override
+  String get prusaReadWrite => 'Prusa: Čitanje i pisanje';
+
+  @override
+  String get prusaReadWriteDesc =>
+      'Prusa tagovi koriste ISO 15693 (NFC-V) s OpenPrintTag formatom. Čitanje i pisanje su podržani.';
 
   @override
   String get bambuCloneLibrary => 'Biblioteka klonova Bambu Lab';
@@ -1023,4 +1096,62 @@ class AppLocalizationsHr extends AppLocalizations {
 
   @override
   String get skuLabel => 'SKU';
+
+  @override
+  String get helpIdentifyFilament =>
+      'Pomozite nam identificirati ovaj filament';
+
+  @override
+  String get helpUsImprove => 'Pomozite nam da se poboljšamo!';
+
+  @override
+  String get helpIdentifyDescription =>
+      'Pročitali smo čip, ali ga nismo mogli identificirati. Recite nam koji je to filament kako bismo poboljšali aplikaciju.';
+
+  @override
+  String get otherBrand => 'Drugi';
+
+  @override
+  String get thankYouFeedback => 'Hvala na povratnim informacijama!';
+
+  @override
+  String get send => 'Pošalji';
+
+  @override
+  String get optionalDetails => 'Neobavezni detalji';
+
+  @override
+  String get weightGrams => 'Težina (g)';
+
+  @override
+  String get diameterMm => 'Promjer (mm)';
+
+  @override
+  String get spoolLengthM => 'Duljina kalema (m)';
+
+  @override
+  String get batchNumberLabel => 'Serija / SKU';
+
+  @override
+  String get contactUs => 'Kontaktirajte nas';
+
+  @override
+  String get contactUsSubtitle => 'Pitanja, prijedlozi ili problemi';
+
+  @override
+  String get nfcTagNotDetected => 'NFC oznaka nije otkrivena';
+
+  @override
+  String get nfcTagNotDetectedDesc =>
+      'Oznaka nije pronađena. Oznaka je možda mrtva, oštećena ili predaleko od telefona. Provjerite je li gornji dio telefona postavljen izravno na NFC oznaku.';
+
+  @override
+  String get nfcTagIncompatible => 'Otkrivena nekompatibilna NFC oznaka';
+
+  @override
+  String get nfcTagInfoPrusa =>
+      'Koristite praznu NXP ICODE SLIX2 oznaku (ISO 15693) za stvaranje OpenPrintTag kompatibilnih oznaka za Prusa MK4/XL.';
+
+  @override
+  String get writePrusaTagTitle => 'Zapiši Prusa OpenPrintTag';
 }

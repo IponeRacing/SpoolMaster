@@ -60,20 +60,7 @@ class _NfcWriterPageState extends State<NfcWriterPage> {
     'PVA': {'code': 'PVA', 'extruderMin': 215, 'extruderMax': 225, 'bedMin': 45, 'bedMax': 60},
   };
 
-  // Codes couleur pour SKU Anycubic
-  final _colorCodes = {
-    'White': 'BW',
-    'Black': 'BK',
-    'Red': 'RD',
-    'Blue': 'BL',
-    'Green': 'GR',
-    'Yellow': 'YL',
-    'Orange': 'OR',
-    'Pink': 'PK',
-    'Gray': 'GY',
-    'Purple': 'PR',
-    'Brown': 'BR',
-  };
+  String _tagFormat = 'anycubic'; // 'anycubic' or 'prusa'
 
   late String _selectedBrand;
   late String _selectedMaterial;
@@ -86,14 +73,16 @@ class _NfcWriterPageState extends State<NfcWriterPage> {
   late int _bedTempMax;
   late double _diameter;
   late int _spoolLength;
+  String _units = UserPreferencesService.unitsMetric;
 
   @override
   void initState() {
     super.initState();
     _loadBrandsAndMaterials();
+    _loadUnits();
 
     // Pré-charger le color picker en arrière-plan après 100ms
-    Future.delayed(const Duration(milliseconds: 100), () {
+    Future<void>.delayed(const Duration(milliseconds: 100), () {
       if (mounted && !_colorPickerPreloaded) {
         setState(() {
           _colorPickerPreloaded = true;
@@ -142,6 +131,11 @@ class _NfcWriterPageState extends State<NfcWriterPage> {
   Color _getColorFromRgb(int? colorRgb) {
     if (colorRgb == null) return const Color(0xFFFF8000); // Default orange
     return Color(0xFF000000 | colorRgb);
+  }
+
+  Future<void> _loadUnits() async {
+    final units = await UserPreferencesService.getUnits();
+    if (mounted) setState(() => _units = units);
   }
 
   Future<void> _loadBrandsAndMaterials() async {
@@ -236,7 +230,7 @@ class _NfcWriterPageState extends State<NfcWriterPage> {
   Future<void> _showColorPickerDialog(BuildContext context) async {
     final selectedColor = await Navigator.push<Color>(
       context,
-      MaterialPageRoute(
+      MaterialPageRoute<Color>(
         fullscreenDialog: true,
         builder: (context) => _ColorPickerDialog(initialColor: _selectedColor),
       ),
@@ -359,6 +353,29 @@ class _NfcWriterPageState extends State<NfcWriterPage> {
                     ),
                     const SizedBox(height: 16),
 
+                    // Tag format selector
+                    SegmentedButton<String>(
+                      segments: const [
+                        ButtonSegment(
+                          value: 'anycubic',
+                          label: Text('Anycubic'),
+                          icon: Icon(Icons.nfc),
+                        ),
+                        ButtonSegment(
+                          value: 'prusa',
+                          label: Text('Prusa'),
+                          icon: Icon(Icons.nfc),
+                        ),
+                      ],
+                      selected: {_tagFormat},
+                      onSelectionChanged: (Set<String> selection) {
+                        setState(() {
+                          _tagFormat = selection.first;
+                        });
+                      },
+                    ),
+                    const SizedBox(height: 16),
+
                     // Info message
                     Container(
                       padding: const EdgeInsets.all(12),
@@ -373,7 +390,9 @@ class _NfcWriterPageState extends State<NfcWriterPage> {
                           const SizedBox(width: 8),
                           Expanded(
                             child: Text(
-                              AppLocalizations.of(context)!.nfcTagInfo,
+                              _tagFormat == 'prusa'
+                                  ? AppLocalizations.of(context)!.nfcTagInfoPrusa
+                                  : AppLocalizations.of(context)!.nfcTagInfo,
                               style: TextStyle(
                                 fontSize: 12,
                                 color: Colors.blue.shade900,
@@ -524,11 +543,9 @@ class _NfcWriterPageState extends State<NfcWriterPage> {
                     Row(
                       children: [
                         Expanded(
-                          child: FutureBuilder<String>(
-                            future: UserPreferencesService.getUnits(),
-                            builder: (context, snapshot) {
-                              final units = snapshot.data ?? UserPreferencesService.unitsMetric;
-                              final tempUnit = units == UserPreferencesService.unitsMetric ? '°C' : '°F';
+                          child: Builder(
+                            builder: (context) {
+                              final tempUnit = _units == UserPreferencesService.unitsMetric ? '°C' : '°F';
                               return TextFormField(
                                 initialValue: _extruderTempMin.toString(),
                                 decoration: InputDecoration(
@@ -556,11 +573,9 @@ class _NfcWriterPageState extends State<NfcWriterPage> {
                         ),
                         const SizedBox(width: 16),
                         Expanded(
-                          child: FutureBuilder<String>(
-                            future: UserPreferencesService.getUnits(),
-                            builder: (context, snapshot) {
-                              final units = snapshot.data ?? UserPreferencesService.unitsMetric;
-                              final tempUnit = units == UserPreferencesService.unitsMetric ? '°C' : '°F';
+                          child: Builder(
+                            builder: (context) {
+                              final tempUnit = _units == UserPreferencesService.unitsMetric ? '°C' : '°F';
                               return TextFormField(
                                 initialValue: _extruderTempMax.toString(),
                                 decoration: InputDecoration(
@@ -594,11 +609,9 @@ class _NfcWriterPageState extends State<NfcWriterPage> {
                     Row(
                       children: [
                         Expanded(
-                          child: FutureBuilder<String>(
-                            future: UserPreferencesService.getUnits(),
-                            builder: (context, snapshot) {
-                              final units = snapshot.data ?? UserPreferencesService.unitsMetric;
-                              final tempUnit = units == UserPreferencesService.unitsMetric ? '°C' : '°F';
+                          child: Builder(
+                            builder: (context) {
+                              final tempUnit = _units == UserPreferencesService.unitsMetric ? '°C' : '°F';
                               return TextFormField(
                                 initialValue: _bedTempMin.toString(),
                                 decoration: InputDecoration(
@@ -626,11 +639,9 @@ class _NfcWriterPageState extends State<NfcWriterPage> {
                         ),
                         const SizedBox(width: 16),
                         Expanded(
-                          child: FutureBuilder<String>(
-                            future: UserPreferencesService.getUnits(),
-                            builder: (context, snapshot) {
-                              final units = snapshot.data ?? UserPreferencesService.unitsMetric;
-                              final tempUnit = units == UserPreferencesService.unitsMetric ? '°C' : '°F';
+                          child: Builder(
+                            builder: (context) {
+                              final tempUnit = _units == UserPreferencesService.unitsMetric ? '°C' : '°F';
                               return TextFormField(
                                 initialValue: _bedTempMax.toString(),
                                 decoration: InputDecoration(
@@ -664,11 +675,9 @@ class _NfcWriterPageState extends State<NfcWriterPage> {
                     Row(
                       children: [
                         Expanded(
-                          child: FutureBuilder<String>(
-                            future: UserPreferencesService.getUnits(),
-                            builder: (context, snapshot) {
-                              final units = snapshot.data ?? UserPreferencesService.unitsMetric;
-                              final lengthUnit = units == UserPreferencesService.unitsMetric ? 'mm' : 'in';
+                          child: Builder(
+                            builder: (context) {
+                              final lengthUnit = _units == UserPreferencesService.unitsMetric ? 'mm' : 'in';
                               return TextFormField(
                                 initialValue: _diameter.toString(),
                                 decoration: InputDecoration(
@@ -727,7 +736,11 @@ class _NfcWriterPageState extends State<NfcWriterPage> {
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
                           final colorCode = _getColorCodeFromRgb(_selectedColor);
-                          final colorRgb = (_selectedColor.r.toInt() << 16) | (_selectedColor.g.toInt() << 8) | _selectedColor.b.toInt();
+                          // Flutter Color.r/g/b returns double 0.0-1.0, we need int 0-255
+                          final r = (_selectedColor.r * 255).round();
+                          final g = (_selectedColor.g * 255).round();
+                          final b = (_selectedColor.b * 255).round();
+                          final colorRgb = (r << 16) | (g << 8) | b;
                           developer.log(
                             '📝 Écriture NFC - Couleur sélectionnée: $_selectedColor, '
                             'Code: $colorCode, RGB: 0x${colorRgb.toRadixString(16).padLeft(6, '0').toUpperCase()}',
@@ -746,10 +759,11 @@ class _NfcWriterPageState extends State<NfcWriterPage> {
                             bedTempMax: _bedTempMax,
                             diameter: _diameter,
                             spoolLength: _spoolLength,
+                            brand: _selectedBrand,
                           );
 
                           context.read<NfcReaderBloc>().add(
-                                WriteBobbinDataEvent(bobbinData),
+                                WriteBobbinDataEvent(bobbinData, tagFormat: _tagFormat),
                               );
                         }
                       },

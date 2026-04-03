@@ -509,7 +509,7 @@ class AppLocalizationsHi extends AppLocalizations {
   String get privacyPolicy => 'गोपनीयता नीति';
 
   @override
-  String get legal => 'Legal';
+  String get legal => 'कानूनी';
 
   @override
   String get back => 'पीछे';
@@ -560,6 +560,33 @@ class AppLocalizationsHi extends AppLocalizations {
   String get blue => 'नीला';
 
   @override
+  String get black => 'काला';
+
+  @override
+  String get white => 'सफ़ेद';
+
+  @override
+  String get yellow => 'पीला';
+
+  @override
+  String get orange => 'नारंगी';
+
+  @override
+  String get pink => 'गुलाबी';
+
+  @override
+  String get purple => 'बैंगनी';
+
+  @override
+  String get gray => 'स्लेटी';
+
+  @override
+  String get brown => 'भूरा';
+
+  @override
+  String get unknown => 'अज्ञात';
+
+  @override
   String get metricUnits => 'मीट्रिक (मिमी, ग्रा, °C)';
 
   @override
@@ -579,6 +606,42 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get cad => 'कैनेडियन डॉलर (CAD)';
+
+  @override
+  String get aud => 'ऑस्ट्रेलियाई डॉलर (A\$)';
+
+  @override
+  String get jpy => 'जापानी येन (¥)';
+
+  @override
+  String get cny => 'चीनी युआन (¥)';
+
+  @override
+  String get inr => 'भारतीय रुपया (₹)';
+
+  @override
+  String get brl => 'ब्राज़ीलियाई रियाल (R\$)';
+
+  @override
+  String get mxn => 'मैक्सिकन पेसो (MX\$)';
+
+  @override
+  String get sek => 'स्वीडिश क्रोना (kr)';
+
+  @override
+  String get nok => 'नॉर्वेजियन क्रोन (kr)';
+
+  @override
+  String get dkk => 'डेनिश क्रोन (kr)';
+
+  @override
+  String get pln => 'पोलिश ज़्लॉटी (zł)';
+
+  @override
+  String get czk => 'चेक कोरुना (Kč)';
+
+  @override
+  String get nzd => 'न्यूज़ीलैंड डॉलर (NZ\$)';
 
   @override
   String get filamentsToOrder => 'ऑर्डर करने के लिए फिलामेंट';
@@ -707,6 +770,16 @@ class AppLocalizationsHi extends AppLocalizations {
   @override
   String get bambuLabReadOnlyDesc =>
       'Bambu Lab टैग RSA एन्क्रिप्शन का उपयोग करते हैं और संशोधित नहीं किए जा सकते। केवल पढ़ें।';
+
+  @override
+  String get forPrusaMk4 => 'Prusa MK4/XL के लिए (OpenPrintTag)';
+
+  @override
+  String get prusaReadWrite => 'Prusa: पढ़ें और लिखें';
+
+  @override
+  String get prusaReadWriteDesc =>
+      'Prusa टैग ISO 15693 (NFC-V) OpenPrintTag प्रारूप का उपयोग करते हैं। पढ़ने और लिखने दोनों समर्थित।';
 
   @override
   String get bambuCloneLibrary => 'Bambu Lab क्लोन लाइब्रेरी';
@@ -1023,4 +1096,62 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get skuLabel => 'SKU';
+
+  @override
+  String get helpIdentifyFilament =>
+      'इस फिलामेंट की पहचान करने में हमारी मदद करें';
+
+  @override
+  String get helpUsImprove => 'हमें बेहतर बनाने में मदद करें!';
+
+  @override
+  String get helpIdentifyDescription =>
+      'हमने टैग पढ़ा लेकिन इसे पहचान नहीं पाए। हमें बताएं कि यह कौन सा फिलामेंट है ताकि हम ऐप को बेहतर बना सकें।';
+
+  @override
+  String get otherBrand => 'अन्य';
+
+  @override
+  String get thankYouFeedback => 'आपकी प्रतिक्रिया के लिए धन्यवाद!';
+
+  @override
+  String get send => 'भेजें';
+
+  @override
+  String get optionalDetails => 'वैकल्पिक विवरण';
+
+  @override
+  String get weightGrams => 'वज़न (ग्रा)';
+
+  @override
+  String get diameterMm => 'व्यास (मिमी)';
+
+  @override
+  String get spoolLengthM => 'स्पूल लंबाई (मी)';
+
+  @override
+  String get batchNumberLabel => 'बैच / SKU';
+
+  @override
+  String get contactUs => 'हमसे संपर्क करें';
+
+  @override
+  String get contactUsSubtitle => 'प्रश्न, सुझाव या समस्याएँ';
+
+  @override
+  String get nfcTagNotDetected => 'कोई NFC टैग नहीं मिला';
+
+  @override
+  String get nfcTagNotDetectedDesc =>
+      'कोई टैग नहीं मिला। टैग खराब, क्षतिग्रस्त या फोन से बहुत दूर हो सकता है। सुनिश्चित करें कि आपके फोन का ऊपरी हिस्सा सीधे NFC टैग पर रखा गया है।';
+
+  @override
+  String get nfcTagIncompatible => 'असंगत NFC टैग मिला';
+
+  @override
+  String get nfcTagInfoPrusa =>
+      'OpenPrintTag संगत टैग बनाने के लिए Prusa MK4/XL के लिए एक खाली NXP ICODE SLIX2 टैग (ISO 15693) का उपयोग करें।';
+
+  @override
+  String get writePrusaTagTitle => 'Prusa OpenPrintTag लिखें';
 }

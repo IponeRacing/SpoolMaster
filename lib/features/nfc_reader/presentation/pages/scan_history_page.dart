@@ -36,6 +36,8 @@ class _ScanHistoryView extends StatelessWidget {
         title: Text(AppLocalizations.of(context)!.scanHistoryTitle),
         actions: [
           BlocBuilder<ScanHistoryBloc, ScanHistoryState>(
+            buildWhen: (previous, current) =>
+                (previous is ScanHistoryLoaded) != (current is ScanHistoryLoaded),
             builder: (context, state) {
               if (state is ScanHistoryLoaded && state.scans.isNotEmpty) {
                 return IconButton(
@@ -141,13 +143,13 @@ class _ScanHistoryView extends StatelessWidget {
   void _navigateToDetail(BuildContext context, ScanHistory scan) {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => ScanDetailPage(scan: scan)),
+      MaterialPageRoute<void>(builder: (context) => ScanDetailPage(scan: scan)),
     );
   }
 
   void _showDeleteConfirmationDialog(BuildContext context, String scanId) {
     final localizations = AppLocalizations.of(context)!;
-    showDialog(
+    showDialog<void>(
       context: context,
       builder: (dialogContext) => AlertDialog(
         title: Text(localizations.deleteThisScan),
@@ -174,7 +176,7 @@ class _ScanHistoryView extends StatelessWidget {
 
   void _showClearConfirmationDialog(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
-    showDialog(
+    showDialog<void>(
       context: context,
       builder: (dialogContext) => AlertDialog(
         title: Text(localizations.clearAll),

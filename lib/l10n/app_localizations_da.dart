@@ -509,7 +509,7 @@ class AppLocalizationsDa extends AppLocalizations {
   String get privacyPolicy => 'Privatlivspolitik';
 
   @override
-  String get legal => 'Legal';
+  String get legal => 'Juridisk';
 
   @override
   String get back => 'Tilbage';
@@ -560,6 +560,33 @@ class AppLocalizationsDa extends AppLocalizations {
   String get blue => 'Blå';
 
   @override
+  String get black => 'Sort';
+
+  @override
+  String get white => 'Hvid';
+
+  @override
+  String get yellow => 'Gul';
+
+  @override
+  String get orange => 'Orange';
+
+  @override
+  String get pink => 'Lyserød';
+
+  @override
+  String get purple => 'Lilla';
+
+  @override
+  String get gray => 'Grå';
+
+  @override
+  String get brown => 'Brun';
+
+  @override
+  String get unknown => 'Ukendt';
+
+  @override
   String get metricUnits => 'Metrisk (mm, g, °C)';
 
   @override
@@ -579,6 +606,42 @@ class AppLocalizationsDa extends AppLocalizations {
 
   @override
   String get cad => 'Canadisk Dollar (CAD)';
+
+  @override
+  String get aud => 'AUD';
+
+  @override
+  String get jpy => 'JPY';
+
+  @override
+  String get cny => 'CNY';
+
+  @override
+  String get inr => 'INR';
+
+  @override
+  String get brl => 'BRL';
+
+  @override
+  String get mxn => 'MXN';
+
+  @override
+  String get sek => 'SEK';
+
+  @override
+  String get nok => 'NOK';
+
+  @override
+  String get dkk => 'DKK';
+
+  @override
+  String get pln => 'PLN';
+
+  @override
+  String get czk => 'CZK';
+
+  @override
+  String get nzd => 'NZD';
 
   @override
   String get filamentsToOrder => 'Filamenter at bestille';
@@ -707,6 +770,16 @@ class AppLocalizationsDa extends AppLocalizations {
   @override
   String get bambuLabReadOnlyDesc =>
       'Bambu Lab tags bruger RSA-kryptering og kan ikke ændres. Skrivebeskyttet.';
+
+  @override
+  String get forPrusaMk4 => 'til Prusa MK4/XL (OpenPrintTag)';
+
+  @override
+  String get prusaReadWrite => 'Prusa: Læsning og skrivning';
+
+  @override
+  String get prusaReadWriteDesc =>
+      'Prusa-tags bruger ISO 15693 (NFC-V) med OpenPrintTag-format. Læsning og skrivning understøttet.';
 
   @override
   String get bambuCloneLibrary => 'Bambu Lab klonbibliotek';
@@ -1022,4 +1095,62 @@ class AppLocalizationsDa extends AppLocalizations {
 
   @override
   String get skuLabel => 'SKU';
+
+  @override
+  String get helpIdentifyFilament =>
+      'Hjælp os med at identificere dette filament';
+
+  @override
+  String get helpUsImprove => 'Hjælp os med at forbedre!';
+
+  @override
+  String get helpIdentifyDescription =>
+      'Vi læste chippen, men kunne ikke identificere den. Fortæl os hvilket filament det er, så vi kan forbedre appen.';
+
+  @override
+  String get otherBrand => 'Andet';
+
+  @override
+  String get thankYouFeedback => 'Tak for din feedback!';
+
+  @override
+  String get send => 'Send';
+
+  @override
+  String get optionalDetails => 'Valgfrie detaljer';
+
+  @override
+  String get weightGrams => 'Vægt (g)';
+
+  @override
+  String get diameterMm => 'Diameter (mm)';
+
+  @override
+  String get spoolLengthM => 'Spole længde (m)';
+
+  @override
+  String get batchNumberLabel => 'Batch / SKU';
+
+  @override
+  String get contactUs => 'Kontakt os';
+
+  @override
+  String get contactUsSubtitle => 'Spørgsmål, forslag eller problemer';
+
+  @override
+  String get nfcTagNotDetected => 'Ingen NFC-tag fundet';
+
+  @override
+  String get nfcTagNotDetectedDesc =>
+      'Ingen tag blev fundet. Taggen kan være død, beskadiget eller for langt fra telefonen. Sørg for at toppen af din telefon placeres direkte på NFC-taggen.';
+
+  @override
+  String get nfcTagIncompatible => 'Inkompatibel NFC-tag fundet';
+
+  @override
+  String get nfcTagInfoPrusa =>
+      'Brug et tomt NXP ICODE SLIX2-kort (ISO 15693) til at oprette OpenPrintTag-kompatible tags til Prusa MK4/XL.';
+
+  @override
+  String get writePrusaTagTitle => 'Skriv Prusa OpenPrintTag';
 }

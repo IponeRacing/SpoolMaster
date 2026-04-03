@@ -163,7 +163,7 @@
   "tempBed": "Temp. llit",
   "termsOfService": "Condicions del servei",
   "privacyPolicy": "Política de privadesa",
-  "legal": "Legal",
+  "legal": "Jurídic",
   "back": "Enrere",
   "retry": "Reintentar",
   "signOut": "Tancar sessió",
@@ -187,6 +187,18 @@
   "usd": "Dòlar americà ($)",
   "gbp": "Lliura esterlina (£)",
   "cad": "Dòlar canadenc (CAD)",
+  "aud": "Dòlar australià (A$)",
+  "jpy": "Ien japonès (¥)",
+  "cny": "Iuan xinès (¥)",
+  "inr": "Rupia índia (₹)",
+  "brl": "Real brasiler (R$)",
+  "mxn": "Peso mexicà (MX$)",
+  "sek": "Corona sueca (kr)",
+  "nok": "Corona noruega (kr)",
+  "dkk": "Corona danesa (kr)",
+  "pln": "Zloty polonès (zł)",
+  "czk": "Corona txeca (Kč)",
+  "nzd": "Dòlar neozelandès (NZ$)",
   "filamentsToOrder": "Filaments per demanar",
   "shoppingList": "Llista de la compra",
   "addToShoppingList": "Afegir a la llista",
@@ -241,6 +253,11 @@
   "ok": "D'acord",
   "bambuLabReadOnly": "Bambu Lab: Només lectura",
   "bambuLabReadOnlyDesc": "Les etiquetes Bambu Lab utilitzen xifratge RSA i no es poden modificar. Només lectura.",
+  "forPrusaMk4": "per a Prusa MK4/XL (OpenPrintTag)",
+  "prusaReadWrite": "Prusa: Lectura i escriptura",
+  "prusaReadWriteDesc": "Les etiquetes Prusa utilitzen ISO 15693 (NFC-V) amb format OpenPrintTag. Lectura i escriptura suportades.",
+  "nfcTagInfoPrusa": "Utilitza una etiqueta NXP ICODE SLIX2 buida (ISO 15693) per crear etiquetes compatibles amb OpenPrintTag per a Prusa MK4/XL.",
+  "writePrusaTagTitle": "Escriure Prusa OpenPrintTag",
   "bambuCloneLibrary": "Biblioteca de clons Bambu Lab",
   "noBambuClones": "No hi ha clons de Bambu Lab",
   "scanBambuToClone": "Escaneja etiquetes originals de Bambu Lab per crear la teva biblioteca de clons",
@@ -289,15 +306,33 @@
   "filamentTypeLabel": "Tipus de filament",
   "scanNfcChipButton": "Escanejar xip NFC",
   "deleteCloneConfirmation": "Eliminar clon \"{name}\"?",
-  "@deleteCloneConfirmation": {"placeholders": {"name": {"type": "String"}}},
+  "@deleteCloneConfirmation": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "cloneDeletedMessage": "Clon \"{name}\" eliminat",
-  "@cloneDeletedMessage": {"placeholders": {"name": {"type": "String"}}},
+  "@cloneDeletedMessage": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "extruderLabel": "Extrusor",
   "writeThisCloneButton": "Escriu aquest clon",
   "customNameHint": "Nom personalitzat",
   "cloneWriteSuccessMessage": "Clon escrit correctament!",
   "errorPrefix": "Error: {error}",
-  "@errorPrefix": {"placeholders": {"error": {"type": "String"}}},
+  "@errorPrefix": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "writingInProgress": "Escrivint...",
   "writeOnCUIDButton": "Escriu a la targeta CUID",
   "diameterLabel": "Diàmetre",
@@ -325,11 +360,23 @@
   "writeBambuLabTagButton": "Escriu etiqueta Bambu Lab",
   "bambuLabRsaNote": "Nota: Les etiquetes Bambu Lab originals utilitzen xifrat RSA. Aquest mode escriu dades en format simplificat compatible.",
   "signInError": "Error d'inici de sessió: {error}",
-  "@signInError": {"placeholders": {"error": {"type": "String"}}},
+  "@signInError": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "subscriptionActivatedMessage": "Subscripció activada correctament!",
   "subscriptionFailedMessage": "Ha fallat la subscripció",
   "errorMessage": "Error: {error}",
-  "@errorMessage": {"placeholders": {"error": {"type": "String"}}},
+  "@errorMessage": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "subscriptionRestoredMessage": "Subscripció restaurada correctament!",
   "noSubscriptionFoundMessage": "No s'ha trobat subscripció",
   "vipLabel": "VIP",
@@ -342,5 +389,30 @@
   "pleaseEnterValidLength": "Introduïu una longitud vàlida",
   "spoolLengthNotSetCannotConvert": "Longitud de bobina no establerta - no es pot convertir",
   "exceedsRemainingWeight": "Supera el pes restant",
-  "skuLabel": "SKU"
+  "skuLabel": "SKU",
+  "helpIdentifyFilament": "Ajuda'ns a identificar aquest filament",
+  "helpUsImprove": "Ajuda'ns a millorar!",
+  "helpIdentifyDescription": "Hem llegit el xip però no l'hem pogut identificar. Diga'ns quin filament és per millorar l'aplicació.",
+  "otherBrand": "Altra",
+  "thankYouFeedback": "Gràcies pel teu comentari!",
+  "send": "Enviar",
+  "optionalDetails": "Detalls opcionals",
+  "weightGrams": "Pes (g)",
+  "diameterMm": "Diàmetre (mm)",
+  "spoolLengthM": "Longitud bobina (m)",
+  "batchNumberLabel": "Lot / SKU",
+  "black": "Negre",
+  "white": "Blanc",
+  "yellow": "Groc",
+  "orange": "Taronja",
+  "pink": "Rosa",
+  "purple": "Lila",
+  "gray": "Gris",
+  "brown": "Marró",
+  "unknown": "Desconegut",
+  "contactUs": "Contacteu-nos",
+  "contactUsSubtitle": "Preguntes, suggeriments o problemes",
+  "nfcTagNotDetected": "No s'ha detectat cap etiqueta NFC",
+  "nfcTagNotDetectedDesc": "No s'ha trobat cap etiqueta. L'etiqueta pot estar morta, danyada o massa lluny del telèfon. Assegureu-vos que la part superior del telèfon estigui directament sobre l'etiqueta NFC.",
+  "nfcTagIncompatible": "S'ha detectat una etiqueta NFC incompatible"
 }

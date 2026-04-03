@@ -162,7 +162,7 @@
   "tempBed": "热床温度",
   "termsOfService": "服务条款",
   "privacyPolicy": "隐私政策",
-  "legal": "Legal",
+  "legal": "法律信息",
   "back": "返回",
   "retry": "重试",
   "signOut": "退出登录",
@@ -192,6 +192,18 @@
   "usd": "美元 ($)",
   "gbp": "英镑 (£)",
   "cad": "加元 (CAD)",
+  "aud": "澳元 (A$)",
+  "jpy": "日元 (¥)",
+  "cny": "人民币 (¥)",
+  "inr": "印度卢比 (₹)",
+  "brl": "巴西雷亚尔 (R$)",
+  "mxn": "墨西哥比索 (MX$)",
+  "sek": "瑞典克朗 (kr)",
+  "nok": "挪威克朗 (kr)",
+  "dkk": "丹麦克朗 (kr)",
+  "pln": "波兰兹罗提 (zł)",
+  "czk": "捷克克朗 (Kč)",
+  "nzd": "新西兰元 (NZ$)",
   "filamentsToOrder": "待订购耗材",
   "shoppingList": "购物清单",
   "addToShoppingList": "添加到清单",
@@ -241,6 +253,11 @@
   "ok": "确定",
   "bambuLabReadOnly": "Bambu Lab: 只读",
   "bambuLabReadOnlyDesc": "Bambu Lab标签使用RSA加密，无法修改。只读。",
+  "forPrusaMk4": "适用于 Prusa MK4/XL (OpenPrintTag)",
+  "prusaReadWrite": "Prusa: 读取和写入",
+  "prusaReadWriteDesc": "Prusa标签使用ISO 15693 (NFC-V) OpenPrintTag格式。支持读取和写入。",
+  "nfcTagInfoPrusa": "使用空白NXP ICODE SLIX2标签(ISO 15693)为Prusa MK4/XL创建OpenPrintTag兼容标签。",
+  "writePrusaTagTitle": "写入Prusa OpenPrintTag",
   "bambuCloneLibrary": "Bambu Lab克隆库",
   "noBambuClones": "无Bambu Lab克隆",
   "scanBambuToClone": "扫描Bambu Lab原装标签以创建克隆库",
@@ -254,7 +271,6 @@
   "clonedOn": "克隆于",
   "writeThisClone": "写入此克隆",
   "writeClone": "写入克隆",
-  "writing": "写入中...",
   "writeOnCUID": "写入CUID卡",
   "cloneWrittenSuccess": "克隆写入成功！",
   "requiredTagFormat": "所需标签格式",
@@ -290,15 +306,33 @@
   "filamentTypeLabel": "耗材类型",
   "scanNfcChipButton": "扫描NFC芯片",
   "deleteCloneConfirmation": "删除克隆「{name}」？",
-  "@deleteCloneConfirmation": {"placeholders": {"name": {"type": "String"}}},
+  "@deleteCloneConfirmation": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "cloneDeletedMessage": "克隆「{name}」已删除",
-  "@cloneDeletedMessage": {"placeholders": {"name": {"type": "String"}}},
+  "@cloneDeletedMessage": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "extruderLabel": "挤出机",
   "writeThisCloneButton": "写入此克隆",
   "customNameHint": "自定义名称",
   "cloneWriteSuccessMessage": "克隆写入成功！",
   "errorPrefix": "错误: {error}",
-  "@errorPrefix": {"placeholders": {"error": {"type": "String"}}},
+  "@errorPrefix": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "writingInProgress": "写入中...",
   "writeOnCUIDButton": "写入CUID卡",
   "diameterLabel": "直径",
@@ -326,11 +360,23 @@
   "writeBambuLabTagButton": "写入Bambu Lab标签",
   "bambuLabRsaNote": "注意：原装Bambu Lab标签使用RSA加密。此模式以简化的兼容格式写入数据。",
   "signInError": "登录错误: {error}",
-  "@signInError": {"placeholders": {"error": {"type": "String"}}},
+  "@signInError": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "subscriptionActivatedMessage": "订阅已激活！",
   "subscriptionFailedMessage": "订阅失败",
   "errorMessage": "错误: {error}",
-  "@errorMessage": {"placeholders": {"error": {"type": "String"}}},
+  "@errorMessage": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "subscriptionRestoredMessage": "订阅已恢复！",
   "noSubscriptionFoundMessage": "未找到订阅",
   "vipLabel": "VIP",
@@ -343,5 +389,30 @@
   "pleaseEnterValidLength": "请输入有效长度",
   "spoolLengthNotSetCannotConvert": "未设置线轴长度 - 无法转换",
   "exceedsRemainingWeight": "超过剩余重量",
-  "skuLabel": "SKU"
+  "skuLabel": "SKU",
+  "helpIdentifyFilament": "帮助我们识别这种耗材",
+  "helpUsImprove": "帮助我们改进！",
+  "helpIdentifyDescription": "我们读取了芯片但无法识别。请告诉我们这是什么耗材，以便我们改进应用。",
+  "otherBrand": "其他",
+  "thankYouFeedback": "感谢您的反馈！",
+  "send": "发送",
+  "optionalDetails": "可选详情",
+  "weightGrams": "重量 (g)",
+  "diameterMm": "直径 (mm)",
+  "spoolLengthM": "线轴长度 (m)",
+  "batchNumberLabel": "批次 / SKU",
+  "black": "黑色",
+  "white": "白色",
+  "yellow": "黄色",
+  "orange": "橙色",
+  "pink": "粉色",
+  "purple": "紫色",
+  "gray": "灰色",
+  "brown": "棕色",
+  "unknown": "未知",
+  "contactUs": "联系我们",
+  "contactUsSubtitle": "问题、建议或反馈",
+  "nfcTagNotDetected": "未检测到NFC标签",
+  "nfcTagNotDetectedDesc": "未找到标签。标签可能已损坏或距离手机太远。请确保将手机顶部直接放在NFC标签上。",
+  "nfcTagIncompatible": "检测到不兼容的NFC标签"
 }

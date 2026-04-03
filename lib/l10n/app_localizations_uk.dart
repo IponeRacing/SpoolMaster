@@ -510,7 +510,7 @@ class AppLocalizationsUk extends AppLocalizations {
   String get privacyPolicy => 'Політика конфіденційності';
 
   @override
-  String get legal => 'Legal';
+  String get legal => 'Юридична інформація';
 
   @override
   String get back => 'Назад';
@@ -561,6 +561,33 @@ class AppLocalizationsUk extends AppLocalizations {
   String get blue => 'Синій';
 
   @override
+  String get black => 'Чорний';
+
+  @override
+  String get white => 'Білий';
+
+  @override
+  String get yellow => 'Жовтий';
+
+  @override
+  String get orange => 'Помаранчевий';
+
+  @override
+  String get pink => 'Рожевий';
+
+  @override
+  String get purple => 'Фіолетовий';
+
+  @override
+  String get gray => 'Сірий';
+
+  @override
+  String get brown => 'Коричневий';
+
+  @override
+  String get unknown => 'Невідомо';
+
+  @override
   String get metricUnits => 'Метричні (мм, г, °C)';
 
   @override
@@ -580,6 +607,42 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get cad => 'Канадський долар (CAD)';
+
+  @override
+  String get aud => 'Австралійський долар (A\$)';
+
+  @override
+  String get jpy => 'Японська єна (¥)';
+
+  @override
+  String get cny => 'Китайський юань (¥)';
+
+  @override
+  String get inr => 'Індійська рупія (₹)';
+
+  @override
+  String get brl => 'Бразильський реал (R\$)';
+
+  @override
+  String get mxn => 'Мексиканське песо (MX\$)';
+
+  @override
+  String get sek => 'Шведська крона (kr)';
+
+  @override
+  String get nok => 'Норвезька крона (kr)';
+
+  @override
+  String get dkk => 'Данська крона (kr)';
+
+  @override
+  String get pln => 'Польський злотий (zł)';
+
+  @override
+  String get czk => 'Чеська крона (Kč)';
+
+  @override
+  String get nzd => 'Новозеландський долар (NZ\$)';
 
   @override
   String get filamentsToOrder => 'Філаменти для замовлення';
@@ -709,6 +772,16 @@ class AppLocalizationsUk extends AppLocalizations {
   @override
   String get bambuLabReadOnlyDesc =>
       'Мітки Bambu Lab використовують шифрування RSA і не можуть бути змінені. Тільки для читання.';
+
+  @override
+  String get forPrusaMk4 => 'для Prusa MK4/XL (OpenPrintTag)';
+
+  @override
+  String get prusaReadWrite => 'Prusa: Читання та запис';
+
+  @override
+  String get prusaReadWriteDesc =>
+      'Теги Prusa використовують ISO 15693 (NFC-V) з форматом OpenPrintTag. Підтримка читання та запису.';
 
   @override
   String get bambuCloneLibrary => 'Бібліотека клонів Bambu Lab';
@@ -1026,4 +1099,61 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get skuLabel => 'Артикул';
+
+  @override
+  String get helpIdentifyFilament => 'Допоможіть нам визначити цей філамент';
+
+  @override
+  String get helpUsImprove => 'Допоможіть нам покращитися!';
+
+  @override
+  String get helpIdentifyDescription =>
+      'Ми прочитали чіп, але не змогли його розпізнати. Розкажіть нам, який це філамент, щоб ми могли покращити додаток.';
+
+  @override
+  String get otherBrand => 'Інший';
+
+  @override
+  String get thankYouFeedback => 'Дякуємо за ваш відгук!';
+
+  @override
+  String get send => 'Надіслати';
+
+  @override
+  String get optionalDetails => 'Додаткові дані';
+
+  @override
+  String get weightGrams => 'Вага (г)';
+
+  @override
+  String get diameterMm => 'Діаметр (мм)';
+
+  @override
+  String get spoolLengthM => 'Довжина котушки (м)';
+
+  @override
+  String get batchNumberLabel => 'Партія / SKU';
+
+  @override
+  String get contactUs => 'Зв\'яжіться з нами';
+
+  @override
+  String get contactUsSubtitle => 'Питання, пропозиції або проблеми';
+
+  @override
+  String get nfcTagNotDetected => 'NFC мітку не виявлено';
+
+  @override
+  String get nfcTagNotDetectedDesc =>
+      'Мітку не знайдено. Мітка може бути несправною, пошкодженою або занадто далеко від телефону. Переконайтеся, що верхня частина телефону розміщена безпосередньо на NFC мітці.';
+
+  @override
+  String get nfcTagIncompatible => 'Виявлено несумісну NFC мітку';
+
+  @override
+  String get nfcTagInfoPrusa =>
+      'Використовуйте пусту карту NXP ICODE SLIX2 (ISO 15693) для створення тегів, сумісних з OpenPrintTag, для Prusa MK4/XL.';
+
+  @override
+  String get writePrusaTagTitle => 'Записати тег Prusa OpenPrintTag';
 }

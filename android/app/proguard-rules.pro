@@ -12,7 +12,9 @@
 -keep class com.engagengine.nfc_anycubic.NativeNfcPlugin { *; }
 -keep class android.nfc.** { *; }
 
-# Google Play Billing
+# Google Play Billing Library 7+
+-keep class com.android.billingclient.** { *; }
+# Legacy billing (keep for compatibility)
 -keep class com.android.vending.billing.** { *; }
 
 # Google Mobile Ads

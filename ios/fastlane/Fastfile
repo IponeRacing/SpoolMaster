@@ -1,0 +1,80 @@
+import File.expand_path("~/.fastlane/SharedFastfile")
+
+default_platform(:ios)
+
+platform :ios do
+
+  desc "Génère les fichiers metadata depuis applestorelang.csv"
+  lane :generate_metadata do
+    require_relative 'csv_to_metadata'
+
+    csv_path = File.expand_path('../../applestorelang.csv', __dir__)
+    metadata_dir = File.expand_path('metadata', __dir__)
+
+    UI.message("🔄 Génération des métadonnées depuis le CSV...")
+    count = generate_metadata(csv_path, metadata_dir)
+    UI.success("✅ #{count} langues générées dans fastlane/metadata/")
+  end
+
+  desc "Envoie les métadonnées vers App Store Connect (sans binaire ni screenshots)"
+  lane :upload_metadata do
+    generate_metadata
+
+    deliver(
+      api_key: shared_api_key,
+      app_identifier: "com.engageengine.nfcfilament",
+      skip_binary_upload: true,
+      skip_screenshots: true,
+      force: true,
+      precheck_include_in_app_purchases: false,
+      run_precheck_before_submit: false,
+      submission_information: nil,
+    )
+  end
+
+  desc "Upload IPA vers App Store Connect (TestFlight)"
+  lane :upload_app do
+    ipa_path = File.expand_path('../../ios/build/ipa/nfc_anycubic.ipa', __dir__)
+
+    unless File.exist?(ipa_path)
+      UI.user_error!("IPA non trouvée: #{ipa_path}\nLance: flutter build ios --release + xcodebuild -exportArchive")
+    end
+
+    pilot(
+      api_key: shared_api_key,
+      ipa: ipa_path,
+      skip_waiting_for_build_processing: true,
+      skip_submission: true,
+    )
+  end
+
+  desc "Upload metadata + IPA"
+  lane :deploy do
+    upload_metadata
+    upload_app
+  end
+
+end
+
+platform :android do
+
+  desc "Upload AAB vers Google Play (internal track)"
+  lane :upload_app do
+    aab_path = File.expand_path('../../build/app/outputs/bundle/release/app-release.aab', __dir__)
+
+    unless File.exist?(aab_path)
+      UI.user_error!("AAB non trouvée: #{aab_path}\nLance: flutter build appbundle --release")
+    end
+
+    upload_to_play_store(
+      json_key: SHARED_GOOGLE_JSON_KEY,
+      package_name: 'com.engagengine.nfc_anycubic',
+      aab: aab_path,
+      track: 'internal',
+      skip_upload_metadata: true,
+      skip_upload_images: true,
+      skip_upload_screenshots: true,
+    )
+  end
+
+end

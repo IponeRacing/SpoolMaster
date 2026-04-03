@@ -162,7 +162,7 @@
   "tempBed": "ベッド温度",
   "termsOfService": "利用規約",
   "privacyPolicy": "プライバシーポリシー",
-  "legal": "Legal",
+  "legal": "法的情報",
   "back": "戻る",
   "retry": "再試行",
   "signOut": "サインアウト",
@@ -192,6 +192,18 @@
   "usd": "米ドル ($)",
   "gbp": "英ポンド (£)",
   "cad": "カナダドル (CAD)",
+  "aud": "オーストラリアドル (A$)",
+  "jpy": "日本円 (¥)",
+  "cny": "中国人民元 (¥)",
+  "inr": "インドルピー (₹)",
+  "brl": "ブラジルレアル (R$)",
+  "mxn": "メキシコペソ (MX$)",
+  "sek": "スウェーデンクローナ (kr)",
+  "nok": "ノルウェークローネ (kr)",
+  "dkk": "デンマーククローネ (kr)",
+  "pln": "ポーランドズウォティ (zł)",
+  "czk": "チェココルナ (Kč)",
+  "nzd": "ニュージーランドドル (NZ$)",
   "filamentsToOrder": "注文するフィラメント",
   "shoppingList": "ショッピングリスト",
   "addToShoppingList": "リストに追加",
@@ -241,6 +253,9 @@
   "ok": "OK",
   "bambuLabReadOnly": "Bambu Lab: 読み取り専用",
   "bambuLabReadOnlyDesc": "Bambu LabタグはRSA暗号化を使用しており、変更できません。読み取り専用です。",
+  "forPrusaMk4": "Prusa MK4/XL用 (OpenPrintTag)",
+  "prusaReadWrite": "Prusa: 読み取り＆書き込み",
+  "prusaReadWriteDesc": "PrusaタグはISO 15693 (NFC-V)のOpenPrintTagフォーマットを使用しています。読み取りと書き込みがサポートされています。",
   "bambuCloneLibrary": "Bambu Labクローンライブラリ",
   "noBambuClones": "Bambu Labクローンがありません",
   "scanBambuToClone": "Bambu Lab純正タグをスキャンしてクローンライブラリを作成",
@@ -254,7 +269,6 @@
   "clonedOn": "クローン作成日",
   "writeThisClone": "このクローンを書き込む",
   "writeClone": "クローンを書き込む",
-  "writing": "書き込み中...",
   "writeOnCUID": "CUIDカードに書き込む",
   "cloneWrittenSuccess": "クローンの書き込みに成功しました！",
   "requiredTagFormat": "必要なタグ形式",
@@ -290,15 +304,33 @@
   "filamentTypeLabel": "フィラメントタイプ",
   "scanNfcChipButton": "NFCチップをスキャン",
   "deleteCloneConfirmation": "クローン「{name}」を削除しますか？",
-  "@deleteCloneConfirmation": {"placeholders": {"name": {"type": "String"}}},
+  "@deleteCloneConfirmation": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "cloneDeletedMessage": "クローン「{name}」を削除しました",
-  "@cloneDeletedMessage": {"placeholders": {"name": {"type": "String"}}},
+  "@cloneDeletedMessage": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "extruderLabel": "エクストルーダー",
   "writeThisCloneButton": "このクローンを書き込む",
   "customNameHint": "カスタム名",
   "cloneWriteSuccessMessage": "クローンの書き込み成功！",
   "errorPrefix": "エラー: {error}",
-  "@errorPrefix": {"placeholders": {"error": {"type": "String"}}},
+  "@errorPrefix": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "writingInProgress": "書き込み中...",
   "writeOnCUIDButton": "CUIDカードに書き込む",
   "diameterLabel": "直径",
@@ -326,11 +358,23 @@
   "writeBambuLabTagButton": "Bambu Labタグを書き込む",
   "bambuLabRsaNote": "注意: オリジナルのBambu LabタグはRSA暗号化を使用しています。このモードは簡略化された互換形式でデータを書き込みます。",
   "signInError": "ログインエラー: {error}",
-  "@signInError": {"placeholders": {"error": {"type": "String"}}},
+  "@signInError": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "subscriptionActivatedMessage": "サブスクリプションが有効になりました！",
   "subscriptionFailedMessage": "サブスクリプションに失敗しました",
   "errorMessage": "エラー: {error}",
-  "@errorMessage": {"placeholders": {"error": {"type": "String"}}},
+  "@errorMessage": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "subscriptionRestoredMessage": "サブスクリプションが復元されました！",
   "noSubscriptionFoundMessage": "サブスクリプションが見つかりません",
   "vipLabel": "VIP",
@@ -343,5 +387,32 @@
   "pleaseEnterValidLength": "有効な長さを入力してください",
   "spoolLengthNotSetCannotConvert": "スプール長が設定されていません - 変換できません",
   "exceedsRemainingWeight": "残りの重量を超えています",
-  "skuLabel": "SKU"
+  "skuLabel": "SKU",
+  "helpIdentifyFilament": "このフィラメントの特定にご協力ください",
+  "helpUsImprove": "改善にご協力ください！",
+  "helpIdentifyDescription": "タグを読み取りましたが、識別できませんでした。このフィラメントが何か教えていただければ、アプリを改善できます。",
+  "otherBrand": "その他",
+  "thankYouFeedback": "フィードバックありがとうございます！",
+  "send": "送信",
+  "optionalDetails": "任意の詳細",
+  "weightGrams": "重量 (g)",
+  "diameterMm": "直径 (mm)",
+  "spoolLengthM": "スプール長さ (m)",
+  "batchNumberLabel": "ロット / SKU",
+  "black": "ブラック",
+  "white": "ホワイト",
+  "yellow": "イエロー",
+  "orange": "オレンジ",
+  "pink": "ピンク",
+  "purple": "パープル",
+  "gray": "グレー",
+  "brown": "ブラウン",
+  "unknown": "不明",
+  "contactUs": "お問い合わせ",
+  "contactUsSubtitle": "ご質問、ご提案、問題について",
+  "nfcTagNotDetected": "NFCタグが検出されませんでした",
+  "nfcTagNotDetectedDesc": "タグが見つかりません。タグが故障しているか、損傷しているか、電話から離れすぎている可能性があります。iPhoneの上部をNFCタグに直接置いてください。",
+  "nfcTagIncompatible": "互換性のないNFCタグが検出されました",
+  "nfcTagInfoPrusa": "空白のNXP ICODE SLIX2タグ（ISO 15693）を使用して、Prusa MK4/XLと互換性のあるOpenPrintTagを作成します。",
+  "writePrusaTagTitle": "Prusa OpenPrintTagに書き込む"
 }

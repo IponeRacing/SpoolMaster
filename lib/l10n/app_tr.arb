@@ -162,7 +162,7 @@
   "tempBed": "Tabla Sıcaklığı",
   "termsOfService": "Hizmet Şartları",
   "privacyPolicy": "Gizlilik Politikası",
-  "legal": "Legal",
+  "legal": "Yasal",
   "back": "Geri",
   "retry": "Yeniden Dene",
   "signOut": "Oturumu Kapat",
@@ -241,6 +241,11 @@
   "ok": "Tamam",
   "bambuLabReadOnly": "Bambu Lab: Salt okunur",
   "bambuLabReadOnlyDesc": "Bambu Lab etiketleri RSA şifrelemesi kullanır ve değiştirilemez. Salt okunur.",
+  "forPrusaMk4": "Prusa MK4/XL için (OpenPrintTag)",
+  "prusaReadWrite": "Prusa: Oku ve Yaz",
+  "prusaReadWriteDesc": "Prusa etiketleri OpenPrintTag formatında ISO 15693 (NFC-V) kullanır. Okuma ve yazma desteklenir.",
+  "nfcTagInfoPrusa": "Prusa MK4/XL için OpenPrintTag uyumlu etiketler oluşturmak için boş bir NXP ICODE SLIX2 etiketi (ISO 15693) kullanın.",
+  "writePrusaTagTitle": "Prusa OpenPrintTag Yaz",
   "bambuCloneLibrary": "Bambu Lab Klon Kütüphanesi",
   "noBambuClones": "Bambu Lab klonu yok",
   "scanBambuToClone": "Klon kütüphanenizi oluşturmak için orijinal Bambu Lab etiketlerini tarayın",
@@ -254,7 +259,6 @@
   "clonedOn": "Klonlandı",
   "writeThisClone": "Bu klonu yaz",
   "writeClone": "Klon yaz",
-  "writing": "Yazılıyor...",
   "writeOnCUID": "CUID kartına yaz",
   "cloneWrittenSuccess": "Klon başarıyla yazıldı!",
   "requiredTagFormat": "Gerekli etiket formatı",
@@ -290,15 +294,33 @@
   "filamentTypeLabel": "Filament türü",
   "scanNfcChipButton": "NFC çip tara",
   "deleteCloneConfirmation": "\"{name}\" klonunu sil?",
-  "@deleteCloneConfirmation": {"placeholders": {"name": {"type": "String"}}},
+  "@deleteCloneConfirmation": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "cloneDeletedMessage": "\"{name}\" klonu silindi",
-  "@cloneDeletedMessage": {"placeholders": {"name": {"type": "String"}}},
+  "@cloneDeletedMessage": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "extruderLabel": "Ekstruder",
   "writeThisCloneButton": "Bu klonu yaz",
   "customNameHint": "Özel ad",
   "cloneWriteSuccessMessage": "Klon başarıyla yazıldı!",
   "errorPrefix": "Hata: {error}",
-  "@errorPrefix": {"placeholders": {"error": {"type": "String"}}},
+  "@errorPrefix": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "writingInProgress": "Yazılıyor...",
   "writeOnCUIDButton": "CUID karta yaz",
   "diameterLabel": "Çap",
@@ -326,11 +348,23 @@
   "writeBambuLabTagButton": "Bambu Lab etiketi yaz",
   "bambuLabRsaNote": "Not: Orijinal Bambu Lab etiketleri RSA şifreleme kullanır. Bu mod verileri basitleştirilmiş uyumlu formatta yazar.",
   "signInError": "Giriş hatası: {error}",
-  "@signInError": {"placeholders": {"error": {"type": "String"}}},
+  "@signInError": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "subscriptionActivatedMessage": "Abonelik başarıyla etkinleştirildi!",
   "subscriptionFailedMessage": "Abonelik başarısız",
   "errorMessage": "Hata: {error}",
-  "@errorMessage": {"placeholders": {"error": {"type": "String"}}},
+  "@errorMessage": {
+    "placeholders": {
+      "error": {
+        "type": "String"
+      }
+    }
+  },
   "subscriptionRestoredMessage": "Abonelik başarıyla geri yüklendi!",
   "noSubscriptionFoundMessage": "Abonelik bulunamadı",
   "vipLabel": "VIP",
@@ -343,5 +377,42 @@
   "pleaseEnterValidLength": "Lütfen geçerli uzunluk girin",
   "spoolLengthNotSetCannotConvert": "Makara uzunluğu ayarlanmamış - dönüştürülemez",
   "exceedsRemainingWeight": "Kalan ağırlığı aşıyor",
-  "skuLabel": "SKU"
+  "skuLabel": "SKU",
+  "helpIdentifyFilament": "Bu filamenti tanımlamamıza yardım edin",
+  "helpUsImprove": "Gelişmemize yardım edin!",
+  "helpIdentifyDescription": "Çipi okuduk ancak tanımlayamadık. Bu filamentin ne olduğunu söyleyin, uygulamayı geliştirelim.",
+  "otherBrand": "Diğer",
+  "thankYouFeedback": "Geri bildiriminiz için teşekkürler!",
+  "send": "Gönder",
+  "optionalDetails": "İsteğe bağlı ayrıntılar",
+  "weightGrams": "Ağırlık (g)",
+  "diameterMm": "Çap (mm)",
+  "spoolLengthM": "Makara uzunluğu (m)",
+  "batchNumberLabel": "Parti / SKU",
+  "black": "Siyah",
+  "white": "Beyaz",
+  "yellow": "Sarı",
+  "orange": "Turuncu",
+  "pink": "Pembe",
+  "purple": "Mor",
+  "gray": "Gri",
+  "brown": "Kahverengi",
+  "unknown": "Bilinmiyor",
+  "aud": "AUD",
+  "jpy": "JPY",
+  "cny": "CNY",
+  "inr": "INR",
+  "brl": "BRL",
+  "mxn": "MXN",
+  "sek": "SEK",
+  "nok": "NOK",
+  "dkk": "DKK",
+  "pln": "PLN",
+  "czk": "CZK",
+  "nzd": "NZD",
+  "contactUs": "Bize Ulaşın",
+  "contactUsSubtitle": "Sorular, öneriler veya sorunlar",
+  "nfcTagNotDetected": "NFC etiketi algılanmadı",
+  "nfcTagNotDetectedDesc": "Etiket bulunamadı. Etiket bozuk, hasarlı veya telefondan çok uzakta olabilir. Telefonunuzun üst kısmının doğrudan NFC etiketinin üzerine yerleştirildiğinden emin olun.",
+  "nfcTagIncompatible": "Uyumsuz NFC etiketi algılandı"
 }

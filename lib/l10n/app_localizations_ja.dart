@@ -503,7 +503,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get privacyPolicy => 'プライバシーポリシー';
 
   @override
-  String get legal => 'Legal';
+  String get legal => '法的情報';
 
   @override
   String get back => '戻る';
@@ -554,6 +554,33 @@ class AppLocalizationsJa extends AppLocalizations {
   String get blue => '青';
 
   @override
+  String get black => 'ブラック';
+
+  @override
+  String get white => 'ホワイト';
+
+  @override
+  String get yellow => 'イエロー';
+
+  @override
+  String get orange => 'オレンジ';
+
+  @override
+  String get pink => 'ピンク';
+
+  @override
+  String get purple => 'パープル';
+
+  @override
+  String get gray => 'グレー';
+
+  @override
+  String get brown => 'ブラウン';
+
+  @override
+  String get unknown => '不明';
+
+  @override
   String get metricUnits => 'メートル法 (mm, g, °C)';
 
   @override
@@ -573,6 +600,42 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get cad => 'カナダドル (CAD)';
+
+  @override
+  String get aud => 'オーストラリアドル (A\$)';
+
+  @override
+  String get jpy => '日本円 (¥)';
+
+  @override
+  String get cny => '中国人民元 (¥)';
+
+  @override
+  String get inr => 'インドルピー (₹)';
+
+  @override
+  String get brl => 'ブラジルレアル (R\$)';
+
+  @override
+  String get mxn => 'メキシコペソ (MX\$)';
+
+  @override
+  String get sek => 'スウェーデンクローナ (kr)';
+
+  @override
+  String get nok => 'ノルウェークローネ (kr)';
+
+  @override
+  String get dkk => 'デンマーククローネ (kr)';
+
+  @override
+  String get pln => 'ポーランドズウォティ (zł)';
+
+  @override
+  String get czk => 'チェココルナ (Kč)';
+
+  @override
+  String get nzd => 'ニュージーランドドル (NZ\$)';
 
   @override
   String get filamentsToOrder => '注文するフィラメント';
@@ -700,6 +763,16 @@ class AppLocalizationsJa extends AppLocalizations {
   @override
   String get bambuLabReadOnlyDesc =>
       'Bambu LabタグはRSA暗号化を使用しており、変更できません。読み取り専用です。';
+
+  @override
+  String get forPrusaMk4 => 'Prusa MK4/XL用 (OpenPrintTag)';
+
+  @override
+  String get prusaReadWrite => 'Prusa: 読み取り＆書き込み';
+
+  @override
+  String get prusaReadWriteDesc =>
+      'PrusaタグはISO 15693 (NFC-V)のOpenPrintTagフォーマットを使用しています。読み取りと書き込みがサポートされています。';
 
   @override
   String get bambuCloneLibrary => 'Bambu Labクローンライブラリ';
@@ -1009,4 +1082,61 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get skuLabel => 'SKU';
+
+  @override
+  String get helpIdentifyFilament => 'このフィラメントの特定にご協力ください';
+
+  @override
+  String get helpUsImprove => '改善にご協力ください！';
+
+  @override
+  String get helpIdentifyDescription =>
+      'タグを読み取りましたが、識別できませんでした。このフィラメントが何か教えていただければ、アプリを改善できます。';
+
+  @override
+  String get otherBrand => 'その他';
+
+  @override
+  String get thankYouFeedback => 'フィードバックありがとうございます！';
+
+  @override
+  String get send => '送信';
+
+  @override
+  String get optionalDetails => '任意の詳細';
+
+  @override
+  String get weightGrams => '重量 (g)';
+
+  @override
+  String get diameterMm => '直径 (mm)';
+
+  @override
+  String get spoolLengthM => 'スプール長さ (m)';
+
+  @override
+  String get batchNumberLabel => 'ロット / SKU';
+
+  @override
+  String get contactUs => 'お問い合わせ';
+
+  @override
+  String get contactUsSubtitle => 'ご質問、ご提案、問題について';
+
+  @override
+  String get nfcTagNotDetected => 'NFCタグが検出されませんでした';
+
+  @override
+  String get nfcTagNotDetectedDesc =>
+      'タグが見つかりません。タグが故障しているか、損傷しているか、電話から離れすぎている可能性があります。iPhoneの上部をNFCタグに直接置いてください。';
+
+  @override
+  String get nfcTagIncompatible => '互換性のないNFCタグが検出されました';
+
+  @override
+  String get nfcTagInfoPrusa =>
+      '空白のNXP ICODE SLIX2タグ（ISO 15693）を使用して、Prusa MK4/XLと互換性のあるOpenPrintTagを作成します。';
+
+  @override
+  String get writePrusaTagTitle => 'Prusa OpenPrintTagに書き込む';
 }

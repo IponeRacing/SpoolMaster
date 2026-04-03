@@ -507,7 +507,7 @@ class AppLocalizationsCs extends AppLocalizations {
   String get privacyPolicy => 'Zásady ochrany osobních údajů';
 
   @override
-  String get legal => 'Legal';
+  String get legal => 'Právní';
 
   @override
   String get back => 'Zpět';
@@ -558,6 +558,33 @@ class AppLocalizationsCs extends AppLocalizations {
   String get blue => 'Modrá';
 
   @override
+  String get black => 'Černá';
+
+  @override
+  String get white => 'Bílá';
+
+  @override
+  String get yellow => 'Žlutá';
+
+  @override
+  String get orange => 'Oranžová';
+
+  @override
+  String get pink => 'Růžová';
+
+  @override
+  String get purple => 'Fialová';
+
+  @override
+  String get gray => 'Šedá';
+
+  @override
+  String get brown => 'Hnědá';
+
+  @override
+  String get unknown => 'Neznámá';
+
+  @override
   String get metricUnits => 'Metrické (mm, g, °C)';
 
   @override
@@ -577,6 +604,42 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get cad => 'Kanadský dolar (CAD)';
+
+  @override
+  String get aud => 'Australský dolar (A\$)';
+
+  @override
+  String get jpy => 'Japonský jen (¥)';
+
+  @override
+  String get cny => 'Čínský jüan (¥)';
+
+  @override
+  String get inr => 'Indická rupie (₹)';
+
+  @override
+  String get brl => 'Brazilský real (R\$)';
+
+  @override
+  String get mxn => 'Mexické peso (MX\$)';
+
+  @override
+  String get sek => 'Švédská koruna (kr)';
+
+  @override
+  String get nok => 'Norská koruna (kr)';
+
+  @override
+  String get dkk => 'Dánská koruna (kr)';
+
+  @override
+  String get pln => 'Polský zlotý (zł)';
+
+  @override
+  String get czk => 'Česká koruna (Kč)';
+
+  @override
+  String get nzd => 'Novozélandský dolar (NZ\$)';
 
   @override
   String get filamentsToOrder => 'Filamenty k objednání';
@@ -705,6 +768,16 @@ class AppLocalizationsCs extends AppLocalizations {
   @override
   String get bambuLabReadOnlyDesc =>
       'Značky Bambu Lab používají šifrování RSA a nelze je upravovat. Pouze čtení.';
+
+  @override
+  String get forPrusaMk4 => 'pro Prusa MK4/XL (OpenPrintTag)';
+
+  @override
+  String get prusaReadWrite => 'Prusa: Čtení a Zápis';
+
+  @override
+  String get prusaReadWriteDesc =>
+      'Prusa tagy používají ISO 15693 (NFC-V) s formátem OpenPrintTag. Čtení i zápis podporovány.';
 
   @override
   String get bambuCloneLibrary => 'Knihovna klonů Bambu Lab';
@@ -1020,4 +1093,61 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get skuLabel => 'SKU';
+
+  @override
+  String get helpIdentifyFilament => 'Pomozte nám identifikovat tento filament';
+
+  @override
+  String get helpUsImprove => 'Pomozte nám se zlepšit!';
+
+  @override
+  String get helpIdentifyDescription =>
+      'Přečetli jsme čip, ale nedokázali jsme ho identifikovat. Řekněte nám, jaký je to filament, abychom mohli vylepšit aplikaci.';
+
+  @override
+  String get otherBrand => 'Jiná';
+
+  @override
+  String get thankYouFeedback => 'Děkujeme za vaši zpětnou vazbu!';
+
+  @override
+  String get send => 'Odeslat';
+
+  @override
+  String get optionalDetails => 'Volitelné detaily';
+
+  @override
+  String get weightGrams => 'Hmotnost (g)';
+
+  @override
+  String get diameterMm => 'Průměr (mm)';
+
+  @override
+  String get spoolLengthM => 'Délka cívky (m)';
+
+  @override
+  String get batchNumberLabel => 'Šarže / SKU';
+
+  @override
+  String get contactUs => 'Kontaktujte nás';
+
+  @override
+  String get contactUsSubtitle => 'Dotazy, návrhy nebo problémy';
+
+  @override
+  String get nfcTagNotDetected => 'Nebyla detekována žádná NFC značka';
+
+  @override
+  String get nfcTagNotDetectedDesc =>
+      'Nenalezena žádná značka. Značka může být mrtvá, poškozená nebo příliš daleko od telefonu. Umístěte horní část iPhonu přímo na NFC značku.';
+
+  @override
+  String get nfcTagIncompatible => 'Detekována nekompatibilní NFC značka';
+
+  @override
+  String get nfcTagInfoPrusa =>
+      'Použijte prázdnou značku NXP ICODE SLIX2 (ISO 15693) k vytvoření značek kompatibilních s OpenPrintTag pro Prusa MK4/XL.';
+
+  @override
+  String get writePrusaTagTitle => 'Zapsat Prusa OpenPrintTag';
 }

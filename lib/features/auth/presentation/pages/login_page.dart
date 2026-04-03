@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nfc_filament/l10n/app_localizations.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import '../../../../core/services/auth_service.dart';
 import '../../../../main.dart' show MainNavigationPage, mainNavigationKey;
 
@@ -39,11 +40,25 @@ class _LoginPageState extends State<LoginPage> {
     try {
       await _authService.signInWithApple();
       _navigateAfterLogin();
+    } on SignInWithAppleAuthorizationException catch (e) {
+      if (e.code == AuthorizationErrorCode.canceled) {
+        // User cancelled — no error message needed
+        return;
+      }
+      if (mounted) {
+        final message = e.code == AuthorizationErrorCode.notHandled ||
+                e.code == AuthorizationErrorCode.notInteractive
+            ? 'Sign in with Apple is not available on this device.'
+            : 'Sign in with Apple failed. Please try again.';
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(message), backgroundColor: Colors.red),
+        );
+      }
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Erreur de connexion: $e'),
+          const SnackBar(
+            content: Text('Sign in failed. Please try again.'),
             backgroundColor: Colors.red,
           ),
         );

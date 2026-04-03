@@ -509,7 +509,7 @@ class AppLocalizationsVi extends AppLocalizations {
   String get privacyPolicy => 'Chính sách bảo mật';
 
   @override
-  String get legal => 'Legal';
+  String get legal => 'Pháp lý';
 
   @override
   String get back => 'Quay lại';
@@ -560,6 +560,33 @@ class AppLocalizationsVi extends AppLocalizations {
   String get blue => 'Xanh dương';
 
   @override
+  String get black => 'Đen';
+
+  @override
+  String get white => 'Trắng';
+
+  @override
+  String get yellow => 'Vàng';
+
+  @override
+  String get orange => 'Cam';
+
+  @override
+  String get pink => 'Hồng';
+
+  @override
+  String get purple => 'Tím';
+
+  @override
+  String get gray => 'Xám';
+
+  @override
+  String get brown => 'Nâu';
+
+  @override
+  String get unknown => 'Không xác định';
+
+  @override
   String get metricUnits => 'Hệ mét (mm, g, °C)';
 
   @override
@@ -579,6 +606,42 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get cad => 'Đô la Canada (CAD)';
+
+  @override
+  String get aud => 'Đô la Úc (A\$)';
+
+  @override
+  String get jpy => 'Yên Nhật (¥)';
+
+  @override
+  String get cny => 'Nhân dân tệ (¥)';
+
+  @override
+  String get inr => 'Rupee Ấn Độ (₹)';
+
+  @override
+  String get brl => 'Real Brazil (R\$)';
+
+  @override
+  String get mxn => 'Peso Mexico (MX\$)';
+
+  @override
+  String get sek => 'Krona Thụy Điển (kr)';
+
+  @override
+  String get nok => 'Krone Na Uy (kr)';
+
+  @override
+  String get dkk => 'Krone Đan Mạch (kr)';
+
+  @override
+  String get pln => 'Zloty Ba Lan (zł)';
+
+  @override
+  String get czk => 'Koruna Séc (Kč)';
+
+  @override
+  String get nzd => 'Đô la New Zealand (NZ\$)';
 
   @override
   String get filamentsToOrder => 'Filament cần đặt';
@@ -709,6 +772,16 @@ class AppLocalizationsVi extends AppLocalizations {
   @override
   String get bambuLabReadOnlyDesc =>
       'Thẻ Bambu Lab sử dụng mã hóa RSA và không thể sửa đổi. Chỉ đọc.';
+
+  @override
+  String get forPrusaMk4 => 'cho Prusa MK4/XL (OpenPrintTag)';
+
+  @override
+  String get prusaReadWrite => 'Prusa: Đọc và ghi';
+
+  @override
+  String get prusaReadWriteDesc =>
+      'Thẻ Prusa sử dụng ISO 15693 (NFC-V) với định dạng OpenPrintTag. Hỗ trợ đọc và ghi.';
 
   @override
   String get bambuCloneLibrary => 'Thư viện bản sao Bambu Lab';
@@ -1025,4 +1098,61 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get skuLabel => 'SKU';
+
+  @override
+  String get helpIdentifyFilament => 'Giúp chúng tôi nhận diện sợi nhựa này';
+
+  @override
+  String get helpUsImprove => 'Giúp chúng tôi cải thiện!';
+
+  @override
+  String get helpIdentifyDescription =>
+      'Chúng tôi đã đọc chip nhưng không thể nhận diện. Hãy cho chúng tôi biết đây là sợi nhựa gì để cải thiện ứng dụng.';
+
+  @override
+  String get otherBrand => 'Khác';
+
+  @override
+  String get thankYouFeedback => 'Cảm ơn phản hồi của bạn!';
+
+  @override
+  String get send => 'Gửi';
+
+  @override
+  String get optionalDetails => 'Chi tiết tùy chọn';
+
+  @override
+  String get weightGrams => 'Trọng lượng (g)';
+
+  @override
+  String get diameterMm => 'Đường kính (mm)';
+
+  @override
+  String get spoolLengthM => 'Chiều dài cuộn (m)';
+
+  @override
+  String get batchNumberLabel => 'Lô / SKU';
+
+  @override
+  String get contactUs => 'Liên hệ với chúng tôi';
+
+  @override
+  String get contactUsSubtitle => 'Câu hỏi, đề xuất hoặc vấn đề';
+
+  @override
+  String get nfcTagNotDetected => 'Không phát hiện thẻ NFC';
+
+  @override
+  String get nfcTagNotDetectedDesc =>
+      'Không tìm thấy thẻ. Thẻ có thể đã hỏng, bị hư hoặc quá xa điện thoại. Hãy đảm bảo đặt phần trên của điện thoại trực tiếp lên thẻ NFC.';
+
+  @override
+  String get nfcTagIncompatible => 'Phát hiện thẻ NFC không tương thích';
+
+  @override
+  String get nfcTagInfoPrusa =>
+      'Sử dụng thẻ NXP ICODE SLIX2 trống (ISO 15693) để tạo thẻ tương thích OpenPrintTag cho Prusa MK4/XL.';
+
+  @override
+  String get writePrusaTagTitle => 'Ghi thẻ Prusa OpenPrintTag';
 }

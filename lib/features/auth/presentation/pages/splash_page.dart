@@ -1,4 +1,6 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:nfc_filament/core/services/admob_service.dart';
 import '../../../../core/services/auth_service.dart';
 import '../../../../core/theme/app_theme.dart';
 import '../../../../main.dart';
@@ -23,8 +25,17 @@ class _SplashPageState extends State<SplashPage> {
 
   Future<void> _checkAuthStatus() async {
     try {
-      // Petite pause pour afficher le logo
-      await Future.delayed(const Duration(seconds: 2));
+      // Petite pause pour afficher le logo ET s'assurer que l'UI est visible
+      await Future<void>.delayed(const Duration(seconds: 1));
+
+      if (!mounted) return;
+
+      // Demander ATT + UMP maintenant que l'UI est visible
+      if (Platform.isIOS) {
+        debugPrint('🔐 [SplashPage] Requesting ATT consent (UI is visible)...');
+        await AdMobService().requestConsents();
+        debugPrint('🔐 [SplashPage] ATT consent flow completed');
+      }
 
       if (!mounted) return;
 
@@ -38,13 +49,13 @@ class _SplashPageState extends State<SplashPage> {
         // Utilisateur connecté → aller à la page principale
         debugPrint('SplashPage: Navigating to MainNavigationPage');
         Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (_) => MainNavigationPage(key: mainNavigationKey)),
+          MaterialPageRoute<void>(builder: (_) => MainNavigationPage(key: mainNavigationKey)),
         );
       } else {
         // Pas connecté → aller à la page de login
         debugPrint('SplashPage: Navigating to LoginPage');
         Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (_) => const LoginPage()),
+          MaterialPageRoute<void>(builder: (_) => const LoginPage()),
         );
       }
     } catch (e, stackTrace) {
@@ -53,7 +64,7 @@ class _SplashPageState extends State<SplashPage> {
       if (mounted) {
         // En cas d'erreur, aller à la page de login
         Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (_) => const LoginPage()),
+          MaterialPageRoute<void>(builder: (_) => const LoginPage()),
         );
       }
     }

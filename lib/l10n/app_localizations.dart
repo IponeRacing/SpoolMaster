@@ -478,25 +478,25 @@ abstract class AppLocalizations {
   /// No description provided for @extruderTempMin.
   ///
   /// In fr, this message translates to:
-  /// **'Température Extrudeur Min'**
+  /// **'Extrudeur min (°C)'**
   String get extruderTempMin;
 
   /// No description provided for @extruderTempMax.
   ///
   /// In fr, this message translates to:
-  /// **'Température Extrudeur Max'**
+  /// **'Extrudeur max (°C)'**
   String get extruderTempMax;
 
   /// No description provided for @bedTempMin.
   ///
   /// In fr, this message translates to:
-  /// **'Température Plateau Min'**
+  /// **'Plateau min (°C)'**
   String get bedTempMin;
 
   /// No description provided for @bedTempMax.
   ///
   /// In fr, this message translates to:
-  /// **'Température Plateau Max'**
+  /// **'Plateau max (°C)'**
   String get bedTempMax;
 
   /// No description provided for @diameter.
@@ -1249,6 +1249,60 @@ abstract class AppLocalizations {
   /// **'Bleu'**
   String get blue;
 
+  /// No description provided for @black.
+  ///
+  /// In fr, this message translates to:
+  /// **'Noir'**
+  String get black;
+
+  /// No description provided for @white.
+  ///
+  /// In fr, this message translates to:
+  /// **'Blanc'**
+  String get white;
+
+  /// No description provided for @yellow.
+  ///
+  /// In fr, this message translates to:
+  /// **'Jaune'**
+  String get yellow;
+
+  /// No description provided for @orange.
+  ///
+  /// In fr, this message translates to:
+  /// **'Orange'**
+  String get orange;
+
+  /// No description provided for @pink.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rose'**
+  String get pink;
+
+  /// No description provided for @purple.
+  ///
+  /// In fr, this message translates to:
+  /// **'Violet'**
+  String get purple;
+
+  /// No description provided for @gray.
+  ///
+  /// In fr, this message translates to:
+  /// **'Gris'**
+  String get gray;
+
+  /// No description provided for @brown.
+  ///
+  /// In fr, this message translates to:
+  /// **'Marron'**
+  String get brown;
+
+  /// No description provided for @unknown.
+  ///
+  /// In fr, this message translates to:
+  /// **'Inconnu'**
+  String get unknown;
+
   /// No description provided for @metricUnits.
   ///
   /// In fr, this message translates to:
@@ -1290,6 +1344,78 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Dollar canadien (CAD)'**
   String get cad;
+
+  /// No description provided for @aud.
+  ///
+  /// In fr, this message translates to:
+  /// **'Dollar australien (A\$)'**
+  String get aud;
+
+  /// No description provided for @jpy.
+  ///
+  /// In fr, this message translates to:
+  /// **'Yen japonais (¥)'**
+  String get jpy;
+
+  /// No description provided for @cny.
+  ///
+  /// In fr, this message translates to:
+  /// **'Yuan chinois (¥)'**
+  String get cny;
+
+  /// No description provided for @inr.
+  ///
+  /// In fr, this message translates to:
+  /// **'Roupie indienne (₹)'**
+  String get inr;
+
+  /// No description provided for @brl.
+  ///
+  /// In fr, this message translates to:
+  /// **'Réal brésilien (R\$)'**
+  String get brl;
+
+  /// No description provided for @mxn.
+  ///
+  /// In fr, this message translates to:
+  /// **'Peso mexicain (MX\$)'**
+  String get mxn;
+
+  /// No description provided for @sek.
+  ///
+  /// In fr, this message translates to:
+  /// **'Couronne suédoise (kr)'**
+  String get sek;
+
+  /// No description provided for @nok.
+  ///
+  /// In fr, this message translates to:
+  /// **'Couronne norvégienne (kr)'**
+  String get nok;
+
+  /// No description provided for @dkk.
+  ///
+  /// In fr, this message translates to:
+  /// **'Couronne danoise (kr)'**
+  String get dkk;
+
+  /// No description provided for @pln.
+  ///
+  /// In fr, this message translates to:
+  /// **'Zloty polonais (zł)'**
+  String get pln;
+
+  /// No description provided for @czk.
+  ///
+  /// In fr, this message translates to:
+  /// **'Couronne tchèque (Kč)'**
+  String get czk;
+
+  /// No description provided for @nzd.
+  ///
+  /// In fr, this message translates to:
+  /// **'Dollar néo-zélandais (NZ\$)'**
+  String get nzd;
 
   /// No description provided for @filamentsToOrder.
   ///
@@ -1530,6 +1656,24 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Les tags Bambu Lab utilisent le chiffrement RSA et ne peuvent pas être modifiés. Lecture seule.'**
   String get bambuLabReadOnlyDesc;
+
+  /// No description provided for @forPrusaMk4.
+  ///
+  /// In fr, this message translates to:
+  /// **'pour Prusa MK4/XL (OpenPrintTag)'**
+  String get forPrusaMk4;
+
+  /// No description provided for @prusaReadWrite.
+  ///
+  /// In fr, this message translates to:
+  /// **'Prusa: Lecture & Écriture'**
+  String get prusaReadWrite;
+
+  /// No description provided for @prusaReadWriteDesc.
+  ///
+  /// In fr, this message translates to:
+  /// **'Les tags Prusa utilisent ISO 15693 (NFC-V) avec le format OpenPrintTag. Lecture et écriture supportées.'**
+  String get prusaReadWriteDesc;
 
   /// No description provided for @bambuCloneLibrary.
   ///
@@ -2112,6 +2256,114 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'SKU'**
   String get skuLabel;
+
+  /// No description provided for @helpIdentifyFilament.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aidez-nous à identifier ce filament'**
+  String get helpIdentifyFilament;
+
+  /// No description provided for @helpUsImprove.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aidez-nous à nous améliorer !'**
+  String get helpUsImprove;
+
+  /// No description provided for @helpIdentifyDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nous avons lu la puce mais n\'avons pas pu l\'identifier. Dites-nous quel filament c\'est pour améliorer l\'application.'**
+  String get helpIdentifyDescription;
+
+  /// No description provided for @otherBrand.
+  ///
+  /// In fr, this message translates to:
+  /// **'Autre'**
+  String get otherBrand;
+
+  /// No description provided for @thankYouFeedback.
+  ///
+  /// In fr, this message translates to:
+  /// **'Merci pour votre retour !'**
+  String get thankYouFeedback;
+
+  /// No description provided for @send.
+  ///
+  /// In fr, this message translates to:
+  /// **'Envoyer'**
+  String get send;
+
+  /// No description provided for @optionalDetails.
+  ///
+  /// In fr, this message translates to:
+  /// **'Détails optionnels'**
+  String get optionalDetails;
+
+  /// No description provided for @weightGrams.
+  ///
+  /// In fr, this message translates to:
+  /// **'Poids (g)'**
+  String get weightGrams;
+
+  /// No description provided for @diameterMm.
+  ///
+  /// In fr, this message translates to:
+  /// **'Diamètre (mm)'**
+  String get diameterMm;
+
+  /// No description provided for @spoolLengthM.
+  ///
+  /// In fr, this message translates to:
+  /// **'Longueur bobine (m)'**
+  String get spoolLengthM;
+
+  /// No description provided for @batchNumberLabel.
+  ///
+  /// In fr, this message translates to:
+  /// **'Lot / SKU'**
+  String get batchNumberLabel;
+
+  /// No description provided for @contactUs.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nous contacter'**
+  String get contactUs;
+
+  /// No description provided for @contactUsSubtitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Questions, suggestions ou problèmes'**
+  String get contactUsSubtitle;
+
+  /// No description provided for @nfcTagNotDetected.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun tag NFC détecté'**
+  String get nfcTagNotDetected;
+
+  /// No description provided for @nfcTagNotDetectedDesc.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun tag n\'a été trouvé. Le tag est peut-être mort, endommagé ou trop éloigné du téléphone. Placez bien le haut de votre iPhone directement sur le tag NFC.'**
+  String get nfcTagNotDetectedDesc;
+
+  /// No description provided for @nfcTagIncompatible.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tag NFC incompatible détecté'**
+  String get nfcTagIncompatible;
+
+  /// No description provided for @nfcTagInfoPrusa.
+  ///
+  /// In fr, this message translates to:
+  /// **'Utilisez une étiquette vierge NXP ICODE SLIX2 (ISO 15693) pour créer des tags OpenPrintTag compatibles avec Prusa MK4/XL.'**
+  String get nfcTagInfoPrusa;
+
+  /// No description provided for @writePrusaTagTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Écrire OpenPrintTag Prusa'**
+  String get writePrusaTagTitle;
 }
 
 class _AppLocalizationsDelegate

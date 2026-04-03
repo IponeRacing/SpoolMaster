@@ -509,7 +509,7 @@ class AppLocalizationsFi extends AppLocalizations {
   String get privacyPolicy => 'Tietosuojakäytäntö';
 
   @override
-  String get legal => 'Legal';
+  String get legal => 'Lakisääteinen';
 
   @override
   String get back => 'Takaisin';
@@ -560,6 +560,33 @@ class AppLocalizationsFi extends AppLocalizations {
   String get blue => 'Sininen';
 
   @override
+  String get black => 'Musta';
+
+  @override
+  String get white => 'Valkoinen';
+
+  @override
+  String get yellow => 'Keltainen';
+
+  @override
+  String get orange => 'Oranssi';
+
+  @override
+  String get pink => 'Vaaleanpunainen';
+
+  @override
+  String get purple => 'Violetti';
+
+  @override
+  String get gray => 'Harmaa';
+
+  @override
+  String get brown => 'Ruskea';
+
+  @override
+  String get unknown => 'Tuntematon';
+
+  @override
   String get metricUnits => 'Metrinen (mm, g, °C)';
 
   @override
@@ -579,6 +606,42 @@ class AppLocalizationsFi extends AppLocalizations {
 
   @override
   String get cad => 'Kanadan dollari (CAD)';
+
+  @override
+  String get aud => 'Australian dollari (A\$)';
+
+  @override
+  String get jpy => 'Japanin jeni (¥)';
+
+  @override
+  String get cny => 'Kiinan yuan (¥)';
+
+  @override
+  String get inr => 'Intian rupia (₹)';
+
+  @override
+  String get brl => 'Brasilian real (R\$)';
+
+  @override
+  String get mxn => 'Meksikon peso (MX\$)';
+
+  @override
+  String get sek => 'Ruotsin kruunu (kr)';
+
+  @override
+  String get nok => 'Norjan kruunu (kr)';
+
+  @override
+  String get dkk => 'Tanskan kruunu (kr)';
+
+  @override
+  String get pln => 'Puolan zloty (zł)';
+
+  @override
+  String get czk => 'Tšekin koruna (Kč)';
+
+  @override
+  String get nzd => 'Uuden-Seelannin dollari (NZ\$)';
 
   @override
   String get filamentsToOrder => 'Tilattavat filamentit';
@@ -707,6 +770,16 @@ class AppLocalizationsFi extends AppLocalizations {
   @override
   String get bambuLabReadOnlyDesc =>
       'Bambu Lab -tagit käyttävät RSA-salausta, eikä niitä voi muokata. Vain luku.';
+
+  @override
+  String get forPrusaMk4 => 'Prusa MK4/XL:lle (OpenPrintTag)';
+
+  @override
+  String get prusaReadWrite => 'Prusa: Luku ja kirjoitus';
+
+  @override
+  String get prusaReadWriteDesc =>
+      'Prusa-tunnisteet käyttävät ISO 15693 (NFC-V) -standardia OpenPrintTag-muodossa. Luku ja kirjoitus tuettu.';
 
   @override
   String get bambuCloneLibrary => 'Bambu Lab kloonkirjasto';
@@ -1023,4 +1096,61 @@ class AppLocalizationsFi extends AppLocalizations {
 
   @override
   String get skuLabel => 'SKU';
+
+  @override
+  String get helpIdentifyFilament => 'Auta meitä tunnistamaan tämä filamentti';
+
+  @override
+  String get helpUsImprove => 'Auta meitä parantamaan!';
+
+  @override
+  String get helpIdentifyDescription =>
+      'Luimme sirun, mutta emme pystyneet tunnistamaan sitä. Kerro meille mikä filamentti tämä on, jotta voimme parantaa sovellusta.';
+
+  @override
+  String get otherBrand => 'Muu';
+
+  @override
+  String get thankYouFeedback => 'Kiitos palautteestasi!';
+
+  @override
+  String get send => 'Lähetä';
+
+  @override
+  String get optionalDetails => 'Valinnaiset tiedot';
+
+  @override
+  String get weightGrams => 'Paino (g)';
+
+  @override
+  String get diameterMm => 'Halkaisija (mm)';
+
+  @override
+  String get spoolLengthM => 'Kelan pituus (m)';
+
+  @override
+  String get batchNumberLabel => 'Erä / SKU';
+
+  @override
+  String get contactUs => 'Ota yhteyttä';
+
+  @override
+  String get contactUsSubtitle => 'Kysymyksiä, ehdotuksia tai ongelmia';
+
+  @override
+  String get nfcTagNotDetected => 'NFC-tagia ei havaittu';
+
+  @override
+  String get nfcTagNotDetectedDesc =>
+      'Tagia ei löytynyt. Tagi voi olla kuollut, vaurioitunut tai liian kaukana puhelimesta. Varmista, että puhelimen yläosa on suoraan NFC-tagin päällä.';
+
+  @override
+  String get nfcTagIncompatible => 'Yhteensopimaton NFC-tagi havaittu';
+
+  @override
+  String get nfcTagInfoPrusa =>
+      'Käytä tyhjää NXP ICODE SLIX2 -korttia (ISO 15693) OpenPrintTag-yhteensopivien tunnisteiden luomiseen Prusa MK4/XL:lle.';
+
+  @override
+  String get writePrusaTagTitle => 'Kirjoita Prusa OpenPrintTag';
 }

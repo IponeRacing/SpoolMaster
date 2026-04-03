@@ -88,7 +88,7 @@ class _BambuCloneLibraryPageState extends State<BambuCloneLibraryPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Bibliothèque Bambu Lab'),
+        title: Text(AppLocalizations.of(context)!.bambuCloneLibrary),
         actions: [
           IconButton(
             icon: _isSyncing
@@ -132,12 +132,12 @@ class _BambuCloneLibraryPageState extends State<BambuCloneLibraryPage> {
                   ),
                   const SizedBox(height: 24),
                   Text(
-                    'Aucun clone Bambu Lab',
+                    AppLocalizations.of(context)!.noBambuClones,
                     style: Theme.of(context).textTheme.headlineSmall,
                   ),
                   const SizedBox(height: 12),
                   Text(
-                    'Scannez des tags Bambu Lab originaux pour créer votre bibliothèque de clones',
+                    AppLocalizations.of(context)!.scanBambuToClone,
                     textAlign: TextAlign.center,
                     style: TextStyle(color: Colors.grey.shade600),
                   ),
@@ -145,7 +145,7 @@ class _BambuCloneLibraryPageState extends State<BambuCloneLibraryPage> {
                   ElevatedButton.icon(
                     onPressed: () => Navigator.pop(context),
                     icon: const Icon(Icons.nfc),
-                    label: const Text('Scanner un tag'),
+                    label: Text(AppLocalizations.of(context)!.scanTag),
                   ),
                 ],
               ),
@@ -258,7 +258,7 @@ class _BambuCloneLibraryPageState extends State<BambuCloneLibraryPage> {
         onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(
+            MaterialPageRoute<void>(
               builder: (context) => BambuCloneWriterPage(clone: clone),
             ),
           ).then((_) => _loadClones());
@@ -377,7 +377,7 @@ class _BambuCloneLibraryPageState extends State<BambuCloneLibraryPage> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(
+                      MaterialPageRoute<void>(
                         builder: (context) => BambuCloneWriterPage(clone: clone),
                       ),
                     );
