@@ -16,8 +16,9 @@ import 'package:nfc_filament/features/nfc_reader/presentation/widgets/color_pick
 
 class NfcWriterPage extends StatefulWidget {
   final BobbinData? prefilledData;
+  final String initialFormat; // 'anycubic' or 'prusa'
 
-  const NfcWriterPage({super.key, this.prefilledData});
+  const NfcWriterPage({super.key, this.prefilledData, this.initialFormat = 'anycubic'});
 
   @override
   State<NfcWriterPage> createState() => _NfcWriterPageState();
@@ -60,7 +61,9 @@ class _NfcWriterPageState extends State<NfcWriterPage> {
     'PVA': {'code': 'PVA', 'extruderMin': 215, 'extruderMax': 225, 'bedMin': 45, 'bedMax': 60},
   };
 
-  String _tagFormat = 'anycubic'; // 'anycubic' or 'prusa'
+  late String _tagFormat; // 'anycubic' or 'prusa'
+
+  bool get _isPrusa => _tagFormat == 'prusa';
 
   late String _selectedBrand;
   late String _selectedMaterial;
@@ -78,6 +81,7 @@ class _NfcWriterPageState extends State<NfcWriterPage> {
   @override
   void initState() {
     super.initState();
+    _tagFormat = widget.initialFormat;
     _loadBrandsAndMaterials();
     _loadUnits();
 
@@ -92,7 +96,7 @@ class _NfcWriterPageState extends State<NfcWriterPage> {
 
     // Initialize with prefilled data if available
     if (widget.prefilledData != null) {
-      _selectedBrand = 'Anycubic';
+      _selectedBrand = widget.prefilledData!.brand ?? (_isPrusa ? 'Prusa' : 'Anycubic');
       _selectedMaterial = _getMaterialFromType(widget.prefilledData!.filamentType);
       _selectedColor = _getColorFromRgb(widget.prefilledData!.colorRgb);
       _serialNumber = _extractSerialNumber(widget.prefilledData!.batchNumber);
@@ -104,7 +108,7 @@ class _NfcWriterPageState extends State<NfcWriterPage> {
       _diameter = widget.prefilledData!.diameter ?? 1.75;
       _spoolLength = widget.prefilledData!.spoolLength ?? 330;
     } else {
-      _selectedBrand = 'Anycubic';
+      _selectedBrand = _isPrusa ? 'Prusa' : 'Anycubic';
       _selectedMaterial = 'PLA High Speed';
       _selectedColor = const Color(0xFFFF8000); // Orange
       _serialNumber = '001';
@@ -251,7 +255,9 @@ class _NfcWriterPageState extends State<NfcWriterPage> {
         children: [
           // Widget principal
           Scaffold(
-            appBar: AppBar(title: Text(AppLocalizations.of(context)!.writeNfcChip)),
+            appBar: AppBar(title: Text(_isPrusa
+                ? AppLocalizations.of(context)!.writePrusaTagTitle
+                : AppLocalizations.of(context)!.writeNfcChip)),
             body: BlocConsumer<NfcReaderBloc, NfcReaderState>(
           listener: (context, state) {
             if (state is BobbinDataWriteSuccess) {
@@ -297,61 +303,66 @@ class _NfcWriterPageState extends State<NfcWriterPage> {
                   children: [
                     // Show prefilled data banner
                     if (widget.prefilledData != null) ...[
-                      Container(
-                        padding: const EdgeInsets.all(12),
-                        decoration: BoxDecoration(
-                          color: AppTheme.anycubicRed.withOpacity(0.1),
-                          borderRadius: BorderRadius.circular(8),
-                          border: Border.all(
-                            color: AppTheme.anycubicRed.withOpacity(0.3),
-                          ),
-                        ),
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.auto_awesome,
-                              color: AppTheme.anycubicRed,
+                      Builder(builder: (context) {
+                        final accentColor = _isPrusa ? const Color(0xFFFA6831) : AppTheme.anycubicRed;
+                        return Container(
+                          padding: const EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                            color: accentColor.withOpacity(0.1),
+                            borderRadius: BorderRadius.circular(8),
+                            border: Border.all(
+                              color: accentColor.withOpacity(0.3),
                             ),
-                            const SizedBox(width: 8),
-                            Expanded(
-                              child: Text(
-                                AppLocalizations.of(context)!.reuseThisData,
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  color: AppTheme.anycubicRed.withOpacity(0.9),
+                          ),
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.auto_awesome,
+                                color: accentColor,
+                              ),
+                              const SizedBox(width: 8),
+                              Expanded(
+                                child: Text(
+                                  AppLocalizations.of(context)!.reuseThisData,
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: accentColor.withOpacity(0.9),
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
+                        );
+                      }),
+                      const SizedBox(height: 16),
+                    ],
+
+                    // SKU Card (Anycubic only)
+                    if (!_isPrusa) ...[
+                      Card(
+                        child: Padding(
+                          padding: const EdgeInsets.all(16),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                AppLocalizations.of(context)!.generatedSku,
+                                style: Theme.of(context).textTheme.titleMedium,
+                              ),
+                              const SizedBox(height: 8),
+                              Text(
+                                _generateSKU(),
+                                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                                      color: AppTheme.anycubicRed,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                       const SizedBox(height: 16),
                     ],
-
-                    // SKU Card
-                    Card(
-                      child: Padding(
-                        padding: const EdgeInsets.all(16),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              AppLocalizations.of(context)!.generatedSku,
-                              style: Theme.of(context).textTheme.titleMedium,
-                            ),
-                            const SizedBox(height: 8),
-                            Text(
-                              _generateSKU(),
-                              style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                                    color: AppTheme.anycubicRed,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 16),
 
                     // Tag format selector
                     SegmentedButton<String>(
@@ -371,6 +382,11 @@ class _NfcWriterPageState extends State<NfcWriterPage> {
                       onSelectionChanged: (Set<String> selection) {
                         setState(() {
                           _tagFormat = selection.first;
+                          if (_isPrusa && _selectedBrand == 'Anycubic') {
+                            _selectedBrand = 'Prusa';
+                          } else if (!_isPrusa && _selectedBrand == 'Prusa') {
+                            _selectedBrand = 'Anycubic';
+                          }
                         });
                       },
                     ),
@@ -481,34 +497,36 @@ class _NfcWriterPageState extends State<NfcWriterPage> {
                     ),
                     const SizedBox(height: 16),
 
-                    // Serial number
-                    TextFormField(
-                      initialValue: _serialNumber,
-                      decoration: InputDecoration(
-                        labelText: '${AppLocalizations.of(context)!.serialNumber} (3 ${AppLocalizations.of(context)!.required.toLowerCase()})',
-                        border: const OutlineInputBorder(),
+                    // Serial number (Anycubic only)
+                    if (!_isPrusa) ...[
+                      TextFormField(
+                        initialValue: _serialNumber,
+                        decoration: InputDecoration(
+                          labelText: '${AppLocalizations.of(context)!.serialNumber} (3 ${AppLocalizations.of(context)!.required.toLowerCase()})',
+                          border: const OutlineInputBorder(),
+                        ),
+                        keyboardType: TextInputType.number,
+                        maxLength: 3,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return AppLocalizations.of(context)!.required;
+                          }
+                          if (value.length != 3) {
+                            return AppLocalizations.of(context)!.invalid;
+                          }
+                          if (int.tryParse(value) == null) {
+                            return AppLocalizations.of(context)!.invalid;
+                          }
+                          return null;
+                        },
+                        onChanged: (value) {
+                          setState(() {
+                            _serialNumber = value;
+                          });
+                        },
                       ),
-                      keyboardType: TextInputType.number,
-                      maxLength: 3,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return AppLocalizations.of(context)!.required;
-                        }
-                        if (value.length != 3) {
-                          return AppLocalizations.of(context)!.invalid;
-                        }
-                        if (int.tryParse(value) == null) {
-                          return AppLocalizations.of(context)!.invalid;
-                        }
-                        return null;
-                      },
-                      onChanged: (value) {
-                        setState(() {
-                          _serialNumber = value;
-                        });
-                      },
-                    ),
-                    const SizedBox(height: 16),
+                      const SizedBox(height: 16),
+                    ],
 
                     // Weight
                     DropdownButtonFormField<double>(

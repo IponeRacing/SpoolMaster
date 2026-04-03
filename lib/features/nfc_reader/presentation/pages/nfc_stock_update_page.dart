@@ -200,8 +200,7 @@ class _NfcStockUpdateView extends StatelessWidget {
     SpoolInventoryItem? matchingSpool;
 
     // Normalize strings for comparison
-    // Default to "Anycubic" if brand is null (Anycubic tags don't always include brand field)
-    final scannedBrand = (bobbinData.brand ?? 'Anycubic').toLowerCase().trim();
+    final scannedBrand = (bobbinData.brand ?? 'Generic').toLowerCase().trim();
     final scannedMaterial = bobbinData.filamentType.toLowerCase().trim();
     final scannedColor = bobbinData.color.toLowerCase().trim();
 

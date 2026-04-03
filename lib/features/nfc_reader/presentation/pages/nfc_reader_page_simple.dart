@@ -1019,7 +1019,7 @@ class _NfcReaderViewState extends State<_NfcReaderView> {
                         onPressed: () {
                           Navigator.of(context).push(
                             MaterialPageRoute<void>(
-                              builder: (_) => const NfcWriterPage(),
+                              builder: (_) => NfcWriterPage(initialFormat: _nfcMode),
                             ),
                           );
                         },
