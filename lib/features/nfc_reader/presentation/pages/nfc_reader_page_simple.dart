@@ -429,6 +429,10 @@ class _NfcReaderViewState extends State<_NfcReaderView> {
       ),
       body: Column(
         children: [
+          // Bannière publicitaire en haut, sous l'app bar
+          AdBannerWidget(
+            adUnitId: AdMobService().nfcReaderBannerId,
+          ),
           Expanded(
             child: BlocBuilder<NfcReaderBloc, NfcReaderState>(
               builder: (context, state) {
@@ -1074,10 +1078,6 @@ class _NfcReaderViewState extends State<_NfcReaderView> {
           );
         },
             ),
-          ),
-          // Bannière publicitaire en bas
-          AdBannerWidget(
-            adUnitId: AdMobService().nfcReaderBannerId,
           ),
         ],
       ),

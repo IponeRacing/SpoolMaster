@@ -159,9 +159,9 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       title: 'Spool Master',
       debugShowCheckedModeBanner: false,
-      theme: AppTheme.lightTheme,
+      theme: AppTheme.darkTheme,
       darkTheme: AppTheme.darkTheme,
-      themeMode: ThemeMode.system,
+      themeMode: ThemeMode.dark,
       locale: _locale,
       localizationsDelegates: const [
         AppLocalizations.delegate,
@@ -238,7 +238,16 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return PopScope(
+      canPop: _selectedIndex == 0,
+      onPopInvokedWithResult: (didPop, result) {
+        if (!didPop) {
+          setState(() {
+            _selectedIndex = 0;
+          });
+        }
+      },
+      child: Scaffold(
       body: IndexedStack(
         index: _selectedIndex,
         children: [
@@ -285,6 +294,7 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
           ),
         ],
       ),
+    ),
     );
   }
 }
