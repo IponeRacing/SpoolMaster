@@ -99,12 +99,14 @@ class SpoolController {
                 user_id, spool_id, brand, material, color_name, color_rgb,
                 initial_weight, remaining_weight, price, diameter, spool_length,
                 extruder_temp_min, extruder_temp_max, bed_temp_min, bed_temp_max,
-                manufacture_date, batch_number, purchase_date, notes, last_synced_at
+                manufacture_date, batch_number, detailed_type, drying_temp, drying_time,
+                material_variant_id, material_id, purchase_date, notes, last_synced_at
             ) VALUES (
                 :user_id, :spool_id, :brand, :material, :color_name, :color_rgb,
                 :initial_weight, :remaining_weight, :price, :diameter, :spool_length,
                 :extruder_temp_min, :extruder_temp_max, :bed_temp_min, :bed_temp_max,
-                :manufacture_date, :batch_number, :purchase_date, :notes, NOW()
+                :manufacture_date, :batch_number, :detailed_type, :drying_temp, :drying_time,
+                :material_variant_id, :material_id, :purchase_date, :notes, NOW()
             )"
         );
 
@@ -126,6 +128,11 @@ class SpoolController {
             'bed_temp_max' => $input['bed_temp_max'] ?? null,
             'manufacture_date' => $input['manufacture_date'] ?? null,
             'batch_number' => $input['batch_number'] ?? null,
+            'detailed_type' => $input['detailed_type'] ?? null,
+            'drying_temp' => $input['drying_temp'] ?? null,
+            'drying_time' => $input['drying_time'] ?? null,
+            'material_variant_id' => $input['material_variant_id'] ?? null,
+            'material_id' => $input['material_id'] ?? null,
             'purchase_date' => $input['purchase_date'] ?? null,
             'notes' => $input['notes'] ?? null
         ]);
@@ -177,7 +184,8 @@ class SpoolController {
             'brand', 'material', 'color_name', 'color_rgb', 'initial_weight',
             'remaining_weight', 'price', 'diameter', 'spool_length',
             'extruder_temp_min', 'extruder_temp_max', 'bed_temp_min', 'bed_temp_max',
-            'manufacture_date', 'batch_number', 'purchase_date', 'notes'
+            'manufacture_date', 'batch_number', 'detailed_type', 'drying_temp', 'drying_time',
+            'material_variant_id', 'material_id', 'purchase_date', 'notes'
         ];
 
         foreach ($allowedFields as $field) {
@@ -280,6 +288,11 @@ class SpoolController {
             'bedTempMax' => 'bed_temp_max',
             'manufactureDate' => 'manufacture_date',
             'batchNumber' => 'batch_number',
+            'detailedType' => 'detailed_type',
+            'dryingTemp' => 'drying_temp',
+            'dryingTime' => 'drying_time',
+            'materialVariantId' => 'material_variant_id',
+            'materialId' => 'material_id',
             'purchaseDate' => 'purchase_date',
             'addedDate' => 'added_date',
             'id' => 'spool_id',

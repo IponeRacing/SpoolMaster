@@ -116,6 +116,11 @@ class SyncController {
                 'bed_temp_max' => $spool['bed_temp_max'] ? (int)$spool['bed_temp_max'] : null,
                 'manufacture_date' => $spool['manufacture_date'],
                 'batch_number' => $spool['batch_number'],
+                'detailed_type' => $spool['detailed_type'] ?? null,
+                'drying_temp' => $spool['drying_temp'] ? (int)$spool['drying_temp'] : null,
+                'drying_time' => $spool['drying_time'] ? (int)$spool['drying_time'] : null,
+                'material_variant_id' => $spool['material_variant_id'] ?? null,
+                'material_id' => $spool['material_id'] ?? null,
                 'created_at' => $spool['created_at'],
                 'updated_at' => $spool['updated_at'],
             ];
@@ -207,6 +212,8 @@ class SyncController {
                     extruder_temp_min = :extruder_temp_min, extruder_temp_max = :extruder_temp_max,
                     bed_temp_min = :bed_temp_min, bed_temp_max = :bed_temp_max,
                     manufacture_date = :manufacture_date, batch_number = :batch_number,
+                    detailed_type = :detailed_type, drying_temp = :drying_temp, drying_time = :drying_time,
+                    material_variant_id = :material_variant_id, material_id = :material_id,
                     purchase_date = :purchase_date, notes = :notes,
                     deleted_at = :deleted_at, sync_version = :sync_version, last_synced_at = NOW()
                  WHERE spool_id = :spool_id AND user_id = :user_id"
@@ -218,13 +225,15 @@ class SyncController {
                     user_id, spool_id, brand, material, color_name, color_rgb,
                     initial_weight, remaining_weight, price, diameter, spool_length,
                     extruder_temp_min, extruder_temp_max, bed_temp_min, bed_temp_max,
-                    manufacture_date, batch_number, purchase_date, notes,
+                    manufacture_date, batch_number, detailed_type, drying_temp, drying_time,
+                    material_variant_id, material_id, purchase_date, notes,
                     deleted_at, sync_version, last_synced_at
                 ) VALUES (
                     :user_id, :spool_id, :brand, :material, :color_name, :color_rgb,
                     :initial_weight, :remaining_weight, :price, :diameter, :spool_length,
                     :extruder_temp_min, :extruder_temp_max, :bed_temp_min, :bed_temp_max,
-                    :manufacture_date, :batch_number, :purchase_date, :notes,
+                    :manufacture_date, :batch_number, :detailed_type, :drying_temp, :drying_time,
+                    :material_variant_id, :material_id, :purchase_date, :notes,
                     :deleted_at, :sync_version, NOW()
                 )"
             );
@@ -248,6 +257,11 @@ class SyncController {
             'bed_temp_max' => $spool['bed_temp_max'] ?? null,
             'manufacture_date' => $spool['manufacture_date'] ?? null,
             'batch_number' => $spool['batch_number'] ?? null,
+            'detailed_type' => $spool['detailed_type'] ?? null,
+            'drying_temp' => $spool['drying_temp'] ?? null,
+            'drying_time' => $spool['drying_time'] ?? null,
+            'material_variant_id' => $spool['material_variant_id'] ?? null,
+            'material_id' => $spool['material_id'] ?? null,
             'purchase_date' => $spool['purchase_date'] ?? null,
             'notes' => $spool['notes'] ?? null,
             'deleted_at' => $spool['deleted_at'] ?? null,
@@ -328,6 +342,11 @@ class SyncController {
             'bedTempMax' => 'bed_temp_max',
             'manufactureDate' => 'manufacture_date',
             'batchNumber' => 'batch_number',
+            'detailedType' => 'detailed_type',
+            'dryingTemp' => 'drying_temp',
+            'dryingTime' => 'drying_time',
+            'materialVariantId' => 'material_variant_id',
+            'materialId' => 'material_id',
             'purchaseDate' => 'purchase_date',
             'addedDate' => 'added_date',
             'id' => 'spool_id',
