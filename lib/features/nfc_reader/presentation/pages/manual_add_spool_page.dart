@@ -32,6 +32,8 @@ class _ManualAddSpoolPageState extends State<ManualAddSpoolPage> {
   late TextEditingController _bedTempMaxController;
   late TextEditingController _diameterController;
   late TextEditingController _spoolLengthController;
+  late TextEditingController _dryingTempController;
+  late TextEditingController _dryingTimeController;
 
   Color _selectedColor = Colors.blue;
   String? _selectedBrand;
@@ -77,6 +79,12 @@ class _ManualAddSpoolPageState extends State<ManualAddSpoolPage> {
     );
     _spoolLengthController = TextEditingController(
       text: spool?.spoolLength?.toString() ?? '',
+    );
+    _dryingTempController = TextEditingController(
+      text: spool?.dryingTemp?.toString() ?? '',
+    );
+    _dryingTimeController = TextEditingController(
+      text: spool?.dryingTime?.toString() ?? '',
     );
     if (spool != null) {
       _selectedColor = Color(spool.colorRgb);
@@ -127,6 +135,8 @@ class _ManualAddSpoolPageState extends State<ManualAddSpoolPage> {
     _bedTempMaxController.dispose();
     _diameterController.dispose();
     _spoolLengthController.dispose();
+    _dryingTempController.dispose();
+    _dryingTimeController.dispose();
     super.dispose();
   }
 
@@ -565,6 +575,43 @@ class _ManualAddSpoolPageState extends State<ManualAddSpoolPage> {
                 );
               },
             ),
+            const SizedBox(height: 16),
+            // Température de séchage
+            FutureBuilder<String>(
+              future: UserPreferencesService.getUnits(),
+              builder: (context, snapshot) {
+                final units =
+                    snapshot.data ?? UserPreferencesService.unitsMetric;
+                final tempUnit = UserPreferencesService.getTemperatureUnit(
+                  units,
+                );
+                return TextFormField(
+                  controller: _dryingTempController,
+                  decoration: InputDecoration(
+                    labelText:
+                        '${AppLocalizations.of(context)!.dryingTemp} ($tempUnit)',
+                    hintText: AppLocalizations.of(context)!.dryingTempHint,
+                    border: const OutlineInputBorder(),
+                    prefixIcon: const Icon(Icons.dry_cleaning),
+                  ),
+                  keyboardType: TextInputType.number,
+                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                );
+              },
+            ),
+            const SizedBox(height: 16),
+            // Temps de séchage
+            TextFormField(
+              controller: _dryingTimeController,
+              decoration: InputDecoration(
+                labelText: AppLocalizations.of(context)!.dryingTime,
+                hintText: AppLocalizations.of(context)!.dryingTimeHint,
+                border: const OutlineInputBorder(),
+                prefixIcon: const Icon(Icons.timer_outlined),
+              ),
+              keyboardType: TextInputType.number,
+              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+            ),
             const SizedBox(height: 24),
             ElevatedButton(
               onPressed: _saveSpool,
@@ -651,6 +698,12 @@ class _ManualAddSpoolPageState extends State<ManualAddSpoolPage> {
             : null,
         spoolLength: _spoolLengthController.text.isNotEmpty
             ? int.parse(_spoolLengthController.text)
+            : null,
+        dryingTemp: _dryingTempController.text.isNotEmpty
+            ? int.parse(_dryingTempController.text)
+            : null,
+        dryingTime: _dryingTimeController.text.isNotEmpty
+            ? int.parse(_dryingTimeController.text)
             : null,
       );
 

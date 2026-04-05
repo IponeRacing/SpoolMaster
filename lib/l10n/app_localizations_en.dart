@@ -1184,6 +1184,18 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get colorHintExamples => 'Red, Blue, Black...';
+
+  @override
+  String get dryingTemp => 'Drying temperature';
+
+  @override
+  String get dryingTempHint => 'e.g. 55';
+
+  @override
+  String get dryingTime => 'Drying time (hours)';
+
+  @override
+  String get dryingTimeHint => 'e.g. 8';
 }
 
 /// The translations for English, as used in Australia (`en_AU`).

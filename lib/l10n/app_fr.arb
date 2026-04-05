@@ -424,5 +424,9 @@
   },
   "experimentalBadge": "EXPÉRIMENTAL",
   "newBadge": "NOUVEAU",
-  "colorHintExamples": "Rouge, Bleu, Noir..."
+  "colorHintExamples": "Rouge, Bleu, Noir...",
+  "dryingTemp": "Température de séchage",
+  "dryingTempHint": "ex. 55",
+  "dryingTime": "Temps de séchage (heures)",
+  "dryingTimeHint": "ex. 8"
 }

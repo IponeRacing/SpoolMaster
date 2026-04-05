@@ -1159,6 +1159,18 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get colorHintExamples => '红色、蓝色、黑色...';
+
+  @override
+  String get dryingTemp => 'Température de séchage';
+
+  @override
+  String get dryingTempHint => 'ex. 55';
+
+  @override
+  String get dryingTime => 'Temps de séchage (heures)';
+
+  @override
+  String get dryingTimeHint => 'ex. 8';
 }
 
 /// The translations for Chinese, as used in Taiwan (`zh_TW`).

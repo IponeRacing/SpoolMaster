@@ -2418,6 +2418,30 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Rouge, Bleu, Noir...'**
   String get colorHintExamples;
+
+  /// No description provided for @dryingTemp.
+  ///
+  /// In fr, this message translates to:
+  /// **'Température de séchage'**
+  String get dryingTemp;
+
+  /// No description provided for @dryingTempHint.
+  ///
+  /// In fr, this message translates to:
+  /// **'ex. 55'**
+  String get dryingTempHint;
+
+  /// No description provided for @dryingTime.
+  ///
+  /// In fr, this message translates to:
+  /// **'Temps de séchage (heures)'**
+  String get dryingTime;
+
+  /// No description provided for @dryingTimeHint.
+  ///
+  /// In fr, this message translates to:
+  /// **'ex. 8'**
+  String get dryingTimeHint;
 }
 
 class _AppLocalizationsDelegate

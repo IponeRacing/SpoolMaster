@@ -246,6 +246,14 @@ class ShoppingListService {
               bedTempMin: (map['bed_temp_min'] ?? map['bedTempMin']) as int?,
               bedTempMax: (map['bed_temp_max'] ?? map['bedTempMax']) as int?,
               diameter: map['diameter'] != null ? (map['diameter'] as num).toDouble() : null,
+              spoolLength: (map['spool_length'] ?? map['spoolLength']) as int?,
+              manufactureDate: (map['manufacture_date'] ?? map['manufactureDate']) != null ? DateTime.parse((map['manufacture_date'] ?? map['manufactureDate']) as String) : null,
+              batchNumber: (map['batch_number'] ?? map['batchNumber']) as String?,
+              detailedType: (map['detailed_type'] ?? map['detailedType']) as String?,
+              dryingTemp: (map['drying_temp'] ?? map['dryingTemp']) as int?,
+              dryingTime: (map['drying_time'] ?? map['dryingTime']) as int?,
+              materialVariantId: (map['material_variant_id'] ?? map['materialVariantId']) as String?,
+              materialId: (map['material_id'] ?? map['materialId']) as String?,
             );
           }).toList();
 

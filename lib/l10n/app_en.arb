@@ -424,5 +424,9 @@
   },
   "experimentalBadge": "EXPERIMENTAL",
   "newBadge": "NEW",
-  "colorHintExamples": "Red, Blue, Black..."
+  "colorHintExamples": "Red, Blue, Black...",
+  "dryingTemp": "Drying temperature",
+  "dryingTempHint": "e.g. 55",
+  "dryingTime": "Drying time (hours)",
+  "dryingTimeHint": "e.g. 8"
 }

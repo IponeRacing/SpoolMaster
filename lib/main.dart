@@ -881,6 +881,11 @@ class _StockListPageState extends State<StockListPage> {
                   spoolLength: bobbinData.spoolLength,
                   manufactureDate: bobbinData.manufactureDate,
                   batchNumber: bobbinData.batchNumber,
+                  detailedType: bobbinData.detailedType,
+                  dryingTemp: bobbinData.dryingTemp,
+                  dryingTime: bobbinData.dryingTime,
+                  materialVariantId: bobbinData.materialVariantId,
+                  materialId: bobbinData.materialId,
                 );
 
                 // Sauvegarder
@@ -1314,11 +1319,16 @@ class _StatisticsPageState extends State<StatisticsPage> {
                       material: (bobbinData.filamentType as String?) ?? 'Inconnu',
                       colorName: (bobbinData.color as String?) ?? 'Inconnu',
                       colorRgb: (bobbinData.colorRgb as int?) ?? 0xFFFFFFFF,
-                      price: 0.0, // Prix par défaut
+                      price: 0.0,
                       weight: (bobbinData.weightGrams as num?)?.toDouble() ?? 1000.0,
                       remainingWeight:
                           (bobbinData.weightGrams as num?)?.toDouble() ?? 1000.0,
                       addedDate: DateTime.now(),
+                      detailedType: bobbinData.detailedType as String?,
+                      dryingTemp: bobbinData.dryingTemp as int?,
+                      dryingTime: bobbinData.dryingTime as int?,
+                      materialVariantId: bobbinData.materialVariantId as String?,
+                      materialId: bobbinData.materialId as String?,
                     );
 
                     // Ajouter à la liste de courses

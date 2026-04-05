@@ -17,6 +17,11 @@ class SpoolInventoryItem {
   final int? spoolLength;
   final DateTime? manufactureDate;
   final String? batchNumber;
+  final String? detailedType;
+  final int? dryingTemp;
+  final int? dryingTime;
+  final String? materialVariantId;
+  final String? materialId;
 
   SpoolInventoryItem({
     required this.id,
@@ -36,6 +41,11 @@ class SpoolInventoryItem {
     this.spoolLength,
     this.manufactureDate,
     this.batchNumber,
+    this.detailedType,
+    this.dryingTemp,
+    this.dryingTime,
+    this.materialVariantId,
+    this.materialId,
   });
 
   Map<String, dynamic> toJson() => {
@@ -56,6 +66,11 @@ class SpoolInventoryItem {
     'spoolLength': spoolLength,
     'manufactureDate': manufactureDate?.toIso8601String(),
     'batchNumber': batchNumber,
+    'detailedType': detailedType,
+    'dryingTemp': dryingTemp,
+    'dryingTime': dryingTime,
+    'materialVariantId': materialVariantId,
+    'materialId': materialId,
   };
 
   factory SpoolInventoryItem.fromJson(Map<String, dynamic> json) =>
@@ -81,6 +96,11 @@ class SpoolInventoryItem {
             ? DateTime.parse(json['manufactureDate'] as String)
             : null,
         batchNumber: json['batchNumber'] as String?,
+        detailedType: json['detailedType'] as String?,
+        dryingTemp: json['dryingTemp'] as int?,
+        dryingTime: json['dryingTime'] as int?,
+        materialVariantId: json['materialVariantId'] as String?,
+        materialId: json['materialId'] as String?,
       );
 
   SpoolInventoryItem copyWith({
@@ -101,6 +121,11 @@ class SpoolInventoryItem {
     int? spoolLength,
     DateTime? manufactureDate,
     String? batchNumber,
+    String? detailedType,
+    int? dryingTemp,
+    int? dryingTime,
+    String? materialVariantId,
+    String? materialId,
   }) {
     return SpoolInventoryItem(
       id: id ?? this.id,
@@ -120,6 +145,11 @@ class SpoolInventoryItem {
       spoolLength: spoolLength ?? this.spoolLength,
       manufactureDate: manufactureDate ?? this.manufactureDate,
       batchNumber: batchNumber ?? this.batchNumber,
+      detailedType: detailedType ?? this.detailedType,
+      dryingTemp: dryingTemp ?? this.dryingTemp,
+      dryingTime: dryingTime ?? this.dryingTime,
+      materialVariantId: materialVariantId ?? this.materialVariantId,
+      materialId: materialId ?? this.materialId,
     );
   }
 }
