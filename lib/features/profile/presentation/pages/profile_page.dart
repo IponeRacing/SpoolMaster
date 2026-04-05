@@ -74,15 +74,15 @@ class _ProfilePageState extends State<ProfilePage> {
         setState(() => _isPremium = true);
 
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Abonnement activé avec succès !'),
+          SnackBar(
+            content: Text(AppLocalizations.of(context)!.subscriptionActivatedMessage),
             backgroundColor: Colors.green,
           ),
         );
       } else if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Échec de l\'abonnement'),
+          SnackBar(
+            content: Text(AppLocalizations.of(context)!.subscriptionFailedMessage),
             backgroundColor: Colors.red,
           ),
         );
@@ -91,7 +91,7 @@ class _ProfilePageState extends State<ProfilePage> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Erreur: $e'),
+            content: Text(AppLocalizations.of(context)!.errorMessage(e.toString())),
             backgroundColor: Colors.red,
           ),
         );
@@ -117,8 +117,8 @@ class _ProfilePageState extends State<ProfilePage> {
           SnackBar(
             content: Text(
               isPremium
-                ? 'Abonnement restauré avec succès !'
-                : 'Aucun abonnement trouvé'
+                ? AppLocalizations.of(context)!.subscriptionRestoredMessage
+                : AppLocalizations.of(context)!.noSubscriptionFoundMessage
             ),
             backgroundColor: isPremium ? Colors.green : Colors.orange,
           ),
@@ -128,7 +128,7 @@ class _ProfilePageState extends State<ProfilePage> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Erreur: $e'),
+            content: Text(AppLocalizations.of(context)!.errorMessage(e.toString())),
             backgroundColor: Colors.red,
           ),
         );
@@ -234,7 +234,7 @@ class _ProfilePageState extends State<ProfilePage> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Erreur: $e'),
+            content: Text(AppLocalizations.of(context)!.errorMessage(e.toString())),
             backgroundColor: Colors.red,
           ),
         );
@@ -678,7 +678,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                       const SizedBox(width: 8),
                       Text(
-                        'VIP',
+                        AppLocalizations.of(context)!.vipLabel,
                         style: Theme.of(context).textTheme.titleLarge?.copyWith(
                           fontWeight: FontWeight.bold,
                           color: Colors.amber.shade700,
@@ -692,9 +692,9 @@ class _ProfilePageState extends State<ProfilePage> {
                             color: Colors.green,
                             borderRadius: BorderRadius.circular(12),
                           ),
-                          child: const Text(
-                            'ACTIF',
-                            style: TextStyle(
+                          child: Text(
+                            AppLocalizations.of(context)!.activeLabel,
+                            style: const TextStyle(
                               color: Colors.white,
                               fontSize: 11,
                               fontWeight: FontWeight.bold,
@@ -719,7 +719,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           const SizedBox(width: 8),
                           Expanded(
                             child: Text(
-                              'Vous profitez de l\'expérience sans publicité !',
+                              AppLocalizations.of(context)!.noAdsExperienceMessage,
                               style: TextStyle(
                                 fontSize: 13,
                                 color: Colors.green.shade900,
@@ -820,7 +820,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                     ),
                                   )
                                 : Text(
-                                    _isPremium ? 'Abonné' : AppLocalizations.of(context)!.subscribe,
+                                    _isPremium ? AppLocalizations.of(context)!.subscribedLabel : AppLocalizations.of(context)!.subscribe,
                                     style: const TextStyle(fontSize: 16),
                                   ),
                           ),
@@ -941,7 +941,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                           ),
                                         )
                                       : Text(
-                                          _isPremium ? 'Abonné' : AppLocalizations.of(context)!.subscribe,
+                                          _isPremium ? AppLocalizations.of(context)!.subscribedLabel : AppLocalizations.of(context)!.subscribe,
                                           style: const TextStyle(fontSize: 16),
                                         ),
                                 ),

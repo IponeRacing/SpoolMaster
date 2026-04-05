@@ -1161,4 +1161,35 @@ class AppLocalizationsEl extends AppLocalizations {
 
   @override
   String get writePrusaTagTitle => 'Εγγραφή OpenPrintTag Prusa';
+
+  @override
+  String get signInAppleNotAvailable =>
+      'Η σύνδεση με Apple δεν είναι διαθέσιμη σε αυτή τη συσκευή.';
+
+  @override
+  String get signInAppleFailed =>
+      'Η σύνδεση με Apple απέτυχε. Παρακαλώ δοκιμάστε ξανά.';
+
+  @override
+  String get signInFailed => 'Η σύνδεση απέτυχε. Παρακαλώ δοκιμάστε ξανά.';
+
+  @override
+  String get mustContain3Digits => 'Πρέπει να περιέχει 3 ψηφία';
+
+  @override
+  String get mustBeNumber => 'Πρέπει να είναι αριθμός';
+
+  @override
+  String generatedUidLabel(String uid) {
+    return 'Δημιουργημένο UID: $uid';
+  }
+
+  @override
+  String get experimentalBadge => 'ΠΕΙΡΑΜΑΤΙΚΟ';
+
+  @override
+  String get newBadge => 'ΝΕΟ';
+
+  @override
+  String get colorHintExamples => 'Κόκκινο, Μπλε, Μαύρο...';
 }

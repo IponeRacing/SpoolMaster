@@ -25,8 +25,8 @@ class _BambuCloneWriterPageState extends State<BambuCloneWriterPage> {
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('✅ Clone écrit avec succès !'),
+          SnackBar(
+            content: Text(AppLocalizations.of(context)!.cloneWriteSuccessMessage),
             backgroundColor: Colors.green,
           ),
         );
@@ -36,7 +36,7 @@ class _BambuCloneWriterPageState extends State<BambuCloneWriterPage> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('❌ Erreur: $e'),
+            content: Text(AppLocalizations.of(context)!.errorPrefix(e.toString())),
             backgroundColor: Colors.red,
           ),
         );
@@ -52,7 +52,7 @@ class _BambuCloneWriterPageState extends State<BambuCloneWriterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Écrire le clone'),
+        title: Text(AppLocalizations.of(context)!.writeClone),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
@@ -88,7 +88,7 @@ class _BambuCloneWriterPageState extends State<BambuCloneWriterPage> {
                       )
                     : const Icon(Icons.nfc, size: 28),
                 label: Text(
-                  _isWriting ? 'Écriture en cours...' : 'Écrire sur une carte CUID',
+                  _isWriting ? AppLocalizations.of(context)!.writingInProgress : AppLocalizations.of(context)!.writeOnCUIDButton,
                   style: const TextStyle(fontSize: 16),
                 ),
                 style: ElevatedButton.styleFrom(
@@ -144,26 +144,26 @@ class _BambuCloneWriterPageState extends State<BambuCloneWriterPage> {
             ),
             const Divider(height: 24),
             _DetailRow(
-              label: 'Poids',
+              label: AppLocalizations.of(context)!.weight,
               value: '${widget.clone.bobbinData.weightGrams}g',
             ),
             if (widget.clone.bobbinData.spoolLength != null)
               _DetailRow(
-                label: 'Longueur',
+                label: AppLocalizations.of(context)!.length,
                 value: '${widget.clone.bobbinData.spoolLength}m',
               ),
             if (widget.clone.bobbinData.diameter != null)
               _DetailRow(
-                label: 'Diamètre',
+                label: AppLocalizations.of(context)!.diameterLabel,
                 value: '${widget.clone.bobbinData.diameter}mm',
               ),
             _DetailRow(
-              label: 'Température extrudeur',
+              label: AppLocalizations.of(context)!.extruderTempLabel,
               value:
                   '${widget.clone.bobbinData.extruderTempMin}-${widget.clone.bobbinData.extruderTempMax}°C',
             ),
             _DetailRow(
-              label: 'Température plateau',
+              label: AppLocalizations.of(context)!.bedTempLabel,
               value:
                   '${widget.clone.bobbinData.bedTempMin}-${widget.clone.bobbinData.bedTempMax}°C',
             ),
@@ -185,9 +185,9 @@ class _BambuCloneWriterPageState extends State<BambuCloneWriterPage> {
               children: [
                 Icon(Icons.info_outline, color: Colors.blue.shade700),
                 const SizedBox(width: 12),
-                const Text(
-                  'Format de tag requis',
-                  style: TextStyle(
+                Text(
+                  AppLocalizations.of(context)!.requiredTagFormat,
+                  style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                   ),
@@ -252,9 +252,9 @@ class _BambuCloneWriterPageState extends State<BambuCloneWriterPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'Instructions',
-              style: TextStyle(
+            Text(
+              AppLocalizations.of(context)!.instructions,
+              style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
               ),
@@ -318,7 +318,7 @@ class _BambuCloneWriterPageState extends State<BambuCloneWriterPage> {
                   const SizedBox(width: 12),
                   Expanded(
                     child: Text(
-                      'Le clone inclut la signature RSA originale, il sera accepté par l\'imprimante !',
+                      AppLocalizations.of(context)!.rsaSignatureNote,
                       style: TextStyle(
                         color: Colors.green.shade900,
                         fontSize: 13,

@@ -6,6 +6,7 @@ import 'package:nfc_filament/features/nfc_reader/presentation/bloc/nfc_reader_bl
 import 'package:nfc_filament/features/nfc_reader/presentation/bloc/nfc_reader_event.dart';
 import 'package:nfc_filament/features/nfc_reader/presentation/bloc/nfc_reader_state.dart';
 import 'package:nfc_filament/features/nfc_reader/presentation/pages/scan_history_page.dart';
+import 'package:nfc_filament/l10n/app_localizations.dart';
 
 class NfcReaderPage extends StatelessWidget {
   const NfcReaderPage({super.key});
@@ -27,7 +28,7 @@ class _NfcReaderView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('NFC Reader Anycubic'),
+        title: Text(AppLocalizations.of(context)!.nfcReaderTitle),
         actions: [
           IconButton(
             icon: const Icon(Icons.history),
@@ -39,7 +40,7 @@ class _NfcReaderView extends StatelessWidget {
                 ),
               );
             },
-            tooltip: 'Historique',
+            tooltip: AppLocalizations.of(context)!.historyTooltip,
           ),
         ],
       ),
@@ -98,7 +99,7 @@ class _NfcReaderView extends StatelessWidget {
                           const CheckNfcAvailabilityEvent(),
                         );
                       },
-                      child: const Text('Réessayer'),
+                      child: Text(AppLocalizations.of(context)!.retryButton),
                     ),
                   ],
                 ),
@@ -120,7 +121,7 @@ class _NfcReaderView extends StatelessWidget {
                     ),
                     const SizedBox(height: 16),
                     Text(
-                      'Lecture réussie !',
+                      AppLocalizations.of(context)!.readSuccessMessage,
                       style: Theme.of(context).textTheme.headlineSmall,
                     ),
                     const SizedBox(height: 32),
@@ -131,17 +132,17 @@ class _NfcReaderView extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             _InfoRow(
-                              label: 'Type de filament',
+                              label: AppLocalizations.of(context)!.filamentTypeLabel,
                               value: state.bobbinData.filamentType,
                             ),
                             const SizedBox(height: 8),
                             _InfoRow(
-                              label: 'Couleur',
+                              label: AppLocalizations.of(context)!.color,
                               value: state.bobbinData.color,
                             ),
                             const SizedBox(height: 8),
                             _InfoRow(
-                              label: 'Poids',
+                              label: AppLocalizations.of(context)!.weight,
                               value: '${state.bobbinData.weightGrams}g',
                             ),
                           ],
@@ -155,7 +156,7 @@ class _NfcReaderView extends StatelessWidget {
                           const ReadBobbinDataEvent(),
                         );
                       },
-                      child: const Text('Scanner une puce NFC'),
+                      child: Text(AppLocalizations.of(context)!.scanNfcChipButton),
                     ),
                   ],
                 ),
@@ -173,7 +174,7 @@ class _NfcReaderView extends StatelessWidget {
                   const Icon(Icons.nfc, size: 120, color: AppTheme.anycubicRed),
                   const SizedBox(height: 32),
                   Text(
-                    'Approchez une puce NFC',
+                    AppLocalizations.of(context)!.approachNfcChip,
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
@@ -190,8 +191,8 @@ class _NfcReaderView extends StatelessWidget {
                         vertical: 16,
                       ),
                     ),
-                    child: const Text(
-                      'Scanner une puce NFC',
+                    child: Text(
+                      AppLocalizations.of(context)!.scanNfcChipButton,
                       style: TextStyle(fontSize: 18),
                     ),
                   ),

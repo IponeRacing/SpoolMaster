@@ -1154,4 +1154,35 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get writePrusaTagTitle => 'Tulis Tag Prusa OpenPrintTag';
+
+  @override
+  String get signInAppleNotAvailable =>
+      'Log masuk dengan Apple tidak tersedia pada peranti ini.';
+
+  @override
+  String get signInAppleFailed =>
+      'Log masuk dengan Apple gagal. Sila cuba lagi.';
+
+  @override
+  String get signInFailed => 'Log masuk gagal. Sila cuba lagi.';
+
+  @override
+  String get mustContain3Digits => 'Mesti mengandungi 3 digit';
+
+  @override
+  String get mustBeNumber => 'Mesti nombor';
+
+  @override
+  String generatedUidLabel(String uid) {
+    return 'UID dijana: $uid';
+  }
+
+  @override
+  String get experimentalBadge => 'EKSPERIMEN';
+
+  @override
+  String get newBadge => 'BAHARU';
+
+  @override
+  String get colorHintExamples => 'Merah, Biru, Hitam...';
 }

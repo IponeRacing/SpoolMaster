@@ -1155,4 +1155,36 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String get writePrusaTagTitle => 'Prusa OpenPrintTag írása';
+
+  @override
+  String get signInAppleNotAvailable =>
+      'Az Apple-fiókkal való bejelentkezés nem érhető el ezen az eszközön.';
+
+  @override
+  String get signInAppleFailed =>
+      'Az Apple-fiókkal való bejelentkezés sikertelen. Kérjük, próbálja újra.';
+
+  @override
+  String get signInFailed =>
+      'A bejelentkezés sikertelen. Kérjük, próbálja újra.';
+
+  @override
+  String get mustContain3Digits => '3 számjegyet kell tartalmaznia';
+
+  @override
+  String get mustBeNumber => 'Számnak kell lennie';
+
+  @override
+  String generatedUidLabel(String uid) {
+    return 'Generált UID: $uid';
+  }
+
+  @override
+  String get experimentalBadge => 'KÍSÉRLETI';
+
+  @override
+  String get newBadge => 'ÚJ';
+
+  @override
+  String get colorHintExamples => 'Piros, Kék, Fekete...';
 }

@@ -24,6 +24,11 @@ BobbinDataModel _$BobbinDataModelFromJson(Map<String, dynamic> json) =>
       spoolLength: (json['spoolLength'] as num?)?.toInt(),
       remainingWeight: (json['remainingWeight'] as num?)?.toDouble(),
       brand: json['brand'] as String?,
+      detailedType: json['detailedType'] as String?,
+      dryingTemp: (json['dryingTemp'] as num?)?.toInt(),
+      dryingTime: (json['dryingTime'] as num?)?.toInt(),
+      materialVariantId: json['materialVariantId'] as String?,
+      materialId: json['materialId'] as String?,
     );
 
 Map<String, dynamic> _$BobbinDataModelToJson(BobbinDataModel instance) =>
@@ -42,4 +47,9 @@ Map<String, dynamic> _$BobbinDataModelToJson(BobbinDataModel instance) =>
       'spoolLength': instance.spoolLength,
       'remainingWeight': instance.remainingWeight,
       'brand': instance.brand,
+      'detailedType': instance.detailedType,
+      'dryingTemp': instance.dryingTemp,
+      'dryingTime': instance.dryingTime,
+      'materialVariantId': instance.materialVariantId,
+      'materialId': instance.materialId,
     };

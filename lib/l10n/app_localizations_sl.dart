@@ -1153,4 +1153,34 @@ class AppLocalizationsSl extends AppLocalizations {
 
   @override
   String get writePrusaTagTitle => 'Zapiši Prusa OpenPrintTag';
+
+  @override
+  String get signInAppleNotAvailable =>
+      'Prijava z Apple ni na voljo na tej napravi.';
+
+  @override
+  String get signInAppleFailed => 'Prijava z Apple ni uspela. Poskusite znova.';
+
+  @override
+  String get signInFailed => 'Prijava ni uspela. Poskusite znova.';
+
+  @override
+  String get mustContain3Digits => 'Mora vsebovati 3 številke';
+
+  @override
+  String get mustBeNumber => 'Mora biti število';
+
+  @override
+  String generatedUidLabel(String uid) {
+    return 'Ustvarjen UID: $uid';
+  }
+
+  @override
+  String get experimentalBadge => 'EKSPERIMENTALNO';
+
+  @override
+  String get newBadge => 'NOVO';
+
+  @override
+  String get colorHintExamples => 'Rdeča, Modra, Črna...';
 }

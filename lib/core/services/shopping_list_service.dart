@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:nfc_filament/main.dart';
+import 'package:nfc_filament/core/models/spool_inventory_item.dart';
 import 'package:nfc_filament/core/api/api_config.dart';
 import 'package:nfc_filament/core/services/auth_service.dart';
 import 'package:nfc_filament/core/services/user_preferences_service.dart';

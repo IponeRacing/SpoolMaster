@@ -1140,4 +1140,33 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get writePrusaTagTitle => 'Prusa OpenPrintTag 쓰기';
+
+  @override
+  String get signInAppleNotAvailable => '이 기기에서는 Apple로 로그인할 수 없습니다.';
+
+  @override
+  String get signInAppleFailed => 'Apple 로그인에 실패했습니다. 다시 시도해 주세요.';
+
+  @override
+  String get signInFailed => '로그인에 실패했습니다. 다시 시도해 주세요.';
+
+  @override
+  String get mustContain3Digits => '3자리 숫자를 포함해야 합니다';
+
+  @override
+  String get mustBeNumber => '숫자여야 합니다';
+
+  @override
+  String generatedUidLabel(String uid) {
+    return '생성된 UID: $uid';
+  }
+
+  @override
+  String get experimentalBadge => '실험적';
+
+  @override
+  String get newBadge => '새로운';
+
+  @override
+  String get colorHintExamples => '빨강, 파랑, 검정...';
 }

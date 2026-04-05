@@ -414,5 +414,19 @@
   "contactUsSubtitle": "问题、建议或反馈",
   "nfcTagNotDetected": "未检测到NFC标签",
   "nfcTagNotDetectedDesc": "未找到标签。标签可能已损坏或距离手机太远。请确保将手机顶部直接放在NFC标签上。",
-  "nfcTagIncompatible": "检测到不兼容的NFC标签"
+  "nfcTagIncompatible": "检测到不兼容的NFC标签",
+  "signInAppleNotAvailable": "此设备不支持通过Apple登录。",
+  "signInAppleFailed": "通过Apple登录失败。请重试。",
+  "signInFailed": "登录失败。请重试。",
+  "mustContain3Digits": "必须包含3位数字",
+  "mustBeNumber": "必须是数字",
+  "generatedUidLabel": "生成的UID：{uid}",
+  "@generatedUidLabel": {
+    "placeholders": {
+      "uid": { "type": "String" }
+    }
+  },
+  "experimentalBadge": "实验性",
+  "newBadge": "新",
+  "colorHintExamples": "红色、蓝色、黑色..."
 }

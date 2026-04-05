@@ -30,7 +30,7 @@ class NfcDataSourceImpl implements NfcDataSource {
       developer.log('❌ Puce vide ou non-Anycubic détectée');
       final hexDump = rawBytes.take(64).map((b) => b.toRadixString(16).padLeft(2, '0')).join(' ');
       throw NfcTagReadFailure(
-        'Tag NFC vide ou non compatible Anycubic',
+        'Tag NFC vide ou non compatible (format Anycubic non détecté)',
         'ascii:$data|hex:$hexDump',
         rawBytes.length,
       );
@@ -280,9 +280,8 @@ class NfcDataSourceImpl implements NfcDataSource {
       try {
         return await _readBambuLabTag();
       } catch (e) {
-        developer.log('⚠️ Échec lecture Bambu Lab, tentative en mode Anycubic: $e');
-        // Si la lecture Bambu Lab échoue, essayer en mode Anycubic
-        // (le tag pourrait être un Anycubic/NTAG même si le mode est sur Bambu)
+        developer.log('❌ Échec lecture Bambu Lab: $e');
+        rethrow;
       }
     }
 

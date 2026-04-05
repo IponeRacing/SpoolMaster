@@ -1139,4 +1139,33 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get writePrusaTagTitle => 'Prusa OpenPrintTagに書き込む';
+
+  @override
+  String get signInAppleNotAvailable => 'このデバイスではAppleでのサインインは利用できません。';
+
+  @override
+  String get signInAppleFailed => 'Appleでのサインインに失敗しました。もう一度お試しください。';
+
+  @override
+  String get signInFailed => 'サインインに失敗しました。もう一度お試しください。';
+
+  @override
+  String get mustContain3Digits => '3桁の数字を含む必要があります';
+
+  @override
+  String get mustBeNumber => '数値である必要があります';
+
+  @override
+  String generatedUidLabel(String uid) {
+    return '生成されたUID: $uid';
+  }
+
+  @override
+  String get experimentalBadge => '実験的';
+
+  @override
+  String get newBadge => '新規';
+
+  @override
+  String get colorHintExamples => '赤、青、黒...';
 }

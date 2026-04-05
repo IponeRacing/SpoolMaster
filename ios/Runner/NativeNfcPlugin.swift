@@ -1,3 +1,4 @@
+import CommonCrypto
 import CoreNFC
 import Flutter
 import UIKit
@@ -667,37 +668,96 @@ extension NativeNfcPlugin: NFCTagReaderSessionDelegate {
         }
     }
 
+    // MARK: - Bambu Lab HKDF Key Derivation
+
+    /// HKDF-Extract: PRK = HMAC-SHA256(salt, ikm)
+    private func hkdfExtract(salt: Data, ikm: Data) -> Data {
+        var hmac = [UInt8](repeating: 0, count: Int(CC_SHA256_DIGEST_LENGTH))
+        salt.withUnsafeBytes { saltPtr in
+            ikm.withUnsafeBytes { ikmPtr in
+                CCHmac(
+                    CCHmacAlgorithm(kCCHmacAlgSHA256),
+                    saltPtr.baseAddress, salt.count,
+                    ikmPtr.baseAddress, ikm.count,
+                    &hmac
+                )
+            }
+        }
+        return Data(hmac)
+    }
+
+    /// HKDF-Expand: OKM = T(1) || T(2) || ... truncated to length
+    private func hkdfExpand(prk: Data, info: Data, length: Int) -> Data {
+        let hashLen = Int(CC_SHA256_DIGEST_LENGTH) // 32
+        let n = (length + hashLen - 1) / hashLen
+        var okm = Data()
+        var t = Data() // T(0) is empty
+
+        for i in 1...n {
+            var input = Data()
+            input.append(t)
+            input.append(info)
+            input.append(UInt8(i))
+
+            var hmac = [UInt8](repeating: 0, count: hashLen)
+            prk.withUnsafeBytes { prkPtr in
+                input.withUnsafeBytes { inputPtr in
+                    CCHmac(
+                        CCHmacAlgorithm(kCCHmacAlgSHA256),
+                        prkPtr.baseAddress, prk.count,
+                        inputPtr.baseAddress, input.count,
+                        &hmac
+                    )
+                }
+            }
+            t = Data(hmac)
+            okm.append(t)
+        }
+        return okm.prefix(length)
+    }
+
+    /// Derive 16 MiFare Classic Key-A values (6 bytes each) from tag UID
+    private func deriveBambuKeys(uid: Data) -> [Data] {
+        let salt = Data([0x9a, 0x75, 0x9c, 0xf2, 0xc4, 0xf7, 0xca, 0xff,
+                         0x22, 0x2c, 0xb9, 0x76, 0x9b, 0x41, 0xbc, 0x96])
+        let info = Data([0x52, 0x46, 0x49, 0x44, 0x2d, 0x41, 0x00]) // "RFID-A\0"
+
+        let prk = hkdfExtract(salt: salt, ikm: uid)
+        let okm = hkdfExpand(prk: prk, info: info, length: 6 * 16) // 96 bytes
+
+        var keys: [Data] = []
+        for i in 0..<16 {
+            let start = i * 6
+            keys.append(okm.subdata(in: start..<(start + 6)))
+        }
+        return keys
+    }
+
     // MARK: - Bambu Lab MiFare Classic Reading
 
     private func readBambuLabTag(mifareTag: NFCMiFareTag, session: NFCTagReaderSession) {
-        // Bambu Lab uses MiFare Classic 1K with specific block structure
-        // Read ALL blocks to enable cloning (including signature)
-        // Default key: FF FF FF FF FF FF
-
+        // Derive HKDF keys from tag UID for genuine Bambu Lab tags
+        let uid = mifareTag.identifier
+        let derivedKeys = deriveBambuKeys(uid: uid)
         let defaultKey = Data([0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF])
-        var blockData: [Int: Data] = [:]
 
-        // Read ALL blocks from MiFare Classic 1K (64 blocks total, 16 sectors)
-        // We need ALL data blocks including Block 0 (UID) for successful cloning
-        // Skip ONLY sector trailers (blocks 3, 7, 11, 15, 19, 23, 27, 31, 35, 39, 43, 47, 51, 55, 59, 63)
+        print("🔑 Bambu Lab: UID = \(uid.map { String(format: "%02x", $0) }.joined(separator: " "))")
+
+        // Build list of blocks to read (skip sector trailers)
         var blocksToRead: [Int] = []
         for sector in 0..<16 {
             for blockInSector in 0..<4 {
-                let blockNum = sector * 4 + blockInSector
-                // Skip sector trailer (every 4th block: 3, 7, 11, 15...)
-                if blockInSector == 3 {
-                    continue
-                }
-                blocksToRead.append(blockNum)
+                if blockInSector == 3 { continue }
+                blocksToRead.append(sector * 4 + blockInSector)
             }
         }
-        // Result: blocks 0,1,2, 4,5,6, 8,9,10, 12,13,14, etc. (48 total blocks)
 
         readBambuBlocks(
             mifareTag: mifareTag,
             blocks: blocksToRead,
-            key: defaultKey,
-            blockData: blockData,
+            derivedKeys: derivedKeys,
+            defaultKey: defaultKey,
+            blockData: [:],
             currentIndex: 0,
             session: session
         )
@@ -706,7 +766,8 @@ extension NativeNfcPlugin: NFCTagReaderSessionDelegate {
     private func readBambuBlocks(
         mifareTag: NFCMiFareTag,
         blocks: [Int],
-        key: Data,
+        derivedKeys: [Data],
+        defaultKey: Data,
         blockData: [Int: Data],
         currentIndex: Int,
         session: NFCTagReaderSession
@@ -729,14 +790,15 @@ extension NativeNfcPlugin: NFCTagReaderSessionDelegate {
         let blockNumber = blocks[currentIndex]
         let sector = blockNumber / 4
 
-        // Authenticate to sector
-        authenticateSector(
+        // Authenticate with HKDF-derived key first, fallback to default
+        authenticateSectorWithFallback(
             mifareTag: mifareTag,
             sector: UInt8(sector),
-            key: key
+            derivedKey: derivedKeys[sector],
+            defaultKey: defaultKey
         ) { success, error in
             if !success {
-                print("❌ Échec authentification secteur \(sector)")
+                print("❌ Échec authentification secteur \(sector) (les deux clés)")
                 session.invalidate(errorMessage: "Échec d'authentification")
                 self.result?(FlutterError(
                     code: "AUTH_ERROR",
@@ -776,11 +838,33 @@ extension NativeNfcPlugin: NFCTagReaderSessionDelegate {
                     self.readBambuBlocks(
                         mifareTag: mifareTag,
                         blocks: blocks,
-                        key: key,
+                        derivedKeys: derivedKeys,
+                        defaultKey: defaultKey,
                         blockData: updatedBlockData,
                         currentIndex: currentIndex + 1,
                         session: session
                     )
+                }
+            }
+        }
+    }
+
+    /// Try HKDF-derived key first, then fallback to default FF key
+    private func authenticateSectorWithFallback(
+        mifareTag: NFCMiFareTag,
+        sector: UInt8,
+        derivedKey: Data,
+        defaultKey: Data,
+        completion: @escaping (Bool, Error?) -> Void
+    ) {
+        authenticateSector(mifareTag: mifareTag, sector: sector, key: derivedKey) { success, _ in
+            if success {
+                completion(true, nil)
+            } else {
+                // Fallback to default key (CUID cards / blank tags)
+                print("🔄 Secteur \(sector): clé HKDF échouée, essai clé par défaut")
+                self.authenticateSector(mifareTag: mifareTag, sector: sector, key: defaultKey) { success2, error2 in
+                    completion(success2, error2)
                 }
             }
         }

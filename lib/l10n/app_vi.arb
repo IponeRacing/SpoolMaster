@@ -414,5 +414,19 @@
   "contactUsSubtitle": "Câu hỏi, đề xuất hoặc vấn đề",
   "nfcTagNotDetected": "Không phát hiện thẻ NFC",
   "nfcTagNotDetectedDesc": "Không tìm thấy thẻ. Thẻ có thể đã hỏng, bị hư hoặc quá xa điện thoại. Hãy đảm bảo đặt phần trên của điện thoại trực tiếp lên thẻ NFC.",
-  "nfcTagIncompatible": "Phát hiện thẻ NFC không tương thích"
+  "nfcTagIncompatible": "Phát hiện thẻ NFC không tương thích",
+  "signInAppleNotAvailable": "Đăng nhập bằng Apple không khả dụng trên thiết bị này.",
+  "signInAppleFailed": "Đăng nhập bằng Apple thất bại. Vui lòng thử lại.",
+  "signInFailed": "Đăng nhập thất bại. Vui lòng thử lại.",
+  "mustContain3Digits": "Phải chứa 3 chữ số",
+  "mustBeNumber": "Phải là một số",
+  "generatedUidLabel": "UID đã tạo: {uid}",
+  "@generatedUidLabel": {
+    "placeholders": {
+      "uid": { "type": "String" }
+    }
+  },
+  "experimentalBadge": "THỬ NGHIỆM",
+  "newBadge": "MỚI",
+  "colorHintExamples": "Đỏ, Xanh dương, Đen..."
 }

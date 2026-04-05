@@ -414,5 +414,19 @@
   "nfcTagNotDetectedDesc": "タグが見つかりません。タグが故障しているか、損傷しているか、電話から離れすぎている可能性があります。iPhoneの上部をNFCタグに直接置いてください。",
   "nfcTagIncompatible": "互換性のないNFCタグが検出されました",
   "nfcTagInfoPrusa": "空白のNXP ICODE SLIX2タグ（ISO 15693）を使用して、Prusa MK4/XLと互換性のあるOpenPrintTagを作成します。",
-  "writePrusaTagTitle": "Prusa OpenPrintTagに書き込む"
+  "writePrusaTagTitle": "Prusa OpenPrintTagに書き込む",
+  "signInAppleNotAvailable": "このデバイスではAppleでのサインインは利用できません。",
+  "signInAppleFailed": "Appleでのサインインに失敗しました。もう一度お試しください。",
+  "signInFailed": "サインインに失敗しました。もう一度お試しください。",
+  "mustContain3Digits": "3桁の数字を含む必要があります",
+  "mustBeNumber": "数値である必要があります",
+  "generatedUidLabel": "生成されたUID: {uid}",
+  "@generatedUidLabel": {
+    "placeholders": {
+      "uid": { "type": "String" }
+    }
+  },
+  "experimentalBadge": "実験的",
+  "newBadge": "新規",
+  "colorHintExamples": "赤、青、黒..."
 }

@@ -414,5 +414,19 @@
   "contactUsSubtitle": "Otázky, návrhy alebo problémy",
   "nfcTagNotDetected": "Nebol zistený žiadny NFC tag",
   "nfcTagNotDetectedDesc": "Nebol nájdený žiadny tag. Tag môže byť mŕtvy, poškodený alebo príliš ďaleko od telefónu. Uistite sa, že horná časť telefónu je umiestnená priamo na NFC tagu.",
-  "nfcTagIncompatible": "Zistený nekompatibilný NFC tag"
+  "nfcTagIncompatible": "Zistený nekompatibilný NFC tag",
+  "signInAppleNotAvailable": "Prihlásenie cez Apple nie je na tomto zariadení k dispozícii.",
+  "signInAppleFailed": "Prihlásenie cez Apple zlyhalo. Skúste to prosím znova.",
+  "signInFailed": "Prihlásenie zlyhalo. Skúste to prosím znova.",
+  "mustContain3Digits": "Musí obsahovať 3 číslice",
+  "mustBeNumber": "Musí byť číslo",
+  "generatedUidLabel": "Vygenerované UID: {uid}",
+  "@generatedUidLabel": {
+    "placeholders": {
+      "uid": { "type": "String" }
+    }
+  },
+  "experimentalBadge": "EXPERIMENTÁLNE",
+  "newBadge": "NOVÉ",
+  "colorHintExamples": "Červená, Modrá, Čierna..."
 }

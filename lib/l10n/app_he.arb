@@ -414,5 +414,19 @@
   "contactUsSubtitle": "שאלות, הצעות או בעיות",
   "nfcTagNotDetected": "לא זוהה תג NFC",
   "nfcTagNotDetectedDesc": "לא נמצא תג. ייתכן שהתג פגום, מת או רחוק מדי מהטלפון. ודא שחלקו העליון של הטלפון מונח ישירות על תג ה-NFC.",
-  "nfcTagIncompatible": "זוהה תג NFC לא תואם"
+  "nfcTagIncompatible": "זוהה תג NFC לא תואם",
+  "signInAppleNotAvailable": "כניסה באמצעות Apple אינה זמינה במכשיר זה.",
+  "signInAppleFailed": "הכניסה באמצעות Apple נכשלה. אנא נסה שוב.",
+  "signInFailed": "הכניסה נכשלה. אנא נסה שוב.",
+  "mustContain3Digits": "חייב להכיל 3 ספרות",
+  "mustBeNumber": "חייב להיות מספר",
+  "generatedUidLabel": "UID שנוצר: {uid}",
+  "@generatedUidLabel": {
+    "placeholders": {
+      "uid": { "type": "String" }
+    }
+  },
+  "experimentalBadge": "ניסיוני",
+  "newBadge": "חדש",
+  "colorHintExamples": "אדום, כחול, שחור..."
 }

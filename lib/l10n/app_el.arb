@@ -414,5 +414,19 @@
   "contactUsSubtitle": "Ερωτήσεις, προτάσεις ή προβλήματα",
   "nfcTagNotDetected": "Δεν εντοπίστηκε ετικέτα NFC",
   "nfcTagNotDetectedDesc": "Δεν βρέθηκε ετικέτα. Η ετικέτα μπορεί να είναι νεκρή, κατεστραμμένη ή πολύ μακριά από το τηλέφωνο. Βεβαιωθείτε ότι το πάνω μέρος του τηλεφώνου σας βρίσκεται απευθείας πάνω στην ετικέτα NFC.",
-  "nfcTagIncompatible": "Εντοπίστηκε μη συμβατή ετικέτα NFC"
+  "nfcTagIncompatible": "Εντοπίστηκε μη συμβατή ετικέτα NFC",
+  "signInAppleNotAvailable": "Η σύνδεση με Apple δεν είναι διαθέσιμη σε αυτή τη συσκευή.",
+  "signInAppleFailed": "Η σύνδεση με Apple απέτυχε. Παρακαλώ δοκιμάστε ξανά.",
+  "signInFailed": "Η σύνδεση απέτυχε. Παρακαλώ δοκιμάστε ξανά.",
+  "mustContain3Digits": "Πρέπει να περιέχει 3 ψηφία",
+  "mustBeNumber": "Πρέπει να είναι αριθμός",
+  "generatedUidLabel": "Δημιουργημένο UID: {uid}",
+  "@generatedUidLabel": {
+    "placeholders": {
+      "uid": { "type": "String" }
+    }
+  },
+  "experimentalBadge": "ΠΕΙΡΑΜΑΤΙΚΟ",
+  "newBadge": "ΝΕΟ",
+  "colorHintExamples": "Κόκκινο, Μπλε, Μαύρο..."
 }

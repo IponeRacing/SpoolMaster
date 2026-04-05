@@ -4,7 +4,8 @@ import 'package:http/http.dart' as http;
 import 'package:nfc_filament/core/api/api_config.dart';
 import 'package:nfc_filament/core/services/auth_service.dart';
 import 'package:nfc_filament/core/services/user_preferences_service.dart';
-import 'package:nfc_filament/main.dart';
+import 'package:nfc_filament/core/models/spool_inventory_item.dart';
+import 'package:nfc_filament/core/services/spool_storage_service.dart';
 
 /// Service de synchronisation des données avec le backend
 class SyncService {

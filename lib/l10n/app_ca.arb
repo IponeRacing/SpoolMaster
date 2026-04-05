@@ -414,5 +414,19 @@
   "contactUsSubtitle": "Preguntes, suggeriments o problemes",
   "nfcTagNotDetected": "No s'ha detectat cap etiqueta NFC",
   "nfcTagNotDetectedDesc": "No s'ha trobat cap etiqueta. L'etiqueta pot estar morta, danyada o massa lluny del telèfon. Assegureu-vos que la part superior del telèfon estigui directament sobre l'etiqueta NFC.",
-  "nfcTagIncompatible": "S'ha detectat una etiqueta NFC incompatible"
+  "nfcTagIncompatible": "S'ha detectat una etiqueta NFC incompatible",
+  "signInAppleNotAvailable": "L'inici de sessió amb Apple no està disponible en aquest dispositiu.",
+  "signInAppleFailed": "L'inici de sessió amb Apple ha fallat. Si us plau, torneu-ho a provar.",
+  "signInFailed": "L'inici de sessió ha fallat. Si us plau, torneu-ho a provar.",
+  "mustContain3Digits": "Ha de contenir 3 dígits",
+  "mustBeNumber": "Ha de ser un número",
+  "generatedUidLabel": "UID generat: {uid}",
+  "@generatedUidLabel": {
+    "placeholders": {
+      "uid": { "type": "String" }
+    }
+  },
+  "experimentalBadge": "EXPERIMENTAL",
+  "newBadge": "NOU",
+  "colorHintExamples": "Vermell, Blau, Negre..."
 }

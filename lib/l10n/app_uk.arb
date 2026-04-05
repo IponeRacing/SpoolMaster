@@ -414,5 +414,19 @@
   "contactUsSubtitle": "Питання, пропозиції або проблеми",
   "nfcTagNotDetected": "NFC мітку не виявлено",
   "nfcTagNotDetectedDesc": "Мітку не знайдено. Мітка може бути несправною, пошкодженою або занадто далеко від телефону. Переконайтеся, що верхня частина телефону розміщена безпосередньо на NFC мітці.",
-  "nfcTagIncompatible": "Виявлено несумісну NFC мітку"
+  "nfcTagIncompatible": "Виявлено несумісну NFC мітку",
+  "signInAppleNotAvailable": "Вхід через Apple недоступний на цьому пристрої.",
+  "signInAppleFailed": "Не вдалося увійти через Apple. Будь ласка, спробуйте ще раз.",
+  "signInFailed": "Не вдалося увійти. Будь ласка, спробуйте ще раз.",
+  "mustContain3Digits": "Має містити 3 цифри",
+  "mustBeNumber": "Має бути числом",
+  "generatedUidLabel": "Згенерований UID: {uid}",
+  "@generatedUidLabel": {
+    "placeholders": {
+      "uid": { "type": "String" }
+    }
+  },
+  "experimentalBadge": "ЕКСПЕРИМЕНТАЛЬНЕ",
+  "newBadge": "НОВЕ",
+  "colorHintExamples": "Червоний, Синій, Чорний..."
 }

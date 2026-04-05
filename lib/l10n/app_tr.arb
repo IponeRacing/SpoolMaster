@@ -414,5 +414,19 @@
   "contactUsSubtitle": "Sorular, öneriler veya sorunlar",
   "nfcTagNotDetected": "NFC etiketi algılanmadı",
   "nfcTagNotDetectedDesc": "Etiket bulunamadı. Etiket bozuk, hasarlı veya telefondan çok uzakta olabilir. Telefonunuzun üst kısmının doğrudan NFC etiketinin üzerine yerleştirildiğinden emin olun.",
-  "nfcTagIncompatible": "Uyumsuz NFC etiketi algılandı"
+  "nfcTagIncompatible": "Uyumsuz NFC etiketi algılandı",
+  "signInAppleNotAvailable": "Bu cihazda Apple ile giriş yapılamıyor.",
+  "signInAppleFailed": "Apple ile giriş başarısız oldu. Lütfen tekrar deneyin.",
+  "signInFailed": "Giriş başarısız oldu. Lütfen tekrar deneyin.",
+  "mustContain3Digits": "3 rakam içermelidir",
+  "mustBeNumber": "Bir sayı olmalıdır",
+  "generatedUidLabel": "Oluşturulan UID: {uid}",
+  "@generatedUidLabel": {
+    "placeholders": {
+      "uid": { "type": "String" }
+    }
+  },
+  "experimentalBadge": "DENEYSEL",
+  "newBadge": "YENİ",
+  "colorHintExamples": "Kırmızı, Mavi, Siyah..."
 }

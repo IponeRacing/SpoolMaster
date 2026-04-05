@@ -39,7 +39,16 @@ mixin _$BobbinData {
   double? get price => throw _privateConstructorUsedError; // Prix d'achat (CHF)
   double? get remainingWeight =>
       throw _privateConstructorUsedError; // Poids restant (grammes)
-  String? get brand => throw _privateConstructorUsedError;
+  String? get brand => throw _privateConstructorUsedError; // Marque
+  String? get detailedType =>
+      throw _privateConstructorUsedError; // Type détaillé Bambu Lab (ex: "PLA Matte")
+  int? get dryingTemp =>
+      throw _privateConstructorUsedError; // Température séchage (°C)
+  int? get dryingTime =>
+      throw _privateConstructorUsedError; // Durée séchage (heures)
+  String? get materialVariantId =>
+      throw _privateConstructorUsedError; // Bambu Lab variant ID (ex: "A50-K0")
+  String? get materialId => throw _privateConstructorUsedError;
 
   /// Create a copy of BobbinData
   /// with the given fields replaced by the non-null parameter values.
@@ -71,6 +80,11 @@ abstract class $BobbinDataCopyWith<$Res> {
     double? price,
     double? remainingWeight,
     String? brand,
+    String? detailedType,
+    int? dryingTemp,
+    int? dryingTime,
+    String? materialVariantId,
+    String? materialId,
   });
 }
 
@@ -104,6 +118,11 @@ class _$BobbinDataCopyWithImpl<$Res, $Val extends BobbinData>
     Object? price = freezed,
     Object? remainingWeight = freezed,
     Object? brand = freezed,
+    Object? detailedType = freezed,
+    Object? dryingTemp = freezed,
+    Object? dryingTime = freezed,
+    Object? materialVariantId = freezed,
+    Object? materialId = freezed,
   }) {
     return _then(
       _value.copyWith(
@@ -167,6 +186,26 @@ class _$BobbinDataCopyWithImpl<$Res, $Val extends BobbinData>
                 ? _value.brand
                 : brand // ignore: cast_nullable_to_non_nullable
                       as String?,
+            detailedType: freezed == detailedType
+                ? _value.detailedType
+                : detailedType // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            dryingTemp: freezed == dryingTemp
+                ? _value.dryingTemp
+                : dryingTemp // ignore: cast_nullable_to_non_nullable
+                      as int?,
+            dryingTime: freezed == dryingTime
+                ? _value.dryingTime
+                : dryingTime // ignore: cast_nullable_to_non_nullable
+                      as int?,
+            materialVariantId: freezed == materialVariantId
+                ? _value.materialVariantId
+                : materialVariantId // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            materialId: freezed == materialId
+                ? _value.materialId
+                : materialId // ignore: cast_nullable_to_non_nullable
+                      as String?,
           )
           as $Val,
     );
@@ -198,6 +237,11 @@ abstract class _$$BobbinDataImplCopyWith<$Res>
     double? price,
     double? remainingWeight,
     String? brand,
+    String? detailedType,
+    int? dryingTemp,
+    int? dryingTime,
+    String? materialVariantId,
+    String? materialId,
   });
 }
 
@@ -230,6 +274,11 @@ class __$$BobbinDataImplCopyWithImpl<$Res>
     Object? price = freezed,
     Object? remainingWeight = freezed,
     Object? brand = freezed,
+    Object? detailedType = freezed,
+    Object? dryingTemp = freezed,
+    Object? dryingTime = freezed,
+    Object? materialVariantId = freezed,
+    Object? materialId = freezed,
   }) {
     return _then(
       _$BobbinDataImpl(
@@ -293,6 +342,26 @@ class __$$BobbinDataImplCopyWithImpl<$Res>
             ? _value.brand
             : brand // ignore: cast_nullable_to_non_nullable
                   as String?,
+        detailedType: freezed == detailedType
+            ? _value.detailedType
+            : detailedType // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        dryingTemp: freezed == dryingTemp
+            ? _value.dryingTemp
+            : dryingTemp // ignore: cast_nullable_to_non_nullable
+                  as int?,
+        dryingTime: freezed == dryingTime
+            ? _value.dryingTime
+            : dryingTime // ignore: cast_nullable_to_non_nullable
+                  as int?,
+        materialVariantId: freezed == materialVariantId
+            ? _value.materialVariantId
+            : materialVariantId // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        materialId: freezed == materialId
+            ? _value.materialId
+            : materialId // ignore: cast_nullable_to_non_nullable
+                  as String?,
       ),
     );
   }
@@ -317,6 +386,11 @@ class _$BobbinDataImpl implements _BobbinData {
     this.price,
     this.remainingWeight,
     this.brand,
+    this.detailedType,
+    this.dryingTemp,
+    this.dryingTime,
+    this.materialVariantId,
+    this.materialId,
   });
 
   @override
@@ -358,10 +432,25 @@ class _$BobbinDataImpl implements _BobbinData {
   // Poids restant (grammes)
   @override
   final String? brand;
+  // Marque
+  @override
+  final String? detailedType;
+  // Type détaillé Bambu Lab (ex: "PLA Matte")
+  @override
+  final int? dryingTemp;
+  // Température séchage (°C)
+  @override
+  final int? dryingTime;
+  // Durée séchage (heures)
+  @override
+  final String? materialVariantId;
+  // Bambu Lab variant ID (ex: "A50-K0")
+  @override
+  final String? materialId;
 
   @override
   String toString() {
-    return 'BobbinData(filamentType: $filamentType, color: $color, weightGrams: $weightGrams, manufactureDate: $manufactureDate, batchNumber: $batchNumber, colorRgb: $colorRgb, extruderTempMin: $extruderTempMin, extruderTempMax: $extruderTempMax, bedTempMin: $bedTempMin, bedTempMax: $bedTempMax, diameter: $diameter, spoolLength: $spoolLength, price: $price, remainingWeight: $remainingWeight, brand: $brand)';
+    return 'BobbinData(filamentType: $filamentType, color: $color, weightGrams: $weightGrams, manufactureDate: $manufactureDate, batchNumber: $batchNumber, colorRgb: $colorRgb, extruderTempMin: $extruderTempMin, extruderTempMax: $extruderTempMax, bedTempMin: $bedTempMin, bedTempMax: $bedTempMax, diameter: $diameter, spoolLength: $spoolLength, price: $price, remainingWeight: $remainingWeight, brand: $brand, detailedType: $detailedType, dryingTemp: $dryingTemp, dryingTime: $dryingTime, materialVariantId: $materialVariantId, materialId: $materialId)';
   }
 
   @override
@@ -395,11 +484,21 @@ class _$BobbinDataImpl implements _BobbinData {
             (identical(other.price, price) || other.price == price) &&
             (identical(other.remainingWeight, remainingWeight) ||
                 other.remainingWeight == remainingWeight) &&
-            (identical(other.brand, brand) || other.brand == brand));
+            (identical(other.brand, brand) || other.brand == brand) &&
+            (identical(other.detailedType, detailedType) ||
+                other.detailedType == detailedType) &&
+            (identical(other.dryingTemp, dryingTemp) ||
+                other.dryingTemp == dryingTemp) &&
+            (identical(other.dryingTime, dryingTime) ||
+                other.dryingTime == dryingTime) &&
+            (identical(other.materialVariantId, materialVariantId) ||
+                other.materialVariantId == materialVariantId) &&
+            (identical(other.materialId, materialId) ||
+                other.materialId == materialId));
   }
 
   @override
-  int get hashCode => Object.hash(
+  int get hashCode => Object.hashAll([
     runtimeType,
     filamentType,
     color,
@@ -416,7 +515,12 @@ class _$BobbinDataImpl implements _BobbinData {
     price,
     remainingWeight,
     brand,
-  );
+    detailedType,
+    dryingTemp,
+    dryingTime,
+    materialVariantId,
+    materialId,
+  ]);
 
   /// Create a copy of BobbinData
   /// with the given fields replaced by the non-null parameter values.
@@ -444,6 +548,11 @@ abstract class _BobbinData implements BobbinData {
     final double? price,
     final double? remainingWeight,
     final String? brand,
+    final String? detailedType,
+    final int? dryingTemp,
+    final int? dryingTime,
+    final String? materialVariantId,
+    final String? materialId,
   }) = _$BobbinDataImpl;
 
   @override
@@ -475,7 +584,17 @@ abstract class _BobbinData implements BobbinData {
   @override
   double? get remainingWeight; // Poids restant (grammes)
   @override
-  String? get brand;
+  String? get brand; // Marque
+  @override
+  String? get detailedType; // Type détaillé Bambu Lab (ex: "PLA Matte")
+  @override
+  int? get dryingTemp; // Température séchage (°C)
+  @override
+  int? get dryingTime; // Durée séchage (heures)
+  @override
+  String? get materialVariantId; // Bambu Lab variant ID (ex: "A50-K0")
+  @override
+  String? get materialId;
 
   /// Create a copy of BobbinData
   /// with the given fields replaced by the non-null parameter values.

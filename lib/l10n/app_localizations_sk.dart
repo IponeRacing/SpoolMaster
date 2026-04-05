@@ -1152,4 +1152,35 @@ class AppLocalizationsSk extends AppLocalizations {
 
   @override
   String get writePrusaTagTitle => 'Zapísať Prusa OpenPrintTag';
+
+  @override
+  String get signInAppleNotAvailable =>
+      'Prihlásenie cez Apple nie je na tomto zariadení k dispozícii.';
+
+  @override
+  String get signInAppleFailed =>
+      'Prihlásenie cez Apple zlyhalo. Skúste to prosím znova.';
+
+  @override
+  String get signInFailed => 'Prihlásenie zlyhalo. Skúste to prosím znova.';
+
+  @override
+  String get mustContain3Digits => 'Musí obsahovať 3 číslice';
+
+  @override
+  String get mustBeNumber => 'Musí byť číslo';
+
+  @override
+  String generatedUidLabel(String uid) {
+    return 'Vygenerované UID: $uid';
+  }
+
+  @override
+  String get experimentalBadge => 'EXPERIMENTÁLNE';
+
+  @override
+  String get newBadge => 'NOVÉ';
+
+  @override
+  String get colorHintExamples => 'Červená, Modrá, Čierna...';
 }

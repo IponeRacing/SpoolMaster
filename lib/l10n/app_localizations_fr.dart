@@ -1157,6 +1157,37 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get writePrusaTagTitle => 'Écrire OpenPrintTag Prusa';
+
+  @override
+  String get signInAppleNotAvailable =>
+      'La connexion avec Apple n\'est pas disponible sur cet appareil.';
+
+  @override
+  String get signInAppleFailed =>
+      'La connexion avec Apple a échoué. Veuillez réessayer.';
+
+  @override
+  String get signInFailed => 'La connexion a échoué. Veuillez réessayer.';
+
+  @override
+  String get mustContain3Digits => 'Doit contenir 3 chiffres';
+
+  @override
+  String get mustBeNumber => 'Doit être un nombre';
+
+  @override
+  String generatedUidLabel(String uid) {
+    return 'UID généré : $uid';
+  }
+
+  @override
+  String get experimentalBadge => 'EXPÉRIMENTAL';
+
+  @override
+  String get newBadge => 'NOUVEAU';
+
+  @override
+  String get colorHintExamples => 'Rouge, Bleu, Noir...';
 }
 
 /// The translations for French, as used in Canada (`fr_CA`).
@@ -2313,4 +2344,35 @@ class AppLocalizationsFrCa extends AppLocalizationsFr {
 
   @override
   String get writePrusaTagTitle => 'Écrire Prusa OpenPrintTag';
+
+  @override
+  String get signInAppleNotAvailable =>
+      'La connexion avec Apple n\'est pas disponible sur cet appareil.';
+
+  @override
+  String get signInAppleFailed =>
+      'La connexion avec Apple a échoué. Veuillez réessayer.';
+
+  @override
+  String get signInFailed => 'La connexion a échoué. Veuillez réessayer.';
+
+  @override
+  String get mustContain3Digits => 'Doit contenir 3 chiffres';
+
+  @override
+  String get mustBeNumber => 'Doit être un nombre';
+
+  @override
+  String generatedUidLabel(String uid) {
+    return 'UID généré : $uid';
+  }
+
+  @override
+  String get experimentalBadge => 'EXPÉRIMENTAL';
+
+  @override
+  String get newBadge => 'NOUVEAU';
+
+  @override
+  String get colorHintExamples => 'Rouge, Bleu, Noir...';
 }

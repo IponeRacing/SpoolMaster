@@ -414,5 +414,19 @@
   "nfcTagNotDetectedDesc": "Nenalezena žádná značka. Značka může být mrtvá, poškozená nebo příliš daleko od telefonu. Umístěte horní část iPhonu přímo na NFC značku.",
   "nfcTagIncompatible": "Detekována nekompatibilní NFC značka",
   "nfcTagInfoPrusa": "Použijte prázdnou značku NXP ICODE SLIX2 (ISO 15693) k vytvoření značek kompatibilních s OpenPrintTag pro Prusa MK4/XL.",
-  "writePrusaTagTitle": "Zapsat Prusa OpenPrintTag"
+  "writePrusaTagTitle": "Zapsat Prusa OpenPrintTag",
+  "signInAppleNotAvailable": "Přihlášení přes Apple není na tomto zařízení k dispozici.",
+  "signInAppleFailed": "Přihlášení přes Apple se nezdařilo. Zkuste to prosím znovu.",
+  "signInFailed": "Přihlášení se nezdařilo. Zkuste to prosím znovu.",
+  "mustContain3Digits": "Musí obsahovat 3 číslice",
+  "mustBeNumber": "Musí být číslo",
+  "generatedUidLabel": "Vygenerované UID: {uid}",
+  "@generatedUidLabel": {
+    "placeholders": {
+      "uid": { "type": "String" }
+    }
+  },
+  "experimentalBadge": "EXPERIMENTÁLNÍ",
+  "newBadge": "NOVÉ",
+  "colorHintExamples": "Červená, Modrá, Černá..."
 }

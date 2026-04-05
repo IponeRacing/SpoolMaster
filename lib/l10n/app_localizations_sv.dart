@@ -1153,4 +1153,35 @@ class AppLocalizationsSv extends AppLocalizations {
 
   @override
   String get writePrusaTagTitle => 'Skriv Prusa OpenPrintTag';
+
+  @override
+  String get signInAppleNotAvailable =>
+      'Inloggning med Apple är inte tillgänglig på denna enhet.';
+
+  @override
+  String get signInAppleFailed =>
+      'Inloggning med Apple misslyckades. Försök igen.';
+
+  @override
+  String get signInFailed => 'Inloggning misslyckades. Försök igen.';
+
+  @override
+  String get mustContain3Digits => 'Måste innehålla 3 siffror';
+
+  @override
+  String get mustBeNumber => 'Måste vara ett nummer';
+
+  @override
+  String generatedUidLabel(String uid) {
+    return 'Genererat UID: $uid';
+  }
+
+  @override
+  String get experimentalBadge => 'EXPERIMENTELL';
+
+  @override
+  String get newBadge => 'NY';
+
+  @override
+  String get colorHintExamples => 'Röd, Blå, Svart...';
 }

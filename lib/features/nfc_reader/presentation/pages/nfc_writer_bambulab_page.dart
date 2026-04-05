@@ -5,6 +5,7 @@ import 'package:nfc_filament/features/nfc_reader/domain/entities/bobbin_data.dar
 import 'package:nfc_filament/features/nfc_reader/presentation/bloc/nfc_reader_bloc.dart';
 import 'package:nfc_filament/features/nfc_reader/presentation/bloc/nfc_reader_event.dart';
 import 'package:nfc_filament/features/nfc_reader/presentation/bloc/nfc_reader_state.dart';
+import 'package:nfc_filament/l10n/app_localizations.dart';
 
 class NfcWriterBambuLabPage extends StatefulWidget {
   const NfcWriterBambuLabPage({super.key});
@@ -63,16 +64,17 @@ class _NfcWriterBambuLabPageState extends State<NfcWriterBambuLabPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return BlocProvider(
       create: (_) => getIt<NfcReaderBloc>(),
       child: Scaffold(
-        appBar: AppBar(title: const Text('Écrire un tag Bambu Lab')),
+        appBar: AppBar(title: Text(l10n.writeBambuLabTagTitle)),
         body: BlocConsumer<NfcReaderBloc, NfcReaderState>(
           listener: (context, state) {
             if (state is BobbinDataWriteSuccess) {
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('Tag Bambu Lab écrit avec succès!'),
+                SnackBar(
+                  content: Text(l10n.bambuLabTagWriteSuccess),
                   backgroundColor: Colors.green,
                 ),
               );
@@ -95,12 +97,12 @@ class _NfcWriterBambuLabPageState extends State<NfcWriterBambuLabPage> {
                     const CircularProgressIndicator(),
                     const SizedBox(height: 16),
                     Text(
-                      'Approchez le tag NFC...',
+                      l10n.approachNfcTagMessage,
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      'Format Bambu Lab (MiFare 13.56 MHz)',
+                      l10n.bambuLabFormatMiFare,
                       style: Theme.of(context).textTheme.bodySmall,
                     ),
                   ],
@@ -131,7 +133,7 @@ class _NfcWriterBambuLabPageState extends State<NfcWriterBambuLabPage> {
                                 ),
                                 const SizedBox(width: 8),
                                 Text(
-                                  'Format Bambu Lab',
+                                  l10n.bambuLabFormat,
                                   style: Theme.of(context).textTheme.titleMedium
                                       ?.copyWith(
                                         color: Colors.blue.shade900,
@@ -142,12 +144,12 @@ class _NfcWriterBambuLabPageState extends State<NfcWriterBambuLabPage> {
                             ),
                             const SizedBox(height: 8),
                             Text(
-                              'Ce format utilise les codes matériaux Bambu Lab et stocke les données dans un format compatible avec l\'AMS.',
+                              l10n.bambuLabFormatInfo,
                               style: TextStyle(color: Colors.blue.shade900),
                             ),
                             const SizedBox(height: 8),
                             Text(
-                              'UID généré: ${_generateUID()}',
+                              l10n.generatedUidLabel(_generateUID()),
                               style: Theme.of(context).textTheme.bodySmall
                                   ?.copyWith(
                                     color: Colors.blue.shade700,
@@ -163,9 +165,9 @@ class _NfcWriterBambuLabPageState extends State<NfcWriterBambuLabPage> {
                     // Brand
                     TextFormField(
                       initialValue: _brand,
-                      decoration: const InputDecoration(
-                        labelText: 'Marque',
-                        border: OutlineInputBorder(),
+                      decoration: InputDecoration(
+                        labelText: l10n.brandLabel,
+                        border: const OutlineInputBorder(),
                       ),
                       onChanged: (value) {
                         setState(() {
@@ -178,9 +180,9 @@ class _NfcWriterBambuLabPageState extends State<NfcWriterBambuLabPage> {
                     // Material dropdown
                     DropdownButtonFormField<String>(
                       value: _selectedMaterial,
-                      decoration: const InputDecoration(
-                        labelText: 'Type de matériau',
-                        border: OutlineInputBorder(),
+                      decoration: InputDecoration(
+                        labelText: l10n.materialTypeLabel,
+                        border: const OutlineInputBorder(),
                       ),
                       items: _materials.keys.map((String material) {
                         return DropdownMenuItem<String>(
@@ -199,9 +201,9 @@ class _NfcWriterBambuLabPageState extends State<NfcWriterBambuLabPage> {
                     // Color dropdown
                     DropdownButtonFormField<String>(
                       value: _selectedColor,
-                      decoration: const InputDecoration(
-                        labelText: 'Couleur',
-                        border: OutlineInputBorder(),
+                      decoration: InputDecoration(
+                        labelText: l10n.color,
+                        border: const OutlineInputBorder(),
                       ),
                       items: _colors.keys.map((String color) {
                         return DropdownMenuItem<String>(
@@ -239,21 +241,21 @@ class _NfcWriterBambuLabPageState extends State<NfcWriterBambuLabPage> {
                     // Serial number
                     TextFormField(
                       initialValue: _serialNumber,
-                      decoration: const InputDecoration(
-                        labelText: 'Numéro de série (3 chiffres)',
-                        border: OutlineInputBorder(),
+                      decoration: InputDecoration(
+                        labelText: l10n.serialNumber3Digits,
+                        border: const OutlineInputBorder(),
                       ),
                       keyboardType: TextInputType.number,
                       maxLength: 3,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Requis';
+                          return l10n.required;
                         }
                         if (value.length != 3) {
-                          return 'Doit contenir 3 chiffres';
+                          return l10n.mustContain3Digits;
                         }
                         if (int.tryParse(value) == null) {
-                          return 'Doit être un nombre';
+                          return l10n.mustBeNumber;
                         }
                         return null;
                       },
@@ -268,19 +270,19 @@ class _NfcWriterBambuLabPageState extends State<NfcWriterBambuLabPage> {
                     // Weight
                     DropdownButtonFormField<double>(
                       value: _weight,
-                      decoration: const InputDecoration(
-                        labelText: 'Poids',
-                        border: OutlineInputBorder(),
+                      decoration: InputDecoration(
+                        labelText: l10n.weight,
+                        border: const OutlineInputBorder(),
                       ),
-                      items: const [
-                        DropdownMenuItem(value: 250, child: Text('250g')),
-                        DropdownMenuItem(value: 500, child: Text('500g')),
+                      items: [
+                        DropdownMenuItem(value: 250, child: Text(l10n.weight250g)),
+                        DropdownMenuItem(value: 500, child: Text(l10n.weight500g)),
                         DropdownMenuItem(
                           value: 1000,
-                          child: Text('1000g (standard)'),
+                          child: Text(l10n.weight1000gStandard),
                         ),
-                        DropdownMenuItem(value: 2000, child: Text('2000g')),
-                        DropdownMenuItem(value: 3000, child: Text('3000g')),
+                        DropdownMenuItem(value: 2000, child: Text(l10n.weight2000g)),
+                        DropdownMenuItem(value: 3000, child: Text(l10n.weight3000g)),
                       ],
                       onChanged: (double? newValue) {
                         setState(() {
@@ -312,15 +314,14 @@ class _NfcWriterBambuLabPageState extends State<NfcWriterBambuLabPage> {
                         backgroundColor: Colors.green.shade700,
                       ),
                       icon: const Icon(Icons.nfc),
-                      label: const Text(
-                        'Écrire le tag Bambu Lab',
-                        style: TextStyle(fontSize: 18),
+                      label: Text(
+                        l10n.writeBambuLabTagButton,
+                        style: const TextStyle(fontSize: 18),
                       ),
                     ),
                     const SizedBox(height: 16),
                     Text(
-                      'Note: Les tags Bambu Lab originaux utilisent un chiffrement RSA. '
-                      'Ce mode écrit les données dans un format simplifié compatible.',
+                      l10n.bambuLabRsaNote,
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
                         color: Colors.grey.shade600,
                         fontStyle: FontStyle.italic,

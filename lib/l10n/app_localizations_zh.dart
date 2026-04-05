@@ -1130,6 +1130,35 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get writePrusaTagTitle => '写入Prusa OpenPrintTag';
+
+  @override
+  String get signInAppleNotAvailable => '此设备不支持通过Apple登录。';
+
+  @override
+  String get signInAppleFailed => '通过Apple登录失败。请重试。';
+
+  @override
+  String get signInFailed => '登录失败。请重试。';
+
+  @override
+  String get mustContain3Digits => '必须包含3位数字';
+
+  @override
+  String get mustBeNumber => '必须是数字';
+
+  @override
+  String generatedUidLabel(String uid) {
+    return '生成的UID：$uid';
+  }
+
+  @override
+  String get experimentalBadge => '实验性';
+
+  @override
+  String get newBadge => '新';
+
+  @override
+  String get colorHintExamples => '红色、蓝色、黑色...';
 }
 
 /// The translations for Chinese, as used in Taiwan (`zh_TW`).
@@ -2258,4 +2287,33 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String get writePrusaTagTitle => '寫入Prusa OpenPrintTag';
+
+  @override
+  String get signInAppleNotAvailable => '此裝置不支援透過Apple登入。';
+
+  @override
+  String get signInAppleFailed => '透過Apple登入失敗。請重試。';
+
+  @override
+  String get signInFailed => '登入失敗。請重試。';
+
+  @override
+  String get mustContain3Digits => '必須包含3位數字';
+
+  @override
+  String get mustBeNumber => '必須是數字';
+
+  @override
+  String generatedUidLabel(String uid) {
+    return '產生的UID：$uid';
+  }
+
+  @override
+  String get experimentalBadge => '實驗性';
+
+  @override
+  String get newBadge => '新';
+
+  @override
+  String get colorHintExamples => '紅色、藍色、黑色...';
 }

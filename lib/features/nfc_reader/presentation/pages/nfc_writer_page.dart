@@ -535,10 +535,10 @@ class _NfcWriterPageState extends State<NfcWriterPage> {
                         labelText: AppLocalizations.of(context)!.weight,
                         border: const OutlineInputBorder(),
                       ),
-                      items: const [
-                        DropdownMenuItem(value: 250, child: Text('250g')),
-                        DropdownMenuItem(value: 500, child: Text('500g')),
-                        DropdownMenuItem(value: 1000, child: Text('1000g')),
+                      items: [
+                        DropdownMenuItem(value: 250, child: Text(AppLocalizations.of(context)!.weight250g)),
+                        DropdownMenuItem(value: 500, child: Text(AppLocalizations.of(context)!.weight500g)),
+                        DropdownMenuItem(value: 1000, child: Text(AppLocalizations.of(context)!.weight1000g)),
                       ],
                       onChanged: (double? newValue) {
                         setState(() {

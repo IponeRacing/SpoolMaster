@@ -414,5 +414,19 @@
   "contactUsSubtitle": "Kérdések, javaslatok vagy problémák",
   "nfcTagNotDetected": "Nem található NFC címke",
   "nfcTagNotDetectedDesc": "Nem található címke. A címke halott, sérült vagy túl messze lehet a telefontól. Győződjön meg arról, hogy a telefon teteje közvetlenül az NFC címkén van.",
-  "nfcTagIncompatible": "Nem kompatibilis NFC címke észlelve"
+  "nfcTagIncompatible": "Nem kompatibilis NFC címke észlelve",
+  "signInAppleNotAvailable": "Az Apple-fiókkal való bejelentkezés nem érhető el ezen az eszközön.",
+  "signInAppleFailed": "Az Apple-fiókkal való bejelentkezés sikertelen. Kérjük, próbálja újra.",
+  "signInFailed": "A bejelentkezés sikertelen. Kérjük, próbálja újra.",
+  "mustContain3Digits": "3 számjegyet kell tartalmaznia",
+  "mustBeNumber": "Számnak kell lennie",
+  "generatedUidLabel": "Generált UID: {uid}",
+  "@generatedUidLabel": {
+    "placeholders": {
+      "uid": { "type": "String" }
+    }
+  },
+  "experimentalBadge": "KÍSÉRLETI",
+  "newBadge": "ÚJ",
+  "colorHintExamples": "Piros, Kék, Fekete..."
 }

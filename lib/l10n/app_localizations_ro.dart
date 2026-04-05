@@ -1153,4 +1153,36 @@ class AppLocalizationsRo extends AppLocalizations {
 
   @override
   String get writePrusaTagTitle => 'Scrie OpenPrintTag Prusa';
+
+  @override
+  String get signInAppleNotAvailable =>
+      'Conectarea cu Apple nu este disponibilă pe acest dispozitiv.';
+
+  @override
+  String get signInAppleFailed =>
+      'Conectarea cu Apple a eșuat. Vă rugăm să încercați din nou.';
+
+  @override
+  String get signInFailed =>
+      'Conectarea a eșuat. Vă rugăm să încercați din nou.';
+
+  @override
+  String get mustContain3Digits => 'Trebuie să conțină 3 cifre';
+
+  @override
+  String get mustBeNumber => 'Trebuie să fie un număr';
+
+  @override
+  String generatedUidLabel(String uid) {
+    return 'UID generat: $uid';
+  }
+
+  @override
+  String get experimentalBadge => 'EXPERIMENTAL';
+
+  @override
+  String get newBadge => 'NOU';
+
+  @override
+  String get colorHintExamples => 'Roșu, Albastru, Negru...';
 }

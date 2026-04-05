@@ -414,5 +414,19 @@
   "contactUsSubtitle": "คำถาม ข้อเสนอแนะ หรือปัญหา",
   "nfcTagNotDetected": "ไม่พบแท็ก NFC",
   "nfcTagNotDetectedDesc": "ไม่พบแท็ก แท็กอาจเสีย เสียหาย หรืออยู่ไกลจากโทรศัพท์เกินไป ตรวจสอบให้แน่ใจว่าส่วนบนของโทรศัพท์วางอยู่บนแท็ก NFC โดยตรง",
-  "nfcTagIncompatible": "ตรวจพบแท็ก NFC ที่ไม่รองรับ"
+  "nfcTagIncompatible": "ตรวจพบแท็ก NFC ที่ไม่รองรับ",
+  "signInAppleNotAvailable": "การลงชื่อเข้าใช้ด้วย Apple ไม่พร้อมใช้งานบนอุปกรณ์นี้",
+  "signInAppleFailed": "การลงชื่อเข้าใช้ด้วย Apple ล้มเหลว กรุณาลองอีกครั้ง",
+  "signInFailed": "การลงชื่อเข้าใช้ล้มเหลว กรุณาลองอีกครั้ง",
+  "mustContain3Digits": "ต้องมี 3 หลัก",
+  "mustBeNumber": "ต้องเป็นตัวเลข",
+  "generatedUidLabel": "UID ที่สร้างขึ้น: {uid}",
+  "@generatedUidLabel": {
+    "placeholders": {
+      "uid": { "type": "String" }
+    }
+  },
+  "experimentalBadge": "ทดลอง",
+  "newBadge": "ใหม่",
+  "colorHintExamples": "แดง, น้ำเงิน, ดำ..."
 }

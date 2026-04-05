@@ -9,7 +9,8 @@ import 'package:nfc_filament/features/nfc_reader/presentation/bloc/nfc_reader_bl
 import 'package:nfc_filament/features/nfc_reader/presentation/bloc/nfc_reader_event.dart';
 import 'package:nfc_filament/features/nfc_reader/presentation/bloc/nfc_reader_state.dart';
 import 'package:nfc_filament/l10n/app_localizations.dart';
-import 'package:nfc_filament/main.dart';
+import 'package:nfc_filament/core/models/spool_inventory_item.dart';
+import 'package:nfc_filament/core/services/spool_storage_service.dart';
 import 'package:nfc_filament/core/services/analytics_service.dart';
 
 /// Page for updating stock by scanning existing NFC spools

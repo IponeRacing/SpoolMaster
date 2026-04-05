@@ -2364,6 +2364,60 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Écrire OpenPrintTag Prusa'**
   String get writePrusaTagTitle;
+
+  /// No description provided for @signInAppleNotAvailable.
+  ///
+  /// In fr, this message translates to:
+  /// **'La connexion avec Apple n\'est pas disponible sur cet appareil.'**
+  String get signInAppleNotAvailable;
+
+  /// No description provided for @signInAppleFailed.
+  ///
+  /// In fr, this message translates to:
+  /// **'La connexion avec Apple a échoué. Veuillez réessayer.'**
+  String get signInAppleFailed;
+
+  /// No description provided for @signInFailed.
+  ///
+  /// In fr, this message translates to:
+  /// **'La connexion a échoué. Veuillez réessayer.'**
+  String get signInFailed;
+
+  /// No description provided for @mustContain3Digits.
+  ///
+  /// In fr, this message translates to:
+  /// **'Doit contenir 3 chiffres'**
+  String get mustContain3Digits;
+
+  /// No description provided for @mustBeNumber.
+  ///
+  /// In fr, this message translates to:
+  /// **'Doit être un nombre'**
+  String get mustBeNumber;
+
+  /// No description provided for @generatedUidLabel.
+  ///
+  /// In fr, this message translates to:
+  /// **'UID généré : {uid}'**
+  String generatedUidLabel(String uid);
+
+  /// No description provided for @experimentalBadge.
+  ///
+  /// In fr, this message translates to:
+  /// **'EXPÉRIMENTAL'**
+  String get experimentalBadge;
+
+  /// No description provided for @newBadge.
+  ///
+  /// In fr, this message translates to:
+  /// **'NOUVEAU'**
+  String get newBadge;
+
+  /// No description provided for @colorHintExamples.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rouge, Bleu, Noir...'**
+  String get colorHintExamples;
 }
 
 class _AppLocalizationsDelegate

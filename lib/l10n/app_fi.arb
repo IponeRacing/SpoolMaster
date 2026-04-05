@@ -414,5 +414,19 @@
   "contactUsSubtitle": "Kysymyksiä, ehdotuksia tai ongelmia",
   "nfcTagNotDetected": "NFC-tagia ei havaittu",
   "nfcTagNotDetectedDesc": "Tagia ei löytynyt. Tagi voi olla kuollut, vaurioitunut tai liian kaukana puhelimesta. Varmista, että puhelimen yläosa on suoraan NFC-tagin päällä.",
-  "nfcTagIncompatible": "Yhteensopimaton NFC-tagi havaittu"
+  "nfcTagIncompatible": "Yhteensopimaton NFC-tagi havaittu",
+  "signInAppleNotAvailable": "Apple-kirjautuminen ei ole käytettävissä tällä laitteella.",
+  "signInAppleFailed": "Apple-kirjautuminen epäonnistui. Yritä uudelleen.",
+  "signInFailed": "Kirjautuminen epäonnistui. Yritä uudelleen.",
+  "mustContain3Digits": "Täytyy sisältää 3 numeroa",
+  "mustBeNumber": "Täytyy olla numero",
+  "generatedUidLabel": "Luotu UID: {uid}",
+  "@generatedUidLabel": {
+    "placeholders": {
+      "uid": { "type": "String" }
+    }
+  },
+  "experimentalBadge": "KOKEELLINEN",
+  "newBadge": "UUSI",
+  "colorHintExamples": "Punainen, Sininen, Musta..."
 }

@@ -11,7 +11,10 @@ import 'package:nfc_filament/dependency_injection.dart';
 import 'package:nfc_filament/features/nfc_reader/presentation/bloc/nfc_reader_bloc.dart';
 import 'package:nfc_filament/features/nfc_reader/presentation/bloc/nfc_reader_event.dart';
 import 'package:nfc_filament/features/nfc_reader/presentation/bloc/nfc_reader_state.dart';
+import 'package:nfc_filament/core/models/spool_inventory_item.dart';
+import 'package:nfc_filament/core/services/spool_storage_service.dart';
 import 'package:nfc_filament/features/nfc_reader/presentation/pages/bambu_clone_library_page.dart';
+import 'package:nfc_filament/features/nfc_reader/presentation/pages/manual_add_spool_page.dart';
 import 'package:nfc_filament/features/nfc_reader/presentation/pages/nfc_writer_page.dart';
 import 'package:nfc_filament/features/nfc_reader/presentation/pages/scan_history_page.dart';
 import 'package:nfc_filament/features/nfc_reader/presentation/widgets/nfc_logo.dart';
@@ -91,7 +94,7 @@ class _NfcReaderViewState extends State<_NfcReaderView> {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),
-            child: const Text('OK'),
+            child: Text(AppLocalizations.of(context)!.ok),
           ),
         ],
       ),
@@ -219,8 +222,8 @@ class _NfcReaderViewState extends State<_NfcReaderView> {
                   ),
                   const SizedBox(height: 8),
                   TextField(
-                    decoration: const InputDecoration(
-                      hintText: 'Red, Blue, Black...',
+                    decoration: InputDecoration(
+                      hintText: AppLocalizations.of(context)!.colorHintExamples,
                       isDense: true,
                       contentPadding: EdgeInsets.symmetric(
                         horizontal: 12,
@@ -395,6 +398,27 @@ class _NfcReaderViewState extends State<_NfcReaderView> {
     }
   }
 
+  void _navigateToManualAdd(BuildContext context) {
+    Navigator.push<void>(
+      context,
+      MaterialPageRoute<void>(
+        builder: (context) => ManualAddSpoolPage(
+          onSave: (spool) async {
+            await SpoolStorageService.addSpool(spool);
+            if (context.mounted) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(AppLocalizations.of(context)!.spoolAdded),
+                  backgroundColor: Colors.green,
+                ),
+              );
+            }
+          },
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -549,6 +573,14 @@ class _NfcReaderViewState extends State<_NfcReaderView> {
                         ),
                       ),
                     ],
+                    const SizedBox(height: 12),
+                    OutlinedButton.icon(
+                      onPressed: () => _navigateToManualAdd(context),
+                      icon: const Icon(Icons.edit),
+                      label: Text(
+                        AppLocalizations.of(context)!.addManually,
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -585,7 +617,7 @@ class _NfcReaderViewState extends State<_NfcReaderView> {
                                 RegExp(r'[A-Z]{4,}-\d{3}'),
                               ))
                                 _InfoRow(
-                                  label: 'SKU',
+                                  label: AppLocalizations.of(context)!.skuLabel,
                                   value: state.bobbinData.batchNumber!,
                                 )
                               // Tags Spool NFC Tag Writer ont "Brand - Material"
@@ -925,9 +957,9 @@ class _NfcReaderViewState extends State<_NfcReaderView> {
                                       color: Colors.orange.shade600,
                                       borderRadius: BorderRadius.circular(4),
                                     ),
-                                    child: const Text(
-                                      'EXPERIMENTAL',
-                                      style: TextStyle(
+                                    child: Text(
+                                      AppLocalizations.of(context)!.experimentalBadge,
+                                      style: const TextStyle(
                                         fontSize: 9,
                                         fontWeight: FontWeight.bold,
                                         color: Colors.white,
@@ -975,9 +1007,9 @@ class _NfcReaderViewState extends State<_NfcReaderView> {
                                       color: Colors.green.shade600,
                                       borderRadius: BorderRadius.circular(4),
                                     ),
-                                    child: const Text(
-                                      'NEW',
-                                      style: TextStyle(
+                                    child: Text(
+                                      AppLocalizations.of(context)!.newBadge,
+                                      style: const TextStyle(
                                         fontSize: 9,
                                         fontWeight: FontWeight.bold,
                                         color: Colors.white,

@@ -414,5 +414,19 @@
   "contactUsSubtitle": "Въпроси, предложения или проблеми",
   "nfcTagNotDetected": "Не е открит NFC таг",
   "nfcTagNotDetectedDesc": "Не е намерен таг. Тагът може да е повреден или твърде далеч от телефона. Уверете се, че горната част на телефона е поставена директно върху NFC тага.",
-  "nfcTagIncompatible": "Открит е несъвместим NFC таг"
+  "nfcTagIncompatible": "Открит е несъвместим NFC таг",
+  "signInAppleNotAvailable": "Влизането с Apple не е налично на това устройство.",
+  "signInAppleFailed": "Влизането с Apple не успя. Моля, опитайте отново.",
+  "signInFailed": "Влизането не успя. Моля, опитайте отново.",
+  "mustContain3Digits": "Трябва да съдържа 3 цифри",
+  "mustBeNumber": "Трябва да е число",
+  "generatedUidLabel": "Генериран UID: {uid}",
+  "@generatedUidLabel": {
+    "placeholders": {
+      "uid": { "type": "String" }
+    }
+  },
+  "experimentalBadge": "ЕКСПЕРИМЕНТАЛНО",
+  "newBadge": "НОВО",
+  "colorHintExamples": "Червено, Синьо, Черно..."
 }

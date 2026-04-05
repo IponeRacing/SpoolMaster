@@ -414,5 +414,19 @@
   "contactUsSubtitle": "Questions, suggestions ou problèmes",
   "nfcTagNotDetected": "Aucun tag NFC détecté",
   "nfcTagNotDetectedDesc": "Aucun tag n'a été trouvé. Le tag est peut-être mort, endommagé ou trop éloigné du téléphone. Placez bien le haut de votre iPhone directement sur le tag NFC.",
-  "nfcTagIncompatible": "Tag NFC incompatible détecté"
+  "nfcTagIncompatible": "Tag NFC incompatible détecté",
+  "signInAppleNotAvailable": "La connexion avec Apple n'est pas disponible sur cet appareil.",
+  "signInAppleFailed": "La connexion avec Apple a échoué. Veuillez réessayer.",
+  "signInFailed": "La connexion a échoué. Veuillez réessayer.",
+  "mustContain3Digits": "Doit contenir 3 chiffres",
+  "mustBeNumber": "Doit être un nombre",
+  "generatedUidLabel": "UID généré : {uid}",
+  "@generatedUidLabel": {
+    "placeholders": {
+      "uid": { "type": "String" }
+    }
+  },
+  "experimentalBadge": "EXPÉRIMENTAL",
+  "newBadge": "NOUVEAU",
+  "colorHintExamples": "Rouge, Bleu, Noir..."
 }

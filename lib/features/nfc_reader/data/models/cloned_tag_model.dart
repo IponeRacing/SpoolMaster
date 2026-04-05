@@ -44,22 +44,7 @@ class ClonedTagModel {
 
   /// Convertir en JSON pour sauvegarde
   Map<String, dynamic> toJson() {
-    final bobbinModel = BobbinDataModel(
-      filamentType: bobbinData.filamentType,
-      color: bobbinData.color,
-      weightGrams: bobbinData.weightGrams,
-      manufactureDate: bobbinData.manufactureDate,
-      batchNumber: bobbinData.batchNumber,
-      colorRgb: bobbinData.colorRgb,
-      extruderTempMin: bobbinData.extruderTempMin,
-      extruderTempMax: bobbinData.extruderTempMax,
-      bedTempMin: bobbinData.bedTempMin,
-      bedTempMax: bobbinData.bedTempMax,
-      diameter: bobbinData.diameter,
-      spoolLength: bobbinData.spoolLength,
-      remainingWeight: bobbinData.remainingWeight,
-      brand: bobbinData.brand,
-    );
+    final bobbinModel = BobbinDataModel.fromEntity(bobbinData);
 
     return {
       'id': id,

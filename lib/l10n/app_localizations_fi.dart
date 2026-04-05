@@ -1153,4 +1153,35 @@ class AppLocalizationsFi extends AppLocalizations {
 
   @override
   String get writePrusaTagTitle => 'Kirjoita Prusa OpenPrintTag';
+
+  @override
+  String get signInAppleNotAvailable =>
+      'Apple-kirjautuminen ei ole käytettävissä tällä laitteella.';
+
+  @override
+  String get signInAppleFailed =>
+      'Apple-kirjautuminen epäonnistui. Yritä uudelleen.';
+
+  @override
+  String get signInFailed => 'Kirjautuminen epäonnistui. Yritä uudelleen.';
+
+  @override
+  String get mustContain3Digits => 'Täytyy sisältää 3 numeroa';
+
+  @override
+  String get mustBeNumber => 'Täytyy olla numero';
+
+  @override
+  String generatedUidLabel(String uid) {
+    return 'Luotu UID: $uid';
+  }
+
+  @override
+  String get experimentalBadge => 'KOKEELLINEN';
+
+  @override
+  String get newBadge => 'UUSI';
+
+  @override
+  String get colorHintExamples => 'Punainen, Sininen, Musta...';
 }

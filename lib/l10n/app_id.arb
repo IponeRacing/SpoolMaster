@@ -414,5 +414,19 @@
   "contactUsSubtitle": "Pertanyaan, saran, atau masalah",
   "nfcTagNotDetected": "Tag NFC tidak terdeteksi",
   "nfcTagNotDetectedDesc": "Tag tidak ditemukan. Tag mungkin mati, rusak, atau terlalu jauh dari ponsel. Pastikan bagian atas ponsel Anda ditempatkan langsung di tag NFC.",
-  "nfcTagIncompatible": "Tag NFC tidak kompatibel terdeteksi"
+  "nfcTagIncompatible": "Tag NFC tidak kompatibel terdeteksi",
+  "signInAppleNotAvailable": "Masuk dengan Apple tidak tersedia di perangkat ini.",
+  "signInAppleFailed": "Masuk dengan Apple gagal. Silakan coba lagi.",
+  "signInFailed": "Masuk gagal. Silakan coba lagi.",
+  "mustContain3Digits": "Harus berisi 3 digit",
+  "mustBeNumber": "Harus berupa angka",
+  "generatedUidLabel": "UID yang dihasilkan: {uid}",
+  "@generatedUidLabel": {
+    "placeholders": {
+      "uid": { "type": "String" }
+    }
+  },
+  "experimentalBadge": "EKSPERIMENTAL",
+  "newBadge": "BARU",
+  "colorHintExamples": "Merah, Biru, Hitam..."
 }

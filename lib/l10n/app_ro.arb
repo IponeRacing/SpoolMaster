@@ -414,5 +414,19 @@
   "contactUsSubtitle": "Întrebări, sugestii sau probleme",
   "nfcTagNotDetected": "Niciun tag NFC detectat",
   "nfcTagNotDetectedDesc": "Nu a fost găsit niciun tag. Tagul poate fi mort, deteriorat sau prea departe de telefon. Asigurați-vă că partea de sus a telefonului este plasată direct pe tagul NFC.",
-  "nfcTagIncompatible": "Tag NFC incompatibil detectat"
+  "nfcTagIncompatible": "Tag NFC incompatibil detectat",
+  "signInAppleNotAvailable": "Conectarea cu Apple nu este disponibilă pe acest dispozitiv.",
+  "signInAppleFailed": "Conectarea cu Apple a eșuat. Vă rugăm să încercați din nou.",
+  "signInFailed": "Conectarea a eșuat. Vă rugăm să încercați din nou.",
+  "mustContain3Digits": "Trebuie să conțină 3 cifre",
+  "mustBeNumber": "Trebuie să fie un număr",
+  "generatedUidLabel": "UID generat: {uid}",
+  "@generatedUidLabel": {
+    "placeholders": {
+      "uid": { "type": "String" }
+    }
+  },
+  "experimentalBadge": "EXPERIMENTAL",
+  "newBadge": "NOU",
+  "colorHintExamples": "Roșu, Albastru, Negru..."
 }

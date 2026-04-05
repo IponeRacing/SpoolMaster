@@ -19,6 +19,8 @@ import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import kotlinx.coroutines.*
 import java.io.IOException
+import javax.crypto.Mac
+import javax.crypto.spec.SecretKeySpec
 
 /**
  * Native NFC Plugin for Android
@@ -48,6 +50,15 @@ class NativeNfcPlugin private constructor(
             0xFF.toByte(), 0xFF.toByte(), 0xFF.toByte(),
             0xFF.toByte(), 0xFF.toByte(), 0xFF.toByte()
         )
+
+        // Bambu Lab HKDF parameters
+        private val BAMBU_HKDF_SALT = byteArrayOf(
+            0x9a.toByte(), 0x75, 0x9c.toByte(), 0xf2.toByte(),
+            0xc4.toByte(), 0xf7.toByte(), 0xca.toByte(), 0xff.toByte(),
+            0x22, 0x2c, 0xb9.toByte(), 0x76, 0x9b.toByte(), 0x41, 0xbc.toByte(), 0x96.toByte()
+        )
+        // "RFID-A\0" (7 bytes including null terminator)
+        private val BAMBU_HKDF_INFO = byteArrayOf(0x52, 0x46, 0x49, 0x44, 0x2d, 0x41, 0x00)
 
         private var instance: NativeNfcPlugin? = null
 
@@ -707,27 +718,68 @@ class NativeNfcPlugin private constructor(
         }
     }
 
+    // ==================== BAMBU LAB HKDF KEY DERIVATION ====================
+
+    private fun hmacSha256(key: ByteArray, data: ByteArray): ByteArray {
+        val mac = Mac.getInstance("HmacSHA256")
+        mac.init(SecretKeySpec(key, "HmacSHA256"))
+        return mac.doFinal(data)
+    }
+
+    private fun hkdfExtract(salt: ByteArray, ikm: ByteArray): ByteArray {
+        return hmacSha256(salt, ikm)
+    }
+
+    private fun hkdfExpand(prk: ByteArray, info: ByteArray, length: Int): ByteArray {
+        val hashLen = 32 // SHA-256
+        val n = (length + hashLen - 1) / hashLen
+        val okm = ByteArray(n * hashLen)
+        var t = byteArrayOf() // T(0) is empty
+
+        for (i in 1..n) {
+            val input = t + info + byteArrayOf(i.toByte())
+            t = hmacSha256(prk, input)
+            System.arraycopy(t, 0, okm, (i - 1) * hashLen, hashLen)
+        }
+        return okm.copyOf(length)
+    }
+
+    /** Derive 16 MiFare Classic Key-A values (6 bytes each) from tag UID */
+    private fun deriveBambuKeys(uid: ByteArray): List<ByteArray> {
+        val prk = hkdfExtract(BAMBU_HKDF_SALT, uid)
+        val okm = hkdfExpand(prk, BAMBU_HKDF_INFO, 6 * 16) // 96 bytes
+        return (0 until 16).map { i -> okm.copyOfRange(i * 6, i * 6 + 6) }
+    }
+
+    // ==================== BAMBU LAB READ (MiFare Classic) ====================
+
     private suspend fun readMifareClassic(classic: MifareClassic) {
         try {
             classic.connect()
-            Log.d(TAG, "Connected to MiFare Classic")
+            val uid = classic.tag.id
+            val derivedKeys = deriveBambuKeys(uid)
+            Log.d(TAG, "Connected to MiFare Classic, UID: ${uid.toHexString()}")
             Log.d(TAG, "Type: ${classic.type}, Size: ${classic.size}, Sectors: ${classic.sectorCount}")
 
             val blockData = mutableMapOf<Int, ByteArray>()
 
             // Read all sectors (16 sectors for 1K)
             for (sector in 0 until classic.sectorCount) {
-                // Authenticate with default key
+                // Try HKDF-derived key first, then fallback to default
                 val authSuccess = try {
-                    classic.authenticateSectorWithKeyA(sector, DEFAULT_KEY)
+                    classic.authenticateSectorWithKeyA(sector, derivedKeys[sector])
                 } catch (e: Exception) {
-                    Log.w(TAG, "Auth failed for sector $sector with Key A: ${e.message}")
-                    // Try Key B
+                    Log.d(TAG, "HKDF key failed for sector $sector, trying default key")
                     try {
-                        classic.authenticateSectorWithKeyB(sector, DEFAULT_KEY)
+                        classic.authenticateSectorWithKeyA(sector, DEFAULT_KEY)
                     } catch (e2: Exception) {
-                        Log.w(TAG, "Auth failed for sector $sector with Key B: ${e2.message}")
-                        false
+                        Log.w(TAG, "Default Key A failed for sector $sector: ${e2.message}")
+                        try {
+                            classic.authenticateSectorWithKeyB(sector, DEFAULT_KEY)
+                        } catch (e3: Exception) {
+                            Log.w(TAG, "All keys failed for sector $sector")
+                            false
+                        }
                     }
                 }
 
@@ -770,20 +822,31 @@ class NativeNfcPlugin private constructor(
     private suspend fun readMifareClassicWithNfcA(nfcA: NfcA) {
         try {
             nfcA.connect()
-            Log.d(TAG, "Reading MiFare Classic via NfcA")
+            val uid = nfcA.tag.id
+            val derivedKeys = deriveBambuKeys(uid)
+            Log.d(TAG, "Reading MiFare Classic via NfcA, UID: ${uid.toHexString()}")
 
             val blockData = mutableMapOf<Int, ByteArray>()
 
             // Read 16 sectors
             for (sector in 0 until 16) {
-                // Authenticate
-                val authCommand = byteArrayOf(CMD_AUTH_KEY_A, sector.toByte()) + DEFAULT_KEY
+                // Try HKDF-derived key first, then fallback to default
+                val hkdfAuth = byteArrayOf(CMD_AUTH_KEY_A, sector.toByte()) + derivedKeys[sector]
+                var authenticated = false
                 try {
-                    nfcA.transceive(authCommand)
+                    nfcA.transceive(hkdfAuth)
+                    authenticated = true
                 } catch (e: IOException) {
-                    Log.w(TAG, "Auth failed for sector $sector")
-                    continue
+                    Log.d(TAG, "HKDF key failed for sector $sector via NfcA, trying default")
+                    val defaultAuth = byteArrayOf(CMD_AUTH_KEY_A, sector.toByte()) + DEFAULT_KEY
+                    try {
+                        nfcA.transceive(defaultAuth)
+                        authenticated = true
+                    } catch (e2: IOException) {
+                        Log.w(TAG, "All keys failed for sector $sector via NfcA")
+                    }
                 }
+                if (!authenticated) continue
 
                 // Read 3 data blocks per sector (skip sector trailer)
                 for (blockInSector in 0 until 3) {

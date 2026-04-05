@@ -414,5 +414,19 @@
   "contactUsSubtitle": "Soalan, cadangan atau masalah",
   "nfcTagNotDetected": "Tiada tag NFC dikesan",
   "nfcTagNotDetectedDesc": "Tiada tag ditemui. Tag mungkin rosak atau terlalu jauh dari telefon. Pastikan bahagian atas telefon anda diletakkan terus pada tag NFC.",
-  "nfcTagIncompatible": "Tag NFC tidak serasi dikesan"
+  "nfcTagIncompatible": "Tag NFC tidak serasi dikesan",
+  "signInAppleNotAvailable": "Log masuk dengan Apple tidak tersedia pada peranti ini.",
+  "signInAppleFailed": "Log masuk dengan Apple gagal. Sila cuba lagi.",
+  "signInFailed": "Log masuk gagal. Sila cuba lagi.",
+  "mustContain3Digits": "Mesti mengandungi 3 digit",
+  "mustBeNumber": "Mesti nombor",
+  "generatedUidLabel": "UID dijana: {uid}",
+  "@generatedUidLabel": {
+    "placeholders": {
+      "uid": { "type": "String" }
+    }
+  },
+  "experimentalBadge": "EKSPERIMEN",
+  "newBadge": "BAHARU",
+  "colorHintExamples": "Merah, Biru, Hitam..."
 }

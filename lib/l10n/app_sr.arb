@@ -414,5 +414,19 @@
   "contactUsSubtitle": "Питања, предлози или проблеми",
   "nfcTagNotDetected": "NFC ознака није откривена",
   "nfcTagNotDetectedDesc": "Ознака није пронађена. Ознака је можда мртва, оштећена или предалеко од телефона. Уверите се да је врх телефона постављен директно на NFC ознаку.",
-  "nfcTagIncompatible": "Откривена некомпатибилна NFC ознака"
+  "nfcTagIncompatible": "Откривена некомпатибилна NFC ознака",
+  "signInAppleNotAvailable": "Пријава преко Apple-а није доступна на овом уређају.",
+  "signInAppleFailed": "Пријава преко Apple-а није успела. Покушајте поново.",
+  "signInFailed": "Пријава није успела. Покушајте поново.",
+  "mustContain3Digits": "Мора да садржи 3 цифре",
+  "mustBeNumber": "Мора бити број",
+  "generatedUidLabel": "Генерисани UID: {uid}",
+  "@generatedUidLabel": {
+    "placeholders": {
+      "uid": { "type": "String" }
+    }
+  },
+  "experimentalBadge": "ЕКСПЕРИМЕНТАЛНО",
+  "newBadge": "НОВО",
+  "colorHintExamples": "Црвена, Плава, Црна..."
 }

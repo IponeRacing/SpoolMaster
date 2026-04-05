@@ -46,10 +46,11 @@ class _LoginPageState extends State<LoginPage> {
         return;
       }
       if (mounted) {
+        final l10n = AppLocalizations.of(context)!;
         final message = e.code == AuthorizationErrorCode.notHandled ||
                 e.code == AuthorizationErrorCode.notInteractive
-            ? 'Sign in with Apple is not available on this device.'
-            : 'Sign in with Apple failed. Please try again.';
+            ? l10n.signInAppleNotAvailable
+            : l10n.signInAppleFailed;
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text(message), backgroundColor: Colors.red),
         );
@@ -57,8 +58,8 @@ class _LoginPageState extends State<LoginPage> {
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Sign in failed. Please try again.'),
+          SnackBar(
+            content: Text(AppLocalizations.of(context)!.signInFailed),
             backgroundColor: Colors.red,
           ),
         );
@@ -80,7 +81,7 @@ class _LoginPageState extends State<LoginPage> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Erreur de connexion: $e'),
+            content: Text(AppLocalizations.of(context)!.signInError(e.toString())),
             backgroundColor: Colors.red,
           ),
         );

@@ -1152,4 +1152,35 @@ class AppLocalizationsTh extends AppLocalizations {
 
   @override
   String get writePrusaTagTitle => 'เขียนแท็ก Prusa OpenPrintTag';
+
+  @override
+  String get signInAppleNotAvailable =>
+      'การลงชื่อเข้าใช้ด้วย Apple ไม่พร้อมใช้งานบนอุปกรณ์นี้';
+
+  @override
+  String get signInAppleFailed =>
+      'การลงชื่อเข้าใช้ด้วย Apple ล้มเหลว กรุณาลองอีกครั้ง';
+
+  @override
+  String get signInFailed => 'การลงชื่อเข้าใช้ล้มเหลว กรุณาลองอีกครั้ง';
+
+  @override
+  String get mustContain3Digits => 'ต้องมี 3 หลัก';
+
+  @override
+  String get mustBeNumber => 'ต้องเป็นตัวเลข';
+
+  @override
+  String generatedUidLabel(String uid) {
+    return 'UID ที่สร้างขึ้น: $uid';
+  }
+
+  @override
+  String get experimentalBadge => 'ทดลอง';
+
+  @override
+  String get newBadge => 'ใหม่';
+
+  @override
+  String get colorHintExamples => 'แดง, น้ำเงิน, ดำ...';
 }

@@ -414,5 +414,19 @@
   "contactUsSubtitle": "أسئلة أو اقتراحات أو مشاكل",
   "nfcTagNotDetected": "لم يتم اكتشاف أي علامة NFC",
   "nfcTagNotDetectedDesc": "لم يتم العثور على أي علامة. قد تكون العلامة تالفة أو بعيدة جداً عن الهاتف. تأكد من وضع الجزء العلوي من هاتفك مباشرة على علامة NFC.",
-  "nfcTagIncompatible": "تم اكتشاف علامة NFC غير متوافقة"
+  "nfcTagIncompatible": "تم اكتشاف علامة NFC غير متوافقة",
+  "signInAppleNotAvailable": "تسجيل الدخول باستخدام Apple غير متاح على هذا الجهاز.",
+  "signInAppleFailed": "فشل تسجيل الدخول باستخدام Apple. يرجى المحاولة مرة أخرى.",
+  "signInFailed": "فشل تسجيل الدخول. يرجى المحاولة مرة أخرى.",
+  "mustContain3Digits": "يجب أن يحتوي على 3 أرقام",
+  "mustBeNumber": "يجب أن يكون رقماً",
+  "generatedUidLabel": "UID المُنشأ: {uid}",
+  "@generatedUidLabel": {
+    "placeholders": {
+      "uid": { "type": "String" }
+    }
+  },
+  "experimentalBadge": "تجريبي",
+  "newBadge": "جديد",
+  "colorHintExamples": "أحمر، أزرق، أسود..."
 }

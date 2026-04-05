@@ -1154,4 +1154,35 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get writePrusaTagTitle => 'Prusa OpenPrintTag लिखें';
+
+  @override
+  String get signInAppleNotAvailable =>
+      'इस डिवाइस पर Apple से साइन इन उपलब्ध नहीं है।';
+
+  @override
+  String get signInAppleFailed =>
+      'Apple से साइन इन विफल रहा। कृपया पुनः प्रयास करें।';
+
+  @override
+  String get signInFailed => 'साइन इन विफल रहा। कृपया पुनः प्रयास करें।';
+
+  @override
+  String get mustContain3Digits => '3 अंक होने चाहिए';
+
+  @override
+  String get mustBeNumber => 'एक संख्या होनी चाहिए';
+
+  @override
+  String generatedUidLabel(String uid) {
+    return 'जनरेट किया गया UID: $uid';
+  }
+
+  @override
+  String get experimentalBadge => 'प्रायोगिक';
+
+  @override
+  String get newBadge => 'नया';
+
+  @override
+  String get colorHintExamples => 'लाल, नीला, काला...';
 }

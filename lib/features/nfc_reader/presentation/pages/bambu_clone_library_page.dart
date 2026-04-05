@@ -42,8 +42,8 @@ class _BambuCloneLibraryPageState extends State<BambuCloneLibraryPage> {
 
     if (mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Synchronisation terminée'),
+        SnackBar(
+          content: Text(AppLocalizations.of(context)!.syncCompleted),
           backgroundColor: Colors.green,
         ),
       );
@@ -56,7 +56,7 @@ class _BambuCloneLibraryPageState extends State<BambuCloneLibraryPage> {
       builder: (context) => AlertDialog(
         title: Text(AppLocalizations.of(context)!.deleteThisScan),
         content: Text(
-          'Supprimer le clone "${clone.displayName}" ?',
+          AppLocalizations.of(context)!.deleteCloneConfirmation(clone.displayName),
         ),
         actions: [
           TextButton(
@@ -78,7 +78,7 @@ class _BambuCloneLibraryPageState extends State<BambuCloneLibraryPage> {
 
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Clone "${clone.displayName}" supprimé')),
+          SnackBar(content: Text(AppLocalizations.of(context)!.cloneDeletedMessage(clone.displayName))),
         );
       }
     }
@@ -101,7 +101,7 @@ class _BambuCloneLibraryPageState extends State<BambuCloneLibraryPage> {
                     ),
                   )
                 : const Icon(Icons.cloud_sync),
-            tooltip: 'Synchroniser avec le cloud',
+            tooltip: AppLocalizations.of(context)!.syncWithCloud,
             onPressed: _isSyncing ? null : _syncWithCloud,
           ),
         ],
@@ -312,23 +312,23 @@ class _BambuCloneLibraryPageState extends State<BambuCloneLibraryPage> {
                       }
                     },
                     itemBuilder: (context) => [
-                      const PopupMenuItem(
+                      PopupMenuItem(
                         value: 'rename',
                         child: Row(
                           children: [
-                            Icon(Icons.edit, size: 20),
-                            SizedBox(width: 8),
-                            Text('Renommer'),
+                            const Icon(Icons.edit, size: 20),
+                            const SizedBox(width: 8),
+                            Text(AppLocalizations.of(context)!.rename),
                           ],
                         ),
                       ),
-                      const PopupMenuItem(
+                      PopupMenuItem(
                         value: 'delete',
                         child: Row(
                           children: [
-                            Icon(Icons.delete, size: 20, color: Colors.red),
-                            SizedBox(width: 8),
-                            Text('Supprimer', style: TextStyle(color: Colors.red)),
+                            const Icon(Icons.delete, size: 20, color: Colors.red),
+                            const SizedBox(width: 8),
+                            Text(AppLocalizations.of(context)!.delete, style: const TextStyle(color: Colors.red)),
                           ],
                         ),
                       ),
@@ -347,24 +347,24 @@ class _BambuCloneLibraryPageState extends State<BambuCloneLibraryPage> {
                   children: [
                     _InfoRow(
                       icon: Icons.scale,
-                      label: 'Poids',
+                      label: AppLocalizations.of(context)!.weight,
                       value: '${clone.bobbinData.weightGrams}g',
                     ),
                     if (clone.bobbinData.spoolLength != null)
                       _InfoRow(
                         icon: Icons.straighten,
-                        label: 'Longueur',
+                        label: AppLocalizations.of(context)!.length,
                         value: '${clone.bobbinData.spoolLength}m',
                       ),
                     _InfoRow(
                       icon: Icons.thermostat,
-                      label: 'Extrudeur',
+                      label: AppLocalizations.of(context)!.extruderLabel,
                       value:
                           '${clone.bobbinData.extruderTempMin}-${clone.bobbinData.extruderTempMax}°C',
                     ),
                     _InfoRow(
                       icon: Icons.calendar_today,
-                      label: 'Cloné le',
+                      label: AppLocalizations.of(context)!.clonedOn,
                       value: dateFormat.format(clone.clonedAt),
                     ),
                   ],
@@ -383,7 +383,7 @@ class _BambuCloneLibraryPageState extends State<BambuCloneLibraryPage> {
                     );
                   },
                   icon: const Icon(Icons.nfc),
-                  label: const Text('Écrire ce clone'),
+                  label: Text(AppLocalizations.of(context)!.writeThisCloneButton),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppTheme.anycubicRed,
                   ),
@@ -402,23 +402,23 @@ class _BambuCloneLibraryPageState extends State<BambuCloneLibraryPage> {
     final newName = await showDialog<String>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Renommer le clone'),
+        title: Text(AppLocalizations.of(context)!.renameClone),
         content: TextField(
           controller: controller,
-          decoration: const InputDecoration(
-            hintText: 'Nom personnalisé',
-            border: OutlineInputBorder(),
+          decoration: InputDecoration(
+            hintText: AppLocalizations.of(context)!.customNameHint,
+            border: const OutlineInputBorder(),
           ),
           autofocus: true,
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Annuler'),
+            child: Text(AppLocalizations.of(context)!.cancel),
           ),
           ElevatedButton(
             onPressed: () => Navigator.pop(context, controller.text),
-            child: const Text('Enregistrer'),
+            child: Text(AppLocalizations.of(context)!.save),
           ),
         ],
       ),

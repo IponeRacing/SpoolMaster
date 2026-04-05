@@ -1155,4 +1155,35 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get writePrusaTagTitle => 'Ghi thẻ Prusa OpenPrintTag';
+
+  @override
+  String get signInAppleNotAvailable =>
+      'Đăng nhập bằng Apple không khả dụng trên thiết bị này.';
+
+  @override
+  String get signInAppleFailed =>
+      'Đăng nhập bằng Apple thất bại. Vui lòng thử lại.';
+
+  @override
+  String get signInFailed => 'Đăng nhập thất bại. Vui lòng thử lại.';
+
+  @override
+  String get mustContain3Digits => 'Phải chứa 3 chữ số';
+
+  @override
+  String get mustBeNumber => 'Phải là một số';
+
+  @override
+  String generatedUidLabel(String uid) {
+    return 'UID đã tạo: $uid';
+  }
+
+  @override
+  String get experimentalBadge => 'THỬ NGHIỆM';
+
+  @override
+  String get newBadge => 'MỚI';
+
+  @override
+  String get colorHintExamples => 'Đỏ, Xanh dương, Đen...';
 }

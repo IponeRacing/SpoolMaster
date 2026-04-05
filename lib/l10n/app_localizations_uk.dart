@@ -1156,4 +1156,35 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get writePrusaTagTitle => 'Записати тег Prusa OpenPrintTag';
+
+  @override
+  String get signInAppleNotAvailable =>
+      'Вхід через Apple недоступний на цьому пристрої.';
+
+  @override
+  String get signInAppleFailed =>
+      'Не вдалося увійти через Apple. Будь ласка, спробуйте ще раз.';
+
+  @override
+  String get signInFailed => 'Не вдалося увійти. Будь ласка, спробуйте ще раз.';
+
+  @override
+  String get mustContain3Digits => 'Має містити 3 цифри';
+
+  @override
+  String get mustBeNumber => 'Має бути числом';
+
+  @override
+  String generatedUidLabel(String uid) {
+    return 'Згенерований UID: $uid';
+  }
+
+  @override
+  String get experimentalBadge => 'ЕКСПЕРИМЕНТАЛЬНЕ';
+
+  @override
+  String get newBadge => 'НОВЕ';
+
+  @override
+  String get colorHintExamples => 'Червоний, Синій, Чорний...';
 }

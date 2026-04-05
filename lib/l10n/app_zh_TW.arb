@@ -414,5 +414,19 @@
   "contactUsSubtitle": "問題、建議或回饋",
   "nfcTagNotDetected": "未偵測到NFC標籤",
   "nfcTagNotDetectedDesc": "未找到標籤。標籤可能已損壞或距離手機太遠。請確保將手機頂部直接放在NFC標籤上。",
-  "nfcTagIncompatible": "偵測到不相容的NFC標籤"
+  "nfcTagIncompatible": "偵測到不相容的NFC標籤",
+  "signInAppleNotAvailable": "此裝置不支援透過Apple登入。",
+  "signInAppleFailed": "透過Apple登入失敗。請重試。",
+  "signInFailed": "登入失敗。請重試。",
+  "mustContain3Digits": "必須包含3位數字",
+  "mustBeNumber": "必須是數字",
+  "generatedUidLabel": "產生的UID：{uid}",
+  "@generatedUidLabel": {
+    "placeholders": {
+      "uid": { "type": "String" }
+    }
+  },
+  "experimentalBadge": "實驗性",
+  "newBadge": "新",
+  "colorHintExamples": "紅色、藍色、黑色..."
 }

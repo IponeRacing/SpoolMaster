@@ -414,5 +414,19 @@
   "contactUsSubtitle": "Frågor, förslag eller problem",
   "nfcTagNotDetected": "Ingen NFC-tagg hittades",
   "nfcTagNotDetectedDesc": "Ingen tagg hittades. Taggen kan vara död, skadad eller för långt från telefonen. Se till att toppen av din telefon placeras direkt på NFC-taggen.",
-  "nfcTagIncompatible": "Inkompatibel NFC-tagg hittades"
+  "nfcTagIncompatible": "Inkompatibel NFC-tagg hittades",
+  "signInAppleNotAvailable": "Inloggning med Apple är inte tillgänglig på denna enhet.",
+  "signInAppleFailed": "Inloggning med Apple misslyckades. Försök igen.",
+  "signInFailed": "Inloggning misslyckades. Försök igen.",
+  "mustContain3Digits": "Måste innehålla 3 siffror",
+  "mustBeNumber": "Måste vara ett nummer",
+  "generatedUidLabel": "Genererat UID: {uid}",
+  "@generatedUidLabel": {
+    "placeholders": {
+      "uid": { "type": "String" }
+    }
+  },
+  "experimentalBadge": "EXPERIMENTELL",
+  "newBadge": "NY",
+  "colorHintExamples": "Röd, Blå, Svart..."
 }

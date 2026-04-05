@@ -19,6 +19,11 @@ class BobbinDataModel {
   final int? spoolLength;
   final double? remainingWeight;
   final String? brand;
+  final String? detailedType;
+  final int? dryingTemp;
+  final int? dryingTime;
+  final String? materialVariantId;
+  final String? materialId;
 
   BobbinDataModel({
     required this.filamentType,
@@ -35,6 +40,11 @@ class BobbinDataModel {
     this.spoolLength,
     this.remainingWeight,
     this.brand,
+    this.detailedType,
+    this.dryingTemp,
+    this.dryingTime,
+    this.materialVariantId,
+    this.materialId,
   });
 
   factory BobbinDataModel.fromJson(Map<String, dynamic> json) =>
@@ -57,6 +67,11 @@ class BobbinDataModel {
     spoolLength: spoolLength,
     remainingWeight: remainingWeight,
     brand: brand,
+    detailedType: detailedType,
+    dryingTemp: dryingTemp,
+    dryingTime: dryingTime,
+    materialVariantId: materialVariantId,
+    materialId: materialId,
   );
 
   factory BobbinDataModel.fromEntity(BobbinData entity) => BobbinDataModel(
@@ -74,5 +89,10 @@ class BobbinDataModel {
     spoolLength: entity.spoolLength,
     remainingWeight: entity.remainingWeight,
     brand: entity.brand,
+    detailedType: entity.detailedType,
+    dryingTemp: entity.dryingTemp,
+    dryingTime: entity.dryingTime,
+    materialVariantId: entity.materialVariantId,
+    materialId: entity.materialId,
   );
 }

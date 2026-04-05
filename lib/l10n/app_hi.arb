@@ -414,5 +414,19 @@
   "contactUsSubtitle": "प्रश्न, सुझाव या समस्याएँ",
   "nfcTagNotDetected": "कोई NFC टैग नहीं मिला",
   "nfcTagNotDetectedDesc": "कोई टैग नहीं मिला। टैग खराब, क्षतिग्रस्त या फोन से बहुत दूर हो सकता है। सुनिश्चित करें कि आपके फोन का ऊपरी हिस्सा सीधे NFC टैग पर रखा गया है।",
-  "nfcTagIncompatible": "असंगत NFC टैग मिला"
+  "nfcTagIncompatible": "असंगत NFC टैग मिला",
+  "signInAppleNotAvailable": "इस डिवाइस पर Apple से साइन इन उपलब्ध नहीं है।",
+  "signInAppleFailed": "Apple से साइन इन विफल रहा। कृपया पुनः प्रयास करें।",
+  "signInFailed": "साइन इन विफल रहा। कृपया पुनः प्रयास करें।",
+  "mustContain3Digits": "3 अंक होने चाहिए",
+  "mustBeNumber": "एक संख्या होनी चाहिए",
+  "generatedUidLabel": "जनरेट किया गया UID: {uid}",
+  "@generatedUidLabel": {
+    "placeholders": {
+      "uid": { "type": "String" }
+    }
+  },
+  "experimentalBadge": "प्रायोगिक",
+  "newBadge": "नया",
+  "colorHintExamples": "लाल, नीला, काला..."
 }

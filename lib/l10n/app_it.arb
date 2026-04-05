@@ -414,5 +414,19 @@
   "nfcTagNotDetectedDesc": "Nessun tag trovato. Il tag potrebbe essere difettoso, danneggiato o troppo lontano dal telefono. Posiziona la parte superiore del tuo iPhone direttamente sul tag NFC.",
   "nfcTagIncompatible": "Tag NFC incompatibile rilevato",
   "nfcTagInfoPrusa": "Utilizza un tag vuoto NXP ICODE SLIX2 (ISO 15693) per creare tag OpenPrintTag compatibili con Prusa MK4/XL.",
-  "writePrusaTagTitle": "Scrivi OpenPrintTag Prusa"
+  "writePrusaTagTitle": "Scrivi OpenPrintTag Prusa",
+  "signInAppleNotAvailable": "L'accesso con Apple non è disponibile su questo dispositivo.",
+  "signInAppleFailed": "Accesso con Apple fallito. Riprova.",
+  "signInFailed": "Accesso fallito. Riprova.",
+  "mustContain3Digits": "Deve contenere 3 cifre",
+  "mustBeNumber": "Deve essere un numero",
+  "generatedUidLabel": "UID generato: {uid}",
+  "@generatedUidLabel": {
+    "placeholders": {
+      "uid": { "type": "String" }
+    }
+  },
+  "experimentalBadge": "SPERIMENTALE",
+  "newBadge": "NUOVO",
+  "colorHintExamples": "Rosso, Blu, Nero..."
 }

@@ -414,5 +414,19 @@
   "nfcTagNotDetectedDesc": "Тег не найден. Тег может быть неисправен, повреждён или слишком далеко от телефона. Поместите верхнюю часть iPhone прямо на NFC-тег.",
   "nfcTagIncompatible": "Обнаружен несовместимый NFC-тег",
   "nfcTagInfoPrusa": "Используйте пустой тег NXP ICODE SLIX2 (ISO 15693) для создания тегов, совместимых с OpenPrintTag, для Prusa MK4/XL.",
-  "writePrusaTagTitle": "Записать Prusa OpenPrintTag"
+  "writePrusaTagTitle": "Записать Prusa OpenPrintTag",
+  "signInAppleNotAvailable": "Вход через Apple недоступен на этом устройстве.",
+  "signInAppleFailed": "Не удалось войти через Apple. Пожалуйста, попробуйте снова.",
+  "signInFailed": "Не удалось войти. Пожалуйста, попробуйте снова.",
+  "mustContain3Digits": "Должно содержать 3 цифры",
+  "mustBeNumber": "Должно быть числом",
+  "generatedUidLabel": "Сгенерированный UID: {uid}",
+  "@generatedUidLabel": {
+    "placeholders": {
+      "uid": { "type": "String" }
+    }
+  },
+  "experimentalBadge": "ЭКСПЕРИМЕНТАЛЬНОЕ",
+  "newBadge": "НОВОЕ",
+  "colorHintExamples": "Красный, Синий, Чёрный..."
 }

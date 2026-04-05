@@ -1150,4 +1150,35 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get writePrusaTagTitle => 'Zapsat Prusa OpenPrintTag';
+
+  @override
+  String get signInAppleNotAvailable =>
+      'Přihlášení přes Apple není na tomto zařízení k dispozici.';
+
+  @override
+  String get signInAppleFailed =>
+      'Přihlášení přes Apple se nezdařilo. Zkuste to prosím znovu.';
+
+  @override
+  String get signInFailed => 'Přihlášení se nezdařilo. Zkuste to prosím znovu.';
+
+  @override
+  String get mustContain3Digits => 'Musí obsahovat 3 číslice';
+
+  @override
+  String get mustBeNumber => 'Musí být číslo';
+
+  @override
+  String generatedUidLabel(String uid) {
+    return 'Vygenerované UID: $uid';
+  }
+
+  @override
+  String get experimentalBadge => 'EXPERIMENTÁLNÍ';
+
+  @override
+  String get newBadge => 'NOVÉ';
+
+  @override
+  String get colorHintExamples => 'Červená, Modrá, Černá...';
 }

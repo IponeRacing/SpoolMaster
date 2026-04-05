@@ -414,5 +414,19 @@
   "nfcTagNotDetectedDesc": "Geen tag gevonden. De tag kan kapot, beschadigd of te ver van de telefoon verwijderd zijn. Plaats de bovenkant van uw iPhone rechtstreeks op de NFC-tag.",
   "nfcTagIncompatible": "Oncompatibele NFC-tag gedetecteerd",
   "nfcTagInfoPrusa": "Gebruik een lege NXP ICODE SLIX2-tag (ISO 15693) om OpenPrintTag-compatibele tags voor Prusa MK4/XL te maken.",
-  "writePrusaTagTitle": "Prusa OpenPrintTag schrijven"
+  "writePrusaTagTitle": "Prusa OpenPrintTag schrijven",
+  "signInAppleNotAvailable": "Inloggen met Apple is niet beschikbaar op dit apparaat.",
+  "signInAppleFailed": "Inloggen met Apple mislukt. Probeer het opnieuw.",
+  "signInFailed": "Inloggen mislukt. Probeer het opnieuw.",
+  "mustContain3Digits": "Moet 3 cijfers bevatten",
+  "mustBeNumber": "Moet een getal zijn",
+  "generatedUidLabel": "Gegenereerde UID: {uid}",
+  "@generatedUidLabel": {
+    "placeholders": {
+      "uid": { "type": "String" }
+    }
+  },
+  "experimentalBadge": "EXPERIMENTEEL",
+  "newBadge": "NIEUW",
+  "colorHintExamples": "Rood, Blauw, Zwart..."
 }

@@ -414,5 +414,19 @@
   "contactUsSubtitle": "Spørsmål, forslag eller problemer",
   "nfcTagNotDetected": "Ingen NFC-brikke oppdaget",
   "nfcTagNotDetectedDesc": "Ingen brikke ble funnet. Brikken kan være død, skadet eller for langt fra telefonen. Sørg for at toppen av telefonen plasseres direkte på NFC-brikken.",
-  "nfcTagIncompatible": "Inkompatibel NFC-brikke oppdaget"
+  "nfcTagIncompatible": "Inkompatibel NFC-brikke oppdaget",
+  "signInAppleNotAvailable": "Logg inn med Apple er ikke tilgjengelig på denne enheten.",
+  "signInAppleFailed": "Logg inn med Apple mislyktes. Vennligst prøv igjen.",
+  "signInFailed": "Innlogging mislyktes. Vennligst prøv igjen.",
+  "mustContain3Digits": "Må inneholde 3 sifre",
+  "mustBeNumber": "Må være et tall",
+  "generatedUidLabel": "Generert UID: {uid}",
+  "@generatedUidLabel": {
+    "placeholders": {
+      "uid": { "type": "String" }
+    }
+  },
+  "experimentalBadge": "EKSPERIMENTELL",
+  "newBadge": "NY",
+  "colorHintExamples": "Rød, Blå, Svart..."
 }

@@ -1153,4 +1153,35 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get writePrusaTagTitle => 'Prusa OpenPrintTag Yaz';
+
+  @override
+  String get signInAppleNotAvailable =>
+      'Bu cihazda Apple ile giriş yapılamıyor.';
+
+  @override
+  String get signInAppleFailed =>
+      'Apple ile giriş başarısız oldu. Lütfen tekrar deneyin.';
+
+  @override
+  String get signInFailed => 'Giriş başarısız oldu. Lütfen tekrar deneyin.';
+
+  @override
+  String get mustContain3Digits => '3 rakam içermelidir';
+
+  @override
+  String get mustBeNumber => 'Bir sayı olmalıdır';
+
+  @override
+  String generatedUidLabel(String uid) {
+    return 'Oluşturulan UID: $uid';
+  }
+
+  @override
+  String get experimentalBadge => 'DENEYSEL';
+
+  @override
+  String get newBadge => 'YENİ';
+
+  @override
+  String get colorHintExamples => 'Kırmızı, Mavi, Siyah...';
 }

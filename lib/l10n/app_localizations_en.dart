@@ -1153,6 +1153,37 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get writePrusaTagTitle => 'Write Prusa OpenPrintTag';
+
+  @override
+  String get signInAppleNotAvailable =>
+      'Sign in with Apple is not available on this device.';
+
+  @override
+  String get signInAppleFailed =>
+      'Sign in with Apple failed. Please try again.';
+
+  @override
+  String get signInFailed => 'Sign in failed. Please try again.';
+
+  @override
+  String get mustContain3Digits => 'Must contain 3 digits';
+
+  @override
+  String get mustBeNumber => 'Must be a number';
+
+  @override
+  String generatedUidLabel(String uid) {
+    return 'Generated UID: $uid';
+  }
+
+  @override
+  String get experimentalBadge => 'EXPERIMENTAL';
+
+  @override
+  String get newBadge => 'NEW';
+
+  @override
+  String get colorHintExamples => 'Red, Blue, Black...';
 }
 
 /// The translations for English, as used in Australia (`en_AU`).
@@ -2304,6 +2335,37 @@ class AppLocalizationsEnAu extends AppLocalizationsEn {
 
   @override
   String get writePrusaTagTitle => 'Write Prusa OpenPrintTag';
+
+  @override
+  String get signInAppleNotAvailable =>
+      'Sign in with Apple is not available on this device.';
+
+  @override
+  String get signInAppleFailed =>
+      'Sign in with Apple failed. Please try again.';
+
+  @override
+  String get signInFailed => 'Sign in failed. Please try again.';
+
+  @override
+  String get mustContain3Digits => 'Must contain 3 digits';
+
+  @override
+  String get mustBeNumber => 'Must be a number';
+
+  @override
+  String generatedUidLabel(String uid) {
+    return 'Generated UID: $uid';
+  }
+
+  @override
+  String get experimentalBadge => 'EXPERIMENTAL';
+
+  @override
+  String get newBadge => 'NEW';
+
+  @override
+  String get colorHintExamples => 'Red, Blue, Black...';
 }
 
 /// The translations for English, as used in Canada (`en_CA`).
@@ -3455,6 +3517,37 @@ class AppLocalizationsEnCa extends AppLocalizationsEn {
 
   @override
   String get writePrusaTagTitle => 'Write Prusa OpenPrintTag';
+
+  @override
+  String get signInAppleNotAvailable =>
+      'Sign in with Apple is not available on this device.';
+
+  @override
+  String get signInAppleFailed =>
+      'Sign in with Apple failed. Please try again.';
+
+  @override
+  String get signInFailed => 'Sign in failed. Please try again.';
+
+  @override
+  String get mustContain3Digits => 'Must contain 3 digits';
+
+  @override
+  String get mustBeNumber => 'Must be a number';
+
+  @override
+  String generatedUidLabel(String uid) {
+    return 'Generated UID: $uid';
+  }
+
+  @override
+  String get experimentalBadge => 'EXPERIMENTAL';
+
+  @override
+  String get newBadge => 'NEW';
+
+  @override
+  String get colorHintExamples => 'Red, Blue, Black...';
 }
 
 /// The translations for English, as used in the United Kingdom (`en_GB`).
@@ -4606,4 +4699,35 @@ class AppLocalizationsEnGb extends AppLocalizationsEn {
 
   @override
   String get writePrusaTagTitle => 'Write Prusa OpenPrintTag';
+
+  @override
+  String get signInAppleNotAvailable =>
+      'Sign in with Apple is not available on this device.';
+
+  @override
+  String get signInAppleFailed =>
+      'Sign in with Apple failed. Please try again.';
+
+  @override
+  String get signInFailed => 'Sign in failed. Please try again.';
+
+  @override
+  String get mustContain3Digits => 'Must contain 3 digits';
+
+  @override
+  String get mustBeNumber => 'Must be a number';
+
+  @override
+  String generatedUidLabel(String uid) {
+    return 'Generated UID: $uid';
+  }
+
+  @override
+  String get experimentalBadge => 'EXPERIMENTAL';
+
+  @override
+  String get newBadge => 'NEW';
+
+  @override
+  String get colorHintExamples => 'Red, Blue, Black...';
 }

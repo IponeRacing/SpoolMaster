@@ -1162,4 +1162,36 @@ class AppLocalizationsCa extends AppLocalizations {
 
   @override
   String get writePrusaTagTitle => 'Escriure Prusa OpenPrintTag';
+
+  @override
+  String get signInAppleNotAvailable =>
+      'L\'inici de sessió amb Apple no està disponible en aquest dispositiu.';
+
+  @override
+  String get signInAppleFailed =>
+      'L\'inici de sessió amb Apple ha fallat. Si us plau, torneu-ho a provar.';
+
+  @override
+  String get signInFailed =>
+      'L\'inici de sessió ha fallat. Si us plau, torneu-ho a provar.';
+
+  @override
+  String get mustContain3Digits => 'Ha de contenir 3 dígits';
+
+  @override
+  String get mustBeNumber => 'Ha de ser un número';
+
+  @override
+  String generatedUidLabel(String uid) {
+    return 'UID generat: $uid';
+  }
+
+  @override
+  String get experimentalBadge => 'EXPERIMENTAL';
+
+  @override
+  String get newBadge => 'NOU';
+
+  @override
+  String get colorHintExamples => 'Vermell, Blau, Negre...';
 }

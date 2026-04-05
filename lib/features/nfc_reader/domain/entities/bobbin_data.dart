@@ -20,5 +20,10 @@ class BobbinData with _$BobbinData {
     double? price, // Prix d'achat (CHF)
     double? remainingWeight, // Poids restant (grammes)
     String? brand, // Marque
+    String? detailedType, // Type détaillé Bambu Lab (ex: "PLA Matte")
+    int? dryingTemp, // Température séchage (°C)
+    int? dryingTime, // Durée séchage (heures)
+    String? materialVariantId, // Bambu Lab variant ID (ex: "A50-K0")
+    String? materialId, // Bambu Lab material ID (ex: "GFA50")
   }) = _BobbinData;
 }
