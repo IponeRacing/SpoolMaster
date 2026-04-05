@@ -461,7 +461,11 @@ class _NfcReaderViewState extends State<_NfcReaderView> {
             child: BlocBuilder<NfcReaderBloc, NfcReaderState>(
               builder: (context, state) {
           if (state is NfcReaderLoading) {
-            return const Center(child: CircularProgressIndicator());
+            return _NfcScanningAnimation(
+              onCancel: () {
+                context.read<NfcReaderBloc>().add(const StopNfcScanEvent());
+              },
+            );
           }
 
           if (state is NfcNotAvailable) {
@@ -588,12 +592,10 @@ class _NfcReaderViewState extends State<_NfcReaderView> {
           }
 
           if (state is BobbinDataReadSuccess) {
-            return Center(
-              child: Padding(
-                padding: const EdgeInsets.all(24),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
+            return SingleChildScrollView(
+              padding: const EdgeInsets.all(24),
+              child: Column(
+                children: [
                     const Icon(
                       Icons.check_circle,
                       size: 64,
@@ -825,7 +827,6 @@ class _NfcReaderViewState extends State<_NfcReaderView> {
                       ),
                   ],
                 ),
-              ),
             );
           }
 
@@ -1136,6 +1137,108 @@ class _InfoRow extends StatelessWidget {
         ),
         Text(value, style: Theme.of(context).textTheme.bodyLarge),
       ],
+    );
+  }
+}
+
+class _NfcScanningAnimation extends StatefulWidget {
+  final VoidCallback onCancel;
+
+  const _NfcScanningAnimation({required this.onCancel});
+
+  @override
+  State<_NfcScanningAnimation> createState() => _NfcScanningAnimationState();
+}
+
+class _NfcScanningAnimationState extends State<_NfcScanningAnimation>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _pulseController;
+  late Animation<double> _pulseAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+    _pulseController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1500),
+    )..repeat(reverse: true);
+    _pulseAnimation = Tween<double>(begin: 0.8, end: 1.2).animate(
+      CurvedAnimation(parent: _pulseController, curve: Curves.easeInOut),
+    );
+  }
+
+  @override
+  void dispose() {
+    _pulseController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    return Center(
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.all(32),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            AnimatedBuilder(
+              animation: _pulseAnimation,
+              builder: (context, child) {
+                return Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    Container(
+                      width: 160 * _pulseAnimation.value,
+                      height: 160 * _pulseAnimation.value,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: const Color(0xFF4CAF50).withValues(alpha: 0.1),
+                      ),
+                    ),
+                    Container(
+                      width: 120 * _pulseAnimation.value,
+                      height: 120 * _pulseAnimation.value,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: const Color(0xFF4CAF50).withValues(alpha: 0.2),
+                      ),
+                    ),
+                    const Icon(
+                      Icons.nfc_rounded,
+                      size: 64,
+                      color: Color(0xFF4CAF50),
+                    ),
+                  ],
+                );
+              },
+            ),
+            const SizedBox(height: 40),
+            Text(
+              l10n.approachNfcChip,
+              style: const TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 12),
+            const SizedBox(
+              width: 200,
+              child: LinearProgressIndicator(
+                backgroundColor: Colors.grey,
+                color: Color(0xFF4CAF50),
+              ),
+            ),
+            const SizedBox(height: 40),
+            OutlinedButton.icon(
+              onPressed: widget.onCancel,
+              icon: const Icon(Icons.close),
+              label: Text(l10n.cancel),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

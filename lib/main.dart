@@ -239,9 +239,9 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
   @override
   Widget build(BuildContext context) {
     return PopScope(
-      canPop: _selectedIndex == 0,
+      canPop: false,
       onPopInvokedWithResult: (didPop, result) {
-        if (!didPop) {
+        if (!didPop && _selectedIndex != 0) {
           setState(() {
             _selectedIndex = 0;
           });

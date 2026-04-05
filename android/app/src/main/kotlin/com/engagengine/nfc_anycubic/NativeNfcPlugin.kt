@@ -62,6 +62,8 @@ class NativeNfcPlugin private constructor(
 
         private var instance: NativeNfcPlugin? = null
 
+        fun getInstance(): NativeNfcPlugin? = instance
+
         fun registerWith(flutterEngine: FlutterEngine, activity: Activity) {
             val channel = MethodChannel(flutterEngine.dartExecutor.binaryMessenger, CHANNEL_NAME)
             instance = NativeNfcPlugin(activity)
@@ -296,21 +298,81 @@ class NativeNfcPlugin private constructor(
         result.success(true)
     }
 
-    private fun enableReaderMode() {
-        val flags = NfcAdapter.FLAG_READER_NFC_A or
-                   NfcAdapter.FLAG_READER_NFC_B or
-                   NfcAdapter.FLAG_READER_NFC_V or
-                   NfcAdapter.FLAG_READER_SKIP_NDEF_CHECK
+    private var useForegroundDispatch = false
 
-        nfcAdapter?.enableReaderMode(activity, this, flags, null)
-        startTimeout()
-        Log.d(TAG, "Reader mode enabled (NFC-A, NFC-B, NFC-V)")
+    private fun enableReaderMode() {
+        // Use foreground dispatch as primary method (more compatible, especially Samsung/Android 16+)
+        try {
+            enableForegroundDispatchFallback()
+            Log.d(TAG, "Using foreground dispatch as primary NFC method")
+        } catch (e: Exception) {
+            Log.e(TAG, "Foreground dispatch failed, trying enableReaderMode", e)
+            try {
+                val flags = NfcAdapter.FLAG_READER_NFC_A or
+                           NfcAdapter.FLAG_READER_NFC_B or
+                           NfcAdapter.FLAG_READER_NFC_V
+
+                val extras = android.os.Bundle()
+                extras.putInt(NfcAdapter.EXTRA_READER_PRESENCE_CHECK_DELAY, 250)
+
+                nfcAdapter?.enableReaderMode(activity, this, flags, extras)
+                useForegroundDispatch = false
+                startTimeout()
+                Log.d(TAG, "Reader mode enabled as fallback (flags=$flags)")
+            } catch (e2: Exception) {
+                Log.e(TAG, "Both NFC methods failed", e2)
+                sendError("NFC_ERROR", "Cannot start NFC: ${e2.message}")
+            }
+        }
+    }
+
+    private fun enableForegroundDispatchFallback() {
+        try {
+            val intent = Intent(activity, MainActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
+            val pendingIntent = PendingIntent.getActivity(
+                activity, 0, intent,
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_MUTABLE
+            )
+            // Pass null for filters + techList to match ALL NFC tags (most compatible)
+            nfcAdapter?.enableForegroundDispatch(activity, pendingIntent, null, null)
+            useForegroundDispatch = true
+            startTimeout()
+            Log.d(TAG, "Foreground dispatch enabled - waiting for any NFC tag")
+        } catch (e: Exception) {
+            Log.e(TAG, "enableForegroundDispatch failed", e)
+            sendError("NFC_ERROR", "Cannot start NFC: ${e.message}")
+        }
+    }
+
+    /** Called from MainActivity when a foreground dispatch intent is received */
+    fun handleIntent(intent: Intent) {
+        if (intent.action == NfcAdapter.ACTION_TECH_DISCOVERED ||
+            intent.action == NfcAdapter.ACTION_TAG_DISCOVERED ||
+            intent.action == NfcAdapter.ACTION_NDEF_DISCOVERED) {
+            val tag: Tag? = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                intent.getParcelableExtra(NfcAdapter.EXTRA_TAG, Tag::class.java)
+            } else {
+                @Suppress("DEPRECATION")
+                intent.getParcelableExtra(NfcAdapter.EXTRA_TAG)
+            }
+            Log.d(TAG, "Tag received via foreground dispatch: ${tag?.techList?.joinToString()}")
+            onTagDiscovered(tag)
+        }
     }
 
     private fun disableReaderMode() {
         cancelTimeout()
-        nfcAdapter?.disableReaderMode(activity)
-        Log.d(TAG, "Reader mode disabled")
+        try {
+            if (useForegroundDispatch) {
+                nfcAdapter?.disableForegroundDispatch(activity)
+                Log.d(TAG, "Foreground dispatch disabled")
+            } else {
+                nfcAdapter?.disableReaderMode(activity)
+                Log.d(TAG, "Reader mode disabled")
+            }
+        } catch (e: Exception) {
+            Log.w(TAG, "Error disabling NFC mode: ${e.message}")
+        }
     }
 
     private fun startTimeout() {

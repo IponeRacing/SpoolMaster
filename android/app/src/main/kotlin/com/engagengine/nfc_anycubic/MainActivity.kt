@@ -1,5 +1,6 @@
 package com.engagengine.nfc_anycubic
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.core.view.WindowCompat
 import io.flutter.embedding.android.FlutterActivity
@@ -15,5 +16,11 @@ class MainActivity : FlutterActivity() {
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
         NativeNfcPlugin.registerWith(flutterEngine, this)
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        // Forward NFC intents to the plugin (for foreground dispatch fallback)
+        NativeNfcPlugin.getInstance()?.handleIntent(intent)
     }
 }
