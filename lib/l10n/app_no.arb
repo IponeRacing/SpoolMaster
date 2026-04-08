@@ -428,5 +428,11 @@
   },
   "experimentalBadge": "EKSPERIMENTELL",
   "newBadge": "NY",
+  "forCrealityCfs": "for Creality CFS",
+  "crealityReadWrite": "Creality: Les & skriv",
+  "crealityReadWriteDesc": "Creality CFS-tagger bruker MiFare Classic 1K med AES-128-ECB-kryptering. Lesing og skriving støttes kun på Android.",
+  "platformLimitationTitle": "Plattformbegrensning",
+  "mifareClassicNotSupportedIos": "MiFare Classic-tagger (Bambu Lab, Creality) støttes ikke på iOS på grunn av en Apple CoreNFC-begrensning. Denne funksjonen er kun tilgjengelig på Android.",
+  "nfcTagInfoCreality": "Bruk en MiFare Classic 1K-tag for å skrive Creality CFS-kompatible data for Creality K2 Plus.",
   "colorHintExamples": "Rød, Blå, Svart..."
 }

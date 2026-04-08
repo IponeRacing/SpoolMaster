@@ -1185,25 +1185,25 @@ class AppLocalizationsVi extends AppLocalizations {
   String get newBadge => 'MỚI';
 
   @override
-  String get forCrealityCfs => 'pour Creality CFS';
+  String get forCrealityCfs => 'cho Creality CFS';
 
   @override
-  String get crealityReadWrite => 'Creality : Lecture & Écriture';
+  String get crealityReadWrite => 'Creality: Đọc & ghi';
 
   @override
   String get crealityReadWriteDesc =>
-      'Les tags Creality CFS utilisent MiFare Classic 1K avec chiffrement AES-128-ECB. Lecture et écriture supportées sur Android uniquement.';
+      'Thẻ Creality CFS sử dụng MiFare Classic 1K với mã hóa AES-128-ECB. Đọc và ghi chỉ được hỗ trợ trên Android.';
 
   @override
-  String get platformLimitationTitle => 'Limitation plateforme';
+  String get platformLimitationTitle => 'Giới hạn nền tảng';
 
   @override
   String get mifareClassicNotSupportedIos =>
-      'Les tags MiFare Classic (Bambu Lab, Creality) ne sont pas supportés sur iOS en raison d\'une limitation Apple CoreNFC. Cette fonctionnalité est disponible sur Android uniquement.';
+      'Thẻ MiFare Classic (Bambu Lab, Creality) không được hỗ trợ trên iOS do giới hạn của Apple CoreNFC. Tính năng này chỉ có trên Android.';
 
   @override
   String get nfcTagInfoCreality =>
-      'Utilisez un tag MiFare Classic 1K pour écrire des données compatibles Creality CFS pour le Creality K2 Plus.';
+      'Sử dụng thẻ MiFare Classic 1K để ghi dữ liệu tương thích Creality CFS cho Creality K2 Plus.';
 
   @override
   String get colorHintExamples => 'Đỏ, Xanh dương, Đen...';

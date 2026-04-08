@@ -428,5 +428,11 @@
   },
   "experimentalBadge": "DENEYSEL",
   "newBadge": "YENİ",
+  "forCrealityCfs": "Creality CFS için",
+  "crealityReadWrite": "Creality: Okuma ve yazma",
+  "crealityReadWriteDesc": "Creality CFS etiketleri AES-128-ECB şifreleme ile MiFare Classic 1K kullanır. Okuma ve yazma yalnızca Android'de desteklenir.",
+  "platformLimitationTitle": "Platform kısıtlaması",
+  "mifareClassicNotSupportedIos": "MiFare Classic etiketler (Bambu Lab, Creality) Apple CoreNFC kısıtlaması nedeniyle iOS'ta desteklenmemektedir. Bu özellik yalnızca Android'de kullanılabilir.",
+  "nfcTagInfoCreality": "Creality K2 Plus için Creality CFS uyumlu veri yazmak üzere MiFare Classic 1K etiketi kullanın.",
   "colorHintExamples": "Kırmızı, Mavi, Siyah..."
 }

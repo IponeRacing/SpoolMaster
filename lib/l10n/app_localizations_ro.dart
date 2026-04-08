@@ -1184,25 +1184,25 @@ class AppLocalizationsRo extends AppLocalizations {
   String get newBadge => 'NOU';
 
   @override
-  String get forCrealityCfs => 'pour Creality CFS';
+  String get forCrealityCfs => 'pentru Creality CFS';
 
   @override
-  String get crealityReadWrite => 'Creality : Lecture & Écriture';
+  String get crealityReadWrite => 'Creality: Citire & scriere';
 
   @override
   String get crealityReadWriteDesc =>
-      'Les tags Creality CFS utilisent MiFare Classic 1K avec chiffrement AES-128-ECB. Lecture et écriture supportées sur Android uniquement.';
+      'Etichetele Creality CFS folosesc MiFare Classic 1K cu criptare AES-128-ECB. Citirea și scrierea sunt acceptate doar pe Android.';
 
   @override
-  String get platformLimitationTitle => 'Limitation plateforme';
+  String get platformLimitationTitle => 'Limitare platformă';
 
   @override
   String get mifareClassicNotSupportedIos =>
-      'Les tags MiFare Classic (Bambu Lab, Creality) ne sont pas supportés sur iOS en raison d\'une limitation Apple CoreNFC. Cette fonctionnalité est disponible sur Android uniquement.';
+      'Etichetele MiFare Classic (Bambu Lab, Creality) nu sunt acceptate pe iOS din cauza unei limitări Apple CoreNFC. Această funcționalitate este disponibilă doar pe Android.';
 
   @override
   String get nfcTagInfoCreality =>
-      'Utilisez un tag MiFare Classic 1K pour écrire des données compatibles Creality CFS pour le Creality K2 Plus.';
+      'Folosiți o etichetă MiFare Classic 1K pentru a scrie date compatibile Creality CFS pentru Creality K2 Plus.';
 
   @override
   String get colorHintExamples => 'Roșu, Albastru, Negru...';

@@ -428,5 +428,11 @@
   },
   "experimentalBadge": "تجريبي",
   "newBadge": "جديد",
+  "forCrealityCfs": "لـ Creality CFS",
+  "crealityReadWrite": "Creality: قراءة وكتابة",
+  "crealityReadWriteDesc": "تستخدم علامات Creality CFS تقنية MiFare Classic 1K مع تشفير AES-128-ECB. القراءة والكتابة مدعومة على Android فقط.",
+  "platformLimitationTitle": "قيود المنصة",
+  "mifareClassicNotSupportedIos": "علامات MiFare Classic (Bambu Lab، Creality) غير مدعومة على iOS بسبب قيود Apple CoreNFC. هذه الميزة متاحة على Android فقط.",
+  "nfcTagInfoCreality": "استخدم علامة MiFare Classic 1K لكتابة بيانات متوافقة مع Creality CFS لـ Creality K2 Plus.",
   "colorHintExamples": "أحمر، أزرق، أسود..."
 }

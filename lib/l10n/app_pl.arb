@@ -428,5 +428,11 @@
   },
   "experimentalBadge": "EKSPERYMENTALNE",
   "newBadge": "NOWE",
+  "forCrealityCfs": "dla Creality CFS",
+  "crealityReadWrite": "Creality: Odczyt i zapis",
+  "crealityReadWriteDesc": "Tagi Creality CFS używają MiFare Classic 1K z szyfrowaniem AES-128-ECB. Odczyt i zapis obsługiwany tylko na Androidzie.",
+  "platformLimitationTitle": "Ograniczenie platformy",
+  "mifareClassicNotSupportedIos": "Tagi MiFare Classic (Bambu Lab, Creality) nie są obsługiwane na iOS z powodu ograniczenia Apple CoreNFC. Ta funkcja jest dostępna tylko na Androidzie.",
+  "nfcTagInfoCreality": "Użyj tagu MiFare Classic 1K, aby zapisać dane kompatybilne z Creality CFS dla Creality K2 Plus.",
   "colorHintExamples": "Czerwony, Niebieski, Czarny..."
 }

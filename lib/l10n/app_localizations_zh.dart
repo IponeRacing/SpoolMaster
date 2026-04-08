@@ -1158,25 +1158,25 @@ class AppLocalizationsZh extends AppLocalizations {
   String get newBadge => '新';
 
   @override
-  String get forCrealityCfs => 'pour Creality CFS';
+  String get forCrealityCfs => '适用于Creality CFS';
 
   @override
-  String get crealityReadWrite => 'Creality : Lecture & Écriture';
+  String get crealityReadWrite => 'Creality：读取和写入';
 
   @override
   String get crealityReadWriteDesc =>
-      'Les tags Creality CFS utilisent MiFare Classic 1K avec chiffrement AES-128-ECB. Lecture et écriture supportées sur Android uniquement.';
+      'Creality CFS标签使用AES-128-ECB加密的MiFare Classic 1K。仅Android支持读写。';
 
   @override
-  String get platformLimitationTitle => 'Limitation plateforme';
+  String get platformLimitationTitle => '平台限制';
 
   @override
   String get mifareClassicNotSupportedIos =>
-      'Les tags MiFare Classic (Bambu Lab, Creality) ne sont pas supportés sur iOS en raison d\'une limitation Apple CoreNFC. Cette fonctionnalité est disponible sur Android uniquement.';
+      '由于Apple CoreNFC限制，iOS不支持MiFare Classic标签（Bambu Lab、Creality）。此功能仅在Android上可用。';
 
   @override
   String get nfcTagInfoCreality =>
-      'Utilisez un tag MiFare Classic 1K pour écrire des données compatibles Creality CFS pour le Creality K2 Plus.';
+      '使用MiFare Classic 1K标签写入Creality CFS兼容数据（适用于Creality K2 Plus）。';
 
   @override
   String get colorHintExamples => '红色、蓝色、黑色...';
@@ -2346,6 +2346,27 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String get newBadge => '新';
+
+  @override
+  String get forCrealityCfs => '適用於Creality CFS';
+
+  @override
+  String get crealityReadWrite => 'Creality：讀取和寫入';
+
+  @override
+  String get crealityReadWriteDesc =>
+      'Creality CFS標籤使用AES-128-ECB加密的MiFare Classic 1K。僅Android支援讀寫。';
+
+  @override
+  String get platformLimitationTitle => '平台限制';
+
+  @override
+  String get mifareClassicNotSupportedIos =>
+      '由於Apple CoreNFC限制，iOS不支援MiFare Classic標籤（Bambu Lab、Creality）。此功能僅在Android上可用。';
+
+  @override
+  String get nfcTagInfoCreality =>
+      '使用MiFare Classic 1K標籤寫入Creality CFS相容資料（適用於Creality K2 Plus）。';
 
   @override
   String get colorHintExamples => '紅色、藍色、黑色...';

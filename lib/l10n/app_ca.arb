@@ -428,5 +428,11 @@
   },
   "experimentalBadge": "EXPERIMENTAL",
   "newBadge": "NOU",
+  "forCrealityCfs": "per a Creality CFS",
+  "crealityReadWrite": "Creality: Lectura i escriptura",
+  "crealityReadWriteDesc": "Les etiquetes Creality CFS utilitzen MiFare Classic 1K amb xifratge AES-128-ECB. Lectura i escriptura compatibles només a Android.",
+  "platformLimitationTitle": "Limitació de plataforma",
+  "mifareClassicNotSupportedIos": "Les etiquetes MiFare Classic (Bambu Lab, Creality) no són compatibles amb iOS a causa d'una limitació d'Apple CoreNFC. Aquesta funcionalitat només està disponible a Android.",
+  "nfcTagInfoCreality": "Utilitzeu una etiqueta MiFare Classic 1K per escriure dades compatibles amb Creality CFS per al Creality K2 Plus.",
   "colorHintExamples": "Vermell, Blau, Negre..."
 }

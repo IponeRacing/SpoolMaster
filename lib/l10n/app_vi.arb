@@ -428,5 +428,11 @@
   },
   "experimentalBadge": "THỬ NGHIỆM",
   "newBadge": "MỚI",
+  "forCrealityCfs": "cho Creality CFS",
+  "crealityReadWrite": "Creality: Đọc & ghi",
+  "crealityReadWriteDesc": "Thẻ Creality CFS sử dụng MiFare Classic 1K với mã hóa AES-128-ECB. Đọc và ghi chỉ được hỗ trợ trên Android.",
+  "platformLimitationTitle": "Giới hạn nền tảng",
+  "mifareClassicNotSupportedIos": "Thẻ MiFare Classic (Bambu Lab, Creality) không được hỗ trợ trên iOS do giới hạn của Apple CoreNFC. Tính năng này chỉ có trên Android.",
+  "nfcTagInfoCreality": "Sử dụng thẻ MiFare Classic 1K để ghi dữ liệu tương thích Creality CFS cho Creality K2 Plus.",
   "colorHintExamples": "Đỏ, Xanh dương, Đen..."
 }

@@ -428,5 +428,11 @@
   },
   "experimentalBadge": "ניסיוני",
   "newBadge": "חדש",
+  "forCrealityCfs": "עבור Creality CFS",
+  "crealityReadWrite": "Creality: קריאה וכתיבה",
+  "crealityReadWriteDesc": "תגי Creality CFS משתמשים ב-MiFare Classic 1K עם הצפנת AES-128-ECB. קריאה וכתיבה נתמכות באנדרואיד בלבד.",
+  "platformLimitationTitle": "מגבלת פלטפורמה",
+  "mifareClassicNotSupportedIos": "תגי MiFare Classic (Bambu Lab, Creality) אינם נתמכים ב-iOS בשל מגבלת Apple CoreNFC. תכונה זו זמינה באנדרואיד בלבד.",
+  "nfcTagInfoCreality": "השתמש בתג MiFare Classic 1K לכתיבת נתונים תואמי Creality CFS עבור Creality K2 Plus.",
   "colorHintExamples": "אדום, כחול, שחור..."
 }

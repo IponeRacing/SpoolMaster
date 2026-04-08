@@ -1182,25 +1182,25 @@ class AppLocalizationsTh extends AppLocalizations {
   String get newBadge => 'ใหม่';
 
   @override
-  String get forCrealityCfs => 'pour Creality CFS';
+  String get forCrealityCfs => 'สำหรับ Creality CFS';
 
   @override
-  String get crealityReadWrite => 'Creality : Lecture & Écriture';
+  String get crealityReadWrite => 'Creality: อ่านและเขียน';
 
   @override
   String get crealityReadWriteDesc =>
-      'Les tags Creality CFS utilisent MiFare Classic 1K avec chiffrement AES-128-ECB. Lecture et écriture supportées sur Android uniquement.';
+      'แท็ก Creality CFS ใช้ MiFare Classic 1K พร้อมการเข้ารหัส AES-128-ECB รองรับการอ่านและเขียนบน Android เท่านั้น';
 
   @override
-  String get platformLimitationTitle => 'Limitation plateforme';
+  String get platformLimitationTitle => 'ข้อจำกัดของแพลตฟอร์ม';
 
   @override
   String get mifareClassicNotSupportedIos =>
-      'Les tags MiFare Classic (Bambu Lab, Creality) ne sont pas supportés sur iOS en raison d\'une limitation Apple CoreNFC. Cette fonctionnalité est disponible sur Android uniquement.';
+      'แท็ก MiFare Classic (Bambu Lab, Creality) ไม่รองรับบน iOS เนื่องจากข้อจำกัดของ Apple CoreNFC ฟีเจอร์นี้ใช้ได้บน Android เท่านั้น';
 
   @override
   String get nfcTagInfoCreality =>
-      'Utilisez un tag MiFare Classic 1K pour écrire des données compatibles Creality CFS pour le Creality K2 Plus.';
+      'ใช้แท็ก MiFare Classic 1K เพื่อเขียนข้อมูลที่เข้ากันได้กับ Creality CFS สำหรับ Creality K2 Plus';
 
   @override
   String get colorHintExamples => 'แดง, น้ำเงิน, ดำ...';

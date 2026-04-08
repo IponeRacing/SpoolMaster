@@ -428,5 +428,11 @@
   },
   "experimentalBadge": "EKSPERIMENTALNO",
   "newBadge": "NOVO",
+  "forCrealityCfs": "za Creality CFS",
+  "crealityReadWrite": "Creality: Čitanje i pisanje",
+  "crealityReadWriteDesc": "Creality CFS oznake koriste MiFare Classic 1K s AES-128-ECB enkripcijom. Čitanje i pisanje podržano samo na Androidu.",
+  "platformLimitationTitle": "Ograničenje platforme",
+  "mifareClassicNotSupportedIos": "MiFare Classic oznake (Bambu Lab, Creality) nisu podržane na iOS-u zbog ograničenja Apple CoreNFC-a. Ova značajka dostupna je samo na Androidu.",
+  "nfcTagInfoCreality": "Koristite MiFare Classic 1K oznaku za pisanje podataka kompatibilnih s Creality CFS za Creality K2 Plus.",
   "colorHintExamples": "Crvena, Plava, Crna..."
 }

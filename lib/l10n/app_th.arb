@@ -428,5 +428,11 @@
   },
   "experimentalBadge": "ทดลอง",
   "newBadge": "ใหม่",
+  "forCrealityCfs": "สำหรับ Creality CFS",
+  "crealityReadWrite": "Creality: อ่านและเขียน",
+  "crealityReadWriteDesc": "แท็ก Creality CFS ใช้ MiFare Classic 1K พร้อมการเข้ารหัส AES-128-ECB รองรับการอ่านและเขียนบน Android เท่านั้น",
+  "platformLimitationTitle": "ข้อจำกัดของแพลตฟอร์ม",
+  "mifareClassicNotSupportedIos": "แท็ก MiFare Classic (Bambu Lab, Creality) ไม่รองรับบน iOS เนื่องจากข้อจำกัดของ Apple CoreNFC ฟีเจอร์นี้ใช้ได้บน Android เท่านั้น",
+  "nfcTagInfoCreality": "ใช้แท็ก MiFare Classic 1K เพื่อเขียนข้อมูลที่เข้ากันได้กับ Creality CFS สำหรับ Creality K2 Plus",
   "colorHintExamples": "แดง, น้ำเงิน, ดำ..."
 }

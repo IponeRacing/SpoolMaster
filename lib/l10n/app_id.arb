@@ -428,5 +428,11 @@
   },
   "experimentalBadge": "EKSPERIMENTAL",
   "newBadge": "BARU",
+  "forCrealityCfs": "untuk Creality CFS",
+  "crealityReadWrite": "Creality: Baca & tulis",
+  "crealityReadWriteDesc": "Tag Creality CFS menggunakan MiFare Classic 1K dengan enkripsi AES-128-ECB. Baca dan tulis hanya didukung di Android.",
+  "platformLimitationTitle": "Batasan platform",
+  "mifareClassicNotSupportedIos": "Tag MiFare Classic (Bambu Lab, Creality) tidak didukung di iOS karena batasan Apple CoreNFC. Fitur ini hanya tersedia di Android.",
+  "nfcTagInfoCreality": "Gunakan tag MiFare Classic 1K untuk menulis data yang kompatibel dengan Creality CFS untuk Creality K2 Plus.",
   "colorHintExamples": "Merah, Biru, Hitam..."
 }

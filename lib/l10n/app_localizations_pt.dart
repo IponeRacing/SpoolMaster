@@ -1187,25 +1187,25 @@ class AppLocalizationsPt extends AppLocalizations {
   String get newBadge => 'NOVO';
 
   @override
-  String get forCrealityCfs => 'pour Creality CFS';
+  String get forCrealityCfs => 'para Creality CFS';
 
   @override
-  String get crealityReadWrite => 'Creality : Lecture & Écriture';
+  String get crealityReadWrite => 'Creality: Leitura e escrita';
 
   @override
   String get crealityReadWriteDesc =>
-      'Les tags Creality CFS utilisent MiFare Classic 1K avec chiffrement AES-128-ECB. Lecture et écriture supportées sur Android uniquement.';
+      'Tags Creality CFS usam MiFare Classic 1K com criptografia AES-128-ECB. Leitura e escrita suportadas apenas no Android.';
 
   @override
-  String get platformLimitationTitle => 'Limitation plateforme';
+  String get platformLimitationTitle => 'Limitação da plataforma';
 
   @override
   String get mifareClassicNotSupportedIos =>
-      'Les tags MiFare Classic (Bambu Lab, Creality) ne sont pas supportés sur iOS en raison d\'une limitation Apple CoreNFC. Cette fonctionnalité est disponible sur Android uniquement.';
+      'Tags MiFare Classic (Bambu Lab, Creality) não são suportados no iOS devido a uma limitação do Apple CoreNFC. Esta funcionalidade está disponível apenas no Android.';
 
   @override
   String get nfcTagInfoCreality =>
-      'Utilisez un tag MiFare Classic 1K pour écrire des données compatibles Creality CFS pour le Creality K2 Plus.';
+      'Use um tag MiFare Classic 1K para escrever dados compatíveis com Creality CFS para o Creality K2 Plus.';
 
   @override
   String get colorHintExamples => 'Vermelho, Azul, Preto...';

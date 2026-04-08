@@ -428,5 +428,11 @@
   },
   "experimentalBadge": "EXPERIMENTÁLNÍ",
   "newBadge": "NOVÉ",
+  "forCrealityCfs": "pro Creality CFS",
+  "crealityReadWrite": "Creality: Čtení a zápis",
+  "crealityReadWriteDesc": "Tagy Creality CFS používají MiFare Classic 1K s šifrováním AES-128-ECB. Čtení a zápis podporován pouze na Androidu.",
+  "platformLimitationTitle": "Omezení platformy",
+  "mifareClassicNotSupportedIos": "Tagy MiFare Classic (Bambu Lab, Creality) nejsou na iOS podporovány kvůli omezení Apple CoreNFC. Tato funkce je dostupná pouze na Androidu.",
+  "nfcTagInfoCreality": "Použijte tag MiFare Classic 1K pro zápis dat kompatibilních s Creality CFS pro Creality K2 Plus.",
   "colorHintExamples": "Červená, Modrá, Černá..."
 }

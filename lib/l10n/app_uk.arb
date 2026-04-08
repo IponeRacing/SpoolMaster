@@ -428,5 +428,11 @@
   },
   "experimentalBadge": "ЕКСПЕРИМЕНТАЛЬНЕ",
   "newBadge": "НОВЕ",
+  "forCrealityCfs": "для Creality CFS",
+  "crealityReadWrite": "Creality: Читання та запис",
+  "crealityReadWriteDesc": "Мітки Creality CFS використовують MiFare Classic 1K з шифруванням AES-128-ECB. Читання та запис підтримуються лише на Android.",
+  "platformLimitationTitle": "Обмеження платформи",
+  "mifareClassicNotSupportedIos": "Мітки MiFare Classic (Bambu Lab, Creality) не підтримуються на iOS через обмеження Apple CoreNFC. Ця функція доступна лише на Android.",
+  "nfcTagInfoCreality": "Використовуйте мітку MiFare Classic 1K для запису даних, сумісних з Creality CFS, для Creality K2 Plus.",
   "colorHintExamples": "Червоний, Синій, Чорний..."
 }
