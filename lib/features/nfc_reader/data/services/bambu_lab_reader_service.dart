@@ -23,7 +23,7 @@ class BambuLabReaderService {
       final result = await _channel.invokeMethod('readBambuLabTag');
 
       if (result == null) {
-        throw const NfcTagReadFailure('Aucune donnée reçue du tag Bambu Lab');
+        throw const NfcTagReadFailure(message: 'Aucune donnée reçue du tag Bambu Lab');
       }
 
       final data = Map<String, dynamic>.from(result as Map);
@@ -66,9 +66,9 @@ class BambuLabReaderService {
       rethrow;
     } catch (e) {
       throw NfcTagReadFailure(
-        'Erreur parsing tag Bambu Lab: $e',
-        rawHexDump,
-        rawBytesCount,
+        message: 'Erreur parsing tag Bambu Lab: $e',
+        rawTagData: rawHexDump,
+        rawBytesCount: rawBytesCount,
       );
     }
   }

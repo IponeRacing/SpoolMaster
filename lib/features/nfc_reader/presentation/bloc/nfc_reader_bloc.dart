@@ -103,17 +103,27 @@ class NfcReaderBloc extends Bloc<NfcReaderEvent, NfcReaderState> {
           return;
         }
 
-        // Déterminer le type d'échec pour l'UI
+        // Déterminer le type d'échec et extraire les diagnostics session
         var failureType = NfcFailureType.readError;
+        int? sessionDurationMs;
+        bool? tagWasDetected;
+
         if (failure is NfcTagNotDetectedFailure) {
           developer.log('⏱️ [BLOC] Tag non détecté (timeout)');
           failureType = NfcFailureType.tagNotDetected;
+          sessionDurationMs = failure.sessionDurationMs;
+          tagWasDetected = failure.tagWasDetected;
         } else if (failure is NfcTagIncompatibleFailure) {
           developer.log('📡 [BLOC] Tag incompatible détecté: ${failure.tagType}');
           failureType = NfcFailureType.incompatibleTag;
+          sessionDurationMs = failure.sessionDurationMs;
+          tagWasDetected = failure.tagWasDetected;
+        } else if (failure is NfcTagReadFailure) {
+          sessionDurationMs = failure.sessionDurationMs;
+          tagWasDetected = failure.tagWasDetected;
         }
 
-        // Log failed scan to backend with error details
+        // Log failed scan to backend with error details + session diagnostics
         AnalyticsService.logNfcScan(
           scanType: 'scan_nfc',
           success: false,
@@ -121,6 +131,8 @@ class NfcReaderBloc extends Bloc<NfcReaderEvent, NfcReaderState> {
           nfcMode: nfcMode,
           rawTagData: failure is NfcTagReadFailure ? failure.rawTagData : null,
           rawBytesCount: failure is NfcTagReadFailure ? failure.rawBytesCount : null,
+          sessionDurationMs: sessionDurationMs,
+          tagWasDetected: tagWasDetected,
         );
         // Comptabiliser l'echec pour le garde-fou review
         unawaited(ReviewService().onFailedScan());
@@ -197,10 +209,20 @@ class NfcReaderBloc extends Bloc<NfcReaderEvent, NfcReaderState> {
         }
 
         var failureType = NfcFailureType.readError;
+        int? sessionDurationMs;
+        bool? tagWasDetected;
+
         if (failure is NfcTagNotDetectedFailure) {
           failureType = NfcFailureType.tagNotDetected;
+          sessionDurationMs = failure.sessionDurationMs;
+          tagWasDetected = failure.tagWasDetected;
         } else if (failure is NfcTagIncompatibleFailure) {
           failureType = NfcFailureType.incompatibleTag;
+          sessionDurationMs = failure.sessionDurationMs;
+          tagWasDetected = failure.tagWasDetected;
+        } else if (failure is NfcTagReadFailure) {
+          sessionDurationMs = failure.sessionDurationMs;
+          tagWasDetected = failure.tagWasDetected;
         }
 
         AnalyticsService.logNfcScan(
@@ -208,6 +230,8 @@ class NfcReaderBloc extends Bloc<NfcReaderEvent, NfcReaderState> {
           success: false,
           errorMessage: failure.message,
           nfcMode: 'auto',
+          sessionDurationMs: sessionDurationMs,
+          tagWasDetected: tagWasDetected,
         );
 
         emit(NfcReaderFailure(

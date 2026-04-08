@@ -19,6 +19,9 @@ class NativeNfcPlugin: NSObject, FlutterPlugin {
     private var isOpenPrintTagWriteMode = false
     private var openPrintTagDataToWrite: [UInt8]?
     private var bambuBlocksToWrite: [String: [UInt8]]?
+    private var sessionStartTime: Date?
+    private var tagDetectedTime: Date?
+    private var tagDetected = false
 
     func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
         switch call.method {
@@ -55,6 +58,13 @@ class NativeNfcPlugin: NSObject, FlutterPlugin {
                 return
             }
             startOpenPrintTagWriteSession(data: data.map { UInt8($0 & 0xFF) }, result: result)
+        case "readCrealityTag", "writeCrealityTag":
+            // MiFare Classic (Crypto1) n'est pas supporté par Apple CoreNFC
+            result(FlutterError(
+                code: "PLATFORM_NOT_SUPPORTED",
+                message: "Les tags Creality CFS utilisent MiFare Classic qui n'est pas supporté par Apple CoreNFC. Cette fonctionnalité est disponible sur Android uniquement.",
+                details: nil
+            ))
         default:
             result(FlutterMethodNotImplemented)
         }
@@ -65,6 +75,7 @@ class NativeNfcPlugin: NSObject, FlutterPlugin {
 
         session = NFCTagReaderSession(pollingOption: .iso14443, delegate: self)
         session?.alertMessage = "Maintenez votre téléphone près du tag NFC"
+        startSessionTracking()
         session?.begin()
     }
 
@@ -75,7 +86,7 @@ class NativeNfcPlugin: NSObject, FlutterPlugin {
         }
         // Notifier le callback en attente si il y en a un
         if let pendingResult = self.result {
-            pendingResult(FlutterError(code: "USER_CANCELLED", message: "Session arrêtée", details: nil))
+            pendingResult(FlutterError(code: "USER_CANCELLED", message: "Session arrêtée", details: buildSessionDiagnostics()))
         }
         self.result = nil
         self.session = nil
@@ -86,6 +97,7 @@ class NativeNfcPlugin: NSObject, FlutterPlugin {
         self.pagesToWrite = nil
         self.bambuBlocksToWrite = nil
         self.openPrintTagDataToWrite = nil
+        resetSessionTracking()
         result(true)
     }
 
@@ -96,6 +108,7 @@ class NativeNfcPlugin: NSObject, FlutterPlugin {
 
         session = NFCTagReaderSession(pollingOption: .iso14443, delegate: self)
         session?.alertMessage = "Maintenez votre téléphone près du tag NFC pour écriture"
+        startSessionTracking()
         session?.begin()
     }
 
@@ -105,6 +118,7 @@ class NativeNfcPlugin: NSObject, FlutterPlugin {
 
         session = NFCTagReaderSession(pollingOption: .iso14443, delegate: self)
         session?.alertMessage = "Maintenez votre téléphone près du tag NFC"
+        startSessionTracking()
         session?.begin()
     }
 
@@ -114,6 +128,7 @@ class NativeNfcPlugin: NSObject, FlutterPlugin {
 
         session = NFCTagReaderSession(pollingOption: [.iso15693], delegate: self)
         session?.alertMessage = "Maintenez votre téléphone près du tag NFC Prusa"
+        startSessionTracking()
         session?.begin()
     }
 
@@ -123,6 +138,7 @@ class NativeNfcPlugin: NSObject, FlutterPlugin {
 
         session = NFCTagReaderSession(pollingOption: [.iso14443, .iso15693], delegate: self)
         session?.alertMessage = "Maintenez votre téléphone près du tag NFC"
+        startSessionTracking()
         session?.begin()
     }
 
@@ -133,6 +149,7 @@ class NativeNfcPlugin: NSObject, FlutterPlugin {
 
         session = NFCTagReaderSession(pollingOption: [.iso15693], delegate: self)
         session?.alertMessage = "Maintenez votre téléphone près du tag NFC ISO 15693 vierge"
+        startSessionTracking()
         session?.begin()
     }
 
@@ -142,7 +159,33 @@ class NativeNfcPlugin: NSObject, FlutterPlugin {
 
         session = NFCTagReaderSession(pollingOption: .iso14443, delegate: self)
         session?.alertMessage = "Maintenez votre téléphone près de la carte CUID vierge"
+        startSessionTracking()
         session?.begin()
+    }
+
+    private func buildSessionDiagnostics(tagType: String? = nil) -> [String: Any] {
+        var details: [String: Any] = [
+            "tag_was_detected": tagDetected,
+        ]
+        if let start = sessionStartTime {
+            details["session_duration_ms"] = Int(Date().timeIntervalSince(start) * 1000)
+        }
+        if let tagType = tagType {
+            details["tag_type"] = tagType
+        }
+        return details
+    }
+
+    private func resetSessionTracking() {
+        self.sessionStartTime = nil
+        self.tagDetectedTime = nil
+        self.tagDetected = false
+    }
+
+    private func startSessionTracking() {
+        self.sessionStartTime = Date()
+        self.tagDetectedTime = nil
+        self.tagDetected = false
     }
 }
 
@@ -163,63 +206,71 @@ extension NativeNfcPlugin: NFCTagReaderSessionDelegate {
         // Code 200: Annulation par l'utilisateur
         if nsError.domain == "NFCError" && nsError.code == 200 {
             print("ℹ️ Session annulée par l'utilisateur")
-            result?(FlutterError(code: "USER_CANCELLED", message: "Scan annulé par l'utilisateur", details: nil))
+            result?(FlutterError(code: "USER_CANCELLED", message: "Scan annulé par l'utilisateur", details: buildSessionDiagnostics()))
             self.result = nil
             self.isBambuLabMode = false
             self.isOpenPrintTagMode = false
             self.isAutoDetectMode = false
             self.pagesToWrite = nil
             self.bambuBlocksToWrite = nil
+            resetSessionTracking()
             return
         }
 
         // Code 201: Timeout - aucun tag détecté dans le délai
         if nsError.domain == "NFCError" && nsError.code == 201 {
             print("⏱️ Session timeout - aucun tag NFC détecté")
-            result?(FlutterError(code: "TAG_NOT_DETECTED", message: "Aucun tag NFC détecté. Le tag est peut-être mort ou incompatible.", details: nil))
+            result?(FlutterError(code: "TAG_NOT_DETECTED", message: "Aucun tag NFC détecté. Le tag est peut-être mort ou incompatible.", details: buildSessionDiagnostics()))
             self.result = nil
             self.isBambuLabMode = false
             self.isOpenPrintTagMode = false
             self.isAutoDetectMode = false
             self.pagesToWrite = nil
             self.bambuBlocksToWrite = nil
+            resetSessionTracking()
             return
         }
 
         // Code 202: Session terminée de façon inattendue (iOS 26+ peut forcer l'arrêt)
         if nsError.domain == "NFCError" && nsError.code == 202 {
             print("⚠️ Session NFC interrompue par le système (code 202)")
-            result?(FlutterError(code: "SESSION_TERMINATED", message: "Session NFC interrompue par le système. Réessayez.", details: nil))
+            result?(FlutterError(code: "SESSION_TERMINATED", message: "Session NFC interrompue par le système. Réessayez.", details: buildSessionDiagnostics()))
             self.result = nil
             self.isBambuLabMode = false
             self.isOpenPrintTagMode = false
             self.isAutoDetectMode = false
             self.pagesToWrite = nil
             self.bambuBlocksToWrite = nil
+            resetSessionTracking()
             return
         }
 
         // Code 203: Système occupé
         if nsError.domain == "NFCError" && nsError.code == 203 {
             print("⚠️ Système NFC occupé")
-            result?(FlutterError(code: "SYSTEM_BUSY", message: "Le lecteur NFC est occupé. Réessayez.", details: nil))
+            result?(FlutterError(code: "SYSTEM_BUSY", message: "Le lecteur NFC est occupé. Réessayez.", details: buildSessionDiagnostics()))
             self.result = nil
             self.isBambuLabMode = false
             self.isOpenPrintTagMode = false
             self.isAutoDetectMode = false
             self.pagesToWrite = nil
             self.bambuBlocksToWrite = nil
+            resetSessionTracking()
             return
         }
 
         print("❌ Session invalidée: \(error.localizedDescription) (domain: \(nsError.domain), code: \(nsError.code))")
-        result?(FlutterError(code: "SESSION_ERROR", message: error.localizedDescription, details: nil))
+        result?(FlutterError(code: "SESSION_ERROR", message: error.localizedDescription, details: buildSessionDiagnostics()))
         self.result = nil
+        resetSessionTracking()
     }
 
     func tagReaderSession(_ session: NFCTagReaderSession, didDetect tags: [NFCTag]) {
+        self.tagDetected = true
+        self.tagDetectedTime = Date()
+
         guard let tag = tags.first else {
-            result?(FlutterError(code: "NO_TAG", message: "Aucun tag détecté", details: nil))
+            result?(FlutterError(code: "NO_TAG", message: "Aucun tag détecté", details: buildSessionDiagnostics()))
             return
         }
 
@@ -266,7 +317,7 @@ extension NativeNfcPlugin: NFCTagReaderSessionDelegate {
             self.result?(FlutterError(
                 code: "INCOMPATIBLE_TAG",
                 message: "Tag NFC détecté mais de type ISO 15693 (NFC-V). Ce type est utilisé par Prusa (OpenPrintTag) et n'est pas encore supporté dans ce mode. Sélectionnez le mode Prusa.",
-                details: tagInfo
+                details: buildSessionDiagnostics(tagType: tagInfo)
             ))
             self.result = nil
             self.isBambuLabMode = false
@@ -305,7 +356,7 @@ extension NativeNfcPlugin: NFCTagReaderSessionDelegate {
                 self.result?(FlutterError(
                     code: "INCOMPATIBLE_TAG",
                     message: "Tag NFC détecté mais de type \(tagTypeDesc). L'app supporte les tags MiFare (Anycubic, Bambu Lab, Creality).",
-                    details: tagTypeDesc
+                    details: self.buildSessionDiagnostics(tagType: tagTypeDesc)
                 ))
                 self.result = nil
                 self.isBambuLabMode = false
@@ -330,13 +381,35 @@ extension NativeNfcPlugin: NFCTagReaderSessionDelegate {
                     print("📖 Tag Ultralight détecté, lecture en mode Anycubic")
                     self.readAllPagesWithTagType(mifareTag: mifareTag, session: session, tagType: "ultralight")
                 case .plus, .desfire:
-                    // MiFare Classic ou compatible, tenter lecture Bambu Lab
-                    print("📖 Tag Classic/Plus détecté, lecture en mode Bambu Lab")
-                    self.readBambuLabTag(mifareTag: mifareTag, session: session)
+                    // MiFare Classic/Plus détecté - Crypto1 non supporté par CoreNFC
+                    print("⚠️ Tag MiFare Classic/Plus détecté - non supporté sur iOS")
+                    session.invalidate(errorMessage: "MiFare Classic non supporté sur iOS")
+                    self.result?(FlutterError(
+                        code: "PLATFORM_NOT_SUPPORTED",
+                        message: "Tag MiFare Classic détecté (Bambu Lab / Creality). Apple CoreNFC ne supporte pas le protocole Crypto1 requis. Utilisez un appareil Android.",
+                        details: self.buildSessionDiagnostics(tagType: "mifare_classic")
+                    ))
+                    self.result = nil
+                    self.isBambuLabMode = false
+                    self.isAutoDetectMode = false
                 default:
-                    // Type inconnu, essayer d'abord Ultralight (plus sûr)
-                    print("⚠️ Type MiFare inconnu (\(tagFamily.rawValue)), tentative en mode Ultralight")
-                    self.readAllPagesWithTagType(mifareTag: mifareTag, session: session, tagType: "ultralight")
+                    if self.isAutoDetectMode {
+                        // En auto-detect, un tag .unknown est probablement MiFare Classic
+                        print("⚠️ Type MiFare inconnu (\(tagFamily.rawValue)) - probablement MiFare Classic, non supporté sur iOS")
+                        session.invalidate(errorMessage: "Type de tag non supporté sur iOS")
+                        self.result?(FlutterError(
+                            code: "PLATFORM_NOT_SUPPORTED",
+                            message: "Tag MiFare de type inconnu détecté (probablement MiFare Classic). Apple CoreNFC ne supporte pas ce type de tag. Utilisez un appareil Android.",
+                            details: self.buildSessionDiagnostics(tagType: "mifare_unknown_\(tagFamily.rawValue)")
+                        ))
+                        self.result = nil
+                        self.isBambuLabMode = false
+                        self.isAutoDetectMode = false
+                    } else {
+                        // En mode dédié (non auto-detect), tenter Ultralight comme fallback
+                        print("���️ Type MiFare inconnu (\(tagFamily.rawValue)), tentative en mode Ultralight")
+                        self.readAllPagesWithTagType(mifareTag: mifareTag, session: session, tagType: "ultralight")
+                    }
                 }
             } else {
                 self.readAllPages(mifareTag: mifareTag, session: session)
@@ -736,6 +809,22 @@ extension NativeNfcPlugin: NFCTagReaderSessionDelegate {
     // MARK: - Bambu Lab MiFare Classic Reading
 
     private func readBambuLabTag(mifareTag: NFCMiFareTag, session: NFCTagReaderSession) {
+        // MiFare Classic authentication (Crypto1) n'est pas supporté par Apple CoreNFC.
+        // Le hardware iPhone détecte les tags MiFare Classic (UID lisible) mais
+        // ne peut pas effectuer l'authentification sectorielle requise.
+        print("⚠️ Tentative de lecture Bambu Lab (MiFare Classic) sur iOS - non supporté")
+        session.invalidate(errorMessage: "MiFare Classic non supporté sur iOS")
+        self.result?(FlutterError(
+            code: "PLATFORM_NOT_SUPPORTED",
+            message: "Les tags Bambu Lab utilisent MiFare Classic qui n'est pas supporté par Apple CoreNFC. Cette fonctionnalité est disponible sur Android uniquement.",
+            details: nil
+        ))
+        self.result = nil
+        self.isBambuLabMode = false
+        self.isAutoDetectMode = false
+        return
+
+        // --- Code original conservé pour référence (ne s'exécute jamais) ---
         // Derive HKDF keys from tag UID for genuine Bambu Lab tags
         let uid = mifareTag.identifier
         let derivedKeys = deriveBambuKeys(uid: uid)

@@ -4,12 +4,42 @@ import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:nfc_filament/core/api/api_config.dart';
 import 'package:nfc_filament/core/services/auth_service.dart';
-// import 'package:device_info_plus/device_info_plus.dart';
-// import 'package:package_info_plus/package_info_plus.dart';
+import 'package:device_info_plus/device_info_plus.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 /// Service pour tracker les événements analytics
 class AnalyticsService {
   static final AuthService _authService = AuthService();
+
+  static String? _cachedAppVersion;
+  static String? _cachedDeviceModel;
+  static String? _cachedOsVersion;
+
+  /// Initialize device and app info (call once at startup)
+  static Future<void> initialize() async {
+    try {
+      final packageInfo = await PackageInfo.fromPlatform();
+      _cachedAppVersion = '${packageInfo.version}+${packageInfo.buildNumber}';
+    } catch (_) {
+      _cachedAppVersion = 'unknown';
+    }
+
+    try {
+      final deviceInfo = DeviceInfoPlugin();
+      if (Platform.isIOS) {
+        final ios = await deviceInfo.iosInfo;
+        _cachedDeviceModel = ios.utsname.machine;
+        _cachedOsVersion = 'iOS ${ios.systemVersion}';
+      } else if (Platform.isAndroid) {
+        final android = await deviceInfo.androidInfo;
+        _cachedDeviceModel = '${android.manufacturer} ${android.model}';
+        _cachedOsVersion = 'Android ${android.version.release} (SDK ${android.version.sdkInt})';
+      }
+    } catch (_) {
+      _cachedDeviceModel = 'unknown';
+      _cachedOsVersion = 'unknown';
+    }
+  }
 
   /// Log un événement analytics sur le backend
   static Future<void> logEvent(
@@ -17,9 +47,8 @@ class AnalyticsService {
     Map<String, dynamic>? eventData,
   }) async {
     try {
-      // Récupérer les infos du device
       final devicePlatform = Platform.isIOS ? 'ios' : 'android';
-      final appVersion = '1.0.0';
+      final appVersion = _cachedAppVersion ?? 'unknown';
 
       final response = await _authService.authenticatedRequest((token) =>
         http.post(
@@ -50,7 +79,7 @@ class AnalyticsService {
 
   /// Log un scan NFC
   static Future<void> logNfcScan({
-    required String scanType, // 'scan_nfc', 'scan_add_spool', 'scan_update_stock'
+    required String scanType,
     String? brand,
     String? material,
     String? color,
@@ -59,6 +88,8 @@ class AnalyticsService {
     String? rawTagData,
     int? rawBytesCount,
     String? nfcMode,
+    int? sessionDurationMs,
+    bool? tagWasDetected,
   }) async {
     await logEvent(
       scanType,
@@ -68,10 +99,14 @@ class AnalyticsService {
         'color': color,
         'success': success,
         'timestamp': DateTime.now().toIso8601String(),
-        if (nfcMode != null) 'nfc_mode': nfcMode,
-        if (errorMessage != null) 'error_message': errorMessage,
+        'nfc_mode': nfcMode ?? '',
+        'error_message': errorMessage ?? '',
         if (rawTagData != null) 'raw_tag_data': rawTagData,
         if (rawBytesCount != null) 'raw_bytes_count': rawBytesCount,
+        if (sessionDurationMs != null) 'session_duration_ms': sessionDurationMs,
+        if (tagWasDetected != null) 'tag_was_detected': tagWasDetected,
+        'device_model': _cachedDeviceModel ?? '',
+        'os_version': _cachedOsVersion ?? '',
       },
     );
   }

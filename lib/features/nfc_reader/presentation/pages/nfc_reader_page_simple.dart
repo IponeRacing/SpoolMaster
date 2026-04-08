@@ -1,3 +1,5 @@
+import 'dart:io' show Platform;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nfc_filament/core/services/admob_service.dart';
@@ -45,7 +47,7 @@ class _NfcReaderView extends StatefulWidget {
 }
 
 class _NfcReaderViewState extends State<_NfcReaderView> {
-  String _nfcMode = 'anycubic'; // 'anycubic', 'bambu', ou 'prusa'
+  String _nfcMode = 'anycubic'; // 'anycubic', 'bambu', 'prusa', ou 'creality'
 
   @override
   void initState() {
@@ -54,7 +56,11 @@ class _NfcReaderViewState extends State<_NfcReaderView> {
   }
 
   Future<void> _loadNfcMode() async {
-    final mode = await UserPreferencesService.getNfcMode();
+    var mode = await UserPreferencesService.getNfcMode();
+    // MiFare Classic (bambu/creality) non supporté sur iOS - fallback
+    if (Platform.isIOS && (mode == 'bambu' || mode == 'creality')) {
+      mode = 'anycubic';
+    }
     setState(() {
       _nfcMode = mode;
     });
@@ -67,6 +73,34 @@ class _NfcReaderViewState extends State<_NfcReaderView> {
     });
   }
 
+  void _showPlatformLimitationDialog(BuildContext context) {
+    final localizations = AppLocalizations.of(context)!;
+    showDialog<void>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Row(
+          children: [
+            Icon(Icons.warning_amber_rounded, color: Colors.orange.shade700),
+            const SizedBox(width: 8),
+            Expanded(
+              child: Text(
+                localizations.platformLimitationTitle,
+                style: const TextStyle(fontSize: 16),
+              ),
+            ),
+          ],
+        ),
+        content: Text(localizations.mifareClassicNotSupportedIos),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx),
+            child: Text(localizations.ok),
+          ),
+        ],
+      ),
+    );
+  }
+
   void _showModeInfoDialog(BuildContext context) {
     final localizations = AppLocalizations.of(context)!;
     final String title;
@@ -75,6 +109,9 @@ class _NfcReaderViewState extends State<_NfcReaderView> {
     if (_nfcMode == 'bambu') {
       title = localizations.bambuLabReadOnly;
       description = localizations.bambuLabReadOnlyDesc;
+    } else if (_nfcMode == 'creality') {
+      title = localizations.crealityReadWrite;
+      description = localizations.crealityReadWriteDesc;
     } else {
       title = localizations.prusaReadWrite;
       description = localizations.prusaReadWriteDesc;
@@ -165,6 +202,14 @@ class _NfcReaderViewState extends State<_NfcReaderView> {
                   RadioListTile<String>(
                     title: const Text('Prusa'),
                     value: 'Prusa',
+                    groupValue: selectedBrand,
+                    dense: true,
+                    contentPadding: EdgeInsets.zero,
+                    onChanged: (v) => setDialogState(() => selectedBrand = v!),
+                  ),
+                  RadioListTile<String>(
+                    title: const Text('Creality'),
+                    value: 'Creality',
                     groupValue: selectedBrand,
                     dense: true,
                     contentPadding: EdgeInsets.zero,
@@ -856,16 +901,18 @@ class _NfcReaderViewState extends State<_NfcReaderView> {
                       Text(
                         _nfcMode == 'prusa'
                             ? AppLocalizations.of(context)!.forPrusaMk4
-                            : _nfcMode == 'anycubic'
-                                ? AppLocalizations.of(context)!.forAnycubicAce
-                                : AppLocalizations.of(context)!.forBambuLabAms,
+                            : _nfcMode == 'creality'
+                                ? AppLocalizations.of(context)!.forCrealityCfs
+                                : _nfcMode == 'anycubic'
+                                    ? AppLocalizations.of(context)!.forAnycubicAce
+                                    : AppLocalizations.of(context)!.forBambuLabAms,
                         textAlign: TextAlign.center,
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                           color: Colors.grey.shade600,
                           fontStyle: FontStyle.italic,
                         ),
                       ),
-                      if (_nfcMode == 'bambu' || _nfcMode == 'prusa') ...[
+                      if (_nfcMode == 'bambu' || _nfcMode == 'prusa' || _nfcMode == 'creality') ...[
                         const SizedBox(width: 6),
                         GestureDetector(
                           onTap: () => _showModeInfoDialog(context),
@@ -887,9 +934,9 @@ class _NfcReaderViewState extends State<_NfcReaderView> {
                     ],
                   ),
                   const SizedBox(height: 24),
-                  // Slider pour choisir entre Anycubic, Bambu Lab et Prusa
+                  // Slider pour choisir entre Anycubic, Bambu Lab, Prusa et Creality
                   Container(
-                    width: 320,
+                    width: 340,
                     padding: const EdgeInsets.all(4),
                     decoration: BoxDecoration(
                       color: Colors.grey.shade200,
@@ -897,6 +944,7 @@ class _NfcReaderViewState extends State<_NfcReaderView> {
                     ),
                     child: Row(
                       children: [
+                        // Anycubic tab
                         Expanded(
                           child: GestureDetector(
                             onTap: () => _setNfcMode('anycubic'),
@@ -913,7 +961,7 @@ class _NfcReaderViewState extends State<_NfcReaderView> {
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 13,
+                                  fontSize: 11,
                                   color: _nfcMode == 'anycubic'
                                       ? Colors.white
                                       : Colors.grey.shade700,
@@ -922,62 +970,73 @@ class _NfcReaderViewState extends State<_NfcReaderView> {
                             ),
                           ),
                         ),
-                        const SizedBox(width: 4),
+                        const SizedBox(width: 3),
+                        // Bambu Lab tab (grisé sur iOS)
                         Expanded(
-                          child: GestureDetector(
-                            onTap: () => _setNfcMode('bambu'),
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(vertical: 12),
-                              decoration: BoxDecoration(
-                                color: _nfcMode == 'bambu'
-                                    ? AppTheme.anycubicRed
-                                    : Colors.transparent,
-                                borderRadius: BorderRadius.circular(6),
-                              ),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Text(
-                                    'Bambu Lab',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 13,
-                                      color: _nfcMode == 'bambu'
-                                          ? Colors.white
-                                          : Colors.grey.shade700,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 2),
-                                  Container(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 6,
-                                      vertical: 2,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      color: Colors.orange.shade600,
-                                      borderRadius: BorderRadius.circular(4),
-                                    ),
-                                    child: Text(
-                                      AppLocalizations.of(context)!.experimentalBadge,
-                                      style: const TextStyle(
-                                        fontSize: 9,
+                          child: Opacity(
+                            opacity: Platform.isIOS ? 0.4 : 1.0,
+                            child: GestureDetector(
+                              onTap: Platform.isIOS
+                                  ? () => _showPlatformLimitationDialog(context)
+                                  : () => _setNfcMode('bambu'),
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(vertical: 8),
+                                decoration: BoxDecoration(
+                                  color: _nfcMode == 'bambu'
+                                      ? AppTheme.anycubicRed
+                                      : Colors.transparent,
+                                  borderRadius: BorderRadius.circular(6),
+                                ),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Text(
+                                      'Bambu Lab',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
                                         fontWeight: FontWeight.bold,
-                                        color: Colors.white,
+                                        fontSize: 11,
+                                        color: _nfcMode == 'bambu'
+                                            ? Colors.white
+                                            : Colors.grey.shade700,
                                       ),
                                     ),
-                                  ),
-                                ],
+                                    const SizedBox(height: 2),
+                                    Container(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 4,
+                                        vertical: 1,
+                                      ),
+                                      decoration: BoxDecoration(
+                                        color: Platform.isIOS
+                                            ? Colors.grey.shade500
+                                            : Colors.orange.shade600,
+                                        borderRadius: BorderRadius.circular(4),
+                                      ),
+                                      child: Text(
+                                        Platform.isIOS
+                                            ? 'ANDROID'
+                                            : AppLocalizations.of(context)!.experimentalBadge,
+                                        style: const TextStyle(
+                                          fontSize: 8,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ),
                         ),
-                        const SizedBox(width: 4),
+                        const SizedBox(width: 3),
+                        // Prusa tab
                         Expanded(
                           child: GestureDetector(
                             onTap: () => _setNfcMode('prusa'),
                             child: Container(
-                              padding: const EdgeInsets.symmetric(vertical: 12),
+                              padding: const EdgeInsets.symmetric(vertical: 8),
                               decoration: BoxDecoration(
                                 color: _nfcMode == 'prusa'
                                     ? AppTheme.anycubicRed
@@ -992,7 +1051,7 @@ class _NfcReaderViewState extends State<_NfcReaderView> {
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
-                                      fontSize: 13,
+                                      fontSize: 11,
                                       color: _nfcMode == 'prusa'
                                           ? Colors.white
                                           : Colors.grey.shade700,
@@ -1001,8 +1060,8 @@ class _NfcReaderViewState extends State<_NfcReaderView> {
                                   const SizedBox(height: 2),
                                   Container(
                                     padding: const EdgeInsets.symmetric(
-                                      horizontal: 6,
-                                      vertical: 2,
+                                      horizontal: 4,
+                                      vertical: 1,
                                     ),
                                     decoration: BoxDecoration(
                                       color: Colors.green.shade600,
@@ -1011,13 +1070,73 @@ class _NfcReaderViewState extends State<_NfcReaderView> {
                                     child: Text(
                                       AppLocalizations.of(context)!.newBadge,
                                       style: const TextStyle(
-                                        fontSize: 9,
+                                        fontSize: 8,
                                         fontWeight: FontWeight.bold,
                                         color: Colors.white,
                                       ),
                                     ),
                                   ),
                                 ],
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 3),
+                        // Creality tab (grisé sur iOS)
+                        Expanded(
+                          child: Opacity(
+                            opacity: Platform.isIOS ? 0.4 : 1.0,
+                            child: GestureDetector(
+                              onTap: Platform.isIOS
+                                  ? () => _showPlatformLimitationDialog(context)
+                                  : () => _setNfcMode('creality'),
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(vertical: 8),
+                                decoration: BoxDecoration(
+                                  color: _nfcMode == 'creality'
+                                      ? AppTheme.anycubicRed
+                                      : Colors.transparent,
+                                  borderRadius: BorderRadius.circular(6),
+                                ),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Text(
+                                      'Creality',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 11,
+                                        color: _nfcMode == 'creality'
+                                            ? Colors.white
+                                            : Colors.grey.shade700,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 2),
+                                    Container(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 4,
+                                        vertical: 1,
+                                      ),
+                                      decoration: BoxDecoration(
+                                        color: Platform.isIOS
+                                            ? Colors.grey.shade500
+                                            : Colors.orange.shade600,
+                                        borderRadius: BorderRadius.circular(4),
+                                      ),
+                                      child: Text(
+                                        Platform.isIOS
+                                            ? 'ANDROID'
+                                            : AppLocalizations.of(context)!.experimentalBadge,
+                                        style: const TextStyle(
+                                          fontSize: 8,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ),
@@ -1047,8 +1166,8 @@ class _NfcReaderViewState extends State<_NfcReaderView> {
                       ),
                     ),
                   ),
-                  // Bouton d'écriture NFC (Anycubic et Prusa)
-                  if (_nfcMode == 'anycubic' || _nfcMode == 'prusa') ...[
+                  // Bouton d'écriture NFC (Anycubic, Prusa et Creality)
+                  if (_nfcMode == 'anycubic' || _nfcMode == 'prusa' || _nfcMode == 'creality') ...[
                     const SizedBox(height: 16),
                     SizedBox(
                       width: 280,

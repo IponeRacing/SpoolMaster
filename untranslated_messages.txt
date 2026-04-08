@@ -1,1 +1,495 @@
-{}
+{
+  "ar": [
+    "forCrealityCfs",
+    "crealityReadWrite",
+    "crealityReadWriteDesc",
+    "platformLimitationTitle",
+    "mifareClassicNotSupportedIos",
+    "nfcTagInfoCreality",
+    "dryingTemp",
+    "dryingTempHint",
+    "dryingTime",
+    "dryingTimeHint"
+  ],
+
+  "bg": [
+    "forCrealityCfs",
+    "crealityReadWrite",
+    "crealityReadWriteDesc",
+    "platformLimitationTitle",
+    "mifareClassicNotSupportedIos",
+    "nfcTagInfoCreality",
+    "dryingTemp",
+    "dryingTempHint",
+    "dryingTime",
+    "dryingTimeHint"
+  ],
+
+  "ca": [
+    "forCrealityCfs",
+    "crealityReadWrite",
+    "crealityReadWriteDesc",
+    "platformLimitationTitle",
+    "mifareClassicNotSupportedIos",
+    "nfcTagInfoCreality",
+    "dryingTemp",
+    "dryingTempHint",
+    "dryingTime",
+    "dryingTimeHint"
+  ],
+
+  "cs": [
+    "forCrealityCfs",
+    "crealityReadWrite",
+    "crealityReadWriteDesc",
+    "platformLimitationTitle",
+    "mifareClassicNotSupportedIos",
+    "nfcTagInfoCreality",
+    "dryingTemp",
+    "dryingTempHint",
+    "dryingTime",
+    "dryingTimeHint"
+  ],
+
+  "da": [
+    "forCrealityCfs",
+    "crealityReadWrite",
+    "crealityReadWriteDesc",
+    "platformLimitationTitle",
+    "mifareClassicNotSupportedIos",
+    "nfcTagInfoCreality",
+    "dryingTemp",
+    "dryingTempHint",
+    "dryingTime",
+    "dryingTimeHint"
+  ],
+
+  "de": [
+    "forCrealityCfs",
+    "crealityReadWrite",
+    "crealityReadWriteDesc",
+    "platformLimitationTitle",
+    "mifareClassicNotSupportedIos",
+    "nfcTagInfoCreality",
+    "dryingTemp",
+    "dryingTempHint",
+    "dryingTime",
+    "dryingTimeHint"
+  ],
+
+  "el": [
+    "forCrealityCfs",
+    "crealityReadWrite",
+    "crealityReadWriteDesc",
+    "platformLimitationTitle",
+    "mifareClassicNotSupportedIos",
+    "nfcTagInfoCreality",
+    "dryingTemp",
+    "dryingTempHint",
+    "dryingTime",
+    "dryingTimeHint"
+  ],
+
+  "en_AU": [
+    "forCrealityCfs",
+    "crealityReadWrite",
+    "crealityReadWriteDesc",
+    "platformLimitationTitle",
+    "mifareClassicNotSupportedIos",
+    "nfcTagInfoCreality",
+    "dryingTemp",
+    "dryingTempHint",
+    "dryingTime",
+    "dryingTimeHint"
+  ],
+
+  "en_CA": [
+    "forCrealityCfs",
+    "crealityReadWrite",
+    "crealityReadWriteDesc",
+    "platformLimitationTitle",
+    "mifareClassicNotSupportedIos",
+    "nfcTagInfoCreality",
+    "dryingTemp",
+    "dryingTempHint",
+    "dryingTime",
+    "dryingTimeHint"
+  ],
+
+  "en_GB": [
+    "forCrealityCfs",
+    "crealityReadWrite",
+    "crealityReadWriteDesc",
+    "platformLimitationTitle",
+    "mifareClassicNotSupportedIos",
+    "nfcTagInfoCreality",
+    "dryingTemp",
+    "dryingTempHint",
+    "dryingTime",
+    "dryingTimeHint"
+  ],
+
+  "es": [
+    "forCrealityCfs",
+    "crealityReadWrite",
+    "crealityReadWriteDesc",
+    "platformLimitationTitle",
+    "mifareClassicNotSupportedIos",
+    "nfcTagInfoCreality",
+    "dryingTemp",
+    "dryingTempHint",
+    "dryingTime",
+    "dryingTimeHint"
+  ],
+
+  "fi": [
+    "forCrealityCfs",
+    "crealityReadWrite",
+    "crealityReadWriteDesc",
+    "platformLimitationTitle",
+    "mifareClassicNotSupportedIos",
+    "nfcTagInfoCreality",
+    "dryingTemp",
+    "dryingTempHint",
+    "dryingTime",
+    "dryingTimeHint"
+  ],
+
+  "fr_CA": [
+    "forCrealityCfs",
+    "crealityReadWrite",
+    "crealityReadWriteDesc",
+    "platformLimitationTitle",
+    "mifareClassicNotSupportedIos",
+    "nfcTagInfoCreality",
+    "dryingTemp",
+    "dryingTempHint",
+    "dryingTime",
+    "dryingTimeHint"
+  ],
+
+  "he": [
+    "forCrealityCfs",
+    "crealityReadWrite",
+    "crealityReadWriteDesc",
+    "platformLimitationTitle",
+    "mifareClassicNotSupportedIos",
+    "nfcTagInfoCreality",
+    "dryingTemp",
+    "dryingTempHint",
+    "dryingTime",
+    "dryingTimeHint"
+  ],
+
+  "hi": [
+    "forCrealityCfs",
+    "crealityReadWrite",
+    "crealityReadWriteDesc",
+    "platformLimitationTitle",
+    "mifareClassicNotSupportedIos",
+    "nfcTagInfoCreality",
+    "dryingTemp",
+    "dryingTempHint",
+    "dryingTime",
+    "dryingTimeHint"
+  ],
+
+  "hr": [
+    "forCrealityCfs",
+    "crealityReadWrite",
+    "crealityReadWriteDesc",
+    "platformLimitationTitle",
+    "mifareClassicNotSupportedIos",
+    "nfcTagInfoCreality",
+    "dryingTemp",
+    "dryingTempHint",
+    "dryingTime",
+    "dryingTimeHint"
+  ],
+
+  "hu": [
+    "forCrealityCfs",
+    "crealityReadWrite",
+    "crealityReadWriteDesc",
+    "platformLimitationTitle",
+    "mifareClassicNotSupportedIos",
+    "nfcTagInfoCreality",
+    "dryingTemp",
+    "dryingTempHint",
+    "dryingTime",
+    "dryingTimeHint"
+  ],
+
+  "id": [
+    "forCrealityCfs",
+    "crealityReadWrite",
+    "crealityReadWriteDesc",
+    "platformLimitationTitle",
+    "mifareClassicNotSupportedIos",
+    "nfcTagInfoCreality",
+    "dryingTemp",
+    "dryingTempHint",
+    "dryingTime",
+    "dryingTimeHint"
+  ],
+
+  "it": [
+    "forCrealityCfs",
+    "crealityReadWrite",
+    "crealityReadWriteDesc",
+    "platformLimitationTitle",
+    "mifareClassicNotSupportedIos",
+    "nfcTagInfoCreality",
+    "dryingTemp",
+    "dryingTempHint",
+    "dryingTime",
+    "dryingTimeHint"
+  ],
+
+  "ja": [
+    "forCrealityCfs",
+    "crealityReadWrite",
+    "crealityReadWriteDesc",
+    "platformLimitationTitle",
+    "mifareClassicNotSupportedIos",
+    "nfcTagInfoCreality",
+    "dryingTemp",
+    "dryingTempHint",
+    "dryingTime",
+    "dryingTimeHint"
+  ],
+
+  "ko": [
+    "forCrealityCfs",
+    "crealityReadWrite",
+    "crealityReadWriteDesc",
+    "platformLimitationTitle",
+    "mifareClassicNotSupportedIos",
+    "nfcTagInfoCreality",
+    "dryingTemp",
+    "dryingTempHint",
+    "dryingTime",
+    "dryingTimeHint"
+  ],
+
+  "ms": [
+    "forCrealityCfs",
+    "crealityReadWrite",
+    "crealityReadWriteDesc",
+    "platformLimitationTitle",
+    "mifareClassicNotSupportedIos",
+    "nfcTagInfoCreality",
+    "dryingTemp",
+    "dryingTempHint",
+    "dryingTime",
+    "dryingTimeHint"
+  ],
+
+  "nl": [
+    "forCrealityCfs",
+    "crealityReadWrite",
+    "crealityReadWriteDesc",
+    "platformLimitationTitle",
+    "mifareClassicNotSupportedIos",
+    "nfcTagInfoCreality",
+    "dryingTemp",
+    "dryingTempHint",
+    "dryingTime",
+    "dryingTimeHint"
+  ],
+
+  "no": [
+    "forCrealityCfs",
+    "crealityReadWrite",
+    "crealityReadWriteDesc",
+    "platformLimitationTitle",
+    "mifareClassicNotSupportedIos",
+    "nfcTagInfoCreality",
+    "dryingTemp",
+    "dryingTempHint",
+    "dryingTime",
+    "dryingTimeHint"
+  ],
+
+  "pl": [
+    "forCrealityCfs",
+    "crealityReadWrite",
+    "crealityReadWriteDesc",
+    "platformLimitationTitle",
+    "mifareClassicNotSupportedIos",
+    "nfcTagInfoCreality",
+    "dryingTemp",
+    "dryingTempHint",
+    "dryingTime",
+    "dryingTimeHint"
+  ],
+
+  "pt": [
+    "forCrealityCfs",
+    "crealityReadWrite",
+    "crealityReadWriteDesc",
+    "platformLimitationTitle",
+    "mifareClassicNotSupportedIos",
+    "nfcTagInfoCreality",
+    "dryingTemp",
+    "dryingTempHint",
+    "dryingTime",
+    "dryingTimeHint"
+  ],
+
+  "ro": [
+    "forCrealityCfs",
+    "crealityReadWrite",
+    "crealityReadWriteDesc",
+    "platformLimitationTitle",
+    "mifareClassicNotSupportedIos",
+    "nfcTagInfoCreality",
+    "dryingTemp",
+    "dryingTempHint",
+    "dryingTime",
+    "dryingTimeHint"
+  ],
+
+  "ru": [
+    "forCrealityCfs",
+    "crealityReadWrite",
+    "crealityReadWriteDesc",
+    "platformLimitationTitle",
+    "mifareClassicNotSupportedIos",
+    "nfcTagInfoCreality",
+    "dryingTemp",
+    "dryingTempHint",
+    "dryingTime",
+    "dryingTimeHint"
+  ],
+
+  "sk": [
+    "forCrealityCfs",
+    "crealityReadWrite",
+    "crealityReadWriteDesc",
+    "platformLimitationTitle",
+    "mifareClassicNotSupportedIos",
+    "nfcTagInfoCreality",
+    "dryingTemp",
+    "dryingTempHint",
+    "dryingTime",
+    "dryingTimeHint"
+  ],
+
+  "sl": [
+    "forCrealityCfs",
+    "crealityReadWrite",
+    "crealityReadWriteDesc",
+    "platformLimitationTitle",
+    "mifareClassicNotSupportedIos",
+    "nfcTagInfoCreality",
+    "dryingTemp",
+    "dryingTempHint",
+    "dryingTime",
+    "dryingTimeHint"
+  ],
+
+  "sr": [
+    "forCrealityCfs",
+    "crealityReadWrite",
+    "crealityReadWriteDesc",
+    "platformLimitationTitle",
+    "mifareClassicNotSupportedIos",
+    "nfcTagInfoCreality",
+    "dryingTemp",
+    "dryingTempHint",
+    "dryingTime",
+    "dryingTimeHint"
+  ],
+
+  "sv": [
+    "forCrealityCfs",
+    "crealityReadWrite",
+    "crealityReadWriteDesc",
+    "platformLimitationTitle",
+    "mifareClassicNotSupportedIos",
+    "nfcTagInfoCreality",
+    "dryingTemp",
+    "dryingTempHint",
+    "dryingTime",
+    "dryingTimeHint"
+  ],
+
+  "th": [
+    "forCrealityCfs",
+    "crealityReadWrite",
+    "crealityReadWriteDesc",
+    "platformLimitationTitle",
+    "mifareClassicNotSupportedIos",
+    "nfcTagInfoCreality",
+    "dryingTemp",
+    "dryingTempHint",
+    "dryingTime",
+    "dryingTimeHint"
+  ],
+
+  "tr": [
+    "forCrealityCfs",
+    "crealityReadWrite",
+    "crealityReadWriteDesc",
+    "platformLimitationTitle",
+    "mifareClassicNotSupportedIos",
+    "nfcTagInfoCreality",
+    "dryingTemp",
+    "dryingTempHint",
+    "dryingTime",
+    "dryingTimeHint"
+  ],
+
+  "uk": [
+    "forCrealityCfs",
+    "crealityReadWrite",
+    "crealityReadWriteDesc",
+    "platformLimitationTitle",
+    "mifareClassicNotSupportedIos",
+    "nfcTagInfoCreality",
+    "dryingTemp",
+    "dryingTempHint",
+    "dryingTime",
+    "dryingTimeHint"
+  ],
+
+  "vi": [
+    "forCrealityCfs",
+    "crealityReadWrite",
+    "crealityReadWriteDesc",
+    "platformLimitationTitle",
+    "mifareClassicNotSupportedIos",
+    "nfcTagInfoCreality",
+    "dryingTemp",
+    "dryingTempHint",
+    "dryingTime",
+    "dryingTimeHint"
+  ],
+
+  "zh": [
+    "forCrealityCfs",
+    "crealityReadWrite",
+    "crealityReadWriteDesc",
+    "platformLimitationTitle",
+    "mifareClassicNotSupportedIos",
+    "nfcTagInfoCreality",
+    "dryingTemp",
+    "dryingTempHint",
+    "dryingTime",
+    "dryingTimeHint"
+  ],
+
+  "zh_TW": [
+    "forCrealityCfs",
+    "crealityReadWrite",
+    "crealityReadWriteDesc",
+    "platformLimitationTitle",
+    "mifareClassicNotSupportedIos",
+    "nfcTagInfoCreality",
+    "dryingTemp",
+    "dryingTempHint",
+    "dryingTime",
+    "dryingTimeHint"
+  ]
+}

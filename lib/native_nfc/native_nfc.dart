@@ -52,6 +52,17 @@ class NativeNfc {
     await _channel.invokeMethod('writeOpenPrintTag', {'data': data});
   }
 
+  /// Lit un tag Creality CFS (MiFare Classic 1K, Sector 1, AES-128-ECB)
+  static Future<Map<String, dynamic>> readCrealityTag() async {
+    final result = await _channel.invokeMethod<Map<Object?, Object?>>('readCrealityTag');
+    return Map<String, dynamic>.from(result ?? {});
+  }
+
+  /// Écrit un tag Creality CFS
+  static Future<void> writeCrealityTag(Map<String, dynamic> data) async {
+    await _channel.invokeMethod('writeCrealityTag', data);
+  }
+
   /// Vérifie si NFC est disponible sur l'appareil (via plugin natif, bypass nfc_manager)
   static Future<bool> checkNfcAvailability() async {
     final result = await _channel.invokeMethod<bool>('checkNfcAvailability');

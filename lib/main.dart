@@ -6,6 +6,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:nfc_filament/core/models/spool_inventory_item.dart';
 import 'package:nfc_filament/core/services/admob_service.dart';
+import 'package:nfc_filament/core/services/analytics_service.dart';
 import 'package:nfc_filament/core/services/brands_materials_service.dart';
 import 'package:nfc_filament/core/services/shopping_list_service.dart';
 import 'package:nfc_filament/core/services/spool_storage_service.dart';
@@ -100,10 +101,11 @@ void main() async {
     return true;
   };
 
-  // DI + AdMob en parallele (independants)
+  // DI + AdMob + Analytics en parallele (independants)
   await Future.wait([
     configureDependencies(),
     AdMobService().initialize(),
+    AnalyticsService.initialize(),
   ]);
 
   AdMobService().preloadInterstitial();

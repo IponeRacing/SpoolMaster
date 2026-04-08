@@ -34,7 +34,7 @@ platform :ios do
 
   desc "Upload IPA vers App Store Connect (TestFlight)"
   lane :upload_app do
-    ipa_path = File.expand_path('../../ios/build/ipa/nfc_anycubic.ipa', __dir__)
+    ipa_path = File.expand_path('../../build/ios/ipa/Spool Master.ipa', __dir__)
 
     unless File.exist?(ipa_path)
       UI.user_error!("IPA non trouvée: #{ipa_path}\nLance: flutter build ios --release + xcodebuild -exportArchive")

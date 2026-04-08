@@ -46,30 +46,55 @@ class NfcRepositoryImpl implements NfcRepository {
     } on Failure catch (failure) {
       return Left(failure);
     } on PlatformException catch (e) {
+      final diag = _extractDiagnostics(e.details);
       // Gérer l'annulation par l'utilisateur
       if (e.code == 'USER_CANCELLED') {
         return const Left(NfcSessionCancelledFailure());
       }
       // Tag non détecté (timeout)
       if (e.code == 'TAG_NOT_DETECTED') {
-        return Left(NfcTagNotDetectedFailure(e.message ?? 'Aucun tag NFC détecté'));
+        return Left(NfcTagNotDetectedFailure(
+          message: e.message ?? 'Aucun tag NFC détecté',
+          sessionDurationMs: diag.sessionDurationMs,
+          tagWasDetected: diag.tagWasDetected,
+        ));
       }
       // Tag incompatible détecté (ISO 15693, FeliCa, etc.)
       if (e.code == 'INCOMPATIBLE_TAG') {
         return Left(NfcTagIncompatibleFailure(
-          e.message ?? 'Tag NFC incompatible',
-          e.details as String?,
+          message: e.message ?? 'Tag NFC incompatible',
+          tagType: diag.tagType,
+          sessionDurationMs: diag.sessionDurationMs,
+          tagWasDetected: diag.tagWasDetected,
+        ));
+      }
+      // MiFare Classic non supporté sur iOS (Bambu Lab, Creality)
+      if (e.code == 'PLATFORM_NOT_SUPPORTED') {
+        return Left(NfcTagIncompatibleFailure(
+          message: e.message ?? 'Non supporté sur cette plateforme',
         ));
       }
       // Session interrompue par iOS (code 202) - retryable
       if (e.code == 'SESSION_TERMINATED') {
-        return Left(NfcTagReadFailure(e.message ?? 'Session NFC interrompue. Réessayez.'));
+        return Left(NfcTagReadFailure(
+          message: e.message ?? 'Session NFC interrompue. Réessayez.',
+          sessionDurationMs: diag.sessionDurationMs,
+          tagWasDetected: diag.tagWasDetected,
+        ));
       }
       // Système NFC occupé (code 203) - retryable
       if (e.code == 'SYSTEM_BUSY') {
-        return Left(NfcTagReadFailure(e.message ?? 'Lecteur NFC occupé. Réessayez.'));
+        return Left(NfcTagReadFailure(
+          message: e.message ?? 'Lecteur NFC occupé. Réessayez.',
+          sessionDurationMs: diag.sessionDurationMs,
+          tagWasDetected: diag.tagWasDetected,
+        ));
       }
-      return Left(NfcTagReadFailure(e.message ?? 'Erreur NFC'));
+      return Left(NfcTagReadFailure(
+        message: e.message ?? 'Erreur NFC',
+        sessionDurationMs: diag.sessionDurationMs,
+        tagWasDetected: diag.tagWasDetected,
+      ));
     } catch (e) {
       return const Left(NfcTagReadFailure());
     }
@@ -83,25 +108,49 @@ class NfcRepositoryImpl implements NfcRepository {
     } on Failure catch (failure) {
       return Left(failure);
     } on PlatformException catch (e) {
+      final diag = _extractDiagnostics(e.details);
       if (e.code == 'USER_CANCELLED') {
         return const Left(NfcSessionCancelledFailure());
       }
       if (e.code == 'TAG_NOT_DETECTED') {
-        return Left(NfcTagNotDetectedFailure(e.message ?? 'Aucun tag NFC détecté'));
+        return Left(NfcTagNotDetectedFailure(
+          message: e.message ?? 'Aucun tag NFC détecté',
+          sessionDurationMs: diag.sessionDurationMs,
+          tagWasDetected: diag.tagWasDetected,
+        ));
       }
       if (e.code == 'INCOMPATIBLE_TAG') {
         return Left(NfcTagIncompatibleFailure(
-          e.message ?? 'Tag NFC incompatible',
-          e.details as String?,
+          message: e.message ?? 'Tag NFC incompatible',
+          tagType: diag.tagType,
+          sessionDurationMs: diag.sessionDurationMs,
+          tagWasDetected: diag.tagWasDetected,
+        ));
+      }
+      if (e.code == 'PLATFORM_NOT_SUPPORTED') {
+        return Left(NfcTagIncompatibleFailure(
+          message: e.message ?? 'Non supporté sur cette plateforme',
         ));
       }
       if (e.code == 'SESSION_TERMINATED') {
-        return Left(NfcTagReadFailure(e.message ?? 'Session NFC interrompue. Réessayez.'));
+        return Left(NfcTagReadFailure(
+          message: e.message ?? 'Session NFC interrompue. Réessayez.',
+          sessionDurationMs: diag.sessionDurationMs,
+          tagWasDetected: diag.tagWasDetected,
+        ));
       }
       if (e.code == 'SYSTEM_BUSY') {
-        return Left(NfcTagReadFailure(e.message ?? 'Lecteur NFC occupé. Réessayez.'));
+        return Left(NfcTagReadFailure(
+          message: e.message ?? 'Lecteur NFC occupé. Réessayez.',
+          sessionDurationMs: diag.sessionDurationMs,
+          tagWasDetected: diag.tagWasDetected,
+        ));
       }
-      return Left(NfcTagReadFailure(e.message ?? 'Erreur NFC'));
+      return Left(NfcTagReadFailure(
+        message: e.message ?? 'Erreur NFC',
+        sessionDurationMs: diag.sessionDurationMs,
+        tagWasDetected: diag.tagWasDetected,
+      ));
     } catch (e) {
       return const Left(NfcTagReadFailure());
     }
@@ -118,8 +167,36 @@ class NfcRepositoryImpl implements NfcRepository {
       return Left(failure);
     } catch (e) {
       return const Left(
-        NfcTagReadFailure('Erreur lors de l\'écriture du tag NFC'),
+        NfcTagReadFailure(message: 'Erreur lors de l\'écriture du tag NFC'),
       );
     }
   }
+
+  /// Extraire les données de diagnostic depuis e.details (Map ou String)
+  _NfcDiagnostics _extractDiagnostics(dynamic details) {
+    if (details is Map) {
+      return _NfcDiagnostics(
+        tagType: details['tag_type'] as String?,
+        sessionDurationMs: details['session_duration_ms'] as int?,
+        tagWasDetected: details['tag_was_detected'] as bool?,
+      );
+    }
+    // Legacy: details was a plain String (e.g. tag type for INCOMPATIBLE_TAG)
+    if (details is String) {
+      return _NfcDiagnostics(tagType: details);
+    }
+    return const _NfcDiagnostics();
+  }
+}
+
+class _NfcDiagnostics {
+  const _NfcDiagnostics({
+    this.tagType,
+    this.sessionDurationMs,
+    this.tagWasDetected,
+  });
+
+  final String? tagType;
+  final int? sessionDurationMs;
+  final bool? tagWasDetected;
 }

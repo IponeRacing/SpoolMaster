@@ -10,6 +10,8 @@ import 'package:nfc_filament/features/nfc_reader/data/models/bobbin_data_model.d
 import 'package:nfc_filament/features/nfc_reader/domain/entities/bobbin_data.dart';
 import 'package:nfc_filament/features/nfc_reader/data/models/nfc_tag_model.dart';
 import 'package:nfc_filament/features/nfc_reader/data/services/bambu_lab_reader_service.dart';
+import 'package:nfc_filament/features/nfc_reader/data/services/creality_reader_service.dart';
+import 'package:nfc_filament/features/nfc_reader/data/services/creality_writer_service.dart';
 import 'package:nfc_filament/features/nfc_reader/data/services/prusa_reader_service.dart';
 import 'package:nfc_filament/features/nfc_reader/data/services/prusa_writer_service.dart';
 import 'package:nfc_filament/native_nfc/native_nfc.dart';
@@ -30,9 +32,9 @@ class NfcDataSourceImpl implements NfcDataSource {
       developer.log('❌ Puce vide ou non-Anycubic détectée');
       final hexDump = rawBytes.take(64).map((b) => b.toRadixString(16).padLeft(2, '0')).join(' ');
       throw NfcTagReadFailure(
-        'Tag NFC vide ou non compatible (format Anycubic non détecté)',
-        'ascii:$data|hex:$hexDump',
-        rawBytes.length,
+        message: 'Tag NFC vide ou non compatible (format Anycubic non détecté)',
+        rawTagData: 'ascii:$data|hex:$hexDump',
+        rawBytesCount: rawBytes.length,
       );
     }
 
@@ -251,7 +253,9 @@ class NfcDataSourceImpl implements NfcDataSource {
       );
     } catch (e) {
       developer.log('❌ Erreur lecture NFC: $e');
-      return Future.error(NfcTagReadFailure(e.toString()));
+      return Future.error(NfcTagReadFailure(
+        message: e is PlatformException ? (e.message ?? 'Erreur NFC') : e.toString(),
+      ));
     }
   }
 
@@ -281,6 +285,17 @@ class NfcDataSourceImpl implements NfcDataSource {
         return await _readBambuLabTag();
       } catch (e) {
         developer.log('❌ Échec lecture Bambu Lab: $e');
+        rethrow;
+      }
+    }
+
+    // Si mode Creality CFS explicitement sélectionné
+    if (nfcMode == 'creality') {
+      developer.log('🏷️ Mode Creality CFS détecté, utilisation du lecteur Creality');
+      try {
+        return await _readCrealityTag();
+      } catch (e) {
+        developer.log('❌ Échec lecture Creality: $e');
         rethrow;
       }
     }
@@ -400,9 +415,9 @@ class NfcDataSourceImpl implements NfcDataSource {
           : null;
       final tagData = rawBytes.isNotEmpty ? 'ascii:$dataString|hex:$hexDump' : null;
       return Future.error(NfcTagReadFailure(
-        e.toString(),
-        tagData,
-        rawBytes.length,
+        message: e is PlatformException ? (e.message ?? 'Erreur NFC') : e.toString(),
+        rawTagData: tagData,
+        rawBytesCount: rawBytes.length,
       ));
     }
   }
@@ -411,6 +426,10 @@ class NfcDataSourceImpl implements NfcDataSource {
   Future<void> writeBobbinData(BobbinDataModel data, {String tagFormat = 'anycubic'}) async {
     if (tagFormat == 'prusa') {
       return _writePrusaTag(data);
+    }
+
+    if (tagFormat == 'creality') {
+      return _writeCrealityTag(data);
     }
 
     developer.log('✍️ Démarrage écriture bobine Anycubic avec plugin natif...');
@@ -513,7 +532,7 @@ class NfcDataSourceImpl implements NfcDataSource {
     } catch (e) {
       developer.log('❌ Erreur écriture NFC native: $e');
       return Future.error(
-        NfcTagReadFailure('Erreur écriture: ${e.toString()}'),
+        NfcTagReadFailure(message: 'Erreur écriture: ${e.toString()}'),
       );
     }
   }
@@ -533,7 +552,26 @@ class NfcDataSourceImpl implements NfcDataSource {
     } catch (e) {
       developer.log('❌ Erreur écriture Prusa: $e');
       return Future.error(
-        NfcTagReadFailure('Erreur écriture Prusa: ${e.toString()}'),
+        NfcTagReadFailure(message: 'Erreur écriture Prusa: $e'),
+      );
+    }
+  }
+
+  /// Écriture d'un tag Creality CFS (MiFare Classic 1K, AES-128-ECB)
+  Future<void> _writeCrealityTag(BobbinDataModel data) async {
+    developer.log('✍️ Démarrage écriture tag Creality CFS...');
+
+    try {
+      final bobbinData = data.toEntity();
+      final payload = CrealityWriterService.buildPayloadMap(bobbinData);
+
+      developer.log('📦 Creality payload: $payload');
+      await NativeNfc.writeCrealityTag(payload);
+      developer.log('✅ Écriture Creality CFS terminée avec succès');
+    } catch (e) {
+      developer.log('❌ Erreur écriture Creality: $e');
+      return Future.error(
+        NfcTagReadFailure(message: 'Erreur écriture Creality CFS: $e'),
       );
     }
   }
@@ -634,7 +672,37 @@ class NfcDataSourceImpl implements NfcDataSource {
       rethrow;
     } catch (e) {
       developer.log('❌ Erreur lecture tag Bambu Lab: $e');
-      throw NfcTagReadFailure('Erreur lecture Bambu Lab: $e');
+      throw NfcTagReadFailure(message: 'Erreur lecture Bambu Lab: $e');
+    }
+  }
+
+  /// Lire un tag Creality CFS en utilisant le plugin natif
+  Future<BobbinDataModel> _readCrealityTag() async {
+    developer.log('🏷️ Démarrage lecture tag Creality CFS...');
+
+    try {
+      final bobbinData = await CrealityReaderService.readCrealityTag();
+
+      final model = BobbinDataModel(
+        filamentType: bobbinData.filamentType,
+        color: bobbinData.color,
+        weightGrams: bobbinData.weightGrams,
+        manufactureDate: bobbinData.manufactureDate,
+        batchNumber: bobbinData.batchNumber,
+        colorRgb: bobbinData.colorRgb,
+        remainingWeight: bobbinData.remainingWeight,
+        brand: bobbinData.brand,
+      );
+
+      developer.log('✅ Tag Creality CFS lu avec succès');
+      return model;
+    } on PlatformException {
+      rethrow;
+    } on Failure {
+      rethrow;
+    } catch (e) {
+      developer.log('❌ Erreur lecture tag Creality CFS: $e');
+      throw NfcTagReadFailure(message: 'Erreur lecture Creality CFS: $e');
     }
   }
 
@@ -655,6 +723,10 @@ class NfcDataSourceImpl implements NfcDataSource {
         final data = Map<String, dynamic>.from(result);
         final bobbinData = BambuLabReaderService.parseFromNativeData(data);
         return _bobbinDataToModel(bobbinData);
+      } else if (tagType == 'creality') {
+        final data = Map<String, dynamic>.from(result);
+        final bobbinData = CrealityReaderService.parseFromNativeData(data);
+        return _bobbinDataToModel(bobbinData);
       } else {
         // Anycubic / ultralight
         final rawBytes = (result['rawBytes'] as List<dynamic>?)?.cast<int>() ?? [];
@@ -673,7 +745,7 @@ class NfcDataSourceImpl implements NfcDataSource {
     } catch (e) {
       developer.log('❌ Erreur auto-detect NFC: $e');
       if (e is PlatformException || e is Failure) rethrow;
-      throw NfcTagReadFailure('Erreur auto-detect: $e');
+      throw NfcTagReadFailure(message: 'Erreur auto-detect: $e');
     }
   }
 
@@ -779,7 +851,7 @@ class NfcDataSourceImpl implements NfcDataSource {
       rethrow;
     } catch (e) {
       developer.log('❌ Erreur lecture tag Prusa: $e');
-      throw NfcTagReadFailure('Erreur lecture Prusa: $e');
+      throw NfcTagReadFailure(message: 'Erreur lecture Prusa: $e');
     }
   }
 }

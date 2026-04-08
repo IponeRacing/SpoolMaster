@@ -52,7 +52,7 @@ class AnalyticsController {
         $appVersion = $input['app_version'] ?? '?';
 
         if (
-            ($input['event_type'] === 'scan_nfc' && isset($eventData['success']) && $eventData['success'] === false && !empty($eventData['raw_tag_data']))
+            (in_array($input['event_type'], ['scan_nfc', 'scan_nfc_auto_detect']) && isset($eventData['success']) && $eventData['success'] === false)
             || $input['event_type'] === 'scan_feedback'
         ) {
             $this->notifyUnmatchedScan($userId, $eventData, $platform, $appVersion, $input['event_type']);
@@ -80,13 +80,22 @@ class AnalyticsController {
         $bytesCount = $eventData['raw_bytes_count'] ?? 'N/A';
         $timestamp = $eventData['timestamp'] ?? date('c');
 
+        $deviceModel = $eventData['device_model'] ?? 'N/A';
+        $osVersion = $eventData['os_version'] ?? 'N/A';
+        $sessionDurationMs = $eventData['session_duration_ms'] ?? 'N/A';
+        $tagWasDetected = isset($eventData['tag_was_detected']) ? ($eventData['tag_was_detected'] ? 'Yes' : 'No') : 'N/A';
+
         $body = "Un utilisateur a scanne un tag NFC non reconnu.\n\n";
         $body .= "User ID: $userId\n";
         $body .= "Platform: $platform\n";
         $body .= "App version: $appVersion\n";
+        $body .= "Device: $deviceModel\n";
+        $body .= "OS: $osVersion\n";
         $body .= "NFC mode: $nfcMode\n";
         $body .= "Timestamp: $timestamp\n";
         $body .= "Error: $error\n";
+        $body .= "Session duration: {$sessionDurationMs}ms\n";
+        $body .= "Tag was detected: $tagWasDetected\n";
         $body .= "Raw bytes count: $bytesCount\n\n";
         $body .= "--- RAW TAG DATA ---\n$rawData\n\n";
 

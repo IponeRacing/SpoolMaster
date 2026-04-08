@@ -1,4 +1,5 @@
 import 'dart:developer' as developer;
+import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nfc_filament/core/services/admob_service.dart';
@@ -16,7 +17,7 @@ import 'package:nfc_filament/features/nfc_reader/presentation/widgets/color_pick
 
 class NfcWriterPage extends StatefulWidget {
   final BobbinData? prefilledData;
-  final String initialFormat; // 'anycubic' or 'prusa'
+  final String initialFormat; // 'anycubic', 'prusa', or 'creality'
 
   const NfcWriterPage({super.key, this.prefilledData, this.initialFormat = 'anycubic'});
 
@@ -61,7 +62,7 @@ class _NfcWriterPageState extends State<NfcWriterPage> {
     'PVA': {'code': 'PVA', 'extruderMin': 215, 'extruderMax': 225, 'bedMin': 45, 'bedMax': 60},
   };
 
-  late String _tagFormat; // 'anycubic' or 'prusa'
+  late String _tagFormat; // 'anycubic', 'prusa', or 'creality'
 
   bool get _isPrusa => _tagFormat == 'prusa';
 
@@ -366,25 +367,33 @@ class _NfcWriterPageState extends State<NfcWriterPage> {
 
                     // Tag format selector
                     SegmentedButton<String>(
-                      segments: const [
-                        ButtonSegment(
+                      segments: [
+                        const ButtonSegment(
                           value: 'anycubic',
                           label: Text('Anycubic'),
                           icon: Icon(Icons.nfc),
                         ),
-                        ButtonSegment(
+                        const ButtonSegment(
                           value: 'prusa',
                           label: Text('Prusa'),
                           icon: Icon(Icons.nfc),
+                        ),
+                        ButtonSegment(
+                          value: 'creality',
+                          label: Text('Creality'),
+                          icon: const Icon(Icons.nfc),
+                          enabled: !Platform.isIOS,
                         ),
                       ],
                       selected: {_tagFormat},
                       onSelectionChanged: (Set<String> selection) {
                         setState(() {
                           _tagFormat = selection.first;
-                          if (_isPrusa && _selectedBrand == 'Anycubic') {
+                          if (_tagFormat == 'prusa' && _selectedBrand == 'Anycubic') {
                             _selectedBrand = 'Prusa';
-                          } else if (!_isPrusa && _selectedBrand == 'Prusa') {
+                          } else if (_tagFormat == 'creality') {
+                            _selectedBrand = 'Creality';
+                          } else if (_tagFormat == 'anycubic' && (_selectedBrand == 'Prusa' || _selectedBrand == 'Creality')) {
                             _selectedBrand = 'Anycubic';
                           }
                         });
@@ -408,7 +417,9 @@ class _NfcWriterPageState extends State<NfcWriterPage> {
                             child: Text(
                               _tagFormat == 'prusa'
                                   ? AppLocalizations.of(context)!.nfcTagInfoPrusa
-                                  : AppLocalizations.of(context)!.nfcTagInfo,
+                                  : _tagFormat == 'creality'
+                                      ? AppLocalizations.of(context)!.nfcTagInfoCreality
+                                      : AppLocalizations.of(context)!.nfcTagInfo,
                               style: TextStyle(
                                 fontSize: 12,
                                 color: Colors.blue.shade900,

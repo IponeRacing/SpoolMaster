@@ -61,7 +61,7 @@ class PrusaReaderService {
       final result = await NativeNfc.readOpenPrintTag();
 
       if (result.isEmpty) {
-        throw NfcTagReadFailure('Aucune donnée reçue du tag Prusa');
+        throw const NfcTagReadFailure(message: 'Aucune donnée reçue du tag Prusa');
       }
 
       rawBytes = (result['rawBytes'] as List<dynamic>?)?.cast<int>() ?? [];
@@ -76,9 +76,9 @@ class PrusaReaderService {
         developer.log('⚠️ Pas de payload OpenPrintTag trouvé');
         final hexDump = rawBytes.take(128).map((b) => b.toRadixString(16).padLeft(2, '0')).join(' ');
         throw NfcTagReadFailure(
-          'Tag Prusa lu mais format non identifié (pas de payload OpenPrintTag)',
-          'hex:$hexDump',
-          rawBytes.length,
+          message: 'Tag Prusa lu mais format non identifié (pas de payload OpenPrintTag)',
+          rawTagData: 'hex:$hexDump',
+          rawBytesCount: rawBytes.length,
         );
       }
 
@@ -94,9 +94,9 @@ class PrusaReaderService {
           ? rawBytes.take(128).map((b) => b.toRadixString(16).padLeft(2, '0')).join(' ')
           : null;
       throw NfcTagReadFailure(
-        'Erreur parsing tag Prusa: $e',
-        hexDump != null ? 'hex:$hexDump' : null,
-        rawBytes.length,
+        message: 'Erreur parsing tag Prusa: $e',
+        rawTagData: hexDump != null ? 'hex:$hexDump' : null,
+        rawBytesCount: rawBytes.length,
       );
     }
   }
@@ -105,7 +105,7 @@ class PrusaReaderService {
   static BobbinData parseFromRawBytes(List<int> rawBytes) {
     final payload = _extractOpenPrintTagPayload(rawBytes);
     if (payload == null || payload.isEmpty) {
-      throw NfcTagReadFailure('Tag Prusa: pas de payload OpenPrintTag');
+      throw const NfcTagReadFailure(message: 'Tag Prusa: pas de payload OpenPrintTag');
     }
     return _parseOpenPrintTagPayload(payload);
   }

@@ -19,6 +19,7 @@ import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import kotlinx.coroutines.*
 import java.io.IOException
+import javax.crypto.Cipher
 import javax.crypto.Mac
 import javax.crypto.spec.SecretKeySpec
 
@@ -29,6 +30,7 @@ import javax.crypto.spec.SecretKeySpec
  * Supports:
  * - MiFare Ultralight (Anycubic/NTAG tags)
  * - MiFare Classic 1K (Bambu Lab tags)
+ * - MiFare Classic 1K (Creality CFS tags)
  * - CUID card cloning
  */
 class NativeNfcPlugin private constructor(
@@ -44,6 +46,7 @@ class NativeNfcPlugin private constructor(
         private const val CMD_WRITE_ULTRALIGHT: Byte = 0xA2.toByte()
         private const val CMD_WRITE_CLASSIC: Byte = 0xA0.toByte()
         private const val CMD_AUTH_KEY_A: Byte = 0x60
+        private const val CMD_AUTH_KEY_B: Byte = 0x61
 
         // Default MiFare Classic key
         private val DEFAULT_KEY = byteArrayOf(
@@ -59,6 +62,18 @@ class NativeNfcPlugin private constructor(
         )
         // "RFID-A\0" (7 bytes including null terminator)
         private val BAMBU_HKDF_INFO = byteArrayOf(0x52, 0x46, 0x49, 0x44, 0x2d, 0x41, 0x00)
+
+        // Creality CFS parameters
+        // XOR secret for sector key derivation: "q3bu^t1nqfZ(pf$1"
+        private val CREALITY_XOR_SECRET = byteArrayOf(
+            0x71, 0x33, 0x62, 0x75, 0x5e, 0x74, 0x31, 0x6e,
+            0x71, 0x66, 0x5a, 0x28, 0x70, 0x66, 0x24, 0x31
+        )
+        // AES-128-ECB key for data encryption: "H@CFkRnz@KAtBJp2"
+        private val CREALITY_AES_KEY = byteArrayOf(
+            0x48, 0x40, 0x43, 0x46, 0x6b, 0x52, 0x6e, 0x7a,
+            0x40, 0x4b, 0x41, 0x74, 0x42, 0x4a, 0x70, 0x32
+        )
 
         private var instance: NativeNfcPlugin? = null
 
@@ -84,6 +99,11 @@ class NativeNfcPlugin private constructor(
     private val SCAN_TIMEOUT_MS = 30_000L // 30 seconds timeout
 
     private var openPrintTagDataToWrite: ByteArray? = null
+    private var crealityDataToWrite: Map<String, Any>? = null
+
+    private var sessionStartTimeMs: Long = 0L
+    private var tagDetectedTimeMs: Long = 0L
+    private var tagWasDetected = false
 
     enum class NfcMode {
         IDLE,
@@ -93,7 +113,9 @@ class NativeNfcPlugin private constructor(
         WRITE_BAMBU_CLONE,
         READ_OPEN_PRINT_TAG,
         WRITE_OPEN_PRINT_TAG,
-        AUTO_DETECT
+        AUTO_DETECT,
+        READ_CREALITY,
+        WRITE_CREALITY
     }
 
     init {
@@ -145,6 +167,16 @@ class NativeNfcPlugin private constructor(
                     return
                 }
                 startOpenPrintTagWriteSession(data.map { it.toByte() }.toByteArray(), result)
+            }
+            "readCrealityTag" -> startCrealityReadSession(result)
+            "writeCrealityTag" -> {
+                val args = call.arguments as? Map<*, *>
+                if (args == null) {
+                    result.error("INVALID_ARGS", "Missing data argument", null)
+                    return
+                }
+                @Suppress("UNCHECKED_CAST")
+                startCrealityWriteSession(args as Map<String, Any>, result)
             }
             else -> result.notImplemented()
         }
@@ -279,13 +311,50 @@ class NativeNfcPlugin private constructor(
         enableReaderMode()
     }
 
+    private fun startCrealityReadSession(result: MethodChannel.Result) {
+        Log.d(TAG, "Starting Creality CFS read session")
+
+        if (nfcAdapter == null) {
+            result.error("NFC_NOT_AVAILABLE", "NFC is not available", null)
+            return
+        }
+
+        if (!nfcAdapter!!.isEnabled) {
+            result.error("NFC_DISABLED", "NFC is disabled", null)
+            return
+        }
+
+        pendingResult = result
+        currentMode = NfcMode.READ_CREALITY
+        enableReaderMode()
+    }
+
+    private fun startCrealityWriteSession(data: Map<String, Any>, result: MethodChannel.Result) {
+        Log.d(TAG, "Starting Creality CFS write session")
+
+        if (nfcAdapter == null) {
+            result.error("NFC_NOT_AVAILABLE", "NFC is not available", null)
+            return
+        }
+
+        if (!nfcAdapter!!.isEnabled) {
+            result.error("NFC_DISABLED", "NFC is disabled", null)
+            return
+        }
+
+        pendingResult = result
+        crealityDataToWrite = data
+        currentMode = NfcMode.WRITE_CREALITY
+        enableReaderMode()
+    }
+
     private fun stopSession(result: MethodChannel.Result) {
         Log.d(TAG, "Stopping NFC session")
 
         cancelTimeout()
 
         // Notify pending result if any
-        pendingResult?.error("USER_CANCELLED", "Session arrêtée", null)
+        pendingResult?.error("USER_CANCELLED", "Session arrêtée", buildSessionDiagnostics())
         pendingResult = null
 
         // Reset state
@@ -294,6 +363,8 @@ class NativeNfcPlugin private constructor(
         pagesToWrite = null
         bambuBlocksToWrite = null
         openPrintTagDataToWrite = null
+        crealityDataToWrite = null
+        resetSessionTracking()
 
         result.success(true)
     }
@@ -301,6 +372,7 @@ class NativeNfcPlugin private constructor(
     private var useForegroundDispatch = false
 
     private fun enableReaderMode() {
+        startSessionTracking()
         // Use foreground dispatch as primary method (more compatible, especially Samsung/Android 16+)
         try {
             enableForegroundDispatchFallback()
@@ -380,7 +452,7 @@ class NativeNfcPlugin private constructor(
         timeoutRunnable = Runnable {
             Log.w(TAG, "⏱️ NFC scan timeout after ${SCAN_TIMEOUT_MS}ms")
             if (pendingResult != null) {
-                pendingResult?.error("TAG_NOT_DETECTED", "Aucun tag NFC détecté après ${SCAN_TIMEOUT_MS / 1000}s. Le tag est peut-être mort ou incompatible.", null)
+                pendingResult?.error("TAG_NOT_DETECTED", "Aucun tag NFC détecté après ${SCAN_TIMEOUT_MS / 1000}s. Le tag est peut-être mort ou incompatible.", buildSessionDiagnostics())
                 pendingResult = null
             }
             disableReaderMode()
@@ -397,9 +469,33 @@ class NativeNfcPlugin private constructor(
         timeoutRunnable = null
     }
 
+    private fun buildSessionDiagnostics(): Map<String, Any> {
+        val details = mutableMapOf<String, Any>(
+            "tag_was_detected" to tagWasDetected,
+        )
+        if (sessionStartTimeMs > 0) {
+            details["session_duration_ms"] = System.currentTimeMillis() - sessionStartTimeMs
+        }
+        return details
+    }
+
+    private fun startSessionTracking() {
+        sessionStartTimeMs = System.currentTimeMillis()
+        tagDetectedTimeMs = 0L
+        tagWasDetected = false
+    }
+
+    private fun resetSessionTracking() {
+        sessionStartTimeMs = 0L
+        tagDetectedTimeMs = 0L
+        tagWasDetected = false
+    }
+
     override fun onTagDiscovered(tag: Tag?) {
         Log.d(TAG, "Tag discovered: ${tag?.techList?.joinToString()}")
         cancelTimeout() // Tag found, cancel the timeout
+        tagWasDetected = true
+        tagDetectedTimeMs = System.currentTimeMillis()
 
         if (tag == null) {
             sendError("NO_TAG", "No tag detected")
@@ -427,6 +523,8 @@ class NativeNfcPlugin private constructor(
                     NfcMode.READ_OPEN_PRINT_TAG -> handleOpenPrintTagRead(tag)
                     NfcMode.WRITE_OPEN_PRINT_TAG -> handleOpenPrintTagWrite(tag)
                     NfcMode.AUTO_DETECT -> handleAutoDetectRead(tag)
+                    NfcMode.READ_CREALITY -> handleCrealityRead(tag)
+                    NfcMode.WRITE_CREALITY -> handleCrealityWrite(tag)
                     NfcMode.IDLE -> { /* Do nothing */ }
                 }
             } catch (e: Exception) {
@@ -1127,14 +1225,35 @@ class NativeNfcPlugin private constructor(
             return
         }
 
-        // 2. Check for MiFare Classic - Bambu Lab
+        // 2. Check for MiFare Classic - try Creality first, then Bambu Lab
         val techList = tag.techList
         if (techList.contains(MifareClassic::class.java.name)) {
             val classic = MifareClassic.get(tag)
             if (classic != null) {
-                Log.d(TAG, "Auto-detect: MiFare Classic (Bambu Lab) tag detected")
-                readMifareClassicWithTagType(classic, "bambu")
-                return
+                Log.d(TAG, "Auto-detect: MiFare Classic tag detected, trying Creality then Bambu Lab")
+
+                // Try Creality CFS first (fast XOR key derivation + vendor check)
+                try {
+                    classic.connect()
+                    val crealityResult = tryCrealityDetection(classic)
+                    if (crealityResult != null) {
+                        classic.close()
+                        sendSuccess(crealityResult)
+                        return
+                    }
+                    classic.close()
+                } catch (e: Exception) {
+                    Log.d(TAG, "Auto-detect: Creality detection failed: ${e.message}")
+                    try { classic.close() } catch (_: Exception) {}
+                }
+
+                // Not Creality, try Bambu Lab (reconnect needed after failed auth)
+                val classic2 = MifareClassic.get(tag)
+                if (classic2 != null) {
+                    Log.d(TAG, "Auto-detect: Trying Bambu Lab")
+                    readMifareClassicWithTagType(classic2, "bambu")
+                    return
+                }
             }
         }
 
@@ -1400,6 +1519,411 @@ class NativeNfcPlugin private constructor(
         }
     }
 
+    // ==================== CREALITY CFS KEY DERIVATION ====================
+
+    /**
+     * Derive Sector 1 Key B from tag UID using XOR with Creality secret.
+     * 1. UID (4 bytes) → uppercase hex string (8 chars)
+     * 2. Duplicate 4x → 32 chars = 16 ASCII bytes
+     * 3. XOR with CREALITY_XOR_SECRET (16 bytes)
+     * 4. Take first 6 bytes as Key B
+     */
+    private fun deriveCrealityKey(uid: ByteArray): ByteArray {
+        val uidHex = uid.take(4).joinToString("") { String.format("%02X", it) }
+        val repeated = uidHex.repeat(4) // 32 chars
+        val repeatedBytes = repeated.toByteArray(Charsets.US_ASCII) // 32 bytes
+
+        val xored = ByteArray(16)
+        for (i in 0 until 16) {
+            xored[i] = (repeatedBytes[i].toInt() xor CREALITY_XOR_SECRET[i].toInt()).toByte()
+        }
+
+        return xored.copyOfRange(0, 6) // Key B = first 6 bytes
+    }
+
+    // ==================== CREALITY CFS AES-128-ECB ====================
+
+    private fun aesEcbDecrypt(data: ByteArray): ByteArray {
+        val cipher = Cipher.getInstance("AES/ECB/NoPadding")
+        cipher.init(Cipher.DECRYPT_MODE, SecretKeySpec(CREALITY_AES_KEY, "AES"))
+        return cipher.doFinal(data)
+    }
+
+    private fun aesEcbEncrypt(data: ByteArray): ByteArray {
+        val cipher = Cipher.getInstance("AES/ECB/NoPadding")
+        cipher.init(Cipher.ENCRYPT_MODE, SecretKeySpec(CREALITY_AES_KEY, "AES"))
+        return cipher.doFinal(data)
+    }
+
+    // ==================== CREALITY CFS READ ====================
+
+    private suspend fun handleCrealityRead(tag: Tag) {
+        Log.d(TAG, "Handling Creality CFS read")
+
+        val classic = MifareClassic.get(tag)
+        if (classic != null) {
+            readCrealityClassic(classic)
+            return
+        }
+
+        // Fallback to NfcA for SAK 0x08/0x18 devices
+        val nfcA = NfcA.get(tag)
+        if (nfcA != null) {
+            val sak = nfcA.sak
+            if (sak.toInt() == 0x08 || sak.toInt() == 0x18) {
+                readCrealityWithNfcA(nfcA)
+                return
+            }
+        }
+
+        sendError("INVALID_TAG", "Tag non compatible Creality CFS (MiFare Classic 1K requis)")
+    }
+
+    private suspend fun readCrealityClassic(classic: MifareClassic) {
+        try {
+            classic.connect()
+            val uid = classic.tag.id
+            val crealityKeyB = deriveCrealityKey(uid)
+            Log.d(TAG, "Creality: UID=${uid.toHexString()}, derived Key B=${crealityKeyB.toHexString()}")
+
+            // Authenticate Sector 1 with derived Key B, fallback to default key
+            val authSuccess = try {
+                classic.authenticateSectorWithKeyB(1, crealityKeyB)
+            } catch (e: Exception) {
+                Log.d(TAG, "Creality Key B failed, trying default key")
+                try {
+                    classic.authenticateSectorWithKeyA(1, DEFAULT_KEY)
+                } catch (e2: Exception) {
+                    try {
+                        classic.authenticateSectorWithKeyB(1, DEFAULT_KEY)
+                    } catch (e3: Exception) {
+                        false
+                    }
+                }
+            }
+
+            if (!authSuccess) {
+                classic.close()
+                sendError("AUTH_ERROR", "Impossible d'authentifier le tag Creality CFS (secteur 1)")
+                return
+            }
+
+            // Read blocks 4, 5, 6 (Sector 1 data blocks)
+            val encryptedData = ByteArray(48)
+            for (i in 0 until 3) {
+                val blockIndex = 4 + i
+                val data = classic.readBlock(blockIndex)
+                if (data != null && data.size >= 16) {
+                    System.arraycopy(data, 0, encryptedData, i * 16, 16)
+                    Log.d(TAG, "Creality block $blockIndex: ${data.take(16).toByteArray().toHexString()}")
+                }
+            }
+
+            classic.close()
+
+            // Decrypt AES-128-ECB
+            val decrypted = aesEcbDecrypt(encryptedData)
+            val decryptedStr = String(decrypted, Charsets.US_ASCII)
+            Log.d(TAG, "Creality decrypted: $decryptedStr")
+
+            // Parse and return
+            val parsedData = parseCrealityData(decryptedStr, uid)
+            sendSuccess(parsedData)
+
+        } catch (e: Exception) {
+            Log.e(TAG, "Error reading Creality CFS", e)
+            try { classic.close() } catch (_: Exception) {}
+            sendError("READ_ERROR", e.message ?: "Creality read failed")
+        }
+    }
+
+    private suspend fun readCrealityWithNfcA(nfcA: NfcA) {
+        try {
+            nfcA.connect()
+            val uid = nfcA.tag.id
+            val crealityKeyB = deriveCrealityKey(uid)
+            Log.d(TAG, "Creality via NfcA: UID=${uid.toHexString()}")
+
+            // Authenticate Sector 1 with Key B (0x61)
+            val authCommand = byteArrayOf(CMD_AUTH_KEY_B, 1.toByte()) + crealityKeyB
+            var authenticated = false
+            try {
+                nfcA.transceive(authCommand)
+                authenticated = true
+            } catch (e: IOException) {
+                Log.d(TAG, "Creality Key B via NfcA failed, trying default")
+                val defaultAuth = byteArrayOf(CMD_AUTH_KEY_A, 1.toByte()) + DEFAULT_KEY
+                try {
+                    nfcA.transceive(defaultAuth)
+                    authenticated = true
+                } catch (e2: IOException) {
+                    Log.w(TAG, "All Creality keys failed via NfcA")
+                }
+            }
+
+            if (!authenticated) {
+                nfcA.close()
+                sendError("AUTH_ERROR", "Impossible d'authentifier le tag Creality CFS (secteur 1)")
+                return
+            }
+
+            // Read blocks 4, 5, 6
+            val encryptedData = ByteArray(48)
+            for (i in 0 until 3) {
+                val blockIndex = 4 + i
+                val readCmd = byteArrayOf(CMD_READ, blockIndex.toByte())
+                val data = nfcA.transceive(readCmd)
+                if (data != null && data.size >= 16) {
+                    System.arraycopy(data, 0, encryptedData, i * 16, 16)
+                }
+            }
+
+            nfcA.close()
+
+            val decrypted = aesEcbDecrypt(encryptedData)
+            val decryptedStr = String(decrypted, Charsets.US_ASCII)
+            Log.d(TAG, "Creality decrypted via NfcA: $decryptedStr")
+
+            val parsedData = parseCrealityData(decryptedStr, uid)
+            sendSuccess(parsedData)
+
+        } catch (e: Exception) {
+            try { nfcA.close() } catch (_: Exception) {}
+            sendError("READ_ERROR", e.message ?: "Creality read failed")
+        }
+    }
+
+    // ==================== CREALITY CFS PARSE ====================
+
+    private fun parseCrealityData(decrypted: String, uid: ByteArray): Map<String, Any> {
+        Log.d(TAG, "Parsing Creality data: '$decrypted' (${decrypted.length} chars)")
+
+        // Structure: Batch(3) | Date(5) | Vendor(4) | MaterialID(5) | Color(7) | Length(4) | Serial(6) | Reserved(14)
+        val batch = if (decrypted.length >= 3) decrypted.substring(0, 3) else ""
+        val date = if (decrypted.length >= 8) decrypted.substring(3, 8) else ""
+        val vendor = if (decrypted.length >= 12) decrypted.substring(8, 12) else ""
+        val materialId = if (decrypted.length >= 17) decrypted.substring(12, 17) else ""
+        val colorField = if (decrypted.length >= 24) decrypted.substring(17, 24) else ""
+        val lengthCode = if (decrypted.length >= 28) decrypted.substring(24, 28) else ""
+        val serial = if (decrypted.length >= 34) decrypted.substring(28, 34) else ""
+
+        // Parse color RGB (format: "0RRGGBB")
+        val colorRgb = try {
+            if (colorField.length >= 7) {
+                Integer.parseInt(colorField.substring(1, 7), 16)
+            } else 0xFFFFFF
+        } catch (e: NumberFormatException) {
+            0xFFFFFF
+        }
+
+        // Parse weight from length code
+        val weightGrams = crealityWeightCodes[lengthCode] ?: 1000.0
+
+        // Parse date (YYMDD format)
+        val productionTimestamp = try {
+            if (date.length >= 5) {
+                val year = 2000 + date.substring(0, 2).toInt()
+                val month = date.substring(2, 3).toInt()
+                val day = date.substring(3, 5).toInt()
+                java.util.Calendar.getInstance().apply {
+                    set(year, month - 1, day)
+                }.timeInMillis / 1000
+            } else 0L
+        } catch (e: Exception) { 0L }
+
+        // Material name lookup
+        val materialName = crealityMaterials[materialId] ?: "Unknown ($materialId)"
+
+        // Raw blocks for clone capability
+        val rawBlocksMap = mutableMapOf<String, List<Int>>()
+
+        return mapOf(
+            "tagType" to "creality",
+            "vendor" to vendor,
+            "materialId" to materialId,
+            "materialName" to materialName,
+            "colorRgb" to colorRgb,
+            "weightGrams" to weightGrams.toInt(),
+            "batch" to batch,
+            "serial" to serial,
+            "productionTimestamp" to productionTimestamp,
+            "lengthCode" to lengthCode,
+            "uid" to uid.joinToString("") { String.format("%02X", it) },
+            "rawDecrypted" to decrypted
+        )
+    }
+
+    // ==================== CREALITY CFS WRITE ====================
+
+    private suspend fun handleCrealityWrite(tag: Tag) {
+        Log.d(TAG, "Handling Creality CFS write")
+
+        val data = crealityDataToWrite
+        if (data == null) {
+            sendError("INVALID_ARGS", "No Creality data to write")
+            return
+        }
+
+        val classic = MifareClassic.get(tag)
+        if (classic != null) {
+            writeCrealityClassic(classic, data)
+            return
+        }
+
+        sendError("INVALID_TAG", "Tag non compatible pour l'ecriture Creality CFS (MiFare Classic 1K requis)")
+    }
+
+    private suspend fun writeCrealityClassic(classic: MifareClassic, data: Map<String, Any>) {
+        try {
+            classic.connect()
+            val uid = classic.tag.id
+            val crealityKeyB = deriveCrealityKey(uid)
+            Log.d(TAG, "Creality write: UID=${uid.toHexString()}")
+
+            // Build 48-char payload
+            val payload = buildCrealityPayload(data)
+            Log.d(TAG, "Creality payload: $payload")
+
+            // Encrypt with AES-128-ECB
+            val payloadBytes = payload.toByteArray(Charsets.US_ASCII)
+            val encrypted = aesEcbEncrypt(payloadBytes)
+
+            // Authenticate Sector 1 with Key B
+            val authSuccess = try {
+                classic.authenticateSectorWithKeyB(1, crealityKeyB)
+            } catch (e: Exception) {
+                try {
+                    classic.authenticateSectorWithKeyA(1, DEFAULT_KEY)
+                } catch (e2: Exception) {
+                    try {
+                        classic.authenticateSectorWithKeyB(1, DEFAULT_KEY)
+                    } catch (e3: Exception) {
+                        false
+                    }
+                }
+            }
+
+            if (!authSuccess) {
+                classic.close()
+                sendError("AUTH_ERROR", "Impossible d'authentifier le tag pour ecriture Creality CFS")
+                return
+            }
+
+            // Write blocks 4, 5, 6
+            for (i in 0 until 3) {
+                val blockIndex = 4 + i
+                val blockData = encrypted.copyOfRange(i * 16, (i + 1) * 16)
+                classic.writeBlock(blockIndex, blockData)
+                Log.d(TAG, "Creality written block $blockIndex: ${blockData.toHexString()}")
+            }
+
+            classic.close()
+            crealityDataToWrite = null
+            sendSuccess(true)
+
+        } catch (e: Exception) {
+            Log.e(TAG, "Error writing Creality CFS", e)
+            try { classic.close() } catch (_: Exception) {}
+            crealityDataToWrite = null
+            sendError("WRITE_ERROR", e.message ?: "Creality write failed")
+        }
+    }
+
+    private fun buildCrealityPayload(data: Map<String, Any>): String {
+        val batch = (data["batch"] as? String ?: "000").padEnd(3, '0').take(3)
+
+        // Date: YYMDD
+        val now = java.util.Calendar.getInstance()
+        val year = (now.get(java.util.Calendar.YEAR) % 100).toString().padStart(2, '0')
+        val month = (now.get(java.util.Calendar.MONTH) + 1).toString()
+        val day = now.get(java.util.Calendar.DAY_OF_MONTH).toString().padStart(2, '0')
+        val date = (data["date"] as? String ?: "$year$month$day").padEnd(5, '0').take(5)
+
+        val vendor = (data["vendor"] as? String ?: "0276").padEnd(4, '0').take(4)
+        val materialId = (data["materialId"] as? String ?: "04001").padEnd(5, '0').take(5)
+
+        // Color: "0" + 6-char RGB hex
+        val colorRgb = (data["colorRgb"] as? Int) ?: 0xFFFFFF
+        val colorField = "0${String.format("%06X", colorRgb and 0xFFFFFF)}"
+
+        val lengthCode = (data["lengthCode"] as? String ?: "0330").padEnd(4, '0').take(4)
+        val serial = (data["serial"] as? String ?: "000001").padEnd(6, '0').take(6)
+        val reserved = "00000000000000" // 14 chars
+
+        val payload = "$batch$date$vendor$materialId$colorField$lengthCode$serial$reserved"
+        Log.d(TAG, "Built Creality payload: $payload (${payload.length} chars)")
+        return payload.take(48).padEnd(48, '0')
+    }
+
+    // ==================== CREALITY CFS AUTO-DETECT ====================
+
+    /**
+     * Try to identify a MiFare Classic tag as Creality CFS.
+     * Returns parsed data if Creality, null otherwise.
+     */
+    private suspend fun tryCrealityDetection(classic: MifareClassic): Map<String, Any>? {
+        val uid = classic.tag.id
+        val crealityKeyB = deriveCrealityKey(uid)
+
+        // Try Creality Key B on Sector 1
+        val authSuccess = try {
+            classic.authenticateSectorWithKeyB(1, crealityKeyB)
+        } catch (e: Exception) {
+            false
+        }
+
+        if (!authSuccess) return null
+
+        // Read blocks 4, 5, 6
+        val encryptedData = ByteArray(48)
+        try {
+            for (i in 0 until 3) {
+                val blockIndex = 4 + i
+                val data = classic.readBlock(blockIndex)
+                if (data != null && data.size >= 16) {
+                    System.arraycopy(data, 0, encryptedData, i * 16, 16)
+                }
+            }
+        } catch (e: IOException) {
+            return null
+        }
+
+        // Decrypt and validate vendor
+        return try {
+            val decrypted = aesEcbDecrypt(encryptedData)
+            val decryptedStr = String(decrypted, Charsets.US_ASCII)
+            // Vendor is at offset 8-11, should be "0276" for Creality
+            val vendor = if (decryptedStr.length >= 12) decryptedStr.substring(8, 12) else ""
+            if (vendor == "0276") {
+                Log.d(TAG, "Auto-detect: Creality CFS confirmed (vendor=$vendor)")
+                parseCrealityData(decryptedStr, uid)
+            } else {
+                Log.d(TAG, "Auto-detect: Creality auth OK but vendor=$vendor, not Creality")
+                null
+            }
+        } catch (e: Exception) {
+            Log.d(TAG, "Auto-detect: Creality decryption failed: ${e.message}")
+            null
+        }
+    }
+
+    // Creality material database (instance-level to avoid companion object conflict)
+    private val crealityMaterials = mapOf(
+        "00001" to "Generic PLA", "01001" to "Hyper PLA", "02001" to "PLA Matte",
+        "03001" to "PLA Silk", "04001" to "CR-PLA", "05001" to "PLA HS",
+        "06001" to "CR-PETG", "07001" to "Hyper PETG", "08001" to "Generic PETG",
+        "09001" to "PETG-CF", "10001" to "CR-ABS", "11001" to "Hyper ABS",
+        "12001" to "Generic ABS", "13001" to "ABS-GF", "14001" to "TPU",
+        "15001" to "PA", "16001" to "CR-TPU", "17001" to "ASA",
+        "18001" to "PVA", "19001" to "HIPS", "20001" to "PC",
+        "21001" to "BVOH", "22001" to "PET"
+    )
+
+    private val crealityWeightCodes = mapOf(
+        "0330" to 1000.0, "0165" to 500.0, "0082" to 250.0,
+        "0198" to 600.0, "0247" to 750.0
+    )
+
     // ==================== HELPERS ====================
 
     private fun sendSuccess(data: Any) {
@@ -1410,8 +1934,9 @@ class NativeNfcPlugin private constructor(
     }
 
     private fun sendError(code: String, message: String) {
+        val diagnostics = buildSessionDiagnostics()
         activity.runOnUiThread {
-            pendingResult?.error(code, message, null)
+            pendingResult?.error(code, message, diagnostics)
             pendingResult = null
             disableReaderMode()
             currentMode = NfcMode.IDLE
