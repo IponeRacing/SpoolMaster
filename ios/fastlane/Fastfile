@@ -18,7 +18,8 @@ platform :ios do
 
   desc "Envoie les métadonnées vers App Store Connect (sans binaire ni screenshots)"
   lane :upload_metadata do
-    generate_metadata
+    # Note: ne régénère plus depuis le CSV automatiquement.
+    # Lancer 'fastlane ios generate_metadata' manuellement si le CSV a été mis à jour.
 
     deliver(
       api_key: shared_api_key,
@@ -58,6 +59,86 @@ end
 
 platform :android do
 
+  ANDROID_METADATA_DIR = File.expand_path('metadata/android', __dir__)
+
+  # Mapping iOS locale → Google Play locale
+  LOCALE_MAP = {
+    'en-US' => 'en-US', 'en-AU' => 'en-AU', 'en-CA' => 'en-CA', 'en-GB' => 'en-GB',
+    'fr-FR' => 'fr-FR', 'fr-CA' => 'fr-CA', 'de-DE' => 'de-DE',
+    'es-ES' => 'es-ES', 'es-MX' => 'es-419', 'it' => 'it-IT',
+    'pt-BR' => 'pt-BR', 'pt-PT' => 'pt-PT', 'nl-NL' => 'nl-NL',
+    'da' => 'da-DK', 'no' => 'no-NO', 'sv' => 'sv-SE', 'fi' => 'fi-FI',
+    'pl' => 'pl-PL', 'cs' => 'cs-CZ', 'sk' => 'sk', 'hu' => 'hu-HU',
+    'ro' => 'ro', 'ca' => 'ca', 'ru' => 'ru-RU', 'uk' => 'uk',
+    'bg' => 'bg', 'hr' => 'hr', 'sl' => 'sl', 'sr' => 'sr',
+    'el' => 'el-GR', 'tr' => 'tr-TR', 'ar-SA' => 'ar',
+    'he' => 'iw-IL', 'hi' => 'hi-IN', 'ja' => 'ja-JP', 'ko' => 'ko-KR',
+    'ms' => 'ms', 'id' => 'id', 'th' => 'th', 'vi' => 'vi',
+    'zh-Hans' => 'zh-CN', 'zh-Hant' => 'zh-TW',
+  }
+
+  desc "Génère les metadata Android depuis les metadata iOS"
+  lane :generate_metadata do
+    ios_metadata_dir = File.expand_path('metadata', __dir__)
+
+    LOCALE_MAP.each do |ios_locale, android_locale|
+      ios_dir = File.join(ios_metadata_dir, ios_locale)
+      next unless File.directory?(ios_dir)
+
+      android_dir = File.join(ANDROID_METADATA_DIR, android_locale)
+      FileUtils.mkdir_p(File.join(android_dir, 'changelogs'))
+
+      # title.txt ← name.txt
+      src = File.join(ios_dir, 'name.txt')
+      FileUtils.cp(src, File.join(android_dir, 'title.txt')) if File.exist?(src)
+
+      # short_description.txt ← subtitle.txt (80 chars max pour Google Play)
+      src = File.join(ios_dir, 'subtitle.txt')
+      if File.exist?(src)
+        subtitle = File.read(src).strip
+        File.write(File.join(android_dir, 'short_description.txt'), subtitle)
+      end
+
+      # full_description.txt ← description.txt (sans les markers "(Android)")
+      src = File.join(ios_dir, 'description.txt')
+      if File.exist?(src)
+        desc = File.read(src)
+        desc.gsub!(/\s*[\(（]Android[\)）]/, '')  # Supprimer markers (Android) et （Android）
+        desc.gsub!(/https:\/\/www\.apple\.com\/.*$/, '')  # Supprimer lien EULA Apple
+        desc.strip!
+        File.write(File.join(android_dir, 'full_description.txt'), desc)
+      end
+
+      # changelogs/default.txt ← release_notes.txt (sans markers "(Android)" et refs iOS)
+      src = File.join(ios_dir, 'release_notes.txt')
+      if File.exist?(src)
+        notes = File.read(src)
+        notes.gsub!(/\s*[\(（]Android[\)）]/, '')  # Supprimer markers (Android) et （Android）
+        notes.gsub!(/^-.*(?:Android.*iOS|iOS.*Android).*\n?/, '')  # Supprimer lignes mentionnant Android+iOS
+        notes.strip!
+        File.write(File.join(android_dir, 'changelogs', 'default.txt'), notes)
+      end
+    end
+
+    UI.success("✅ #{LOCALE_MAP.count} locales Android générées dans metadata/android/")
+  end
+
+  desc "Envoie les métadonnées vers Google Play (sans binaire ni screenshots)"
+  lane :upload_metadata do
+    generate_metadata
+
+    upload_to_play_store(
+      json_key: SHARED_GOOGLE_JSON_KEY,
+      package_name: 'com.engagengine.nfc_anycubic',
+      metadata_path: ANDROID_METADATA_DIR,
+      skip_upload_aab: true,
+      skip_upload_apk: true,
+      skip_upload_images: true,
+      skip_upload_screenshots: true,
+      skip_upload_changelogs: false,
+    )
+  end
+
   desc "Upload AAB vers Google Play (internal track)"
   lane :upload_app do
     aab_path = File.expand_path('../../build/app/outputs/bundle/release/app-release.aab', __dir__)
@@ -75,6 +156,12 @@ platform :android do
       skip_upload_images: true,
       skip_upload_screenshots: true,
     )
+  end
+
+  desc "Upload metadata + AAB"
+  lane :deploy do
+    upload_metadata
+    upload_app
   end
 
 end
