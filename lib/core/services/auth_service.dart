@@ -1,25 +1,27 @@
 import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
+import 'package:nfc_filament/core/api/api_config.dart';
+import 'package:nfc_filament/core/models/user_model.dart';
+import 'package:nfc_filament/core/services/shopping_list_service.dart';
+import 'package:nfc_filament/core/services/sync_service.dart';
+import 'package:nfc_filament/core/services/user_preferences_service.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import '../api/api_config.dart';
-import '../models/user_model.dart';
-import 'user_preferences_service.dart';
-import 'sync_service.dart';
-import 'shopping_list_service.dart';
 
 /// Service d'authentification Apple & Google
 class AuthService {
-  // Singleton
-  static final AuthService _instance = AuthService._internal();
   factory AuthService() => _instance;
   AuthService._internal();
+  // Singleton
+  static final AuthService _instance = AuthService._internal();
 
-  final GoogleSignIn _googleSignIn = GoogleSignIn(
-    scopes: ['email', 'profile'],
-  );
+  static const String _googleServerClientId =
+      '1091367332850-6hgb6firnj5miot7uvqggtcng6uc7qog.apps.googleusercontent.com';
+  final GoogleSignIn _googleSignIn = GoogleSignIn.instance;
+  bool _googleInitialized = false;
 
   final FlutterSecureStorage _secureStorage = const FlutterSecureStorage();
 
@@ -62,7 +64,8 @@ class AuthService {
         debugPrint('Apple backend response: ${response.statusCode}');
 
         if (response.statusCode == 200) {
-          final responseBody = jsonDecode(response.body);
+          final responseBody =
+              jsonDecode(response.body) as Map<String, dynamic>?;
 
           if (responseBody == null) {
             throw Exception('Backend returned null response');
@@ -73,9 +76,7 @@ class AuthService {
             throw Exception('Backend error: ${responseBody['error'] ?? 'Unknown error'}');
           }
 
-          final authResponse = AuthResponse.fromJson(
-            responseBody as Map<String, dynamic>,
-          );
+          final authResponse = AuthResponse.fromJson(responseBody);
 
           await _saveTokens(authResponse);
           await UserPreferencesService.loadPreferencesFromBackend();
@@ -93,13 +94,15 @@ class AuthService {
       }
 
       // 3. Fallback mode local si backend échoue
+      // Apple ne donne l'email qu'au PREMIER sign-in.
+      // Si email est null ici, on affiche un placeholder plus utile.
       await UserPreferencesService.setUserInfo(
         isSignedIn: true,
         userName: name ?? 'Apple User',
-        userEmail: email ?? 'apple-user@local',
+        userEmail: email ?? credential.userIdentifier ?? 'Apple Sign-In',
       );
 
-      debugPrint('Apple Sign In successful (local mode)');
+      debugPrint('Apple Sign In successful (local mode) - email: $email');
     } catch (e) {
       debugPrint('Apple Sign In error: $e');
       rethrow;
@@ -110,14 +113,18 @@ class AuthService {
   Future<void> signInWithGoogle() async {
     try {
       // 1. Demander l'authentification Google
-      final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
-
-      if (googleUser == null) {
-        throw Exception('Google Sign In cancelled');
+      if (!_googleInitialized) {
+        await _googleSignIn.initialize(
+          serverClientId: _googleServerClientId,
+        );
+        _googleInitialized = true;
       }
+      final googleUser = await _googleSignIn.authenticate(
+        scopeHint: ['email', 'profile'],
+      );
 
-      final GoogleSignInAuthentication googleAuth =
-          await googleUser.authentication;
+      final googleAuth =
+          googleUser.authentication;
 
       // 2. Essayer d'envoyer au backend
       try {
@@ -132,7 +139,8 @@ class AuthService {
         debugPrint('Google backend response: ${response.statusCode}');
 
         if (response.statusCode == 200) {
-          final responseBody = jsonDecode(response.body);
+          final responseBody =
+              jsonDecode(response.body) as Map<String, dynamic>?;
 
           if (responseBody == null) {
             throw Exception('Backend returned null response');
@@ -142,9 +150,7 @@ class AuthService {
             throw Exception('Backend error: ${responseBody['error'] ?? 'Unknown error'}');
           }
 
-          final authResponse = AuthResponse.fromJson(
-            responseBody as Map<String, dynamic>,
-          );
+          final authResponse = AuthResponse.fromJson(responseBody);
           await _saveTokens(authResponse);
           await UserPreferencesService.loadPreferencesFromBackend();
           await SyncService.fullSync();
@@ -211,12 +217,12 @@ class AuthService {
 
   /// Récupérer l'access token
   Future<String?> getAccessToken() async {
-    return await _secureStorage.read(key: _keyAccessToken);
+    return _secureStorage.read(key: _keyAccessToken);
   }
 
   /// Récupérer le refresh token
   Future<String?> getRefreshToken() async {
-    return await _secureStorage.read(key: _keyRefreshToken);
+    return _secureStorage.read(key: _keyRefreshToken);
   }
 
   /// Récupérer les données utilisateur
@@ -240,7 +246,7 @@ class AuthService {
 
   /// Vérifier si l'utilisateur est connecté
   Future<bool> isLoggedIn() async {
-    return await UserPreferencesService.isSignedIn();
+    return UserPreferencesService.isSignedIn();
   }
 
   /// Refresh le token d'accès
@@ -262,7 +268,8 @@ class AuthService {
       throw Exception('Token refresh failed - logged out');
     }
 
-    final data = jsonDecode(response.body)['data'];
+    final body = jsonDecode(response.body) as Map<String, dynamic>;
+    final data = body['data'] as Map<String, dynamic>;
     await _secureStorage.write(
       key: _keyAccessToken,
       value: data['access_token'] as String,

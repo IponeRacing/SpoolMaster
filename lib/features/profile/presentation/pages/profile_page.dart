@@ -65,6 +65,36 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Future<void> _purchaseSubscription(String productId) async {
+    // Block purchase if not logged in
+    final token = await AuthService().getAccessToken();
+    if (token == null) {
+      if (!mounted) return;
+      final shouldLogin = await showDialog<bool>(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: Text(AppLocalizations.of(ctx)!.authentication),
+          content: Text(AppLocalizations.of(ctx)!.signInToSync),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(ctx).pop(false),
+              child: Text(AppLocalizations.of(ctx)!.cancel),
+            ),
+            ElevatedButton(
+              onPressed: () => Navigator.of(ctx).pop(true),
+              child: Text(AppLocalizations.of(ctx)!.signIn),
+            ),
+          ],
+        ),
+      );
+      if (shouldLogin == true && mounted) {
+        await Navigator.of(context).push(
+          MaterialPageRoute<void>(builder: (_) => const LoginPage()),
+        );
+        await _loadPreferences();
+      }
+      return;
+    }
+
     setState(() => _isLoadingSubscription = true);
 
     try {
@@ -192,7 +222,7 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
     );
 
-    if (confirmed == true) {
+    if (confirmed ?? false) {
       await _deleteAccount();
     }
   }
@@ -305,10 +335,13 @@ class _ProfilePageState extends State<ProfilePage> {
           style: const TextStyle(fontWeight: FontWeight.bold),
         ),
       ),
-      body: ListView(
-        padding: const EdgeInsets.all(16),
-        children: [
-          // Section Authentification
+      body: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 600),
+          child: ListView(
+            padding: const EdgeInsets.all(16),
+            children: [
+              // Section Authentification
           Card(
             child: Padding(
               padding: const EdgeInsets.all(16),
@@ -335,15 +368,14 @@ class _ProfilePageState extends State<ProfilePage> {
                       onPressed: () async {
                         await UserPreferencesService.signOut();
                         await _loadPreferences();
-                        if (mounted) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text(
-                                AppLocalizations.of(context)!.signOut,
-                              ),
+                        if (!context.mounted) return;
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              AppLocalizations.of(context)!.signOut,
                             ),
-                          );
-                        }
+                          ),
+                        );
                       },
                       icon: const Icon(Icons.logout),
                       label: Text(AppLocalizations.of(context)!.signOut),
@@ -420,26 +452,28 @@ class _ProfilePageState extends State<ProfilePage> {
                             AppLocalizations.of(context)!.selectLanguage,
                           ),
                           content: SingleChildScrollView(
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: UserPreferencesService.supportedLanguages
-                                  .map((lang) {
-                                    return RadioListTile<String>(
-                                      title: Text(
-                                        UserPreferencesService
-                                            .languageNames[lang]!,
-                                      ),
-                                      value: lang,
-                                      groupValue: _selectedLanguage,
-                                      onChanged: (value) {
-                                        if (value != null) {
-                                          _saveLanguage(value);
-                                          Navigator.pop(context);
-                                        }
-                                      },
-                                    );
-                                  })
-                                  .toList(),
+                            child: RadioGroup<String>(
+                              groupValue: _selectedLanguage,
+                              onChanged: (value) {
+                                if (value != null) {
+                                  _saveLanguage(value);
+                                  Navigator.pop(context);
+                                }
+                              },
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: UserPreferencesService.supportedLanguages
+                                    .map((lang) {
+                                      return RadioListTile<String>(
+                                        title: Text(
+                                          UserPreferencesService
+                                              .languageNames[lang]!,
+                                        ),
+                                        value: lang,
+                                      );
+                                    })
+                                    .toList(),
+                              ),
                             ),
                           ),
                         ),
@@ -464,26 +498,28 @@ class _ProfilePageState extends State<ProfilePage> {
                             AppLocalizations.of(context)!.selectCurrency,
                           ),
                           content: SingleChildScrollView(
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: UserPreferencesService
-                                  .supportedCurrencies
-                                  .map((currency) {
-                                    return RadioListTile<String>(
-                                      title: Text(
-                                        _getCurrencyName(context, currency),
-                                      ),
-                                      value: currency,
-                                      groupValue: _selectedCurrency,
-                                      onChanged: (value) {
-                                        if (value != null) {
-                                          _saveCurrency(value);
-                                          Navigator.pop(context);
-                                        }
-                                      },
-                                    );
-                                  })
-                                  .toList(),
+                            child: RadioGroup<String>(
+                              groupValue: _selectedCurrency,
+                              onChanged: (value) {
+                                if (value != null) {
+                                  _saveCurrency(value);
+                                  Navigator.pop(context);
+                                }
+                              },
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: UserPreferencesService
+                                    .supportedCurrencies
+                                    .map((currency) {
+                                      return RadioListTile<String>(
+                                        title: Text(
+                                          _getCurrencyName(context, currency),
+                                        ),
+                                        value: currency,
+                                      );
+                                    })
+                                    .toList(),
+                              ),
                             ),
                           ),
                         ),
@@ -509,36 +545,31 @@ class _ProfilePageState extends State<ProfilePage> {
                           title: Text(
                             AppLocalizations.of(context)!.selectUnits,
                           ),
-                          content: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              RadioListTile<String>(
-                                title: Text(
-                                  AppLocalizations.of(context)!.metricUnits,
+                          content: RadioGroup<String>(
+                            groupValue: _selectedUnits,
+                            onChanged: (value) {
+                              if (value != null) {
+                                _saveUnits(value);
+                                Navigator.pop(context);
+                              }
+                            },
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                RadioListTile<String>(
+                                  title: Text(
+                                    AppLocalizations.of(context)!.metricUnits,
+                                  ),
+                                  value: UserPreferencesService.unitsMetric,
                                 ),
-                                value: UserPreferencesService.unitsMetric,
-                                groupValue: _selectedUnits,
-                                onChanged: (value) {
-                                  if (value != null) {
-                                    _saveUnits(value);
-                                    Navigator.pop(context);
-                                  }
-                                },
-                              ),
-                              RadioListTile<String>(
-                                title: Text(
-                                  AppLocalizations.of(context)!.imperialUnits,
+                                RadioListTile<String>(
+                                  title: Text(
+                                    AppLocalizations.of(context)!.imperialUnits,
+                                  ),
+                                  value: UserPreferencesService.unitsImperial,
                                 ),
-                                value: UserPreferencesService.unitsImperial,
-                                groupValue: _selectedUnits,
-                                onChanged: (value) {
-                                  if (value != null) {
-                                    _saveUnits(value);
-                                    Navigator.pop(context);
-                                  }
-                                },
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       );
@@ -559,7 +590,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         context: context,
                         builder: (context) {
                           // Clamp threshold between slider min/max to prevent crash
-                          int tempThreshold = _lowStockThreshold.clamp(5, 50);
+                          var tempThreshold = _lowStockThreshold.clamp(5, 50);
                           return StatefulBuilder(
                             builder: (context, setDialogState) {
                               return AlertDialog(
@@ -1065,7 +1096,9 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
             ),
           ),
-        ],
+          ],
+        ),
+      ),
       ),
     );
   }

@@ -1,22 +1,22 @@
 import 'dart:async';
 import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
+import 'package:http/http.dart' as http;
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:in_app_purchase_storekit/in_app_purchase_storekit.dart';
 import 'package:in_app_purchase_storekit/store_kit_wrappers.dart';
-import 'package:in_app_purchase_android/in_app_purchase_android.dart';
-import 'package:http/http.dart' as http;
 import 'package:nfc_filament/core/api/api_config.dart';
 import 'package:nfc_filament/core/services/admob_service.dart';
-import 'package:nfc_filament/core/services/user_preferences_service.dart';
 import 'package:nfc_filament/core/services/auth_service.dart';
+import 'package:nfc_filament/core/services/user_preferences_service.dart';
 
 /// Service de gestion des abonnements In-App Purchase
 /// Suit les meilleures pratiques Apple 2025-2026 avec StoreKit 2
 class SubscriptionService {
-  static final SubscriptionService _instance = SubscriptionService._internal();
   factory SubscriptionService() => _instance;
   SubscriptionService._internal();
+  static final SubscriptionService _instance = SubscriptionService._internal();
 
   final InAppPurchase _iap = InAppPurchase.instance;
   StreamSubscription<List<PurchaseDetails>>? _subscription;
@@ -70,7 +70,7 @@ class SubscriptionService {
     premiumStatusNotifier.value = _isPremium;
 
     // Mettre à jour AdMob
-    AdMobService().setUserPremiumStatus(_isPremium);
+    AdMobService().setUserPremiumStatus(isPremium: _isPremium);
 
     // Écouter les achats
     _subscription = _iap.purchaseStream.listen(
@@ -106,7 +106,7 @@ class SubscriptionService {
   /// Charge les produits depuis App Store
   Future<void> loadProducts() async {
     try {
-      final ProductDetailsResponse response = await _iap.queryProductDetails(_productIds);
+      final response = await _iap.queryProductDetails(_productIds);
 
       if (response.error != null) {
         debugPrint('❌ Error loading products: ${response.error}');
@@ -139,7 +139,7 @@ class SubscriptionService {
       orElse: () => throw Exception('Product $productId not found'),
     );
 
-    final PurchaseParam purchaseParam = PurchaseParam(productDetails: product);
+    final purchaseParam = PurchaseParam(productDetails: product);
 
     try {
       return await _iap.buyNonConsumable(purchaseParam: purchaseParam);
@@ -152,7 +152,7 @@ class SubscriptionService {
   /// Gère les mises à jour d'achat
   /// Best practice 2025: Transaction automatique avec StoreKit 2
   Future<void> _handlePurchaseUpdates(List<PurchaseDetails> purchaseDetailsList) async {
-    for (final PurchaseDetails purchaseDetails in purchaseDetailsList) {
+    for (final purchaseDetails in purchaseDetailsList) {
       debugPrint('📱 Purchase update: ${purchaseDetails.productID} - ${purchaseDetails.status}');
 
       if (purchaseDetails.status == PurchaseStatus.pending) {
@@ -162,40 +162,51 @@ class SubscriptionService {
         if (purchaseDetails.status == PurchaseStatus.error) {
           // Erreur d'achat
           debugPrint('❌ Purchase error: ${purchaseDetails.error}');
+          if (purchaseDetails.pendingCompletePurchase) {
+            await _iap.completePurchase(purchaseDetails);
+          }
         } else if (purchaseDetails.status == PurchaseStatus.purchased ||
                    purchaseDetails.status == PurchaseStatus.restored) {
-          // Achat réussi ou restauré
-          await _verifyAndDeliverProduct(purchaseDetails);
-        }
-
-        // IMPORTANT: Compléter la transaction (best practice 2025)
-        if (purchaseDetails.pendingCompletePurchase) {
-          await _iap.completePurchase(purchaseDetails);
-          debugPrint('✅ Purchase completed');
+          // Achat réussi ou restauré — vérifier AVANT de compléter
+          final verified = await _verifyAndDeliverProduct(purchaseDetails);
+          if (purchaseDetails.pendingCompletePurchase) {
+            if (verified) {
+              await _iap.completePurchase(purchaseDetails);
+              debugPrint('✅ Purchase completed after verification');
+            } else {
+              // Complete anyway to avoid infinite re-delivery,
+              // but user will need to restore purchases after logging in
+              await _iap.completePurchase(purchaseDetails);
+              debugPrint('⚠️ Purchase completed without server verification');
+            }
+          }
+        } else {
+          if (purchaseDetails.pendingCompletePurchase) {
+            await _iap.completePurchase(purchaseDetails);
+          }
         }
       }
     }
   }
 
   /// Vérifie et active l'abonnement
-  /// Best practice 2025: TOUJOURS vérifier côté serveur
-  Future<void> _verifyAndDeliverProduct(PurchaseDetails purchaseDetails) async {
+  /// Retourne true si la vérification serveur a réussi
+  Future<bool> _verifyAndDeliverProduct(PurchaseDetails purchaseDetails) async {
     try {
-      // Vérifier avec le serveur backend (SÉCURITÉ)
       final isValid = await _verifyPurchaseWithServer(purchaseDetails);
 
       if (isValid) {
         await _activatePremium();
         debugPrint('✅ Premium activated!');
+        return true;
       } else {
-        // Désactiver le premium si l'abonnement est expiré
         await _deactivatePremium();
         debugPrint('❌ Purchase verification failed - Premium DEACTIVATED');
+        return false;
       }
     } catch (e) {
       debugPrint('❌ Server verification error: $e - Premium NOT activated');
-      // NE PAS activer en cas d'erreur serveur (sécurité)
-      // L'utilisateur devra contacter le support ou réessayer plus tard
+      return false;
     }
   }
 
@@ -213,36 +224,11 @@ class SubscriptionService {
         return false;
       }
 
-      String? signedTransaction;
-      String platform = 'ios';
+      final platform = defaultTargetPlatform == TargetPlatform.android ? 'android' : 'ios';
+      final signedTransaction = purchaseDetails.verificationData.serverVerificationData;
 
-      if (defaultTargetPlatform == TargetPlatform.iOS) {
-        // Pour iOS StoreKit 2
-        if (purchaseDetails is AppStorePurchaseDetails) {
-          if (purchaseDetails.skPaymentTransaction.transactionState == SKPaymentTransactionStateWrapper.purchased ||
-              purchaseDetails.skPaymentTransaction.transactionState == SKPaymentTransactionStateWrapper.restored) {
-            signedTransaction = purchaseDetails.verificationData.serverVerificationData;
-            debugPrint('📦 iOS: Using serverVerificationData');
-          }
-        } else {
-          signedTransaction = purchaseDetails.verificationData.serverVerificationData;
-        }
-      } else if (defaultTargetPlatform == TargetPlatform.android) {
-        // Pour Android Google Play
-        platform = 'android';
-        if (purchaseDetails is GooglePlayPurchaseDetails) {
-          // Google Play envoie le purchaseToken pour la verification
-          signedTransaction = purchaseDetails.verificationData.serverVerificationData;
-          debugPrint('📦 Android: Using Google Play purchaseToken');
-        } else {
-          signedTransaction = purchaseDetails.verificationData.serverVerificationData;
-        }
-      }
-
-      if (signedTransaction == null || signedTransaction.isEmpty) {
+      if (signedTransaction.isEmpty) {
         debugPrint('❌ No signed transaction data - cannot verify purchase');
-        // SECURITY: Require valid transaction data from Store
-        // Without it, we cannot cryptographically verify the purchase
         return false;
       }
 
@@ -263,9 +249,10 @@ class SubscriptionService {
       ).timeout(const Duration(seconds: 10));
 
       if (response.statusCode == 200) {
-        final data = jsonDecode(response.body);
+        final data = jsonDecode(response.body) as Map<String, dynamic>;
         final isSuccess = data['success'] == true;
-        final isPremium = data['subscription']?['is_premium'] == true;
+        final subscription = data['subscription'] as Map<String, dynamic>?;
+        final isPremium = subscription?['is_premium'] == true;
 
         debugPrint('✅ Server verification - success: $isSuccess, is_premium: $isPremium');
 
@@ -297,7 +284,7 @@ class SubscriptionService {
       );
 
       if (response.statusCode == 200) {
-        final data = jsonDecode(response.body);
+        final data = jsonDecode(response.body) as Map<String, dynamic>;
         final serverIsPremium = data['is_premium'] == true;
 
         debugPrint('🔄 Server subscription status: $serverIsPremium');
@@ -326,10 +313,10 @@ class SubscriptionService {
     premiumStatusNotifier.value = true;
 
     // Sauvegarder dans le stockage local
-    await UserPreferencesService.setPremium(true);
+    await UserPreferencesService.setPremium(isPremium: true);
 
     // Mettre à jour AdMob pour cacher les pubs
-    AdMobService().setUserPremiumStatus(true);
+    AdMobService().setUserPremiumStatus(isPremium: true);
 
     debugPrint('🌟 Premium status activated - Ads disabled');
   }
@@ -339,8 +326,8 @@ class SubscriptionService {
     _isPremium = false;
     premiumStatusNotifier.value = false;
 
-    await UserPreferencesService.setPremium(false);
-    AdMobService().setUserPremiumStatus(false);
+    await UserPreferencesService.setPremium(isPremium: false);
+    AdMobService().setUserPremiumStatus(isPremium: false);
 
     debugPrint('📱 Premium status deactivated - Ads enabled');
   }
@@ -363,36 +350,10 @@ class SubscriptionService {
     }
   }
 
-  /// Vérifie le statut d'abonnement actuel
-  /// Best practice: Vérifier régulièrement (ex: au démarrage app)
+  /// Vérifie le statut d'abonnement actuel via le serveur
   Future<void> checkSubscriptionStatus() async {
     try {
-      if (defaultTargetPlatform == TargetPlatform.iOS) {
-        // iOS: Utiliser StoreKit 2 pour vérifier le statut
-        final transactions = await SKPaymentQueueWrapper().transactions();
-
-        bool hasActiveSubscription = false;
-        for (final transaction in transactions) {
-          if (transaction.transactionState == SKPaymentTransactionStateWrapper.purchased ||
-              transaction.transactionState == SKPaymentTransactionStateWrapper.restored) {
-            if (_productIds.contains(transaction.payment.productIdentifier)) {
-              hasActiveSubscription = true;
-              break;
-            }
-          }
-        }
-
-        if (hasActiveSubscription && !_isPremium) {
-          await _activatePremium();
-        } else if (!hasActiveSubscription && _isPremium) {
-          await _deactivatePremium();
-        }
-      } else if (defaultTargetPlatform == TargetPlatform.android) {
-        // Android: Vérifier via Google Play Billing
-        // Le statut est géré via purchaseStream et syncSubscriptionStatusWithServer
-        // On synchronise simplement avec le serveur
-        await syncSubscriptionStatusWithServer();
-      }
+      await syncSubscriptionStatusWithServer();
     } catch (e) {
       debugPrint('❌ Error checking subscription status: $e');
     }
