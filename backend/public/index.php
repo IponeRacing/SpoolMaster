@@ -94,6 +94,7 @@ use NfcAnycubic\Controllers\SubscriptionController;
 use NfcAnycubic\Controllers\AppleServerNotificationController;
 use NfcAnycubic\Controllers\GooglePlayWebhookController;
 use NfcAnycubic\Controllers\ShoppingListController;
+use NfcAnycubic\Controllers\ReportController;
 
 // Error handling
 error_reporting(E_ALL);
@@ -142,6 +143,9 @@ $router->post('/webhooks/google-play', [GooglePlayWebhookController::class, 'han
 
 // CRON endpoint (public but with secret key)
 $router->get('/cron/check-expired/:secret', [SubscriptionController::class, 'cronCheckExpired']);
+$router->get('/cron/daily-report/:secret', [ReportController::class, 'dailyReport']);
+$router->get('/cron/scan-analysis/:secret', [ReportController::class, 'scanAnalysis']);
+$router->get('/cron/user-search/:secret', [ReportController::class, 'userSearch']);
 
 // ============================================
 // Routes protégées (auth requise)
