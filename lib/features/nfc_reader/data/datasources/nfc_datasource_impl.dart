@@ -1,19 +1,21 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer' as developer;
+
 import 'package:flutter/services.dart';
 import 'package:injectable/injectable.dart';
 import 'package:nfc_filament/core/errors/failures.dart';
 import 'package:nfc_filament/core/services/user_preferences_service.dart';
 import 'package:nfc_filament/features/nfc_reader/data/datasources/nfc_datasource.dart';
 import 'package:nfc_filament/features/nfc_reader/data/models/bobbin_data_model.dart';
-import 'package:nfc_filament/features/nfc_reader/domain/entities/bobbin_data.dart';
 import 'package:nfc_filament/features/nfc_reader/data/models/nfc_tag_model.dart';
 import 'package:nfc_filament/features/nfc_reader/data/services/bambu_lab_reader_service.dart';
 import 'package:nfc_filament/features/nfc_reader/data/services/creality_reader_service.dart';
 import 'package:nfc_filament/features/nfc_reader/data/services/creality_writer_service.dart';
+import 'package:nfc_filament/features/nfc_reader/data/services/open_standards_reader_service.dart';
 import 'package:nfc_filament/features/nfc_reader/data/services/prusa_reader_service.dart';
 import 'package:nfc_filament/features/nfc_reader/data/services/prusa_writer_service.dart';
+import 'package:nfc_filament/features/nfc_reader/domain/entities/bobbin_data.dart';
 import 'package:nfc_filament/native_nfc/native_nfc.dart';
 import 'package:nfc_manager/nfc_manager.dart';
 
@@ -29,17 +31,17 @@ class NfcDataSourceImpl implements NfcDataSource {
 
     // Si pas de SKU trouvé, la puce est vide ou non-Anycubic
     if (sku.isEmpty) {
-      developer.log('❌ Puce vide ou non-Anycubic détectée');
+      developer.log('❌ Puce vide ou format non reconnu');
       final hexDump = rawBytes.take(64).map((b) => b.toRadixString(16).padLeft(2, '0')).join(' ');
       throw NfcTagReadFailure(
-        message: 'Tag NFC vide ou non compatible (format Anycubic non détecté)',
+        message: 'Tag NFC vide ou non compatible avec le mode sélectionné',
         rawTagData: 'ascii:$data|hex:$hexDump',
         rawBytesCount: rawBytes.length,
       );
     }
 
-    String filamentType = 'PLA';
-    String color = 'Unknown';
+    var filamentType = 'PLA';
+    var color = 'Unknown';
     int? colorRgb;
 
     if (sku.isNotEmpty) {
@@ -155,9 +157,9 @@ class NfcDataSourceImpl implements NfcDataSource {
         'Brown': 0x8B4513,
       };
       if (colorNameToRgb.containsKey(color)) {
-        colorRgb = colorNameToRgb[color]!;
+        colorRgb = colorNameToRgb[color];
         developer.log(
-          '🔄 Fallback RGB depuis couleur SKU "$color": 0x${colorRgb.toRadixString(16).padLeft(6, '0')}',
+          '🔄 Fallback RGB depuis couleur SKU "$color": 0x${colorRgb?.toRadixString(16).padLeft(6, '0')}',
         );
       }
     }
@@ -172,8 +174,12 @@ class NfcDataSourceImpl implements NfcDataSource {
     }
 
     // Parse temperatures and advanced settings
-    int? extruderMin, extruderMax, bedMin, bedMax, spoolLength;
-    double weight = 1000.0;
+    int? extruderMin;
+    int? extruderMax;
+    int? bedMin;
+    int? bedMax;
+    int? spoolLength;
+    double weight = 1000;
     double? diameter;
 
     if (rawBytes.length >= 128) {
@@ -187,7 +193,7 @@ class NfcDataSourceImpl implements NfcDataSource {
       final diameterRaw = rawBytes[120] | (rawBytes[121] << 8);
       diameter = diameterRaw / 100.0;
       spoolLength = rawBytes[122] | (rawBytes[123] << 8);
-      weight = ((rawBytes[124] | (rawBytes[125] << 8))).toDouble();
+      weight = (rawBytes[124] | (rawBytes[125] << 8)).toDouble();
 
       developer.log('🌡️ Extrudeur: $extruderMin-$extruderMax°C');
       developer.log('🌡️ Plateau: $bedMin-$bedMax°C');
@@ -260,15 +266,15 @@ class NfcDataSourceImpl implements NfcDataSource {
   }
 
   @override
-  Future<BobbinDataModel> readBobbinData() async {
+  Future<BobbinDataModel> readBobbinData({String? nfcMode}) async {
     developer.log('📱 Démarrage scan bobine avec plugin natif...');
 
-    // Vérifier le mode NFC (Anycubic ou Bambu Lab)
-    final nfcMode = await UserPreferencesService.getNfcMode();
-    developer.log('🔧 Mode NFC: $nfcMode');
+    // Utiliser le mode passé en paramètre, sinon la préférence utilisateur
+    final effectiveMode = nfcMode ?? await UserPreferencesService.getNfcMode();
+    developer.log('🔧 Mode NFC: $effectiveMode (override: ${nfcMode != null})');
 
     // Si mode Prusa explicitement sélectionné, utiliser le lecteur OpenPrintTag
-    if (nfcMode == 'prusa') {
+    if (effectiveMode == 'prusa') {
       developer.log('🏷️ Mode Prusa détecté, utilisation du lecteur OpenPrintTag');
       try {
         return await _readPrusaTag();
@@ -279,7 +285,7 @@ class NfcDataSourceImpl implements NfcDataSource {
     }
 
     // Si mode Bambu Lab explicitement sélectionné, utiliser le lecteur spécifique
-    if (nfcMode == 'bambu') {
+    if (effectiveMode == 'bambu') {
       developer.log('🏷️ Mode Bambu Lab détecté, utilisation du lecteur Bambu Lab');
       try {
         return await _readBambuLabTag();
@@ -290,7 +296,7 @@ class NfcDataSourceImpl implements NfcDataSource {
     }
 
     // Si mode Creality CFS explicitement sélectionné
-    if (nfcMode == 'creality') {
+    if (effectiveMode == 'creality') {
       developer.log('🏷️ Mode Creality CFS détecté, utilisation du lecteur Creality');
       try {
         return await _readCrealityTag();
@@ -300,8 +306,8 @@ class NfcDataSourceImpl implements NfcDataSource {
       }
     }
 
-    List<int> rawBytes = [];
-    String dataString = '';
+    var rawBytes = <int>[];
+    var dataString = '';
 
     try {
       // Utiliser le plugin natif qui gère correctement la connexion (Anycubic)
@@ -327,9 +333,22 @@ class NfcDataSourceImpl implements NfcDataSource {
       // Détecter le format: Spool NFC Tag Writer (Brand + Material) ou Anycubic (SKU)
       final hasSku = RegExp(r'A[A-Z]{3,5}[A-Z]{2}-\d{3}').hasMatch(dataString);
 
-      if (!hasSku && rawBytes.length >= 64) {
-        // Format "Spool NFC Tag Writer": Brand at pages 8-11, Material at pages 12-15
-        developer.log('🔍 Format détecté: Spool NFC Tag Writer (Brand + Material)');
+      // Standards ouverts (OpenSpool JSON, OpenTag3D, Elegoo) : NDEF sur NTAG21x
+      if (!hasSku) {
+        final openStandard = OpenStandardsReaderService.tryParse(rawBytes);
+        if (openStandard != null) {
+          developer.log('✅ Tag standard ouvert détecté (OpenSpool/OpenTag3D/Elegoo)');
+          return _bobbinDataToModel(openStandard);
+        }
+      }
+
+      // Tags ACE Pro officiels (NTAG213) et "Spool NFC Tag Writer" partagent
+      // le même layout, identifié par le magic byte 0x7B en page 4.
+      final hasAceMagic = rawBytes.length > 16 && rawBytes[16] == 0x7B;
+
+      if (!hasSku && (hasAceMagic || rawBytes.length >= 64)) {
+        // Format ACE/Tag Writer: Brand pages 10-13, Material pages 15-18
+        developer.log('🔍 Format détecté: ACE/Spool NFC Tag Writer (magic: $hasAceMagic)');
 
         // Pages 8-11 = bytes 40-55 (16 bytes pour brand, commence au milieu de page 8)
         // Pages 12-15 = bytes 60-75 (16 bytes pour material, commence au milieu de page 12)
@@ -342,7 +361,7 @@ class NfcDataSourceImpl implements NfcDataSource {
         developer.log('🏷️ Brand: "$brand", Material: "$material"');
 
         // Parse color from pages 20-23 (bytes 80-83) - ABGR format (little-endian)
-        String colorName = 'Unknown';
+        var colorName = 'Unknown';
         int? colorRgb;
         if (rawBytes.length >= 84) {
           // Format ABGR: Alpha, Blue, Green, Red
@@ -362,8 +381,12 @@ class NfcDataSourceImpl implements NfcDataSource {
         }
 
         // Parse temperatures and advanced settings
-        int? extruderMin, extruderMax, bedMin, bedMax, spoolLength;
-        double weight = 1000.0;
+        int? extruderMin;
+    int? extruderMax;
+    int? bedMin;
+    int? bedMax;
+    int? spoolLength;
+        double weight = 1000;
         double? diameter;
 
         if (rawBytes.length >= 128) {
@@ -378,7 +401,7 @@ class NfcDataSourceImpl implements NfcDataSource {
           final diameterRaw = rawBytes[120] | (rawBytes[121] << 8);
           diameter = diameterRaw / 100.0; // Converti de 0.01mm en mm
           spoolLength = rawBytes[122] | (rawBytes[123] << 8);
-          weight = ((rawBytes[124] | (rawBytes[125] << 8))).toDouble();
+          weight = (rawBytes[124] | (rawBytes[125] << 8)).toDouble();
 
           developer.log('🌡️ Plateau: $bedMin-$bedMax°C');
           developer.log('📏 Diamètre: ${diameter}mm');
@@ -405,6 +428,9 @@ class NfcDataSourceImpl implements NfcDataSource {
       // Parser les données Anycubic (format SKU)
       final bobbinModel = _parseAnycubicData(dataString, rawBytes);
       return bobbinModel;
+    } on PlatformException {
+      // Laisser les PlatformException remonter (USER_CANCELLED, TAG_NOT_DETECTED, etc.)
+      rethrow;
     } catch (e) {
       developer.log('❌ Erreur lecture NFC native: $e');
       if (e is NfcTagReadFailure) {
@@ -415,7 +441,7 @@ class NfcDataSourceImpl implements NfcDataSource {
           : null;
       final tagData = rawBytes.isNotEmpty ? 'ascii:$dataString|hex:$hexDump' : null;
       return Future.error(NfcTagReadFailure(
-        message: e is PlatformException ? (e.message ?? 'Erreur NFC') : e.toString(),
+        message: e.toString(),
         rawTagData: tagData,
         rawBytesCount: rawBytes.length,
       ));
@@ -448,7 +474,7 @@ class NfcDataSourceImpl implements NfcDataSource {
       final r = (colorRgb >> 16) & 0xFF;
       final g = (colorRgb >> 8) & 0xFF;
       final b = colorRgb & 0xFF;
-      final a = 0xFF; // Full opacity
+      const a = 0xFF; // Full opacity
 
       // Temperatures and advanced settings
       final extruderMin = data.extruderTempMin ?? 190;
@@ -532,7 +558,7 @@ class NfcDataSourceImpl implements NfcDataSource {
     } catch (e) {
       developer.log('❌ Erreur écriture NFC native: $e');
       return Future.error(
-        NfcTagReadFailure(message: 'Erreur écriture: ${e.toString()}'),
+        NfcTagReadFailure(message: 'Erreur écriture: $e'),
       );
     }
   }
@@ -671,7 +697,7 @@ class NfcDataSourceImpl implements NfcDataSource {
       // Laisser les NfcTagReadFailure (avec rawTagData) remonter
       rethrow;
     } catch (e) {
-      developer.log('❌ Erreur lecture tag Bambu Lab: $e');
+      developer.log('❌ Erreur lecture tag Bambu Lab: $e\n${e is Error ? e.stackTrace : ""}');
       throw NfcTagReadFailure(message: 'Erreur lecture Bambu Lab: $e');
     }
   }
@@ -701,7 +727,7 @@ class NfcDataSourceImpl implements NfcDataSource {
     } on Failure {
       rethrow;
     } catch (e) {
-      developer.log('❌ Erreur lecture tag Creality CFS: $e');
+      developer.log('❌ Erreur lecture tag Creality CFS: $e\n${e is Error ? e.stackTrace : ""}');
       throw NfcTagReadFailure(message: 'Erreur lecture Creality CFS: $e');
     }
   }
@@ -736,6 +762,15 @@ class NfcDataSourceImpl implements NfcDataSource {
 
         final hasSku = RegExp(r'A[A-Z]{3,5}[A-Z]{2}-\d{3}').hasMatch(dataString);
 
+        // Standards ouverts (OpenSpool JSON, OpenTag3D, Elegoo) : NDEF sur NTAG21x
+        if (!hasSku) {
+          final openStandard = OpenStandardsReaderService.tryParse(rawBytes);
+          if (openStandard != null) {
+            developer.log('✅ Auto-detect: tag standard ouvert (OpenSpool/OpenTag3D/Elegoo)');
+            return _bobbinDataToModel(openStandard);
+          }
+        }
+
         if (!hasSku && rawBytes.length >= 64) {
           return _parseSpoolNfcTagWriterData(rawBytes);
         }
@@ -743,7 +778,7 @@ class NfcDataSourceImpl implements NfcDataSource {
         return _parseAnycubicData(dataString, rawBytes);
       }
     } catch (e) {
-      developer.log('❌ Erreur auto-detect NFC: $e');
+      developer.log('❌ Erreur auto-detect NFC: $e\n${e is Error ? e.stackTrace : ""}');
       if (e is PlatformException || e is Failure) rethrow;
       throw NfcTagReadFailure(message: 'Erreur auto-detect: $e');
     }
@@ -776,7 +811,7 @@ class NfcDataSourceImpl implements NfcDataSource {
     final brand = String.fromCharCodes(brandBytes.where((b) => b >= 32 && b < 127)).trim();
     final material = String.fromCharCodes(materialBytes.where((b) => b >= 32 && b < 127)).trim();
 
-    String colorName = 'Unknown';
+    var colorName = 'Unknown';
     int? colorRgb;
     if (rawBytes.length >= 84) {
       final b = rawBytes[81];
@@ -786,8 +821,12 @@ class NfcDataSourceImpl implements NfcDataSource {
       colorName = _rgbToColorName(r, g, b);
     }
 
-    int? extruderMin, extruderMax, bedMin, bedMax, spoolLength;
-    double weight = 1000.0;
+    int? extruderMin;
+    int? extruderMax;
+    int? bedMin;
+    int? bedMax;
+    int? spoolLength;
+    double weight = 1000;
     double? diameter;
 
     if (rawBytes.length >= 128) {
@@ -798,7 +837,7 @@ class NfcDataSourceImpl implements NfcDataSource {
       final diameterRaw = rawBytes[120] | (rawBytes[121] << 8);
       diameter = diameterRaw / 100.0;
       spoolLength = rawBytes[122] | (rawBytes[123] << 8);
-      weight = ((rawBytes[124] | (rawBytes[125] << 8))).toDouble();
+      weight = (rawBytes[124] | (rawBytes[125] << 8)).toDouble();
     }
 
     return BobbinDataModel(
@@ -850,7 +889,7 @@ class NfcDataSourceImpl implements NfcDataSource {
       // Laisser les NfcTagReadFailure (avec rawTagData) remonter
       rethrow;
     } catch (e) {
-      developer.log('❌ Erreur lecture tag Prusa: $e');
+      developer.log('❌ Erreur lecture tag Prusa: $e\n${e is Error ? e.stackTrace : ""}');
       throw NfcTagReadFailure(message: 'Erreur lecture Prusa: $e');
     }
   }

@@ -64,8 +64,8 @@ class NativeNfcPlugin private constructor(
         private val BAMBU_HKDF_INFO = byteArrayOf(0x52, 0x46, 0x49, 0x44, 0x2d, 0x41, 0x00)
 
         // Creality CFS parameters
-        // XOR secret for sector key derivation: "q3bu^t1nqfZ(pf$1"
-        private val CREALITY_XOR_SECRET = byteArrayOf(
+        // AES key for sector key derivation from UID: "q3bu^t1nqfZ(pf$1"
+        private val CREALITY_UID_KEY = byteArrayOf(
             0x71, 0x33, 0x62, 0x75, 0x5e, 0x74, 0x31, 0x6e,
             0x71, 0x66, 0x5a, 0x28, 0x70, 0x66, 0x24, 0x31
         )
@@ -373,27 +373,64 @@ class NativeNfcPlugin private constructor(
 
     private fun enableReaderMode() {
         startSessionTracking()
-        // Use foreground dispatch as primary method (more compatible, especially Samsung/Android 16+)
-        try {
-            enableForegroundDispatchFallback()
-            Log.d(TAG, "Using foreground dispatch as primary NFC method")
-        } catch (e: Exception) {
-            Log.e(TAG, "Foreground dispatch failed, trying enableReaderMode", e)
+        Log.i(TAG, "🚀 NFC session start: SDK=${Build.VERSION.SDK_INT}, device=${Build.MANUFACTURER} ${Build.MODEL}, nfc_enabled=${nfcAdapter?.isEnabled}, mode=$currentMode")
+
+        val isSamsung = Build.MANUFACTURER.equals("samsung", ignoreCase = true)
+
+        if (isSamsung) {
+            // Samsung: enableReaderMode silently fails on many models (onTagDiscovered never fires).
+            // Foreground dispatch works reliably with Samsung's NFC stack.
+            Log.d(TAG, "Samsung device — using foreground dispatch as primary")
+            try {
+                val intent = Intent(activity, MainActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
+                val pendingIntent = PendingIntent.getActivity(
+                    activity, 0, intent,
+                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_MUTABLE
+                )
+                nfcAdapter?.enableForegroundDispatch(activity, pendingIntent, null, null)
+                useForegroundDispatch = true
+                startTimeout()
+                Log.d(TAG, "Foreground dispatch enabled (Samsung primary)")
+            } catch (e: Exception) {
+                Log.e(TAG, "Foreground dispatch failed on Samsung, trying reader mode", e)
+                try {
+                    val flags = NfcAdapter.FLAG_READER_NFC_A or
+                               NfcAdapter.FLAG_READER_NFC_B or
+                               NfcAdapter.FLAG_READER_NFC_V
+                    val extras = android.os.Bundle()
+                    extras.putInt(NfcAdapter.EXTRA_READER_PRESENCE_CHECK_DELAY, 500)
+                    nfcAdapter?.enableReaderMode(activity, this, flags, extras)
+                    useForegroundDispatch = false
+                    startTimeout()
+                    Log.d(TAG, "Reader mode enabled as Samsung fallback (flags=$flags)")
+                } catch (e2: Exception) {
+                    Log.e(TAG, "Both NFC methods failed on Samsung", e2)
+                    sendError("NFC_ERROR", "Cannot start NFC: ${e2.message}")
+                }
+            }
+        } else {
+            // Non-Samsung: reader mode as primary (direct callback, blocks other NFC handlers)
             try {
                 val flags = NfcAdapter.FLAG_READER_NFC_A or
                            NfcAdapter.FLAG_READER_NFC_B or
                            NfcAdapter.FLAG_READER_NFC_V
 
                 val extras = android.os.Bundle()
-                extras.putInt(NfcAdapter.EXTRA_READER_PRESENCE_CHECK_DELAY, 250)
+                extras.putInt(NfcAdapter.EXTRA_READER_PRESENCE_CHECK_DELAY, 500)
 
                 nfcAdapter?.enableReaderMode(activity, this, flags, extras)
                 useForegroundDispatch = false
                 startTimeout()
-                Log.d(TAG, "Reader mode enabled as fallback (flags=$flags)")
-            } catch (e2: Exception) {
-                Log.e(TAG, "Both NFC methods failed", e2)
-                sendError("NFC_ERROR", "Cannot start NFC: ${e2.message}")
+                Log.d(TAG, "Reader mode enabled as primary (flags=$flags)")
+            } catch (e: Exception) {
+                Log.e(TAG, "enableReaderMode failed, trying foreground dispatch", e)
+                try {
+                    enableForegroundDispatchFallback()
+                    Log.d(TAG, "Using foreground dispatch as fallback")
+                } catch (e2: Exception) {
+                    Log.e(TAG, "Both NFC methods failed", e2)
+                    sendError("NFC_ERROR", "Cannot start NFC: ${e2.message}")
+                }
             }
         }
     }
@@ -450,9 +487,10 @@ class NativeNfcPlugin private constructor(
     private fun startTimeout() {
         cancelTimeout()
         timeoutRunnable = Runnable {
-            Log.w(TAG, "⏱️ NFC scan timeout after ${SCAN_TIMEOUT_MS}ms")
+            val diag = buildSessionDiagnostics()
+            Log.w(TAG, "⏱️ NFC scan timeout after ${SCAN_TIMEOUT_MS}ms — SDK=${Build.VERSION.SDK_INT}, device=${Build.MANUFACTURER} ${Build.MODEL}, method=${if (useForegroundDispatch) "foreground_dispatch" else "reader_mode"}, nfc_enabled=${nfcAdapter?.isEnabled}, tag_detected=$tagWasDetected, mode=$currentMode")
             if (pendingResult != null) {
-                pendingResult?.error("TAG_NOT_DETECTED", "Aucun tag NFC détecté après ${SCAN_TIMEOUT_MS / 1000}s. Le tag est peut-être mort ou incompatible.", buildSessionDiagnostics())
+                pendingResult?.error("TAG_NOT_DETECTED", "Aucun tag NFC détecté après ${SCAN_TIMEOUT_MS / 1000}s. Le tag est peut-être mort ou incompatible.", diag)
                 pendingResult = null
             }
             disableReaderMode()
@@ -472,9 +510,16 @@ class NativeNfcPlugin private constructor(
     private fun buildSessionDiagnostics(): Map<String, Any> {
         val details = mutableMapOf<String, Any>(
             "tag_was_detected" to tagWasDetected,
+            "sdk_version" to Build.VERSION.SDK_INT,
+            "device_model" to "${Build.MANUFACTURER} ${Build.MODEL}",
+            "nfc_method" to if (useForegroundDispatch) "foreground_dispatch" else "reader_mode",
+            "nfc_enabled" to (nfcAdapter?.isEnabled == true),
         )
         if (sessionStartTimeMs > 0) {
             details["session_duration_ms"] = System.currentTimeMillis() - sessionStartTimeMs
+        }
+        if (tagDetectedTimeMs > 0 && sessionStartTimeMs > 0) {
+            details["tag_detect_delay_ms"] = tagDetectedTimeMs - sessionStartTimeMs
         }
         return details
     }
@@ -492,7 +537,9 @@ class NativeNfcPlugin private constructor(
     }
 
     override fun onTagDiscovered(tag: Tag?) {
-        Log.d(TAG, "Tag discovered: ${tag?.techList?.joinToString()}")
+        val detectDelay = if (sessionStartTimeMs > 0) System.currentTimeMillis() - sessionStartTimeMs else -1
+        val nfcA = tag?.let { NfcA.get(it) }
+        Log.i(TAG, "📡 Tag discovered: techs=[${tag?.techList?.joinToString()}], id=${tag?.id?.joinToString(":") { String.format("%02x", it) }}, SAK=${nfcA?.sak}, ATQA=${nfcA?.atqa?.joinToString(" ") { String.format("%02X", it) }}, detect_delay=${detectDelay}ms, mode=$currentMode")
         cancelTimeout() // Tag found, cancel the timeout
         tagWasDetected = true
         tagDetectedTimeMs = System.currentTimeMillis()
@@ -561,39 +608,92 @@ class NativeNfcPlugin private constructor(
         sendError("INVALID_TAG", "Tag not supported")
     }
 
+    /**
+     * Lit toutes les pages d'un tag Ultralight/NTAG avec retry.
+     * Sur IOException : reconnexion + nouvelle tentative de la page (1x),
+     * puis abandon en retournant ce qui a été lu. Corrige les lectures
+     * "0 bytes" observées sur Samsung (la 1ère page échouait → succès vide).
+     */
+    private fun readUltralightAllPages(mifare: MifareUltralight): ByteArray {
+        val allData = ByteArray(160) // 40 pages * 4 bytes
+        var offset = 0
+
+        var startPage = 0
+        while (startPage < 40) {
+            var data: ByteArray? = null
+            try {
+                data = mifare.readPages(startPage)
+            } catch (e: IOException) {
+                Log.w(TAG, "Read pages $startPage failed: ${e.message} — reconnecting for retry")
+                try {
+                    mifare.close()
+                    Thread.sleep(50)
+                    mifare.connect()
+                    mifare.timeout = 2000
+                    data = mifare.readPages(startPage)
+                } catch (e2: Exception) {
+                    Log.w(TAG, "Retry failed for page $startPage: ${e2.message}")
+                    return allData.copyOf(offset)
+                }
+            }
+            if (data != null && data.isNotEmpty()) {
+                val bytesToCopy = minOf(data.size, 160 - offset)
+                System.arraycopy(data, 0, allData, offset, bytesToCopy)
+                offset += bytesToCopy
+                Log.d(TAG, "Read pages $startPage-${startPage + 3}: ${data.toHexString()}")
+            }
+            startPage += 4
+        }
+        return allData.copyOf(offset)
+    }
+
+    /** Lit toutes les pages via commandes NfcA brutes avec retry/reconnexion. */
+    private fun readNfcAAllPages(nfcA: NfcA): ByteArray {
+        val allData = mutableListOf<Byte>()
+
+        var page = 0
+        while (page < 40) {
+            var response: ByteArray? = null
+            try {
+                response = nfcA.transceive(byteArrayOf(CMD_READ, page.toByte()))
+            } catch (e: IOException) {
+                Log.w(TAG, "NfcA read page $page failed: ${e.message} — reconnecting for retry")
+                try {
+                    nfcA.close()
+                    Thread.sleep(50)
+                    nfcA.connect()
+                    nfcA.timeout = 2000
+                    response = nfcA.transceive(byteArrayOf(CMD_READ, page.toByte()))
+                } catch (e2: Exception) {
+                    Log.w(TAG, "Retry failed for page $page: ${e2.message}")
+                    return allData.toByteArray()
+                }
+            }
+            if (response != null && response.isNotEmpty()) {
+                allData.addAll(response.take(4).toList())
+            }
+            page++
+        }
+        return allData.toByteArray()
+    }
+
     private suspend fun readMifareUltralight(mifare: MifareUltralight) {
         try {
             mifare.connect()
+            mifare.timeout = 2000
             Log.d(TAG, "Connected to MiFare Ultralight")
 
-            val allData = ByteArray(160) // 40 pages * 4 bytes
-            var offset = 0
+            val readData = readUltralightAllPages(mifare)
+            try { mifare.close() } catch (_: Exception) {}
 
-            // Read 40 pages (pages 0-39)
-            for (startPage in 0 until 40 step 4) {
-                try {
-                    val data = mifare.readPages(startPage)
-                    if (data != null && data.isNotEmpty()) {
-                        val bytesToCopy = minOf(data.size, 160 - offset)
-                        System.arraycopy(data, 0, allData, offset, bytesToCopy)
-                        offset += bytesToCopy
-                        Log.d(TAG, "Read pages $startPage-${startPage + 3}: ${data.toHexString()}")
-                    }
-                } catch (e: IOException) {
-                    Log.w(TAG, "Error reading page $startPage: ${e.message}")
-                    break
-                }
+            if (readData.isEmpty()) {
+                sendError("EMPTY_READ", "Impossible de lire le tag (0 octet). Maintenez le tag immobile contre le téléphone et réessayez.")
+                return
             }
 
-            mifare.close()
-
-            // Convert to result
-            val dataString = allData.decodeToStringOrEmpty()
-            val rawBytes = allData.take(offset).map { it.toInt() and 0xFF }
-
             val resultData = mapOf(
-                "data" to dataString,
-                "rawBytes" to rawBytes
+                "data" to readData.decodeToStringOrEmpty(),
+                "rawBytes" to readData.map { it.toInt() and 0xFF }
             )
 
             sendSuccess(resultData)
@@ -608,35 +708,20 @@ class NativeNfcPlugin private constructor(
     private suspend fun readWithNfcA(nfcA: NfcA) {
         try {
             nfcA.connect()
+            nfcA.timeout = 2000
             Log.d(TAG, "Connected via NfcA")
 
-            val allData = mutableListOf<Byte>()
+            val readData = readNfcAAllPages(nfcA)
+            try { nfcA.close() } catch (_: Exception) {}
 
-            // Read pages using raw commands
-            for (page in 0 until 40) {
-                try {
-                    val command = byteArrayOf(CMD_READ, page.toByte())
-                    val response = nfcA.transceive(command)
-                    if (response != null && response.isNotEmpty()) {
-                        // READ command returns 16 bytes (4 pages)
-                        allData.addAll(response.take(4).toList())
-                        Log.d(TAG, "Read page $page: ${response.take(4).toByteArray().toHexString()}")
-                    }
-                } catch (e: IOException) {
-                    Log.w(TAG, "Error reading page $page: ${e.message}")
-                    break
-                }
+            if (readData.isEmpty()) {
+                sendError("EMPTY_READ", "Impossible de lire le tag (0 octet). Maintenez le tag immobile contre le téléphone et réessayez.")
+                return
             }
 
-            nfcA.close()
-
-            val dataArray = allData.toByteArray()
-            val dataString = dataArray.decodeToStringOrEmpty()
-            val rawBytes = allData.map { it.toInt() and 0xFF }
-
             val resultData = mapOf(
-                "data" to dataString,
-                "rawBytes" to rawBytes
+                "data" to readData.decodeToStringOrEmpty(),
+                "rawBytes" to readData.map { it.toInt() and 0xFF }
             )
 
             sendSuccess(resultData)
@@ -676,81 +761,103 @@ class NativeNfcPlugin private constructor(
     }
 
     private suspend fun writeMifareUltralight(mifare: MifareUltralight, pages: List<Map<String, Any>>) {
-        try {
-            mifare.connect()
-            Log.d(TAG, "Connected to MiFare Ultralight for writing")
+        val maxRetries = 2
+        for (attempt in 1..maxRetries) {
+            try {
+                mifare.connect()
+                mifare.timeout = 5000 // 5s timeout for foldable devices
+                Log.d(TAG, "Connected to MiFare Ultralight for writing (attempt $attempt/$maxRetries)")
 
-            for (pageInfo in pages) {
-                val pageNumber = (pageInfo["page"] as? Number)?.toInt() ?: continue
-                @Suppress("UNCHECKED_CAST")
-                val dataList = pageInfo["data"] as? List<Number> ?: continue
+                for (pageInfo in pages) {
+                    val pageNumber = (pageInfo["page"] as? Number)?.toInt() ?: continue
+                    @Suppress("UNCHECKED_CAST")
+                    val dataList = pageInfo["data"] as? List<Number> ?: continue
 
-                if (dataList.size != 4) {
-                    Log.w(TAG, "Invalid data size for page $pageNumber: ${dataList.size}")
-                    continue
+                    if (dataList.size != 4) {
+                        Log.w(TAG, "Invalid data size for page $pageNumber: ${dataList.size}")
+                        continue
+                    }
+
+                    val data = dataList.map { it.toByte() }.toByteArray()
+
+                    try {
+                        mifare.writePage(pageNumber, data)
+                        Log.d(TAG, "Written page $pageNumber: ${data.toHexString()}")
+                    } catch (e: IOException) {
+                        Log.e(TAG, "Error writing page $pageNumber", e)
+                        throw e
+                    }
                 }
 
-                val data = dataList.map { it.toByte() }.toByteArray()
+                mifare.close()
+                pagesToWrite = null
+                sendSuccess(true)
+                return // Success, exit
 
-                try {
-                    mifare.writePage(pageNumber, data)
-                    Log.d(TAG, "Written page $pageNumber: ${data.toHexString()}")
-                } catch (e: IOException) {
-                    Log.e(TAG, "Error writing page $pageNumber", e)
-                    throw e
+            } catch (e: Exception) {
+                Log.e(TAG, "Error writing MiFare Ultralight (attempt $attempt/$maxRetries)", e)
+                try { mifare.close() } catch (_: Exception) {}
+
+                if (attempt < maxRetries) {
+                    Log.d(TAG, "Retrying write in 300ms...")
+                    delay(300)
+                } else {
+                    pagesToWrite = null
+                    sendError("WRITE_ERROR", "Tag perdu pendant l'écriture. Gardez le tag bien appuyé contre l'arrière de l'appareil et réessayez.")
                 }
             }
-
-            mifare.close()
-            pagesToWrite = null
-            sendSuccess(true)
-
-        } catch (e: Exception) {
-            Log.e(TAG, "Error writing MiFare Ultralight", e)
-            try { mifare.close() } catch (_: Exception) {}
-            pagesToWrite = null
-            sendError("WRITE_ERROR", e.message ?: "Write failed")
         }
     }
 
     private suspend fun writeWithNfcA(nfcA: NfcA, pages: List<Map<String, Any>>) {
-        try {
-            nfcA.connect()
-            Log.d(TAG, "Connected via NfcA for writing")
+        val maxRetries = 2
+        for (attempt in 1..maxRetries) {
+            try {
+                nfcA.connect()
+                nfcA.timeout = 5000 // 5s timeout for foldable devices
+                Log.d(TAG, "Connected via NfcA for writing (attempt $attempt/$maxRetries)")
 
-            for (pageInfo in pages) {
-                val pageNumber = (pageInfo["page"] as? Number)?.toInt() ?: continue
-                @Suppress("UNCHECKED_CAST")
-                val dataList = pageInfo["data"] as? List<Number> ?: continue
+                for (pageInfo in pages) {
+                    val pageNumber = (pageInfo["page"] as? Number)?.toInt() ?: continue
+                    @Suppress("UNCHECKED_CAST")
+                    val dataList = pageInfo["data"] as? List<Number> ?: continue
 
-                if (dataList.size != 4) {
-                    Log.w(TAG, "Invalid data size for page $pageNumber: ${dataList.size}")
-                    continue
+                    if (dataList.size != 4) {
+                        Log.w(TAG, "Invalid data size for page $pageNumber: ${dataList.size}")
+                        continue
+                    }
+
+                    val data = dataList.map { it.toByte() }.toByteArray()
+
+                    // WRITE command: 0xA2 + page + 4 bytes
+                    val command = byteArrayOf(CMD_WRITE_ULTRALIGHT, pageNumber.toByte()) + data
+
+                    try {
+                        nfcA.transceive(command)
+                        Log.d(TAG, "Written page $pageNumber: ${data.toHexString()}")
+                    } catch (e: IOException) {
+                        Log.e(TAG, "Error writing page $pageNumber", e)
+                        throw e
+                    }
                 }
 
-                val data = dataList.map { it.toByte() }.toByteArray()
+                nfcA.close()
+                pagesToWrite = null
+                sendSuccess(true)
+                return // Success, exit
 
-                // WRITE command: 0xA2 + page + 4 bytes
-                val command = byteArrayOf(CMD_WRITE_ULTRALIGHT, pageNumber.toByte()) + data
+            } catch (e: Exception) {
+                Log.e(TAG, "Error writing with NfcA (attempt $attempt/$maxRetries)", e)
+                try { nfcA.close() } catch (_: Exception) {}
 
-                try {
-                    nfcA.transceive(command)
-                    Log.d(TAG, "Written page $pageNumber: ${data.toHexString()}")
-                } catch (e: IOException) {
-                    Log.e(TAG, "Error writing page $pageNumber", e)
-                    throw e
+                if (attempt < maxRetries) {
+                    Log.d(TAG, "Retrying write in 300ms...")
+                    delay(300)
+                } else {
+                    pagesToWrite = null
+                    sendError("WRITE_ERROR", "Tag perdu pendant l'écriture. Gardez le tag bien appuyé contre l'arrière de l'appareil et réessayez.")
                 }
             }
-
-            nfcA.close()
-            pagesToWrite = null
-            sendSuccess(true)
-
-        } catch (e: Exception) {
-            Log.e(TAG, "Error writing with NfcA", e)
-            try { nfcA.close() } catch (_: Exception) {}
-            pagesToWrite = null
-            sendError("WRITE_ERROR", e.message ?: "Write failed")
         }
     }
 
@@ -804,32 +911,20 @@ class NativeNfcPlugin private constructor(
     private suspend fun readMifareUltralightWithTagType(mifare: MifareUltralight, tagType: String) {
         try {
             mifare.connect()
+            mifare.timeout = 2000
             Log.d(TAG, "Connected to MiFare Ultralight (tagType: $tagType)")
 
-            val allData = ByteArray(160)
-            var offset = 0
+            val readData = readUltralightAllPages(mifare)
+            try { mifare.close() } catch (_: Exception) {}
 
-            for (startPage in 0 until 40 step 4) {
-                try {
-                    val data = mifare.readPages(startPage)
-                    if (data != null && data.isNotEmpty()) {
-                        val bytesToCopy = minOf(data.size, 160 - offset)
-                        System.arraycopy(data, 0, allData, offset, bytesToCopy)
-                        offset += bytesToCopy
-                    }
-                } catch (e: IOException) {
-                    break
-                }
+            if (readData.isEmpty()) {
+                sendError("EMPTY_READ", "Impossible de lire le tag (0 octet). Maintenez le tag immobile contre le téléphone et réessayez.")
+                return
             }
 
-            mifare.close()
-
-            val dataString = allData.decodeToStringOrEmpty()
-            val rawBytes = allData.take(offset).map { it.toInt() and 0xFF }
-
             val resultData = mapOf(
-                "data" to dataString,
-                "rawBytes" to rawBytes,
+                "data" to readData.decodeToStringOrEmpty(),
+                "rawBytes" to readData.map { it.toInt() and 0xFF },
                 "tagType" to tagType
             )
 
@@ -844,29 +939,19 @@ class NativeNfcPlugin private constructor(
     private suspend fun readWithNfcATagType(nfcA: NfcA, tagType: String) {
         try {
             nfcA.connect()
-            val allData = mutableListOf<Byte>()
+            nfcA.timeout = 2000
 
-            for (page in 0 until 40) {
-                try {
-                    val command = byteArrayOf(CMD_READ, page.toByte())
-                    val response = nfcA.transceive(command)
-                    if (response != null && response.isNotEmpty()) {
-                        allData.addAll(response.take(4).toList())
-                    }
-                } catch (e: IOException) {
-                    break
-                }
+            val readData = readNfcAAllPages(nfcA)
+            try { nfcA.close() } catch (_: Exception) {}
+
+            if (readData.isEmpty()) {
+                sendError("EMPTY_READ", "Impossible de lire le tag (0 octet). Maintenez le tag immobile contre le téléphone et réessayez.")
+                return
             }
 
-            nfcA.close()
-
-            val dataArray = allData.toByteArray()
-            val dataString = dataArray.decodeToStringOrEmpty()
-            val rawBytes = allData.map { it.toInt() and 0xFF }
-
             val resultData = mapOf(
-                "data" to dataString,
-                "rawBytes" to rawBytes,
+                "data" to readData.decodeToStringOrEmpty(),
+                "rawBytes" to readData.map { it.toInt() and 0xFF },
                 "tagType" to tagType
             )
 
@@ -916,6 +1001,8 @@ class NativeNfcPlugin private constructor(
     private suspend fun readMifareClassic(classic: MifareClassic) {
         try {
             classic.connect()
+            classic.timeout = 5000 // Extended timeout for budget NFC controllers
+            delay(100) // RF field stabilization
             val uid = classic.tag.id
             val derivedKeys = deriveBambuKeys(uid)
             Log.d(TAG, "Connected to MiFare Classic, UID: ${uid.toHexString()}")
@@ -982,6 +1069,8 @@ class NativeNfcPlugin private constructor(
     private suspend fun readMifareClassicWithNfcA(nfcA: NfcA) {
         try {
             nfcA.connect()
+            nfcA.timeout = 5000 // Extended timeout for budget NFC controllers
+            delay(100) // RF field stabilization
             val uid = nfcA.tag.id
             val derivedKeys = deriveBambuKeys(uid)
             Log.d(TAG, "Reading MiFare Classic via NfcA, UID: ${uid.toHexString()}")
@@ -1233,18 +1322,11 @@ class NativeNfcPlugin private constructor(
                 Log.d(TAG, "Auto-detect: MiFare Classic tag detected, trying Creality then Bambu Lab")
 
                 // Try Creality CFS first (fast XOR key derivation + vendor check)
-                try {
-                    classic.connect()
-                    val crealityResult = tryCrealityDetection(classic)
-                    if (crealityResult != null) {
-                        classic.close()
-                        sendSuccess(crealityResult)
-                        return
-                    }
-                    classic.close()
-                } catch (e: Exception) {
-                    Log.d(TAG, "Auto-detect: Creality detection failed: ${e.message}")
-                    try { classic.close() } catch (_: Exception) {}
+                // Use retry for weak NFC controllers (e.g. Samsung budget phones)
+                val crealityResult = tryCrealityDetectionWithRetry(tag)
+                if (crealityResult != null) {
+                    sendSuccess(crealityResult)
+                    return
                 }
 
                 // Not Creality, try Bambu Lab (reconnect needed after failed auth)
@@ -1334,6 +1416,8 @@ class NativeNfcPlugin private constructor(
     private suspend fun readMifareClassicWithTagType(classic: MifareClassic, tagType: String) {
         try {
             classic.connect()
+            classic.timeout = 5000 // Extended timeout for budget NFC controllers
+            delay(100) // RF field stabilization
             Log.d(TAG, "Connected to MiFare Classic (auto-detect)")
 
             val blockData = mutableMapOf<Int, ByteArray>()
@@ -1411,6 +1495,8 @@ class NativeNfcPlugin private constructor(
     private suspend fun writeMifareClassic(classic: MifareClassic, blocks: Map<String, List<Int>>) {
         try {
             classic.connect()
+            classic.timeout = 5000 // Extended timeout for budget NFC controllers
+            delay(100) // RF field stabilization
             Log.d(TAG, "Connected to MiFare Classic for writing")
 
             // Sort block numbers
@@ -1472,6 +1558,8 @@ class NativeNfcPlugin private constructor(
     private suspend fun writeMifareClassicWithNfcA(nfcA: NfcA, blocks: Map<String, List<Int>>) {
         try {
             nfcA.connect()
+            nfcA.timeout = 5000 // Extended timeout for budget NFC controllers
+            delay(100) // RF field stabilization
             Log.d(TAG, "Writing MiFare Classic via NfcA")
 
             val sortedBlocks = blocks.entries
@@ -1522,23 +1610,27 @@ class NativeNfcPlugin private constructor(
     // ==================== CREALITY CFS KEY DERIVATION ====================
 
     /**
-     * Derive Sector 1 Key B from tag UID using XOR with Creality secret.
+     * Derive Sector 1 Key B from tag UID using AES-ECB encryption.
+     * Algorithm (from CFSWriter / community reverse-engineering):
      * 1. UID (4 bytes) → uppercase hex string (8 chars)
-     * 2. Duplicate 4x → 32 chars = 16 ASCII bytes
-     * 3. XOR with CREALITY_XOR_SECRET (16 bytes)
-     * 4. Take first 6 bytes as Key B
+     * 2. Repeat 4x → 32 hex chars
+     * 3. Convert hex string to 16 raw bytes
+     * 4. AES-128-ECB encrypt with CREALITY_UID_KEY
+     * 5. Take first 6 bytes as Key B
      */
     private fun deriveCrealityKey(uid: ByteArray): ByteArray {
         val uidHex = uid.take(4).joinToString("") { String.format("%02X", it) }
-        val repeated = uidHex.repeat(4) // 32 chars
-        val repeatedBytes = repeated.toByteArray(Charsets.US_ASCII) // 32 bytes
-
-        val xored = ByteArray(16)
-        for (i in 0 until 16) {
-            xored[i] = (repeatedBytes[i].toInt() xor CREALITY_XOR_SECRET[i].toInt()).toByte()
+        val repeated = uidHex.repeat(4).take(32) // 32 hex chars
+        // Convert hex string to 16 raw bytes (not ASCII bytes!)
+        val plaintext = ByteArray(16) { i ->
+            repeated.substring(i * 2, i * 2 + 2).toInt(16).toByte()
         }
 
-        return xored.copyOfRange(0, 6) // Key B = first 6 bytes
+        val cipher = Cipher.getInstance("AES/ECB/NoPadding")
+        cipher.init(Cipher.ENCRYPT_MODE, SecretKeySpec(CREALITY_UID_KEY, "AES"))
+        val encrypted = cipher.doFinal(plaintext)
+
+        return encrypted.copyOfRange(0, 6) // Key B = first 6 bytes
     }
 
     // ==================== CREALITY CFS AES-128-ECB ====================
@@ -1579,117 +1671,245 @@ class NativeNfcPlugin private constructor(
         sendError("INVALID_TAG", "Tag non compatible Creality CFS (MiFare Classic 1K requis)")
     }
 
-    private suspend fun readCrealityClassic(classic: MifareClassic) {
+    /**
+     * Authenticate MiFare Classic sector 1 for Creality CFS.
+     * Tries derived Key B first, then reconnects and tries default keys.
+     * Returns the authenticated MifareClassic handle, or null on failure.
+     */
+    private suspend fun authenticateCrealitySector(tag: Tag, crealityKeyB: ByteArray): MifareClassic? {
+        val uid = tag.id
+        val techs = tag.techList.joinToString(", ")
+        Log.i(TAG, "🔐 Creality auth start: UID=${uid.toHexString()}, techs=[$techs], derivedKeyB=${crealityKeyB.toHexString()}")
+
+        // Try 1: derived Key B
+        val mfc1 = MifareClassic.get(tag)
+        if (mfc1 == null) {
+            Log.e(TAG, "🔐 Creality auth: MifareClassic.get() returned null! SAK might be wrong. techs=[$techs]")
+            return null
+        }
         try {
-            classic.connect()
-            val uid = classic.tag.id
-            val crealityKeyB = deriveCrealityKey(uid)
-            Log.d(TAG, "Creality: UID=${uid.toHexString()}, derived Key B=${crealityKeyB.toHexString()}")
-
-            // Authenticate Sector 1 with derived Key B, fallback to default key
-            val authSuccess = try {
-                classic.authenticateSectorWithKeyB(1, crealityKeyB)
-            } catch (e: Exception) {
-                Log.d(TAG, "Creality Key B failed, trying default key")
-                try {
-                    classic.authenticateSectorWithKeyA(1, DEFAULT_KEY)
-                } catch (e2: Exception) {
-                    try {
-                        classic.authenticateSectorWithKeyB(1, DEFAULT_KEY)
-                    } catch (e3: Exception) {
-                        false
-                    }
-                }
+            mfc1.connect()
+            mfc1.timeout = 5000
+            val mfcType = when (mfc1.type) { MifareClassic.TYPE_CLASSIC -> "CLASSIC"; MifareClassic.TYPE_PLUS -> "PLUS"; MifareClassic.TYPE_PRO -> "PRO"; else -> "UNKNOWN(${mfc1.type})" }
+            Log.d(TAG, "🔐 Creality: connected, type=$mfcType, sectorCount=${mfc1.sectorCount}, size=${mfc1.size}")
+            delay(100) // RF field stabilization for weak NFC controllers
+            val result1 = mfc1.authenticateSectorWithKeyB(1, crealityKeyB)
+            Log.d(TAG, "🔐 Creality derived Key B auth: $result1")
+            if (result1) {
+                return mfc1
             }
-
-            if (!authSuccess) {
-                classic.close()
-                sendError("AUTH_ERROR", "Impossible d'authentifier le tag Creality CFS (secteur 1)")
-                return
-            }
-
-            // Read blocks 4, 5, 6 (Sector 1 data blocks)
-            val encryptedData = ByteArray(48)
-            for (i in 0 until 3) {
-                val blockIndex = 4 + i
-                val data = classic.readBlock(blockIndex)
-                if (data != null && data.size >= 16) {
-                    System.arraycopy(data, 0, encryptedData, i * 16, 16)
-                    Log.d(TAG, "Creality block $blockIndex: ${data.take(16).toByteArray().toHexString()}")
-                }
-            }
-
-            classic.close()
-
-            // Decrypt AES-128-ECB
-            val decrypted = aesEcbDecrypt(encryptedData)
-            val decryptedStr = String(decrypted, Charsets.US_ASCII)
-            Log.d(TAG, "Creality decrypted: $decryptedStr")
-
-            // Parse and return
-            val parsedData = parseCrealityData(decryptedStr, uid)
-            sendSuccess(parsedData)
-
         } catch (e: Exception) {
-            Log.e(TAG, "Error reading Creality CFS", e)
-            try { classic.close() } catch (_: Exception) {}
-            sendError("READ_ERROR", e.message ?: "Creality read failed")
+            Log.w(TAG, "🔐 Creality Key B auth exception: ${e::class.simpleName}: ${e.message}")
+        }
+        try { mfc1.close() } catch (_: Exception) {}
+
+        // Try 2: default Key A (fresh connection — auth failure taints MiFare state)
+        val mfc2 = MifareClassic.get(tag) ?: return null
+        try {
+            mfc2.connect()
+            mfc2.timeout = 5000
+            delay(100)
+            val result2 = mfc2.authenticateSectorWithKeyA(1, DEFAULT_KEY)
+            Log.d(TAG, "🔐 Creality default Key A auth: $result2")
+            if (result2) {
+                return mfc2
+            }
+        } catch (e: Exception) {
+            Log.w(TAG, "🔐 Creality default Key A auth exception: ${e::class.simpleName}: ${e.message}")
+        }
+        try { mfc2.close() } catch (_: Exception) {}
+
+        // Try 3: default Key B (fresh connection)
+        val mfc3 = MifareClassic.get(tag) ?: return null
+        try {
+            mfc3.connect()
+            mfc3.timeout = 5000
+            delay(100)
+            val result3 = mfc3.authenticateSectorWithKeyB(1, DEFAULT_KEY)
+            Log.d(TAG, "🔐 Creality default Key B auth: $result3")
+            if (result3) {
+                return mfc3
+            }
+        } catch (e: Exception) {
+            Log.w(TAG, "🔐 Creality default Key B auth exception: ${e::class.simpleName}: ${e.message}")
+        }
+        try { mfc3.close() } catch (_: Exception) {}
+
+        Log.e(TAG, "🔐 Creality: ALL 3 auth methods FAILED for UID=${uid.toHexString()}, device=${Build.MANUFACTURER} ${Build.MODEL}")
+        return null
+    }
+
+    private suspend fun readCrealityClassic(classic: MifareClassic) {
+        val maxRetries = 3
+        val tag = classic.tag
+        val uid = tag.id
+        val crealityKeyB = deriveCrealityKey(uid)
+        Log.d(TAG, "Creality: UID=${uid.toHexString()}, derived Key B=${crealityKeyB.toHexString()}")
+
+        for (attempt in 1..maxRetries) {
+            try {
+                Log.d(TAG, "Creality read attempt $attempt/$maxRetries")
+                val mfc = authenticateCrealitySector(tag, crealityKeyB)
+
+                if (mfc == null) {
+                    if (attempt < maxRetries) {
+                        Log.d(TAG, "Creality auth failed attempt $attempt/$maxRetries, retrying in 300ms...")
+                        delay(300)
+                        continue
+                    }
+                    val diag = buildSessionDiagnostics().toMutableMap()
+                    diag["uid"] = uid.toHexString()
+                    diag["derived_key_b"] = crealityKeyB.toHexString()
+                    diag["retries_exhausted"] = maxRetries
+                    sendError("AUTH_ERROR", "Impossible d'authentifier le tag Creality CFS (secteur 1). Gardez le tag bien appuyé et réessayez.", diag)
+                    return
+                }
+
+                try {
+                    // Read blocks 4, 5, 6 (Sector 1 data blocks)
+                    val encryptedData = ByteArray(48)
+                    for (i in 0 until 3) {
+                        val blockIndex = 4 + i
+                        val data = mfc.readBlock(blockIndex)
+                        if (data != null && data.size >= 16) {
+                            System.arraycopy(data, 0, encryptedData, i * 16, 16)
+                            Log.d(TAG, "Creality block $blockIndex: ${data.take(16).toByteArray().toHexString()}")
+                        }
+                    }
+
+                    mfc.close()
+
+                    // Decrypt AES-128-ECB
+                    val decrypted = aesEcbDecrypt(encryptedData)
+                    val decryptedStr = String(decrypted, Charsets.US_ASCII)
+                    Log.d(TAG, "Creality decrypted: $decryptedStr")
+
+                    // Parse and return
+                    val parsedData = parseCrealityData(decryptedStr, uid)
+                    sendSuccess(parsedData)
+                    return // Success
+                } catch (e: Exception) {
+                    try { mfc.close() } catch (_: Exception) {}
+                    throw e // Re-throw to outer catch for retry
+                }
+
+            } catch (e: Exception) {
+                Log.e(TAG, "Error reading Creality CFS (attempt $attempt/$maxRetries)", e)
+
+                if (attempt < maxRetries) {
+                    Log.d(TAG, "Retrying Creality read in 300ms...")
+                    delay(300)
+                } else {
+                    sendError("READ_ERROR", "Échec lecture Creality après $maxRetries tentatives. Gardez le tag bien appuyé et réessayez.")
+                }
+            }
         }
     }
 
     private suspend fun readCrealityWithNfcA(nfcA: NfcA) {
-        try {
-            nfcA.connect()
-            val uid = nfcA.tag.id
-            val crealityKeyB = deriveCrealityKey(uid)
-            Log.d(TAG, "Creality via NfcA: UID=${uid.toHexString()}")
+        val maxRetries = 3
+        val tag = nfcA.tag
+        val uid = tag.id
+        val crealityKeyB = deriveCrealityKey(uid)
+        Log.d(TAG, "Creality via NfcA: UID=${uid.toHexString()}")
 
-            // Authenticate Sector 1 with Key B (0x61)
-            val authCommand = byteArrayOf(CMD_AUTH_KEY_B, 1.toByte()) + crealityKeyB
-            var authenticated = false
+        for (attempt in 1..maxRetries) {
+            val nfc = if (attempt == 1) nfcA else NfcA.get(tag)
+            if (nfc == null) {
+                Log.e(TAG, "Creality NfcA: get() returned null on attempt $attempt")
+                continue
+            }
+
             try {
-                nfcA.transceive(authCommand)
-                authenticated = true
-            } catch (e: IOException) {
-                Log.d(TAG, "Creality Key B via NfcA failed, trying default")
-                val defaultAuth = byteArrayOf(CMD_AUTH_KEY_A, 1.toByte()) + DEFAULT_KEY
+                nfc.connect()
+                nfc.timeout = 5000
+                delay(100) // RF field stabilization
+                Log.d(TAG, "Creality NfcA read attempt $attempt/$maxRetries connected")
+
+                // Authenticate Sector 1 with Key B (0x61)
+                val authCommand = byteArrayOf(CMD_AUTH_KEY_B, 1.toByte()) + crealityKeyB
+                var authenticated = false
                 try {
-                    nfcA.transceive(defaultAuth)
+                    nfc.transceive(authCommand)
                     authenticated = true
-                } catch (e2: IOException) {
-                    Log.w(TAG, "All Creality keys failed via NfcA")
+                } catch (e: IOException) {
+                    Log.d(TAG, "Creality Key B via NfcA failed (attempt $attempt), trying default")
+                    // NfcA auth failure: need reconnect for fresh state
+                    try { nfc.close() } catch (_: Exception) {}
+                    val nfc2 = NfcA.get(tag)
+                    if (nfc2 != null) {
+                        try {
+                            nfc2.connect()
+                            nfc2.timeout = 5000
+                            delay(100)
+                            val defaultAuth = byteArrayOf(CMD_AUTH_KEY_A, 1.toByte()) + DEFAULT_KEY
+                            nfc2.transceive(defaultAuth)
+                            authenticated = true
+                            // Read with nfc2 since it's the authenticated handle
+                            val encryptedData = ByteArray(48)
+                            for (i in 0 until 3) {
+                                val blockIndex = 4 + i
+                                val readCmd = byteArrayOf(CMD_READ, blockIndex.toByte())
+                                val data = nfc2.transceive(readCmd)
+                                if (data != null && data.size >= 16) {
+                                    System.arraycopy(data, 0, encryptedData, i * 16, 16)
+                                }
+                            }
+                            nfc2.close()
+                            val decrypted = aesEcbDecrypt(encryptedData)
+                            val decryptedStr = String(decrypted, Charsets.US_ASCII)
+                            Log.d(TAG, "Creality decrypted via NfcA (default key): $decryptedStr")
+                            sendSuccess(parseCrealityData(decryptedStr, uid))
+                            return
+                        } catch (e2: Exception) {
+                            try { nfc2.close() } catch (_: Exception) {}
+                            authenticated = false
+                        }
+                    }
+                }
+
+                if (!authenticated) {
+                    try { nfc.close() } catch (_: Exception) {}
+                    if (attempt < maxRetries) {
+                        Log.d(TAG, "Creality NfcA auth failed attempt $attempt/$maxRetries, retrying in 300ms...")
+                        delay(300)
+                        continue
+                    }
+                    sendError("AUTH_ERROR", "Impossible d'authentifier le tag Creality CFS (secteur 1). Gardez le tag bien appuyé et réessayez.")
+                    return
+                }
+
+                // Read blocks 4, 5, 6
+                val encryptedData = ByteArray(48)
+                for (i in 0 until 3) {
+                    val blockIndex = 4 + i
+                    val readCmd = byteArrayOf(CMD_READ, blockIndex.toByte())
+                    val data = nfc.transceive(readCmd)
+                    if (data != null && data.size >= 16) {
+                        System.arraycopy(data, 0, encryptedData, i * 16, 16)
+                    }
+                }
+
+                nfc.close()
+
+                val decrypted = aesEcbDecrypt(encryptedData)
+                val decryptedStr = String(decrypted, Charsets.US_ASCII)
+                Log.d(TAG, "Creality decrypted via NfcA: $decryptedStr")
+
+                sendSuccess(parseCrealityData(decryptedStr, uid))
+                return // Success
+
+            } catch (e: Exception) {
+                Log.e(TAG, "Error reading Creality via NfcA (attempt $attempt/$maxRetries)", e)
+                try { nfc.close() } catch (_: Exception) {}
+
+                if (attempt < maxRetries) {
+                    Log.d(TAG, "Retrying Creality NfcA read in 300ms...")
+                    delay(300)
+                } else {
+                    sendError("READ_ERROR", "Échec lecture Creality après $maxRetries tentatives. Gardez le tag bien appuyé et réessayez.")
                 }
             }
-
-            if (!authenticated) {
-                nfcA.close()
-                sendError("AUTH_ERROR", "Impossible d'authentifier le tag Creality CFS (secteur 1)")
-                return
-            }
-
-            // Read blocks 4, 5, 6
-            val encryptedData = ByteArray(48)
-            for (i in 0 until 3) {
-                val blockIndex = 4 + i
-                val readCmd = byteArrayOf(CMD_READ, blockIndex.toByte())
-                val data = nfcA.transceive(readCmd)
-                if (data != null && data.size >= 16) {
-                    System.arraycopy(data, 0, encryptedData, i * 16, 16)
-                }
-            }
-
-            nfcA.close()
-
-            val decrypted = aesEcbDecrypt(encryptedData)
-            val decryptedStr = String(decrypted, Charsets.US_ASCII)
-            Log.d(TAG, "Creality decrypted via NfcA: $decryptedStr")
-
-            val parsedData = parseCrealityData(decryptedStr, uid)
-            sendSuccess(parsedData)
-
-        } catch (e: Exception) {
-            try { nfcA.close() } catch (_: Exception) {}
-            sendError("READ_ERROR", e.message ?: "Creality read failed")
         }
     }
 
@@ -1774,58 +1994,63 @@ class NativeNfcPlugin private constructor(
     }
 
     private suspend fun writeCrealityClassic(classic: MifareClassic, data: Map<String, Any>) {
-        try {
-            classic.connect()
-            val uid = classic.tag.id
-            val crealityKeyB = deriveCrealityKey(uid)
-            Log.d(TAG, "Creality write: UID=${uid.toHexString()}")
+        val maxRetries = 3
+        val tag = classic.tag
+        val uid = tag.id
+        val crealityKeyB = deriveCrealityKey(uid)
+        Log.d(TAG, "Creality write: UID=${uid.toHexString()}")
 
-            // Build 48-char payload
-            val payload = buildCrealityPayload(data)
-            Log.d(TAG, "Creality payload: $payload")
+        // Build 48-char payload (only once, doesn't change between retries)
+        val payload = buildCrealityPayload(data)
+        Log.d(TAG, "Creality payload: $payload")
+        val payloadBytes = payload.toByteArray(Charsets.US_ASCII)
+        val encrypted = aesEcbEncrypt(payloadBytes)
 
-            // Encrypt with AES-128-ECB
-            val payloadBytes = payload.toByteArray(Charsets.US_ASCII)
-            val encrypted = aesEcbEncrypt(payloadBytes)
+        for (attempt in 1..maxRetries) {
+            try {
+                Log.d(TAG, "Creality write attempt $attempt/$maxRetries")
+                val mfc = authenticateCrealitySector(tag, crealityKeyB)
 
-            // Authenticate Sector 1 with Key B
-            val authSuccess = try {
-                classic.authenticateSectorWithKeyB(1, crealityKeyB)
-            } catch (e: Exception) {
-                try {
-                    classic.authenticateSectorWithKeyA(1, DEFAULT_KEY)
-                } catch (e2: Exception) {
-                    try {
-                        classic.authenticateSectorWithKeyB(1, DEFAULT_KEY)
-                    } catch (e3: Exception) {
-                        false
+                if (mfc == null) {
+                    if (attempt < maxRetries) {
+                        Log.d(TAG, "Creality write auth failed attempt $attempt/$maxRetries, retrying in 300ms...")
+                        delay(300)
+                        continue
                     }
+                    crealityDataToWrite = null
+                    sendError("AUTH_ERROR", "Impossible d'authentifier le tag pour écriture Creality CFS. Gardez le tag bien appuyé et réessayez.")
+                    return
+                }
+
+                try {
+                    // Write blocks 4, 5, 6
+                    for (i in 0 until 3) {
+                        val blockIndex = 4 + i
+                        val blockData = encrypted.copyOfRange(i * 16, (i + 1) * 16)
+                        mfc.writeBlock(blockIndex, blockData)
+                        Log.d(TAG, "Creality written block $blockIndex: ${blockData.toHexString()}")
+                    }
+
+                    mfc.close()
+                    crealityDataToWrite = null
+                    sendSuccess(true)
+                    return // Success
+                } catch (e: Exception) {
+                    try { mfc.close() } catch (_: Exception) {}
+                    throw e
+                }
+
+            } catch (e: Exception) {
+                Log.e(TAG, "Error writing Creality CFS (attempt $attempt/$maxRetries)", e)
+
+                if (attempt < maxRetries) {
+                    Log.d(TAG, "Retrying Creality write in 300ms...")
+                    delay(300)
+                } else {
+                    crealityDataToWrite = null
+                    sendError("WRITE_ERROR", "Échec écriture Creality après $maxRetries tentatives. Gardez le tag bien appuyé et réessayez.")
                 }
             }
-
-            if (!authSuccess) {
-                classic.close()
-                sendError("AUTH_ERROR", "Impossible d'authentifier le tag pour ecriture Creality CFS")
-                return
-            }
-
-            // Write blocks 4, 5, 6
-            for (i in 0 until 3) {
-                val blockIndex = 4 + i
-                val blockData = encrypted.copyOfRange(i * 16, (i + 1) * 16)
-                classic.writeBlock(blockIndex, blockData)
-                Log.d(TAG, "Creality written block $blockIndex: ${blockData.toHexString()}")
-            }
-
-            classic.close()
-            crealityDataToWrite = null
-            sendSuccess(true)
-
-        } catch (e: Exception) {
-            Log.e(TAG, "Error writing Creality CFS", e)
-            try { classic.close() } catch (_: Exception) {}
-            crealityDataToWrite = null
-            sendError("WRITE_ERROR", e.message ?: "Creality write failed")
         }
     }
 
@@ -1858,53 +2083,72 @@ class NativeNfcPlugin private constructor(
     // ==================== CREALITY CFS AUTO-DETECT ====================
 
     /**
-     * Try to identify a MiFare Classic tag as Creality CFS.
+     * Try to identify a MiFare Classic tag as Creality CFS with retry logic.
+     * Retries help on budget NFC controllers (e.g. Samsung SM-A217F) where
+     * auth can fail intermittently due to weak RF field or timing issues.
      * Returns parsed data if Creality, null otherwise.
      */
-    private suspend fun tryCrealityDetection(classic: MifareClassic): Map<String, Any>? {
-        val uid = classic.tag.id
+    private suspend fun tryCrealityDetectionWithRetry(tag: Tag): Map<String, Any>? {
+        val uid = tag.id
         val crealityKeyB = deriveCrealityKey(uid)
 
-        // Try Creality Key B on Sector 1
-        val authSuccess = try {
-            classic.authenticateSectorWithKeyB(1, crealityKeyB)
-        } catch (e: Exception) {
-            false
-        }
+        for (attempt in 1..2) {
+            val mfc = MifareClassic.get(tag) ?: return null
+            try {
+                mfc.connect()
+                mfc.timeout = 5000
+                delay(100) // RF field stabilization
 
-        if (!authSuccess) return null
+                // Try Creality Key B on Sector 1
+                val authSuccess = try {
+                    mfc.authenticateSectorWithKeyB(1, crealityKeyB)
+                } catch (e: Exception) {
+                    Log.d(TAG, "Auto-detect: Creality Key B failed (attempt $attempt): ${e.message}")
+                    false
+                }
 
-        // Read blocks 4, 5, 6
-        val encryptedData = ByteArray(48)
-        try {
-            for (i in 0 until 3) {
-                val blockIndex = 4 + i
-                val data = classic.readBlock(blockIndex)
-                if (data != null && data.size >= 16) {
-                    System.arraycopy(data, 0, encryptedData, i * 16, 16)
+                if (!authSuccess) {
+                    mfc.close()
+                    if (attempt < 2) {
+                        delay(200)
+                        continue
+                    }
+                    return null
+                }
+
+                // Read blocks 4, 5, 6
+                val encryptedData = ByteArray(48)
+                for (i in 0 until 3) {
+                    val blockIndex = 4 + i
+                    val data = mfc.readBlock(blockIndex)
+                    if (data != null && data.size >= 16) {
+                        System.arraycopy(data, 0, encryptedData, i * 16, 16)
+                    }
+                }
+
+                mfc.close()
+
+                // Decrypt and validate vendor
+                val decrypted = aesEcbDecrypt(encryptedData)
+                val decryptedStr = String(decrypted, Charsets.US_ASCII)
+                val vendor = if (decryptedStr.length >= 12) decryptedStr.substring(8, 12) else ""
+                if (vendor == "0276") {
+                    Log.d(TAG, "Auto-detect: Creality CFS confirmed (vendor=$vendor, attempt $attempt)")
+                    return parseCrealityData(decryptedStr, uid)
+                } else {
+                    Log.d(TAG, "Auto-detect: Creality auth OK but vendor=$vendor, not Creality")
+                    return null
+                }
+
+            } catch (e: Exception) {
+                Log.d(TAG, "Auto-detect: Creality detection failed (attempt $attempt): ${e.message}")
+                try { mfc.close() } catch (_: Exception) {}
+                if (attempt < 2) {
+                    delay(200)
                 }
             }
-        } catch (e: IOException) {
-            return null
         }
-
-        // Decrypt and validate vendor
-        return try {
-            val decrypted = aesEcbDecrypt(encryptedData)
-            val decryptedStr = String(decrypted, Charsets.US_ASCII)
-            // Vendor is at offset 8-11, should be "0276" for Creality
-            val vendor = if (decryptedStr.length >= 12) decryptedStr.substring(8, 12) else ""
-            if (vendor == "0276") {
-                Log.d(TAG, "Auto-detect: Creality CFS confirmed (vendor=$vendor)")
-                parseCrealityData(decryptedStr, uid)
-            } else {
-                Log.d(TAG, "Auto-detect: Creality auth OK but vendor=$vendor, not Creality")
-                null
-            }
-        } catch (e: Exception) {
-            Log.d(TAG, "Auto-detect: Creality decryption failed: ${e.message}")
-            null
-        }
+        return null
     }
 
     // Creality material database (instance-level to avoid companion object conflict)
@@ -1933,8 +2177,10 @@ class NativeNfcPlugin private constructor(
         }
     }
 
-    private fun sendError(code: String, message: String) {
-        val diagnostics = buildSessionDiagnostics()
+    private fun sendError(code: String, message: String, extraDiagnostics: Map<String, Any>? = null) {
+        val diagnostics = buildSessionDiagnostics().toMutableMap()
+        extraDiagnostics?.let { diagnostics.putAll(it) }
+        Log.w(TAG, "📤 sendError: code=$code, msg=$message, diag=$diagnostics")
         activity.runOnUiThread {
             pendingResult?.error(code, message, diagnostics)
             pendingResult = null
