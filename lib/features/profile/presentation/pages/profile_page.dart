@@ -52,6 +52,17 @@ class _ProfilePageState extends State<ProfilePage> {
     _isSignedIn = await UserPreferencesService.isSignedIn();
     _userName = await UserPreferencesService.getUserName();
     _userEmail = await UserPreferencesService.getUserEmail();
+    // Fallback: récupérer l'email du compte backend si absent en local
+    if (_isSignedIn && (_userEmail == null || _userEmail!.isEmpty)) {
+      final user = await AuthService().getCurrentUser();
+      if (user != null && user.email.isNotEmpty) {
+        _userEmail = user.email;
+        await UserPreferencesService.setUserInfo(
+          isSignedIn: true,
+          userEmail: user.email,
+        );
+      }
+    }
     _selectedLanguage = await UserPreferencesService.getLanguage();
     _selectedCurrency = await UserPreferencesService.getCurrency();
     _selectedUnits = await UserPreferencesService.getUnits();

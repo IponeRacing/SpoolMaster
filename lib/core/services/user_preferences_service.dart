@@ -1,9 +1,10 @@
 import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:nfc_filament/core/api/api_config.dart';
 import 'package:nfc_filament/core/services/auth_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class UserPreferencesService {
   static const String _keyLanguage = 'user_language';
@@ -119,7 +120,13 @@ class UserPreferencesService {
 
   static Future<String?> getUserEmail() async {
     final prefs = await SharedPreferences.getInstance();
-    return prefs.getString(_keyUserEmail);
+    final email = prefs.getString(_keyUserEmail);
+    // Migration: ancien placeholder stocké par les versions <= 1.3.1
+    if (email == 'apple-user@local') {
+      await prefs.remove(_keyUserEmail);
+      return null;
+    }
+    return email;
   }
 
   static Future<int> getLowStockThreshold() async {
@@ -172,7 +179,7 @@ class UserPreferencesService {
     // No need to sync to backend - this is a local UI preference
   }
 
-  static Future<void> setPremium(bool isPremium) async {
+  static Future<void> setPremium({required bool isPremium}) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool(_keyIsPremium, isPremium);
     debugPrint('💎 Premium status saved: $isPremium');
@@ -239,7 +246,7 @@ class UserPreferencesService {
       debugPrint('Load preferences response: ${response.statusCode}');
 
       if (response.statusCode == 200) {
-        final responseBody = jsonDecode(response.body);
+        final responseBody = jsonDecode(response.body) as Map<String, dynamic>;
 
         final prefs = await SharedPreferences.getInstance();
 
