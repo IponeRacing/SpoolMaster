@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:nfc_filament/core/services/admob_service.dart';
+import 'package:nfc_filament/core/services/subscription_service.dart';
 
 /// Widget de bannière publicitaire réutilisable
 /// Gère le chargement, l'affichage et le dispose automatique
 /// Utilise des adaptive banners pour un meilleur fill rate
 class AdBannerWidget extends StatefulWidget {
-  final String adUnitId;
-  final EdgeInsets margin;
 
   const AdBannerWidget({
-    super.key,
-    required this.adUnitId,
+    required this.adUnitId, super.key,
     this.margin = const EdgeInsets.symmetric(vertical: 8),
   });
+  final String adUnitId;
+  final EdgeInsets margin;
 
   @override
   State<AdBannerWidget> createState() => _AdBannerWidgetState();
@@ -23,6 +23,27 @@ class _AdBannerWidgetState extends State<AdBannerWidget> {
   BannerAd? _bannerAd;
   bool _isLoaded = false;
   final AdMobService _adMobService = AdMobService();
+
+  @override
+  void initState() {
+    super.initState();
+    // Réagir aux changements de statut premium : cacher immédiatement la
+    // bannière quand le premium s'active (sync serveur, restauration d'achat)
+    // sans attendre un redémarrage de l'app.
+    SubscriptionService().premiumStatusNotifier.addListener(_onPremiumChanged);
+  }
+
+  void _onPremiumChanged() {
+    if (!mounted) return;
+    if (SubscriptionService().isPremium) {
+      _bannerAd?.dispose();
+      _bannerAd = null;
+      setState(() => _isLoaded = false);
+    } else if (_bannerAd == null) {
+      // Premium expiré → recharger une bannière
+      _loadAd();
+    }
+  }
 
   @override
   void didChangeDependencies() {
@@ -42,7 +63,7 @@ class _AdBannerWidgetState extends State<AdBannerWidget> {
 
     // Adaptive banner basé sur la largeur de l'écran
     final width = MediaQuery.of(context).size.width.truncate();
-    final adaptiveSize = await AdSize.getAnchoredAdaptiveBannerAdSize(
+    final adaptiveSize = await AdSize.getLargeAnchoredAdaptiveBannerAdSizeWithOrientation(
       Orientation.portrait,
       width,
     );
@@ -71,6 +92,7 @@ class _AdBannerWidgetState extends State<AdBannerWidget> {
 
   @override
   void dispose() {
+    SubscriptionService().premiumStatusNotifier.removeListener(_onPremiumChanged);
     _bannerAd?.dispose();
     super.dispose();
   }
