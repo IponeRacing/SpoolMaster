@@ -4,6 +4,8 @@
 /// uniquement (la spec OpenPrintTag n'utilise pas l'indéfini).
 library;
 
+import 'dart:convert';
+
 class CborLite {
   /// Décode la première valeur CBOR de [bytes] à partir de [offset].
   /// Retourne (valeur, prochain offset). Lance [FormatException] si invalide.
@@ -51,7 +53,10 @@ class CborLite {
 
       case 3: // text string
         _checkBounds(bytes, cursor, argument);
-        final str = String.fromCharCodes(bytes.sublist(cursor, cursor + argument));
+        final str = utf8.decode(
+          bytes.sublist(cursor, cursor + argument),
+          allowMalformed: true,
+        );
         return (str, cursor + argument);
 
       case 4: // array
@@ -109,7 +114,9 @@ class CborLite {
   }
 
   static void _checkBounds(List<int> bytes, int offset, int length) {
-    if (offset + length > bytes.length) {
+    // length < 0 : une longueur 64 bits >= 2^63 devient négative en Dart et
+    // contournerait le check d'addition — rejeter explicitement
+    if (length < 0 || offset < 0 || offset + length > bytes.length) {
       throw const FormatException('CBOR: dépassement de buffer');
     }
   }

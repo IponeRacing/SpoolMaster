@@ -344,9 +344,11 @@ class NfcDataSourceImpl implements NfcDataSource {
 
       // Tags ACE Pro officiels (NTAG213) et "Spool NFC Tag Writer" partagent
       // le même layout, identifié par le magic byte 0x7B en page 4.
+      // Minimum 64 bytes : en dessous (lecture partielle), les extractions
+      // brand/material déborderaient (bytes 40-76).
       final hasAceMagic = rawBytes.length > 16 && rawBytes[16] == 0x7B;
 
-      if (!hasSku && (hasAceMagic || rawBytes.length >= 64)) {
+      if (!hasSku && rawBytes.length >= 64) {
         // Format ACE/Tag Writer: Brand pages 10-13, Material pages 15-18
         developer.log('🔍 Format détecté: ACE/Spool NFC Tag Writer (magic: $hasAceMagic)');
 
@@ -359,6 +361,14 @@ class NfcDataSourceImpl implements NfcDataSource {
         final material = String.fromCharCodes(materialBytes.where((b) => b >= 32 && b < 127)).trim();
 
         developer.log('🏷️ Brand: "$brand", Material: "$material"');
+
+        // Garde-fou : un tag vierge (tout à zéro) passe le check de longueur
+        // mais n'a ni brand ni material → erreur "tag vide" au lieu d'une
+        // bobine fantôme aux champs vides
+        if (brand.isEmpty && material.isEmpty) {
+          developer.log('❌ Tag sans brand ni material → considéré vide');
+          return _parseAnycubicData(dataString, rawBytes); // → throw "Tag vide"
+        }
 
         // Parse color from pages 20-23 (bytes 80-83) - ABGR format (little-endian)
         var colorName = 'Unknown';
@@ -810,6 +820,15 @@ class NfcDataSourceImpl implements NfcDataSource {
 
     final brand = String.fromCharCodes(brandBytes.where((b) => b >= 32 && b < 127)).trim();
     final material = String.fromCharCodes(materialBytes.where((b) => b >= 32 && b < 127)).trim();
+
+    // Garde-fou : tag vierge (ni brand ni material) → erreur explicite
+    if (brand.isEmpty && material.isEmpty) {
+      throw NfcTagReadFailure(
+        message: 'Tag NFC vide ou non compatible avec le mode sélectionné',
+        rawTagData: 'bytes:${rawBytes.length}',
+        rawBytesCount: rawBytes.length,
+      );
+    }
 
     var colorName = 'Unknown';
     int? colorRgb;

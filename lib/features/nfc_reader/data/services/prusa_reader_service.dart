@@ -103,14 +103,21 @@ class PrusaReaderService {
   /// Parser des rawBytes Prusa déjà lus (pour auto-detect)
   static BobbinData parseFromRawBytes(List<int> rawBytes) {
     // 1. Format officiel OpenPrintTag (oct. 2025+) : record NDEF MIME
-    //    application/vnd.openprinttag, payload CBOR (Prusament récents)
+    //    application/vnd.openprinttag, payload CBOR (Prusament récents).
+    //    ATTENTION : nos anciens tags écrits par l'app utilisent le MÊME
+    //    type MIME avec un payload TLV → fallback legacy si le CBOR échoue.
     final officialPayload = _extractMimeRecordPayload(
       rawBytes,
       'application/vnd.openprinttag',
     );
     if (officialPayload != null && officialPayload.isNotEmpty) {
-      developer.log('📦 OpenPrintTag officiel (CBOR) détecté');
-      return _parseOpenPrintTagCbor(officialPayload);
+      try {
+        final parsed = _parseOpenPrintTagCbor(officialPayload);
+        developer.log('📦 OpenPrintTag officiel (CBOR) détecté');
+        return parsed;
+      } catch (e) {
+        developer.log('⚠️ Payload non-CBOR, tentative format legacy TLV: $e');
+      }
     }
 
     // 2. Format legacy TLV (tags écrits par les anciennes versions de l'app)
@@ -203,6 +210,7 @@ class PrusaReaderService {
 
       var idLength = 0;
       if (hasIdLength) {
+        if (offset + headerSize >= message.length) break;
         idLength = message[offset + headerSize];
         headerSize += 1;
       }
@@ -238,7 +246,7 @@ class PrusaReaderService {
     final meta = metaRaw;
 
     final mainOffset = (meta[0] as num?)?.toInt();
-    if (mainOffset == null || mainOffset >= payload.length) {
+    if (mainOffset == null || mainOffset < 0 || mainOffset >= payload.length) {
       throw const NfcTagReadFailure(message: 'OpenPrintTag: offset main region invalide');
     }
 
@@ -251,7 +259,7 @@ class PrusaReaderService {
     // Aux region optionnelle (poids consommé, etc.)
     Map<dynamic, dynamic>? aux;
     final auxOffset = (meta[2] as num?)?.toInt();
-    if (auxOffset != null && auxOffset < payload.length) {
+    if (auxOffset != null && auxOffset >= 0 && auxOffset < payload.length) {
       try {
         final (auxRaw, _) = CborLite.decode(payload, auxOffset);
         if (auxRaw is Map) aux = auxRaw;

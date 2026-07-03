@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer' as developer;
 
+import 'package:nfc_filament/core/errors/failures.dart';
 import 'package:nfc_filament/features/nfc_reader/domain/entities/bobbin_data.dart';
 
 /// Parseur des standards ouverts de tags filament sur NTAG21x (NFC Type 2) :
@@ -24,6 +25,13 @@ class OpenStandardsReaderService {
       if (record.type == 'application/opentag3d') {
         final parsed = _parseOpenTag3DPayload(record.payload);
         if (parsed != null) return parsed;
+        // Record OpenTag3D reconnu mais version/contenu non supporté :
+        // erreur explicite plutôt qu'un fallthrough vers le parseur ACE
+        // qui produirait une bobine fantôme depuis les bytes NDEF.
+        throw const NfcTagReadFailure(
+          message:
+              "Tag OpenTag3D détecté mais version non supportée. Mettez à jour l'application.",
+        );
       }
       final parsed = _tryParseJsonRecord(record);
       if (parsed != null) return parsed;
@@ -103,6 +111,7 @@ class OpenStandardsReaderService {
 
       var idLength = 0;
       if (hasIdLength) {
+        if (offset + headerSize >= message.length) break;
         idLength = message[offset + headerSize];
         headerSize += 1;
       }
@@ -137,10 +146,16 @@ class OpenStandardsReaderService {
     var bytes = record.payload;
     if (record.type == 'T' && bytes.length > 3) {
       final langLength = bytes[0] & 0x3F;
+      if (1 + langLength >= bytes.length) return null; // payload tronqué
       bytes = bytes.sublist(1 + langLength);
     }
 
-    final text = String.fromCharCodes(bytes).trim();
+    final String text;
+    try {
+      text = utf8.decode(bytes, allowMalformed: true).trim();
+    } catch (_) {
+      return null;
+    }
     if (!text.startsWith('{')) return null;
 
     try {

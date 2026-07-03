@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:nfc_filament/core/errors/failures.dart';
 import 'package:nfc_filament/features/nfc_reader/data/services/open_standards_reader_service.dart';
 import 'package:nfc_filament/features/nfc_reader/data/services/prusa_reader_service.dart';
 
@@ -177,7 +178,7 @@ void main() {
       expect(result.bedTempMin, 60);
     });
 
-    test('rejette une version invalide', () {
+    test('version non supportée → erreur explicite (pas de fallthrough ACE)', () {
       final payload = buildOpenTag3DPayload();
       payload[0x00] = 0x30; // version 12345 → hors plage v1.x
       payload[0x01] = 0x39;
@@ -187,7 +188,10 @@ void main() {
         asMime: true,
       );
 
-      expect(OpenStandardsReaderService.tryParse(dump), isNull);
+      expect(
+        () => OpenStandardsReaderService.tryParse(dump),
+        throwsA(isA<NfcTagReadFailure>()),
+      );
     });
   });
 
