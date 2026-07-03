@@ -17,8 +17,17 @@ class AppleJWKHelper
      */
     public static function jwkToPem(array $jwk): string
     {
-        if (!isset($jwk['kty']) || $jwk['kty'] !== 'EC') {
-            throw new \InvalidArgumentException('Only EC (Elliptic Curve) keys are supported');
+        if (!isset($jwk['kty'])) {
+            throw new \InvalidArgumentException('Missing kty in JWK');
+        }
+
+        // Les identity tokens Sign in with Apple sont signés RS256 (clés RSA)
+        if ($jwk['kty'] === 'RSA') {
+            return self::rsaJwkToPem($jwk);
+        }
+
+        if ($jwk['kty'] !== 'EC') {
+            throw new \InvalidArgumentException('Only EC and RSA keys are supported');
         }
 
         if (!isset($jwk['crv']) || $jwk['crv'] !== 'P-256') {
@@ -46,6 +55,55 @@ class AppleJWKHelper
         $pem .= "-----END PUBLIC KEY-----\n";
 
         return $pem;
+    }
+
+    /**
+     * Convert RSA JWK (n, e) to PEM SubjectPublicKeyInfo
+     */
+    private static function rsaJwkToPem(array $jwk): string
+    {
+        if (!isset($jwk['n']) || !isset($jwk['e'])) {
+            throw new \InvalidArgumentException('Missing n or e in RSA JWK');
+        }
+
+        $n = self::base64UrlDecode($jwk['n']);
+        $e = self::base64UrlDecode($jwk['e']);
+
+        // INTEGER : préfixer 0x00 si le bit de poids fort est à 1 (nombre positif)
+        $nInt = self::derInteger($n);
+        $eInt = self::derInteger($e);
+
+        // RSAPublicKey ::= SEQUENCE { modulus INTEGER, publicExponent INTEGER }
+        $rsaPublicKey = self::derSequence($nInt . $eInt);
+
+        // OID rsaEncryption 1.2.840.113549.1.1.1 + NULL
+        $algorithmIdentifier = self::derSequence(
+            "\x06\x09\x2a\x86\x48\x86\xf7\x0d\x01\x01\x01" . "\x05\x00"
+        );
+
+        // SubjectPublicKeyInfo ::= SEQUENCE { algorithm, subjectPublicKey BIT STRING }
+        $der = self::derSequence($algorithmIdentifier . self::derBitString($rsaPublicKey));
+
+        $pem = "-----BEGIN PUBLIC KEY-----\n";
+        $pem .= chunk_split(base64_encode($der), 64, "\n");
+        $pem .= "-----END PUBLIC KEY-----\n";
+
+        return $pem;
+    }
+
+    /**
+     * Create DER INTEGER (unsigned big-endian input)
+     */
+    private static function derInteger(string $bytes): string
+    {
+        $bytes = ltrim($bytes, "\x00");
+        if ($bytes === '') {
+            $bytes = "\x00";
+        }
+        if (ord($bytes[0]) & 0x80) {
+            $bytes = "\x00" . $bytes;
+        }
+        return "\x02" . self::derLength(strlen($bytes)) . $bytes;
     }
 
     /**

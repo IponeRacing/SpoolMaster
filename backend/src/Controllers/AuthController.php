@@ -268,21 +268,29 @@ class AuthController {
             $dataToVerify = $parts[0] . '.' . $parts[1];
             $signature = base64_decode(strtr($parts[2], '-_', '+/'));
 
-            // Apple uses ES256 (ECDSA with P-256 and SHA-256)
             $publicKey = openssl_pkey_get_public($publicKeyPem);
             if (!$publicKey) {
                 error_log("Apple token: Failed to parse public key");
                 return null;
             }
 
-            // For ES256, we need to convert the signature from JWS format to DER format
-            $derSignature = $this->convertEs256SignatureToDer($signature);
-            if (!$derSignature) {
-                error_log("Apple token: Failed to convert signature format");
+            // Apple signe les identity tokens en RS256 (RSA). ES256 conservé par sécurité.
+            $alg = $header['alg'] ?? 'RS256';
+            if ($alg === 'ES256') {
+                // ES256: convertir la signature JWS (r||s) en DER pour OpenSSL
+                $derSignature = $this->convertEs256SignatureToDer($signature);
+                if (!$derSignature) {
+                    error_log("Apple token: Failed to convert signature format");
+                    return null;
+                }
+                $verified = openssl_verify($dataToVerify, $derSignature, $publicKey, OPENSSL_ALGO_SHA256);
+            } elseif ($alg === 'RS256') {
+                // RS256: signature RSA brute, pas de conversion
+                $verified = openssl_verify($dataToVerify, $signature, $publicKey, OPENSSL_ALGO_SHA256);
+            } else {
+                error_log("Apple token: Unsupported alg: $alg");
                 return null;
             }
-
-            $verified = openssl_verify($dataToVerify, $derSignature, $publicKey, OPENSSL_ALGO_SHA256);
 
             if ($verified !== 1) {
                 error_log("Apple token: Signature verification failed. OpenSSL error: " . openssl_error_string());
@@ -469,8 +477,29 @@ class AuthController {
             return $existing;
         }
 
+        // Compte existant avec le même email (autre provider) : rattacher au lieu
+        // de crasher sur la contrainte UNIQUE(email). Email vérifié par le provider.
+        if (!empty($data['email'])) {
+            $stmt = $db->prepare("SELECT * FROM users WHERE email = :email LIMIT 1");
+            $stmt->execute(['email' => $data['email']]);
+            $sameEmail = $stmt->fetch();
+
+            if ($sameEmail) {
+                error_log("Account link: {$data['provider']} login for existing email (user {$sameEmail['user_id']}, provider {$sameEmail['provider']})");
+                $stmt = $db->prepare("UPDATE users SET last_login = NOW() WHERE user_id = :user_id");
+                $stmt->execute(['user_id' => $sameEmail['user_id']]);
+                return $sameEmail;
+            }
+        }
+
         // Créer un nouvel utilisateur
         $userId = $this->generateUUID();
+
+        // users.email est UNIQUE NOT NULL — Apple ne renvoie parfois pas l'email
+        // (déjà consommé sur un autre device) : placeholder stable par provider_id
+        if (empty($data['email'])) {
+            $data['email'] = $data['provider_id'] . '@' . $data['provider'] . '.local';
+        }
 
         $stmt = $db->prepare(
             "INSERT INTO users (user_id, provider, provider_id, email, name, avatar_url, email_verified, last_login)
