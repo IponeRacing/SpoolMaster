@@ -277,7 +277,7 @@
   "instructions": "Οδηγίες",
   "step1GetCUID": "Αποκτήστε μια κενή κάρτα CUID (MiFare Classic 1K)",
   "step2PressWrite": "Πατήστε το κουμπί \"Εγγραφή\" παρακάτω",
-  "step3HoldPhone": "Κρατήστε το iPhone σας κοντά στην κάρτα CUID",
+  "step3HoldPhone": "Κρατήστε το τηλέφωνό σας κοντά στην κάρτα CUID",
   "step4WaitConfirm": "Περιμένετε την επιβεβαίωση εγγραφής",
   "step5TestClone": "Δοκιμάστε την κλωνοποιημένη ετικέτα στον εκτυπωτή Bambu Lab σας!",
   "rsaIncluded": "Ο κλώνος περιλαμβάνει την αρχική υπογραφή RSA, θα γίνει αποδεκτός από τον εκτυπωτή!",
@@ -413,8 +413,10 @@
   "contactUs": "Επικοινωνήστε μαζί μας",
   "contactUsSubtitle": "Ερωτήσεις, προτάσεις ή προβλήματα",
   "nfcTagNotDetected": "Δεν εντοπίστηκε ετικέτα NFC",
-  "nfcTagNotDetectedDesc": "Δεν βρέθηκε ετικέτα. Η ετικέτα μπορεί να είναι νεκρή, κατεστραμμένη ή πολύ μακριά από το τηλέφωνο. Βεβαιωθείτε ότι το πάνω μέρος του τηλεφώνου σας βρίσκεται απευθείας πάνω στην ετικέτα NFC.",
+  "nfcTagNotDetectedDesc": "Δεν βρέθηκε ετικέτα. Η ετικέτα μπορεί να είναι νεκρή, κατεστραμμένη ή πολύ μακριά από το τηλέφωνο.",
   "nfcTagIncompatible": "Εντοπίστηκε μη συμβατή ετικέτα NFC",
+  "nfcAuthError": "Αποτυχία ελέγχου ταυτότητας NFC tag",
+  "nfcAuthErrorDesc": "Το tag εντοπίστηκε αλλά ο έλεγχος ταυτότητας απέτυχε μετά από πολλές προσπάθειες. Κρατήστε το tag σταθερά πατημένο στο πίσω μέρος του τηλεφώνου και δοκιμάστε ξανά.",
   "signInAppleNotAvailable": "Η σύνδεση με Apple δεν είναι διαθέσιμη σε αυτή τη συσκευή.",
   "signInAppleFailed": "Η σύνδεση με Apple απέτυχε. Παρακαλώ δοκιμάστε ξανά.",
   "signInFailed": "Η σύνδεση απέτυχε. Παρακαλώ δοκιμάστε ξανά.",
@@ -423,7 +425,9 @@
   "generatedUidLabel": "Δημιουργημένο UID: {uid}",
   "@generatedUidLabel": {
     "placeholders": {
-      "uid": { "type": "String" }
+      "uid": {
+        "type": "String"
+      }
     }
   },
   "experimentalBadge": "ΠΕΙΡΑΜΑΤΙΚΟ",
@@ -434,5 +438,20 @@
   "platformLimitationTitle": "Περιορισμός πλατφόρμας",
   "mifareClassicNotSupportedIos": "Οι ετικέτες MiFare Classic (Bambu Lab, Creality) δεν υποστηρίζονται σε iOS λόγω περιορισμού του Apple CoreNFC. Αυτή η λειτουργία είναι διαθέσιμη μόνο σε Android.",
   "nfcTagInfoCreality": "Χρησιμοποιήστε μια ετικέτα MiFare Classic 1K για εγγραφή δεδομένων συμβατών με Creality CFS για το Creality K2 Plus.",
-  "colorHintExamples": "Κόκκινο, Μπλε, Μαύρο..."
+  "colorHintExamples": "Κόκκινο, Μπλε, Μαύρο...",
+  "fallbackDetectedAs": "Η ετικέτα ανιχνεύτηκε ως {mode} — αλλάξτε καρτέλα για τις επόμενες σαρώσεις",
+  "@fallbackDetectedAs": {
+    "placeholders": {
+      "mode": {
+        "type": "String"
+      }
+    }
+  },
+  "fallbackChooseMode": "Επιλογή λειτουργίας χειροκίνητα",
+  "fallbackChooseModeSubtitle": "Η αυτόματη ανίχνευση δεν μπόρεσε να αναγνωρίσει αυτήν την ετικέτα. Επιλέξτε το πρωτόκολλο:",
+  "tryAutoDetect": "Δοκιμάστε αυτόματη ανίχνευση",
+  "autoDetectAllBrands": "Αυτόματη ανίχνευση — όλες οι μάρκες",
+  "autoDetectAllBrandsDesc": "Anycubic, Elegoo, OpenSpool, OpenTag3D και άλλα",
+  "nfcTipIos": "Ο αναγνώστης NFC βρίσκεται στο πάνω μέρος του iPhone σας. Τοποθετήστε τον απευθείας πάνω στην ετικέτα NFC του ρολού.",
+  "nfcTipAndroid": "Ο αναγνώστης NFC βρίσκεται συνήθως στο κέντρο του πίσω μέρους του τηλεφώνου. Τοποθετήστε το πίσω μέρος του τηλεφώνου πάνω στην ετικέτα NFC του ρολού."
 }

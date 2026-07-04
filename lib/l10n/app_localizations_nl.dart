@@ -880,7 +880,7 @@ class AppLocalizationsNl extends AppLocalizations {
   String get step2PressWrite => 'Druk op de knop \"Schrijven\" hieronder';
 
   @override
-  String get step3HoldPhone => 'Houd je iPhone bij de CUID-kaart';
+  String get step3HoldPhone => 'Houd je telefoon bij de CUID-kaart';
 
   @override
   String get step4WaitConfirm => 'Wacht op schrijfbevestiging';
@@ -1142,10 +1142,17 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get nfcTagNotDetectedDesc =>
-      'Geen tag gevonden. De tag kan kapot, beschadigd of te ver van de telefoon verwijderd zijn. Plaats de bovenkant van uw iPhone rechtstreeks op de NFC-tag.';
+      'Geen tag gevonden. De tag kan kapot, beschadigd of te ver van de telefoon verwijderd zijn.';
 
   @override
   String get nfcTagIncompatible => 'Oncompatibele NFC-tag gedetecteerd';
+
+  @override
+  String get nfcAuthError => 'NFC-tag authenticatie mislukt';
+
+  @override
+  String get nfcAuthErrorDesc =>
+      'De tag werd gedetecteerd maar de authenticatie is mislukt na meerdere pogingen. Houd de tag stevig tegen de achterkant van uw telefoon gedrukt en probeer het opnieuw.';
 
   @override
   String get nfcTagInfoPrusa =>
@@ -1217,4 +1224,34 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get dryingTimeHint => 'ex. 8';
+
+  @override
+  String fallbackDetectedAs(String mode) {
+    return 'Tag gedetecteerd als $mode — wissel van tabblad voor volgende scans';
+  }
+
+  @override
+  String get fallbackChooseMode => 'Modus handmatig kiezen';
+
+  @override
+  String get fallbackChooseModeSubtitle =>
+      'Automatische detectie kon deze tag niet identificeren. Selecteer het protocol:';
+
+  @override
+  String get tryAutoDetect => 'Automatische detectie proberen';
+
+  @override
+  String get autoDetectAllBrands => 'Automatische detectie — alle merken';
+
+  @override
+  String get autoDetectAllBrandsDesc =>
+      'Anycubic, Elegoo, OpenSpool, OpenTag3D en meer';
+
+  @override
+  String get nfcTipIos =>
+      'De NFC-lezer zit bovenaan je iPhone. Plaats hem direct op de NFC-tag van de spoel.';
+
+  @override
+  String get nfcTipAndroid =>
+      'De NFC-lezer zit meestal in het midden van de achterkant van je telefoon. Plaats de achterkant van je telefoon op de NFC-tag van de spoel.';
 }

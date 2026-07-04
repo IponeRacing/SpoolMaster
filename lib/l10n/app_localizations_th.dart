@@ -881,7 +881,7 @@ class AppLocalizationsTh extends AppLocalizations {
   String get step2PressWrite => 'กดปุ่ม \"เขียน\" ด้านล่าง';
 
   @override
-  String get step3HoldPhone => 'ถือ iPhone ของคุณใกล้กับการ์ด CUID';
+  String get step3HoldPhone => 'ถือโทรศัพท์ของคุณใกล้กับการ์ด CUID';
 
   @override
   String get step4WaitConfirm => 'รอการยืนยันการเขียน';
@@ -1141,10 +1141,17 @@ class AppLocalizationsTh extends AppLocalizations {
 
   @override
   String get nfcTagNotDetectedDesc =>
-      'ไม่พบแท็ก แท็กอาจเสีย เสียหาย หรืออยู่ไกลจากโทรศัพท์เกินไป ตรวจสอบให้แน่ใจว่าส่วนบนของโทรศัพท์วางอยู่บนแท็ก NFC โดยตรง';
+      'ไม่พบแท็ก แท็กอาจเสีย เสียหาย หรืออยู่ไกลจากโทรศัพท์เกินไป';
 
   @override
   String get nfcTagIncompatible => 'ตรวจพบแท็ก NFC ที่ไม่รองรับ';
+
+  @override
+  String get nfcAuthError => 'การยืนยันตัวตนแท็ก NFC ล้มเหลว';
+
+  @override
+  String get nfcAuthErrorDesc =>
+      'ตรวจพบแท็กแล้วแต่การยืนยันตัวตนล้มเหลวหลังจากพยายามหลายครั้ง กดแท็กให้แนบแน่นกับด้านหลังโทรศัพท์แล้วลองอีกครั้ง';
 
   @override
   String get nfcTagInfoPrusa =>
@@ -1216,4 +1223,34 @@ class AppLocalizationsTh extends AppLocalizations {
 
   @override
   String get dryingTimeHint => 'ex. 8';
+
+  @override
+  String fallbackDetectedAs(String mode) {
+    return 'ตรวจพบแท็กเป็น $mode — สลับแท็บสำหรับการสแกนครั้งต่อไป';
+  }
+
+  @override
+  String get fallbackChooseMode => 'เลือกโหมดด้วยตนเอง';
+
+  @override
+  String get fallbackChooseModeSubtitle =>
+      'การตรวจจับอัตโนมัติไม่สามารถระบุแท็กนี้ได้ เลือกโปรโตคอล:';
+
+  @override
+  String get tryAutoDetect => 'ลองตรวจจับอัตโนมัติ';
+
+  @override
+  String get autoDetectAllBrands => 'ตรวจจับอัตโนมัติ — ทุกแบรนด์';
+
+  @override
+  String get autoDetectAllBrandsDesc =>
+      'Anycubic, Elegoo, OpenSpool, OpenTag3D และอื่น ๆ';
+
+  @override
+  String get nfcTipIos =>
+      'ตัวอ่าน NFC อยู่ที่ด้านบนของ iPhone วางลงบนแท็ก NFC ของม้วนโดยตรง';
+
+  @override
+  String get nfcTipAndroid =>
+      'ตัวอ่าน NFC มักอยู่ตรงกลางด้านหลังของโทรศัพท์ วางด้านหลังของโทรศัพท์ลงบนแท็ก NFC ของม้วน';
 }

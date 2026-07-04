@@ -883,7 +883,7 @@ class AppLocalizationsRu extends AppLocalizations {
   String get step2PressWrite => 'Нажмите кнопку \"Записать\" ниже';
 
   @override
-  String get step3HoldPhone => 'Поднесите iPhone к карте CUID';
+  String get step3HoldPhone => 'Поднесите телефон к карте CUID';
 
   @override
   String get step4WaitConfirm => 'Дождитесь подтверждения записи';
@@ -1143,10 +1143,17 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get nfcTagNotDetectedDesc =>
-      'Тег не найден. Тег может быть неисправен, повреждён или слишком далеко от телефона. Поместите верхнюю часть iPhone прямо на NFC-тег.';
+      'Тег не найден. Тег может быть неисправен, повреждён или слишком далеко от телефона.';
 
   @override
   String get nfcTagIncompatible => 'Обнаружен несовместимый NFC-тег';
+
+  @override
+  String get nfcAuthError => 'Ошибка аутентификации NFC-метки';
+
+  @override
+  String get nfcAuthErrorDesc =>
+      'Метка была обнаружена, но аутентификация не удалась после нескольких попыток. Плотно прижмите метку к задней панели телефона и попробуйте снова.';
 
   @override
   String get nfcTagInfoPrusa =>
@@ -1218,4 +1225,34 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get dryingTimeHint => 'ex. 8';
+
+  @override
+  String fallbackDetectedAs(String mode) {
+    return 'Тег обнаружен как $mode — переключите вкладку для следующих сканирований';
+  }
+
+  @override
+  String get fallbackChooseMode => 'Выбрать режим вручную';
+
+  @override
+  String get fallbackChooseModeSubtitle =>
+      'Автоопределение не смогло идентифицировать этот тег. Выберите протокол:';
+
+  @override
+  String get tryAutoDetect => 'Попробовать авто-определение';
+
+  @override
+  String get autoDetectAllBrands => 'Авто-определение — все бренды';
+
+  @override
+  String get autoDetectAllBrandsDesc =>
+      'Anycubic, Elegoo, OpenSpool, OpenTag3D и другие';
+
+  @override
+  String get nfcTipIos =>
+      'NFC-считыватель расположен в верхней части вашего iPhone. Поместите его прямо на NFC-метку катушки.';
+
+  @override
+  String get nfcTipAndroid =>
+      'NFC-считыватель обычно расположен в центре задней панели телефона. Поместите заднюю панель телефона на NFC-метку катушки.';
 }

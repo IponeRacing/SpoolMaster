@@ -4,28 +4,27 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nfc_filament/core/services/admob_service.dart';
 import 'package:nfc_filament/core/services/analytics_service.dart';
+import 'package:nfc_filament/core/services/spool_storage_service.dart';
 import 'package:nfc_filament/core/services/user_preferences_service.dart';
-import 'package:nfc_filament/core/widgets/ad_banner_widget.dart';
-import 'package:nfc_filament/l10n/app_localizations.dart';
 import 'package:nfc_filament/core/theme/app_theme.dart';
+import 'package:nfc_filament/core/widgets/ad_banner_widget.dart';
 import 'package:nfc_filament/core/widgets/formatted_value_widgets.dart';
 import 'package:nfc_filament/dependency_injection.dart';
 import 'package:nfc_filament/features/nfc_reader/presentation/bloc/nfc_reader_bloc.dart';
 import 'package:nfc_filament/features/nfc_reader/presentation/bloc/nfc_reader_event.dart';
 import 'package:nfc_filament/features/nfc_reader/presentation/bloc/nfc_reader_state.dart';
-import 'package:nfc_filament/core/models/spool_inventory_item.dart';
-import 'package:nfc_filament/core/services/spool_storage_service.dart';
 import 'package:nfc_filament/features/nfc_reader/presentation/pages/bambu_clone_library_page.dart';
 import 'package:nfc_filament/features/nfc_reader/presentation/pages/manual_add_spool_page.dart';
 import 'package:nfc_filament/features/nfc_reader/presentation/pages/nfc_writer_page.dart';
 import 'package:nfc_filament/features/nfc_reader/presentation/pages/scan_history_page.dart';
 import 'package:nfc_filament/features/nfc_reader/presentation/widgets/nfc_logo.dart';
 import 'package:nfc_filament/features/profile/presentation/pages/profile_page.dart';
+import 'package:nfc_filament/l10n/app_localizations.dart';
 
 class NfcReaderPage extends StatelessWidget {
-  final bool returnDataAfterScan;
 
   const NfcReaderPage({super.key, this.returnDataAfterScan = false});
+  final bool returnDataAfterScan;
 
   @override
   Widget build(BuildContext context) {
@@ -38,9 +37,9 @@ class NfcReaderPage extends StatelessWidget {
 }
 
 class _NfcReaderView extends StatefulWidget {
-  final bool returnDataAfterScan;
 
   const _NfcReaderView({this.returnDataAfterScan = false});
+  final bool returnDataAfterScan;
 
   @override
   State<_NfcReaderView> createState() => _NfcReaderViewState();
@@ -183,65 +182,63 @@ class _NfcReaderViewState extends State<_NfcReaderView> {
                     style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 8),
-                  RadioListTile<String>(
-                    title: const Text('Anycubic'),
-                    value: 'Anycubic',
+                  RadioGroup<String>(
                     groupValue: selectedBrand,
-                    dense: true,
-                    contentPadding: EdgeInsets.zero,
-                    onChanged: (v) => setDialogState(() => selectedBrand = v!),
-                  ),
-                  RadioListTile<String>(
-                    title: const Text('Bambu Lab'),
-                    value: 'Bambu Lab',
-                    groupValue: selectedBrand,
-                    dense: true,
-                    contentPadding: EdgeInsets.zero,
-                    onChanged: (v) => setDialogState(() => selectedBrand = v!),
-                  ),
-                  RadioListTile<String>(
-                    title: const Text('Prusa'),
-                    value: 'Prusa',
-                    groupValue: selectedBrand,
-                    dense: true,
-                    contentPadding: EdgeInsets.zero,
-                    onChanged: (v) => setDialogState(() => selectedBrand = v!),
-                  ),
-                  RadioListTile<String>(
-                    title: const Text('Creality'),
-                    value: 'Creality',
-                    groupValue: selectedBrand,
-                    dense: true,
-                    contentPadding: EdgeInsets.zero,
-                    onChanged: (v) => setDialogState(() => selectedBrand = v!),
-                  ),
-                  RadioListTile<String>(
-                    title: Row(
+                    onChanged: (v) => setDialogState(() => selectedBrand = v ?? selectedBrand),
+                    child: Column(
                       children: [
-                        Text('${localizations.otherBrand}: '),
-                        Expanded(
-                          child: TextField(
-                            decoration: const InputDecoration(
-                              isDense: true,
-                              contentPadding: EdgeInsets.symmetric(
-                                horizontal: 8,
-                                vertical: 8,
+                        const RadioListTile<String>(
+                          title: Text('Anycubic'),
+                          value: 'Anycubic',
+                          dense: true,
+                          contentPadding: EdgeInsets.zero,
+                        ),
+                        const RadioListTile<String>(
+                          title: Text('Bambu Lab'),
+                          value: 'Bambu Lab',
+                          dense: true,
+                          contentPadding: EdgeInsets.zero,
+                        ),
+                        const RadioListTile<String>(
+                          title: Text('Prusa'),
+                          value: 'Prusa',
+                          dense: true,
+                          contentPadding: EdgeInsets.zero,
+                        ),
+                        const RadioListTile<String>(
+                          title: Text('Creality'),
+                          value: 'Creality',
+                          dense: true,
+                          contentPadding: EdgeInsets.zero,
+                        ),
+                        RadioListTile<String>(
+                          title: Row(
+                            children: [
+                              Text('${localizations.otherBrand}: '),
+                              Expanded(
+                                child: TextField(
+                                  decoration: const InputDecoration(
+                                    isDense: true,
+                                    contentPadding: EdgeInsets.symmetric(
+                                      horizontal: 8,
+                                      vertical: 8,
+                                    ),
+                                  ),
+                                  onChanged: (v) {
+                                    customBrand = v;
+                                    setDialogState(() => selectedBrand = 'other');
+                                  },
+                                  onTap: () => setDialogState(() => selectedBrand = 'other'),
+                                ),
                               ),
-                            ),
-                            onChanged: (v) {
-                              customBrand = v;
-                              setDialogState(() => selectedBrand = 'other');
-                            },
-                            onTap: () => setDialogState(() => selectedBrand = 'other'),
+                            ],
                           ),
+                          value: 'other',
+                          dense: true,
+                          contentPadding: EdgeInsets.zero,
                         ),
                       ],
                     ),
-                    value: 'other',
-                    groupValue: selectedBrand,
-                    dense: true,
-                    contentPadding: EdgeInsets.zero,
-                    onChanged: (v) => setDialogState(() => selectedBrand = v!),
                   ),
                   const SizedBox(height: 16),
                   // Material
@@ -251,7 +248,7 @@ class _NfcReaderViewState extends State<_NfcReaderView> {
                   ),
                   const SizedBox(height: 8),
                   DropdownButtonFormField<String>(
-                    value: selectedMaterial,
+                    initialValue: selectedMaterial,
                     isExpanded: true,
                     items: materials.map((m) => DropdownMenuItem(
                       value: m,
@@ -270,7 +267,7 @@ class _NfcReaderViewState extends State<_NfcReaderView> {
                     decoration: InputDecoration(
                       hintText: AppLocalizations.of(context)!.colorHintExamples,
                       isDense: true,
-                      contentPadding: EdgeInsets.symmetric(
+                      contentPadding: const EdgeInsets.symmetric(
                         horizontal: 12,
                         vertical: 10,
                       ),
@@ -433,7 +430,7 @@ class _NfcReaderViewState extends State<_NfcReaderView> {
       ),
     );
 
-    if (result == true && context.mounted) {
+    if ((result ?? false) && context.mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(localizations.thankYouFeedback),
@@ -503,7 +500,19 @@ class _NfcReaderViewState extends State<_NfcReaderView> {
             adUnitId: AdMobService().nfcReaderBannerId,
           ),
           Expanded(
-            child: BlocBuilder<NfcReaderBloc, NfcReaderState>(
+            child: BlocConsumer<NfcReaderBloc, NfcReaderState>(
+              listener: (context, state) {
+                if (state is BobbinDataReadSuccessWithFallback) {
+                  final modeName = state.detectedMode == 'bambu' ? 'Bambu Lab' : state.detectedMode[0].toUpperCase() + state.detectedMode.substring(1);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(AppLocalizations.of(context)!.fallbackDetectedAs(modeName)),
+                      backgroundColor: Colors.orange,
+                      duration: const Duration(seconds: 5),
+                    ),
+                  );
+                }
+              },
               builder: (context, state) {
           if (state is NfcReaderLoading) {
             return _NfcScanningAnimation(
@@ -555,6 +564,11 @@ class _NfcReaderViewState extends State<_NfcReaderView> {
                 failureColor = Colors.amber;
                 failureTitle = AppLocalizations.of(context)!.nfcTagIncompatible;
                 failureDetail = state.message;
+              case NfcFailureType.authError:
+                failureIcon = Icons.lock_outline;
+                failureColor = Colors.orange;
+                failureTitle = AppLocalizations.of(context)!.nfcAuthError;
+                failureDetail = AppLocalizations.of(context)!.nfcAuthErrorDesc;
               case NfcFailureType.readError:
                 failureIcon = Icons.error_outline;
                 failureColor = AppTheme.anycubicRed;
@@ -563,7 +577,7 @@ class _NfcReaderViewState extends State<_NfcReaderView> {
             }
 
             return Center(
-              child: Padding(
+              child: SingleChildScrollView(
                 padding: const EdgeInsets.all(24),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -586,6 +600,34 @@ class _NfcReaderViewState extends State<_NfcReaderView> {
                         textAlign: TextAlign.center,
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
                           color: Colors.grey.shade600,
+                        ),
+                      ),
+                    ],
+                    // Conseil de positionnement NFC adapté à la plateforme
+                    if (state.failureType == NfcFailureType.tagNotDetected) ...[
+                      const SizedBox(height: 12),
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                        decoration: BoxDecoration(
+                          color: Colors.blue.shade50,
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(color: Colors.blue.shade200),
+                        ),
+                        child: Row(
+                          children: [
+                            Icon(Icons.lightbulb_outline, size: 20, color: Colors.blue.shade700),
+                            const SizedBox(width: 10),
+                            Expanded(
+                              child: Text(
+                                Platform.isIOS
+                                    ? AppLocalizations.of(context)!.nfcTipIos
+                                    : AppLocalizations.of(context)!.nfcTipAndroid,
+                                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                  color: Colors.blue.shade900,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ],
@@ -612,16 +654,27 @@ class _NfcReaderViewState extends State<_NfcReaderView> {
                         ),
                       ],
                     ),
-                    if (state.hasTagData) ...[
-                      const SizedBox(height: 24),
+                    // Bouton auto-detect pour les timeouts
+                    if (state.failureType == NfcFailureType.tagNotDetected) ...[
+                      const SizedBox(height: 12),
                       OutlinedButton.icon(
-                        onPressed: () => _showFeedbackDialog(context, state),
-                        icon: const Icon(Icons.help_outline),
-                        label: Text(
-                          AppLocalizations.of(context)!.helpIdentifyFilament,
-                        ),
+                        onPressed: () {
+                          context.read<NfcReaderBloc>().add(
+                            const ReadBobbinDataAutoDetectEvent(),
+                          );
+                        },
+                        icon: const Icon(Icons.search),
+                        label: Text(AppLocalizations.of(context)!.tryAutoDetect),
                       ),
                     ],
+                    const SizedBox(height: 24),
+                    OutlinedButton.icon(
+                      onPressed: () => _showFeedbackDialog(context, state),
+                      icon: const Icon(Icons.feedback_outlined),
+                      label: Text(
+                        AppLocalizations.of(context)!.helpIdentifyFilament,
+                      ),
+                    ),
                     const SizedBox(height: 12),
                     OutlinedButton.icon(
                       onPressed: () => _navigateToManualAdd(context),
@@ -636,7 +689,10 @@ class _NfcReaderViewState extends State<_NfcReaderView> {
             );
           }
 
-          if (state is BobbinDataReadSuccess) {
+          if (state is BobbinDataReadSuccessWithFallback || state is BobbinDataReadSuccess) {
+            final bobbinData = state is BobbinDataReadSuccessWithFallback
+                ? state.bobbinData
+                : (state as BobbinDataReadSuccess).bobbinData;
             return SingleChildScrollView(
               padding: const EdgeInsets.all(24),
               child: Column(
@@ -658,46 +714,45 @@ class _NfcReaderViewState extends State<_NfcReaderView> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            if (state.bobbinData.batchNumber != null) ...[
+                            if (bobbinData.batchNumber != null) ...[
                               // Tags Anycubic ont un SKU (ex: AHPLOR-001)
-                              if (state.bobbinData.batchNumber!.contains(
+                              if (bobbinData.batchNumber!.contains(
                                 RegExp(r'[A-Z]{4,}-\d{3}'),
                               ))
                                 _InfoRow(
                                   label: AppLocalizations.of(context)!.skuLabel,
-                                  value: state.bobbinData.batchNumber!,
+                                  value: bobbinData.batchNumber!,
                                 )
                               // Tags Spool NFC Tag Writer ont "Brand - Material"
-                              else if (state.bobbinData.batchNumber!.contains(
+                              else if (bobbinData.batchNumber!.contains(
                                 ' - ',
                               )) ...[
                                 _InfoRow(
                                   label: AppLocalizations.of(context)!.brand,
-                                  value: state.bobbinData.batchNumber!
+                                  value: bobbinData.batchNumber!
                                       .split(' - ')
                                       .first,
                                 ),
                               ] else
                                 _InfoRow(
                                   label: AppLocalizations.of(context)!.batchNumber,
-                                  value: state.bobbinData.batchNumber!,
+                                  value: bobbinData.batchNumber!,
                                 ),
                               const Divider(height: 24),
                             ],
                             // Pour les tags Anycubic (SKU), afficher "Anycubic" comme fabricant
-                            if (state.bobbinData.batchNumber?.contains(
+                            if (bobbinData.batchNumber?.contains(
                                   RegExp(r'[A-Z]{4,}-\d{3}'),
-                                ) ==
-                                true) ...[
+                                ) ?? false) ...[
                               _InfoRow(label: AppLocalizations.of(context)!.brand, value: 'Anycubic'),
                               const SizedBox(height: 8),
                             ],
                             _InfoRow(
                               label: AppLocalizations.of(context)!.filamentType,
-                              value: state.bobbinData.filamentType,
+                              value: bobbinData.filamentType,
                             ),
                             const SizedBox(height: 8),
-                            if (state.bobbinData.colorRgb != null)
+                            if (bobbinData.colorRgb != null)
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
@@ -714,18 +769,17 @@ class _NfcReaderViewState extends State<_NfcReaderView> {
                                     height: 24,
                                     decoration: BoxDecoration(
                                       color: Color(
-                                        0xFF000000 | state.bobbinData.colorRgb!,
+                                        0xFF000000 | bobbinData.colorRgb!,
                                       ),
                                       border: Border.all(
                                         color: Colors.grey.shade300,
-                                        width: 1,
                                       ),
                                       borderRadius: BorderRadius.circular(4),
                                     ),
                                   ),
                                 ],
                               ),
-                            if (state.bobbinData.colorRgb != null)
+                            if (bobbinData.colorRgb != null)
                               const SizedBox(height: 8),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -738,12 +792,12 @@ class _NfcReaderViewState extends State<_NfcReaderView> {
                                       ?.copyWith(fontWeight: FontWeight.w500),
                                 ),
                                 FormattedWeight(
-                                  weightInGrams: state.bobbinData.weightGrams,
+                                  weightInGrams: bobbinData.weightGrams,
                                   style: Theme.of(context).textTheme.bodyLarge,
                                 ),
                               ],
                             ),
-                            if (state.bobbinData.diameter != null) ...[
+                            if (bobbinData.diameter != null) ...[
                               const SizedBox(height: 8),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -756,14 +810,14 @@ class _NfcReaderViewState extends State<_NfcReaderView> {
                                         ?.copyWith(fontWeight: FontWeight.w500),
                                   ),
                                   FormattedLength(
-                                    lengthInMm: state.bobbinData.diameter!,
+                                    lengthInMm: bobbinData.diameter!,
                                     decimals: 2,
                                     style: Theme.of(context).textTheme.bodyLarge,
                                   ),
                                 ],
                               ),
                             ],
-                            if (state.bobbinData.spoolLength != null) ...[
+                            if (bobbinData.spoolLength != null) ...[
                               const SizedBox(height: 8),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -776,7 +830,7 @@ class _NfcReaderViewState extends State<_NfcReaderView> {
                                         ?.copyWith(fontWeight: FontWeight.w500),
                                   ),
                                   FormattedLength(
-                                    lengthInMm: state.bobbinData.spoolLength! * 1000,
+                                    lengthInMm: bobbinData.spoolLength! * 1000,
                                     style: Theme.of(context).textTheme.bodyLarge,
                                     decimals: 0,
                                     showMetersForMetric: true,
@@ -784,8 +838,8 @@ class _NfcReaderViewState extends State<_NfcReaderView> {
                                 ],
                               ),
                             ],
-                            if (state.bobbinData.extruderTempMin != null &&
-                                state.bobbinData.extruderTempMax != null) ...[
+                            if (bobbinData.extruderTempMin != null &&
+                                bobbinData.extruderTempMax != null) ...[
                               const SizedBox(height: 8),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -798,15 +852,15 @@ class _NfcReaderViewState extends State<_NfcReaderView> {
                                         ?.copyWith(fontWeight: FontWeight.w500),
                                   ),
                                   FormattedTemperatureRange(
-                                    minTempCelsius: state.bobbinData.extruderTempMin!.toDouble(),
-                                    maxTempCelsius: state.bobbinData.extruderTempMax!.toDouble(),
+                                    minTempCelsius: bobbinData.extruderTempMin!.toDouble(),
+                                    maxTempCelsius: bobbinData.extruderTempMax!.toDouble(),
                                     style: Theme.of(context).textTheme.bodyLarge,
                                   ),
                                 ],
                               ),
                             ],
-                            if (state.bobbinData.bedTempMin != null &&
-                                state.bobbinData.bedTempMax != null) ...[
+                            if (bobbinData.bedTempMin != null &&
+                                bobbinData.bedTempMax != null) ...[
                               const SizedBox(height: 8),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -819,8 +873,8 @@ class _NfcReaderViewState extends State<_NfcReaderView> {
                                         ?.copyWith(fontWeight: FontWeight.w500),
                                   ),
                                   FormattedTemperatureRange(
-                                    minTempCelsius: state.bobbinData.bedTempMin!.toDouble(),
-                                    maxTempCelsius: state.bobbinData.bedTempMax!.toDouble(),
+                                    minTempCelsius: bobbinData.bedTempMin!.toDouble(),
+                                    maxTempCelsius: bobbinData.bedTempMax!.toDouble(),
                                     style: Theme.of(context).textTheme.bodyLarge,
                                   ),
                                 ],
@@ -835,7 +889,7 @@ class _NfcReaderViewState extends State<_NfcReaderView> {
                       ElevatedButton.icon(
                         onPressed: () {
                           Navigator.pop(context, {
-                            'bobbinData': state.bobbinData,
+                            'bobbinData': bobbinData,
                           });
                         },
                         icon: const Icon(Icons.add_shopping_cart),
@@ -885,7 +939,7 @@ class _NfcReaderViewState extends State<_NfcReaderView> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const NfcLogo(size: 120),
+                  const NfcLogo(),
                   const SizedBox(height: 32),
                   Text(
                     AppLocalizations.of(context)!.nfcEncoder,
@@ -921,7 +975,7 @@ class _NfcReaderViewState extends State<_NfcReaderView> {
                             height: 20,
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
-                              color: Colors.blue.withOpacity(0.15),
+                              color: Colors.blue.withValues(alpha: 0.15),
                             ),
                             child: Icon(
                               Icons.info_outline,
@@ -934,6 +988,51 @@ class _NfcReaderViewState extends State<_NfcReaderView> {
                     ],
                   ),
                   const SizedBox(height: 24),
+                  // Détection auto toutes marques (standards ouverts inclus :
+                  // Elegoo, OpenSpool, OpenTag3D...)
+                  SizedBox(
+                    width: 340,
+                    child: ElevatedButton(
+                      onPressed: () => context.read<NfcReaderBloc>().add(
+                            const ReadBobbinDataAutoDetectEvent(),
+                          ),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppTheme.anycubicRed,
+                        foregroundColor: Colors.white,
+                        padding: const EdgeInsets.symmetric(vertical: 12),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Icon(Icons.auto_awesome, size: 18),
+                              const SizedBox(width: 8),
+                              Flexible(
+                                child: Text(
+                                  AppLocalizations.of(context)!.autoDetectAllBrands,
+                                  style: const TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 2),
+                          Text(
+                            AppLocalizations.of(context)!.autoDetectAllBrandsDesc,
+                            style: TextStyle(
+                              fontSize: 11,
+                              color: Colors.white.withValues(alpha: 0.85),
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 12),
                   // Slider pour choisir entre Anycubic, Bambu Lab, Prusa et Creality
                   Container(
                     width: 340,
@@ -1261,9 +1360,9 @@ class _InfoRow extends StatelessWidget {
 }
 
 class _NfcScanningAnimation extends StatefulWidget {
-  final VoidCallback onCancel;
 
   const _NfcScanningAnimation({required this.onCancel});
+  final VoidCallback onCancel;
 
   @override
   State<_NfcScanningAnimation> createState() => _NfcScanningAnimationState();

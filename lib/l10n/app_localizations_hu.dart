@@ -882,7 +882,7 @@ class AppLocalizationsHu extends AppLocalizations {
   String get step2PressWrite => 'Nyomja meg az alábbi \"Írás\" gombot';
 
   @override
-  String get step3HoldPhone => 'Tartsa iPhone-ját a CUID kártya közelében';
+  String get step3HoldPhone => 'Tartsa telefonját a CUID kártya közelében';
 
   @override
   String get step4WaitConfirm => 'Várja meg az írás megerősítését';
@@ -1144,10 +1144,17 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String get nfcTagNotDetectedDesc =>
-      'Nem található címke. A címke halott, sérült vagy túl messze lehet a telefontól. Győződjön meg arról, hogy a telefon teteje közvetlenül az NFC címkén van.';
+      'Nem található címke. A címke halott, sérült vagy túl messze lehet a telefontól.';
 
   @override
   String get nfcTagIncompatible => 'Nem kompatibilis NFC címke észlelve';
+
+  @override
+  String get nfcAuthError => 'NFC címke hitelesítés sikertelen';
+
+  @override
+  String get nfcAuthErrorDesc =>
+      'A címke észlelve lett, de a hitelesítés többszöri próbálkozás után sem sikerült. Tartsa a címkét szorosan a telefon hátuljához és próbálja újra.';
 
   @override
   String get nfcTagInfoPrusa =>
@@ -1220,4 +1227,34 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String get dryingTimeHint => 'ex. 8';
+
+  @override
+  String fallbackDetectedAs(String mode) {
+    return 'Tag $mode módban észlelve — váltson fület a következő szkenelésekhez';
+  }
+
+  @override
+  String get fallbackChooseMode => 'Mód kézi kiválasztása';
+
+  @override
+  String get fallbackChooseModeSubtitle =>
+      'Az automatikus felismerés nem tudta azonosítani ezt a taget. Válassza ki a protokollt:';
+
+  @override
+  String get tryAutoDetect => 'Automatikus felismerés kipróbálása';
+
+  @override
+  String get autoDetectAllBrands => 'Automatikus felismerés — minden márka';
+
+  @override
+  String get autoDetectAllBrandsDesc =>
+      'Anycubic, Elegoo, OpenSpool, OpenTag3D és további márkák';
+
+  @override
+  String get nfcTipIos =>
+      'Az NFC-olvasó az iPhone tetején található. Helyezze közvetlenül az orsó NFC-címkéjére.';
+
+  @override
+  String get nfcTipAndroid =>
+      'Az NFC-olvasó általában a telefon hátoldalának közepén található. Helyezze a telefon hátoldalát az orsó NFC-címkéjére.';
 }

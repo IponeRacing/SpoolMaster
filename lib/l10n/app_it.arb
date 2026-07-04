@@ -296,7 +296,7 @@
   "instructions": "Istruzioni",
   "step1GetCUID": "Procurati una scheda CUID vuota (MiFare Classic 1K)",
   "step2PressWrite": "Premi il pulsante \"Scrivi\" qui sotto",
-  "step3HoldPhone": "Tieni il tuo iPhone vicino alla scheda CUID",
+  "step3HoldPhone": "Tieni il tuo telefono vicino alla scheda CUID",
   "step4WaitConfirm": "Attendi la conferma di scrittura",
   "step5TestClone": "Testa il tag clonato sulla tua stampante Bambu Lab!",
   "rsaIncluded": "Il clone include la firma RSA originale, sarà accettato dalla stampante!",
@@ -411,8 +411,10 @@
   "contactUs": "Contattaci",
   "contactUsSubtitle": "Domande, suggerimenti o problemi",
   "nfcTagNotDetected": "Nessun tag NFC rilevato",
-  "nfcTagNotDetectedDesc": "Nessun tag trovato. Il tag potrebbe essere difettoso, danneggiato o troppo lontano dal telefono. Posiziona la parte superiore del tuo iPhone direttamente sul tag NFC.",
+  "nfcTagNotDetectedDesc": "Nessun tag trovato. Il tag potrebbe essere difettoso, danneggiato o troppo lontano dal telefono.",
   "nfcTagIncompatible": "Tag NFC incompatibile rilevato",
+  "nfcAuthError": "Autenticazione tag NFC fallita",
+  "nfcAuthErrorDesc": "Il tag è stato rilevato ma l'autenticazione è fallita dopo diversi tentativi. Tenere il tag premuto saldamente contro il retro del telefono e riprovare.",
   "nfcTagInfoPrusa": "Utilizza un tag vuoto NXP ICODE SLIX2 (ISO 15693) per creare tag OpenPrintTag compatibili con Prusa MK4/XL.",
   "writePrusaTagTitle": "Scrivi OpenPrintTag Prusa",
   "signInAppleNotAvailable": "L'accesso con Apple non è disponibile su questo dispositivo.",
@@ -423,7 +425,9 @@
   "generatedUidLabel": "UID generato: {uid}",
   "@generatedUidLabel": {
     "placeholders": {
-      "uid": { "type": "String" }
+      "uid": {
+        "type": "String"
+      }
     }
   },
   "experimentalBadge": "SPERIMENTALE",
@@ -434,5 +438,20 @@
   "platformLimitationTitle": "Limitazione piattaforma",
   "mifareClassicNotSupportedIos": "I tag MiFare Classic (Bambu Lab, Creality) non sono supportati su iOS a causa di una limitazione di Apple CoreNFC. Questa funzionalità è disponibile solo su Android.",
   "nfcTagInfoCreality": "Usa un tag MiFare Classic 1K per scrivere dati compatibili Creality CFS per il Creality K2 Plus.",
-  "colorHintExamples": "Rosso, Blu, Nero..."
+  "colorHintExamples": "Rosso, Blu, Nero...",
+  "fallbackDetectedAs": "Tag rilevato come {mode} — cambia scheda per i prossimi scan",
+  "@fallbackDetectedAs": {
+    "placeholders": {
+      "mode": {
+        "type": "String"
+      }
+    }
+  },
+  "fallbackChooseMode": "Scegli modalità manualmente",
+  "fallbackChooseModeSubtitle": "Il rilevamento automatico non ha identificato questo tag. Seleziona il protocollo:",
+  "tryAutoDetect": "Prova rilevamento automatico",
+  "autoDetectAllBrands": "Rilevamento automatico — tutte le marche",
+  "autoDetectAllBrandsDesc": "Anycubic, Elegoo, OpenSpool, OpenTag3D e altro",
+  "nfcTipIos": "Il lettore NFC si trova nella parte superiore del tuo iPhone. Posizionalo direttamente sul tag NFC della bobina.",
+  "nfcTipAndroid": "Il lettore NFC si trova solitamente al centro della parte posteriore del telefono. Posiziona il retro del telefono sul tag NFC della bobina."
 }

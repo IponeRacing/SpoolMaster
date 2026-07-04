@@ -884,7 +884,7 @@ class AppLocalizationsUk extends AppLocalizations {
   String get step2PressWrite => 'Натисніть кнопку \"Записати\" нижче';
 
   @override
-  String get step3HoldPhone => 'Тримайте iPhone біля картки CUID';
+  String get step3HoldPhone => 'Тримайте телефон біля картки CUID';
 
   @override
   String get step4WaitConfirm => 'Зачекайте підтвердження запису';
@@ -1145,10 +1145,17 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get nfcTagNotDetectedDesc =>
-      'Мітку не знайдено. Мітка може бути несправною, пошкодженою або занадто далеко від телефону. Переконайтеся, що верхня частина телефону розміщена безпосередньо на NFC мітці.';
+      'Мітку не знайдено. Мітка може бути несправною, пошкодженою або занадто далеко від телефону.';
 
   @override
   String get nfcTagIncompatible => 'Виявлено несумісну NFC мітку';
+
+  @override
+  String get nfcAuthError => 'Помилка автентифікації NFC-мітки';
+
+  @override
+  String get nfcAuthErrorDesc =>
+      'Мітку було виявлено, але автентифікація не вдалася після кількох спроб. Щільно притисніть мітку до задньої панелі телефону та спробуйте знову.';
 
   @override
   String get nfcTagInfoPrusa =>
@@ -1220,4 +1227,34 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get dryingTimeHint => 'ex. 8';
+
+  @override
+  String fallbackDetectedAs(String mode) {
+    return 'Тег виявлено як $mode — змініть вкладку для наступних сканувань';
+  }
+
+  @override
+  String get fallbackChooseMode => 'Вибрати режим вручну';
+
+  @override
+  String get fallbackChooseModeSubtitle =>
+      'Автовизначення не змогло ідентифікувати цей тег. Виберіть протокол:';
+
+  @override
+  String get tryAutoDetect => 'Спробувати автовизначення';
+
+  @override
+  String get autoDetectAllBrands => 'Автовизначення — усі бренди';
+
+  @override
+  String get autoDetectAllBrandsDesc =>
+      'Anycubic, Elegoo, OpenSpool, OpenTag3D та інші';
+
+  @override
+  String get nfcTipIos =>
+      'Зчитувач NFC знаходиться у верхній частині вашого iPhone. Помістіть його безпосередньо на NFC-мітку котушки.';
+
+  @override
+  String get nfcTipAndroid =>
+      'Зчитувач NFC зазвичай знаходиться в центрі задньої панелі телефону. Помістіть задню панель телефону на NFC-мітку котушки.';
 }

@@ -1,6 +1,12 @@
+import 'dart:async';
+import 'dart:io' show Platform;
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nfc_filament/core/models/spool_inventory_item.dart';
+import 'package:nfc_filament/core/services/analytics_service.dart';
+import 'package:nfc_filament/core/services/spool_storage_service.dart';
 import 'package:nfc_filament/core/theme/app_theme.dart';
 import 'package:nfc_filament/core/utils/color_translator.dart';
 import 'package:nfc_filament/dependency_injection.dart';
@@ -9,9 +15,6 @@ import 'package:nfc_filament/features/nfc_reader/presentation/bloc/nfc_reader_bl
 import 'package:nfc_filament/features/nfc_reader/presentation/bloc/nfc_reader_event.dart';
 import 'package:nfc_filament/features/nfc_reader/presentation/bloc/nfc_reader_state.dart';
 import 'package:nfc_filament/l10n/app_localizations.dart';
-import 'package:nfc_filament/core/models/spool_inventory_item.dart';
-import 'package:nfc_filament/core/services/spool_storage_service.dart';
-import 'package:nfc_filament/core/services/analytics_service.dart';
 
 /// Page for updating stock by scanning existing NFC spools
 class NfcStockUpdatePage extends StatelessWidget {
@@ -22,8 +25,7 @@ class NfcStockUpdatePage extends StatelessWidget {
     return BlocProvider(
       create: (_) =>
           getIt<NfcReaderBloc>()
-            ..add(const CheckNfcAvailabilityEvent())
-            ..add(const ReadBobbinDataAutoDetectEvent()),
+            ..add(const CheckNfcAvailabilityEvent()),
       child: const _NfcStockUpdateView(),
     );
   }
@@ -32,28 +34,35 @@ class NfcStockUpdatePage extends StatelessWidget {
 class _NfcStockUpdateView extends StatelessWidget {
   const _NfcStockUpdateView();
 
+  void _startScanWithMode(BuildContext context, String mode) {
+    context.read<NfcReaderBloc>().add(
+      ReadBobbinDataEvent(overrideMode: mode),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final isIOS = Platform.isIOS;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          AppLocalizations.of(context)!.updateStock,
+          l10n.updateStock,
           style: const TextStyle(fontWeight: FontWeight.bold),
         ),
       ),
       body: BlocListener<NfcReaderBloc, NfcReaderState>(
         listener: (context, state) {
-          debugPrint('🔍 [STOCK UPDATE] State changed: ${state.runtimeType}');
-          // When scan succeeds, show update dialog
           if (state is BobbinDataReadSuccess) {
-            debugPrint('✅ [STOCK UPDATE] Scan success, showing dialog');
+            _showUpdateDialog(context, state.bobbinData);
+          } else if (state is BobbinDataReadSuccessWithFallback) {
             _showUpdateDialog(context, state.bobbinData);
           }
         },
         child: BlocBuilder<NfcReaderBloc, NfcReaderState>(
           builder: (context, state) {
-            debugPrint('🎨 [STOCK UPDATE] Building UI with state: ${state.runtimeType}');
-            if (state is NfcReaderLoading || state is NfcReaderInitial) {
+            if (state is NfcReaderLoading) {
               return Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -61,12 +70,12 @@ class _NfcStockUpdateView extends StatelessWidget {
                     const CircularProgressIndicator(),
                     const SizedBox(height: 24),
                     Text(
-                      AppLocalizations.of(context)!.approachNfcChip,
+                      l10n.approachNfcChip,
                       style: const TextStyle(fontSize: 18),
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      AppLocalizations.of(context)!.scanSpoolToUpdate,
+                      l10n.scanSpoolToUpdate,
                       style: TextStyle(
                         fontSize: 14,
                         color: Colors.grey.shade600,
@@ -98,7 +107,7 @@ class _NfcStockUpdateView extends StatelessWidget {
                       const SizedBox(height: 24),
                       ElevatedButton(
                         onPressed: () => Navigator.pop(context),
-                        child: Text(AppLocalizations.of(context)!.back),
+                        child: Text(l10n.back),
                       ),
                     ],
                   ),
@@ -130,16 +139,12 @@ class _NfcStockUpdateView extends StatelessWidget {
                         children: [
                           OutlinedButton(
                             onPressed: () => Navigator.pop(context),
-                            child: Text(AppLocalizations.of(context)!.cancel),
+                            child: Text(l10n.cancel),
                           ),
                           const SizedBox(width: 16),
                           ElevatedButton(
-                            onPressed: () {
-                              context.read<NfcReaderBloc>().add(
-                                const ReadBobbinDataAutoDetectEvent(),
-                              );
-                            },
-                            child: Text(AppLocalizations.of(context)!.retry),
+                            onPressed: () => _showModeSelectionDialog(context),
+                            child: Text(l10n.retry),
                           ),
                         ],
                       ),
@@ -162,7 +167,7 @@ class _NfcStockUpdateView extends StatelessWidget {
                     ),
                     const SizedBox(height: 24),
                     Text(
-                      AppLocalizations.of(context)!.scanningNfc,
+                      l10n.scanningNfc,
                       style: const TextStyle(fontSize: 18),
                     ),
                   ],
@@ -170,20 +175,170 @@ class _NfcStockUpdateView extends StatelessWidget {
               );
             }
 
+            // État initial : sélecteur de protocole
             return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const CircularProgressIndicator(),
-                  const SizedBox(height: 24),
-                  Text(
-                    AppLocalizations.of(context)!.approachNfcChip,
-                    style: const TextStyle(fontSize: 18),
-                  ),
-                ],
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.all(32),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(
+                      Icons.nfc_rounded,
+                      size: 64,
+                      color: AppTheme.anycubicRed,
+                    ),
+                    const SizedBox(height: 24),
+                    Text(
+                      l10n.fallbackChooseMode,
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 12),
+                    Text(
+                      l10n.scanSpoolToUpdate,
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.grey[400],
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 32),
+                    _autoDetectCard(context, l10n),
+                    const SizedBox(height: 20),
+                    _protocolCard(context, 'Anycubic', 'anycubic', enabled: true),
+                    const SizedBox(height: 12),
+                    _protocolCard(context, 'Bambu Lab', 'bambu', enabled: !isIOS),
+                    const SizedBox(height: 12),
+                    _protocolCard(context, 'Prusa', 'prusa', enabled: true),
+                    const SizedBox(height: 12),
+                    _protocolCard(context, 'Creality', 'creality', enabled: !isIOS),
+                  ],
+                ),
               ),
             );
           },
+        ),
+      ),
+    );
+  }
+
+  /// Carte "Détection auto — toutes marques" : couvre aussi les standards
+  /// ouverts (Elegoo, OpenSpool, OpenTag3D) sans choisir de protocole.
+  Widget _autoDetectCard(BuildContext context, AppLocalizations l10n) {
+    return SizedBox(
+      width: double.infinity,
+      child: ElevatedButton(
+        onPressed: () => context
+            .read<NfcReaderBloc>()
+            .add(const ReadBobbinDataAutoDetectEvent()),
+        style: ElevatedButton.styleFrom(
+          backgroundColor: AppTheme.anycubicRed,
+          foregroundColor: Colors.white,
+          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        ),
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Icon(Icons.auto_awesome, size: 24),
+                const SizedBox(width: 12),
+                Flexible(
+                  child: Text(
+                    l10n.autoDetectAllBrands,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 4),
+            Text(
+              l10n.autoDetectAllBrandsDesc,
+              style: TextStyle(fontSize: 12, color: Colors.white.withValues(alpha: 0.85)),
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _protocolCard(BuildContext context, String label, String mode, {required bool enabled}) {
+    return SizedBox(
+      width: double.infinity,
+      child: ElevatedButton(
+        onPressed: enabled ? () => _startScanWithMode(context, mode) : null,
+        style: ElevatedButton.styleFrom(
+          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Icon(Icons.nfc_rounded, size: 24),
+            const SizedBox(width: 12),
+            Text(label, style: const TextStyle(fontSize: 16)),
+            if (!enabled) ...[
+              const SizedBox(width: 8),
+              Text(
+                '(Android)',
+                style: TextStyle(fontSize: 12, color: Colors.grey[500]),
+              ),
+            ],
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _showModeSelectionDialog(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final isIOS = Platform.isIOS;
+
+    showDialog<void>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        icon: const Icon(Icons.nfc_rounded, size: 40, color: AppTheme.anycubicRed),
+        title: Text(l10n.fallbackChooseMode),
+        content: Text(
+          l10n.fallbackChooseModeSubtitle,
+          style: Theme.of(dialogContext).textTheme.bodySmall,
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(dialogContext),
+            child: Text(l10n.cancel),
+          ),
+          _modeButton(context, dialogContext, 'Anycubic', 'anycubic', enabled: true),
+          _modeButton(context, dialogContext, 'Bambu Lab', 'bambu', enabled: !isIOS),
+          _modeButton(context, dialogContext, 'Prusa', 'prusa', enabled: true),
+          _modeButton(context, dialogContext, 'Creality', 'creality', enabled: !isIOS),
+        ],
+      ),
+    );
+  }
+
+  Widget _modeButton(BuildContext pageContext, BuildContext dialogContext, String label, String mode, {required bool enabled}) {
+    return TextButton(
+      onPressed: enabled
+          ? () {
+              Navigator.pop(dialogContext);
+              pageContext.read<NfcReaderBloc>().add(
+                ReadBobbinDataEvent(overrideMode: mode),
+              );
+            }
+          : null,
+      child: Text(
+        label,
+        style: TextStyle(
+          color: enabled ? null : Colors.grey,
         ),
       ),
     );
@@ -294,71 +449,74 @@ class _NfcStockUpdateView extends StatelessWidget {
                     style: const TextStyle(fontSize: 14),
                   ),
                   const SizedBox(height: 16),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: RadioListTile<bool>(
-                          title: Text(AppLocalizations.of(context)!.weightUsed),
-                          value: true,
-                          groupValue: useWeight,
-                          onChanged: (value) {
-                            setState(() {
-                              useWeight = value ?? true;
-                              lengthController.clear();
-                            });
-                          },
-                          contentPadding: EdgeInsets.zero,
+                  RadioGroup<bool>(
+                    groupValue: useWeight,
+                    onChanged: (value) {
+                      setState(() {
+                        useWeight = value ?? true;
+                        if (useWeight) {
+                          lengthController.clear();
+                        } else {
+                          weightController.clear();
+                        }
+                      });
+                    },
+                    child: Column(
+                      children: [
+                        Row(
+                          children: [
+                            Expanded(
+                              child: RadioListTile<bool>(
+                                title: Text(AppLocalizations.of(context)!.weightUsed),
+                                value: true,
+                                contentPadding: EdgeInsets.zero,
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                    ],
-                  ),
-                  if (useWeight)
-                    TextFormField(
-                      controller: weightController,
-                      decoration: InputDecoration(
-                        labelText: AppLocalizations.of(context)!.weightUsedG,
-                        border: const OutlineInputBorder(),
-                        suffixText: 'g',
-                      ),
-                      keyboardType: const TextInputType.numberWithOptions(
-                        decimal: true,
-                      ),
-                      inputFormatters: [
-                        FilteringTextInputFormatter.allow(
-                          RegExp(r'^\d+\.?\d{0,2}'),
+                        if (useWeight)
+                          TextFormField(
+                            controller: weightController,
+                            decoration: InputDecoration(
+                              labelText: AppLocalizations.of(context)!.weightUsedG,
+                              border: const OutlineInputBorder(),
+                              suffixText: 'g',
+                            ),
+                            keyboardType: const TextInputType.numberWithOptions(
+                              decimal: true,
+                            ),
+                            inputFormatters: [
+                              FilteringTextInputFormatter.allow(
+                                RegExp(r'^\d+\.?\d{0,2}'),
+                              ),
+                            ],
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return AppLocalizations.of(context)!.enterWeight;
+                              }
+                              final weight = double.tryParse(value);
+                              if (weight == null) {
+                                return AppLocalizations.of(context)!.enterValidWeight;
+                              }
+                              if (weight > spool.remainingWeight) {
+                                return 'Cannot exceed remaining weight';
+                              }
+                              return null;
+                            },
+                          ),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: RadioListTile<bool>(
+                                title: Text(AppLocalizations.of(context)!.lengthUsed),
+                                value: false,
+                                contentPadding: EdgeInsets.zero,
+                              ),
+                            ),
+                          ],
                         ),
                       ],
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return AppLocalizations.of(context)!.enterWeight;
-                        }
-                        final weight = double.tryParse(value);
-                        if (weight == null) {
-                          return AppLocalizations.of(context)!.enterValidWeight;
-                        }
-                        if (weight > spool.remainingWeight) {
-                          return 'Cannot exceed remaining weight';
-                        }
-                        return null;
-                      },
                     ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: RadioListTile<bool>(
-                          title: Text(AppLocalizations.of(context)!.lengthUsed),
-                          value: false,
-                          groupValue: useWeight,
-                          onChanged: (value) {
-                            setState(() {
-                              useWeight = value ?? true;
-                              weightController.clear();
-                            });
-                          },
-                          contentPadding: EdgeInsets.zero,
-                        ),
-                      ),
-                    ],
                   ),
                   if (!useWeight)
                     TextFormField(
@@ -424,9 +582,9 @@ class _NfcStockUpdateView extends StatelessWidget {
       double weightUsed = 0;
 
       if (useWeight) {
-        weightUsed = double.parse(weightController.text);
+        weightUsed = double.tryParse(weightController.text) ?? 0.0;
       } else {
-        final lengthUsed = double.parse(lengthController.text);
+        final lengthUsed = double.tryParse(lengthController.text) ?? 0.0;
         // Use spool's specific ratio: weight/length (g/m)
         final ratio = spool.weight / spool.spoolLength!;
         weightUsed = lengthUsed * ratio;
@@ -442,13 +600,13 @@ class _NfcStockUpdateView extends StatelessWidget {
       await SpoolStorageService.updateSpool(spool.id, updatedSpool);
 
       // Log stock update to backend
-      AnalyticsService.logNfcScan(
+      unawaited(AnalyticsService.logNfcScan(
         scanType: 'scan_update_stock',
         brand: spool.brand,
         material: spool.material,
         color: spool.colorName,
         success: true,
-      );
+      ));
 
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(

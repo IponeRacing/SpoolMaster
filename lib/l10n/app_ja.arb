@@ -287,7 +287,7 @@
   "instructions": "手順",
   "step1GetCUID": "空白のCUIDカード（MiFare Classic 1K）を入手",
   "step2PressWrite": "下の「書き込む」ボタンを押す",
-  "step3HoldPhone": "iPhoneをCUIDカードの近くに置く",
+  "step3HoldPhone": "電話をCUIDカードの近くに置く",
   "step4WaitConfirm": "書き込み確認を待つ",
   "step5TestClone": "Bambu Labプリンターでクローンタグをテスト！",
   "rsaIncluded": "クローンには元のRSA署名が含まれているため、プリンターに受け入れられます！",
@@ -411,8 +411,10 @@
   "contactUs": "お問い合わせ",
   "contactUsSubtitle": "ご質問、ご提案、問題について",
   "nfcTagNotDetected": "NFCタグが検出されませんでした",
-  "nfcTagNotDetectedDesc": "タグが見つかりません。タグが故障しているか、損傷しているか、電話から離れすぎている可能性があります。iPhoneの上部をNFCタグに直接置いてください。",
+  "nfcTagNotDetectedDesc": "タグが見つかりません。タグが故障しているか、損傷しているか、電話から離れすぎている可能性があります。",
   "nfcTagIncompatible": "互換性のないNFCタグが検出されました",
+  "nfcAuthError": "NFCタグの認証に失敗しました",
+  "nfcAuthErrorDesc": "タグは検出されましたが、複数回試行しても認証に失敗しました。タグをスマートフォンの背面にしっかり押し当ててもう一度お試しください。",
   "nfcTagInfoPrusa": "空白のNXP ICODE SLIX2タグ（ISO 15693）を使用して、Prusa MK4/XLと互換性のあるOpenPrintTagを作成します。",
   "writePrusaTagTitle": "Prusa OpenPrintTagに書き込む",
   "signInAppleNotAvailable": "このデバイスではAppleでのサインインは利用できません。",
@@ -423,7 +425,9 @@
   "generatedUidLabel": "生成されたUID: {uid}",
   "@generatedUidLabel": {
     "placeholders": {
-      "uid": { "type": "String" }
+      "uid": {
+        "type": "String"
+      }
     }
   },
   "experimentalBadge": "実験的",
@@ -434,5 +438,20 @@
   "platformLimitationTitle": "プラットフォーム制限",
   "mifareClassicNotSupportedIos": "MiFare Classicタグ（Bambu Lab、Creality）はApple CoreNFCの制限によりiOSでは対応していません。この機能はAndroidでのみ利用できます。",
   "nfcTagInfoCreality": "MiFare Classic 1KタグにCreality CFS対応データを書き込みます（Creality K2 Plus用）。",
-  "colorHintExamples": "赤、青、黒..."
+  "colorHintExamples": "赤、青、黒...",
+  "fallbackDetectedAs": "タグは{mode}として検出されました — 次回のスキャンではタブを切り替えてください",
+  "@fallbackDetectedAs": {
+    "placeholders": {
+      "mode": {
+        "type": "String"
+      }
+    }
+  },
+  "fallbackChooseMode": "モードを手動で選択",
+  "fallbackChooseModeSubtitle": "自動検出ではこのタグを識別できませんでした。プロトコルを選択してください：",
+  "tryAutoDetect": "自動検出を試す",
+  "autoDetectAllBrands": "自動検出 — すべてのブランド",
+  "autoDetectAllBrandsDesc": "Anycubic、Elegoo、OpenSpool、OpenTag3Dなど",
+  "nfcTipIos": "NFCリーダーはiPhoneの上部にあります。スプールのNFCタグに直接かざしてください。",
+  "nfcTipAndroid": "NFCリーダーは通常、電話の背面中央にあります。電話の背面をスプールのNFCタグにかざしてください。"
 }

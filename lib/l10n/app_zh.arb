@@ -289,7 +289,7 @@
   "instructions": "说明",
   "step1GetCUID": "获取空白CUID卡（MiFare Classic 1K）",
   "step2PressWrite": "按下面的\"写入\"按钮",
-  "step3HoldPhone": "将iPhone靠近CUID卡",
+  "step3HoldPhone": "将手机靠近CUID卡",
   "step4WaitConfirm": "等待写入确认",
   "step5TestClone": "在Bambu Lab打印机上测试克隆标签！",
   "rsaIncluded": "克隆包含原始RSA签名，将被打印机接受！",
@@ -413,8 +413,10 @@
   "contactUs": "联系我们",
   "contactUsSubtitle": "问题、建议或反馈",
   "nfcTagNotDetected": "未检测到NFC标签",
-  "nfcTagNotDetectedDesc": "未找到标签。标签可能已损坏或距离手机太远。请确保将手机顶部直接放在NFC标签上。",
+  "nfcTagNotDetectedDesc": "未找到标签。标签可能已损坏或距离手机太远。",
   "nfcTagIncompatible": "检测到不兼容的NFC标签",
+  "nfcAuthError": "NFC标签认证失败",
+  "nfcAuthErrorDesc": "已检测到标签，但多次尝试后认证失败。请将标签紧贴手机背面并重试。",
   "signInAppleNotAvailable": "此设备不支持通过Apple登录。",
   "signInAppleFailed": "通过Apple登录失败。请重试。",
   "signInFailed": "登录失败。请重试。",
@@ -423,7 +425,9 @@
   "generatedUidLabel": "生成的UID：{uid}",
   "@generatedUidLabel": {
     "placeholders": {
-      "uid": { "type": "String" }
+      "uid": {
+        "type": "String"
+      }
     }
   },
   "experimentalBadge": "实验性",
@@ -434,5 +438,20 @@
   "platformLimitationTitle": "平台限制",
   "mifareClassicNotSupportedIos": "由于Apple CoreNFC限制，iOS不支持MiFare Classic标签（Bambu Lab、Creality）。此功能仅在Android上可用。",
   "nfcTagInfoCreality": "使用MiFare Classic 1K标签写入Creality CFS兼容数据（适用于Creality K2 Plus）。",
-  "colorHintExamples": "红色、蓝色、黑色..."
+  "colorHintExamples": "红色、蓝色、黑色...",
+  "fallbackDetectedAs": "标签检测为{mode} — 下次扫描请切换标签页",
+  "@fallbackDetectedAs": {
+    "placeholders": {
+      "mode": {
+        "type": "String"
+      }
+    }
+  },
+  "fallbackChooseMode": "手动选择模式",
+  "fallbackChooseModeSubtitle": "自动检测无法识别此标签。请选择协议：",
+  "tryAutoDetect": "尝试自动检测",
+  "autoDetectAllBrands": "自动检测 — 所有品牌",
+  "autoDetectAllBrandsDesc": "Anycubic、Elegoo、OpenSpool、OpenTag3D 等",
+  "nfcTipIos": "NFC读卡器位于iPhone顶部。请将其直接放在线轴的NFC标签上。",
+  "nfcTipAndroid": "NFC读卡器通常位于手机背面中央。请将手机背面放在线轴的NFC标签上。"
 }

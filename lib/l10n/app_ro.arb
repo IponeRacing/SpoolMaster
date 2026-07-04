@@ -289,7 +289,7 @@
   "instructions": "Instrucțiuni",
   "step1GetCUID": "Procurați un card CUID gol (MiFare Classic 1K)",
   "step2PressWrite": "Apăsați butonul \"Scrie\" de mai jos",
-  "step3HoldPhone": "Țineți iPhone-ul aproape de cardul CUID",
+  "step3HoldPhone": "Țineți telefonul aproape de cardul CUID",
   "step4WaitConfirm": "Așteptați confirmarea scrierii",
   "step5TestClone": "Testați eticheta clonată pe imprimanta Bambu Lab!",
   "rsaIncluded": "Clona include semnătura RSA originală, va fi acceptată de imprimantă!",
@@ -413,8 +413,10 @@
   "contactUs": "Contactați-ne",
   "contactUsSubtitle": "Întrebări, sugestii sau probleme",
   "nfcTagNotDetected": "Niciun tag NFC detectat",
-  "nfcTagNotDetectedDesc": "Nu a fost găsit niciun tag. Tagul poate fi mort, deteriorat sau prea departe de telefon. Asigurați-vă că partea de sus a telefonului este plasată direct pe tagul NFC.",
+  "nfcTagNotDetectedDesc": "Nu a fost găsit niciun tag. Tagul poate fi mort, deteriorat sau prea departe de telefon.",
   "nfcTagIncompatible": "Tag NFC incompatibil detectat",
+  "nfcAuthError": "Autentificarea tag-ului NFC a eșuat",
+  "nfcAuthErrorDesc": "Tag-ul a fost detectat, dar autentificarea a eșuat după mai multe încercări. Țineți tag-ul apăsat ferm pe spatele telefonului și încercați din nou.",
   "signInAppleNotAvailable": "Conectarea cu Apple nu este disponibilă pe acest dispozitiv.",
   "signInAppleFailed": "Conectarea cu Apple a eșuat. Vă rugăm să încercați din nou.",
   "signInFailed": "Conectarea a eșuat. Vă rugăm să încercați din nou.",
@@ -423,7 +425,9 @@
   "generatedUidLabel": "UID generat: {uid}",
   "@generatedUidLabel": {
     "placeholders": {
-      "uid": { "type": "String" }
+      "uid": {
+        "type": "String"
+      }
     }
   },
   "experimentalBadge": "EXPERIMENTAL",
@@ -434,5 +438,20 @@
   "platformLimitationTitle": "Limitare platformă",
   "mifareClassicNotSupportedIos": "Etichetele MiFare Classic (Bambu Lab, Creality) nu sunt acceptate pe iOS din cauza unei limitări Apple CoreNFC. Această funcționalitate este disponibilă doar pe Android.",
   "nfcTagInfoCreality": "Folosiți o etichetă MiFare Classic 1K pentru a scrie date compatibile Creality CFS pentru Creality K2 Plus.",
-  "colorHintExamples": "Roșu, Albastru, Negru..."
+  "colorHintExamples": "Roșu, Albastru, Negru...",
+  "fallbackDetectedAs": "Tag detectat ca {mode} — schimbați fila pentru scanările următoare",
+  "@fallbackDetectedAs": {
+    "placeholders": {
+      "mode": {
+        "type": "String"
+      }
+    }
+  },
+  "fallbackChooseMode": "Alegeți modul manual",
+  "fallbackChooseModeSubtitle": "Detectarea automată nu a putut identifica acest tag. Selectați protocolul:",
+  "tryAutoDetect": "Încearcă detectarea automată",
+  "autoDetectAllBrands": "Detectare automată — toate mărcile",
+  "autoDetectAllBrandsDesc": "Anycubic, Elegoo, OpenSpool, OpenTag3D și altele",
+  "nfcTipIos": "Cititorul NFC se află în partea de sus a iPhone-ului. Plasați-l direct pe eticheta NFC a bobinei.",
+  "nfcTipAndroid": "Cititorul NFC se află de obicei în centrul părții din spate a telefonului. Plasați spatele telefonului pe eticheta NFC a bobinei."
 }

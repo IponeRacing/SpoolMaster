@@ -289,7 +289,7 @@
   "instructions": "Utasítások",
   "step1GetCUID": "Szerezzen be egy üres CUID kártyát (MiFare Classic 1K)",
   "step2PressWrite": "Nyomja meg az alábbi \"Írás\" gombot",
-  "step3HoldPhone": "Tartsa iPhone-ját a CUID kártya közelében",
+  "step3HoldPhone": "Tartsa telefonját a CUID kártya közelében",
   "step4WaitConfirm": "Várja meg az írás megerősítését",
   "step5TestClone": "Tesztelje a klónozott címkét Bambu Lab nyomtatóján!",
   "rsaIncluded": "A klón tartalmazza az eredeti RSA aláírást, a nyomtató elfogadja!",
@@ -413,8 +413,10 @@
   "contactUs": "Kapcsolat",
   "contactUsSubtitle": "Kérdések, javaslatok vagy problémák",
   "nfcTagNotDetected": "Nem található NFC címke",
-  "nfcTagNotDetectedDesc": "Nem található címke. A címke halott, sérült vagy túl messze lehet a telefontól. Győződjön meg arról, hogy a telefon teteje közvetlenül az NFC címkén van.",
+  "nfcTagNotDetectedDesc": "Nem található címke. A címke halott, sérült vagy túl messze lehet a telefontól.",
   "nfcTagIncompatible": "Nem kompatibilis NFC címke észlelve",
+  "nfcAuthError": "NFC címke hitelesítés sikertelen",
+  "nfcAuthErrorDesc": "A címke észlelve lett, de a hitelesítés többszöri próbálkozás után sem sikerült. Tartsa a címkét szorosan a telefon hátuljához és próbálja újra.",
   "signInAppleNotAvailable": "Az Apple-fiókkal való bejelentkezés nem érhető el ezen az eszközön.",
   "signInAppleFailed": "Az Apple-fiókkal való bejelentkezés sikertelen. Kérjük, próbálja újra.",
   "signInFailed": "A bejelentkezés sikertelen. Kérjük, próbálja újra.",
@@ -423,7 +425,9 @@
   "generatedUidLabel": "Generált UID: {uid}",
   "@generatedUidLabel": {
     "placeholders": {
-      "uid": { "type": "String" }
+      "uid": {
+        "type": "String"
+      }
     }
   },
   "experimentalBadge": "KÍSÉRLETI",
@@ -434,5 +438,20 @@
   "platformLimitationTitle": "Platformkorlátozás",
   "mifareClassicNotSupportedIos": "A MiFare Classic címkék (Bambu Lab, Creality) nem támogatottak iOS-en az Apple CoreNFC korlátozása miatt. Ez a funkció csak Androidon érhető el.",
   "nfcTagInfoCreality": "Használjon MiFare Classic 1K címkét Creality CFS kompatibilis adatok írásához a Creality K2 Plus-hoz.",
-  "colorHintExamples": "Piros, Kék, Fekete..."
+  "colorHintExamples": "Piros, Kék, Fekete...",
+  "fallbackDetectedAs": "Tag {mode} módban észlelve — váltson fület a következő szkenelésekhez",
+  "@fallbackDetectedAs": {
+    "placeholders": {
+      "mode": {
+        "type": "String"
+      }
+    }
+  },
+  "fallbackChooseMode": "Mód kézi kiválasztása",
+  "fallbackChooseModeSubtitle": "Az automatikus felismerés nem tudta azonosítani ezt a taget. Válassza ki a protokollt:",
+  "tryAutoDetect": "Automatikus felismerés kipróbálása",
+  "autoDetectAllBrands": "Automatikus felismerés — minden márka",
+  "autoDetectAllBrandsDesc": "Anycubic, Elegoo, OpenSpool, OpenTag3D és további márkák",
+  "nfcTipIos": "Az NFC-olvasó az iPhone tetején található. Helyezze közvetlenül az orsó NFC-címkéjére.",
+  "nfcTipAndroid": "Az NFC-olvasó általában a telefon hátoldalának közepén található. Helyezze a telefon hátoldalát az orsó NFC-címkéjére."
 }

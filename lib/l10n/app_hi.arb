@@ -289,7 +289,7 @@
   "instructions": "निर्देश",
   "step1GetCUID": "एक खाली CUID कार्ड प्राप्त करें (MiFare Classic 1K)",
   "step2PressWrite": "नीचे \"लिखें\" बटन दबाएं",
-  "step3HoldPhone": "अपने iPhone को CUID कार्ड के पास रखें",
+  "step3HoldPhone": "अपने फोन को CUID कार्ड के पास रखें",
   "step4WaitConfirm": "लेखन पुष्टि की प्रतीक्षा करें",
   "step5TestClone": "अपने Bambu Lab प्रिंटर पर क्लोन किए गए टैग का परीक्षण करें!",
   "rsaIncluded": "क्लोन में मूल RSA हस्ताक्षर शामिल है, इसे प्रिंटर द्वारा स्वीकार किया जाएगा!",
@@ -413,8 +413,10 @@
   "contactUs": "हमसे संपर्क करें",
   "contactUsSubtitle": "प्रश्न, सुझाव या समस्याएँ",
   "nfcTagNotDetected": "कोई NFC टैग नहीं मिला",
-  "nfcTagNotDetectedDesc": "कोई टैग नहीं मिला। टैग खराब, क्षतिग्रस्त या फोन से बहुत दूर हो सकता है। सुनिश्चित करें कि आपके फोन का ऊपरी हिस्सा सीधे NFC टैग पर रखा गया है।",
+  "nfcTagNotDetectedDesc": "कोई टैग नहीं मिला। टैग खराब, क्षतिग्रस्त या फोन से बहुत दूर हो सकता है।",
   "nfcTagIncompatible": "असंगत NFC टैग मिला",
+  "nfcAuthError": "NFC टैग प्रमाणीकरण विफल",
+  "nfcAuthErrorDesc": "टैग का पता चला लेकिन कई प्रयासों के बाद प्रमाणीकरण विफल रहा। टैग को फ़ोन के पीछे मजबूती से दबाकर रखें और पुनः प्रयास करें।",
   "signInAppleNotAvailable": "इस डिवाइस पर Apple से साइन इन उपलब्ध नहीं है।",
   "signInAppleFailed": "Apple से साइन इन विफल रहा। कृपया पुनः प्रयास करें।",
   "signInFailed": "साइन इन विफल रहा। कृपया पुनः प्रयास करें।",
@@ -423,7 +425,9 @@
   "generatedUidLabel": "जनरेट किया गया UID: {uid}",
   "@generatedUidLabel": {
     "placeholders": {
-      "uid": { "type": "String" }
+      "uid": {
+        "type": "String"
+      }
     }
   },
   "experimentalBadge": "प्रायोगिक",
@@ -434,5 +438,20 @@
   "platformLimitationTitle": "प्लेटफ़ॉर्म सीमा",
   "mifareClassicNotSupportedIos": "Apple CoreNFC की सीमा के कारण iOS पर MiFare Classic टैग (Bambu Lab, Creality) समर्थित नहीं हैं। यह सुविधा केवल Android पर उपलब्ध है।",
   "nfcTagInfoCreality": "Creality K2 Plus के लिए Creality CFS संगत डेटा लिखने के लिए MiFare Classic 1K टैग का उपयोग करें।",
-  "colorHintExamples": "लाल, नीला, काला..."
+  "colorHintExamples": "लाल, नीला, काला...",
+  "fallbackDetectedAs": "टैग {mode} के रूप में पहचाना गया — अगले स्कैन के लिए टैब बदलें",
+  "@fallbackDetectedAs": {
+    "placeholders": {
+      "mode": {
+        "type": "String"
+      }
+    }
+  },
+  "fallbackChooseMode": "मोड मैन्युअल रूप से चुनें",
+  "fallbackChooseModeSubtitle": "स्वचालित पहचान इस टैग को पहचान नहीं सकी। प्रोटोकॉल चुनें:",
+  "tryAutoDetect": "ऑटो-डिटेक्ट आज़माएं",
+  "autoDetectAllBrands": "ऑटो-डिटेक्ट — सभी ब्रांड",
+  "autoDetectAllBrandsDesc": "Anycubic, Elegoo, OpenSpool, OpenTag3D और अधिक",
+  "nfcTipIos": "NFC रीडर आपके iPhone के शीर्ष पर है। इसे सीधे स्पूल के NFC टैग पर रखें।",
+  "nfcTipAndroid": "NFC रीडर आमतौर पर आपके फोन के पीछे केंद्र में होता है। फोन के पिछले हिस्से को स्पूल के NFC टैग पर रखें।"
 }

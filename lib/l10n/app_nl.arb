@@ -287,7 +287,7 @@
   "instructions": "Instructies",
   "step1GetCUID": "Koop een lege CUID-kaart (MiFare Classic 1K)",
   "step2PressWrite": "Druk op de knop \"Schrijven\" hieronder",
-  "step3HoldPhone": "Houd je iPhone bij de CUID-kaart",
+  "step3HoldPhone": "Houd je telefoon bij de CUID-kaart",
   "step4WaitConfirm": "Wacht op schrijfbevestiging",
   "step5TestClone": "Test de gekloonde tag op je Bambu Lab printer!",
   "rsaIncluded": "De kloon bevat de originele RSA-handtekening, deze wordt geaccepteerd door de printer!",
@@ -411,8 +411,10 @@
   "contactUs": "Neem contact op",
   "contactUsSubtitle": "Vragen, suggesties of problemen",
   "nfcTagNotDetected": "Geen NFC-tag gedetecteerd",
-  "nfcTagNotDetectedDesc": "Geen tag gevonden. De tag kan kapot, beschadigd of te ver van de telefoon verwijderd zijn. Plaats de bovenkant van uw iPhone rechtstreeks op de NFC-tag.",
+  "nfcTagNotDetectedDesc": "Geen tag gevonden. De tag kan kapot, beschadigd of te ver van de telefoon verwijderd zijn.",
   "nfcTagIncompatible": "Oncompatibele NFC-tag gedetecteerd",
+  "nfcAuthError": "NFC-tag authenticatie mislukt",
+  "nfcAuthErrorDesc": "De tag werd gedetecteerd maar de authenticatie is mislukt na meerdere pogingen. Houd de tag stevig tegen de achterkant van uw telefoon gedrukt en probeer het opnieuw.",
   "nfcTagInfoPrusa": "Gebruik een lege NXP ICODE SLIX2-tag (ISO 15693) om OpenPrintTag-compatibele tags voor Prusa MK4/XL te maken.",
   "writePrusaTagTitle": "Prusa OpenPrintTag schrijven",
   "signInAppleNotAvailable": "Inloggen met Apple is niet beschikbaar op dit apparaat.",
@@ -423,7 +425,9 @@
   "generatedUidLabel": "Gegenereerde UID: {uid}",
   "@generatedUidLabel": {
     "placeholders": {
-      "uid": { "type": "String" }
+      "uid": {
+        "type": "String"
+      }
     }
   },
   "experimentalBadge": "EXPERIMENTEEL",
@@ -434,5 +438,20 @@
   "platformLimitationTitle": "Platformbeperking",
   "mifareClassicNotSupportedIos": "MiFare Classic-tags (Bambu Lab, Creality) worden niet ondersteund op iOS vanwege een Apple CoreNFC-beperking. Deze functie is alleen beschikbaar op Android.",
   "nfcTagInfoCreality": "Gebruik een MiFare Classic 1K-tag om Creality CFS-compatibele gegevens te schrijven voor de Creality K2 Plus.",
-  "colorHintExamples": "Rood, Blauw, Zwart..."
+  "colorHintExamples": "Rood, Blauw, Zwart...",
+  "fallbackDetectedAs": "Tag gedetecteerd als {mode} — wissel van tabblad voor volgende scans",
+  "@fallbackDetectedAs": {
+    "placeholders": {
+      "mode": {
+        "type": "String"
+      }
+    }
+  },
+  "fallbackChooseMode": "Modus handmatig kiezen",
+  "fallbackChooseModeSubtitle": "Automatische detectie kon deze tag niet identificeren. Selecteer het protocol:",
+  "tryAutoDetect": "Automatische detectie proberen",
+  "autoDetectAllBrands": "Automatische detectie — alle merken",
+  "autoDetectAllBrandsDesc": "Anycubic, Elegoo, OpenSpool, OpenTag3D en meer",
+  "nfcTipIos": "De NFC-lezer zit bovenaan je iPhone. Plaats hem direct op de NFC-tag van de spoel.",
+  "nfcTipAndroid": "De NFC-lezer zit meestal in het midden van de achterkant van je telefoon. Plaats de achterkant van je telefoon op de NFC-tag van de spoel."
 }

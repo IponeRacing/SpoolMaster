@@ -1864,7 +1864,7 @@ abstract class AppLocalizations {
   /// No description provided for @step3HoldPhone.
   ///
   /// In fr, this message translates to:
-  /// **'Tenez votre iPhone près de la carte CUID'**
+  /// **'Tenez votre téléphone près de la carte CUID'**
   String get step3HoldPhone;
 
   /// No description provided for @step4WaitConfirm.
@@ -2344,7 +2344,7 @@ abstract class AppLocalizations {
   /// No description provided for @nfcTagNotDetectedDesc.
   ///
   /// In fr, this message translates to:
-  /// **'Aucun tag n\'a été trouvé. Le tag est peut-être mort, endommagé ou trop éloigné du téléphone. Placez bien le haut de votre iPhone directement sur le tag NFC.'**
+  /// **'Aucun tag n\'a été trouvé. Le tag est peut-être mort, endommagé ou trop éloigné du téléphone.'**
   String get nfcTagNotDetectedDesc;
 
   /// No description provided for @nfcTagIncompatible.
@@ -2352,6 +2352,18 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Tag NFC incompatible détecté'**
   String get nfcTagIncompatible;
+
+  /// No description provided for @nfcAuthError.
+  ///
+  /// In fr, this message translates to:
+  /// **'Échec d\'authentification du tag NFC'**
+  String get nfcAuthError;
+
+  /// No description provided for @nfcAuthErrorDesc.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le tag a été détecté mais l\'authentification a échoué après plusieurs tentatives. Gardez le tag bien appuyé contre l\'arrière du téléphone et réessayez.'**
+  String get nfcAuthErrorDesc;
 
   /// No description provided for @nfcTagInfoPrusa.
   ///
@@ -2478,6 +2490,54 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'ex. 8'**
   String get dryingTimeHint;
+
+  /// No description provided for @fallbackDetectedAs.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tag détecté en mode {mode} — changez d\'onglet pour les prochains scans'**
+  String fallbackDetectedAs(String mode);
+
+  /// No description provided for @fallbackChooseMode.
+  ///
+  /// In fr, this message translates to:
+  /// **'Choisir le mode manuellement'**
+  String get fallbackChooseMode;
+
+  /// No description provided for @fallbackChooseModeSubtitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'La détection automatique n\'a pas pu identifier ce tag. Sélectionnez le protocole :'**
+  String get fallbackChooseModeSubtitle;
+
+  /// No description provided for @tryAutoDetect.
+  ///
+  /// In fr, this message translates to:
+  /// **'Essayer l\'auto-détection'**
+  String get tryAutoDetect;
+
+  /// No description provided for @autoDetectAllBrands.
+  ///
+  /// In fr, this message translates to:
+  /// **'Détection auto — toutes marques'**
+  String get autoDetectAllBrands;
+
+  /// No description provided for @autoDetectAllBrandsDesc.
+  ///
+  /// In fr, this message translates to:
+  /// **'Anycubic, Elegoo, OpenSpool, OpenTag3D et plus'**
+  String get autoDetectAllBrandsDesc;
+
+  /// No description provided for @nfcTipIos.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le lecteur NFC est en haut de votre iPhone. Placez-le directement sur le tag NFC de la bobine.'**
+  String get nfcTipIos;
+
+  /// No description provided for @nfcTipAndroid.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le lecteur NFC est généralement au centre-arrière de votre téléphone. Placez le dos du téléphone sur le tag NFC de la bobine.'**
+  String get nfcTipAndroid;
 }
 
 class _AppLocalizationsDelegate

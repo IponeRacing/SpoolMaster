@@ -289,7 +289,7 @@
   "step1GetMagicGen2": "Get a blank Magic Gen2 card (MiFare Classic 1K with writable UID)",
   "step1GetCUID": "Get a blank CUID card (MiFare Classic 1K)",
   "step2PressWrite": "Press the \"Write\" button below",
-  "step3HoldPhone": "Hold your iPhone near the card",
+  "step3HoldPhone": "Hold your phone near the card",
   "step4WaitConfirm": "Wait for write confirmation",
   "step5TestClone": "Test the cloned tag on your Bambu Lab printer!",
   "rsaIncluded": "The clone includes the original RSA signature, it will be accepted by the printer!",
@@ -413,8 +413,10 @@
   "contactUs": "Contact Us",
   "contactUsSubtitle": "Questions, suggestions or issues",
   "nfcTagNotDetected": "No NFC tag detected",
-  "nfcTagNotDetectedDesc": "No tag was found. The tag may be dead, damaged, or too far from the phone. Make sure the top of your iPhone is placed directly on the NFC tag.",
+  "nfcTagNotDetectedDesc": "No tag was found. The tag may be dead, damaged, or too far from the phone.",
   "nfcTagIncompatible": "Incompatible NFC tag detected",
+  "nfcAuthError": "NFC tag authentication failed",
+  "nfcAuthErrorDesc": "The tag was detected but authentication failed after multiple attempts. Keep the tag pressed firmly against the back of your phone and try again.",
   "signInAppleNotAvailable": "Sign in with Apple is not available on this device.",
   "signInAppleFailed": "Sign in with Apple failed. Please try again.",
   "signInFailed": "Sign in failed. Please try again.",
@@ -423,7 +425,9 @@
   "generatedUidLabel": "Generated UID: {uid}",
   "@generatedUidLabel": {
     "placeholders": {
-      "uid": { "type": "String" }
+      "uid": {
+        "type": "String"
+      }
     }
   },
   "experimentalBadge": "EXPERIMENTAL",
@@ -434,5 +438,20 @@
   "platformLimitationTitle": "Platform Limitation",
   "mifareClassicNotSupportedIos": "MiFare Classic tags (Bambu Lab, Creality) are not supported on iOS due to an Apple CoreNFC limitation. This feature is available on Android only.",
   "nfcTagInfoCreality": "Use a MiFare Classic 1K tag to write Creality CFS compatible data for Creality K2 Plus.",
-  "colorHintExamples": "Red, Blue, Black..."
+  "colorHintExamples": "Red, Blue, Black...",
+  "fallbackDetectedAs": "Tag detected as {mode} — switch tab for next scans",
+  "@fallbackDetectedAs": {
+    "placeholders": {
+      "mode": {
+        "type": "String"
+      }
+    }
+  },
+  "fallbackChooseMode": "Choose mode manually",
+  "fallbackChooseModeSubtitle": "Auto-detection could not identify this tag. Select the protocol:",
+  "tryAutoDetect": "Try auto-detect",
+  "autoDetectAllBrands": "Auto-detect — all brands",
+  "autoDetectAllBrandsDesc": "Anycubic, Elegoo, OpenSpool, OpenTag3D and more",
+  "nfcTipIos": "The NFC reader is at the top of your iPhone. Place it directly on the spool's NFC tag.",
+  "nfcTipAndroid": "The NFC reader is usually at the center back of your phone. Place the back of your phone on the spool's NFC tag."
 }

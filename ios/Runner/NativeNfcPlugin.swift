@@ -43,7 +43,11 @@ class NativeNfcPlugin: NSObject, FlutterPlugin {
         case "readOpenPrintTag":
             startOpenPrintTagReadSession(result: result)
         case "startAutoDetectReadSession":
-            startAutoDetectReadSession(result: result)
+            // iso14443Only : contourne le bug iOS 26 où le polling combiné
+            // [.iso14443, .iso15693] casse la détection ISO 14443 (NTAG)
+            let args = call.arguments as? [String: Any]
+            let iso14443Only = args?["iso14443Only"] as? Bool ?? false
+            startAutoDetectReadSession(iso14443Only: iso14443Only, result: result)
         case "writeBambuLabClone":
             guard let args = call.arguments as? [String: Any],
                   let blocks = args["blocks"] as? [String: [UInt8]] else {
@@ -132,11 +136,13 @@ class NativeNfcPlugin: NSObject, FlutterPlugin {
         session?.begin()
     }
 
-    private func startAutoDetectReadSession(result: @escaping FlutterResult) {
+    private func startAutoDetectReadSession(iso14443Only: Bool = false, result: @escaping FlutterResult) {
         self.result = result
         self.isAutoDetectMode = true
 
-        session = NFCTagReaderSession(pollingOption: [.iso14443, .iso15693], delegate: self)
+        let polling: NFCTagReaderSession.PollingOption =
+            iso14443Only ? .iso14443 : [.iso14443, .iso15693]
+        session = NFCTagReaderSession(pollingOption: polling, delegate: self)
         session?.alertMessage = "Maintenez votre téléphone près du tag NFC"
         startSessionTracking()
         session?.begin()

@@ -277,7 +277,7 @@
   "instructions": "Talimatlar",
   "step1GetCUID": "Boş bir CUID kartı edinin (MiFare Classic 1K)",
   "step2PressWrite": "Aşağıdaki \"Yaz\" düğmesine basın",
-  "step3HoldPhone": "iPhone'unuzu CUID kartına yakın tutun",
+  "step3HoldPhone": "Telefonunuzu CUID kartına yakın tutun",
   "step4WaitConfirm": "Yazma onayını bekleyin",
   "step5TestClone": "Klonlanan etiketi Bambu Lab yazıcınızda test edin!",
   "rsaIncluded": "Klon orijinal RSA imzasını içerir, yazıcı tarafından kabul edilecektir!",
@@ -413,8 +413,10 @@
   "contactUs": "Bize Ulaşın",
   "contactUsSubtitle": "Sorular, öneriler veya sorunlar",
   "nfcTagNotDetected": "NFC etiketi algılanmadı",
-  "nfcTagNotDetectedDesc": "Etiket bulunamadı. Etiket bozuk, hasarlı veya telefondan çok uzakta olabilir. Telefonunuzun üst kısmının doğrudan NFC etiketinin üzerine yerleştirildiğinden emin olun.",
+  "nfcTagNotDetectedDesc": "Etiket bulunamadı. Etiket bozuk, hasarlı veya telefondan çok uzakta olabilir.",
   "nfcTagIncompatible": "Uyumsuz NFC etiketi algılandı",
+  "nfcAuthError": "NFC etiket kimlik doğrulaması başarısız",
+  "nfcAuthErrorDesc": "Etiket algılandı ancak birden fazla deneme sonrasında kimlik doğrulaması başarısız oldu. Etiketi telefonun arkasına sıkıca bastırın ve tekrar deneyin.",
   "signInAppleNotAvailable": "Bu cihazda Apple ile giriş yapılamıyor.",
   "signInAppleFailed": "Apple ile giriş başarısız oldu. Lütfen tekrar deneyin.",
   "signInFailed": "Giriş başarısız oldu. Lütfen tekrar deneyin.",
@@ -423,7 +425,9 @@
   "generatedUidLabel": "Oluşturulan UID: {uid}",
   "@generatedUidLabel": {
     "placeholders": {
-      "uid": { "type": "String" }
+      "uid": {
+        "type": "String"
+      }
     }
   },
   "experimentalBadge": "DENEYSEL",
@@ -434,5 +438,20 @@
   "platformLimitationTitle": "Platform kısıtlaması",
   "mifareClassicNotSupportedIos": "MiFare Classic etiketler (Bambu Lab, Creality) Apple CoreNFC kısıtlaması nedeniyle iOS'ta desteklenmemektedir. Bu özellik yalnızca Android'de kullanılabilir.",
   "nfcTagInfoCreality": "Creality K2 Plus için Creality CFS uyumlu veri yazmak üzere MiFare Classic 1K etiketi kullanın.",
-  "colorHintExamples": "Kırmızı, Mavi, Siyah..."
+  "colorHintExamples": "Kırmızı, Mavi, Siyah...",
+  "fallbackDetectedAs": "Etiket {mode} olarak algılandı — sonraki taramalar için sekmeyi değiştirin",
+  "@fallbackDetectedAs": {
+    "placeholders": {
+      "mode": {
+        "type": "String"
+      }
+    }
+  },
+  "fallbackChooseMode": "Modu manuel olarak seçin",
+  "fallbackChooseModeSubtitle": "Otomatik algılama bu etiketi tanımlayamadı. Protokolü seçin:",
+  "tryAutoDetect": "Otomatik algılamayı dene",
+  "autoDetectAllBrands": "Otomatik algılama — tüm markalar",
+  "autoDetectAllBrandsDesc": "Anycubic, Elegoo, OpenSpool, OpenTag3D ve daha fazlası",
+  "nfcTipIos": "NFC okuyucu iPhone'unuzun üst kısmında bulunur. Makaranın NFC etiketine doğrudan yerleştirin.",
+  "nfcTipAndroid": "NFC okuyucu genellikle telefonunuzun arka yüzünün ortasında bulunur. Telefonun arkasını makaranın NFC etiketine yerleştirin."
 }

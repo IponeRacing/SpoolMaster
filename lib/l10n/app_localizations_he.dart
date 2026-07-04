@@ -878,7 +878,7 @@ class AppLocalizationsHe extends AppLocalizations {
   String get step2PressWrite => 'לחץ על כפתור \"כתוב\" למטה';
 
   @override
-  String get step3HoldPhone => 'החזק את ה-iPhone שלך ליד הכרטיס';
+  String get step3HoldPhone => 'החזק את הטלפון שלך ליד הכרטיס';
 
   @override
   String get step4WaitConfirm => 'המתן לאישור כתיבה';
@@ -1137,10 +1137,17 @@ class AppLocalizationsHe extends AppLocalizations {
 
   @override
   String get nfcTagNotDetectedDesc =>
-      'לא נמצא תג. ייתכן שהתג פגום, מת או רחוק מדי מהטלפון. ודא שחלקו העליון של הטלפון מונח ישירות על תג ה-NFC.';
+      'לא נמצא תג. ייתכן שהתג פגום, מת או רחוק מדי מהטלפון.';
 
   @override
   String get nfcTagIncompatible => 'זוהה תג NFC לא תואם';
+
+  @override
+  String get nfcAuthError => 'אימות תגית NFC נכשל';
+
+  @override
+  String get nfcAuthErrorDesc =>
+      'התגית זוהתה אך האימות נכשל לאחר מספר ניסיונות. החזק את התגית לחוצה היטב על גב הטלפון ונסה שוב.';
 
   @override
   String get nfcTagInfoPrusa =>
@@ -1211,4 +1218,34 @@ class AppLocalizationsHe extends AppLocalizations {
 
   @override
   String get dryingTimeHint => 'ex. 8';
+
+  @override
+  String fallbackDetectedAs(String mode) {
+    return 'תג זוהה כ-$mode — החלף לשונית לסריקות הבאות';
+  }
+
+  @override
+  String get fallbackChooseMode => 'בחר מצב ידנית';
+
+  @override
+  String get fallbackChooseModeSubtitle =>
+      'הזיהוי האוטומטי לא הצליח לזהות תג זה. בחר פרוטוקול:';
+
+  @override
+  String get tryAutoDetect => 'נסה זיהוי אוטומטי';
+
+  @override
+  String get autoDetectAllBrands => 'זיהוי אוטומטי — כל המותגים';
+
+  @override
+  String get autoDetectAllBrandsDesc =>
+      'Anycubic, Elegoo, OpenSpool, OpenTag3D ועוד';
+
+  @override
+  String get nfcTipIos =>
+      'קורא ה-NFC נמצא בחלק העליון של האייפון. הנח אותו ישירות על תג ה-NFC של הסליל.';
+
+  @override
+  String get nfcTipAndroid =>
+      'קורא ה-NFC נמצא בדרך כלל במרכז גב הטלפון. הנח את גב הטלפון על תג ה-NFC של הסליל.';
 }

@@ -289,7 +289,7 @@
   "instructions": "Упутства",
   "step1GetCUID": "Набавите празну CUID картицу (MiFare Classic 1K)",
   "step2PressWrite": "Притисните дугме \"Упиши\" испод",
-  "step3HoldPhone": "Држите iPhone близу CUID картице",
+  "step3HoldPhone": "Држите телефон близу CUID картице",
   "step4WaitConfirm": "Сачекајте потврду уписа",
   "step5TestClone": "Тестирајте клонирану ознаку на штампачу Bambu Lab!",
   "rsaIncluded": "Клон укључује оригинални RSA потпис, биће прихваћен од стране штампача!",
@@ -413,8 +413,10 @@
   "contactUs": "Контактирајте нас",
   "contactUsSubtitle": "Питања, предлози или проблеми",
   "nfcTagNotDetected": "NFC ознака није откривена",
-  "nfcTagNotDetectedDesc": "Ознака није пронађена. Ознака је можда мртва, оштећена или предалеко од телефона. Уверите се да је врх телефона постављен директно на NFC ознаку.",
+  "nfcTagNotDetectedDesc": "Ознака није пронађена. Ознака је можда мртва, оштећена или предалеко од телефона.",
   "nfcTagIncompatible": "Откривена некомпатибилна NFC ознака",
+  "nfcAuthError": "Аутентификација NFC ознаке није успела",
+  "nfcAuthErrorDesc": "Ознака је детектована, али аутентификација није успела након неколико покушаја. Држите ознаку чврсто притиснуту на полеђину телефона и покушајте поново.",
   "signInAppleNotAvailable": "Пријава преко Apple-а није доступна на овом уређају.",
   "signInAppleFailed": "Пријава преко Apple-а није успела. Покушајте поново.",
   "signInFailed": "Пријава није успела. Покушајте поново.",
@@ -423,7 +425,9 @@
   "generatedUidLabel": "Генерисани UID: {uid}",
   "@generatedUidLabel": {
     "placeholders": {
-      "uid": { "type": "String" }
+      "uid": {
+        "type": "String"
+      }
     }
   },
   "experimentalBadge": "ЕКСПЕРИМЕНТАЛНО",
@@ -434,5 +438,20 @@
   "platformLimitationTitle": "Ограничење платформе",
   "mifareClassicNotSupportedIos": "MiFare Classic ознаке (Bambu Lab, Creality) нису подржане на iOS-у због ограничења Apple CoreNFC-а. Ова функција је доступна само на Андроиду.",
   "nfcTagInfoCreality": "Користите MiFare Classic 1K ознаку за писање података компатибилних са Creality CFS за Creality K2 Plus.",
-  "colorHintExamples": "Црвена, Плава, Црна..."
+  "colorHintExamples": "Црвена, Плава, Црна...",
+  "fallbackDetectedAs": "Тag откривен као {mode} — промените картицу за следећа скенирања",
+  "@fallbackDetectedAs": {
+    "placeholders": {
+      "mode": {
+        "type": "String"
+      }
+    }
+  },
+  "fallbackChooseMode": "Изаберите режим ручно",
+  "fallbackChooseModeSubtitle": "Аутоматска детекција није могла идентификовати овај таг. Изаберите протокол:",
+  "tryAutoDetect": "Покушај аутоматско препознавање",
+  "autoDetectAllBrands": "Аутоматско препознавање — све марке",
+  "autoDetectAllBrandsDesc": "Anycubic, Elegoo, OpenSpool, OpenTag3D и више",
+  "nfcTipIos": "NFC читач се налази на врху вашег iPhone-а. Поставите га директно на NFC ознаку калема.",
+  "nfcTipAndroid": "NFC читач се обично налази у средини задње стране телефона. Поставите задњу страну телефона на NFC ознаку калема."
 }

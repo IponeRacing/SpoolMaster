@@ -289,7 +289,7 @@
   "instructions": "Інструкції",
   "step1GetCUID": "Отримайте порожню картку CUID (MiFare Classic 1K)",
   "step2PressWrite": "Натисніть кнопку \"Записати\" нижче",
-  "step3HoldPhone": "Тримайте iPhone біля картки CUID",
+  "step3HoldPhone": "Тримайте телефон біля картки CUID",
   "step4WaitConfirm": "Зачекайте підтвердження запису",
   "step5TestClone": "Протестуйте клоновану мітку на принтері Bambu Lab!",
   "rsaIncluded": "Клон містить оригінальний підпис RSA, він буде прийнятий принтером!",
@@ -413,8 +413,10 @@
   "contactUs": "Зв'яжіться з нами",
   "contactUsSubtitle": "Питання, пропозиції або проблеми",
   "nfcTagNotDetected": "NFC мітку не виявлено",
-  "nfcTagNotDetectedDesc": "Мітку не знайдено. Мітка може бути несправною, пошкодженою або занадто далеко від телефону. Переконайтеся, що верхня частина телефону розміщена безпосередньо на NFC мітці.",
+  "nfcTagNotDetectedDesc": "Мітку не знайдено. Мітка може бути несправною, пошкодженою або занадто далеко від телефону.",
   "nfcTagIncompatible": "Виявлено несумісну NFC мітку",
+  "nfcAuthError": "Помилка автентифікації NFC-мітки",
+  "nfcAuthErrorDesc": "Мітку було виявлено, але автентифікація не вдалася після кількох спроб. Щільно притисніть мітку до задньої панелі телефону та спробуйте знову.",
   "signInAppleNotAvailable": "Вхід через Apple недоступний на цьому пристрої.",
   "signInAppleFailed": "Не вдалося увійти через Apple. Будь ласка, спробуйте ще раз.",
   "signInFailed": "Не вдалося увійти. Будь ласка, спробуйте ще раз.",
@@ -423,7 +425,9 @@
   "generatedUidLabel": "Згенерований UID: {uid}",
   "@generatedUidLabel": {
     "placeholders": {
-      "uid": { "type": "String" }
+      "uid": {
+        "type": "String"
+      }
     }
   },
   "experimentalBadge": "ЕКСПЕРИМЕНТАЛЬНЕ",
@@ -434,5 +438,20 @@
   "platformLimitationTitle": "Обмеження платформи",
   "mifareClassicNotSupportedIos": "Мітки MiFare Classic (Bambu Lab, Creality) не підтримуються на iOS через обмеження Apple CoreNFC. Ця функція доступна лише на Android.",
   "nfcTagInfoCreality": "Використовуйте мітку MiFare Classic 1K для запису даних, сумісних з Creality CFS, для Creality K2 Plus.",
-  "colorHintExamples": "Червоний, Синій, Чорний..."
+  "colorHintExamples": "Червоний, Синій, Чорний...",
+  "fallbackDetectedAs": "Тег виявлено як {mode} — змініть вкладку для наступних сканувань",
+  "@fallbackDetectedAs": {
+    "placeholders": {
+      "mode": {
+        "type": "String"
+      }
+    }
+  },
+  "fallbackChooseMode": "Вибрати режим вручну",
+  "fallbackChooseModeSubtitle": "Автовизначення не змогло ідентифікувати цей тег. Виберіть протокол:",
+  "tryAutoDetect": "Спробувати автовизначення",
+  "autoDetectAllBrands": "Автовизначення — усі бренди",
+  "autoDetectAllBrandsDesc": "Anycubic, Elegoo, OpenSpool, OpenTag3D та інші",
+  "nfcTipIos": "Зчитувач NFC знаходиться у верхній частині вашого iPhone. Помістіть його безпосередньо на NFC-мітку котушки.",
+  "nfcTipAndroid": "Зчитувач NFC зазвичай знаходиться в центрі задньої панелі телефону. Помістіть задню панель телефону на NFC-мітку котушки."
 }

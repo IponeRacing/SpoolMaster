@@ -881,7 +881,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get step2PressWrite => 'Aşağıdaki \"Yaz\" düğmesine basın';
 
   @override
-  String get step3HoldPhone => 'iPhone\'unuzu CUID kartına yakın tutun';
+  String get step3HoldPhone => 'Telefonunuzu CUID kartına yakın tutun';
 
   @override
   String get step4WaitConfirm => 'Yazma onayını bekleyin';
@@ -1142,10 +1142,17 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get nfcTagNotDetectedDesc =>
-      'Etiket bulunamadı. Etiket bozuk, hasarlı veya telefondan çok uzakta olabilir. Telefonunuzun üst kısmının doğrudan NFC etiketinin üzerine yerleştirildiğinden emin olun.';
+      'Etiket bulunamadı. Etiket bozuk, hasarlı veya telefondan çok uzakta olabilir.';
 
   @override
   String get nfcTagIncompatible => 'Uyumsuz NFC etiketi algılandı';
+
+  @override
+  String get nfcAuthError => 'NFC etiket kimlik doğrulaması başarısız';
+
+  @override
+  String get nfcAuthErrorDesc =>
+      'Etiket algılandı ancak birden fazla deneme sonrasında kimlik doğrulaması başarısız oldu. Etiketi telefonun arkasına sıkıca bastırın ve tekrar deneyin.';
 
   @override
   String get nfcTagInfoPrusa =>
@@ -1217,4 +1224,34 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get dryingTimeHint => 'ex. 8';
+
+  @override
+  String fallbackDetectedAs(String mode) {
+    return 'Etiket $mode olarak algılandı — sonraki taramalar için sekmeyi değiştirin';
+  }
+
+  @override
+  String get fallbackChooseMode => 'Modu manuel olarak seçin';
+
+  @override
+  String get fallbackChooseModeSubtitle =>
+      'Otomatik algılama bu etiketi tanımlayamadı. Protokolü seçin:';
+
+  @override
+  String get tryAutoDetect => 'Otomatik algılamayı dene';
+
+  @override
+  String get autoDetectAllBrands => 'Otomatik algılama — tüm markalar';
+
+  @override
+  String get autoDetectAllBrandsDesc =>
+      'Anycubic, Elegoo, OpenSpool, OpenTag3D ve daha fazlası';
+
+  @override
+  String get nfcTipIos =>
+      'NFC okuyucu iPhone\'unuzun üst kısmında bulunur. Makaranın NFC etiketine doğrudan yerleştirin.';
+
+  @override
+  String get nfcTipAndroid =>
+      'NFC okuyucu genellikle telefonunuzun arka yüzünün ortasında bulunur. Telefonun arkasını makaranın NFC etiketine yerleştirin.';
 }

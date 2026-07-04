@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:developer' as developer;
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:injectable/injectable.dart';
 import 'package:nfc_filament/core/errors/failures.dart';
@@ -747,7 +748,11 @@ class NfcDataSourceImpl implements NfcDataSource {
     developer.log('📱 Démarrage scan auto-detect...');
 
     try {
-      final result = await NativeNfc.startAutoDetectReadSession();
+      // iOS 26 : le polling combiné casse la détection NTAG → ISO 14443 seul
+      // (couvre Anycubic/ACE/Elegoo/OpenSpool/OpenTag3D ; Prusa a son mode dédié)
+      final result = await NativeNfc.startAutoDetectReadSession(
+        iso14443Only: !kIsWeb && defaultTargetPlatform == TargetPlatform.iOS,
+      );
       final tagType = result['tagType'] as String?;
       developer.log('🔍 Auto-detect tagType: $tagType');
 

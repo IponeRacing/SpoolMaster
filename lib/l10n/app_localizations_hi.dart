@@ -882,7 +882,7 @@ class AppLocalizationsHi extends AppLocalizations {
   String get step2PressWrite => 'नीचे \"लिखें\" बटन दबाएं';
 
   @override
-  String get step3HoldPhone => 'अपने iPhone को CUID कार्ड के पास रखें';
+  String get step3HoldPhone => 'अपने फोन को CUID कार्ड के पास रखें';
 
   @override
   String get step4WaitConfirm => 'लेखन पुष्टि की प्रतीक्षा करें';
@@ -1143,10 +1143,17 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get nfcTagNotDetectedDesc =>
-      'कोई टैग नहीं मिला। टैग खराब, क्षतिग्रस्त या फोन से बहुत दूर हो सकता है। सुनिश्चित करें कि आपके फोन का ऊपरी हिस्सा सीधे NFC टैग पर रखा गया है।';
+      'कोई टैग नहीं मिला। टैग खराब, क्षतिग्रस्त या फोन से बहुत दूर हो सकता है।';
 
   @override
   String get nfcTagIncompatible => 'असंगत NFC टैग मिला';
+
+  @override
+  String get nfcAuthError => 'NFC टैग प्रमाणीकरण विफल';
+
+  @override
+  String get nfcAuthErrorDesc =>
+      'टैग का पता चला लेकिन कई प्रयासों के बाद प्रमाणीकरण विफल रहा। टैग को फ़ोन के पीछे मजबूती से दबाकर रखें और पुनः प्रयास करें।';
 
   @override
   String get nfcTagInfoPrusa =>
@@ -1218,4 +1225,34 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get dryingTimeHint => 'ex. 8';
+
+  @override
+  String fallbackDetectedAs(String mode) {
+    return 'टैग $mode के रूप में पहचाना गया — अगले स्कैन के लिए टैब बदलें';
+  }
+
+  @override
+  String get fallbackChooseMode => 'मोड मैन्युअल रूप से चुनें';
+
+  @override
+  String get fallbackChooseModeSubtitle =>
+      'स्वचालित पहचान इस टैग को पहचान नहीं सकी। प्रोटोकॉल चुनें:';
+
+  @override
+  String get tryAutoDetect => 'ऑटो-डिटेक्ट आज़माएं';
+
+  @override
+  String get autoDetectAllBrands => 'ऑटो-डिटेक्ट — सभी ब्रांड';
+
+  @override
+  String get autoDetectAllBrandsDesc =>
+      'Anycubic, Elegoo, OpenSpool, OpenTag3D और अधिक';
+
+  @override
+  String get nfcTipIos =>
+      'NFC रीडर आपके iPhone के शीर्ष पर है। इसे सीधे स्पूल के NFC टैग पर रखें।';
+
+  @override
+  String get nfcTipAndroid =>
+      'NFC रीडर आमतौर पर आपके फोन के पीछे केंद्र में होता है। फोन के पिछले हिस्से को स्पूल के NFC टैग पर रखें।';
 }

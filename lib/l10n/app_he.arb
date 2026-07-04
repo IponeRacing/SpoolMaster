@@ -289,7 +289,7 @@
   "step1GetMagicGen2": "השג כרטיס Magic Gen2 ריק (MiFare Classic 1K עם UID ניתן לכתיבה)",
   "step1GetCUID": "השג כרטיס CUID ריק (MiFare Classic 1K)",
   "step2PressWrite": "לחץ על כפתור \"כתוב\" למטה",
-  "step3HoldPhone": "החזק את ה-iPhone שלך ליד הכרטיס",
+  "step3HoldPhone": "החזק את הטלפון שלך ליד הכרטיס",
   "step4WaitConfirm": "המתן לאישור כתיבה",
   "step5TestClone": "בדוק את התג המשוכפל במדפסת Bambu Lab שלך!",
   "rsaIncluded": "השכפול כולל את חתימת RSA המקורית, המדפסת תקבל אותו!",
@@ -413,8 +413,10 @@
   "contactUs": "צור קשר",
   "contactUsSubtitle": "שאלות, הצעות או בעיות",
   "nfcTagNotDetected": "לא זוהה תג NFC",
-  "nfcTagNotDetectedDesc": "לא נמצא תג. ייתכן שהתג פגום, מת או רחוק מדי מהטלפון. ודא שחלקו העליון של הטלפון מונח ישירות על תג ה-NFC.",
+  "nfcTagNotDetectedDesc": "לא נמצא תג. ייתכן שהתג פגום, מת או רחוק מדי מהטלפון.",
   "nfcTagIncompatible": "זוהה תג NFC לא תואם",
+  "nfcAuthError": "אימות תגית NFC נכשל",
+  "nfcAuthErrorDesc": "התגית זוהתה אך האימות נכשל לאחר מספר ניסיונות. החזק את התגית לחוצה היטב על גב הטלפון ונסה שוב.",
   "signInAppleNotAvailable": "כניסה באמצעות Apple אינה זמינה במכשיר זה.",
   "signInAppleFailed": "הכניסה באמצעות Apple נכשלה. אנא נסה שוב.",
   "signInFailed": "הכניסה נכשלה. אנא נסה שוב.",
@@ -423,7 +425,9 @@
   "generatedUidLabel": "UID שנוצר: {uid}",
   "@generatedUidLabel": {
     "placeholders": {
-      "uid": { "type": "String" }
+      "uid": {
+        "type": "String"
+      }
     }
   },
   "experimentalBadge": "ניסיוני",
@@ -434,5 +438,20 @@
   "platformLimitationTitle": "מגבלת פלטפורמה",
   "mifareClassicNotSupportedIos": "תגי MiFare Classic (Bambu Lab, Creality) אינם נתמכים ב-iOS בשל מגבלת Apple CoreNFC. תכונה זו זמינה באנדרואיד בלבד.",
   "nfcTagInfoCreality": "השתמש בתג MiFare Classic 1K לכתיבת נתונים תואמי Creality CFS עבור Creality K2 Plus.",
-  "colorHintExamples": "אדום, כחול, שחור..."
+  "colorHintExamples": "אדום, כחול, שחור...",
+  "fallbackDetectedAs": "תג זוהה כ-{mode} — החלף לשונית לסריקות הבאות",
+  "@fallbackDetectedAs": {
+    "placeholders": {
+      "mode": {
+        "type": "String"
+      }
+    }
+  },
+  "fallbackChooseMode": "בחר מצב ידנית",
+  "fallbackChooseModeSubtitle": "הזיהוי האוטומטי לא הצליח לזהות תג זה. בחר פרוטוקול:",
+  "tryAutoDetect": "נסה זיהוי אוטומטי",
+  "autoDetectAllBrands": "זיהוי אוטומטי — כל המותגים",
+  "autoDetectAllBrandsDesc": "Anycubic, Elegoo, OpenSpool, OpenTag3D ועוד",
+  "nfcTipIos": "קורא ה-NFC נמצא בחלק העליון של האייפון. הנח אותו ישירות על תג ה-NFC של הסליל.",
+  "nfcTipAndroid": "קורא ה-NFC נמצא בדרך כלל במרכז גב הטלפון. הנח את גב הטלפון על תג ה-NFC של הסליל."
 }

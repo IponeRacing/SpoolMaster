@@ -1,4 +1,3 @@
-import 'dart:typed_data';
 import 'package:flutter/services.dart';
 
 class NativeNfc {
@@ -35,9 +34,19 @@ class NativeNfc {
     await _channel.invokeMethod('startWriteSession', {'pages': pages});
   }
 
-  /// Auto-détecte le type de tag NFC et le lit (Anycubic/Bambu/Prusa)
-  static Future<Map<String, dynamic>> startAutoDetectReadSession() async {
-    final result = await _channel.invokeMethod<Map<Object?, Object?>>('startAutoDetectReadSession');
+  /// Auto-détecte le type de tag NFC et le lit (Anycubic/Bambu/Prusa/standards ouverts)
+  ///
+  /// [iso14443Only] (iOS uniquement) : limite le polling à ISO 14443 pour
+  /// contourner le bug iOS 26 où le polling combiné casse la détection NTAG.
+  /// Couvre tous les formats NTAG (Anycubic, ACE, Elegoo, OpenSpool, OpenTag3D) ;
+  /// Prusa/OpenPrintTag (ISO 15693) reste accessible via son mode dédié.
+  static Future<Map<String, dynamic>> startAutoDetectReadSession({
+    bool iso14443Only = false,
+  }) async {
+    final result = await _channel.invokeMethod<Map<Object?, Object?>>(
+      'startAutoDetectReadSession',
+      {'iso14443Only': iso14443Only},
+    );
     return Map<String, dynamic>.from(result ?? {});
   }
 

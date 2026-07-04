@@ -873,7 +873,7 @@ class AppLocalizationsKo extends AppLocalizations {
   String get step2PressWrite => '아래 \"쓰기\" 버튼 누르기';
 
   @override
-  String get step3HoldPhone => 'iPhone을 CUID 카드 가까이 대기';
+  String get step3HoldPhone => '휴대폰을 CUID 카드 가까이 대기';
 
   @override
   String get step4WaitConfirm => '쓰기 확인 대기';
@@ -1129,10 +1129,17 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get nfcTagNotDetectedDesc =>
-      '태그를 찾을 수 없습니다. 태그가 고장났거나 손상되었거나 전화기에서 너무 멀리 있을 수 있습니다. iPhone 상단을 NFC 태그 위에 직접 놓으세요.';
+      '태그를 찾을 수 없습니다. 태그가 고장났거나 손상되었거나 전화기에서 너무 멀리 있을 수 있습니다.';
 
   @override
   String get nfcTagIncompatible => '호환되지 않는 NFC 태그 감지됨';
+
+  @override
+  String get nfcAuthError => 'NFC 태그 인증 실패';
+
+  @override
+  String get nfcAuthErrorDesc =>
+      '태그가 감지되었지만 여러 번 시도 후에도 인증에 실패했습니다. 태그를 휴대폰 뒷면에 단단히 대고 다시 시도해 주세요.';
 
   @override
   String get nfcTagInfoPrusa =>
@@ -1202,4 +1209,33 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get dryingTimeHint => 'ex. 8';
+
+  @override
+  String fallbackDetectedAs(String mode) {
+    return '태그가 $mode로 감지됨 — 다음 스캔을 위해 탭을 변경하세요';
+  }
+
+  @override
+  String get fallbackChooseMode => '모드 수동 선택';
+
+  @override
+  String get fallbackChooseModeSubtitle =>
+      '자동 감지로 이 태그를 식별할 수 없습니다. 프로토콜을 선택하세요:';
+
+  @override
+  String get tryAutoDetect => '자동 감지 시도';
+
+  @override
+  String get autoDetectAllBrands => '자동 감지 — 모든 브랜드';
+
+  @override
+  String get autoDetectAllBrandsDesc =>
+      'Anycubic, Elegoo, OpenSpool, OpenTag3D 등';
+
+  @override
+  String get nfcTipIos => 'NFC 리더는 iPhone 상단에 있습니다. 스풀의 NFC 태그에 직접 놓으세요.';
+
+  @override
+  String get nfcTipAndroid =>
+      'NFC 리더는 보통 전화기 뒷면 중앙에 있습니다. 전화기 뒷면을 스풀의 NFC 태그에 놓으세요.';
 }

@@ -882,7 +882,7 @@ class AppLocalizationsMs extends AppLocalizations {
   String get step2PressWrite => 'Tekan butang \"Tulis\" di bawah';
 
   @override
-  String get step3HoldPhone => 'Pegang iPhone anda berhampiran kad CUID';
+  String get step3HoldPhone => 'Pegang telefon anda berhampiran kad CUID';
 
   @override
   String get step4WaitConfirm => 'Tunggu pengesahan penulisan';
@@ -1143,10 +1143,17 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get nfcTagNotDetectedDesc =>
-      'Tiada tag ditemui. Tag mungkin rosak atau terlalu jauh dari telefon. Pastikan bahagian atas telefon anda diletakkan terus pada tag NFC.';
+      'Tiada tag ditemui. Tag mungkin rosak atau terlalu jauh dari telefon.';
 
   @override
   String get nfcTagIncompatible => 'Tag NFC tidak serasi dikesan';
+
+  @override
+  String get nfcAuthError => 'Pengesahan tag NFC gagal';
+
+  @override
+  String get nfcAuthErrorDesc =>
+      'Tag dikesan tetapi pengesahan gagal selepas beberapa percubaan. Tekan tag dengan kuat pada bahagian belakang telefon dan cuba lagi.';
 
   @override
   String get nfcTagInfoPrusa =>
@@ -1218,4 +1225,34 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get dryingTimeHint => 'ex. 8';
+
+  @override
+  String fallbackDetectedAs(String mode) {
+    return 'Tag dikesan sebagai $mode — tukar tab untuk imbasan seterusnya';
+  }
+
+  @override
+  String get fallbackChooseMode => 'Pilih mod secara manual';
+
+  @override
+  String get fallbackChooseModeSubtitle =>
+      'Pengesanan automatik tidak dapat mengenal pasti tag ini. Pilih protokol:';
+
+  @override
+  String get tryAutoDetect => 'Cuba pengesanan automatik';
+
+  @override
+  String get autoDetectAllBrands => 'Pengesanan automatik — semua jenama';
+
+  @override
+  String get autoDetectAllBrandsDesc =>
+      'Anycubic, Elegoo, OpenSpool, OpenTag3D dan banyak lagi';
+
+  @override
+  String get nfcTipIos =>
+      'Pembaca NFC berada di bahagian atas iPhone anda. Letakkan terus pada tag NFC kili.';
+
+  @override
+  String get nfcTipAndroid =>
+      'Pembaca NFC biasanya berada di tengah belakang telefon anda. Letakkan bahagian belakang telefon pada tag NFC kili.';
 }

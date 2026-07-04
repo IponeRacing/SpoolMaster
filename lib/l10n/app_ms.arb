@@ -289,7 +289,7 @@
   "instructions": "Arahan",
   "step1GetCUID": "Dapatkan kad CUID kosong (MiFare Classic 1K)",
   "step2PressWrite": "Tekan butang \"Tulis\" di bawah",
-  "step3HoldPhone": "Pegang iPhone anda berhampiran kad CUID",
+  "step3HoldPhone": "Pegang telefon anda berhampiran kad CUID",
   "step4WaitConfirm": "Tunggu pengesahan penulisan",
   "step5TestClone": "Uji tag yang diklon pada pencetak Bambu Lab anda!",
   "rsaIncluded": "Klon termasuk tandatangan RSA asal, ia akan diterima oleh pencetak!",
@@ -413,8 +413,10 @@
   "contactUs": "Hubungi Kami",
   "contactUsSubtitle": "Soalan, cadangan atau masalah",
   "nfcTagNotDetected": "Tiada tag NFC dikesan",
-  "nfcTagNotDetectedDesc": "Tiada tag ditemui. Tag mungkin rosak atau terlalu jauh dari telefon. Pastikan bahagian atas telefon anda diletakkan terus pada tag NFC.",
+  "nfcTagNotDetectedDesc": "Tiada tag ditemui. Tag mungkin rosak atau terlalu jauh dari telefon.",
   "nfcTagIncompatible": "Tag NFC tidak serasi dikesan",
+  "nfcAuthError": "Pengesahan tag NFC gagal",
+  "nfcAuthErrorDesc": "Tag dikesan tetapi pengesahan gagal selepas beberapa percubaan. Tekan tag dengan kuat pada bahagian belakang telefon dan cuba lagi.",
   "signInAppleNotAvailable": "Log masuk dengan Apple tidak tersedia pada peranti ini.",
   "signInAppleFailed": "Log masuk dengan Apple gagal. Sila cuba lagi.",
   "signInFailed": "Log masuk gagal. Sila cuba lagi.",
@@ -423,7 +425,9 @@
   "generatedUidLabel": "UID dijana: {uid}",
   "@generatedUidLabel": {
     "placeholders": {
-      "uid": { "type": "String" }
+      "uid": {
+        "type": "String"
+      }
     }
   },
   "experimentalBadge": "EKSPERIMEN",
@@ -434,5 +438,20 @@
   "platformLimitationTitle": "Had platform",
   "mifareClassicNotSupportedIos": "Tag MiFare Classic (Bambu Lab, Creality) tidak disokong pada iOS kerana had Apple CoreNFC. Ciri ini hanya tersedia pada Android.",
   "nfcTagInfoCreality": "Gunakan tag MiFare Classic 1K untuk menulis data serasi Creality CFS untuk Creality K2 Plus.",
-  "colorHintExamples": "Merah, Biru, Hitam..."
+  "colorHintExamples": "Merah, Biru, Hitam...",
+  "fallbackDetectedAs": "Tag dikesan sebagai {mode} — tukar tab untuk imbasan seterusnya",
+  "@fallbackDetectedAs": {
+    "placeholders": {
+      "mode": {
+        "type": "String"
+      }
+    }
+  },
+  "fallbackChooseMode": "Pilih mod secara manual",
+  "fallbackChooseModeSubtitle": "Pengesanan automatik tidak dapat mengenal pasti tag ini. Pilih protokol:",
+  "tryAutoDetect": "Cuba pengesanan automatik",
+  "autoDetectAllBrands": "Pengesanan automatik — semua jenama",
+  "autoDetectAllBrandsDesc": "Anycubic, Elegoo, OpenSpool, OpenTag3D dan banyak lagi",
+  "nfcTipIos": "Pembaca NFC berada di bahagian atas iPhone anda. Letakkan terus pada tag NFC kili.",
+  "nfcTipAndroid": "Pembaca NFC biasanya berada di tengah belakang telefon anda. Letakkan bahagian belakang telefon pada tag NFC kili."
 }

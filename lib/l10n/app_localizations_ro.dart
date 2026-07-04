@@ -882,7 +882,7 @@ class AppLocalizationsRo extends AppLocalizations {
   String get step2PressWrite => 'Apăsați butonul \"Scrie\" de mai jos';
 
   @override
-  String get step3HoldPhone => 'Țineți iPhone-ul aproape de cardul CUID';
+  String get step3HoldPhone => 'Țineți telefonul aproape de cardul CUID';
 
   @override
   String get step4WaitConfirm => 'Așteptați confirmarea scrierii';
@@ -1142,10 +1142,17 @@ class AppLocalizationsRo extends AppLocalizations {
 
   @override
   String get nfcTagNotDetectedDesc =>
-      'Nu a fost găsit niciun tag. Tagul poate fi mort, deteriorat sau prea departe de telefon. Asigurați-vă că partea de sus a telefonului este plasată direct pe tagul NFC.';
+      'Nu a fost găsit niciun tag. Tagul poate fi mort, deteriorat sau prea departe de telefon.';
 
   @override
   String get nfcTagIncompatible => 'Tag NFC incompatibil detectat';
+
+  @override
+  String get nfcAuthError => 'Autentificarea tag-ului NFC a eșuat';
+
+  @override
+  String get nfcAuthErrorDesc =>
+      'Tag-ul a fost detectat, dar autentificarea a eșuat după mai multe încercări. Țineți tag-ul apăsat ferm pe spatele telefonului și încercați din nou.';
 
   @override
   String get nfcTagInfoPrusa =>
@@ -1218,4 +1225,34 @@ class AppLocalizationsRo extends AppLocalizations {
 
   @override
   String get dryingTimeHint => 'ex. 8';
+
+  @override
+  String fallbackDetectedAs(String mode) {
+    return 'Tag detectat ca $mode — schimbați fila pentru scanările următoare';
+  }
+
+  @override
+  String get fallbackChooseMode => 'Alegeți modul manual';
+
+  @override
+  String get fallbackChooseModeSubtitle =>
+      'Detectarea automată nu a putut identifica acest tag. Selectați protocolul:';
+
+  @override
+  String get tryAutoDetect => 'Încearcă detectarea automată';
+
+  @override
+  String get autoDetectAllBrands => 'Detectare automată — toate mărcile';
+
+  @override
+  String get autoDetectAllBrandsDesc =>
+      'Anycubic, Elegoo, OpenSpool, OpenTag3D și altele';
+
+  @override
+  String get nfcTipIos =>
+      'Cititorul NFC se află în partea de sus a iPhone-ului. Plasați-l direct pe eticheta NFC a bobinei.';
+
+  @override
+  String get nfcTipAndroid =>
+      'Cititorul NFC se află de obicei în centrul părții din spate a telefonului. Plasați spatele telefonului pe eticheta NFC a bobinei.';
 }

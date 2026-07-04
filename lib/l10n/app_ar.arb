@@ -289,7 +289,7 @@
   "step1GetMagicGen2": "احصل على بطاقة Magic Gen2 فارغة (MiFare Classic 1K مع UID قابل للكتابة)",
   "step1GetCUID": "احصل على بطاقة CUID فارغة (MiFare Classic 1K)",
   "step2PressWrite": "اضغط على زر \"كتابة\" أدناه",
-  "step3HoldPhone": "امسك iPhone بالقرب من البطاقة",
+  "step3HoldPhone": "امسك هاتفك بالقرب من البطاقة",
   "step4WaitConfirm": "انتظر تأكيد الكتابة",
   "step5TestClone": "اختبر العلامة المنسوخة على طابعة Bambu Lab الخاصة بك!",
   "rsaIncluded": "تتضمن النسخة توقيع RSA الأصلي، وستقبلها الطابعة!",
@@ -413,8 +413,10 @@
   "contactUs": "اتصل بنا",
   "contactUsSubtitle": "أسئلة أو اقتراحات أو مشاكل",
   "nfcTagNotDetected": "لم يتم اكتشاف أي علامة NFC",
-  "nfcTagNotDetectedDesc": "لم يتم العثور على أي علامة. قد تكون العلامة تالفة أو بعيدة جداً عن الهاتف. تأكد من وضع الجزء العلوي من هاتفك مباشرة على علامة NFC.",
+  "nfcTagNotDetectedDesc": "لم يتم العثور على أي علامة. قد تكون العلامة تالفة أو بعيدة جداً عن الهاتف.",
   "nfcTagIncompatible": "تم اكتشاف علامة NFC غير متوافقة",
+  "nfcAuthError": "فشل مصادقة علامة NFC",
+  "nfcAuthErrorDesc": "تم اكتشاف العلامة ولكن فشلت المصادقة بعد عدة محاولات. اضغط العلامة بإحكام على الجزء الخلفي من الهاتف وحاول مرة أخرى.",
   "signInAppleNotAvailable": "تسجيل الدخول باستخدام Apple غير متاح على هذا الجهاز.",
   "signInAppleFailed": "فشل تسجيل الدخول باستخدام Apple. يرجى المحاولة مرة أخرى.",
   "signInFailed": "فشل تسجيل الدخول. يرجى المحاولة مرة أخرى.",
@@ -423,7 +425,9 @@
   "generatedUidLabel": "UID المُنشأ: {uid}",
   "@generatedUidLabel": {
     "placeholders": {
-      "uid": { "type": "String" }
+      "uid": {
+        "type": "String"
+      }
     }
   },
   "experimentalBadge": "تجريبي",
@@ -434,5 +438,20 @@
   "platformLimitationTitle": "قيود المنصة",
   "mifareClassicNotSupportedIos": "علامات MiFare Classic (Bambu Lab، Creality) غير مدعومة على iOS بسبب قيود Apple CoreNFC. هذه الميزة متاحة على Android فقط.",
   "nfcTagInfoCreality": "استخدم علامة MiFare Classic 1K لكتابة بيانات متوافقة مع Creality CFS لـ Creality K2 Plus.",
-  "colorHintExamples": "أحمر، أزرق، أسود..."
+  "colorHintExamples": "أحمر، أزرق، أسود...",
+  "fallbackDetectedAs": "تم اكتشاف العلامة كـ {mode} — قم بتبديل التبويب للمسح التالي",
+  "@fallbackDetectedAs": {
+    "placeholders": {
+      "mode": {
+        "type": "String"
+      }
+    }
+  },
+  "fallbackChooseMode": "اختر الوضع يدوياً",
+  "fallbackChooseModeSubtitle": "لم يتمكن الكشف التلقائي من التعرف على هذه العلامة. اختر البروتوكول:",
+  "tryAutoDetect": "محاولة الكشف التلقائي",
+  "autoDetectAllBrands": "الكشف التلقائي — جميع العلامات التجارية",
+  "autoDetectAllBrandsDesc": "Anycubic وElegoo وOpenSpool وOpenTag3D والمزيد",
+  "nfcTipIos": "قارئ NFC في أعلى iPhone. ضعه مباشرة على علامة NFC الخاصة بالبكرة.",
+  "nfcTipAndroid": "قارئ NFC عادة في وسط الجهة الخلفية من هاتفك. ضع الجهة الخلفية من الهاتف على علامة NFC الخاصة بالبكرة."
 }

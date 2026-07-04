@@ -885,7 +885,7 @@ class AppLocalizationsEl extends AppLocalizations {
   String get step2PressWrite => 'Πατήστε το κουμπί \"Εγγραφή\" παρακάτω';
 
   @override
-  String get step3HoldPhone => 'Κρατήστε το iPhone σας κοντά στην κάρτα CUID';
+  String get step3HoldPhone => 'Κρατήστε το τηλέφωνό σας κοντά στην κάρτα CUID';
 
   @override
   String get step4WaitConfirm => 'Περιμένετε την επιβεβαίωση εγγραφής';
@@ -1150,10 +1150,17 @@ class AppLocalizationsEl extends AppLocalizations {
 
   @override
   String get nfcTagNotDetectedDesc =>
-      'Δεν βρέθηκε ετικέτα. Η ετικέτα μπορεί να είναι νεκρή, κατεστραμμένη ή πολύ μακριά από το τηλέφωνο. Βεβαιωθείτε ότι το πάνω μέρος του τηλεφώνου σας βρίσκεται απευθείας πάνω στην ετικέτα NFC.';
+      'Δεν βρέθηκε ετικέτα. Η ετικέτα μπορεί να είναι νεκρή, κατεστραμμένη ή πολύ μακριά από το τηλέφωνο.';
 
   @override
   String get nfcTagIncompatible => 'Εντοπίστηκε μη συμβατή ετικέτα NFC';
+
+  @override
+  String get nfcAuthError => 'Αποτυχία ελέγχου ταυτότητας NFC tag';
+
+  @override
+  String get nfcAuthErrorDesc =>
+      'Το tag εντοπίστηκε αλλά ο έλεγχος ταυτότητας απέτυχε μετά από πολλές προσπάθειες. Κρατήστε το tag σταθερά πατημένο στο πίσω μέρος του τηλεφώνου και δοκιμάστε ξανά.';
 
   @override
   String get nfcTagInfoPrusa =>
@@ -1225,4 +1232,34 @@ class AppLocalizationsEl extends AppLocalizations {
 
   @override
   String get dryingTimeHint => 'ex. 8';
+
+  @override
+  String fallbackDetectedAs(String mode) {
+    return 'Η ετικέτα ανιχνεύτηκε ως $mode — αλλάξτε καρτέλα για τις επόμενες σαρώσεις';
+  }
+
+  @override
+  String get fallbackChooseMode => 'Επιλογή λειτουργίας χειροκίνητα';
+
+  @override
+  String get fallbackChooseModeSubtitle =>
+      'Η αυτόματη ανίχνευση δεν μπόρεσε να αναγνωρίσει αυτήν την ετικέτα. Επιλέξτε το πρωτόκολλο:';
+
+  @override
+  String get tryAutoDetect => 'Δοκιμάστε αυτόματη ανίχνευση';
+
+  @override
+  String get autoDetectAllBrands => 'Αυτόματη ανίχνευση — όλες οι μάρκες';
+
+  @override
+  String get autoDetectAllBrandsDesc =>
+      'Anycubic, Elegoo, OpenSpool, OpenTag3D και άλλα';
+
+  @override
+  String get nfcTipIos =>
+      'Ο αναγνώστης NFC βρίσκεται στο πάνω μέρος του iPhone σας. Τοποθετήστε τον απευθείας πάνω στην ετικέτα NFC του ρολού.';
+
+  @override
+  String get nfcTipAndroid =>
+      'Ο αναγνώστης NFC βρίσκεται συνήθως στο κέντρο του πίσω μέρους του τηλεφώνου. Τοποθετήστε το πίσω μέρος του τηλεφώνου πάνω στην ετικέτα NFC του ρολού.';
 }

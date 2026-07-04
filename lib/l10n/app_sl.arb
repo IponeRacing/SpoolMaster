@@ -289,7 +289,7 @@
   "instructions": "Navodila",
   "step1GetCUID": "Pridobite prazno kartico CUID (MiFare Classic 1K)",
   "step2PressWrite": "Pritisnite gumb \"Zapiši\" spodaj",
-  "step3HoldPhone": "Držite iPhone blizu kartice CUID",
+  "step3HoldPhone": "Držite telefon blizu kartice CUID",
   "step4WaitConfirm": "Počakajte na potrditev zapisa",
   "step5TestClone": "Preizkusite klonirano oznako na tiskalnik Bambu Lab!",
   "rsaIncluded": "Klon vključuje izvirni RSA podpis, sprejel ga bo tiskalnik!",
@@ -413,8 +413,10 @@
   "contactUs": "Kontaktirajte nas",
   "contactUsSubtitle": "Vprašanja, predlogi ali težave",
   "nfcTagNotDetected": "NFC oznaka ni zaznana",
-  "nfcTagNotDetectedDesc": "Oznaka ni bila najdena. Oznaka je morda mrtva, poškodovana ali predaleč od telefona. Prepričajte se, da je zgornji del telefona nameščen neposredno na NFC oznako.",
+  "nfcTagNotDetectedDesc": "Oznaka ni bila najdena. Oznaka je morda mrtva, poškodovana ali predaleč od telefona.",
   "nfcTagIncompatible": "Zaznana nezdružljiva NFC oznaka",
+  "nfcAuthError": "Preverjanje pristnosti NFC oznake ni uspelo",
+  "nfcAuthErrorDesc": "Oznaka je bila zaznana, vendar preverjanje pristnosti po več poskusih ni uspelo. Držite oznako trdno ob zadnji strani telefona in poskusite znova.",
   "signInAppleNotAvailable": "Prijava z Apple ni na voljo na tej napravi.",
   "signInAppleFailed": "Prijava z Apple ni uspela. Poskusite znova.",
   "signInFailed": "Prijava ni uspela. Poskusite znova.",
@@ -423,7 +425,9 @@
   "generatedUidLabel": "Ustvarjen UID: {uid}",
   "@generatedUidLabel": {
     "placeholders": {
-      "uid": { "type": "String" }
+      "uid": {
+        "type": "String"
+      }
     }
   },
   "experimentalBadge": "EKSPERIMENTALNO",
@@ -434,5 +438,20 @@
   "platformLimitationTitle": "Omejitev platforme",
   "mifareClassicNotSupportedIos": "Oznake MiFare Classic (Bambu Lab, Creality) niso podprte na iOS-u zaradi omejitve Apple CoreNFC. Ta funkcija je na voljo samo na Androidu.",
   "nfcTagInfoCreality": "Uporabite oznako MiFare Classic 1K za pisanje podatkov, združljivih s Creality CFS, za Creality K2 Plus.",
-  "colorHintExamples": "Rdeča, Modra, Črna..."
+  "colorHintExamples": "Rdeča, Modra, Črna...",
+  "fallbackDetectedAs": "Oznaka zaznana kot {mode} — zamenjajte zavihek za naslednja skeniranja",
+  "@fallbackDetectedAs": {
+    "placeholders": {
+      "mode": {
+        "type": "String"
+      }
+    }
+  },
+  "fallbackChooseMode": "Izberite način ročno",
+  "fallbackChooseModeSubtitle": "Samodejna zaznava ni mogla identificirati te oznake. Izberite protokol:",
+  "tryAutoDetect": "Poskusi samodejno zaznavanje",
+  "autoDetectAllBrands": "Samodejno zaznavanje — vse znamke",
+  "autoDetectAllBrandsDesc": "Anycubic, Elegoo, OpenSpool, OpenTag3D in več",
+  "nfcTipIos": "Bralnik NFC je na vrhu vašega iPhona. Postavite ga neposredno na NFC oznako koluta.",
+  "nfcTipAndroid": "Bralnik NFC je običajno na sredini zadnje strani telefona. Postavite zadnjo stran telefona na NFC oznako koluta."
 }

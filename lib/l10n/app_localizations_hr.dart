@@ -881,7 +881,7 @@ class AppLocalizationsHr extends AppLocalizations {
   String get step2PressWrite => 'Pritisnite gumb \"Zapiši\" ispod';
 
   @override
-  String get step3HoldPhone => 'Držite iPhone blizu CUID kartice';
+  String get step3HoldPhone => 'Držite telefon blizu CUID kartice';
 
   @override
   String get step4WaitConfirm => 'Pričekajte potvrdu zapisa';
@@ -1143,10 +1143,17 @@ class AppLocalizationsHr extends AppLocalizations {
 
   @override
   String get nfcTagNotDetectedDesc =>
-      'Oznaka nije pronađena. Oznaka je možda mrtva, oštećena ili predaleko od telefona. Provjerite je li gornji dio telefona postavljen izravno na NFC oznaku.';
+      'Oznaka nije pronađena. Oznaka je možda mrtva, oštećena ili predaleko od telefona.';
 
   @override
   String get nfcTagIncompatible => 'Otkrivena nekompatibilna NFC oznaka';
+
+  @override
+  String get nfcAuthError => 'Autentifikacija NFC oznake nije uspjela';
+
+  @override
+  String get nfcAuthErrorDesc =>
+      'Oznaka je otkrivena, ali autentifikacija nije uspjela nakon više pokušaja. Držite oznaku čvrsto prislonjen uz stražnju stranu telefona i pokušajte ponovo.';
 
   @override
   String get nfcTagInfoPrusa =>
@@ -1218,4 +1225,34 @@ class AppLocalizationsHr extends AppLocalizations {
 
   @override
   String get dryingTimeHint => 'ex. 8';
+
+  @override
+  String fallbackDetectedAs(String mode) {
+    return 'Tag otkriven kao $mode — promijenite karticu za sljedeća skeniranja';
+  }
+
+  @override
+  String get fallbackChooseMode => 'Odaberite način ručno';
+
+  @override
+  String get fallbackChooseModeSubtitle =>
+      'Automatska detekcija nije mogla identificirati ovaj tag. Odaberite protokol:';
+
+  @override
+  String get tryAutoDetect => 'Pokušaj automatsko prepoznavanje';
+
+  @override
+  String get autoDetectAllBrands => 'Automatsko prepoznavanje — sve marke';
+
+  @override
+  String get autoDetectAllBrandsDesc =>
+      'Anycubic, Elegoo, OpenSpool, OpenTag3D i više';
+
+  @override
+  String get nfcTipIos =>
+      'NFC čitač se nalazi na vrhu vašeg iPhonea. Postavite ga izravno na NFC oznaku kalema.';
+
+  @override
+  String get nfcTipAndroid =>
+      'NFC čitač se obično nalazi na sredini stražnje strane telefona. Postavite stražnju stranu telefona na NFC oznaku kalema.';
 }

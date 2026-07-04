@@ -289,7 +289,7 @@
   "instructions": "Ohjeet",
   "step1GetCUID": "Hanki tyhjä CUID-kortti (MiFare Classic 1K)",
   "step2PressWrite": "Paina alla olevaa \"Kirjoita\"-painiketta",
-  "step3HoldPhone": "Pidä iPhonesi CUID-kortin lähellä",
+  "step3HoldPhone": "Pidä puhelimesi CUID-kortin lähellä",
   "step4WaitConfirm": "Odota kirjoitusvahvistusta",
   "step5TestClone": "Testaa kloonattu tagi Bambu Lab -tulostimellasi!",
   "rsaIncluded": "Klooni sisältää alkuperäisen RSA-allekirjoituksen, tulostin hyväksyy sen!",
@@ -413,8 +413,10 @@
   "contactUs": "Ota yhteyttä",
   "contactUsSubtitle": "Kysymyksiä, ehdotuksia tai ongelmia",
   "nfcTagNotDetected": "NFC-tagia ei havaittu",
-  "nfcTagNotDetectedDesc": "Tagia ei löytynyt. Tagi voi olla kuollut, vaurioitunut tai liian kaukana puhelimesta. Varmista, että puhelimen yläosa on suoraan NFC-tagin päällä.",
+  "nfcTagNotDetectedDesc": "Tagia ei löytynyt. Tagi voi olla kuollut, vaurioitunut tai liian kaukana puhelimesta.",
   "nfcTagIncompatible": "Yhteensopimaton NFC-tagi havaittu",
+  "nfcAuthError": "NFC-tunnisteen todennus epäonnistui",
+  "nfcAuthErrorDesc": "Tunniste havaittiin, mutta todennus epäonnistui useiden yritysten jälkeen. Pidä tunniste tukevasti puhelimen takaosaa vasten ja yritä uudelleen.",
   "signInAppleNotAvailable": "Apple-kirjautuminen ei ole käytettävissä tällä laitteella.",
   "signInAppleFailed": "Apple-kirjautuminen epäonnistui. Yritä uudelleen.",
   "signInFailed": "Kirjautuminen epäonnistui. Yritä uudelleen.",
@@ -423,7 +425,9 @@
   "generatedUidLabel": "Luotu UID: {uid}",
   "@generatedUidLabel": {
     "placeholders": {
-      "uid": { "type": "String" }
+      "uid": {
+        "type": "String"
+      }
     }
   },
   "experimentalBadge": "KOKEELLINEN",
@@ -434,5 +438,20 @@
   "platformLimitationTitle": "Alustarajoitus",
   "mifareClassicNotSupportedIos": "MiFare Classic -tageja (Bambu Lab, Creality) ei tueta iOS:llä Apple CoreNFC -rajoituksen vuoksi. Tämä toiminto on käytettävissä vain Androidilla.",
   "nfcTagInfoCreality": "Käytä MiFare Classic 1K -tagia kirjoittaaksesi Creality CFS -yhteensopivia tietoja Creality K2 Plus -tulostimelle.",
-  "colorHintExamples": "Punainen, Sininen, Musta..."
+  "colorHintExamples": "Punainen, Sininen, Musta...",
+  "fallbackDetectedAs": "Tunniste havaittu muodossa {mode} — vaihda välilehteä seuraavia skannauksia varten",
+  "@fallbackDetectedAs": {
+    "placeholders": {
+      "mode": {
+        "type": "String"
+      }
+    }
+  },
+  "fallbackChooseMode": "Valitse tila manuaalisesti",
+  "fallbackChooseModeSubtitle": "Automaattinen tunnistus ei tunnistanut tätä tunnistetta. Valitse protokolla:",
+  "tryAutoDetect": "Kokeile automaattista tunnistusta",
+  "autoDetectAllBrands": "Automaattinen tunnistus — kaikki merkit",
+  "autoDetectAllBrandsDesc": "Anycubic, Elegoo, OpenSpool, OpenTag3D ja muut",
+  "nfcTipIos": "NFC-lukija on iPhonesi yläosassa. Aseta se suoraan kelan NFC-tagin päälle.",
+  "nfcTipAndroid": "NFC-lukija on yleensä puhelimen takaosan keskellä. Aseta puhelimen takaosa kelan NFC-tagin päälle."
 }

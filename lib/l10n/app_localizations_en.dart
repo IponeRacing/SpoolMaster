@@ -880,7 +880,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get step2PressWrite => 'Press the \"Write\" button below';
 
   @override
-  String get step3HoldPhone => 'Hold your iPhone near the card';
+  String get step3HoldPhone => 'Hold your phone near the card';
 
   @override
   String get step4WaitConfirm => 'Wait for write confirmation';
@@ -1142,10 +1142,17 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get nfcTagNotDetectedDesc =>
-      'No tag was found. The tag may be dead, damaged, or too far from the phone. Make sure the top of your iPhone is placed directly on the NFC tag.';
+      'No tag was found. The tag may be dead, damaged, or too far from the phone.';
 
   @override
   String get nfcTagIncompatible => 'Incompatible NFC tag detected';
+
+  @override
+  String get nfcAuthError => 'NFC tag authentication failed';
+
+  @override
+  String get nfcAuthErrorDesc =>
+      'The tag was detected but authentication failed after multiple attempts. Keep the tag pressed firmly against the back of your phone and try again.';
 
   @override
   String get nfcTagInfoPrusa =>
@@ -1217,6 +1224,36 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get dryingTimeHint => 'e.g. 8';
+
+  @override
+  String fallbackDetectedAs(String mode) {
+    return 'Tag detected as $mode — switch tab for next scans';
+  }
+
+  @override
+  String get fallbackChooseMode => 'Choose mode manually';
+
+  @override
+  String get fallbackChooseModeSubtitle =>
+      'Auto-detection could not identify this tag. Select the protocol:';
+
+  @override
+  String get tryAutoDetect => 'Try auto-detect';
+
+  @override
+  String get autoDetectAllBrands => 'Auto-detect — all brands';
+
+  @override
+  String get autoDetectAllBrandsDesc =>
+      'Anycubic, Elegoo, OpenSpool, OpenTag3D and more';
+
+  @override
+  String get nfcTipIos =>
+      'The NFC reader is at the top of your iPhone. Place it directly on the spool\'s NFC tag.';
+
+  @override
+  String get nfcTipAndroid =>
+      'The NFC reader is usually at the center back of your phone. Place the back of your phone on the spool\'s NFC tag.';
 }
 
 /// The translations for English, as used in Australia (`en_AU`).
@@ -2095,7 +2132,7 @@ class AppLocalizationsEnAu extends AppLocalizationsEn {
   String get step2PressWrite => 'Press the \"Write\" button below';
 
   @override
-  String get step3HoldPhone => 'Hold your iPhone near the card';
+  String get step3HoldPhone => 'Hold your phone near the card';
 
   @override
   String get step4WaitConfirm => 'Wait for write confirmation';
@@ -2357,10 +2394,17 @@ class AppLocalizationsEnAu extends AppLocalizationsEn {
 
   @override
   String get nfcTagNotDetectedDesc =>
-      'No tag was found. The tag may be dead, damaged, or too far from the phone. Make sure the top of your iPhone is placed directly on the NFC tag.';
+      'No tag was found. The tag may be dead, damaged, or too far from the phone.';
 
   @override
   String get nfcTagIncompatible => 'Incompatible NFC tag detected';
+
+  @override
+  String get nfcAuthError => 'NFC tag authentication failed';
+
+  @override
+  String get nfcAuthErrorDesc =>
+      'The tag was detected but authentication failed after multiple attempts. Keep the tag pressed firmly against the back of your phone and try again.';
 
   @override
   String get nfcTagInfoPrusa =>
@@ -2420,6 +2464,36 @@ class AppLocalizationsEnAu extends AppLocalizationsEn {
 
   @override
   String get colorHintExamples => 'Red, Blue, Black...';
+
+  @override
+  String fallbackDetectedAs(String mode) {
+    return 'Tag detected as $mode — switch tab for next scans';
+  }
+
+  @override
+  String get fallbackChooseMode => 'Choose mode manually';
+
+  @override
+  String get fallbackChooseModeSubtitle =>
+      'Auto-detection could not identify this tag. Select the protocol:';
+
+  @override
+  String get tryAutoDetect => 'Try auto-detect';
+
+  @override
+  String get autoDetectAllBrands => 'Auto-detect — all brands';
+
+  @override
+  String get autoDetectAllBrandsDesc =>
+      'Anycubic, Elegoo, OpenSpool, OpenTag3D and more';
+
+  @override
+  String get nfcTipIos =>
+      'The NFC reader is at the top of your iPhone. Place it directly on the spool\'s NFC tag.';
+
+  @override
+  String get nfcTipAndroid =>
+      'The NFC reader is usually at the centre back of your phone. Place the back of your phone on the spool\'s NFC tag.';
 }
 
 /// The translations for English, as used in Canada (`en_CA`).
@@ -3298,7 +3372,7 @@ class AppLocalizationsEnCa extends AppLocalizationsEn {
   String get step2PressWrite => 'Press the \"Write\" button below';
 
   @override
-  String get step3HoldPhone => 'Hold your iPhone near the card';
+  String get step3HoldPhone => 'Hold your phone near the card';
 
   @override
   String get step4WaitConfirm => 'Wait for write confirmation';
@@ -3560,10 +3634,17 @@ class AppLocalizationsEnCa extends AppLocalizationsEn {
 
   @override
   String get nfcTagNotDetectedDesc =>
-      'No tag was found. The tag may be dead, damaged, or too far from the phone. Make sure the top of your iPhone is placed directly on the NFC tag.';
+      'No tag was found. The tag may be dead, damaged, or too far from the phone.';
 
   @override
   String get nfcTagIncompatible => 'Incompatible NFC tag detected';
+
+  @override
+  String get nfcAuthError => 'NFC tag authentication failed';
+
+  @override
+  String get nfcAuthErrorDesc =>
+      'The tag was detected but authentication failed after multiple attempts. Keep the tag pressed firmly against the back of your phone and try again.';
 
   @override
   String get nfcTagInfoPrusa =>
@@ -3623,6 +3704,36 @@ class AppLocalizationsEnCa extends AppLocalizationsEn {
 
   @override
   String get colorHintExamples => 'Red, Blue, Black...';
+
+  @override
+  String fallbackDetectedAs(String mode) {
+    return 'Tag detected as $mode — switch tab for next scans';
+  }
+
+  @override
+  String get fallbackChooseMode => 'Choose mode manually';
+
+  @override
+  String get fallbackChooseModeSubtitle =>
+      'Auto-detection could not identify this tag. Select the protocol:';
+
+  @override
+  String get tryAutoDetect => 'Try auto-detect';
+
+  @override
+  String get autoDetectAllBrands => 'Auto-detect — all brands';
+
+  @override
+  String get autoDetectAllBrandsDesc =>
+      'Anycubic, Elegoo, OpenSpool, OpenTag3D and more';
+
+  @override
+  String get nfcTipIos =>
+      'The NFC reader is at the top of your iPhone. Place it directly on the spool\'s NFC tag.';
+
+  @override
+  String get nfcTipAndroid =>
+      'The NFC reader is usually at the center back of your phone. Place the back of your phone on the spool\'s NFC tag.';
 }
 
 /// The translations for English, as used in the United Kingdom (`en_GB`).
@@ -4501,7 +4612,7 @@ class AppLocalizationsEnGb extends AppLocalizationsEn {
   String get step2PressWrite => 'Press the \"Write\" button below';
 
   @override
-  String get step3HoldPhone => 'Hold your iPhone near the card';
+  String get step3HoldPhone => 'Hold your phone near the card';
 
   @override
   String get step4WaitConfirm => 'Wait for write confirmation';
@@ -4763,10 +4874,17 @@ class AppLocalizationsEnGb extends AppLocalizationsEn {
 
   @override
   String get nfcTagNotDetectedDesc =>
-      'No tag was found. The tag may be dead, damaged, or too far from the phone. Make sure the top of your iPhone is placed directly on the NFC tag.';
+      'No tag was found. The tag may be dead, damaged, or too far from the phone.';
 
   @override
   String get nfcTagIncompatible => 'Incompatible NFC tag detected';
+
+  @override
+  String get nfcAuthError => 'NFC tag authentication failed';
+
+  @override
+  String get nfcAuthErrorDesc =>
+      'The tag was detected but authentication failed after multiple attempts. Keep the tag pressed firmly against the back of your phone and try again.';
 
   @override
   String get nfcTagInfoPrusa =>
@@ -4826,4 +4944,34 @@ class AppLocalizationsEnGb extends AppLocalizationsEn {
 
   @override
   String get colorHintExamples => 'Red, Blue, Black...';
+
+  @override
+  String fallbackDetectedAs(String mode) {
+    return 'Tag detected as $mode — switch tab for next scans';
+  }
+
+  @override
+  String get fallbackChooseMode => 'Choose mode manually';
+
+  @override
+  String get fallbackChooseModeSubtitle =>
+      'Auto-detection could not identify this tag. Select the protocol:';
+
+  @override
+  String get tryAutoDetect => 'Try auto-detect';
+
+  @override
+  String get autoDetectAllBrands => 'Auto-detect — all brands';
+
+  @override
+  String get autoDetectAllBrandsDesc =>
+      'Anycubic, Elegoo, OpenSpool, OpenTag3D and more';
+
+  @override
+  String get nfcTipIos =>
+      'The NFC reader is at the top of your iPhone. Place it directly on the spool\'s NFC tag.';
+
+  @override
+  String get nfcTipAndroid =>
+      'The NFC reader is usually at the centre back of your phone. Place the back of your phone on the spool\'s NFC tag.';
 }

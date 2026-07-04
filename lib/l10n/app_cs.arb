@@ -287,7 +287,7 @@
   "instructions": "Instrukce",
   "step1GetCUID": "Získejte prázdnou kartu CUID (MiFare Classic 1K)",
   "step2PressWrite": "Stiskněte tlačítko \"Zapsat\" níže",
-  "step3HoldPhone": "Přidržte iPhone u karty CUID",
+  "step3HoldPhone": "Přidržte telefon u karty CUID",
   "step4WaitConfirm": "Počkejte na potvrzení zápisu",
   "step5TestClone": "Otestujte naklonovanou značku na tiskárně Bambu Lab!",
   "rsaIncluded": "Klon obsahuje originální RSA podpis, bude akceptován tiskárnou!",
@@ -411,8 +411,10 @@
   "contactUs": "Kontaktujte nás",
   "contactUsSubtitle": "Dotazy, návrhy nebo problémy",
   "nfcTagNotDetected": "Nebyla detekována žádná NFC značka",
-  "nfcTagNotDetectedDesc": "Nenalezena žádná značka. Značka může být mrtvá, poškozená nebo příliš daleko od telefonu. Umístěte horní část iPhonu přímo na NFC značku.",
+  "nfcTagNotDetectedDesc": "Nenalezena žádná značka. Značka může být mrtvá, poškozená nebo příliš daleko od telefonu.",
   "nfcTagIncompatible": "Detekována nekompatibilní NFC značka",
+  "nfcAuthError": "Ověření NFC tagu selhalo",
+  "nfcAuthErrorDesc": "Tag byl detekován, ale ověření selhalo po několika pokusech. Držte tag pevně přitisknutý k zadní straně telefonu a zkuste to znovu.",
   "nfcTagInfoPrusa": "Použijte prázdnou značku NXP ICODE SLIX2 (ISO 15693) k vytvoření značek kompatibilních s OpenPrintTag pro Prusa MK4/XL.",
   "writePrusaTagTitle": "Zapsat Prusa OpenPrintTag",
   "signInAppleNotAvailable": "Přihlášení přes Apple není na tomto zařízení k dispozici.",
@@ -423,7 +425,9 @@
   "generatedUidLabel": "Vygenerované UID: {uid}",
   "@generatedUidLabel": {
     "placeholders": {
-      "uid": { "type": "String" }
+      "uid": {
+        "type": "String"
+      }
     }
   },
   "experimentalBadge": "EXPERIMENTÁLNÍ",
@@ -434,5 +438,20 @@
   "platformLimitationTitle": "Omezení platformy",
   "mifareClassicNotSupportedIos": "Tagy MiFare Classic (Bambu Lab, Creality) nejsou na iOS podporovány kvůli omezení Apple CoreNFC. Tato funkce je dostupná pouze na Androidu.",
   "nfcTagInfoCreality": "Použijte tag MiFare Classic 1K pro zápis dat kompatibilních s Creality CFS pro Creality K2 Plus.",
-  "colorHintExamples": "Červená, Modrá, Černá..."
+  "colorHintExamples": "Červená, Modrá, Černá...",
+  "fallbackDetectedAs": "Tag detekován jako {mode} — přepněte záložku pro další skeny",
+  "@fallbackDetectedAs": {
+    "placeholders": {
+      "mode": {
+        "type": "String"
+      }
+    }
+  },
+  "fallbackChooseMode": "Vybrat režim ručně",
+  "fallbackChooseModeSubtitle": "Automatická detekce nemohla identifikovat tento tag. Vyberte protokol:",
+  "tryAutoDetect": "Zkusit automatickou detekci",
+  "autoDetectAllBrands": "Automatická detekce — všechny značky",
+  "autoDetectAllBrandsDesc": "Anycubic, Elegoo, OpenSpool, OpenTag3D a další",
+  "nfcTipIos": "NFC čtečka je nahoře na vašem iPhonu. Přiložte ho přímo na NFC tag cívky.",
+  "nfcTipAndroid": "NFC čtečka je obvykle uprostřed zadní strany telefonu. Přiložte zadní stranu telefonu na NFC tag cívky."
 }

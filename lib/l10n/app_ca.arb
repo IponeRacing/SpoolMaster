@@ -289,7 +289,7 @@
   "step1GetMagicGen2": "Aconsegueix una targeta Magic Gen2 buida (MiFare Classic 1K amb UID escrivible)",
   "step1GetCUID": "Aconsegueix una targeta CUID buida (MiFare Classic 1K)",
   "step2PressWrite": "Prem el botó \"Escriure\" a continuació",
-  "step3HoldPhone": "Mantén el teu iPhone a prop de la targeta",
+  "step3HoldPhone": "Mantén el teu telèfon a prop de la targeta",
   "step4WaitConfirm": "Espera la confirmació d'escriptura",
   "step5TestClone": "Prova l'etiqueta clonada a la teva impressora Bambu Lab!",
   "rsaIncluded": "El clon inclou la signatura RSA original, la impressora l'acceptarà!",
@@ -413,8 +413,10 @@
   "contactUs": "Contacteu-nos",
   "contactUsSubtitle": "Preguntes, suggeriments o problemes",
   "nfcTagNotDetected": "No s'ha detectat cap etiqueta NFC",
-  "nfcTagNotDetectedDesc": "No s'ha trobat cap etiqueta. L'etiqueta pot estar morta, danyada o massa lluny del telèfon. Assegureu-vos que la part superior del telèfon estigui directament sobre l'etiqueta NFC.",
+  "nfcTagNotDetectedDesc": "No s'ha trobat cap etiqueta. L'etiqueta pot estar morta, danyada o massa lluny del telèfon.",
   "nfcTagIncompatible": "S'ha detectat una etiqueta NFC incompatible",
+  "nfcAuthError": "Error d'autenticació del tag NFC",
+  "nfcAuthErrorDesc": "El tag s'ha detectat però l'autenticació ha fallat després de diversos intents. Mantingueu el tag ben premut contra la part posterior del telèfon i torneu-ho a provar.",
   "signInAppleNotAvailable": "L'inici de sessió amb Apple no està disponible en aquest dispositiu.",
   "signInAppleFailed": "L'inici de sessió amb Apple ha fallat. Si us plau, torneu-ho a provar.",
   "signInFailed": "L'inici de sessió ha fallat. Si us plau, torneu-ho a provar.",
@@ -423,7 +425,9 @@
   "generatedUidLabel": "UID generat: {uid}",
   "@generatedUidLabel": {
     "placeholders": {
-      "uid": { "type": "String" }
+      "uid": {
+        "type": "String"
+      }
     }
   },
   "experimentalBadge": "EXPERIMENTAL",
@@ -434,5 +438,20 @@
   "platformLimitationTitle": "Limitació de plataforma",
   "mifareClassicNotSupportedIos": "Les etiquetes MiFare Classic (Bambu Lab, Creality) no són compatibles amb iOS a causa d'una limitació d'Apple CoreNFC. Aquesta funcionalitat només està disponible a Android.",
   "nfcTagInfoCreality": "Utilitzeu una etiqueta MiFare Classic 1K per escriure dades compatibles amb Creality CFS per al Creality K2 Plus.",
-  "colorHintExamples": "Vermell, Blau, Negre..."
+  "colorHintExamples": "Vermell, Blau, Negre...",
+  "fallbackDetectedAs": "Tag detectat com a {mode} — canvieu de pestanya per als propers escaneigs",
+  "@fallbackDetectedAs": {
+    "placeholders": {
+      "mode": {
+        "type": "String"
+      }
+    }
+  },
+  "fallbackChooseMode": "Triar mode manualment",
+  "fallbackChooseModeSubtitle": "La detecció automàtica no ha pogut identificar aquest tag. Seleccioneu el protocol:",
+  "tryAutoDetect": "Prova la detecció automàtica",
+  "autoDetectAllBrands": "Detecció automàtica — totes les marques",
+  "autoDetectAllBrandsDesc": "Anycubic, Elegoo, OpenSpool, OpenTag3D i més",
+  "nfcTipIos": "El lector NFC es troba a la part superior del teu iPhone. Col·loca'l directament sobre l'etiqueta NFC de la bobina.",
+  "nfcTipAndroid": "El lector NFC sol estar al centre de la part posterior del telèfon. Col·loca la part posterior del telèfon sobre l'etiqueta NFC de la bobina."
 }

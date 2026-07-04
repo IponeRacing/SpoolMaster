@@ -881,7 +881,7 @@ class AppLocalizationsSv extends AppLocalizations {
   String get step2PressWrite => 'Tryck på knappen \"Skriv\" nedan';
 
   @override
-  String get step3HoldPhone => 'Håll din iPhone nära CUID-kortet';
+  String get step3HoldPhone => 'Håll din telefon nära CUID-kortet';
 
   @override
   String get step4WaitConfirm => 'Vänta på skrivbekräftelse';
@@ -1142,10 +1142,17 @@ class AppLocalizationsSv extends AppLocalizations {
 
   @override
   String get nfcTagNotDetectedDesc =>
-      'Ingen tagg hittades. Taggen kan vara död, skadad eller för långt från telefonen. Se till att toppen av din telefon placeras direkt på NFC-taggen.';
+      'Ingen tagg hittades. Taggen kan vara död, skadad eller för långt från telefonen.';
 
   @override
   String get nfcTagIncompatible => 'Inkompatibel NFC-tagg hittades';
+
+  @override
+  String get nfcAuthError => 'NFC-tagg autentisering misslyckades';
+
+  @override
+  String get nfcAuthErrorDesc =>
+      'Taggen upptäcktes men autentiseringen misslyckades efter flera försök. Håll taggen stadigt mot baksidan av telefonen och försök igen.';
 
   @override
   String get nfcTagInfoPrusa =>
@@ -1217,4 +1224,34 @@ class AppLocalizationsSv extends AppLocalizations {
 
   @override
   String get dryingTimeHint => 'ex. 8';
+
+  @override
+  String fallbackDetectedAs(String mode) {
+    return 'Tagg identifierad som $mode — byt flik för nästa skanningar';
+  }
+
+  @override
+  String get fallbackChooseMode => 'Välj läge manuellt';
+
+  @override
+  String get fallbackChooseModeSubtitle =>
+      'Automatisk identifiering kunde inte identifiera denna tagg. Välj protokollet:';
+
+  @override
+  String get tryAutoDetect => 'Prova automatisk identifiering';
+
+  @override
+  String get autoDetectAllBrands => 'Automatisk identifiering — alla märken';
+
+  @override
+  String get autoDetectAllBrandsDesc =>
+      'Anycubic, Elegoo, OpenSpool, OpenTag3D med flera';
+
+  @override
+  String get nfcTipIos =>
+      'NFC-läsaren sitter högst upp på din iPhone. Placera den direkt på spolens NFC-tagg.';
+
+  @override
+  String get nfcTipAndroid =>
+      'NFC-läsaren sitter vanligtvis mitt på baksidan av din telefon. Placera baksidan av telefonen på spolens NFC-tagg.';
 }

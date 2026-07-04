@@ -51,10 +51,10 @@
   "serialNumberHint": "e.g.: 001",
   "initialWeight": "Initial Weight",
   "initialWeightHint": "e.g.: 1000",
-  "extruderTempMin": "Extruder Temp Min",
-  "extruderTempMax": "Extruder Temp Max",
-  "bedTempMin": "Bed Temp Min",
-  "bedTempMax": "Bed Temp Max",
+  "extruderTempMin": "Extruder min (°C)",
+  "extruderTempMax": "Extruder max (°C)",
+  "bedTempMin": "Bed min (°C)",
+  "bedTempMax": "Bed max (°C)",
   "diameter": "Filament Diameter",
   "spoolLength": "Spool Length",
   "generatedSku": "Generated SKU",
@@ -278,7 +278,6 @@
   "clonedOn": "Cloned on",
   "writeThisClone": "Write this clone",
   "writeClone": "Write clone",
-  "writing": "Writing...",
   "writeOnCUID": "Write on CUID card",
   "cloneWrittenSuccess": "Clone written successfully!",
   "requiredTagFormat": "Required tag format",
@@ -297,7 +296,7 @@
   "step1GetMagicGen2": "Get a blank Magic Gen2 card (MiFare Classic 1K with writable UID)",
   "step1GetCUID": "Get a blank CUID card (MiFare Classic 1K)",
   "step2PressWrite": "Press the \"Write\" button below",
-  "step3HoldPhone": "Hold your iPhone near the card",
+  "step3HoldPhone": "Hold your phone near the card",
   "step4WaitConfirm": "Wait for write confirmation",
   "step5TestClone": "Test the cloned tag on your Bambu Lab printer!",
   "rsaIncluded": "The clone includes the original RSA signature, it will be accepted by the printer!",
@@ -316,13 +315,17 @@
   "deleteCloneConfirmation": "Delete clone \"{name}\"?",
   "@deleteCloneConfirmation": {
     "placeholders": {
-      "name": { "type": "String" }
+      "name": {
+        "type": "String"
+      }
     }
   },
   "cloneDeletedMessage": "Clone \"{name}\" deleted",
   "@cloneDeletedMessage": {
     "placeholders": {
-      "name": { "type": "String" }
+      "name": {
+        "type": "String"
+      }
     }
   },
   "extruderLabel": "Extruder",
@@ -332,7 +335,9 @@
   "errorPrefix": "Error: {error}",
   "@errorPrefix": {
     "placeholders": {
-      "error": { "type": "String" }
+      "error": {
+        "type": "String"
+      }
     }
   },
   "writingInProgress": "Writing...",
@@ -364,7 +369,9 @@
   "signInError": "Sign in error: {error}",
   "@signInError": {
     "placeholders": {
-      "error": { "type": "String" }
+      "error": {
+        "type": "String"
+      }
     }
   },
   "subscriptionActivatedMessage": "Subscription activated successfully!",
@@ -372,7 +379,9 @@
   "errorMessage": "Error: {error}",
   "@errorMessage": {
     "placeholders": {
-      "error": { "type": "String" }
+      "error": {
+        "type": "String"
+      }
     }
   },
   "subscriptionRestoredMessage": "Subscription restored successfully!",
@@ -391,24 +400,21 @@
   "helpIdentifyFilament": "Help us identify this filament",
   "helpUsImprove": "Help us improve!",
   "helpIdentifyDescription": "We read the tag but couldn't identify it. Tell us what filament this is so we can improve the app.",
-  "brandLabel": "Brand",
   "otherBrand": "Other",
   "thankYouFeedback": "Thank you for your feedback!",
   "send": "Send",
   "optionalDetails": "Optional details",
   "weightGrams": "Weight (g)",
-  "extruderTempMin": "Extruder min (°C)",
-  "extruderTempMax": "Extruder max (°C)",
-  "bedTempMin": "Bed min (°C)",
-  "bedTempMax": "Bed max (°C)",
   "diameterMm": "Diameter (mm)",
   "spoolLengthM": "Spool length (m)",
   "batchNumberLabel": "Batch / SKU",
   "contactUs": "Contact Us",
   "contactUsSubtitle": "Questions, suggestions or issues",
   "nfcTagNotDetected": "No NFC tag detected",
-  "nfcTagNotDetectedDesc": "No tag was found. The tag may be dead, damaged, or too far from the phone. Make sure the top of your iPhone is placed directly on the NFC tag.",
+  "nfcTagNotDetectedDesc": "No tag was found. The tag may be dead, damaged, or too far from the phone.",
   "nfcTagIncompatible": "Incompatible NFC tag detected",
+  "nfcAuthError": "NFC tag authentication failed",
+  "nfcAuthErrorDesc": "The tag was detected but authentication failed after multiple attempts. Keep the tag pressed firmly against the back of your phone and try again.",
   "nfcTagInfoPrusa": "Use a blank NXP ICODE SLIX2 tag (ISO 15693) to create OpenPrintTag compatible tags for Prusa MK4/XL.",
   "writePrusaTagTitle": "Write Prusa OpenPrintTag",
   "signInAppleNotAvailable": "Sign in with Apple is not available on this device.",
@@ -419,7 +425,9 @@
   "generatedUidLabel": "Generated UID: {uid}",
   "@generatedUidLabel": {
     "placeholders": {
-      "uid": { "type": "String" }
+      "uid": {
+        "type": "String"
+      }
     }
   },
   "experimentalBadge": "EXPERIMENTAL",
@@ -434,5 +442,20 @@
   "dryingTemp": "Drying temperature",
   "dryingTempHint": "e.g. 55",
   "dryingTime": "Drying time (hours)",
-  "dryingTimeHint": "e.g. 8"
+  "dryingTimeHint": "e.g. 8",
+  "fallbackDetectedAs": "Tag detected as {mode} — switch tab for next scans",
+  "@fallbackDetectedAs": {
+    "placeholders": {
+      "mode": {
+        "type": "String"
+      }
+    }
+  },
+  "fallbackChooseMode": "Choose mode manually",
+  "fallbackChooseModeSubtitle": "Auto-detection could not identify this tag. Select the protocol:",
+  "tryAutoDetect": "Try auto-detect",
+  "autoDetectAllBrands": "Auto-detect — all brands",
+  "autoDetectAllBrandsDesc": "Anycubic, Elegoo, OpenSpool, OpenTag3D and more",
+  "nfcTipIos": "The NFC reader is at the top of your iPhone. Place it directly on the spool's NFC tag.",
+  "nfcTipAndroid": "The NFC reader is usually at the center back of your phone. Place the back of your phone on the spool's NFC tag."
 }

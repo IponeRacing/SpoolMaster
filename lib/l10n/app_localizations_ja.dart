@@ -873,7 +873,7 @@ class AppLocalizationsJa extends AppLocalizations {
   String get step2PressWrite => '下の「書き込む」ボタンを押す';
 
   @override
-  String get step3HoldPhone => 'iPhoneをCUIDカードの近くに置く';
+  String get step3HoldPhone => '電話をCUIDカードの近くに置く';
 
   @override
   String get step4WaitConfirm => '書き込み確認を待つ';
@@ -1128,10 +1128,17 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get nfcTagNotDetectedDesc =>
-      'タグが見つかりません。タグが故障しているか、損傷しているか、電話から離れすぎている可能性があります。iPhoneの上部をNFCタグに直接置いてください。';
+      'タグが見つかりません。タグが故障しているか、損傷しているか、電話から離れすぎている可能性があります。';
 
   @override
   String get nfcTagIncompatible => '互換性のないNFCタグが検出されました';
+
+  @override
+  String get nfcAuthError => 'NFCタグの認証に失敗しました';
+
+  @override
+  String get nfcAuthErrorDesc =>
+      'タグは検出されましたが、複数回試行しても認証に失敗しました。タグをスマートフォンの背面にしっかり押し当ててもう一度お試しください。';
 
   @override
   String get nfcTagInfoPrusa =>
@@ -1201,4 +1208,32 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get dryingTimeHint => 'ex. 8';
+
+  @override
+  String fallbackDetectedAs(String mode) {
+    return 'タグは$modeとして検出されました — 次回のスキャンではタブを切り替えてください';
+  }
+
+  @override
+  String get fallbackChooseMode => 'モードを手動で選択';
+
+  @override
+  String get fallbackChooseModeSubtitle =>
+      '自動検出ではこのタグを識別できませんでした。プロトコルを選択してください：';
+
+  @override
+  String get tryAutoDetect => '自動検出を試す';
+
+  @override
+  String get autoDetectAllBrands => '自動検出 — すべてのブランド';
+
+  @override
+  String get autoDetectAllBrandsDesc => 'Anycubic、Elegoo、OpenSpool、OpenTag3Dなど';
+
+  @override
+  String get nfcTipIos => 'NFCリーダーはiPhoneの上部にあります。スプールのNFCタグに直接かざしてください。';
+
+  @override
+  String get nfcTipAndroid =>
+      'NFCリーダーは通常、電話の背面中央にあります。電話の背面をスプールのNFCタグにかざしてください。';
 }

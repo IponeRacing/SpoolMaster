@@ -287,7 +287,7 @@
   "instructions": "Инструкции",
   "step1GetCUID": "Получите пустую карту CUID (MiFare Classic 1K)",
   "step2PressWrite": "Нажмите кнопку \"Записать\" ниже",
-  "step3HoldPhone": "Поднесите iPhone к карте CUID",
+  "step3HoldPhone": "Поднесите телефон к карте CUID",
   "step4WaitConfirm": "Дождитесь подтверждения записи",
   "step5TestClone": "Протестируйте клонированную метку на принтере Bambu Lab!",
   "rsaIncluded": "Клон включает оригинальную подпись RSA, он будет принят принтером!",
@@ -411,8 +411,10 @@
   "contactUs": "Связаться с нами",
   "contactUsSubtitle": "Вопросы, предложения или проблемы",
   "nfcTagNotDetected": "Тег NFC не обнаружен",
-  "nfcTagNotDetectedDesc": "Тег не найден. Тег может быть неисправен, повреждён или слишком далеко от телефона. Поместите верхнюю часть iPhone прямо на NFC-тег.",
+  "nfcTagNotDetectedDesc": "Тег не найден. Тег может быть неисправен, повреждён или слишком далеко от телефона.",
   "nfcTagIncompatible": "Обнаружен несовместимый NFC-тег",
+  "nfcAuthError": "Ошибка аутентификации NFC-метки",
+  "nfcAuthErrorDesc": "Метка была обнаружена, но аутентификация не удалась после нескольких попыток. Плотно прижмите метку к задней панели телефона и попробуйте снова.",
   "nfcTagInfoPrusa": "Используйте пустой тег NXP ICODE SLIX2 (ISO 15693) для создания тегов, совместимых с OpenPrintTag, для Prusa MK4/XL.",
   "writePrusaTagTitle": "Записать Prusa OpenPrintTag",
   "signInAppleNotAvailable": "Вход через Apple недоступен на этом устройстве.",
@@ -423,7 +425,9 @@
   "generatedUidLabel": "Сгенерированный UID: {uid}",
   "@generatedUidLabel": {
     "placeholders": {
-      "uid": { "type": "String" }
+      "uid": {
+        "type": "String"
+      }
     }
   },
   "experimentalBadge": "ЭКСПЕРИМЕНТАЛЬНОЕ",
@@ -434,5 +438,20 @@
   "platformLimitationTitle": "Ограничение платформы",
   "mifareClassicNotSupportedIos": "Метки MiFare Classic (Bambu Lab, Creality) не поддерживаются на iOS из-за ограничения Apple CoreNFC. Эта функция доступна только на Android.",
   "nfcTagInfoCreality": "Используйте метку MiFare Classic 1K для записи данных, совместимых с Creality CFS, для Creality K2 Plus.",
-  "colorHintExamples": "Красный, Синий, Чёрный..."
+  "colorHintExamples": "Красный, Синий, Чёрный...",
+  "fallbackDetectedAs": "Тег обнаружен как {mode} — переключите вкладку для следующих сканирований",
+  "@fallbackDetectedAs": {
+    "placeholders": {
+      "mode": {
+        "type": "String"
+      }
+    }
+  },
+  "fallbackChooseMode": "Выбрать режим вручную",
+  "fallbackChooseModeSubtitle": "Автоопределение не смогло идентифицировать этот тег. Выберите протокол:",
+  "tryAutoDetect": "Попробовать авто-определение",
+  "autoDetectAllBrands": "Авто-определение — все бренды",
+  "autoDetectAllBrandsDesc": "Anycubic, Elegoo, OpenSpool, OpenTag3D и другие",
+  "nfcTipIos": "NFC-считыватель расположен в верхней части вашего iPhone. Поместите его прямо на NFC-метку катушки.",
+  "nfcTipAndroid": "NFC-считыватель обычно расположен в центре задней панели телефона. Поместите заднюю панель телефона на NFC-метку катушки."
 }

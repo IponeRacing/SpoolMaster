@@ -289,7 +289,7 @@
   "instructions": "คำแนะนำ",
   "step1GetCUID": "หาการ์ด CUID เปล่า (MiFare Classic 1K)",
   "step2PressWrite": "กดปุ่ม \"เขียน\" ด้านล่าง",
-  "step3HoldPhone": "ถือ iPhone ของคุณใกล้กับการ์ด CUID",
+  "step3HoldPhone": "ถือโทรศัพท์ของคุณใกล้กับการ์ด CUID",
   "step4WaitConfirm": "รอการยืนยันการเขียน",
   "step5TestClone": "ทดสอบแท็กที่โคลนบนเครื่องพิมพ์ Bambu Lab ของคุณ!",
   "rsaIncluded": "Clone รวมลายเซ็น RSA ต้นฉบับ จะได้รับการยอมรับจากเครื่องพิมพ์!",
@@ -413,8 +413,10 @@
   "contactUs": "ติดต่อเรา",
   "contactUsSubtitle": "คำถาม ข้อเสนอแนะ หรือปัญหา",
   "nfcTagNotDetected": "ไม่พบแท็ก NFC",
-  "nfcTagNotDetectedDesc": "ไม่พบแท็ก แท็กอาจเสีย เสียหาย หรืออยู่ไกลจากโทรศัพท์เกินไป ตรวจสอบให้แน่ใจว่าส่วนบนของโทรศัพท์วางอยู่บนแท็ก NFC โดยตรง",
+  "nfcTagNotDetectedDesc": "ไม่พบแท็ก แท็กอาจเสีย เสียหาย หรืออยู่ไกลจากโทรศัพท์เกินไป",
   "nfcTagIncompatible": "ตรวจพบแท็ก NFC ที่ไม่รองรับ",
+  "nfcAuthError": "การยืนยันตัวตนแท็ก NFC ล้มเหลว",
+  "nfcAuthErrorDesc": "ตรวจพบแท็กแล้วแต่การยืนยันตัวตนล้มเหลวหลังจากพยายามหลายครั้ง กดแท็กให้แนบแน่นกับด้านหลังโทรศัพท์แล้วลองอีกครั้ง",
   "signInAppleNotAvailable": "การลงชื่อเข้าใช้ด้วย Apple ไม่พร้อมใช้งานบนอุปกรณ์นี้",
   "signInAppleFailed": "การลงชื่อเข้าใช้ด้วย Apple ล้มเหลว กรุณาลองอีกครั้ง",
   "signInFailed": "การลงชื่อเข้าใช้ล้มเหลว กรุณาลองอีกครั้ง",
@@ -423,7 +425,9 @@
   "generatedUidLabel": "UID ที่สร้างขึ้น: {uid}",
   "@generatedUidLabel": {
     "placeholders": {
-      "uid": { "type": "String" }
+      "uid": {
+        "type": "String"
+      }
     }
   },
   "experimentalBadge": "ทดลอง",
@@ -434,5 +438,20 @@
   "platformLimitationTitle": "ข้อจำกัดของแพลตฟอร์ม",
   "mifareClassicNotSupportedIos": "แท็ก MiFare Classic (Bambu Lab, Creality) ไม่รองรับบน iOS เนื่องจากข้อจำกัดของ Apple CoreNFC ฟีเจอร์นี้ใช้ได้บน Android เท่านั้น",
   "nfcTagInfoCreality": "ใช้แท็ก MiFare Classic 1K เพื่อเขียนข้อมูลที่เข้ากันได้กับ Creality CFS สำหรับ Creality K2 Plus",
-  "colorHintExamples": "แดง, น้ำเงิน, ดำ..."
+  "colorHintExamples": "แดง, น้ำเงิน, ดำ...",
+  "fallbackDetectedAs": "ตรวจพบแท็กเป็น {mode} — สลับแท็บสำหรับการสแกนครั้งต่อไป",
+  "@fallbackDetectedAs": {
+    "placeholders": {
+      "mode": {
+        "type": "String"
+      }
+    }
+  },
+  "fallbackChooseMode": "เลือกโหมดด้วยตนเอง",
+  "fallbackChooseModeSubtitle": "การตรวจจับอัตโนมัติไม่สามารถระบุแท็กนี้ได้ เลือกโปรโตคอล:",
+  "tryAutoDetect": "ลองตรวจจับอัตโนมัติ",
+  "autoDetectAllBrands": "ตรวจจับอัตโนมัติ — ทุกแบรนด์",
+  "autoDetectAllBrandsDesc": "Anycubic, Elegoo, OpenSpool, OpenTag3D และอื่น ๆ",
+  "nfcTipIos": "ตัวอ่าน NFC อยู่ที่ด้านบนของ iPhone วางลงบนแท็ก NFC ของม้วนโดยตรง",
+  "nfcTipAndroid": "ตัวอ่าน NFC มักอยู่ตรงกลางด้านหลังของโทรศัพท์ วางด้านหลังของโทรศัพท์ลงบนแท็ก NFC ของม้วน"
 }

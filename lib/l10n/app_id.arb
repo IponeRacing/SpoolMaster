@@ -289,7 +289,7 @@
   "instructions": "Instruksi",
   "step1GetCUID": "Dapatkan kartu CUID kosong (MiFare Classic 1K)",
   "step2PressWrite": "Tekan tombol \"Tulis\" di bawah",
-  "step3HoldPhone": "Tahan iPhone Anda di dekat kartu CUID",
+  "step3HoldPhone": "Tahan ponsel Anda di dekat kartu CUID",
   "step4WaitConfirm": "Tunggu konfirmasi penulisan",
   "step5TestClone": "Uji tag yang diklon di printer Bambu Lab Anda!",
   "rsaIncluded": "Klon mencakup tanda tangan RSA asli, akan diterima oleh printer!",
@@ -413,8 +413,10 @@
   "contactUs": "Hubungi Kami",
   "contactUsSubtitle": "Pertanyaan, saran, atau masalah",
   "nfcTagNotDetected": "Tag NFC tidak terdeteksi",
-  "nfcTagNotDetectedDesc": "Tag tidak ditemukan. Tag mungkin mati, rusak, atau terlalu jauh dari ponsel. Pastikan bagian atas ponsel Anda ditempatkan langsung di tag NFC.",
+  "nfcTagNotDetectedDesc": "Tag tidak ditemukan. Tag mungkin mati, rusak, atau terlalu jauh dari ponsel.",
   "nfcTagIncompatible": "Tag NFC tidak kompatibel terdeteksi",
+  "nfcAuthError": "Autentikasi tag NFC gagal",
+  "nfcAuthErrorDesc": "Tag terdeteksi tetapi autentikasi gagal setelah beberapa percobaan. Tekan tag dengan kuat ke bagian belakang ponsel dan coba lagi.",
   "signInAppleNotAvailable": "Masuk dengan Apple tidak tersedia di perangkat ini.",
   "signInAppleFailed": "Masuk dengan Apple gagal. Silakan coba lagi.",
   "signInFailed": "Masuk gagal. Silakan coba lagi.",
@@ -423,7 +425,9 @@
   "generatedUidLabel": "UID yang dihasilkan: {uid}",
   "@generatedUidLabel": {
     "placeholders": {
-      "uid": { "type": "String" }
+      "uid": {
+        "type": "String"
+      }
     }
   },
   "experimentalBadge": "EKSPERIMENTAL",
@@ -434,5 +438,20 @@
   "platformLimitationTitle": "Batasan platform",
   "mifareClassicNotSupportedIos": "Tag MiFare Classic (Bambu Lab, Creality) tidak didukung di iOS karena batasan Apple CoreNFC. Fitur ini hanya tersedia di Android.",
   "nfcTagInfoCreality": "Gunakan tag MiFare Classic 1K untuk menulis data yang kompatibel dengan Creality CFS untuk Creality K2 Plus.",
-  "colorHintExamples": "Merah, Biru, Hitam..."
+  "colorHintExamples": "Merah, Biru, Hitam...",
+  "fallbackDetectedAs": "Tag terdeteksi sebagai {mode} — ganti tab untuk pemindaian berikutnya",
+  "@fallbackDetectedAs": {
+    "placeholders": {
+      "mode": {
+        "type": "String"
+      }
+    }
+  },
+  "fallbackChooseMode": "Pilih mode secara manual",
+  "fallbackChooseModeSubtitle": "Deteksi otomatis tidak dapat mengidentifikasi tag ini. Pilih protokol:",
+  "tryAutoDetect": "Coba deteksi otomatis",
+  "autoDetectAllBrands": "Deteksi otomatis — semua merek",
+  "autoDetectAllBrandsDesc": "Anycubic, Elegoo, OpenSpool, OpenTag3D dan lainnya",
+  "nfcTipIos": "Pembaca NFC ada di bagian atas iPhone Anda. Letakkan langsung di tag NFC gulungan.",
+  "nfcTipAndroid": "Pembaca NFC biasanya ada di tengah bagian belakang ponsel. Letakkan bagian belakang ponsel di tag NFC gulungan."
 }

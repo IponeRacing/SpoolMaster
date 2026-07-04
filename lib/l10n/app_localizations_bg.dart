@@ -882,7 +882,7 @@ class AppLocalizationsBg extends AppLocalizations {
   String get step2PressWrite => 'Натиснете бутона \"Запиши\" по-долу';
 
   @override
-  String get step3HoldPhone => 'Дръжте iPhone до CUID картата';
+  String get step3HoldPhone => 'Дръжте телефона до CUID картата';
 
   @override
   String get step4WaitConfirm => 'Изчакайте потвърждение на записването';
@@ -1145,10 +1145,17 @@ class AppLocalizationsBg extends AppLocalizations {
 
   @override
   String get nfcTagNotDetectedDesc =>
-      'Не е намерен таг. Тагът може да е повреден или твърде далеч от телефона. Уверете се, че горната част на телефона е поставена директно върху NFC тага.';
+      'Не е намерен таг. Тагът може да е повреден или твърде далеч от телефона.';
 
   @override
   String get nfcTagIncompatible => 'Открит е несъвместим NFC таг';
+
+  @override
+  String get nfcAuthError => 'Неуспешна автентикация на NFC таг';
+
+  @override
+  String get nfcAuthErrorDesc =>
+      'Тагът беше открит, но автентикацията е неуспешна след няколко опита. Дръжте тага плътно притиснат към гърба на телефона и опитайте отново.';
 
   @override
   String get nfcTagInfoPrusa =>
@@ -1220,4 +1227,34 @@ class AppLocalizationsBg extends AppLocalizations {
 
   @override
   String get dryingTimeHint => 'ex. 8';
+
+  @override
+  String fallbackDetectedAs(String mode) {
+    return 'Тагът е открит като $mode — сменете раздела за следващите сканирания';
+  }
+
+  @override
+  String get fallbackChooseMode => 'Изберете режим ръчно';
+
+  @override
+  String get fallbackChooseModeSubtitle =>
+      'Автоматичното разпознаване не успя да идентифицира този таг. Изберете протокола:';
+
+  @override
+  String get tryAutoDetect => 'Опитайте автоматично разпознаване';
+
+  @override
+  String get autoDetectAllBrands => 'Автоматично разпознаване — всички марки';
+
+  @override
+  String get autoDetectAllBrandsDesc =>
+      'Anycubic, Elegoo, OpenSpool, OpenTag3D и други';
+
+  @override
+  String get nfcTipIos =>
+      'NFC четецът е в горната част на вашия iPhone. Поставете го директно върху NFC маркера на макарата.';
+
+  @override
+  String get nfcTipAndroid =>
+      'NFC четецът обикновено е в средата на задната част на телефона. Поставете задната страна на телефона върху NFC маркера на макарата.';
 }

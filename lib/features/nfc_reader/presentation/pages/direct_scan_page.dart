@@ -1,3 +1,5 @@
+import 'dart:io' show Platform;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nfc_filament/core/services/analytics_service.dart';
@@ -13,6 +15,7 @@ import 'package:nfc_filament/l10n/app_localizations.dart';
 import 'package:nfc_filament/native_nfc/native_nfc.dart';
 
 /// Page qui lance directement le scan NFC sans afficher de menu
+/// Affiche un sélecteur de protocole, avec fallback auto-detect si échec
 class DirectScanPage extends StatelessWidget {
   const DirectScanPage({super.key});
 
@@ -21,8 +24,7 @@ class DirectScanPage extends StatelessWidget {
     return BlocProvider(
       create: (_) =>
           getIt<NfcReaderBloc>()
-            ..add(const CheckNfcAvailabilityEvent())
-            ..add(const ReadBobbinDataEvent()), // Lance automatiquement le scan
+            ..add(const CheckNfcAvailabilityEvent()),
       child: const _DirectScanView(),
     );
   }
@@ -90,57 +92,57 @@ class _DirectScanView extends StatelessWidget {
                     style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 8),
-                  RadioListTile<String>(
-                    title: const Text('Anycubic'),
-                    value: 'Anycubic',
+                  RadioGroup<String>(
                     groupValue: selectedBrand,
-                    dense: true,
-                    contentPadding: EdgeInsets.zero,
-                    onChanged: (v) => setDialogState(() => selectedBrand = v!),
-                  ),
-                  RadioListTile<String>(
-                    title: const Text('Bambu Lab'),
-                    value: 'Bambu Lab',
-                    groupValue: selectedBrand,
-                    dense: true,
-                    contentPadding: EdgeInsets.zero,
-                    onChanged: (v) => setDialogState(() => selectedBrand = v!),
-                  ),
-                  RadioListTile<String>(
-                    title: const Text('Prusa'),
-                    value: 'Prusa',
-                    groupValue: selectedBrand,
-                    dense: true,
-                    contentPadding: EdgeInsets.zero,
-                    onChanged: (v) => setDialogState(() => selectedBrand = v!),
-                  ),
-                  RadioListTile<String>(
-                    title: Row(
+                    onChanged: (v) => setDialogState(() => selectedBrand = v ?? selectedBrand),
+                    child: Column(
                       children: [
-                        Text('${localizations.otherBrand}: '),
-                        Expanded(
-                          child: TextField(
-                            decoration: const InputDecoration(
-                              isDense: true,
-                              contentPadding: EdgeInsets.symmetric(
-                                horizontal: 8,
-                                vertical: 8,
+                        const RadioListTile<String>(
+                          title: Text('Anycubic'),
+                          value: 'Anycubic',
+                          dense: true,
+                          contentPadding: EdgeInsets.zero,
+                        ),
+                        const RadioListTile<String>(
+                          title: Text('Bambu Lab'),
+                          value: 'Bambu Lab',
+                          dense: true,
+                          contentPadding: EdgeInsets.zero,
+                        ),
+                        const RadioListTile<String>(
+                          title: Text('Prusa'),
+                          value: 'Prusa',
+                          dense: true,
+                          contentPadding: EdgeInsets.zero,
+                        ),
+                        RadioListTile<String>(
+                          title: Row(
+                            children: [
+                              Text('${localizations.otherBrand}: '),
+                              Expanded(
+                                child: TextField(
+                                  decoration: const InputDecoration(
+                                    isDense: true,
+                                    contentPadding: EdgeInsets.symmetric(
+                                      horizontal: 8,
+                                      vertical: 8,
+                                    ),
+                                  ),
+                                  onChanged: (v) {
+                                    customBrand = v;
+                                    setDialogState(() => selectedBrand = 'other');
+                                  },
+                                  onTap: () => setDialogState(() => selectedBrand = 'other'),
+                                ),
                               ),
-                            ),
-                            onChanged: (v) {
-                              customBrand = v;
-                              setDialogState(() => selectedBrand = 'other');
-                            },
-                            onTap: () => setDialogState(() => selectedBrand = 'other'),
+                            ],
                           ),
+                          value: 'other',
+                          dense: true,
+                          contentPadding: EdgeInsets.zero,
                         ),
                       ],
                     ),
-                    value: 'other',
-                    groupValue: selectedBrand,
-                    dense: true,
-                    contentPadding: EdgeInsets.zero,
-                    onChanged: (v) => setDialogState(() => selectedBrand = v!),
                   ),
                   const SizedBox(height: 16),
                   Text(
@@ -149,7 +151,7 @@ class _DirectScanView extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
                   DropdownButtonFormField<String>(
-                    value: selectedMaterial,
+                    initialValue: selectedMaterial,
                     isExpanded: true,
                     items: materials.map((m) => DropdownMenuItem(
                       value: m,
@@ -204,7 +206,7 @@ class _DirectScanView extends StatelessWidget {
       ),
     );
 
-    if (result == true && context.mounted) {
+    if ((result ?? false) && context.mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(localizations.thankYouFeedback),
@@ -214,19 +216,78 @@ class _DirectScanView extends StatelessWidget {
     }
   }
 
+  /// Affiche un popup pour choisir le mode NFC manuellement (fallback B)
+  void _showModeSelectionDialog(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final isIOS = Platform.isIOS;
+
+    showDialog<void>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        icon: const Icon(Icons.nfc_rounded, size: 40, color: AppTheme.anycubicRed),
+        title: Text(l10n.fallbackChooseMode),
+        content: Text(
+          l10n.fallbackChooseModeSubtitle,
+          style: Theme.of(dialogContext).textTheme.bodySmall,
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(dialogContext),
+            child: Text(l10n.cancel),
+          ),
+          _modeButton(context, dialogContext, 'Anycubic', 'anycubic', enabled: true),
+          _modeButton(context, dialogContext, 'Bambu Lab', 'bambu', enabled: !isIOS),
+          _modeButton(context, dialogContext, 'Prusa', 'prusa', enabled: true),
+          _modeButton(context, dialogContext, 'Creality', 'creality', enabled: !isIOS),
+        ],
+      ),
+    );
+  }
+
+  Widget _modeButton(BuildContext pageContext, BuildContext dialogContext, String label, String mode, {required bool enabled}) {
+    return TextButton(
+      onPressed: enabled
+          ? () {
+              Navigator.pop(dialogContext);
+              pageContext.read<NfcReaderBloc>().add(
+                ReadBobbinDataEvent(overrideMode: mode),
+              );
+            }
+          : null,
+      child: Text(
+        label,
+        style: TextStyle(
+          color: enabled ? null : Colors.grey,
+        ),
+      ),
+    );
+  }
+
+  void _startScanWithMode(BuildContext context, String mode) {
+    context.read<NfcReaderBloc>().add(
+      ReadBobbinDataEvent(overrideMode: mode),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final isIOS = Platform.isIOS;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          AppLocalizations.of(context)!.scanBobbinDirectly,
+          l10n.scanBobbinDirectly,
           style: const TextStyle(fontWeight: FontWeight.bold),
         ),
       ),
       body: BlocListener<NfcReaderBloc, NfcReaderState>(
         listener: (context, state) {
-          // Quand le scan réussit, retourner les données
           if (state is BobbinDataReadSuccess) {
+            Navigator.pop(context, {
+              'bobbinData': state.bobbinData,
+            });
+          } else if (state is BobbinDataReadSuccessWithFallback) {
             Navigator.pop(context, {
               'bobbinData': state.bobbinData,
             });
@@ -234,7 +295,7 @@ class _DirectScanView extends StatelessWidget {
         },
         child: BlocBuilder<NfcReaderBloc, NfcReaderState>(
           builder: (context, state) {
-            if (state is NfcReaderLoading || state is NfcReaderInitial) {
+            if (state is NfcReaderLoading) {
               return _NfcScanningView(
                 onCancel: () {
                   NativeNfc.stopSession();
@@ -264,7 +325,7 @@ class _DirectScanView extends StatelessWidget {
                       const SizedBox(height: 24),
                       ElevatedButton(
                         onPressed: () => Navigator.pop(context),
-                        child: Text(AppLocalizations.of(context)!.back),
+                        child: Text(l10n.back),
                       ),
                     ],
                   ),
@@ -296,36 +357,26 @@ class _DirectScanView extends StatelessWidget {
                         children: [
                           OutlinedButton(
                             onPressed: () => Navigator.pop(context),
-                            child: Text(AppLocalizations.of(context)!.cancel),
+                            child: Text(l10n.cancel),
                           ),
                           const SizedBox(width: 16),
                           ElevatedButton(
-                            onPressed: () {
-                              context.read<NfcReaderBloc>().add(
-                                const ReadBobbinDataEvent(),
-                              );
-                            },
-                            child: Text(AppLocalizations.of(context)!.retry),
+                            onPressed: () => _showModeSelectionDialog(context),
+                            child: Text(l10n.retry),
                           ),
                         ],
                       ),
-                      if (state.hasTagData) ...[
-                        const SizedBox(height: 24),
-                        OutlinedButton.icon(
-                          onPressed: () => _showFeedbackDialog(context, state),
-                          icon: const Icon(Icons.help_outline),
-                          label: Text(
-                            AppLocalizations.of(context)!.helpIdentifyFilament,
-                          ),
-                        ),
-                      ],
+                      const SizedBox(height: 24),
+                      OutlinedButton.icon(
+                        onPressed: () => _showFeedbackDialog(context, state),
+                        icon: const Icon(Icons.feedback_outlined),
+                        label: Text(l10n.helpIdentifyFilament),
+                      ),
                       const SizedBox(height: 12),
                       OutlinedButton.icon(
                         onPressed: () => _navigateToManualAdd(context),
                         icon: const Icon(Icons.edit),
-                        label: Text(
-                          AppLocalizations.of(context)!.addManually,
-                        ),
+                        label: Text(l10n.addManually),
                       ),
                     ],
                   ),
@@ -333,14 +384,130 @@ class _DirectScanView extends StatelessWidget {
               );
             }
 
-            // État de scan en cours
-            return _NfcScanningView(
-              onCancel: () {
-                NativeNfc.stopSession();
-                Navigator.pop(context);
-              },
+            // État initial : sélecteur de protocole
+            return Center(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.all(32),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(
+                      Icons.nfc_rounded,
+                      size: 64,
+                      color: AppTheme.anycubicRed,
+                    ),
+                    const SizedBox(height: 24),
+                    Text(
+                      l10n.fallbackChooseMode,
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 12),
+                    Text(
+                      l10n.fallbackChooseModeSubtitle,
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.grey[400],
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 32),
+                    _autoDetectCard(context, l10n),
+                    const SizedBox(height: 20),
+                    _protocolCard(context, 'Anycubic', 'anycubic', Icons.nfc_rounded, enabled: true),
+                    const SizedBox(height: 12),
+                    _protocolCard(context, 'Bambu Lab', 'bambu', Icons.nfc_rounded, enabled: !isIOS),
+                    const SizedBox(height: 12),
+                    _protocolCard(context, 'Prusa', 'prusa', Icons.nfc_rounded, enabled: true),
+                    const SizedBox(height: 12),
+                    _protocolCard(context, 'Creality', 'creality', Icons.nfc_rounded, enabled: !isIOS),
+                    const SizedBox(height: 24),
+                    OutlinedButton.icon(
+                      onPressed: () => _navigateToManualAdd(context),
+                      icon: const Icon(Icons.edit),
+                      label: Text(l10n.addManually),
+                    ),
+                  ],
+                ),
+              ),
             );
           },
+        ),
+      ),
+    );
+  }
+
+  /// Carte "Détection auto — toutes marques" : couvre aussi les standards
+  /// ouverts (Elegoo, OpenSpool, OpenTag3D) sans choisir de protocole.
+  Widget _autoDetectCard(BuildContext context, AppLocalizations l10n) {
+    return SizedBox(
+      width: double.infinity,
+      child: ElevatedButton(
+        onPressed: () => context
+            .read<NfcReaderBloc>()
+            .add(const ReadBobbinDataAutoDetectEvent()),
+        style: ElevatedButton.styleFrom(
+          backgroundColor: AppTheme.anycubicRed,
+          foregroundColor: Colors.white,
+          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        ),
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Icon(Icons.auto_awesome, size: 24),
+                const SizedBox(width: 12),
+                Flexible(
+                  child: Text(
+                    l10n.autoDetectAllBrands,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 4),
+            Text(
+              l10n.autoDetectAllBrandsDesc,
+              style: TextStyle(fontSize: 12, color: Colors.white.withValues(alpha: 0.85)),
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _protocolCard(BuildContext context, String label, String mode, IconData icon, {required bool enabled}) {
+    return SizedBox(
+      width: double.infinity,
+      child: ElevatedButton(
+        onPressed: enabled ? () => _startScanWithMode(context, mode) : null,
+        style: ElevatedButton.styleFrom(
+          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(icon, size: 24),
+            const SizedBox(width: 12),
+            Text(label, style: const TextStyle(fontSize: 16)),
+            if (!enabled) ...[
+              const SizedBox(width: 8),
+              Text(
+                '(Android)',
+                style: TextStyle(fontSize: 12, color: Colors.grey[500]),
+              ),
+            ],
+          ],
         ),
       ),
     );
@@ -349,9 +516,9 @@ class _DirectScanView extends StatelessWidget {
 
 /// Widget d'animation NFC pour Android (remplace le simple spinner)
 class _NfcScanningView extends StatefulWidget {
-  final VoidCallback onCancel;
 
   const _NfcScanningView({required this.onCancel});
+  final VoidCallback onCancel;
 
   @override
   State<_NfcScanningView> createState() => _NfcScanningViewState();
@@ -402,7 +569,7 @@ class _NfcScanningViewState extends State<_NfcScanningView>
                       height: 160 * _pulseAnimation.value,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: Color(0xFF4CAF50).withValues(alpha: 0.1),
+                        color: const Color(0xFF4CAF50).withValues(alpha: 0.1),
                       ),
                     ),
                     // Cercle moyen
@@ -411,7 +578,7 @@ class _NfcScanningViewState extends State<_NfcScanningView>
                       height: 120 * _pulseAnimation.value,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: Color(0xFF4CAF50).withValues(alpha: 0.2),
+                        color: const Color(0xFF4CAF50).withValues(alpha: 0.2),
                       ),
                     ),
                     // Icone NFC

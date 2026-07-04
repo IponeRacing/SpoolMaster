@@ -880,7 +880,7 @@ class AppLocalizationsSk extends AppLocalizations {
   String get step2PressWrite => 'Stlačte tlačidlo \"Zapísať\" nižšie';
 
   @override
-  String get step3HoldPhone => 'Pridržte iPhone pri karte CUID';
+  String get step3HoldPhone => 'Pridržte telefón pri karte CUID';
 
   @override
   String get step4WaitConfirm => 'Počkajte na potvrdenie zápisu';
@@ -1141,10 +1141,17 @@ class AppLocalizationsSk extends AppLocalizations {
 
   @override
   String get nfcTagNotDetectedDesc =>
-      'Nebol nájdený žiadny tag. Tag môže byť mŕtvy, poškodený alebo príliš ďaleko od telefónu. Uistite sa, že horná časť telefónu je umiestnená priamo na NFC tagu.';
+      'Nebol nájdený žiadny tag. Tag môže byť mŕtvy, poškodený alebo príliš ďaleko od telefónu.';
 
   @override
   String get nfcTagIncompatible => 'Zistený nekompatibilný NFC tag';
+
+  @override
+  String get nfcAuthError => 'Overenie NFC tagu zlyhalo';
+
+  @override
+  String get nfcAuthErrorDesc =>
+      'Tag bol detekovaný, ale overenie zlyhalo po niekoľkých pokusoch. Držte tag pevne pritlačený k zadnej strane telefónu a skúste to znova.';
 
   @override
   String get nfcTagInfoPrusa =>
@@ -1216,4 +1223,34 @@ class AppLocalizationsSk extends AppLocalizations {
 
   @override
   String get dryingTimeHint => 'ex. 8';
+
+  @override
+  String fallbackDetectedAs(String mode) {
+    return 'Tag detegovaný ako $mode — prepnite záložku pre ďalšie skeny';
+  }
+
+  @override
+  String get fallbackChooseMode => 'Vybrať režim ručne';
+
+  @override
+  String get fallbackChooseModeSubtitle =>
+      'Automatická detekcia nemohla identifikovať tento tag. Vyberte protokol:';
+
+  @override
+  String get tryAutoDetect => 'Skúsiť automatickú detekciu';
+
+  @override
+  String get autoDetectAllBrands => 'Automatická detekcia — všetky značky';
+
+  @override
+  String get autoDetectAllBrandsDesc =>
+      'Anycubic, Elegoo, OpenSpool, OpenTag3D a ďalšie';
+
+  @override
+  String get nfcTipIos =>
+      'NFC čítačka je hore na vašom iPhone. Priložte ho priamo na NFC tag cievky.';
+
+  @override
+  String get nfcTipAndroid =>
+      'NFC čítačka je zvyčajne v strede zadnej strany telefónu. Priložte zadnú stranu telefónu na NFC tag cievky.';
 }

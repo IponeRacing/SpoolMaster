@@ -289,7 +289,7 @@
   "instructions": "Hướng dẫn",
   "step1GetCUID": "Lấy thẻ CUID trống (MiFare Classic 1K)",
   "step2PressWrite": "Nhấn nút \"Ghi\" bên dưới",
-  "step3HoldPhone": "Giữ iPhone của bạn gần thẻ CUID",
+  "step3HoldPhone": "Giữ điện thoại của bạn gần thẻ CUID",
   "step4WaitConfirm": "Chờ xác nhận ghi",
   "step5TestClone": "Kiểm tra thẻ đã sao chép trên máy in Bambu Lab của bạn!",
   "rsaIncluded": "Bản sao bao gồm chữ ký RSA gốc, nó sẽ được máy in chấp nhận!",
@@ -413,8 +413,10 @@
   "contactUs": "Liên hệ với chúng tôi",
   "contactUsSubtitle": "Câu hỏi, đề xuất hoặc vấn đề",
   "nfcTagNotDetected": "Không phát hiện thẻ NFC",
-  "nfcTagNotDetectedDesc": "Không tìm thấy thẻ. Thẻ có thể đã hỏng, bị hư hoặc quá xa điện thoại. Hãy đảm bảo đặt phần trên của điện thoại trực tiếp lên thẻ NFC.",
+  "nfcTagNotDetectedDesc": "Không tìm thấy thẻ. Thẻ có thể đã hỏng, bị hư hoặc quá xa điện thoại.",
   "nfcTagIncompatible": "Phát hiện thẻ NFC không tương thích",
+  "nfcAuthError": "Xác thực thẻ NFC thất bại",
+  "nfcAuthErrorDesc": "Thẻ đã được phát hiện nhưng xác thực thất bại sau nhiều lần thử. Giữ thẻ áp chặt vào mặt sau điện thoại và thử lại.",
   "signInAppleNotAvailable": "Đăng nhập bằng Apple không khả dụng trên thiết bị này.",
   "signInAppleFailed": "Đăng nhập bằng Apple thất bại. Vui lòng thử lại.",
   "signInFailed": "Đăng nhập thất bại. Vui lòng thử lại.",
@@ -423,7 +425,9 @@
   "generatedUidLabel": "UID đã tạo: {uid}",
   "@generatedUidLabel": {
     "placeholders": {
-      "uid": { "type": "String" }
+      "uid": {
+        "type": "String"
+      }
     }
   },
   "experimentalBadge": "THỬ NGHIỆM",
@@ -434,5 +438,20 @@
   "platformLimitationTitle": "Giới hạn nền tảng",
   "mifareClassicNotSupportedIos": "Thẻ MiFare Classic (Bambu Lab, Creality) không được hỗ trợ trên iOS do giới hạn của Apple CoreNFC. Tính năng này chỉ có trên Android.",
   "nfcTagInfoCreality": "Sử dụng thẻ MiFare Classic 1K để ghi dữ liệu tương thích Creality CFS cho Creality K2 Plus.",
-  "colorHintExamples": "Đỏ, Xanh dương, Đen..."
+  "colorHintExamples": "Đỏ, Xanh dương, Đen...",
+  "fallbackDetectedAs": "Thẻ được phát hiện là {mode} — chuyển tab cho các lần quét tiếp theo",
+  "@fallbackDetectedAs": {
+    "placeholders": {
+      "mode": {
+        "type": "String"
+      }
+    }
+  },
+  "fallbackChooseMode": "Chọn chế độ thủ công",
+  "fallbackChooseModeSubtitle": "Tự động phát hiện không thể nhận dạng thẻ này. Chọn giao thức:",
+  "tryAutoDetect": "Thử nhận dạng tự động",
+  "autoDetectAllBrands": "Nhận dạng tự động — tất cả thương hiệu",
+  "autoDetectAllBrandsDesc": "Anycubic, Elegoo, OpenSpool, OpenTag3D và nhiều hơn nữa",
+  "nfcTipIos": "Đầu đọc NFC nằm ở đỉnh iPhone. Đặt trực tiếp lên thẻ NFC của cuộn.",
+  "nfcTipAndroid": "Đầu đọc NFC thường nằm ở giữa mặt sau điện thoại. Đặt mặt sau điện thoại lên thẻ NFC của cuộn."
 }

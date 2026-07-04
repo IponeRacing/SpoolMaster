@@ -868,7 +868,7 @@ class AppLocalizationsZh extends AppLocalizations {
   String get step2PressWrite => '按下面的\"写入\"按钮';
 
   @override
-  String get step3HoldPhone => '将iPhone靠近CUID卡';
+  String get step3HoldPhone => '将手机靠近CUID卡';
 
   @override
   String get step4WaitConfirm => '等待写入确认';
@@ -1118,11 +1118,16 @@ class AppLocalizationsZh extends AppLocalizations {
   String get nfcTagNotDetected => '未检测到NFC标签';
 
   @override
-  String get nfcTagNotDetectedDesc =>
-      '未找到标签。标签可能已损坏或距离手机太远。请确保将手机顶部直接放在NFC标签上。';
+  String get nfcTagNotDetectedDesc => '未找到标签。标签可能已损坏或距离手机太远。';
 
   @override
   String get nfcTagIncompatible => '检测到不兼容的NFC标签';
+
+  @override
+  String get nfcAuthError => 'NFC标签认证失败';
+
+  @override
+  String get nfcAuthErrorDesc => '已检测到标签，但多次尝试后认证失败。请将标签紧贴手机背面并重试。';
 
   @override
   String get nfcTagInfoPrusa =>
@@ -1192,6 +1197,32 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get dryingTimeHint => 'ex. 8';
+
+  @override
+  String fallbackDetectedAs(String mode) {
+    return '标签检测为$mode — 下次扫描请切换标签页';
+  }
+
+  @override
+  String get fallbackChooseMode => '手动选择模式';
+
+  @override
+  String get fallbackChooseModeSubtitle => '自动检测无法识别此标签。请选择协议：';
+
+  @override
+  String get tryAutoDetect => '尝试自动检测';
+
+  @override
+  String get autoDetectAllBrands => '自动检测 — 所有品牌';
+
+  @override
+  String get autoDetectAllBrandsDesc => 'Anycubic、Elegoo、OpenSpool、OpenTag3D 等';
+
+  @override
+  String get nfcTipIos => 'NFC读卡器位于iPhone顶部。请将其直接放在线轴的NFC标签上。';
+
+  @override
+  String get nfcTipAndroid => 'NFC读卡器通常位于手机背面中央。请将手机背面放在线轴的NFC标签上。';
 }
 
 /// The translations for Chinese, as used in Taiwan (`zh_TW`).
@@ -2058,7 +2089,7 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
   String get step2PressWrite => '按下面的\"写入\"按钮';
 
   @override
-  String get step3HoldPhone => '将iPhone靠近CUID卡';
+  String get step3HoldPhone => '將手機靠近CUID卡';
 
   @override
   String get step4WaitConfirm => '等待写入确认';
@@ -2308,11 +2339,16 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
   String get nfcTagNotDetected => '未偵測到NFC標籤';
 
   @override
-  String get nfcTagNotDetectedDesc =>
-      '未找到標籤。標籤可能已損壞或距離手機太遠。請確保將手機頂部直接放在NFC標籤上。';
+  String get nfcTagNotDetectedDesc => '未找到標籤。標籤可能已損壞或距離手機太遠。';
 
   @override
   String get nfcTagIncompatible => '偵測到不相容的NFC標籤';
+
+  @override
+  String get nfcAuthError => 'NFC標籤認證失敗';
+
+  @override
+  String get nfcAuthErrorDesc => '已偵測到標籤，但多次嘗試後認證失敗。請將標籤緊貼手機背面並重試。';
 
   @override
   String get nfcTagInfoPrusa =>
@@ -2370,4 +2406,30 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String get colorHintExamples => '紅色、藍色、黑色...';
+
+  @override
+  String fallbackDetectedAs(String mode) {
+    return '標籤偵測為$mode — 下次掃描請切換標籤頁';
+  }
+
+  @override
+  String get fallbackChooseMode => '手動選擇模式';
+
+  @override
+  String get fallbackChooseModeSubtitle => '自動偵測無法識別此標籤。請選擇協議：';
+
+  @override
+  String get tryAutoDetect => '嘗試自動檢測';
+
+  @override
+  String get autoDetectAllBrands => '自動檢測 — 所有品牌';
+
+  @override
+  String get autoDetectAllBrandsDesc => 'Anycubic、Elegoo、OpenSpool、OpenTag3D 等';
+
+  @override
+  String get nfcTipIos => 'NFC讀卡器位於iPhone頂部。請將其直接放在線軸的NFC標籤上。';
+
+  @override
+  String get nfcTipAndroid => 'NFC讀卡器通常位於手機背面中央。請將手機背面放在線軸的NFC標籤上。';
 }

@@ -882,7 +882,7 @@ class AppLocalizationsSl extends AppLocalizations {
   String get step2PressWrite => 'Pritisnite gumb \"Zapiši\" spodaj';
 
   @override
-  String get step3HoldPhone => 'Držite iPhone blizu kartice CUID';
+  String get step3HoldPhone => 'Držite telefon blizu kartice CUID';
 
   @override
   String get step4WaitConfirm => 'Počakajte na potrditev zapisa';
@@ -1142,10 +1142,17 @@ class AppLocalizationsSl extends AppLocalizations {
 
   @override
   String get nfcTagNotDetectedDesc =>
-      'Oznaka ni bila najdena. Oznaka je morda mrtva, poškodovana ali predaleč od telefona. Prepričajte se, da je zgornji del telefona nameščen neposredno na NFC oznako.';
+      'Oznaka ni bila najdena. Oznaka je morda mrtva, poškodovana ali predaleč od telefona.';
 
   @override
   String get nfcTagIncompatible => 'Zaznana nezdružljiva NFC oznaka';
+
+  @override
+  String get nfcAuthError => 'Preverjanje pristnosti NFC oznake ni uspelo';
+
+  @override
+  String get nfcAuthErrorDesc =>
+      'Oznaka je bila zaznana, vendar preverjanje pristnosti po več poskusih ni uspelo. Držite oznako trdno ob zadnji strani telefona in poskusite znova.';
 
   @override
   String get nfcTagInfoPrusa =>
@@ -1216,4 +1223,34 @@ class AppLocalizationsSl extends AppLocalizations {
 
   @override
   String get dryingTimeHint => 'ex. 8';
+
+  @override
+  String fallbackDetectedAs(String mode) {
+    return 'Oznaka zaznana kot $mode — zamenjajte zavihek za naslednja skeniranja';
+  }
+
+  @override
+  String get fallbackChooseMode => 'Izberite način ročno';
+
+  @override
+  String get fallbackChooseModeSubtitle =>
+      'Samodejna zaznava ni mogla identificirati te oznake. Izberite protokol:';
+
+  @override
+  String get tryAutoDetect => 'Poskusi samodejno zaznavanje';
+
+  @override
+  String get autoDetectAllBrands => 'Samodejno zaznavanje — vse znamke';
+
+  @override
+  String get autoDetectAllBrandsDesc =>
+      'Anycubic, Elegoo, OpenSpool, OpenTag3D in več';
+
+  @override
+  String get nfcTipIos =>
+      'Bralnik NFC je na vrhu vašega iPhona. Postavite ga neposredno na NFC oznako koluta.';
+
+  @override
+  String get nfcTipAndroid =>
+      'Bralnik NFC je običajno na sredini zadnje strani telefona. Postavite zadnjo stran telefona na NFC oznako koluta.';
 }

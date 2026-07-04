@@ -880,7 +880,7 @@ class AppLocalizationsPl extends AppLocalizations {
   String get step2PressWrite => 'Naciśnij przycisk \"Zapisz\" poniżej';
 
   @override
-  String get step3HoldPhone => 'Przytrzymaj iPhone blisko karty CUID';
+  String get step3HoldPhone => 'Przytrzymaj telefon blisko karty CUID';
 
   @override
   String get step4WaitConfirm => 'Poczekaj na potwierdzenie zapisu';
@@ -1143,10 +1143,17 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get nfcTagNotDetectedDesc =>
-      'Nie znaleziono tagu. Tag może być uszkodzony, zniszczony lub zbyt daleko od telefonu. Umieść górę iPhone\'a bezpośrednio na tagu NFC.';
+      'Nie znaleziono tagu. Tag może być uszkodzony, zniszczony lub zbyt daleko od telefonu.';
 
   @override
   String get nfcTagIncompatible => 'Wykryto niezgodny tag NFC';
+
+  @override
+  String get nfcAuthError => 'Uwierzytelnianie tagu NFC nie powiodło się';
+
+  @override
+  String get nfcAuthErrorDesc =>
+      'Tag został wykryty, ale uwierzytelnianie nie powiodło się po kilku próbach. Przytrzymaj tag mocno przy tylnej części telefonu i spróbuj ponownie.';
 
   @override
   String get nfcTagInfoPrusa =>
@@ -1218,4 +1225,34 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get dryingTimeHint => 'ex. 8';
+
+  @override
+  String fallbackDetectedAs(String mode) {
+    return 'Tag wykryty jako $mode — zmień zakładkę na kolejne skany';
+  }
+
+  @override
+  String get fallbackChooseMode => 'Wybierz tryb ręcznie';
+
+  @override
+  String get fallbackChooseModeSubtitle =>
+      'Automatyczne wykrywanie nie mogło zidentyfikować tego tagu. Wybierz protokół:';
+
+  @override
+  String get tryAutoDetect => 'Wypróbuj automatyczne wykrywanie';
+
+  @override
+  String get autoDetectAllBrands => 'Automatyczne wykrywanie — wszystkie marki';
+
+  @override
+  String get autoDetectAllBrandsDesc =>
+      'Anycubic, Elegoo, OpenSpool, OpenTag3D i więcej';
+
+  @override
+  String get nfcTipIos =>
+      'Czytnik NFC znajduje się na górze iPhone\'a. Przyłóż go bezpośrednio do znacznika NFC szpuli.';
+
+  @override
+  String get nfcTipAndroid =>
+      'Czytnik NFC znajduje się zazwyczaj w środku tylnej części telefonu. Przyłóż tył telefonu do znacznika NFC szpuli.';
 }

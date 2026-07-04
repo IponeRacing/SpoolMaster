@@ -289,7 +289,7 @@
   "instructions": "Instruktioner",
   "step1GetCUID": "Skaffa ett tomt CUID-kort (MiFare Classic 1K)",
   "step2PressWrite": "Tryck på knappen \"Skriv\" nedan",
-  "step3HoldPhone": "Håll din iPhone nära CUID-kortet",
+  "step3HoldPhone": "Håll din telefon nära CUID-kortet",
   "step4WaitConfirm": "Vänta på skrivbekräftelse",
   "step5TestClone": "Testa den klonade taggen på din Bambu Lab skrivare!",
   "rsaIncluded": "Klonen inkluderar den ursprungliga RSA-signaturen, den kommer att accepteras av skrivaren!",
@@ -413,8 +413,10 @@
   "contactUs": "Kontakta oss",
   "contactUsSubtitle": "Frågor, förslag eller problem",
   "nfcTagNotDetected": "Ingen NFC-tagg hittades",
-  "nfcTagNotDetectedDesc": "Ingen tagg hittades. Taggen kan vara död, skadad eller för långt från telefonen. Se till att toppen av din telefon placeras direkt på NFC-taggen.",
+  "nfcTagNotDetectedDesc": "Ingen tagg hittades. Taggen kan vara död, skadad eller för långt från telefonen.",
   "nfcTagIncompatible": "Inkompatibel NFC-tagg hittades",
+  "nfcAuthError": "NFC-tagg autentisering misslyckades",
+  "nfcAuthErrorDesc": "Taggen upptäcktes men autentiseringen misslyckades efter flera försök. Håll taggen stadigt mot baksidan av telefonen och försök igen.",
   "signInAppleNotAvailable": "Inloggning med Apple är inte tillgänglig på denna enhet.",
   "signInAppleFailed": "Inloggning med Apple misslyckades. Försök igen.",
   "signInFailed": "Inloggning misslyckades. Försök igen.",
@@ -423,7 +425,9 @@
   "generatedUidLabel": "Genererat UID: {uid}",
   "@generatedUidLabel": {
     "placeholders": {
-      "uid": { "type": "String" }
+      "uid": {
+        "type": "String"
+      }
     }
   },
   "experimentalBadge": "EXPERIMENTELL",
@@ -434,5 +438,20 @@
   "platformLimitationTitle": "Plattformsbegränsning",
   "mifareClassicNotSupportedIos": "MiFare Classic-taggar (Bambu Lab, Creality) stöds inte på iOS på grund av en Apple CoreNFC-begränsning. Denna funktion är bara tillgänglig på Android.",
   "nfcTagInfoCreality": "Använd en MiFare Classic 1K-tagg för att skriva Creality CFS-kompatibla data för Creality K2 Plus.",
-  "colorHintExamples": "Röd, Blå, Svart..."
+  "colorHintExamples": "Röd, Blå, Svart...",
+  "fallbackDetectedAs": "Tagg identifierad som {mode} — byt flik för nästa skanningar",
+  "@fallbackDetectedAs": {
+    "placeholders": {
+      "mode": {
+        "type": "String"
+      }
+    }
+  },
+  "fallbackChooseMode": "Välj läge manuellt",
+  "fallbackChooseModeSubtitle": "Automatisk identifiering kunde inte identifiera denna tagg. Välj protokollet:",
+  "tryAutoDetect": "Prova automatisk identifiering",
+  "autoDetectAllBrands": "Automatisk identifiering — alla märken",
+  "autoDetectAllBrandsDesc": "Anycubic, Elegoo, OpenSpool, OpenTag3D med flera",
+  "nfcTipIos": "NFC-läsaren sitter högst upp på din iPhone. Placera den direkt på spolens NFC-tagg.",
+  "nfcTipAndroid": "NFC-läsaren sitter vanligtvis mitt på baksidan av din telefon. Placera baksidan av telefonen på spolens NFC-tagg."
 }

@@ -883,7 +883,7 @@ class AppLocalizationsVi extends AppLocalizations {
   String get step2PressWrite => 'Nhấn nút \"Ghi\" bên dưới';
 
   @override
-  String get step3HoldPhone => 'Giữ iPhone của bạn gần thẻ CUID';
+  String get step3HoldPhone => 'Giữ điện thoại của bạn gần thẻ CUID';
 
   @override
   String get step4WaitConfirm => 'Chờ xác nhận ghi';
@@ -1144,10 +1144,17 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get nfcTagNotDetectedDesc =>
-      'Không tìm thấy thẻ. Thẻ có thể đã hỏng, bị hư hoặc quá xa điện thoại. Hãy đảm bảo đặt phần trên của điện thoại trực tiếp lên thẻ NFC.';
+      'Không tìm thấy thẻ. Thẻ có thể đã hỏng, bị hư hoặc quá xa điện thoại.';
 
   @override
   String get nfcTagIncompatible => 'Phát hiện thẻ NFC không tương thích';
+
+  @override
+  String get nfcAuthError => 'Xác thực thẻ NFC thất bại';
+
+  @override
+  String get nfcAuthErrorDesc =>
+      'Thẻ đã được phát hiện nhưng xác thực thất bại sau nhiều lần thử. Giữ thẻ áp chặt vào mặt sau điện thoại và thử lại.';
 
   @override
   String get nfcTagInfoPrusa =>
@@ -1219,4 +1226,34 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get dryingTimeHint => 'ex. 8';
+
+  @override
+  String fallbackDetectedAs(String mode) {
+    return 'Thẻ được phát hiện là $mode — chuyển tab cho các lần quét tiếp theo';
+  }
+
+  @override
+  String get fallbackChooseMode => 'Chọn chế độ thủ công';
+
+  @override
+  String get fallbackChooseModeSubtitle =>
+      'Tự động phát hiện không thể nhận dạng thẻ này. Chọn giao thức:';
+
+  @override
+  String get tryAutoDetect => 'Thử nhận dạng tự động';
+
+  @override
+  String get autoDetectAllBrands => 'Nhận dạng tự động — tất cả thương hiệu';
+
+  @override
+  String get autoDetectAllBrandsDesc =>
+      'Anycubic, Elegoo, OpenSpool, OpenTag3D và nhiều hơn nữa';
+
+  @override
+  String get nfcTipIos =>
+      'Đầu đọc NFC nằm ở đỉnh iPhone. Đặt trực tiếp lên thẻ NFC của cuộn.';
+
+  @override
+  String get nfcTipAndroid =>
+      'Đầu đọc NFC thường nằm ở giữa mặt sau điện thoại. Đặt mặt sau điện thoại lên thẻ NFC của cuộn.';
 }

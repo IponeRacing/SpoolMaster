@@ -881,7 +881,7 @@ class AppLocalizationsFi extends AppLocalizations {
   String get step2PressWrite => 'Paina alla olevaa \"Kirjoita\"-painiketta';
 
   @override
-  String get step3HoldPhone => 'Pidä iPhonesi CUID-kortin lähellä';
+  String get step3HoldPhone => 'Pidä puhelimesi CUID-kortin lähellä';
 
   @override
   String get step4WaitConfirm => 'Odota kirjoitusvahvistusta';
@@ -1142,10 +1142,17 @@ class AppLocalizationsFi extends AppLocalizations {
 
   @override
   String get nfcTagNotDetectedDesc =>
-      'Tagia ei löytynyt. Tagi voi olla kuollut, vaurioitunut tai liian kaukana puhelimesta. Varmista, että puhelimen yläosa on suoraan NFC-tagin päällä.';
+      'Tagia ei löytynyt. Tagi voi olla kuollut, vaurioitunut tai liian kaukana puhelimesta.';
 
   @override
   String get nfcTagIncompatible => 'Yhteensopimaton NFC-tagi havaittu';
+
+  @override
+  String get nfcAuthError => 'NFC-tunnisteen todennus epäonnistui';
+
+  @override
+  String get nfcAuthErrorDesc =>
+      'Tunniste havaittiin, mutta todennus epäonnistui useiden yritysten jälkeen. Pidä tunniste tukevasti puhelimen takaosaa vasten ja yritä uudelleen.';
 
   @override
   String get nfcTagInfoPrusa =>
@@ -1217,4 +1224,34 @@ class AppLocalizationsFi extends AppLocalizations {
 
   @override
   String get dryingTimeHint => 'ex. 8';
+
+  @override
+  String fallbackDetectedAs(String mode) {
+    return 'Tunniste havaittu muodossa $mode — vaihda välilehteä seuraavia skannauksia varten';
+  }
+
+  @override
+  String get fallbackChooseMode => 'Valitse tila manuaalisesti';
+
+  @override
+  String get fallbackChooseModeSubtitle =>
+      'Automaattinen tunnistus ei tunnistanut tätä tunnistetta. Valitse protokolla:';
+
+  @override
+  String get tryAutoDetect => 'Kokeile automaattista tunnistusta';
+
+  @override
+  String get autoDetectAllBrands => 'Automaattinen tunnistus — kaikki merkit';
+
+  @override
+  String get autoDetectAllBrandsDesc =>
+      'Anycubic, Elegoo, OpenSpool, OpenTag3D ja muut';
+
+  @override
+  String get nfcTipIos =>
+      'NFC-lukija on iPhonesi yläosassa. Aseta se suoraan kelan NFC-tagin päälle.';
+
+  @override
+  String get nfcTipAndroid =>
+      'NFC-lukija on yleensä puhelimen takaosan keskellä. Aseta puhelimen takaosa kelan NFC-tagin päälle.';
 }

@@ -878,7 +878,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get step2PressWrite => 'اضغط على زر \"كتابة\" أدناه';
 
   @override
-  String get step3HoldPhone => 'امسك iPhone بالقرب من البطاقة';
+  String get step3HoldPhone => 'امسك هاتفك بالقرب من البطاقة';
 
   @override
   String get step4WaitConfirm => 'انتظر تأكيد الكتابة';
@@ -1137,10 +1137,17 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get nfcTagNotDetectedDesc =>
-      'لم يتم العثور على أي علامة. قد تكون العلامة تالفة أو بعيدة جداً عن الهاتف. تأكد من وضع الجزء العلوي من هاتفك مباشرة على علامة NFC.';
+      'لم يتم العثور على أي علامة. قد تكون العلامة تالفة أو بعيدة جداً عن الهاتف.';
 
   @override
   String get nfcTagIncompatible => 'تم اكتشاف علامة NFC غير متوافقة';
+
+  @override
+  String get nfcAuthError => 'فشل مصادقة علامة NFC';
+
+  @override
+  String get nfcAuthErrorDesc =>
+      'تم اكتشاف العلامة ولكن فشلت المصادقة بعد عدة محاولات. اضغط العلامة بإحكام على الجزء الخلفي من الهاتف وحاول مرة أخرى.';
 
   @override
   String get nfcTagInfoPrusa =>
@@ -1212,4 +1219,34 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get dryingTimeHint => 'ex. 8';
+
+  @override
+  String fallbackDetectedAs(String mode) {
+    return 'تم اكتشاف العلامة كـ $mode — قم بتبديل التبويب للمسح التالي';
+  }
+
+  @override
+  String get fallbackChooseMode => 'اختر الوضع يدوياً';
+
+  @override
+  String get fallbackChooseModeSubtitle =>
+      'لم يتمكن الكشف التلقائي من التعرف على هذه العلامة. اختر البروتوكول:';
+
+  @override
+  String get tryAutoDetect => 'محاولة الكشف التلقائي';
+
+  @override
+  String get autoDetectAllBrands => 'الكشف التلقائي — جميع العلامات التجارية';
+
+  @override
+  String get autoDetectAllBrandsDesc =>
+      'Anycubic وElegoo وOpenSpool وOpenTag3D والمزيد';
+
+  @override
+  String get nfcTipIos =>
+      'قارئ NFC في أعلى iPhone. ضعه مباشرة على علامة NFC الخاصة بالبكرة.';
+
+  @override
+  String get nfcTipAndroid =>
+      'قارئ NFC عادة في وسط الجهة الخلفية من هاتفك. ضع الجهة الخلفية من الهاتف على علامة NFC الخاصة بالبكرة.';
 }
