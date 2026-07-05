@@ -51,16 +51,19 @@ platform :ios do
       skip_submission: true,
     )
 
-    # Upload dSYMs to Firebase Crashlytics
-    dsym_path = File.expand_path('../../build/ios/archive/Runner.xcarchive/dSYMs', __dir__)
-    if File.directory?(dsym_path)
+    # Upload dSYMs to Firebase Crashlytics (l'action exige un .zip, pas un dossier)
+    dsym_dir = File.expand_path('../../build/ios/archive/Runner.xcarchive/dSYMs', __dir__)
+    if File.directory?(dsym_dir)
+      dsym_zip = File.expand_path('../../build/ios/dSYMs.zip', __dir__)
+      File.delete(dsym_zip) if File.exist?(dsym_zip)
+      sh("cd #{File.dirname(dsym_dir).shellescape} && zip -rq #{dsym_zip.shellescape} dSYMs")
       upload_symbols_to_crashlytics(
-        dsym_path: dsym_path,
+        dsym_path: dsym_zip,
         gsp_path: File.expand_path('../Runner/GoogleService-Info.plist', __dir__),
       )
       UI.success("✅ dSYMs uploadés vers Firebase Crashlytics")
     else
-      UI.important("⚠️ dSYMs non trouvés: #{dsym_path}")
+      UI.important("⚠️ dSYMs non trouvés: #{dsym_dir}")
     end
   end
 
@@ -68,6 +71,34 @@ platform :ios do
   lane :deploy do
     upload_metadata
     upload_app
+  end
+
+  desc "Soumet la version à la review App Store (build déjà uploadé ET traité par Apple)"
+  desc "Usage: fastlane ios submit_review version:1.3.3 build:71"
+  lane :submit_review do |options|
+    deliver(
+      api_key: shared_api_key,
+      app_identifier: "com.engageengine.nfcfilament",
+      app_version: options[:version],
+      build_number: options[:build],
+      skip_binary_upload: true,
+      skip_metadata: true,
+      skip_screenshots: true,
+      force: true,
+      run_precheck_before_submit: false,
+      precheck_include_in_app_purchases: false,
+      submit_for_review: true,
+      automatic_release: true,
+      # Déclarations IDFA (AdMob) + chiffrement exempt (HTTPS uniquement)
+      submission_information: {
+        add_id_info_uses_idfa: true,
+        add_id_info_serves_ads: true,
+        add_id_info_tracks_action: true,
+        add_id_info_tracks_install: true,
+        add_id_info_limits_tracking: true,
+        export_compliance_uses_encryption: false,
+      }
+    )
   end
 
 end
@@ -195,6 +226,22 @@ platform :android do
   lane :deploy do
     upload_metadata
     upload_app
+  end
+
+  desc "Promeut la release internal vers production (déclenche la review Google)"
+  lane :promote_to_production do
+    upload_to_play_store(
+      json_key: SHARED_GOOGLE_JSON_KEY,
+      package_name: 'com.engagengine.nfc_anycubic',
+      track: 'internal',
+      track_promote_to: 'production',
+      skip_upload_aab: true,
+      skip_upload_apk: true,
+      skip_upload_metadata: true,
+      skip_upload_images: true,
+      skip_upload_screenshots: true,
+      skip_upload_changelogs: true,
+    )
   end
 
 end
