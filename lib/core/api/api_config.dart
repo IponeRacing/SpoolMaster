@@ -6,6 +6,21 @@ import 'package:http/http.dart' as http;
 class ApiConfig {
   static const String baseUrl = 'https://api.engageengine.ch';
 
+  /// Version de l'app (ex: "1.3.4+72"), renseignée au démarrage par
+  /// [initAppVersion]. Envoyée dans l'en-tête X-App-Version de chaque
+  /// requête pour tracer la version côté serveur (support / logs).
+  static String appVersion = 'unknown';
+
+  /// En-têtes communs à toutes les requêtes API.
+  static Map<String, String> get commonHeaders => {
+        'X-App-Version': appVersion,
+      };
+
+  /// À appeler une fois au démarrage (main) avec PackageInfo.
+  static void initAppVersion(String version, String buildNumber) {
+    appVersion = buildNumber.isEmpty ? version : '$version+$buildNumber';
+  }
+
   // Endpoints Auth
   static const String loginWithApple = '/auth/apple';
   static const String loginWithGoogle = '/auth/google';

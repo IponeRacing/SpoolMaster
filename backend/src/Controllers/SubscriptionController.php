@@ -403,6 +403,11 @@ class SubscriptionController
         $userId = AuthMiddleware::getUserId();
         if (!$userId) return $this->error('Unauthorized', 401);
 
+        // Version de l'app envoyée par le client (en-tête X-App-Version),
+        // tracée dans les logs pour le support même sans event analytics.
+        $appVer = $_SERVER['HTTP_X_APP_VERSION'] ?? '?';
+        \error_log("📱 [v$appVer] getSubscriptionStatus user $userId");
+
         try {
             // First check user_preferences for VIP/lifetime status
             $stmt = $this->db->prepare("

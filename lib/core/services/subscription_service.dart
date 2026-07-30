@@ -240,6 +240,7 @@ class SubscriptionService {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer $token',
+          ...ApiConfig.commonHeaders,
         },
         body: jsonEncode({
           'signedTransaction': signedTransaction,
@@ -279,6 +280,7 @@ class SubscriptionService {
           headers: {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer $token',
+            ...ApiConfig.commonHeaders,
           },
         ).timeout(const Duration(seconds: 10)),
       );

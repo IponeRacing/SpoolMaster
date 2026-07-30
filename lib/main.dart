@@ -1,13 +1,15 @@
+import 'dart:async';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:nfc_filament/core/api/api_config.dart';
 import 'package:nfc_filament/core/models/spool_inventory_item.dart';
 import 'package:nfc_filament/core/services/admob_service.dart';
 import 'package:nfc_filament/core/services/analytics_service.dart';
-import 'package:nfc_filament/core/services/brands_materials_service.dart';
 import 'package:nfc_filament/core/services/shopping_list_service.dart';
 import 'package:nfc_filament/core/services/spool_storage_service.dart';
 import 'package:nfc_filament/core/services/subscription_service.dart';
@@ -20,14 +22,14 @@ import 'package:nfc_filament/dependency_injection.dart';
 import 'package:nfc_filament/features/auth/presentation/pages/splash_page.dart';
 import 'package:nfc_filament/features/nfc_reader/domain/entities/bobbin_data.dart';
 import 'package:nfc_filament/features/nfc_reader/presentation/pages/direct_scan_page.dart';
-import 'package:nfc_filament/features/nfc_reader/presentation/pages/nfc_reader_page_simple.dart';
 import 'package:nfc_filament/features/nfc_reader/presentation/pages/manual_add_spool_page.dart';
+import 'package:nfc_filament/features/nfc_reader/presentation/pages/nfc_reader_page_simple.dart';
 import 'package:nfc_filament/features/nfc_reader/presentation/pages/nfc_stock_update_page.dart';
 import 'package:nfc_filament/features/nfc_reader/presentation/pages/nfc_writer_page.dart';
-import 'package:nfc_filament/features/nfc_reader/presentation/widgets/color_picker_widget.dart';
 import 'package:nfc_filament/features/profile/presentation/pages/profile_page.dart';
 import 'package:nfc_filament/firebase_options.dart';
 import 'package:nfc_filament/l10n/app_localizations.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 // Re-export extracted classes for backward compatibility
 export 'package:nfc_filament/core/models/spool_inventory_item.dart';
@@ -38,38 +40,38 @@ void main() async {
 
   // Initialize all locales for date formatting (parallelized)
   await Future.wait([
-    initializeDateFormatting('fr_FR', null),
-    initializeDateFormatting('en_US', null),
-    initializeDateFormatting('de_DE', null),
-    initializeDateFormatting('it_IT', null),
-    initializeDateFormatting('es_ES', null),
-    initializeDateFormatting('nl_NL', null),
-    initializeDateFormatting('pl_PL', null),
-    initializeDateFormatting('cs_CZ', null),
-    initializeDateFormatting('pt_PT', null),
-    initializeDateFormatting('ru_RU', null),
-    initializeDateFormatting('ja_JP', null),
-    initializeDateFormatting('ko_KR', null),
-    initializeDateFormatting('zh_CN', null),
-    initializeDateFormatting('sv_SE', null),
-    initializeDateFormatting('tr_TR', null),
-    initializeDateFormatting('ro_RO', null),
-    initializeDateFormatting('hu_HU', null),
-    initializeDateFormatting('el_GR', null),
-    initializeDateFormatting('bg_BG', null),
-    initializeDateFormatting('hr_HR', null),
-    initializeDateFormatting('sk_SK', null),
-    initializeDateFormatting('sl_SI', null),
-    initializeDateFormatting('sr_RS', null),
-    initializeDateFormatting('uk_UA', null),
-    initializeDateFormatting('da_DK', null),
-    initializeDateFormatting('nb_NO', null),
-    initializeDateFormatting('fi_FI', null),
-    initializeDateFormatting('th_TH', null),
-    initializeDateFormatting('vi_VN', null),
-    initializeDateFormatting('id_ID', null),
-    initializeDateFormatting('ms_MY', null),
-    initializeDateFormatting('hi_IN', null),
+    initializeDateFormatting('fr_FR'),
+    initializeDateFormatting('en_US'),
+    initializeDateFormatting('de_DE'),
+    initializeDateFormatting('it_IT'),
+    initializeDateFormatting('es_ES'),
+    initializeDateFormatting('nl_NL'),
+    initializeDateFormatting('pl_PL'),
+    initializeDateFormatting('cs_CZ'),
+    initializeDateFormatting('pt_PT'),
+    initializeDateFormatting('ru_RU'),
+    initializeDateFormatting('ja_JP'),
+    initializeDateFormatting('ko_KR'),
+    initializeDateFormatting('zh_CN'),
+    initializeDateFormatting('sv_SE'),
+    initializeDateFormatting('tr_TR'),
+    initializeDateFormatting('ro_RO'),
+    initializeDateFormatting('hu_HU'),
+    initializeDateFormatting('el_GR'),
+    initializeDateFormatting('bg_BG'),
+    initializeDateFormatting('hr_HR'),
+    initializeDateFormatting('sk_SK'),
+    initializeDateFormatting('sl_SI'),
+    initializeDateFormatting('sr_RS'),
+    initializeDateFormatting('uk_UA'),
+    initializeDateFormatting('da_DK'),
+    initializeDateFormatting('nb_NO'),
+    initializeDateFormatting('fi_FI'),
+    initializeDateFormatting('th_TH'),
+    initializeDateFormatting('vi_VN'),
+    initializeDateFormatting('id_ID'),
+    initializeDateFormatting('ms_MY'),
+    initializeDateFormatting('hi_IN'),
   ]);
 
   // Enable edge-to-edge display
@@ -101,6 +103,14 @@ void main() async {
     return true;
   };
 
+  // Version de l'app pour l'en-tête X-App-Version (tracing serveur/support)
+  try {
+    final packageInfo = await PackageInfo.fromPlatform();
+    ApiConfig.initAppVersion(packageInfo.version, packageInfo.buildNumber);
+  } catch (e) {
+    debugPrint("⚠️ Impossible de lire la version de l'app: $e");
+  }
+
   // DI + AdMob + Analytics en parallele (independants)
   await Future.wait([
     configureDependencies(),
@@ -113,22 +123,22 @@ void main() async {
   // Subscription + premium status (depend de DI)
   await SubscriptionService().initialize();
   final isPremium = await UserPreferencesService.isPremium();
-  AdMobService().setUserPremiumStatus(isPremium);
+  AdMobService().setUserPremiumStatus(isPremium: isPremium);
 
   runApp(MyApp(key: myAppKey));
 }
 
 // Global key pour accéder au MyAppState
-final GlobalKey<_MyAppState> myAppKey = GlobalKey<_MyAppState>();
+final GlobalKey<MyAppState> myAppKey = GlobalKey<MyAppState>();
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
   @override
-  State<MyApp> createState() => _MyAppState();
+  State<MyApp> createState() => MyAppState();
 }
 
-class _MyAppState extends State<MyApp> {
+class MyAppState extends State<MyApp> {
   Locale? _locale;
 
   @override
@@ -219,17 +229,17 @@ class _MyAppState extends State<MyApp> {
 }
 
 // Global key pour accéder au MainNavigationPageState
-final GlobalKey<_MainNavigationPageState> mainNavigationKey =
-    GlobalKey<_MainNavigationPageState>();
+final GlobalKey<MainNavigationPageState> mainNavigationKey =
+    GlobalKey<MainNavigationPageState>();
 
 class MainNavigationPage extends StatefulWidget {
   const MainNavigationPage({super.key});
 
   @override
-  State<MainNavigationPage> createState() => _MainNavigationPageState();
+  State<MainNavigationPage> createState() => MainNavigationPageState();
 }
 
-class _MainNavigationPageState extends State<MainNavigationPage> {
+class MainNavigationPageState extends State<MainNavigationPage> {
   int _selectedIndex = 0;
   final _statisticsKey = GlobalKey<_StatisticsPageState>();
 
@@ -303,13 +313,6 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
 
 // Model for shopping list items
 class ShoppingListItem {
-  final String id;
-  final String brand;
-  final String material;
-  final String colorName;
-  final int colorRgb;
-  final bool isOrdered;
-  final DateTime addedDate;
 
   ShoppingListItem({
     required this.id,
@@ -317,19 +320,8 @@ class ShoppingListItem {
     required this.material,
     required this.colorName,
     required this.colorRgb,
-    this.isOrdered = false,
-    required this.addedDate,
+    required this.addedDate, this.isOrdered = false,
   });
-
-  Map<String, dynamic> toJson() => {
-    'id': id,
-    'brand': brand,
-    'material': material,
-    'colorName': colorName,
-    'colorRgb': colorRgb,
-    'isOrdered': isOrdered,
-    'addedDate': addedDate.toIso8601String(),
-  };
 
   factory ShoppingListItem.fromJson(Map<String, dynamic> json) =>
       ShoppingListItem(
@@ -341,6 +333,23 @@ class ShoppingListItem {
         isOrdered: json['isOrdered'] as bool? ?? false,
         addedDate: DateTime.parse(json['addedDate'] as String),
       );
+  final String id;
+  final String brand;
+  final String material;
+  final String colorName;
+  final int colorRgb;
+  final bool isOrdered;
+  final DateTime addedDate;
+
+  Map<String, dynamic> toJson() => {
+    'id': id,
+    'brand': brand,
+    'material': material,
+    'colorName': colorName,
+    'colorRgb': colorRgb,
+    'isOrdered': isOrdered,
+    'addedDate': addedDate.toIso8601String(),
+  };
 
   ShoppingListItem copyWith({
     String? id,
@@ -522,8 +531,9 @@ class _StockListPageState extends State<StockListPage> {
 
                       // Calculer l'index réel en tenant compte des pubs
                       final spoolIndex = index - (index ~/ 6);
-                      if (spoolIndex >= _spools.length)
+                      if (spoolIndex >= _spools.length) {
                         return const SizedBox.shrink();
+                      }
 
                       final spool = _spools[spoolIndex];
                       return Dismissible(
@@ -540,7 +550,7 @@ class _StockListPageState extends State<StockListPage> {
                           child: const Icon(Icons.delete, color: Colors.white),
                         ),
                         confirmDismiss: (direction) async {
-                          return await showDialog(
+                          return showDialog(
                             context: context,
                             builder: (context) => AlertDialog(
                               title: Text(
@@ -589,7 +599,6 @@ class _StockListPageState extends State<StockListPage> {
                 ),
               ],
             ),
-      floatingActionButton: null,
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(16),
         child: Row(
@@ -603,7 +612,7 @@ class _StockListPageState extends State<StockListPage> {
                       builder: (context) => const NfcStockUpdatePage(),
                     ),
                   );
-                  if (result == true) {
+                  if (result ?? false) {
                     await _loadSpools();
                   }
                 },
@@ -663,7 +672,7 @@ class _StockListPageState extends State<StockListPage> {
                 decoration: BoxDecoration(
                   color: color,
                   borderRadius: BorderRadius.circular(8),
-                  border: Border.all(color: Colors.grey.shade300, width: 1),
+                  border: Border.all(color: Colors.grey.shade300),
                 ),
               ),
               const SizedBox(width: 16),
@@ -787,7 +796,7 @@ class _StockListPageState extends State<StockListPage> {
     );
   }
 
-  void _navigateToNfcScan() async {
+  Future<void> _navigateToNfcScan() async {
     // Naviguer vers la page de scan direct
     final result = await Navigator.push(
       context,
@@ -800,12 +809,12 @@ class _StockListPageState extends State<StockListPage> {
       final bobbinData = result['bobbinData'] as BobbinData?;
       if (bobbinData != null) {
         // Demander le prix à l'utilisateur
-        _showPriceDialog(bobbinData);
+        unawaited(_showPriceDialog(bobbinData));
       }
     }
   }
 
-  void _showPriceDialog(BobbinData bobbinData) async {
+  Future<void> _showPriceDialog(BobbinData bobbinData) async {
     final priceController = TextEditingController();
     final formKey = GlobalKey<FormState>();
     final currency = await UserPreferencesService.getCurrency();
@@ -813,7 +822,7 @@ class _StockListPageState extends State<StockListPage> {
 
     if (!mounted) return;
 
-    showDialog<void>(
+    unawaited(showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
         title: Text(AppLocalizations.of(context)!.bobbinPrice),
@@ -859,7 +868,7 @@ class _StockListPageState extends State<StockListPage> {
           ElevatedButton(
             onPressed: () async {
               if (formKey.currentState!.validate()) {
-                final price = double.parse(priceController.text);
+                final price = double.tryParse(priceController.text) ?? 0.0;
 
                 // Créer l'objet SpoolInventoryItem depuis les données NFC
                 final spool = SpoolInventoryItem(
@@ -909,7 +918,7 @@ class _StockListPageState extends State<StockListPage> {
           ),
         ],
       ),
-    );
+    ));
   }
 
   String _extractBrandFromBatchNumber(String? batchNumber) {
@@ -1060,7 +1069,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
   // Calculate statistics
   int get totalSpools => _spools.length;
 
-  double get totalValue => _spools.fold(0.0, (sum, spool) => sum + spool.price);
+  double get totalValue => _spools.fold(0, (sum, spool) => sum + spool.price);
 
   int get totalMaterials => _spools.map((s) => s.material).toSet().length;
 
@@ -1141,8 +1150,8 @@ class _StatisticsPageState extends State<StatisticsPage> {
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             color: isDark
-                                ? Colors.white.withOpacity(0.1)
-                                : Colors.white.withOpacity(0.5),
+                                ? Colors.white.withValues(alpha: 0.1)
+                                : Colors.white.withValues(alpha: 0.5),
                           ),
                           child: Center(
                             child: Text(
@@ -1313,24 +1322,24 @@ class _StatisticsPageState extends State<StatisticsPage> {
                 // Si on a scanné des données, les ajouter à la liste
                 if (result != null && result is Map<String, dynamic>) {
                   final bobbinData = result['bobbinData'];
-                  if (bobbinData != null) {
+                  if (bobbinData != null && bobbinData is BobbinData) {
                     // Créer une bobine à partir des données NFC
                     final spool = SpoolInventoryItem(
                       id: DateTime.now().millisecondsSinceEpoch.toString(),
-                      brand: (bobbinData.brand as String?) ?? 'Inconnu',
-                      material: (bobbinData.filamentType as String?) ?? 'Inconnu',
-                      colorName: (bobbinData.color as String?) ?? 'Inconnu',
-                      colorRgb: (bobbinData.colorRgb as int?) ?? 0xFFFFFFFF,
-                      price: 0.0,
-                      weight: (bobbinData.weightGrams as num?)?.toDouble() ?? 1000.0,
+                      brand: bobbinData.brand ?? 'Inconnu',
+                      material: bobbinData.filamentType,
+                      colorName: bobbinData.color,
+                      colorRgb: bobbinData.colorRgb ?? 0xFFFFFFFF,
+                      price: 0,
+                      weight: bobbinData.weightGrams,
                       remainingWeight:
-                          (bobbinData.weightGrams as num?)?.toDouble() ?? 1000.0,
+                          bobbinData.weightGrams,
                       addedDate: DateTime.now(),
-                      detailedType: bobbinData.detailedType as String?,
-                      dryingTemp: bobbinData.dryingTemp as int?,
-                      dryingTime: bobbinData.dryingTime as int?,
-                      materialVariantId: bobbinData.materialVariantId as String?,
-                      materialId: bobbinData.materialId as String?,
+                      detailedType: bobbinData.detailedType,
+                      dryingTemp: bobbinData.dryingTemp,
+                      dryingTime: bobbinData.dryingTime,
+                      materialVariantId: bobbinData.materialVariantId,
+                      materialId: bobbinData.materialId,
                     );
 
                     // Ajouter à la liste de courses
@@ -1447,8 +1456,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
             ),
           ),
           // Liste des items
-          _shoppingList.isEmpty
-              ? Padding(
+          if (_shoppingList.isEmpty) Padding(
                   padding: const EdgeInsets.all(32),
                   child: Column(
                     children: [
@@ -1468,8 +1476,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
                       ),
                     ],
                   ),
-                )
-              : ListView.separated(
+                ) else ListView.separated(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   itemCount:
@@ -1498,8 +1505,9 @@ class _StatisticsPageState extends State<StatisticsPage> {
 
                     // Calculer l'index réel en tenant compte des pubs
                     final spoolIndex = index - (index ~/ 6);
-                    if (spoolIndex >= _shoppingList.length)
+                    if (spoolIndex >= _shoppingList.length) {
                       return const SizedBox.shrink();
+                    }
 
                     final spool = _shoppingList[spoolIndex];
                     return _buildShoppingListItem(
@@ -1534,7 +1542,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
         decoration: BoxDecoration(
           color: color,
           borderRadius: BorderRadius.circular(8),
-          border: Border.all(color: Colors.grey.shade300, width: 1),
+          border: Border.all(color: Colors.grey.shade300),
         ),
       ),
       title: Text(

@@ -50,7 +50,7 @@ class AuthService {
       try {
         final response = await http.post(
           Uri.parse('${ApiConfig.baseUrl}${ApiConfig.loginWithApple}'),
-          headers: {'Content-Type': 'application/json'},
+          headers: {'Content-Type': 'application/json', ...ApiConfig.commonHeaders},
           body: jsonEncode({
             'identityToken': credential.identityToken,
             'authorizationCode': credential.authorizationCode,
@@ -130,7 +130,7 @@ class AuthService {
       try {
         final response = await http.post(
           Uri.parse('${ApiConfig.baseUrl}${ApiConfig.loginWithGoogle}'),
-          headers: {'Content-Type': 'application/json'},
+          headers: {'Content-Type': 'application/json', ...ApiConfig.commonHeaders},
           body: jsonEncode({
             'idToken': googleAuth.idToken,
           }),
