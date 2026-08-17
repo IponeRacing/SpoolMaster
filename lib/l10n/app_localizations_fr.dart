@@ -1586,6 +1586,20 @@ class AppLocalizationsFrCa extends AppLocalizationsFr {
   String get selectOrEnterBrand => 'Veuillez sélectionner ou entrer une marque';
 
   @override
+  String get quantity => 'Quantité';
+
+  @override
+  String get quantityHelper => 'Ajoutez plusieurs bobines identiques à la fois';
+
+  @override
+  String get quantityInvalid => 'Entrez un nombre entre 1 et 99';
+
+  @override
+  String spoolsInStockCount(int count) {
+    return '$count en stock';
+  }
+
+  @override
   String get enterMaterial => 'Veuillez entrer un matériau';
 
   @override

@@ -315,14 +315,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get selectOrEnterBrand => 'Por favor selecciona o ingresa una marca';
 
   @override
-  String get quantity => 'Quantité';
+  String get quantity => 'Cantidad';
 
   @override
-  String get quantityHelper =>
-      'Ajouter plusieurs bobines identiques d\'un coup';
+  String get quantityHelper => 'Añade varias bobinas idénticas a la vez';
 
   @override
-  String get quantityInvalid => 'Entrez un nombre entre 1 et 99';
+  String get quantityInvalid => 'Introduce un número entre 1 y 99';
 
   @override
   String spoolsInStockCount(int count) {

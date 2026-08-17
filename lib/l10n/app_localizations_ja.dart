@@ -311,18 +311,17 @@ class AppLocalizationsJa extends AppLocalizations {
   String get selectOrEnterBrand => 'ブランドを選択または入力してください';
 
   @override
-  String get quantity => 'Quantité';
+  String get quantity => '数量';
 
   @override
-  String get quantityHelper =>
-      'Ajouter plusieurs bobines identiques d\'un coup';
+  String get quantityHelper => '同じスプールを一度に複数追加';
 
   @override
-  String get quantityInvalid => 'Entrez un nombre entre 1 et 99';
+  String get quantityInvalid => '1〜99の数値を入力してください';
 
   @override
   String spoolsInStockCount(int count) {
-    return '$count en stock';
+    return '在庫 $count 個';
   }
 
   @override

@@ -315,18 +315,17 @@ class AppLocalizationsHu extends AppLocalizations {
   String get selectOrEnterBrand => 'Kérlek válassz vagy adj meg egy márkát';
 
   @override
-  String get quantity => 'Quantité';
+  String get quantity => 'Mennyiség';
 
   @override
-  String get quantityHelper =>
-      'Ajouter plusieurs bobines identiques d\'un coup';
+  String get quantityHelper => 'Több azonos tekercs hozzáadása egyszerre';
 
   @override
-  String get quantityInvalid => 'Entrez un nombre entre 1 et 99';
+  String get quantityInvalid => 'Adjon meg egy számot 1 és 99 között';
 
   @override
   String spoolsInStockCount(int count) {
-    return '$count en stock';
+    return '$count raktáron';
   }
 
   @override

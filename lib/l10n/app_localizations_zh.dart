@@ -310,18 +310,17 @@ class AppLocalizationsZh extends AppLocalizations {
   String get selectOrEnterBrand => '请选择或输入品牌';
 
   @override
-  String get quantity => 'Quantité';
+  String get quantity => '数量';
 
   @override
-  String get quantityHelper =>
-      'Ajouter plusieurs bobines identiques d\'un coup';
+  String get quantityHelper => '一次添加多个相同的线轴';
 
   @override
-  String get quantityInvalid => 'Entrez un nombre entre 1 et 99';
+  String get quantityInvalid => '输入 1 到 99 之间的数字';
 
   @override
   String spoolsInStockCount(int count) {
-    return '$count en stock';
+    return '库存 $count 个';
   }
 
   @override
@@ -1544,6 +1543,20 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String get selectOrEnterBrand => '请选择或输入品牌';
+
+  @override
+  String get quantity => '數量';
+
+  @override
+  String get quantityHelper => '一次新增多個相同的線軸';
+
+  @override
+  String get quantityInvalid => '輸入 1 到 99 之間的數字';
+
+  @override
+  String spoolsInStockCount(int count) {
+    return '庫存 $count 個';
+  }
 
   @override
   String get enterMaterial => '请输入材料';

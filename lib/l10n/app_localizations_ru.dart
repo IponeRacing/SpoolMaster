@@ -315,18 +315,17 @@ class AppLocalizationsRu extends AppLocalizations {
   String get selectOrEnterBrand => 'Пожалуйста, выберите или введите бренд';
 
   @override
-  String get quantity => 'Quantité';
+  String get quantity => 'Количество';
 
   @override
-  String get quantityHelper =>
-      'Ajouter plusieurs bobines identiques d\'un coup';
+  String get quantityHelper => 'Добавьте несколько одинаковых катушек сразу';
 
   @override
-  String get quantityInvalid => 'Entrez un nombre entre 1 et 99';
+  String get quantityInvalid => 'Введите число от 1 до 99';
 
   @override
   String spoolsInStockCount(int count) {
-    return '$count en stock';
+    return '$count в наличии';
   }
 
   @override

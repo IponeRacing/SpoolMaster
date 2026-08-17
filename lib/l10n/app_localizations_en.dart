@@ -1580,6 +1580,20 @@ class AppLocalizationsEnAu extends AppLocalizationsEn {
   String get selectOrEnterBrand => 'Please select or enter a brand';
 
   @override
+  String get quantity => 'Quantity';
+
+  @override
+  String get quantityHelper => 'Add several identical spools at once';
+
+  @override
+  String get quantityInvalid => 'Enter a number between 1 and 99';
+
+  @override
+  String spoolsInStockCount(int count) {
+    return '$count in stock';
+  }
+
+  @override
   String get enterMaterial => 'Please enter a material';
 
   @override
@@ -2820,6 +2834,20 @@ class AppLocalizationsEnCa extends AppLocalizationsEn {
   String get selectOrEnterBrand => 'Please select or enter a brand';
 
   @override
+  String get quantity => 'Quantity';
+
+  @override
+  String get quantityHelper => 'Add several identical spools at once';
+
+  @override
+  String get quantityInvalid => 'Enter a number between 1 and 99';
+
+  @override
+  String spoolsInStockCount(int count) {
+    return '$count in stock';
+  }
+
+  @override
   String get enterMaterial => 'Please enter a material';
 
   @override
@@ -4058,6 +4086,20 @@ class AppLocalizationsEnGb extends AppLocalizationsEn {
 
   @override
   String get selectOrEnterBrand => 'Please select or enter a brand';
+
+  @override
+  String get quantity => 'Quantity';
+
+  @override
+  String get quantityHelper => 'Add several identical spools at once';
+
+  @override
+  String get quantityInvalid => 'Enter a number between 1 and 99';
+
+  @override
+  String spoolsInStockCount(int count) {
+    return '$count in stock';
+  }
 
   @override
   String get enterMaterial => 'Please enter a material';

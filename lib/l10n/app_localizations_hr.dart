@@ -315,18 +315,17 @@ class AppLocalizationsHr extends AppLocalizations {
   String get selectOrEnterBrand => 'Molimo odaberite ili unesite marku';
 
   @override
-  String get quantity => 'Quantité';
+  String get quantity => 'Količina';
 
   @override
-  String get quantityHelper =>
-      'Ajouter plusieurs bobines identiques d\'un coup';
+  String get quantityHelper => 'Dodajte nekoliko istih koluta odjednom';
 
   @override
-  String get quantityInvalid => 'Entrez un nombre entre 1 et 99';
+  String get quantityInvalid => 'Unesite broj između 1 i 99';
 
   @override
   String spoolsInStockCount(int count) {
-    return '$count en stock';
+    return '$count na zalihi';
   }
 
   @override

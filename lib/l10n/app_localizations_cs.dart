@@ -313,18 +313,17 @@ class AppLocalizationsCs extends AppLocalizations {
   String get selectOrEnterBrand => 'Vyberte nebo zadejte značku';
 
   @override
-  String get quantity => 'Quantité';
+  String get quantity => 'Množství';
 
   @override
-  String get quantityHelper =>
-      'Ajouter plusieurs bobines identiques d\'un coup';
+  String get quantityHelper => 'Přidejte více stejných cívek najednou';
 
   @override
-  String get quantityInvalid => 'Entrez un nombre entre 1 et 99';
+  String get quantityInvalid => 'Zadejte číslo mezi 1 a 99';
 
   @override
   String spoolsInStockCount(int count) {
-    return '$count en stock';
+    return '$count skladem';
   }
 
   @override

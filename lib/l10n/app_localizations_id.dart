@@ -315,18 +315,17 @@ class AppLocalizationsId extends AppLocalizations {
   String get selectOrEnterBrand => 'Silakan pilih atau masukkan merek';
 
   @override
-  String get quantity => 'Quantité';
+  String get quantity => 'Jumlah';
 
   @override
-  String get quantityHelper =>
-      'Ajouter plusieurs bobines identiques d\'un coup';
+  String get quantityHelper => 'Tambahkan beberapa gulungan identik sekaligus';
 
   @override
-  String get quantityInvalid => 'Entrez un nombre entre 1 et 99';
+  String get quantityInvalid => 'Masukkan angka antara 1 dan 99';
 
   @override
   String spoolsInStockCount(int count) {
-    return '$count en stock';
+    return '$count tersedia';
   }
 
   @override

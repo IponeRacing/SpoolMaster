@@ -315,18 +315,17 @@ class AppLocalizationsVi extends AppLocalizations {
   String get selectOrEnterBrand => 'Vui lòng chọn hoặc nhập thương hiệu';
 
   @override
-  String get quantity => 'Quantité';
+  String get quantity => 'Số lượng';
 
   @override
-  String get quantityHelper =>
-      'Ajouter plusieurs bobines identiques d\'un coup';
+  String get quantityHelper => 'Thêm nhiều cuộn giống nhau cùng lúc';
 
   @override
-  String get quantityInvalid => 'Entrez un nombre entre 1 et 99';
+  String get quantityInvalid => 'Nhập một số từ 1 đến 99';
 
   @override
   String spoolsInStockCount(int count) {
-    return '$count en stock';
+    return '$count trong kho';
   }
 
   @override

@@ -315,18 +315,17 @@ class AppLocalizationsTr extends AppLocalizations {
   String get selectOrEnterBrand => 'Lütfen bir marka seçin veya girin';
 
   @override
-  String get quantity => 'Quantité';
+  String get quantity => 'Miktar';
 
   @override
-  String get quantityHelper =>
-      'Ajouter plusieurs bobines identiques d\'un coup';
+  String get quantityHelper => 'Aynı anda birden fazla özdeş makara ekleyin';
 
   @override
-  String get quantityInvalid => 'Entrez un nombre entre 1 et 99';
+  String get quantityInvalid => '1 ile 99 arasında bir sayı girin';
 
   @override
   String spoolsInStockCount(int count) {
-    return '$count en stock';
+    return '$count stokta';
   }
 
   @override

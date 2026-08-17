@@ -315,18 +315,17 @@ class AppLocalizationsFi extends AppLocalizations {
   String get selectOrEnterBrand => 'Valitse tai anna merkki';
 
   @override
-  String get quantity => 'Quantité';
+  String get quantity => 'Määrä';
 
   @override
-  String get quantityHelper =>
-      'Ajouter plusieurs bobines identiques d\'un coup';
+  String get quantityHelper => 'Lisää useita samanlaisia keloja kerralla';
 
   @override
-  String get quantityInvalid => 'Entrez un nombre entre 1 et 99';
+  String get quantityInvalid => 'Anna luku väliltä 1–99';
 
   @override
   String spoolsInStockCount(int count) {
-    return '$count en stock';
+    return '$count varastossa';
   }
 
   @override

@@ -314,18 +314,17 @@ class AppLocalizationsRo extends AppLocalizations {
   String get selectOrEnterBrand => 'Te rog selectează sau introdu o marcă';
 
   @override
-  String get quantity => 'Quantité';
+  String get quantity => 'Cantitate';
 
   @override
-  String get quantityHelper =>
-      'Ajouter plusieurs bobines identiques d\'un coup';
+  String get quantityHelper => 'Adăugați mai multe bobine identice deodată';
 
   @override
-  String get quantityInvalid => 'Entrez un nombre entre 1 et 99';
+  String get quantityInvalid => 'Introduceți un număr între 1 și 99';
 
   @override
   String spoolsInStockCount(int count) {
-    return '$count en stock';
+    return '$count în stoc';
   }
 
   @override

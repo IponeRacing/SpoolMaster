@@ -312,18 +312,17 @@ class AppLocalizationsAr extends AppLocalizations {
   String get selectOrEnterBrand => 'الرجاء اختيار أو إدخال علامة تجارية';
 
   @override
-  String get quantity => 'Quantité';
+  String get quantity => 'الكمية';
 
   @override
-  String get quantityHelper =>
-      'Ajouter plusieurs bobines identiques d\'un coup';
+  String get quantityHelper => 'أضف عدة بكرات متطابقة دفعة واحدة';
 
   @override
-  String get quantityInvalid => 'Entrez un nombre entre 1 et 99';
+  String get quantityInvalid => 'أدخل رقمًا بين 1 و99';
 
   @override
   String spoolsInStockCount(int count) {
-    return '$count en stock';
+    return '$count في المخزون';
   }
 
   @override

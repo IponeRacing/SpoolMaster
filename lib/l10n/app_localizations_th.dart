@@ -314,18 +314,17 @@ class AppLocalizationsTh extends AppLocalizations {
   String get selectOrEnterBrand => 'กรุณาเลือกหรือระบุยี่ห้อ';
 
   @override
-  String get quantity => 'Quantité';
+  String get quantity => 'จำนวน';
 
   @override
-  String get quantityHelper =>
-      'Ajouter plusieurs bobines identiques d\'un coup';
+  String get quantityHelper => 'เพิ่มสปูลที่เหมือนกันหลายอันพร้อมกัน';
 
   @override
-  String get quantityInvalid => 'Entrez un nombre entre 1 et 99';
+  String get quantityInvalid => 'ป้อนตัวเลขระหว่าง 1 ถึง 99';
 
   @override
   String spoolsInStockCount(int count) {
-    return '$count en stock';
+    return 'มีในสต็อก $count อัน';
   }
 
   @override

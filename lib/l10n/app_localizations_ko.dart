@@ -311,18 +311,17 @@ class AppLocalizationsKo extends AppLocalizations {
   String get selectOrEnterBrand => '브랜드를 선택하거나 입력하세요';
 
   @override
-  String get quantity => 'Quantité';
+  String get quantity => '수량';
 
   @override
-  String get quantityHelper =>
-      'Ajouter plusieurs bobines identiques d\'un coup';
+  String get quantityHelper => '동일한 스풀을 한 번에 여러 개 추가';
 
   @override
-  String get quantityInvalid => 'Entrez un nombre entre 1 et 99';
+  String get quantityInvalid => '1에서 99 사이의 숫자를 입력하세요';
 
   @override
   String spoolsInStockCount(int count) {
-    return '$count en stock';
+    return '재고 $count개';
   }
 
   @override

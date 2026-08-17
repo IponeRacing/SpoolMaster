@@ -312,18 +312,17 @@ class AppLocalizationsHe extends AppLocalizations {
   String get selectOrEnterBrand => 'אנא בחר או הזן מותג';
 
   @override
-  String get quantity => 'Quantité';
+  String get quantity => 'כמות';
 
   @override
-  String get quantityHelper =>
-      'Ajouter plusieurs bobines identiques d\'un coup';
+  String get quantityHelper => 'הוסף מספר סלילים זהים בבת אחת';
 
   @override
-  String get quantityInvalid => 'Entrez un nombre entre 1 et 99';
+  String get quantityInvalid => 'הזן מספר בין 1 ל-99';
 
   @override
   String spoolsInStockCount(int count) {
-    return '$count en stock';
+    return '$count במלאי';
   }
 
   @override

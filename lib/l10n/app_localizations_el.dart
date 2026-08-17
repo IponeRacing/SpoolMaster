@@ -315,18 +315,18 @@ class AppLocalizationsEl extends AppLocalizations {
   String get selectOrEnterBrand => 'Παρακαλώ επιλέξτε ή εισάγετε μια μάρκα';
 
   @override
-  String get quantity => 'Quantité';
+  String get quantity => 'Ποσότητα';
 
   @override
   String get quantityHelper =>
-      'Ajouter plusieurs bobines identiques d\'un coup';
+      'Προσθέστε πολλές πανομοιότυπες μπομπίνες ταυτόχρονα';
 
   @override
-  String get quantityInvalid => 'Entrez un nombre entre 1 et 99';
+  String get quantityInvalid => 'Εισαγάγετε έναν αριθμό μεταξύ 1 και 99';
 
   @override
   String spoolsInStockCount(int count) {
-    return '$count en stock';
+    return '$count σε απόθεμα';
   }
 
   @override
