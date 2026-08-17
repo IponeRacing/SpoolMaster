@@ -85,6 +85,7 @@ platform :ios do
       skip_metadata: true,
       skip_screenshots: true,
       force: true,
+      ignore_language_directory_validation: true,
       run_precheck_before_submit: false,
       precheck_include_in_app_purchases: false,
       submit_for_review: true,
@@ -162,6 +163,14 @@ platform :android do
         notes.gsub!(/\s*[\(（]Android[\)）]/, '')  # Supprimer markers (Android) et （Android）
         notes.gsub!(/^-.*(?:Android.*iOS|iOS.*Android).*\n?/, '')  # Supprimer lignes mentionnant Android+iOS
         notes.strip!
+        # Google Play limite les changelogs à 500 caractères (iOS: 4000).
+        # Tronquer proprement sur une frontière de phrase/mot si dépassement.
+        if notes.length > 500
+          cut = notes[0, 500]
+          # revenir au dernier point/espace pour ne pas couper un mot
+          boundary = cut.rindex(/[.!?]\s/) || cut.rindex(' ')
+          notes = boundary ? cut[0, boundary + 1].strip : cut.strip
+        end
         File.write(File.join(android_dir, 'changelogs', 'default.txt'), notes)
       end
     end
