@@ -763,6 +763,30 @@ abstract class AppLocalizations {
   /// **'Veuillez sélectionner ou entrer une marque'**
   String get selectOrEnterBrand;
 
+  /// No description provided for @quantity.
+  ///
+  /// In fr, this message translates to:
+  /// **'Quantité'**
+  String get quantity;
+
+  /// No description provided for @quantityHelper.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ajouter plusieurs bobines identiques d\'un coup'**
+  String get quantityHelper;
+
+  /// No description provided for @quantityInvalid.
+  ///
+  /// In fr, this message translates to:
+  /// **'Entrez un nombre entre 1 et 99'**
+  String get quantityInvalid;
+
+  /// No description provided for @spoolsInStockCount.
+  ///
+  /// In fr, this message translates to:
+  /// **'{count} en stock'**
+  String spoolsInStockCount(int count);
+
   /// No description provided for @enterMaterial.
   ///
   /// In fr, this message translates to:

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:nfc_filament/core/models/spool_inventory_item.dart';
@@ -26,18 +27,18 @@ class SpoolStorageService {
   static Future<List<SpoolInventoryItem>> loadSpools() async {
     final prefs = await SharedPreferences.getInstance();
     final key = await _getStorageKey();
-    final String? data = prefs.getString(key);
+    final data = prefs.getString(key);
 
     // Si pas de données avec la clé scopée, essayer la clé non-scopée (migration)
     if (data == null && key != _keyPrefix) {
-      final String? legacyData = prefs.getString(_keyPrefix);
+      final legacyData = prefs.getString(_keyPrefix);
       if (legacyData != null) {
         debugPrint('Migrating spools from legacy key to user-scoped key');
         // Migrer les données vers la nouvelle clé
         await prefs.setString(key, legacyData);
         // Supprimer l'ancienne clé
         await prefs.remove(_keyPrefix);
-        final List<dynamic> jsonList = jsonDecode(legacyData) as List<dynamic>;
+        final jsonList = jsonDecode(legacyData) as List<dynamic>;
         return jsonList
             .map(
               (json) => SpoolInventoryItem.fromJson(json as Map<String, dynamic>),
@@ -48,7 +49,7 @@ class SpoolStorageService {
 
     if (data == null) return [];
 
-    final List<dynamic> jsonList = jsonDecode(data) as List<dynamic>;
+    final jsonList = jsonDecode(data) as List<dynamic>;
     return jsonList
         .map(
           (json) => SpoolInventoryItem.fromJson(json as Map<String, dynamic>),
@@ -62,14 +63,14 @@ class SpoolStorageService {
     final allKeys = prefs.getKeys();
     final spoolKeys = allKeys.where((k) => k.startsWith(_keyPrefix));
 
-    final List<SpoolInventoryItem> allSpools = [];
-    final Set<String> seenIds = {};
+    final allSpools = <SpoolInventoryItem>[];
+    final seenIds = <String>{};
 
     for (final key in spoolKeys) {
-      final String? data = prefs.getString(key);
+      final data = prefs.getString(key);
       if (data != null) {
         try {
-          final List<dynamic> jsonList = jsonDecode(data) as List<dynamic>;
+          final jsonList = jsonDecode(data) as List<dynamic>;
           for (final json in jsonList) {
             final spool = SpoolInventoryItem.fromJson(json as Map<String, dynamic>);
             // Éviter les doublons par ID
@@ -90,7 +91,7 @@ class SpoolStorageService {
   static Future<void> saveSpools(List<SpoolInventoryItem> spools) async {
     final prefs = await SharedPreferences.getInstance();
     final key = await _getStorageKey();
-    final String data = jsonEncode(spools.map((s) => s.toJson()).toList());
+    final data = jsonEncode(spools.map((s) => s.toJson()).toList());
     await prefs.setString(key, data);
     // Notifier les changements
     stockChangedNotifier.value++;
@@ -101,15 +102,54 @@ class SpoolStorageService {
     spools.add(spool);
     await saveSpools(spools);
     // Sync to backend
-    SyncService.syncSpool(spool);
+    unawaited(SyncService.syncSpool(spool));
     // Log to analytics
-    AnalyticsService.logNfcScan(
+    unawaited(AnalyticsService.logNfcScan(
       scanType: 'scan_add_spool',
       brand: spool.brand,
       material: spool.material,
       color: spool.colorName,
       success: true,
-    );
+    ));
+  }
+
+  /// Regroupe les bobines identiques (marque + matériau + couleur RGB),
+  /// en préservant l'ordre d'apparition. Chaque bobine reste distincte.
+  /// Fonction pure (testable) utilisée par l'affichage de l'inventaire.
+  static List<List<SpoolInventoryItem>> groupIdentical(
+    List<SpoolInventoryItem> spools,
+  ) {
+    final groups = <String, List<SpoolInventoryItem>>{};
+    final order = <String>[];
+    for (final spool in spools) {
+      final key = '${spool.brand.toLowerCase().trim()}|'
+          '${spool.material.toLowerCase().trim()}|${spool.colorRgb}';
+      if (!groups.containsKey(key)) {
+        groups[key] = [];
+        order.add(key);
+      }
+      groups[key]!.add(spool);
+    }
+    return [for (final k in order) groups[k]!];
+  }
+
+  /// Ajoute plusieurs bobines identiques d'un coup (champ quantité).
+  /// Chaque bobine reste une entrée distincte avec son propre poids restant.
+  static Future<void> addSpools(List<SpoolInventoryItem> newSpools) async {
+    if (newSpools.isEmpty) return;
+    final spools = await loadSpools();
+    spools.addAll(newSpools);
+    await saveSpools(spools);
+    for (final spool in newSpools) {
+      unawaited(SyncService.syncSpool(spool));
+    }
+    unawaited(AnalyticsService.logNfcScan(
+      scanType: 'scan_add_spool',
+      brand: newSpools.first.brand,
+      material: newSpools.first.material,
+      color: newSpools.first.colorName,
+      success: true,
+    ));
   }
 
   static Future<void> updateSpool(String id, SpoolInventoryItem spool) async {
@@ -119,7 +159,7 @@ class SpoolStorageService {
       spools[index] = spool;
       await saveSpools(spools);
       // Sync to backend
-      SyncService.syncSpool(spool);
+      unawaited(SyncService.syncSpool(spool));
     }
   }
 
@@ -128,6 +168,6 @@ class SpoolStorageService {
     spools.removeWhere((s) => s.id == id);
     await saveSpools(spools);
     // Sync deletion to backend
-    SyncService.deleteSpool(id);
+    unawaited(SyncService.deleteSpool(id));
   }
 }

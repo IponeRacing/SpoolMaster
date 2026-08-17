@@ -420,6 +420,12 @@ class _StockListPageState extends State<StockListPage> {
     }).toList();
   }
 
+  /// Regroupe les bobines identiques (marque + matériau + couleur RGB).
+  /// Chaque bobine reste distincte (poids restant individuel) mais elles
+  /// s'affichent sous une entrée maître dépliable. Ordre préservé.
+  List<List<SpoolInventoryItem>> get _groupedSpools =>
+      SpoolStorageService.groupIdentical(_spools);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -513,86 +519,28 @@ class _StockListPageState extends State<StockListPage> {
                     vertical: 8,
                   ),
                 ),
-                // Liste des bobines
+                // Liste des bobines, regroupées par type
                 Expanded(
-                  child: ListView.builder(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    itemCount:
-                        _spools.length +
-                        (_spools.length ~/ 5), // Ajouter des slots pour pubs
-                    itemBuilder: (context, index) {
-                      // Afficher une pub toutes les 5 items
-                      if (index > 0 && (index + 1) % 6 == 0) {
-                        return AdBannerWidget(
-                          adUnitId: AdMobService().stockListBannerId,
-                          margin: const EdgeInsets.symmetric(vertical: 12),
-                        );
-                      }
-
-                      // Calculer l'index réel en tenant compte des pubs
-                      final spoolIndex = index - (index ~/ 6);
-                      if (spoolIndex >= _spools.length) {
-                        return const SizedBox.shrink();
-                      }
-
-                      final spool = _spools[spoolIndex];
-                      return Dismissible(
-                        key: Key(spool.id),
-                        direction: DismissDirection.endToStart,
-                        background: Container(
-                          margin: const EdgeInsets.only(bottom: 12),
-                          decoration: BoxDecoration(
-                            color: Colors.red,
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          alignment: Alignment.centerRight,
-                          padding: const EdgeInsets.only(right: 20),
-                          child: const Icon(Icons.delete, color: Colors.white),
-                        ),
-                        confirmDismiss: (direction) async {
-                          return showDialog(
-                            context: context,
-                            builder: (context) => AlertDialog(
-                              title: Text(
-                                AppLocalizations.of(context)!.deleteThisSpool,
-                              ),
-                              content: Text(
-                                AppLocalizations.of(context)!.cannotBeUndone,
-                              ),
-                              actions: [
-                                TextButton(
-                                  onPressed: () =>
-                                      Navigator.pop(context, false),
-                                  child: Text(
-                                    AppLocalizations.of(context)!.cancel,
-                                  ),
-                                ),
-                                TextButton(
-                                  onPressed: () => Navigator.pop(context, true),
-                                  child: Text(
-                                    AppLocalizations.of(context)!.delete,
-                                    style: const TextStyle(color: Colors.red),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          );
-                        },
-                        onDismissed: (direction) async {
-                          await SpoolStorageService.deleteSpool(spool.id);
-                          await _loadSpools();
-                          if (context.mounted) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text(
-                                  AppLocalizations.of(context)!.scanDeleted,
-                                ),
-                                duration: const Duration(seconds: 2),
-                              ),
+                  child: Builder(
+                    builder: (context) {
+                      final groups = _groupedSpools;
+                      return ListView.builder(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        itemCount: groups.length + (groups.length ~/ 5),
+                        itemBuilder: (context, index) {
+                          // Une pub tous les 6 éléments
+                          if (index > 0 && (index + 1) % 6 == 0) {
+                            return AdBannerWidget(
+                              adUnitId: AdMobService().stockListBannerId,
+                              margin: const EdgeInsets.symmetric(vertical: 12),
                             );
                           }
+                          final groupIndex = index - (index ~/ 6);
+                          if (groupIndex >= groups.length) {
+                            return const SizedBox.shrink();
+                          }
+                          return _buildGroupTile(groups[groupIndex]);
                         },
-                        child: _buildSpoolCard(spool),
                       );
                     },
                   ),
@@ -645,6 +593,138 @@ class _StockListPageState extends State<StockListPage> {
           ],
         ),
       ),
+    );
+  }
+
+  /// Affiche un groupe de bobines identiques : si une seule, carte simple ;
+  /// sinon une entrée maître dépliable ("×N en stock") révélant chaque bobine
+  /// avec son propre poids restant.
+  Widget _buildGroupTile(List<SpoolInventoryItem> group) {
+    if (group.length == 1) {
+      return _buildDismissibleSpool(group.first);
+    }
+
+    final master = group.first;
+    final color = Color(0xFF000000 | master.colorRgb);
+    final totalRemaining = group.fold<double>(
+      0,
+      (sum, s) => sum + s.remainingWeight,
+    );
+    final totalWeight = group.fold<double>(0, (sum, s) => sum + s.weight);
+    final pct = totalWeight > 0 ? (totalRemaining / totalWeight * 100).clamp(0, 100) : 0.0;
+
+    return Card(
+      margin: const EdgeInsets.only(bottom: 12),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      child: Theme(
+        // Retire les séparateurs par défaut de l'ExpansionTile
+        data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+        child: ExpansionTile(
+          tilePadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+          childrenPadding: const EdgeInsets.fromLTRB(12, 0, 12, 8),
+          leading: Container(
+            width: 48,
+            height: 48,
+            decoration: BoxDecoration(
+              color: color,
+              borderRadius: BorderRadius.circular(8),
+              border: Border.all(color: Colors.grey.shade300),
+            ),
+          ),
+          title: Text(
+            '${master.brand} - ${master.material}',
+            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          ),
+          subtitle: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 4),
+              Text(translateColorName(context, master.colorName)),
+              const SizedBox(height: 6),
+              Row(
+                children: [
+                  Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                    decoration: BoxDecoration(
+                      color: AppTheme.anycubicRed.withValues(alpha: 0.12),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Text(
+                      AppLocalizations.of(context)!.spoolsInStockCount(group.length),
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: AppTheme.anycubicRed,
+                        fontSize: 12,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  Text(
+                    '${totalRemaining.toStringAsFixed(0)} g (${pct.toStringAsFixed(0)}%)',
+                    style: TextStyle(fontSize: 12, color: Colors.grey.shade600),
+                  ),
+                ],
+              ),
+            ],
+          ),
+          children: [
+            for (final spool in group) _buildDismissibleSpool(spool),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildDismissibleSpool(SpoolInventoryItem spool) {
+    return Dismissible(
+      key: Key(spool.id),
+      direction: DismissDirection.endToStart,
+      background: Container(
+        margin: const EdgeInsets.only(bottom: 12),
+        decoration: BoxDecoration(
+          color: Colors.red,
+          borderRadius: BorderRadius.circular(12),
+        ),
+        alignment: Alignment.centerRight,
+        padding: const EdgeInsets.only(right: 20),
+        child: const Icon(Icons.delete, color: Colors.white),
+      ),
+      confirmDismiss: (direction) async {
+        return showDialog<bool>(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text(AppLocalizations.of(context)!.deleteThisSpool),
+            content: Text(AppLocalizations.of(context)!.cannotBeUndone),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context, false),
+                child: Text(AppLocalizations.of(context)!.cancel),
+              ),
+              TextButton(
+                onPressed: () => Navigator.pop(context, true),
+                child: Text(
+                  AppLocalizations.of(context)!.delete,
+                  style: const TextStyle(color: Colors.red),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+      onDismissed: (direction) async {
+        await SpoolStorageService.deleteSpool(spool.id);
+        await _loadSpools();
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(AppLocalizations.of(context)!.scanDeleted),
+              duration: const Duration(seconds: 2),
+            ),
+          );
+        }
+      },
+      child: _buildSpoolCard(spool),
     );
   }
 
@@ -942,8 +1022,21 @@ class _StockListPageState extends State<StockListPage> {
       context,
       MaterialPageRoute<void>(
         builder: (context) => ManualAddSpoolPage(
+          showQuantity: true,
           onSave: (spool) async {
             await SpoolStorageService.addSpool(spool);
+            await _loadSpools();
+            if (context.mounted) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(AppLocalizations.of(context)!.spoolAdded),
+                  duration: const Duration(seconds: 2),
+                ),
+              );
+            }
+          },
+          onSaveBatch: (spools) async {
+            await SpoolStorageService.addSpools(spools);
             await _loadSpools();
             if (context.mounted) {
               ScaffoldMessenger.of(context).showSnackBar(

@@ -9,10 +9,23 @@ import 'package:nfc_filament/l10n/app_localizations.dart';
 
 // Manual Add/Edit Form Page
 class ManualAddSpoolPage extends StatefulWidget {
-  const ManualAddSpoolPage({required this.onSave, this.editSpool, super.key});
+  const ManualAddSpoolPage({
+    required this.onSave,
+    this.editSpool,
+    this.onSaveBatch,
+    this.showQuantity = false,
+    super.key,
+  });
 
   final void Function(SpoolInventoryItem) onSave;
+
+  /// Appelé à la place de [onSave] quand la quantité > 1 (ajout multiple).
+  /// Si null, [onSave] est appelé pour chaque bobine générée.
+  final void Function(List<SpoolInventoryItem>)? onSaveBatch;
   final SpoolInventoryItem? editSpool;
+
+  /// Affiche le champ Quantité (ajout au stock uniquement, pas liste de courses)
+  final bool showQuantity;
 
   @override
   State<ManualAddSpoolPage> createState() => _ManualAddSpoolPageState();
@@ -34,6 +47,7 @@ class _ManualAddSpoolPageState extends State<ManualAddSpoolPage> {
   late TextEditingController _spoolLengthController;
   late TextEditingController _dryingTempController;
   late TextEditingController _dryingTimeController;
+  final _quantityController = TextEditingController(text: '1');
 
   Color _selectedColor = Colors.blue;
   String? _selectedBrand;
@@ -137,6 +151,7 @@ class _ManualAddSpoolPageState extends State<ManualAddSpoolPage> {
     _spoolLengthController.dispose();
     _dryingTempController.dispose();
     _dryingTimeController.dispose();
+    _quantityController.dispose();
     super.dispose();
   }
 
@@ -153,15 +168,40 @@ class _ManualAddSpoolPageState extends State<ManualAddSpoolPage> {
           style: const TextStyle(fontWeight: FontWeight.bold),
         ),
       ),
-      body: Form(
-        key: _formKey,
-        child: ListView(
-          padding: const EdgeInsets.all(16),
-          children: [
+      body: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 600),
+          child: Form(
+            key: _formKey,
+            child: ListView(
+              padding: const EdgeInsets.all(16),
+              children: [
+            // Quantité (ajout au stock uniquement, pas en édition/liste de courses)
+            if (widget.showQuantity && widget.editSpool == null) ...[
+              TextFormField(
+                controller: _quantityController,
+                keyboardType: TextInputType.number,
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                decoration: InputDecoration(
+                  labelText: AppLocalizations.of(context)!.quantity,
+                  helperText: AppLocalizations.of(context)!.quantityHelper,
+                  border: const OutlineInputBorder(),
+                  prefixIcon: const Icon(Icons.numbers),
+                ),
+                validator: (value) {
+                  final n = int.tryParse(value ?? '');
+                  if (n == null || n < 1 || n > 99) {
+                    return AppLocalizations.of(context)!.quantityInvalid;
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 16),
+            ],
             // Dropdown Marque
             if (!_isCustomBrand)
               DropdownButtonFormField<String>(
-                value: _selectedBrand,
+                initialValue: _selectedBrand,
                 decoration: InputDecoration(
                   labelText: AppLocalizations.of(context)!.brand,
                   border: const OutlineInputBorder(),
@@ -225,7 +265,7 @@ class _ManualAddSpoolPageState extends State<ManualAddSpoolPage> {
             // Dropdown Matériau
             if (!_isCustomMaterial)
               DropdownButtonFormField<String>(
-                value: _selectedMaterial,
+                initialValue: _selectedMaterial,
                 decoration: InputDecoration(
                   labelText: AppLocalizations.of(context)!.materialType,
                   border: const OutlineInputBorder(),
@@ -625,7 +665,9 @@ class _ManualAddSpoolPageState extends State<ManualAddSpoolPage> {
                 style: const TextStyle(fontSize: 16),
               ),
             ),
-          ],
+              ],
+            ),
+          ),
         ),
       ),
     );
@@ -649,14 +691,13 @@ class _ManualAddSpoolPageState extends State<ManualAddSpoolPage> {
                 _selectedColor = color;
               });
             },
-            showOpacitySlider: true,
           ),
         ),
       ),
     );
   }
 
-  void _saveSpool() async {
+  Future<void> _saveSpool() async {
     if (_formKey.currentState!.validate()) {
       final brand = _brandController.text.trim();
       final material = _materialController.text.trim();
@@ -669,45 +710,54 @@ class _ManualAddSpoolPageState extends State<ManualAddSpoolPage> {
         await BrandsMaterialsService.addCustomMaterial(material);
       }
 
-      final spool = SpoolInventoryItem(
-        id:
-            widget.editSpool?.id ??
-            DateTime.now().millisecondsSinceEpoch.toString(),
-        brand: brand,
-        material: material,
-        colorName: _colorNameController.text.trim(),
-        colorRgb: _selectedColor.value,
-        price: double.parse(_priceController.text),
-        weight: double.parse(_weightController.text),
-        remainingWeight: double.parse(_remainingWeightController.text),
-        addedDate: widget.editSpool?.addedDate ?? DateTime.now(),
-        extruderTempMin: _extruderTempMinController.text.isNotEmpty
-            ? int.parse(_extruderTempMinController.text)
-            : null,
-        extruderTempMax: _extruderTempMaxController.text.isNotEmpty
-            ? int.parse(_extruderTempMaxController.text)
-            : null,
-        bedTempMin: _bedTempMinController.text.isNotEmpty
-            ? int.parse(_bedTempMinController.text)
-            : null,
-        bedTempMax: _bedTempMaxController.text.isNotEmpty
-            ? int.parse(_bedTempMaxController.text)
-            : null,
-        diameter: _diameterController.text.isNotEmpty
-            ? double.parse(_diameterController.text)
-            : null,
-        spoolLength: _spoolLengthController.text.isNotEmpty
-            ? int.parse(_spoolLengthController.text)
-            : null,
-        dryingTemp: _dryingTempController.text.isNotEmpty
-            ? int.parse(_dryingTempController.text)
-            : null,
-        dryingTime: _dryingTimeController.text.isNotEmpty
-            ? int.parse(_dryingTimeController.text)
-            : null,
-      );
+      // Quantité (uniquement à l'ajout) : génère N bobines distinctes,
+      // chacune avec son propre id et son propre poids restant.
+      final isEditing = widget.editSpool != null;
+      final quantity = isEditing
+          ? 1
+          : (int.tryParse(_quantityController.text) ?? 1).clamp(1, 99);
 
-      widget.onSave(spool);
+      final baseTs = DateTime.now().millisecondsSinceEpoch;
+
+      SpoolInventoryItem buildSpool(String id) => SpoolInventoryItem(
+            id: id,
+            brand: brand,
+            material: material,
+            colorName: _colorNameController.text.trim(),
+            colorRgb: _selectedColor.toARGB32(),
+            price: double.tryParse(_priceController.text) ?? 0.0,
+            weight: double.tryParse(_weightController.text) ?? 0.0,
+            remainingWeight:
+                double.tryParse(_remainingWeightController.text) ?? 0.0,
+            addedDate: widget.editSpool?.addedDate ?? DateTime.now(),
+            extruderTempMin: int.tryParse(_extruderTempMinController.text),
+            extruderTempMax: int.tryParse(_extruderTempMaxController.text),
+            bedTempMin: int.tryParse(_bedTempMinController.text),
+            bedTempMax: int.tryParse(_bedTempMaxController.text),
+            diameter: double.tryParse(_diameterController.text),
+            spoolLength: int.tryParse(_spoolLengthController.text),
+            dryingTemp: int.tryParse(_dryingTempController.text),
+            dryingTime: int.tryParse(_dryingTimeController.text),
+          );
+
+      if (isEditing || quantity == 1) {
+        widget.onSave(buildSpool(
+          widget.editSpool?.id ?? baseTs.toString(),
+        ));
+      } else {
+        // Ids uniques : baseTs + index
+        final spools = List.generate(
+          quantity,
+          (i) => buildSpool('${baseTs}_$i'),
+        );
+        if (widget.onSaveBatch != null) {
+          widget.onSaveBatch!(spools);
+        } else {
+          spools.forEach(widget.onSave);
+        }
+      }
+
+      if (!mounted) return;
       Navigator.pop(context);
     }
   }

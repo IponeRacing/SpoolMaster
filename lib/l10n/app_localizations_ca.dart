@@ -316,6 +316,21 @@ class AppLocalizationsCa extends AppLocalizations {
       'Si us plau, selecciona o introdueix una marca';
 
   @override
+  String get quantity => 'Quantité';
+
+  @override
+  String get quantityHelper =>
+      'Ajouter plusieurs bobines identiques d\'un coup';
+
+  @override
+  String get quantityInvalid => 'Entrez un nombre entre 1 et 99';
+
+  @override
+  String spoolsInStockCount(int count) {
+    return '$count en stock';
+  }
+
+  @override
   String get enterMaterial => 'Si us plau, introdueix un material';
 
   @override
