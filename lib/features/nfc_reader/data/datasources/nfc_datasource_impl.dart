@@ -216,6 +216,7 @@ class NfcDataSourceImpl implements NfcDataSource {
       bedTempMax: bedMax,
       diameter: diameter,
       spoolLength: spoolLength,
+      brand: 'Anycubic',
     );
   }
 

@@ -117,6 +117,9 @@ void main() {
 
       expect(result.filamentType, 'PLA High Speed');
       expect(result.color, 'White');
+      // La marque doit être renseignée pour que la mise à jour de stock
+      // matche la bobine (sinon null→"Generic" ≠ "Anycubic" en inventaire)
+      expect(result.brand, 'Anycubic');
     });
 
     test('tag OpenSpool scanné en mode Anycubic → reconnu (plus de "Tag vide")',

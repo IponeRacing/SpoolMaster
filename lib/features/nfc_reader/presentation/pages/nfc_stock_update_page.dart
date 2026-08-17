@@ -352,30 +352,44 @@ class _NfcStockUpdateView extends StatelessWidget {
     final spools = await SpoolStorageService.loadSpools();
     debugPrint('🔍 [DIALOG] Found ${spools.length} spools in storage');
 
-    // Try to match by brand+material+color
+    // Trouver la bobine correspondante en inventaire.
+    // Le match exact marque+matériau+couleur est trop fragile (la marque
+    // Anycubic pouvait être null→"Generic", le nom de couleur peut varier).
+    // On matche par tiers, du plus fiable au plus permissif :
+    //  1. colorRgb (int stable issu du tag) + matériau
+    //  2. égalité exacte marque+matériau+nom de couleur (rétrocompat)
     SpoolInventoryItem? matchingSpool;
 
     // Normalize strings for comparison
     final scannedBrand = (bobbinData.brand ?? 'Generic').toLowerCase().trim();
     final scannedMaterial = bobbinData.filamentType.toLowerCase().trim();
     final scannedColor = bobbinData.color.toLowerCase().trim();
+    final scannedRgb = bobbinData.colorRgb;
 
-    debugPrint('🔍 [DIALOG] Normalized scan: "$scannedBrand" - "$scannedMaterial" - "$scannedColor"');
+    debugPrint('🔍 [DIALOG] Normalized scan: "$scannedBrand" - "$scannedMaterial" - "$scannedColor" - rgb:$scannedRgb');
 
-    for (final spool in spools) {
-      final spoolBrand = spool.brand.toLowerCase().trim();
-      final spoolMaterial = spool.material.toLowerCase().trim();
-      final spoolColor = spool.colorName.toLowerCase().trim();
+    // Tier 1 : matériau + couleur RGB exacte (le plus fiable)
+    if (scannedRgb != null) {
+      for (final spool in spools) {
+        if (spool.material.toLowerCase().trim() == scannedMaterial &&
+            spool.colorRgb == scannedRgb) {
+          matchingSpool = spool;
+          debugPrint('✅ [DIALOG] Match par matériau + colorRgb');
+          break;
+        }
+      }
+    }
 
-      debugPrint('🔍 [DIALOG] Comparing with: "$spoolBrand" - "$spoolMaterial" - "$spoolColor"');
-
-      // Match by brand, material and color (case-insensitive, trimmed)
-      if (spoolBrand == scannedBrand &&
-          spoolMaterial == scannedMaterial &&
-          spoolColor == scannedColor) {
-        matchingSpool = spool;
-        debugPrint('✅ [DIALOG] Match found!');
-        break;
+    // Tier 2 : égalité exacte marque + matériau + nom de couleur
+    if (matchingSpool == null) {
+      for (final spool in spools) {
+        if (spool.brand.toLowerCase().trim() == scannedBrand &&
+            spool.material.toLowerCase().trim() == scannedMaterial &&
+            spool.colorName.toLowerCase().trim() == scannedColor) {
+          matchingSpool = spool;
+          debugPrint('✅ [DIALOG] Match exact marque+matériau+couleur');
+          break;
+        }
       }
     }
 
