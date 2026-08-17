@@ -936,6 +936,9 @@ class _NfcReaderViewState extends State<_NfcReaderView> {
                 constraints: BoxConstraints(minHeight: constraints.maxHeight),
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                  child: Center(
+                  child: ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 420),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -1322,6 +1325,8 @@ class _NfcReaderViewState extends State<_NfcReaderView> {
                     ),
                   ],
                     ],
+                  ),
+                  ),
                   ),
                 ),
               ),
