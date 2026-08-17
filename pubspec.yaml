@@ -27,9 +27,9 @@ dependencies:
   google_sign_in: ^7.2.0
   hive_flutter: ^1.1.0
   http: ^1.2.2
-  in_app_purchase: ^3.2.3
-  in_app_purchase_android: ^0.4.0+11
-  in_app_purchase_storekit: ^0.4.8+1
+  in_app_purchase: ^3.3.0
+  in_app_purchase_android: ^0.5.2
+  in_app_purchase_storekit: ^0.4.11+1
   in_app_review: ^2.0.10
   injectable: ^3.0.0
   intl: ^0.20.2
