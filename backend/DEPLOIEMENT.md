@@ -1,5 +1,30 @@
 # 🚀 Guide de Déploiement Rapide
 
+## ⚠️ CRITIQUE — Fichiers secrets à NE JAMAIS oublier
+
+Ces fichiers sont **`.gitignore`** (absents du repo) mais **indispensables** au fonctionnement.
+Ils doivent être présents sur le serveur après CHAQUE déploiement/migration, sinon des
+fonctionnalités cassent silencieusement (déjà arrivé : vérif achats Android HS 3 semaines).
+
+| Fichier serveur (`api/`) | Rôle | Source locale |
+|---|---|---|
+| `config/google-play-service-account.json` | **Vérif achats Google Play (Android)** — sans lui, tout achat Android est rejeté en 503 | `~/.private_keys/google-play-service-account.json` |
+| `keys/AuthKey_*.p8` | Apple Sign In + App Store Server API | `ios/` (clés Apple) |
+| `config/app.php` | Secrets JWT, CRON_SECRET, APPLE_SHARED_SECRET, etc. | à recréer/copier |
+| `.env` | Config OAuth (APPLE_CLIENT_ID, GOOGLE_*, CRON_SECRET) | à recréer/copier |
+
+**Après tout déploiement, VÉRIFIER leur présence :**
+```bash
+ssh ly9x5_fable@ly9x5.ftp.infomaniak.com
+ls -la sites/engageengine.ch/api/config/google-play-service-account.json  # doit exister, chmod 600
+ls -la sites/engageengine.ch/api/keys/*.p8
+```
+Si le service account manque : `scp ~/.private_keys/google-play-service-account.json ly9x5_fable@ly9x5.ftp.infomaniak.com:sites/engageengine.ch/api/config/` puis `chmod 600`.
+
+Rappel : DNS géré chez **Cloudflare** (pas Infomaniak), IP serveur actuel = 185.176.225.13.
+
+---
+
 ## Étape 1 : Générer la clé JWT
 
 Sur ton ordinateur :
