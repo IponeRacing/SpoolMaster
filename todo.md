@@ -45,6 +45,16 @@ _Revue faite le 17/08/2026. Le flow est sain et à jour sur l'axe critique (Bill
   - Fix = autoriser l'analytics anonyme : backend accepter events sans user (user_id nullable + retirer la FK, ou device_id anonyme) + client envoyer sans auth si non connecté. **Changement de schéma sur DB live = à faire prudemment.**
   - Fait le 23/08 : ajout `entry_point` (home/add_spool/stock_update) aux events + au mail d'alerte d'échec (déployé). Capté automatiquement (event_data = JSON). Visible dès que les users passent en 1.3.6+.
 
+## 🟣 Nouveaux formats NFC (recherche 23/08/2026 — rien de cassant)
+
+- [ ] **Ajouter le parseur TigerTag** (le plus gros gain de couverture)
+  - NTAG21x, 144 bytes, pages 0x04-0x27, big-endian, non chiffré (signature ECDSA-P256 optionnelle → parser les données sans vérifier). Lisible iOS+Android.
+  - C'est ainsi que **Sunlu, eSUN, Rosa3D, Landu, JamgHE, Nanovia** taggent maintenant (2.5M+ puces).
+  - **Prérequis : récupérer le layout byte exact** depuis github.com/TigerTag-Project/TigerTag-RFID-Guide (offsets material/color/temps/weight) AVANT d'implémenter — ne pas coder à l'aveugle. + tests.
+- [ ] OpenPrintTag : ajouter champs `primary_color_lab/ral` + achat, tolérer ICODE SLIX 112B (mineur ; PA612 déjà géré).
+- [ ] OpenTag3D : mettre à jour le lien repo → GooborgStudios/OpenTag3D (cosmétique ; parseur 1.001 déjà compatible).
+- Rien à faire : Bambu, Creality, OpenSpool, Elegoo (déjà structuré), iOS/Android (inchangés).
+
 ## 🟢 Optionnel — maintenance (aucune urgence, à tester avant)
 
 - [ ] Bumps majeurs à faire dans une passe tranquille (pas mélanger avec le paiement) :
