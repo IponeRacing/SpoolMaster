@@ -47,7 +47,7 @@ _Revue faite le 17/08/2026. Le flow est sain et à jour sur l'axe critique (Bill
 
 ## 🟣 Nouveaux formats NFC (recherche 23/08/2026 — rien de cassant)
 
-- [ ] **Ajouter le parseur TigerTag** (le plus gros gain de couverture)
+- [x] **TigerTag AJOUTÉ** (commit) : parseur + registres 113 matériaux/132 marques + 6 tests. Reste optionnel : signature ECDSA (skip), refresh registres via API.
   - NTAG21x, 144 bytes, pages 0x04-0x27, big-endian, non chiffré (signature ECDSA-P256 optionnelle → parser les données sans vérifier). Lisible iOS+Android.
   - C'est ainsi que **Sunlu, eSUN, Rosa3D, Landu, JamgHE, Nanovia** taggent maintenant (2.5M+ puces).
   - **Prérequis : récupérer le layout byte exact** depuis github.com/TigerTag-Project/TigerTag-RFID-Guide (offsets material/color/temps/weight) AVANT d'implémenter — ne pas coder à l'aveugle. + tests.
