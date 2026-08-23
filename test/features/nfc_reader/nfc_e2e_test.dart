@@ -82,6 +82,27 @@ List<int> buildOpenSpoolDump() {
 /// Tag entièrement vide (échec attendu, sans crash)
 List<int> buildEmptyDump() => List<int>.filled(160, 0);
 
+/// Tag TigerTag (Sunlu PLA) — zone à partir de la page 4 (offset 16)
+List<int> buildTigerTagDump() {
+  final d = List<int>.filled(160, 0);
+  void put(int off, List<int> bytes) {
+    for (var i = 0; i < bytes.length; i++) {
+      d[16 + off + i] = bytes[i];
+    }
+  }
+
+  put(0, [0x5B, 0xF5, 0x92, 0x64]); // magic Maker
+  put(8, [0x95, 0x4B]); // PLA (38219)
+  d[16 + 13] = 56; // Ø1.75
+  put(14, [0xCA, 0x91]); // Sunlu (51857)
+  put(16, [0x00, 0x00, 0xFF, 0xFF]); // bleu
+  put(20, [0x00, 0x03, 0xE8]); // 1000
+  d[16 + 23] = 21; // g
+  put(24, [0x00, 0xD2]); // 210
+  put(26, [0x00, 0xE6]); // 230
+  return d;
+}
+
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   final datasource = NfcDataSourceImpl();
@@ -142,6 +163,17 @@ void main() {
         datasource.readBobbinData(nfcMode: 'anycubic'),
         throwsA(isA<NfcTagReadFailure>()),
       );
+    });
+
+    test('tag TigerTag (Sunlu) scanné en mode Anycubic → reconnu', () async {
+      mockNativeChannel({'data': '', 'rawBytes': buildTigerTagDump()});
+
+      final result = await datasource.readBobbinData(nfcMode: 'anycubic');
+
+      expect(result.filamentType, 'PLA');
+      expect(result.brand, 'Sunlu');
+      expect(result.weightGrams, 1000);
+      expect(result.extruderTempMin, 210);
     });
   });
 

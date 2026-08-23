@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer' as developer;
 
 import 'package:nfc_filament/core/errors/failures.dart';
+import 'package:nfc_filament/features/nfc_reader/data/services/tigertag_registry.dart';
 import 'package:nfc_filament/features/nfc_reader/domain/entities/bobbin_data.dart';
 
 /// Parseur des standards ouverts de tags filament sur NTAG21x (NFC Type 2) :
@@ -14,12 +15,16 @@ class OpenStandardsReaderService {
   /// Tente de parser les rawBytes (dump pages 0..N d'un tag Type 2).
   /// Retourne null si aucun format ouvert reconnu.
   static BobbinData? tryParse(List<int> rawBytes) {
-    // 1. Elegoo Canvas : données RAW pages 16+, APRÈS le terminator NDEF
+    // 1. TigerTag : magic u32 en page 4 (Sunlu, eSUN, Rosa3D... plain NTAG21x)
+    final tigerTag = _tryParseTigerTag(rawBytes);
+    if (tigerTag != null) return tigerTag;
+
+    // 2. Elegoo Canvas : données RAW pages 16+, APRÈS le terminator NDEF
     //    (détection par magic bytes, la plus spécifique → en premier)
     final elegoo = _tryParseElegoo(rawBytes);
     if (elegoo != null) return elegoo;
 
-    // 2. NDEF : OpenSpool (application/json), OpenTag3D (application/opentag3d)
+    // 3. NDEF : OpenSpool (application/json), OpenTag3D (application/opentag3d)
     final ndefRecords = _extractNdefPayloads(rawBytes);
     for (final record in ndefRecords) {
       if (record.type == 'application/opentag3d') {
@@ -292,6 +297,89 @@ class OpenStandardsReaderService {
       bedTempMax: maxBed ?? (bedTemp > 0 ? bedTemp : null),
       diameter: diameterUm > 0 ? diameterUm / 1000.0 : null,
       brand: manufacturer.isEmpty ? 'OpenTag3D' : manufacturer,
+    );
+  }
+
+  // ==================== TigerTag (raw NTAG21x, big-endian) ====================
+
+  /// Magic `ID TigerTag` (u32 BE en page 4 / offset 16) → variantes reconnues.
+  /// 1542820452 = TigerTag (Maker), 1816240865 = Init, 3155151767 = TigerTag+.
+  static const Set<int> _kTigerTagMagics = {1542820452, 1816240865, 3155151767};
+
+  /// TigerTag v2.x : 80 octets de données à partir de la page 4 (offset 16),
+  /// big-endian, non chiffré. Le tag ne stocke que des IDs entiers → noms
+  /// résolus via [kTigerTagMaterials]/[kTigerTagBrands]. Spec : SDK officiel
+  /// parse_tigertag.py (github.com/TigerTag-Project/TigerTag-RFID-Guide).
+  static BobbinData? _tryParseTigerTag(List<int> p) {
+    // Le dump commence page 0 : la zone TigerTag débute page 4 = offset 16.
+    const base = 16;
+    if (p.length < base + 80) return null;
+
+    int u16(int off) => (p[base + off] << 8) | p[base + off + 1];
+    int u24(int off) =>
+        (p[base + off] << 16) | (p[base + off + 1] << 8) | p[base + off + 2];
+    int u32(int off) =>
+        (p[base + off] << 24) |
+        (p[base + off + 1] << 16) |
+        (p[base + off + 2] << 8) |
+        p[base + off + 3];
+
+    // Détection : ID TigerTag (u32 BE) à l'offset +0
+    if (!_kTigerTagMagics.contains(u32(0))) return null;
+
+    final materialId = u16(8);
+    final diameterId = p[base + 13];
+    final brandId = u16(14);
+
+    // Color1 RGBA (+16)
+    final r = p[base + 16];
+    final g = p[base + 17];
+    final b = p[base + 18];
+    final colorRgb = (r << 16) | (g << 8) | b;
+
+    // Measure (+20, u24) total + ID Unit (+23) → normaliser en grammes
+    final measure = u24(20);
+    final unitId = p[base + 23];
+    final gramsPerUnit = kTigerTagUnitToGrams[unitId] ?? 1.0;
+    final weightGrams = measure * gramsPerUnit;
+
+    // Températures : nozzle min/max (u16), bed min/max (u8), séchage
+    final nozzleMin = u16(24);
+    final nozzleMax = u16(26);
+    final dryTemp = p[base + 28];
+    final dryTime = p[base + 29];
+    final bedMin = p[base + 30];
+    final bedMax = p[base + 31];
+
+    // Measure Available (+76, u24) → poids restant
+    final available = u24(76);
+    final remainingGrams = available * gramsPerUnit;
+
+    final material = kTigerTagMaterials[materialId] ?? 'Unknown';
+    final brand = kTigerTagBrands[brandId] ?? 'TigerTag';
+    final diameter = kTigerTagDiameters[diameterId];
+
+    developer.log(
+      '✅ Tag TigerTag détecté: $brand $material '
+      '${weightGrams.toStringAsFixed(0)}g',
+    );
+
+    return BobbinData(
+      filamentType: material,
+      color: _rgbToColorName(r, g, b),
+      weightGrams: weightGrams > 0 ? weightGrams : 1000,
+      manufactureDate: DateTime.now(),
+      batchNumber: '$brand - $material',
+      colorRgb: colorRgb,
+      extruderTempMin: nozzleMin > 0 ? nozzleMin : null,
+      extruderTempMax: nozzleMax > 0 ? nozzleMax : null,
+      bedTempMin: bedMin > 0 ? bedMin : null,
+      bedTempMax: bedMax > 0 ? bedMax : null,
+      diameter: diameter != null ? double.tryParse(diameter) : null,
+      remainingWeight: available > 0 ? remainingGrams : null,
+      brand: brand,
+      dryingTemp: dryTemp > 0 ? dryTemp : null,
+      dryingTime: dryTime > 0 ? dryTime : null,
     );
   }
 

@@ -316,4 +316,83 @@ void main() {
       expect(result.remainingWeight, 850);
     });
   });
+
+  group('OpenStandardsReaderService - TigerTag', () {
+    /// Dump NTAG21x : zone TigerTag à partir de la page 4 (offset 16),
+    /// big-endian. Valeurs : magic Maker, PLA (38219), Sunlu (51857),
+    /// Ø1.75 (56), rouge, 1000 g (unité 21=g), buse 210-230, plateau 60,
+    /// restant 750 g.
+    List<int> buildTigerTagDump() {
+      final d = List<int>.filled(144, 0);
+      void put(int off, List<int> bytes) {
+        for (var i = 0; i < bytes.length; i++) {
+          d[16 + off + i] = bytes[i];
+        }
+      }
+
+      put(0, [0x5B, 0xF5, 0x92, 0x64]); // magic 1542820452 (TigerTag Maker)
+      put(4, [0xFF, 0xFF, 0xFF, 0xFF]); // ID Product = Maker
+      put(8, [0x95, 0x4B]); // ID Material 38219 = PLA
+      d[16 + 13] = 56; // ID Diameter = 1.75
+      put(14, [0xCA, 0x91]); // ID Brand 51857 = Sunlu
+      put(16, [0xFF, 0x00, 0x00, 0xFF]); // Color1 RGBA = rouge opaque
+      put(20, [0x00, 0x03, 0xE8]); // Measure = 1000
+      d[16 + 23] = 21; // ID Unit = g
+      put(24, [0x00, 0xD2]); // Nozzle min 210
+      put(26, [0x00, 0xE6]); // Nozzle max 230
+      d[16 + 30] = 60; // Bed min
+      d[16 + 31] = 60; // Bed max
+      put(76, [0x00, 0x02, 0xEE]); // Measure Available = 750
+      return d;
+    }
+
+    test('parse un tag TigerTag Sunlu PLA', () {
+      final result = OpenStandardsReaderService.tryParse(buildTigerTagDump());
+
+      expect(result, isNotNull);
+      expect(result!.filamentType, 'PLA');
+      expect(result.brand, 'Sunlu');
+      expect(result.color, 'Red');
+      expect(result.colorRgb, 0xFF0000);
+      expect(result.weightGrams, 1000);
+      expect(result.remainingWeight, 750);
+      expect(result.diameter, closeTo(1.75, 0.001));
+      expect(result.extruderTempMin, 210);
+      expect(result.extruderTempMax, 230);
+      expect(result.bedTempMin, 60);
+      expect(result.bedTempMax, 60);
+    });
+
+    test('reconnaît les 3 variantes de magic (Maker/Init/TigerTag+)', () {
+      for (final magic in [
+        [0x5B, 0xF5, 0x92, 0x64], // Maker
+        [0x6C, 0x41, 0xA2, 0xE1], // Init
+        [0xBC, 0x0F, 0xCB, 0x97], // TigerTag+
+      ]) {
+        final d = buildTigerTagDump();
+        for (var i = 0; i < 4; i++) {
+          d[16 + i] = magic[i];
+        }
+        expect(OpenStandardsReaderService.tryParse(d), isNotNull);
+      }
+    });
+
+    test('marque/matériau inconnus → fallback sans crash', () {
+      final d = buildTigerTagDump();
+      d[16 + 8] = 0x9C; // ID Material 40000 = absent du registre
+      d[16 + 9] = 0x40;
+      d[16 + 14] = 0x9C; // ID Brand 40000 = absent du registre
+      d[16 + 15] = 0x40;
+      final result = OpenStandardsReaderService.tryParse(d);
+      expect(result, isNotNull);
+      expect(result!.filamentType, 'Unknown');
+      expect(result.brand, 'TigerTag');
+    });
+
+    test('magic invalide → null (pas un TigerTag)', () {
+      final d = buildTigerTagDump();
+      d[16] = 0x00; // casse le magic
+      expect(OpenStandardsReaderService.tryParse(d), isNull);
+    });
+  });
 }
