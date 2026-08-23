@@ -1,10 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:nfc_filament/core/services/cloned_tags_storage_service.dart';
 import 'package:nfc_filament/core/theme/app_theme.dart';
 import 'package:nfc_filament/features/nfc_reader/data/models/cloned_tag_model.dart';
 import 'package:nfc_filament/features/nfc_reader/presentation/pages/bambu_clone_writer_page.dart';
 import 'package:nfc_filament/l10n/app_localizations.dart';
-import 'package:intl/intl.dart';
 
 /// Page de bibliothèque des tags Bambu Lab clonés
 class BambuCloneLibraryPage extends StatefulWidget {
@@ -72,7 +74,7 @@ class _BambuCloneLibraryPageState extends State<BambuCloneLibraryPage> {
       ),
     );
 
-    if (confirm == true) {
+    if (confirm ?? false) {
       await ClonedTagsStorageService.deleteClonedTag(clone.id);
       await _loadClones();
 
@@ -308,7 +310,7 @@ class _BambuCloneLibraryPageState extends State<BambuCloneLibraryPage> {
                       if (value == 'delete') {
                         await _deleteClone(clone);
                       } else if (value == 'rename') {
-                        _showRenameDialog(clone);
+                        unawaited(_showRenameDialog(clone));
                       }
                     },
                     itemBuilder: (context) => [
@@ -432,15 +434,15 @@ class _BambuCloneLibraryPageState extends State<BambuCloneLibraryPage> {
 }
 
 class _InfoRow extends StatelessWidget {
-  final IconData icon;
-  final String label;
-  final String value;
 
   const _InfoRow({
     required this.icon,
     required this.label,
     required this.value,
   });
+  final IconData icon;
+  final String label;
+  final String value;
 
   @override
   Widget build(BuildContext context) {

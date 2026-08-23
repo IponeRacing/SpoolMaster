@@ -203,15 +203,15 @@ class _ScanHistoryView extends StatelessWidget {
 }
 
 class _ScanHistoryCard extends StatelessWidget {
-  final ScanHistory scan;
-  final VoidCallback onTap;
-  final VoidCallback onDelete;
 
   const _ScanHistoryCard({
     required this.scan,
     required this.onTap,
     required this.onDelete,
   });
+  final ScanHistory scan;
+  final VoidCallback onTap;
+  final VoidCallback onDelete;
 
   @override
   Widget build(BuildContext context) {
@@ -230,7 +230,7 @@ class _ScanHistoryCard extends StatelessWidget {
                 width: 48,
                 height: 48,
                 decoration: BoxDecoration(
-                  color: AppTheme.anycubicRed.withOpacity(0.1),
+                  color: AppTheme.anycubicRed.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: const Icon(

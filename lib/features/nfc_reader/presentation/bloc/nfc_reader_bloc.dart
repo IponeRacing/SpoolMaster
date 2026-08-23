@@ -4,6 +4,10 @@ import 'dart:developer' as developer;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:nfc_filament/core/errors/failures.dart';
+import 'package:nfc_filament/core/services/admob_service.dart';
+import 'package:nfc_filament/core/services/analytics_service.dart';
+import 'package:nfc_filament/core/services/review_service.dart';
+import 'package:nfc_filament/core/services/user_preferences_service.dart';
 import 'package:nfc_filament/features/nfc_reader/data/models/scan_history_model.dart';
 import 'package:nfc_filament/features/nfc_reader/domain/usecases/check_nfc_availability.dart';
 import 'package:nfc_filament/features/nfc_reader/domain/usecases/read_bobbin_data.dart';
@@ -13,19 +17,9 @@ import 'package:nfc_filament/features/nfc_reader/domain/usecases/save_scan_to_hi
 import 'package:nfc_filament/features/nfc_reader/domain/usecases/write_bobbin_data.dart';
 import 'package:nfc_filament/features/nfc_reader/presentation/bloc/nfc_reader_event.dart';
 import 'package:nfc_filament/features/nfc_reader/presentation/bloc/nfc_reader_state.dart';
-import 'package:nfc_filament/core/services/admob_service.dart';
-import 'package:nfc_filament/core/services/analytics_service.dart';
-import 'package:nfc_filament/core/services/review_service.dart';
-import 'package:nfc_filament/core/services/user_preferences_service.dart';
 
 @injectable
 class NfcReaderBloc extends Bloc<NfcReaderEvent, NfcReaderState> {
-  final CheckNfcAvailability checkNfcAvailability;
-  final ReadNfcTag readNfcTag;
-  final ReadBobbinData readBobbinData;
-  final WriteBobbinData writeBobbinData;
-  final SaveScanToHistory saveScanToHistory;
-  final ReadBobbinDataAutoDetect readBobbinDataAutoDetect;
 
   NfcReaderBloc({
     required this.checkNfcAvailability,
@@ -42,6 +36,12 @@ class NfcReaderBloc extends Bloc<NfcReaderEvent, NfcReaderState> {
     on<WriteBobbinDataEvent>(_onWriteBobbinData);
     on<StopNfcScanEvent>(_onStopNfcScan);
   }
+  final CheckNfcAvailability checkNfcAvailability;
+  final ReadNfcTag readNfcTag;
+  final ReadBobbinData readBobbinData;
+  final WriteBobbinData writeBobbinData;
+  final SaveScanToHistory saveScanToHistory;
+  final ReadBobbinDataAutoDetect readBobbinDataAutoDetect;
 
   Future<void> _onCheckNfcAvailability(
     CheckNfcAvailabilityEvent event,
@@ -83,16 +83,44 @@ class NfcReaderBloc extends Bloc<NfcReaderEvent, NfcReaderState> {
     );
   }
 
+  /// Déduit la marque à partir du mode NFC (pour analytics)
+  String _brandFromMode(String mode) {
+    switch (mode) {
+      case 'bambu':
+        return 'Bambu Lab';
+      case 'prusa':
+        return 'Prusa';
+      case 'creality':
+        return 'Creality';
+      default:
+        return 'Anycubic';
+    }
+  }
+
+  /// Déduit le mode NFC à partir de la marque détectée
+  String _detectModeFromBrand(String? brand) {
+    switch (brand?.toLowerCase()) {
+      case 'bambu lab':
+        return 'bambu';
+      case 'prusa':
+        return 'prusa';
+      case 'creality':
+        return 'creality';
+      default:
+        return 'anycubic';
+    }
+  }
+
   Future<void> _onReadBobbinData(
     ReadBobbinDataEvent event,
     Emitter<NfcReaderState> emit,
   ) async {
     emit(const NfcReaderLoading());
 
-    // Lire le mode NFC pour le tracking analytics
-    final nfcMode = await UserPreferencesService.getNfcMode();
+    // Mode NFC : override (fallback B) ou préférence utilisateur
+    final nfcMode = event.overrideMode ?? await UserPreferencesService.getNfcMode();
 
-    final result = await readBobbinData();
+    final result = await readBobbinData(nfcMode: nfcMode);
 
     await result.fold(
       (failure) async {
@@ -101,6 +129,54 @@ class NfcReaderBloc extends Bloc<NfcReaderEvent, NfcReaderState> {
           developer.log("ℹ️ [BLOC] Scan annulé par l'utilisateur");
           emit(const NfcAvailable());
           return;
+        }
+
+        // Fallback A : si tag incompatible ou erreur de lecture, tenter auto-detect
+        if (failure is NfcTagReadFailure || failure is NfcTagIncompatibleFailure) {
+          developer.log('🔄 [BLOC] Échec mode $nfcMode, tentative auto-detect...');
+          final fallbackResult = await readBobbinDataAutoDetect();
+          final didFallback = fallbackResult.fold(
+            (fallbackFailure) => false,
+            (bobbinData) => true,
+          );
+          if (didFallback) {
+            final bobbinData = fallbackResult.fold((_) => throw Exception(), (d) => d);
+            final detectedMode = _detectModeFromBrand(bobbinData.brand);
+            developer.log('✅ [BLOC] Fallback auto-detect réussi → mode $detectedMode');
+
+            // Auto-save scan to history
+            final scanHistory = ScanHistoryModel.fromBobbinData(bobbinData);
+            await saveScanToHistory(scanHistory);
+
+            // Analytics : tracker le fallback avec details complets
+            unawaited(AnalyticsService.logNfcScan(
+              scanType: 'scan_nfc_fallback',
+              brand: bobbinData.brand,
+              material: bobbinData.filamentType,
+              color: bobbinData.color,
+              success: true,
+              nfcMode: detectedMode,
+              entryPoint: event.entryPoint,
+              weight: bobbinData.weightGrams,
+              batchNumber: bobbinData.batchNumber,
+              extruderTempMin: bobbinData.extruderTempMin,
+              extruderTempMax: bobbinData.extruderTempMax,
+              bedTempMin: bobbinData.bedTempMin,
+              bedTempMax: bobbinData.bedTempMax,
+            ));
+
+            emit(BobbinDataReadSuccessWithFallback(
+              bobbinData,
+              detectedMode: detectedMode,
+              originalMode: nfcMode,
+            ));
+
+            // Interstitiel + review
+            AdMobService().onScanCompleted();
+            unawaited(ReviewService().onSuccessfulScan());
+            return;
+          }
+          developer.log('❌ [BLOC] Fallback auto-detect aussi échoué');
         }
 
         // Déterminer le type d'échec et extraire les diagnostics session
@@ -118,22 +194,29 @@ class NfcReaderBloc extends Bloc<NfcReaderEvent, NfcReaderState> {
           failureType = NfcFailureType.incompatibleTag;
           sessionDurationMs = failure.sessionDurationMs;
           tagWasDetected = failure.tagWasDetected;
+        } else if (failure is NfcAuthFailure) {
+          developer.log('🔐 [BLOC] Échec authentification tag NFC');
+          failureType = NfcFailureType.authError;
+          sessionDurationMs = failure.sessionDurationMs;
+          tagWasDetected = failure.tagWasDetected;
         } else if (failure is NfcTagReadFailure) {
           sessionDurationMs = failure.sessionDurationMs;
           tagWasDetected = failure.tagWasDetected;
         }
 
         // Log failed scan to backend with error details + session diagnostics
-        AnalyticsService.logNfcScan(
+        unawaited(AnalyticsService.logNfcScan(
           scanType: 'scan_nfc',
+          brand: _brandFromMode(nfcMode),
           success: false,
           errorMessage: failure.message,
           nfcMode: nfcMode,
+          entryPoint: event.entryPoint,
           rawTagData: failure is NfcTagReadFailure ? failure.rawTagData : null,
           rawBytesCount: failure is NfcTagReadFailure ? failure.rawBytesCount : null,
           sessionDurationMs: sessionDurationMs,
           tagWasDetected: tagWasDetected,
-        );
+        ));
         // Comptabiliser l'echec pour le garde-fou review
         unawaited(ReviewService().onFailedScan());
 
@@ -151,15 +234,23 @@ class NfcReaderBloc extends Bloc<NfcReaderEvent, NfcReaderState> {
         await saveScanToHistory(scanHistory);
         developer.log('✅ [BLOC] Scan auto-saved');
 
-        // Log successful scan to backend
-        AnalyticsService.logNfcScan(
+        // Log successful scan to backend with full details
+        unawaited(AnalyticsService.logNfcScan(
           scanType: 'scan_nfc',
-          brand: bobbinData.brand,
+          brand: bobbinData.brand ?? _brandFromMode(nfcMode),
           material: bobbinData.filamentType,
           color: bobbinData.color,
           success: true,
           nfcMode: nfcMode,
-        );
+          entryPoint: event.entryPoint,
+          weight: bobbinData.weightGrams,
+          batchNumber: bobbinData.batchNumber,
+          tagFormat: bobbinData.batchNumber != null && RegExp(r'A[A-Z]{3,5}[A-Z]{2}-\d{3}').hasMatch(bobbinData.batchNumber!) ? 'anycubic_sku' : 'spool_nfc_writer',
+          extruderTempMin: bobbinData.extruderTempMin,
+          extruderTempMax: bobbinData.extruderTempMax,
+          bedTempMin: bobbinData.bedTempMin,
+          bedTempMax: bobbinData.bedTempMax,
+        ));
 
         emit(BobbinDataReadSuccess(bobbinData));
 
@@ -220,19 +311,24 @@ class NfcReaderBloc extends Bloc<NfcReaderEvent, NfcReaderState> {
           failureType = NfcFailureType.incompatibleTag;
           sessionDurationMs = failure.sessionDurationMs;
           tagWasDetected = failure.tagWasDetected;
+        } else if (failure is NfcAuthFailure) {
+          failureType = NfcFailureType.authError;
+          sessionDurationMs = failure.sessionDurationMs;
+          tagWasDetected = failure.tagWasDetected;
         } else if (failure is NfcTagReadFailure) {
           sessionDurationMs = failure.sessionDurationMs;
           tagWasDetected = failure.tagWasDetected;
         }
 
-        AnalyticsService.logNfcScan(
+        unawaited(AnalyticsService.logNfcScan(
           scanType: 'scan_nfc_auto_detect',
           success: false,
           errorMessage: failure.message,
           nfcMode: 'auto',
+          entryPoint: event.entryPoint,
           sessionDurationMs: sessionDurationMs,
           tagWasDetected: tagWasDetected,
-        );
+        ));
 
         emit(NfcReaderFailure(
           failure.message,
@@ -244,14 +340,21 @@ class NfcReaderBloc extends Bloc<NfcReaderEvent, NfcReaderState> {
         final scanHistory = ScanHistoryModel.fromBobbinData(bobbinData);
         await saveScanToHistory(scanHistory);
 
-        AnalyticsService.logNfcScan(
+        unawaited(AnalyticsService.logNfcScan(
           scanType: 'scan_nfc_auto_detect',
           brand: bobbinData.brand,
           material: bobbinData.filamentType,
           color: bobbinData.color,
           success: true,
           nfcMode: 'auto',
-        );
+          entryPoint: event.entryPoint,
+          weight: bobbinData.weightGrams,
+          batchNumber: bobbinData.batchNumber,
+          extruderTempMin: bobbinData.extruderTempMin,
+          extruderTempMax: bobbinData.extruderTempMax,
+          bedTempMin: bobbinData.bedTempMin,
+          bedTempMax: bobbinData.bedTempMax,
+        ));
 
         emit(BobbinDataReadSuccess(bobbinData));
       },

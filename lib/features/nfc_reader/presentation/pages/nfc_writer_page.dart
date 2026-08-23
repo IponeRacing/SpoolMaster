@@ -1,25 +1,26 @@
 import 'dart:developer' as developer;
 import 'dart:io' show Platform;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nfc_filament/core/services/admob_service.dart';
-import 'package:nfc_filament/core/widgets/ad_banner_widget.dart';
-import 'package:nfc_filament/l10n/app_localizations.dart';
 import 'package:nfc_filament/core/services/brands_materials_service.dart';
 import 'package:nfc_filament/core/services/user_preferences_service.dart';
 import 'package:nfc_filament/core/theme/app_theme.dart';
+import 'package:nfc_filament/core/widgets/ad_banner_widget.dart';
 import 'package:nfc_filament/dependency_injection.dart';
 import 'package:nfc_filament/features/nfc_reader/domain/entities/bobbin_data.dart';
 import 'package:nfc_filament/features/nfc_reader/presentation/bloc/nfc_reader_bloc.dart';
 import 'package:nfc_filament/features/nfc_reader/presentation/bloc/nfc_reader_event.dart';
 import 'package:nfc_filament/features/nfc_reader/presentation/bloc/nfc_reader_state.dart';
 import 'package:nfc_filament/features/nfc_reader/presentation/widgets/color_picker_widget.dart';
+import 'package:nfc_filament/l10n/app_localizations.dart';
 
-class NfcWriterPage extends StatefulWidget {
-  final BobbinData? prefilledData;
-  final String initialFormat; // 'anycubic', 'prusa', or 'creality'
+class NfcWriterPage extends StatefulWidget { // 'anycubic', 'prusa', or 'creality'
 
   const NfcWriterPage({super.key, this.prefilledData, this.initialFormat = 'anycubic'});
+  final BobbinData? prefilledData;
+  final String initialFormat;
 
   @override
   State<NfcWriterPage> createState() => _NfcWriterPageState();
@@ -125,7 +126,7 @@ class _NfcWriterPageState extends State<NfcWriterPage> {
 
   String _getMaterialFromType(String filamentType) {
     // Try to match the filament type to a material in the list
-    for (var material in _materials.keys) {
+    for (final material in _materials.keys) {
       if (material.toLowerCase().contains(filamentType.toLowerCase())) {
         return material;
       }
@@ -149,7 +150,7 @@ class _NfcWriterPageState extends State<NfcWriterPage> {
 
     setState(() {
       _brands = brands;
-      _materialKeys = materials.where((m) => _materials.containsKey(m)).toList();
+      _materialKeys = materials.where(_materials.containsKey).toList();
     });
   }
 
@@ -162,15 +163,15 @@ class _NfcWriterPageState extends State<NfcWriterPage> {
 
   String _generateSKU() {
     final materialData = _materials[_selectedMaterial]!;
-    final materialCode = materialData['code'] as String;
+    final materialCode = materialData['code']! as String;
     final colorCode = _getColorCodeFromRgb(_selectedColor);
     return 'A$materialCode$colorCode-${_serialNumber.padLeft(3, '0')}';
   }
 
   String _getColorCodeFromRgb(Color color) {
     // Find closest color code based on RGB values
-    String closestCode = 'OR'; // Default Orange
-    double minDistance = double.infinity;
+    var closestCode = 'OR'; // Default Orange
+    var minDistance = double.infinity;
 
     final predefinedColors = {
       'BW': const Color(0xFFFFFFFF),
@@ -186,7 +187,7 @@ class _NfcWriterPageState extends State<NfcWriterPage> {
       'BR': const Color(0xFF8B4513),
     };
 
-    for (var entry in predefinedColors.entries) {
+    for (final entry in predefinedColors.entries) {
       final targetColor = entry.value;
       final distance = _colorDistance(color, targetColor);
       if (distance < minDistance) {
@@ -200,9 +201,9 @@ class _NfcWriterPageState extends State<NfcWriterPage> {
 
   double _colorDistance(Color c1, Color c2) {
     // Euclidean distance in RGB space
-    final dr = c1.red - c2.red;
-    final dg = c1.green - c2.green;
-    final db = c1.blue - c2.blue;
+    final dr = (c1.r * 255.0).round().clamp(0, 255) - (c2.r * 255.0).round().clamp(0, 255);
+    final dg = (c1.g * 255.0).round().clamp(0, 255) - (c2.g * 255.0).round().clamp(0, 255);
+    final db = (c1.b * 255.0).round().clamp(0, 255) - (c2.b * 255.0).round().clamp(0, 255);
     return (dr * dr + dg * dg + db * db).toDouble();
   }
 
@@ -225,10 +226,10 @@ class _NfcWriterPageState extends State<NfcWriterPage> {
     setState(() {
       _selectedMaterial = material;
       final materialData = _materials[material]!;
-      _extruderTempMin = materialData['extruderMin'] as int;
-      _extruderTempMax = materialData['extruderMax'] as int;
-      _bedTempMin = materialData['bedMin'] as int;
-      _bedTempMax = materialData['bedMax'] as int;
+      _extruderTempMin = materialData['extruderMin']! as int;
+      _extruderTempMax = materialData['extruderMax']! as int;
+      _bedTempMin = materialData['bedMin']! as int;
+      _bedTempMax = materialData['bedMax']! as int;
     });
   }
 
@@ -295,24 +296,27 @@ class _NfcWriterPageState extends State<NfcWriterPage> {
               );
             }
 
-            return SingleChildScrollView(
-              padding: const EdgeInsets.all(24),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    // Show prefilled data banner
+            return Center(
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 600),
+                child: SingleChildScrollView(
+                  padding: const EdgeInsets.all(24),
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        // Show prefilled data banner
                     if (widget.prefilledData != null) ...[
                       Builder(builder: (context) {
                         final accentColor = _isPrusa ? const Color(0xFFFA6831) : AppTheme.anycubicRed;
                         return Container(
                           padding: const EdgeInsets.all(12),
                           decoration: BoxDecoration(
-                            color: accentColor.withOpacity(0.1),
+                            color: accentColor.withValues(alpha: 0.1),
                             borderRadius: BorderRadius.circular(8),
                             border: Border.all(
-                              color: accentColor.withOpacity(0.3),
+                              color: accentColor.withValues(alpha: 0.3),
                             ),
                           ),
                           child: Row(
@@ -327,7 +331,7 @@ class _NfcWriterPageState extends State<NfcWriterPage> {
                                   AppLocalizations.of(context)!.reuseThisData,
                                   style: TextStyle(
                                     fontSize: 12,
-                                    color: accentColor.withOpacity(0.9),
+                                    color: accentColor.withValues(alpha: 0.9),
                                   ),
                                 ),
                               ),
@@ -380,7 +384,7 @@ class _NfcWriterPageState extends State<NfcWriterPage> {
                         ),
                         ButtonSegment(
                           value: 'creality',
-                          label: Text('Creality'),
+                          label: const Text('Creality'),
                           icon: const Icon(Icons.nfc),
                           enabled: !Platform.isIOS,
                         ),
@@ -433,7 +437,7 @@ class _NfcWriterPageState extends State<NfcWriterPage> {
 
                     // Brand dropdown
                     DropdownButtonFormField<String>(
-                      value: _selectedBrand,
+                      initialValue: _selectedBrand,
                       decoration: InputDecoration(
                         labelText: AppLocalizations.of(context)!.brand,
                         border: const OutlineInputBorder(),
@@ -454,7 +458,7 @@ class _NfcWriterPageState extends State<NfcWriterPage> {
 
                     // Material dropdown
                     DropdownButtonFormField<String>(
-                      value: _selectedMaterial,
+                      initialValue: _selectedMaterial,
                       decoration: InputDecoration(
                         labelText: AppLocalizations.of(context)!.materialType,
                         border: const OutlineInputBorder(),
@@ -489,7 +493,7 @@ class _NfcWriterPageState extends State<NfcWriterPage> {
                           ),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.black.withOpacity(0.1),
+                              color: Colors.black.withValues(alpha: 0.1),
                               blurRadius: 4,
                               offset: const Offset(0, 2),
                             ),
@@ -541,7 +545,7 @@ class _NfcWriterPageState extends State<NfcWriterPage> {
 
                     // Weight
                     DropdownButtonFormField<double>(
-                      value: _weight,
+                      initialValue: _weight,
                       decoration: InputDecoration(
                         labelText: AppLocalizations.of(context)!.weight,
                         border: const OutlineInputBorder(),
@@ -810,8 +814,10 @@ class _NfcWriterPageState extends State<NfcWriterPage> {
                     AdBannerWidget(
                       adUnitId: AdMobService().nfcWriterBannerId,
                     ),
-                    const SizedBox(height: 16),
-                  ],
+                        const SizedBox(height: 16),
+                      ],
+                    ),
+                  ),
                 ),
               ),
             );
@@ -830,9 +836,9 @@ class _NfcWriterPageState extends State<NfcWriterPage> {
 }
 
 class _ColorPickerDialog extends StatefulWidget {
-  final Color initialColor;
 
   const _ColorPickerDialog({required this.initialColor});
+  final Color initialColor;
 
   @override
   State<_ColorPickerDialog> createState() => _ColorPickerDialogState();
@@ -879,8 +885,7 @@ class _ColorPickerDialogState extends State<_ColorPickerDialog> {
                 ),
                 Expanded(
                   child: Slider(
-                    value: _tempColor.alpha.toDouble(),
-                    min: 0,
+                    value: (_tempColor.a * 255.0).round().clamp(0, 255).toDouble(),
                     max: 255,
                     divisions: 255,
                     activeColor: Colors.grey,
@@ -894,7 +899,7 @@ class _ColorPickerDialogState extends State<_ColorPickerDialog> {
                 SizedBox(
                   width: 40,
                   child: Text(
-                    _tempColor.alpha.toString(),
+                    (_tempColor.a * 255.0).round().clamp(0, 255).toString(),
                     textAlign: TextAlign.right,
                     style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
                   ),

@@ -647,7 +647,7 @@ class _NfcReaderViewState extends State<_NfcReaderView> {
                         ElevatedButton(
                           onPressed: () {
                             context.read<NfcReaderBloc>().add(
-                              const ReadBobbinDataEvent(),
+                              const ReadBobbinDataEvent(entryPoint: 'home'),
                             );
                           },
                           child: Text(AppLocalizations.of(context)!.refresh),
@@ -660,7 +660,7 @@ class _NfcReaderViewState extends State<_NfcReaderView> {
                       OutlinedButton.icon(
                         onPressed: () {
                           context.read<NfcReaderBloc>().add(
-                            const ReadBobbinDataAutoDetectEvent(),
+                            const ReadBobbinDataAutoDetectEvent(entryPoint: 'home'),
                           );
                         },
                         icon: const Icon(Icons.search),
@@ -917,7 +917,7 @@ class _NfcReaderViewState extends State<_NfcReaderView> {
                           ElevatedButton(
                             onPressed: () {
                               context.read<NfcReaderBloc>().add(
-                                const ReadBobbinDataEvent(),
+                                const ReadBobbinDataEvent(entryPoint: 'home'),
                               );
                             },
                             child: Text(AppLocalizations.of(context)!.readNfcChip),
@@ -997,7 +997,7 @@ class _NfcReaderViewState extends State<_NfcReaderView> {
                     width: 340,
                     child: ElevatedButton(
                       onPressed: () => context.read<NfcReaderBloc>().add(
-                            const ReadBobbinDataAutoDetectEvent(),
+                            const ReadBobbinDataAutoDetectEvent(entryPoint: 'home'),
                           ),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppTheme.anycubicRed,
@@ -1252,7 +1252,7 @@ class _NfcReaderViewState extends State<_NfcReaderView> {
                     child: ElevatedButton.icon(
                       onPressed: () {
                         context.read<NfcReaderBloc>().add(
-                          const ReadBobbinDataEvent(),
+                          const ReadBobbinDataEvent(entryPoint: 'home'),
                         );
                       },
                       style: ElevatedButton.styleFrom(

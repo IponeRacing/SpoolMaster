@@ -17,21 +17,36 @@ class ReadNfcTagEvent extends NfcReaderEvent {
 }
 
 class ReadBobbinDataEvent extends NfcReaderEvent {
-  const ReadBobbinDataEvent();
+  const ReadBobbinDataEvent({this.overrideMode, this.entryPoint});
+
+  final String? overrideMode;
+
+  /// Écran d'où le scan est lancé (home / add_spool / stock_update / wishlist),
+  /// enregistré dans l'analytics pour attribuer un échec à un parcours précis.
+  final String? entryPoint;
+
+  @override
+  List<Object?> get props => [overrideMode, entryPoint];
 }
 
 class WriteBobbinDataEvent extends NfcReaderEvent {
-  final BobbinData bobbinData;
-  final String tagFormat;
 
   const WriteBobbinDataEvent(this.bobbinData, {this.tagFormat = 'anycubic'});
+  final BobbinData bobbinData;
+  final String tagFormat;
 
   @override
   List<Object?> get props => [bobbinData, tagFormat];
 }
 
 class ReadBobbinDataAutoDetectEvent extends NfcReaderEvent {
-  const ReadBobbinDataAutoDetectEvent();
+  const ReadBobbinDataAutoDetectEvent({this.entryPoint});
+
+  /// Écran d'où le scan auto-detect est lancé (home / add_spool / stock_update).
+  final String? entryPoint;
+
+  @override
+  List<Object?> get props => [entryPoint];
 }
 
 class StopNfcScanEvent extends NfcReaderEvent {

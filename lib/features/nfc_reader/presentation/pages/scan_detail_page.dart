@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:nfc_filament/l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 import 'package:nfc_filament/core/theme/app_theme.dart';
 import 'package:nfc_filament/core/widgets/formatted_value_widgets.dart';
 import 'package:nfc_filament/features/nfc_reader/domain/entities/scan_history.dart';
 import 'package:nfc_filament/features/nfc_reader/presentation/pages/nfc_writer_page.dart';
+import 'package:nfc_filament/l10n/app_localizations.dart';
 
 class ScanDetailPage extends StatelessWidget {
-  final ScanHistory scan;
 
-  const ScanDetailPage({super.key, required this.scan});
+  const ScanDetailPage({required this.scan, super.key});
+  final ScanHistory scan;
 
   @override
   Widget build(BuildContext context) {
@@ -28,12 +28,15 @@ class ScanDetailPage extends StatelessWidget {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            // Header card with icon
+      body: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 600),
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                // Header card with icon
             Card(
               child: Padding(
                 padding: const EdgeInsets.all(24),
@@ -43,7 +46,7 @@ class ScanDetailPage extends StatelessWidget {
                       width: 80,
                       height: 80,
                       decoration: BoxDecoration(
-                        color: AppTheme.anycubicRed.withOpacity(0.1),
+                        color: AppTheme.anycubicRed.withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(16),
                       ),
                       child: const Icon(
@@ -307,6 +310,8 @@ class ScanDetailPage extends StatelessWidget {
           ],
         ),
       ),
+        ),
+      ),
     );
   }
 
@@ -321,15 +326,15 @@ class ScanDetailPage extends StatelessWidget {
 }
 
 class _DetailRow extends StatelessWidget {
-  final IconData icon;
-  final String label;
-  final String value;
 
   const _DetailRow({
     required this.icon,
     required this.label,
     required this.value,
   });
+  final IconData icon;
+  final String label;
+  final String value;
 
   @override
   Widget build(BuildContext context) {
@@ -364,15 +369,15 @@ class _DetailRow extends StatelessWidget {
 }
 
 class _DetailRowWidget extends StatelessWidget {
-  final IconData icon;
-  final String label;
-  final Widget valueWidget;
 
   const _DetailRowWidget({
     required this.icon,
     required this.label,
     required this.valueWidget,
   });
+  final IconData icon;
+  final String label;
+  final Widget valueWidget;
 
   @override
   Widget build(BuildContext context) {

@@ -6,9 +6,9 @@ import 'package:nfc_filament/l10n/app_localizations.dart';
 
 /// Page pour écrire un clone Bambu Lab sur une carte CUID
 class BambuCloneWriterPage extends StatefulWidget {
-  final ClonedTagModel clone;
 
-  const BambuCloneWriterPage({super.key, required this.clone});
+  const BambuCloneWriterPage({required this.clone, super.key});
+  final ClonedTagModel clone;
 
   @override
   State<BambuCloneWriterPage> createState() => _BambuCloneWriterPageState();
@@ -54,9 +54,12 @@ class _BambuCloneWriterPageState extends State<BambuCloneWriterPage> {
       appBar: AppBar(
         title: Text(AppLocalizations.of(context)!.writeClone),
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: Column(
+      body: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 600),
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(16),
+            child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Info du clone
@@ -97,6 +100,8 @@ class _BambuCloneWriterPageState extends State<BambuCloneWriterPage> {
               ),
             ),
           ],
+        ),
+      ),
         ),
       ),
     );
@@ -336,10 +341,10 @@ class _BambuCloneWriterPageState extends State<BambuCloneWriterPage> {
 }
 
 class _DetailRow extends StatelessWidget {
-  final String label;
-  final String value;
 
   const _DetailRow({required this.label, required this.value});
+  final String label;
+  final String value;
 
   @override
   Widget build(BuildContext context) {
@@ -363,10 +368,10 @@ class _DetailRow extends StatelessWidget {
 }
 
 class _FormatRow extends StatelessWidget {
-  final String label;
-  final String value;
 
   const _FormatRow({required this.label, required this.value});
+  final String label;
+  final String value;
 
   @override
   Widget build(BuildContext context) {
@@ -394,10 +399,10 @@ class _FormatRow extends StatelessWidget {
 }
 
 class _InstructionStep extends StatelessWidget {
-  final int number;
-  final String text;
 
   const _InstructionStep({required this.number, required this.text});
+  final int number;
+  final String text;
 
   @override
   Widget build(BuildContext context) {
@@ -409,7 +414,7 @@ class _InstructionStep extends StatelessWidget {
           Container(
             width: 28,
             height: 28,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: AppTheme.anycubicRed,
               shape: BoxShape.circle,
             ),

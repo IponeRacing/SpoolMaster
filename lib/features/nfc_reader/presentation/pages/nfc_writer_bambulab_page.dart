@@ -110,14 +110,17 @@ class _NfcWriterBambuLabPageState extends State<NfcWriterBambuLabPage> {
               );
             }
 
-            return SingleChildScrollView(
-              padding: const EdgeInsets.all(24),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    // Info card
+            return Center(
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 600),
+                child: SingleChildScrollView(
+                  padding: const EdgeInsets.all(24),
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        // Info card
                     Card(
                       color: Colors.blue.shade50,
                       child: Padding(
@@ -179,7 +182,7 @@ class _NfcWriterBambuLabPageState extends State<NfcWriterBambuLabPage> {
 
                     // Material dropdown
                     DropdownButtonFormField<String>(
-                      value: _selectedMaterial,
+                      initialValue: _selectedMaterial,
                       decoration: InputDecoration(
                         labelText: l10n.materialTypeLabel,
                         border: const OutlineInputBorder(),
@@ -200,7 +203,7 @@ class _NfcWriterBambuLabPageState extends State<NfcWriterBambuLabPage> {
 
                     // Color dropdown
                     DropdownButtonFormField<String>(
-                      value: _selectedColor,
+                      initialValue: _selectedColor,
                       decoration: InputDecoration(
                         labelText: l10n.color,
                         border: const OutlineInputBorder(),
@@ -269,7 +272,7 @@ class _NfcWriterBambuLabPageState extends State<NfcWriterBambuLabPage> {
 
                     // Weight
                     DropdownButtonFormField<double>(
-                      value: _weight,
+                      initialValue: _weight,
                       decoration: InputDecoration(
                         labelText: l10n.weight,
                         border: const OutlineInputBorder(),
@@ -327,8 +330,10 @@ class _NfcWriterBambuLabPageState extends State<NfcWriterBambuLabPage> {
                         fontStyle: FontStyle.italic,
                       ),
                       textAlign: TextAlign.center,
+                        ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
               ),
             );

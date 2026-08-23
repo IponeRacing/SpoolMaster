@@ -1,10 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
+
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:nfc_filament/core/api/api_config.dart';
 import 'package:nfc_filament/core/services/auth_service.dart';
-import 'package:device_info_plus/device_info_plus.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 /// Service pour tracker les événements analytics
@@ -88,8 +89,16 @@ class AnalyticsService {
     String? rawTagData,
     int? rawBytesCount,
     String? nfcMode,
+    String? entryPoint,
     int? sessionDurationMs,
     bool? tagWasDetected,
+    double? weight,
+    String? batchNumber,
+    String? tagFormat,
+    int? extruderTempMin,
+    int? extruderTempMax,
+    int? bedTempMin,
+    int? bedTempMax,
   }) async {
     await logEvent(
       scanType,
@@ -100,11 +109,21 @@ class AnalyticsService {
         'success': success,
         'timestamp': DateTime.now().toIso8601String(),
         'nfc_mode': nfcMode ?? '',
+        // Écran d'où le scan a été lancé (home / add_spool / stock_update /
+        // wishlist) — clé pour attribuer un échec à un parcours UI précis.
+        if (entryPoint != null) 'entry_point': entryPoint,
         'error_message': errorMessage ?? '',
         if (rawTagData != null) 'raw_tag_data': rawTagData,
         if (rawBytesCount != null) 'raw_bytes_count': rawBytesCount,
         if (sessionDurationMs != null) 'session_duration_ms': sessionDurationMs,
         if (tagWasDetected != null) 'tag_was_detected': tagWasDetected,
+        if (weight != null) 'weight': weight,
+        if (batchNumber != null && batchNumber.isNotEmpty) 'batch_number': batchNumber,
+        if (tagFormat != null) 'tag_format': tagFormat,
+        if (extruderTempMin != null) 'extruder_temp_min': extruderTempMin,
+        if (extruderTempMax != null) 'extruder_temp_max': extruderTempMax,
+        if (bedTempMin != null) 'bed_temp_min': bedTempMin,
+        if (bedTempMax != null) 'bed_temp_max': bedTempMax,
         'device_model': _cachedDeviceModel ?? '',
         'os_version': _cachedOsVersion ?? '',
       },
@@ -193,7 +212,7 @@ class AnalyticsService {
       );
 
       if (response.statusCode == 200) {
-        final data = jsonDecode(response.body);
+        final data = jsonDecode(response.body) as Map<String, dynamic>;
         return data['data'] as Map<String, dynamic>?;
       } else {
         debugPrint('❌ [Analytics] Failed to get stats: ${response.statusCode}');

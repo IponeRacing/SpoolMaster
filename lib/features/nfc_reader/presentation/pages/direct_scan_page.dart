@@ -250,7 +250,7 @@ class _DirectScanView extends StatelessWidget {
           ? () {
               Navigator.pop(dialogContext);
               pageContext.read<NfcReaderBloc>().add(
-                ReadBobbinDataEvent(overrideMode: mode),
+                ReadBobbinDataEvent(overrideMode: mode, entryPoint: 'add_spool'),
               );
             }
           : null,
@@ -265,7 +265,7 @@ class _DirectScanView extends StatelessWidget {
 
   void _startScanWithMode(BuildContext context, String mode) {
     context.read<NfcReaderBloc>().add(
-      ReadBobbinDataEvent(overrideMode: mode),
+      ReadBobbinDataEvent(overrideMode: mode, entryPoint: 'add_spool'),
     );
   }
 
@@ -448,7 +448,7 @@ class _DirectScanView extends StatelessWidget {
       child: ElevatedButton(
         onPressed: () => context
             .read<NfcReaderBloc>()
-            .add(const ReadBobbinDataAutoDetectEvent()),
+            .add(const ReadBobbinDataAutoDetectEvent(entryPoint: 'add_spool')),
         style: ElevatedButton.styleFrom(
           backgroundColor: AppTheme.anycubicRed,
           foregroundColor: Colors.white,

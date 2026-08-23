@@ -36,7 +36,7 @@ class _NfcStockUpdateView extends StatelessWidget {
 
   void _startScanWithMode(BuildContext context, String mode) {
     context.read<NfcReaderBloc>().add(
-      ReadBobbinDataEvent(overrideMode: mode),
+      ReadBobbinDataEvent(overrideMode: mode, entryPoint: 'stock_update'),
     );
   }
 
@@ -233,7 +233,7 @@ class _NfcStockUpdateView extends StatelessWidget {
       child: ElevatedButton(
         onPressed: () => context
             .read<NfcReaderBloc>()
-            .add(const ReadBobbinDataAutoDetectEvent()),
+            .add(const ReadBobbinDataAutoDetectEvent(entryPoint: 'stock_update')),
         style: ElevatedButton.styleFrom(
           backgroundColor: AppTheme.anycubicRed,
           foregroundColor: Colors.white,
@@ -331,7 +331,7 @@ class _NfcStockUpdateView extends StatelessWidget {
           ? () {
               Navigator.pop(dialogContext);
               pageContext.read<NfcReaderBloc>().add(
-                ReadBobbinDataEvent(overrideMode: mode),
+                ReadBobbinDataEvent(overrideMode: mode, entryPoint: 'stock_update'),
               );
             }
           : null,

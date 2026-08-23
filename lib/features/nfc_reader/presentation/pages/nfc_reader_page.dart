@@ -193,7 +193,7 @@ class _NfcReaderView extends StatelessWidget {
                     ),
                     child: Text(
                       AppLocalizations.of(context)!.scanNfcChipButton,
-                      style: TextStyle(fontSize: 18),
+                      style: const TextStyle(fontSize: 18),
                     ),
                   ),
                 ],
