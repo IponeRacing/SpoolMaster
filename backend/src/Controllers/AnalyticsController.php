@@ -75,6 +75,7 @@ class AnalyticsController {
             : '[Spool Master] Scan NFC non reconnu';
 
         $nfcMode = $eventData['nfc_mode'] ?? 'unknown';
+        $entryPoint = $eventData['entry_point'] ?? 'N/A';
         $error = $eventData['error_message'] ?? 'N/A';
         $rawData = $eventData['raw_tag_data'] ?? 'N/A';
         $bytesCount = $eventData['raw_bytes_count'] ?? 'N/A';
@@ -92,6 +93,7 @@ class AnalyticsController {
         $body .= "Device: $deviceModel\n";
         $body .= "OS: $osVersion\n";
         $body .= "NFC mode: $nfcMode\n";
+        $body .= "Entry point: $entryPoint\n";
         $body .= "Timestamp: $timestamp\n";
         $body .= "Error: $error\n";
         $body .= "Session duration: {$sessionDurationMs}ms\n";
