@@ -6,9 +6,9 @@ import 'package:nfc_filament/features/nfc_reader/domain/repositories/nfc_reposit
 
 @lazySingleton
 class ReadNfcTag {
-  final NfcRepository repository;
 
   ReadNfcTag(this.repository);
+  final NfcRepository repository;
 
   Future<Either<Failure, NfcTag>> call() async {
     return repository.readNfcTag();

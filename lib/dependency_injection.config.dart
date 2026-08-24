@@ -1,5 +1,5 @@
-// dart format width=80
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// dart format width=80
 
 // **************************************************************************
 // InjectableConfigGenerator
@@ -62,24 +62,24 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i1053.NfcRepository>(
       () => _i474.NfcRepositoryImpl(gh<_i154.NfcDataSource>()),
     );
-    gh.factory<_i906.WriteBobbinData>(
-      () => _i906.WriteBobbinData(gh<_i1053.NfcRepository>()),
-    );
-    gh.lazySingleton<_i313.ReadBobbinData>(
-      () => _i313.ReadBobbinData(gh<_i1053.NfcRepository>()),
+    gh.lazySingleton<_i1023.ScanHistoryLocalDataSource>(
+      () =>
+          _i1024.ScanHistoryLocalDataSourceImpl(gh<_i460.SharedPreferences>()),
     );
     gh.lazySingleton<_i323.CheckNfcAvailability>(
       () => _i323.CheckNfcAvailability(gh<_i1053.NfcRepository>()),
     );
-    gh.lazySingleton<_i221.ReadNfcTag>(
-      () => _i221.ReadNfcTag(gh<_i1053.NfcRepository>()),
+    gh.lazySingleton<_i313.ReadBobbinData>(
+      () => _i313.ReadBobbinData(gh<_i1053.NfcRepository>()),
     );
     gh.lazySingleton<_i916.ReadBobbinDataAutoDetect>(
       () => _i916.ReadBobbinDataAutoDetect(gh<_i1053.NfcRepository>()),
     );
-    gh.lazySingleton<_i1023.ScanHistoryLocalDataSource>(
-      () =>
-          _i1024.ScanHistoryLocalDataSourceImpl(gh<_i460.SharedPreferences>()),
+    gh.lazySingleton<_i221.ReadNfcTag>(
+      () => _i221.ReadNfcTag(gh<_i1053.NfcRepository>()),
+    );
+    gh.factory<_i906.WriteBobbinData>(
+      () => _i906.WriteBobbinData(gh<_i1053.NfcRepository>()),
     );
     gh.lazySingleton<_i622.ScanHistoryRepository>(
       () => _i580.ScanHistoryRepositoryImpl(
@@ -92,11 +92,11 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i2.DeleteScan>(
       () => _i2.DeleteScan(gh<_i622.ScanHistoryRepository>()),
     );
-    gh.factory<_i787.SaveScanToHistory>(
-      () => _i787.SaveScanToHistory(gh<_i622.ScanHistoryRepository>()),
-    );
     gh.factory<_i416.GetScanHistory>(
       () => _i416.GetScanHistory(gh<_i622.ScanHistoryRepository>()),
+    );
+    gh.factory<_i787.SaveScanToHistory>(
+      () => _i787.SaveScanToHistory(gh<_i622.ScanHistoryRepository>()),
     );
     gh.factory<_i396.NfcReaderBloc>(
       () => _i396.NfcReaderBloc(

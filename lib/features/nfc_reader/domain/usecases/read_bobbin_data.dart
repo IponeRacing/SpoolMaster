@@ -6,11 +6,11 @@ import 'package:nfc_filament/features/nfc_reader/domain/repositories/nfc_reposit
 
 @lazySingleton
 class ReadBobbinData {
-  final NfcRepository repository;
 
   ReadBobbinData(this.repository);
+  final NfcRepository repository;
 
-  Future<Either<Failure, BobbinData>> call() async {
-    return repository.readBobbinData();
+  Future<Either<Failure, BobbinData>> call({String? nfcMode}) async {
+    return repository.readBobbinData(nfcMode: nfcMode);
   }
 }

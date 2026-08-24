@@ -11,10 +11,6 @@ import 'package:nfc_filament/features/nfc_reader/presentation/bloc/scan_history_
 
 @injectable
 class ScanHistoryBloc extends Bloc<ScanHistoryEvent, ScanHistoryState> {
-  final GetScanHistory getScanHistory;
-  final SaveScanToHistory saveScanToHistory;
-  final DeleteScan deleteScan;
-  final ClearScanHistory clearScanHistory;
 
   ScanHistoryBloc({
     required this.getScanHistory,
@@ -27,6 +23,10 @@ class ScanHistoryBloc extends Bloc<ScanHistoryEvent, ScanHistoryState> {
     on<DeleteScanEvent>(_onDeleteScan);
     on<ClearAllScansEvent>(_onClearAllScans);
   }
+  final GetScanHistory getScanHistory;
+  final SaveScanToHistory saveScanToHistory;
+  final DeleteScan deleteScan;
+  final ClearScanHistory clearScanHistory;
 
   Future<void> _onLoadScanHistory(
     LoadScanHistoryEvent event,

@@ -1,11 +1,12 @@
 import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:nfc_filament/core/api/api_config.dart';
-import 'package:nfc_filament/core/services/auth_service.dart';
-import 'package:nfc_filament/core/services/user_preferences_service.dart';
 import 'package:nfc_filament/core/models/spool_inventory_item.dart';
+import 'package:nfc_filament/core/services/auth_service.dart';
 import 'package:nfc_filament/core/services/spool_storage_service.dart';
+import 'package:nfc_filament/core/services/user_preferences_service.dart';
 
 /// Service de synchronisation des données avec le backend
 class SyncService {
@@ -97,7 +98,8 @@ class SyncService {
           debugPrint('Found ${spoolsJson.length} spools in backend response');
 
           // Clear local spools and replace with backend data
-          final spools = spoolsJson.map((json) {
+          final spools = spoolsJson.map((jsonItem) {
+            final json = jsonItem as Map<String, dynamic>;
             return SpoolInventoryItem(
               id: (json['spool_id'] ?? json['id']) as String,
               brand: (json['brand'] ?? '') as String,

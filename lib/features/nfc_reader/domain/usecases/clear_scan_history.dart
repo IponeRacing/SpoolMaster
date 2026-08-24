@@ -5,11 +5,11 @@ import 'package:nfc_filament/features/nfc_reader/domain/repositories/scan_histor
 
 @injectable
 class ClearScanHistory {
-  final ScanHistoryRepository repository;
 
   ClearScanHistory(this.repository);
+  final ScanHistoryRepository repository;
 
   Future<Either<Failure, void>> call() async {
-    return await repository.clearAllScans();
+    return repository.clearAllScans();
   }
 }

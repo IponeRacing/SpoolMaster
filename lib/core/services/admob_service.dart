@@ -7,9 +7,9 @@ import 'package:nfc_filament/core/services/consent_manager.dart';
 /// Service de gestion des publicités AdMob
 /// Gère plusieurs unités publicitaires pour différentes sections de l'app
 class AdMobService {
-  static final AdMobService _instance = AdMobService._internal();
   factory AdMobService() => _instance;
   AdMobService._internal();
+  static final AdMobService _instance = AdMobService._internal();
 
   bool _isInitialized = false;
   bool _isPremiumUser = false;
@@ -38,7 +38,7 @@ class AdMobService {
   }
 
   /// Met à jour le statut premium de l'utilisateur
-  void setUserPremiumStatus(bool isPremium) {
+  void setUserPremiumStatus({required bool isPremium}) {
     _isPremiumUser = isPremium;
     debugPrint('🎯 AdMob: User premium status = $isPremium');
   }

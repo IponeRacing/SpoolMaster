@@ -1,8 +1,9 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:nfc_filament/core/services/auth_service.dart';
 import 'package:nfc_filament/l10n/app_localizations.dart';
+import 'package:nfc_filament/main.dart' show MainNavigationPage, mainNavigationKey;
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
-import '../../../../core/services/auth_service.dart';
-import '../../../../main.dart' show MainNavigationPage, mainNavigationKey;
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key, this.fromProfile = false});
@@ -124,7 +125,7 @@ class _LoginPageState extends State<LoginPage> {
                     borderRadius: BorderRadius.circular(24),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(isDark ? 0.3 : 0.1),
+                        color: Colors.black.withValues(alpha: isDark ? 0.3 : 0.1),
                         blurRadius: 30,
                         offset: const Offset(0, 15),
                       ),
@@ -149,15 +150,17 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       const SizedBox(height: 32),
 
-                      // Apple Sign In Button
+                      // Sign In Buttons
                       if (_isLoading)
                         const CircularProgressIndicator()
                       else ...[
-                        _AppleSignInButton(
-                          onPressed: _signInWithApple,
-                          label: localizations.continueWithApple,
-                        ),
-                        const SizedBox(height: 16),
+                        if (defaultTargetPlatform == TargetPlatform.iOS) ...[
+                          _AppleSignInButton(
+                            onPressed: _signInWithApple,
+                            label: localizations.continueWithApple,
+                          ),
+                          const SizedBox(height: 16),
+                        ],
                         _GoogleSignInButton(
                           onPressed: _signInWithGoogle,
                           label: localizations.continueWithGoogle,
@@ -207,10 +210,10 @@ class _LoginPageState extends State<LoginPage> {
 
 /// Bouton Apple Sign In personnalisé
 class _AppleSignInButton extends StatelessWidget {
-  final VoidCallback onPressed;
-  final String label;
 
   const _AppleSignInButton({required this.onPressed, required this.label});
+  final VoidCallback onPressed;
+  final String label;
 
   @override
   Widget build(BuildContext context) {
@@ -242,10 +245,10 @@ class _AppleSignInButton extends StatelessWidget {
 
 /// Bouton Google Sign In personnalisé
 class _GoogleSignInButton extends StatelessWidget {
-  final VoidCallback onPressed;
-  final String label;
 
   const _GoogleSignInButton({required this.onPressed, required this.label});
+  final VoidCallback onPressed;
+  final String label;
 
   @override
   Widget build(BuildContext context) {

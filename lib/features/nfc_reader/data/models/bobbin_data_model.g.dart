@@ -29,6 +29,9 @@ BobbinDataModel _$BobbinDataModelFromJson(Map<String, dynamic> json) =>
       dryingTime: (json['dryingTime'] as num?)?.toInt(),
       materialVariantId: json['materialVariantId'] as String?,
       materialId: json['materialId'] as String?,
+      nozzleSize: (json['nozzleSize'] as num?)?.toDouble(),
+      vendorCode: json['vendorCode'] as String?,
+      productCode: json['productCode'] as String?,
     );
 
 Map<String, dynamic> _$BobbinDataModelToJson(BobbinDataModel instance) =>
@@ -52,4 +55,7 @@ Map<String, dynamic> _$BobbinDataModelToJson(BobbinDataModel instance) =>
       'dryingTime': instance.dryingTime,
       'materialVariantId': instance.materialVariantId,
       'materialId': instance.materialId,
+      'nozzleSize': instance.nozzleSize,
+      'vendorCode': instance.vendorCode,
+      'productCode': instance.productCode,
     };

@@ -17,9 +17,9 @@ class ScanHistoryLoading extends ScanHistoryState {
 }
 
 class ScanHistoryLoaded extends ScanHistoryState {
-  final List<ScanHistory> scans;
 
   const ScanHistoryLoaded(this.scans);
+  final List<ScanHistory> scans;
 
   @override
   List<Object?> get props => [scans];
@@ -30,9 +30,9 @@ class ScanHistoryEmpty extends ScanHistoryState {
 }
 
 class ScanHistoryError extends ScanHistoryState {
-  final String message;
 
   const ScanHistoryError(this.message);
+  final String message;
 
   @override
   List<Object?> get props => [message];

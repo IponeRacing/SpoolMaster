@@ -29,7 +29,7 @@ class _NfcLogoPainter extends CustomPainter {
     final center = Offset(size.width / 2, size.height / 2);
 
     // Dessiner 3 ondes NFC en spirale
-    for (int i = 0; i < 3; i++) {
+    for (var i = 0; i < 3; i++) {
       final radius = (size.width / 2) * (0.3 + i * 0.25);
       final arcRect = Rect.fromCircle(center: center, radius: radius);
 

@@ -1,10 +1,12 @@
+import 'dart:async';
 import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:nfc_filament/core/api/api_config.dart';
 import 'package:nfc_filament/core/services/auth_service.dart';
 import 'package:nfc_filament/features/nfc_reader/data/models/cloned_tag_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 /// Service pour gérer la bibliothèque de tags clonés
 /// Architecture hybride : Cache local (SharedPreferences) + Cloud backup
@@ -36,7 +38,7 @@ class ClonedTagsStorageService {
     await prefs.setStringList(_keyClonedTags, jsonList);
 
     // Sync vers le cloud (async, ne bloque pas l'UI)
-    _syncCloneToCloud(clone);
+    unawaited(_syncCloneToCloud(clone));
   }
 
   /// Récupérer tous les tags clonés (local + cloud)
@@ -45,7 +47,7 @@ class ClonedTagsStorageService {
     final jsonList = prefs.getStringList(_keyClonedTags) ?? [];
 
     return jsonList
-        .map((jsonStr) => ClonedTagModel.fromJsonString(jsonStr))
+        .map(ClonedTagModel.fromJsonString)
         .toList();
   }
 
@@ -62,7 +64,7 @@ class ClonedTagsStorageService {
     await prefs.setStringList(_keyClonedTags, jsonList);
 
     // Supprimer du cloud
-    _deleteCloneFromCloud(id);
+    unawaited(_deleteCloneFromCloud(id));
   }
 
   /// Mettre à jour le nom personnalisé d'un clone
@@ -87,7 +89,7 @@ class ClonedTagsStorageService {
       await prefs.setStringList(_keyClonedTags, jsonList);
 
       // Sync vers le cloud
-      _syncCloneToCloud(updatedClone);
+      unawaited(_syncCloneToCloud(updatedClone));
     }
   }
 
@@ -187,7 +189,7 @@ class ClonedTagsStorageService {
       ).timeout(ApiConfig.connectTimeout);
 
       if (response.statusCode == 200) {
-        final List<dynamic> data = jsonDecode(response.body) as List;
+        final data = jsonDecode(response.body) as List;
         final cloudClones = data
             .map((json) => ClonedTagModel.fromJson(json as Map<String, dynamic>))
             .toList();
@@ -208,7 +210,7 @@ class ClonedTagsStorageService {
       final localClones = await getClonedTags();
 
       // Fusionner : utiliser un Set pour éviter les doublons (par ID)
-      final Map<String, ClonedTagModel> mergedMap = {};
+      final mergedMap = <String, ClonedTagModel>{};
 
       // Ajouter les clones locaux
       for (final clone in localClones) {

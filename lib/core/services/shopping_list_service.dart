@@ -1,11 +1,12 @@
 import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:nfc_filament/core/models/spool_inventory_item.dart';
 import 'package:nfc_filament/core/api/api_config.dart';
+import 'package:nfc_filament/core/models/spool_inventory_item.dart';
 import 'package:nfc_filament/core/services/auth_service.dart';
 import 'package:nfc_filament/core/services/user_preferences_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ShoppingListService {
   static const String _keyShoppingList = 'shopping_list';
@@ -44,7 +45,7 @@ class ShoppingListService {
         debugPrint('📦 Migrating shopping list from legacy key to user-scoped key');
         await prefs.setString(key, legacyData);
         await prefs.remove(_keyShoppingList);
-        final List<dynamic> jsonList = json.decode(legacyData) as List<dynamic>;
+        final jsonList = json.decode(legacyData) as List<dynamic>;
         return jsonList.map((j) => SpoolInventoryItem.fromJson(j as Map<String, dynamic>)).toList();
       }
     }
@@ -53,7 +54,7 @@ class ShoppingListService {
       return [];
     }
 
-    final List<dynamic> jsonList = json.decode(jsonString) as List<dynamic>;
+    final jsonList = json.decode(jsonString) as List<dynamic>;
     return jsonList.map((j) => SpoolInventoryItem.fromJson(j as Map<String, dynamic>)).toList();
   }
 
@@ -63,14 +64,14 @@ class ShoppingListService {
     final allKeys = prefs.getKeys();
     final shoppingKeys = allKeys.where((k) => k.startsWith(_keyShoppingList));
 
-    final List<SpoolInventoryItem> allItems = [];
-    final Set<String> seenIds = {};
+    final allItems = <SpoolInventoryItem>[];
+    final seenIds = <String>{};
 
     for (final key in shoppingKeys) {
       final data = prefs.getString(key);
       if (data != null && data.isNotEmpty) {
         try {
-          final List<dynamic> jsonList = json.decode(data) as List<dynamic>;
+          final jsonList = json.decode(data) as List<dynamic>;
           for (final j in jsonList) {
             final item = SpoolInventoryItem.fromJson(j as Map<String, dynamic>);
             if (!seenIds.contains(item.id)) {

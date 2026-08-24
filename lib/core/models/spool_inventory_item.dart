@@ -1,27 +1,5 @@
 // Model for inventory items
 class SpoolInventoryItem {
-  final String id;
-  final String brand;
-  final String material;
-  final String colorName;
-  final int colorRgb;
-  final double price;
-  final double weight;
-  final double remainingWeight;
-  final DateTime addedDate;
-  final int? extruderTempMin;
-  final int? extruderTempMax;
-  final int? bedTempMin;
-  final int? bedTempMax;
-  final double? diameter;
-  final int? spoolLength;
-  final DateTime? manufactureDate;
-  final String? batchNumber;
-  final String? detailedType;
-  final int? dryingTemp;
-  final int? dryingTime;
-  final String? materialVariantId;
-  final String? materialId;
 
   SpoolInventoryItem({
     required this.id,
@@ -46,32 +24,10 @@ class SpoolInventoryItem {
     this.dryingTime,
     this.materialVariantId,
     this.materialId,
+    this.nozzleSize,
+    this.vendorCode,
+    this.productCode,
   });
-
-  Map<String, dynamic> toJson() => {
-    'id': id,
-    'brand': brand,
-    'material': material,
-    'colorName': colorName,
-    'colorRgb': colorRgb,
-    'price': price,
-    'weight': weight,
-    'remainingWeight': remainingWeight,
-    'addedDate': addedDate.toIso8601String(),
-    'extruderTempMin': extruderTempMin,
-    'extruderTempMax': extruderTempMax,
-    'bedTempMin': bedTempMin,
-    'bedTempMax': bedTempMax,
-    'diameter': diameter,
-    'spoolLength': spoolLength,
-    'manufactureDate': manufactureDate?.toIso8601String(),
-    'batchNumber': batchNumber,
-    'detailedType': detailedType,
-    'dryingTemp': dryingTemp,
-    'dryingTime': dryingTime,
-    'materialVariantId': materialVariantId,
-    'materialId': materialId,
-  };
 
   factory SpoolInventoryItem.fromJson(Map<String, dynamic> json) =>
       SpoolInventoryItem(
@@ -101,7 +57,65 @@ class SpoolInventoryItem {
         dryingTime: json['dryingTime'] as int?,
         materialVariantId: json['materialVariantId'] as String?,
         materialId: json['materialId'] as String?,
+        nozzleSize: json['nozzleSize'] != null
+            ? (json['nozzleSize'] as num).toDouble()
+            : null,
+        vendorCode: json['vendorCode'] as String?,
+        productCode: json['productCode'] as String?,
       );
+  final String id;
+  final String brand;
+  final String material;
+  final String colorName;
+  final int colorRgb;
+  final double price;
+  final double weight;
+  final double remainingWeight;
+  final DateTime addedDate;
+  final int? extruderTempMin;
+  final int? extruderTempMax;
+  final int? bedTempMin;
+  final int? bedTempMax;
+  final double? diameter;
+  final int? spoolLength;
+  final DateTime? manufactureDate;
+  final String? batchNumber;
+  final String? detailedType;
+  final int? dryingTemp;
+  final int? dryingTime;
+  final String? materialVariantId;
+  final String? materialId;
+  final double? nozzleSize;
+  final String? vendorCode;
+  final String? productCode;
+
+  Map<String, dynamic> toJson() => {
+    'id': id,
+    'brand': brand,
+    'material': material,
+    'colorName': colorName,
+    'colorRgb': colorRgb,
+    'price': price,
+    'weight': weight,
+    'remainingWeight': remainingWeight,
+    'addedDate': addedDate.toIso8601String(),
+    'extruderTempMin': extruderTempMin,
+    'extruderTempMax': extruderTempMax,
+    'bedTempMin': bedTempMin,
+    'bedTempMax': bedTempMax,
+    'diameter': diameter,
+    'spoolLength': spoolLength,
+    'manufactureDate': manufactureDate?.toIso8601String(),
+    'batchNumber': batchNumber,
+    'detailedType': detailedType,
+    'dryingTemp': dryingTemp,
+    'dryingTime': dryingTime,
+    'materialVariantId': materialVariantId,
+    'materialId': materialId,
+    'nozzleSize': nozzleSize,
+    'vendorCode': vendorCode,
+    'productCode': productCode,
+  };
 
   SpoolInventoryItem copyWith({
     String? id,
@@ -126,6 +140,9 @@ class SpoolInventoryItem {
     int? dryingTime,
     String? materialVariantId,
     String? materialId,
+    double? nozzleSize,
+    String? vendorCode,
+    String? productCode,
   }) {
     return SpoolInventoryItem(
       id: id ?? this.id,
@@ -150,6 +167,9 @@ class SpoolInventoryItem {
       dryingTime: dryingTime ?? this.dryingTime,
       materialVariantId: materialVariantId ?? this.materialVariantId,
       materialId: materialId ?? this.materialId,
+      nozzleSize: nozzleSize ?? this.nozzleSize,
+      vendorCode: vendorCode ?? this.vendorCode,
+      productCode: productCode ?? this.productCode,
     );
   }
 }

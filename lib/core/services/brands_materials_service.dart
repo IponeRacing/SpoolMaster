@@ -130,18 +130,16 @@ class BrandsMaterialsService {
   /// Supprime une marque personnalisée
   static Future<void> removeCustomBrand(String brand) async {
     final prefs = await SharedPreferences.getInstance();
-    final customBrands = prefs.getStringList(_keyCustomBrands) ?? [];
-
-    customBrands.remove(brand);
+    final customBrands = prefs.getStringList(_keyCustomBrands) ?? []
+      ..remove(brand);
     await prefs.setStringList(_keyCustomBrands, customBrands);
   }
 
   /// Supprime un matériau personnalisé
   static Future<void> removeCustomMaterial(String material) async {
     final prefs = await SharedPreferences.getInstance();
-    final customMaterials = prefs.getStringList(_keyCustomMaterials) ?? [];
-
-    customMaterials.remove(material);
+    final customMaterials = prefs.getStringList(_keyCustomMaterials) ?? []
+      ..remove(material);
     await prefs.setStringList(_keyCustomMaterials, customMaterials);
   }
 

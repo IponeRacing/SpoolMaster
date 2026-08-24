@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-abstract class Failure extends Equatable {
+abstract class Failure extends Equatable implements Exception {
   const Failure(this.message);
 
   final String message;
@@ -48,6 +48,20 @@ class NfcPermissionDeniedFailure extends Failure {
 
 class NfcSessionCancelledFailure extends Failure {
   const NfcSessionCancelledFailure([super.message = 'Scan NFC annulé']);
+}
+
+class NfcAuthFailure extends Failure {
+  const NfcAuthFailure({
+    String message = 'Authentification tag NFC échouée',
+    this.sessionDurationMs,
+    this.tagWasDetected,
+  }) : super(message);
+
+  final int? sessionDurationMs;
+  final bool? tagWasDetected;
+
+  @override
+  List<Object?> get props => [message, sessionDurationMs, tagWasDetected];
 }
 
 class NfcTagNotDetectedFailure extends Failure {

@@ -6,11 +6,11 @@ import 'package:nfc_filament/features/nfc_reader/domain/repositories/nfc_reposit
 
 @injectable
 class WriteBobbinData {
-  final NfcRepository repository;
 
   WriteBobbinData(this.repository);
+  final NfcRepository repository;
 
   Future<Either<Failure, void>> call(BobbinData bobbinData, {String tagFormat = 'anycubic'}) async {
-    return await repository.writeBobbinData(bobbinData, tagFormat: tagFormat);
+    return repository.writeBobbinData(bobbinData, tagFormat: tagFormat);
   }
 }

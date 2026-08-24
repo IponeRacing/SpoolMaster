@@ -14,9 +14,9 @@ class NfcReaderInitial extends NfcReaderState {
 }
 
 class NfcNotAvailable extends NfcReaderState {
-  final String message;
 
   const NfcNotAvailable(this.message);
+  final String message;
 
   @override
   List<Object?> get props => [message];
@@ -31,21 +31,32 @@ class NfcReaderLoading extends NfcReaderState {
 }
 
 class NfcTagReadSuccess extends NfcReaderState {
-  final NfcTag tag;
 
   const NfcTagReadSuccess(this.tag);
+  final NfcTag tag;
 
   @override
   List<Object?> get props => [tag];
 }
 
 class BobbinDataReadSuccess extends NfcReaderState {
-  final BobbinData bobbinData;
 
   const BobbinDataReadSuccess(this.bobbinData);
+  final BobbinData bobbinData;
 
   @override
   List<Object?> get props => [bobbinData];
+}
+
+class BobbinDataReadSuccessWithFallback extends NfcReaderState {
+  const BobbinDataReadSuccessWithFallback(this.bobbinData, {required this.detectedMode, required this.originalMode});
+
+  final BobbinData bobbinData;
+  final String detectedMode;
+  final String originalMode;
+
+  @override
+  List<Object?> get props => [bobbinData, detectedMode, originalMode];
 }
 
 class BobbinDataWriteSuccess extends NfcReaderState {
@@ -70,4 +81,5 @@ enum NfcFailureType {
   readError,
   tagNotDetected,
   incompatibleTag,
+  authError,
 }

@@ -6,11 +6,11 @@ import 'package:nfc_filament/features/nfc_reader/domain/repositories/scan_histor
 
 @injectable
 class GetScanHistory {
-  final ScanHistoryRepository repository;
 
   GetScanHistory(this.repository);
+  final ScanHistoryRepository repository;
 
   Future<Either<Failure, List<ScanHistory>>> call() async {
-    return await repository.getAllScans();
+    return repository.getAllScans();
   }
 }

@@ -1,3 +1,5 @@
+import 'dart:developer' as developer;
+
 import 'package:dartz/dartz.dart';
 import 'package:flutter/services.dart';
 import 'package:injectable/injectable.dart';
@@ -10,9 +12,9 @@ import 'package:nfc_filament/features/nfc_reader/domain/repositories/nfc_reposit
 
 @LazySingleton(as: NfcRepository)
 class NfcRepositoryImpl implements NfcRepository {
-  final NfcDataSource dataSource;
 
   NfcRepositoryImpl(this.dataSource);
+  final NfcDataSource dataSource;
 
   @override
   Future<Either<Failure, bool>> isNfcAvailable() async {
@@ -22,6 +24,7 @@ class NfcRepositoryImpl implements NfcRepository {
     } on Failure catch (failure) {
       return Left(failure);
     } catch (e) {
+      developer.log('❌ isNfcAvailable error: $e\n${e is Error ? e.stackTrace : ""}');
       return const Left(NfcNotAvailableFailure());
     }
   }
@@ -34,14 +37,15 @@ class NfcRepositoryImpl implements NfcRepository {
     } on Failure catch (failure) {
       return Left(failure);
     } catch (e) {
+      developer.log('❌ readNfcTag unexpected error: $e\n${e is Error ? e.stackTrace : ""}');
       return const Left(NfcTagReadFailure());
     }
   }
 
   @override
-  Future<Either<Failure, BobbinData>> readBobbinData() async {
+  Future<Either<Failure, BobbinData>> readBobbinData({String? nfcMode}) async {
     try {
-      final bobbinModel = await dataSource.readBobbinData();
+      final bobbinModel = await dataSource.readBobbinData(nfcMode: nfcMode);
       return Right(bobbinModel.toEntity());
     } on Failure catch (failure) {
       return Left(failure);
@@ -74,6 +78,14 @@ class NfcRepositoryImpl implements NfcRepository {
           message: e.message ?? 'Non supporté sur cette plateforme',
         ));
       }
+      // Authentification MiFare Classic échouée (Creality/Bambu Lab)
+      if (e.code == 'AUTH_ERROR') {
+        return Left(NfcAuthFailure(
+          message: e.message ?? 'Authentification tag NFC échouée',
+          sessionDurationMs: diag.sessionDurationMs,
+          tagWasDetected: diag.tagWasDetected,
+        ));
+      }
       // Session interrompue par iOS (code 202) - retryable
       if (e.code == 'SESSION_TERMINATED') {
         return Left(NfcTagReadFailure(
@@ -96,6 +108,7 @@ class NfcRepositoryImpl implements NfcRepository {
         tagWasDetected: diag.tagWasDetected,
       ));
     } catch (e) {
+      developer.log('❌ readBobbinData unexpected error: $e\n${e is Error ? e.stackTrace : ""}');
       return const Left(NfcTagReadFailure());
     }
   }
@@ -132,6 +145,13 @@ class NfcRepositoryImpl implements NfcRepository {
           message: e.message ?? 'Non supporté sur cette plateforme',
         ));
       }
+      if (e.code == 'AUTH_ERROR') {
+        return Left(NfcAuthFailure(
+          message: e.message ?? 'Authentification tag NFC échouée',
+          sessionDurationMs: diag.sessionDurationMs,
+          tagWasDetected: diag.tagWasDetected,
+        ));
+      }
       if (e.code == 'SESSION_TERMINATED') {
         return Left(NfcTagReadFailure(
           message: e.message ?? 'Session NFC interrompue. Réessayez.',
@@ -152,6 +172,7 @@ class NfcRepositoryImpl implements NfcRepository {
         tagWasDetected: diag.tagWasDetected,
       ));
     } catch (e) {
+      developer.log('❌ readBobbinDataAutoDetect unexpected error: $e\n${e is Error ? e.stackTrace : ""}');
       return const Left(NfcTagReadFailure());
     }
   }
@@ -166,8 +187,9 @@ class NfcRepositoryImpl implements NfcRepository {
     } on Failure catch (failure) {
       return Left(failure);
     } catch (e) {
+      developer.log('❌ writeBobbinData unexpected error: $e\n${e is Error ? e.stackTrace : ""}');
       return const Left(
-        NfcTagReadFailure(message: 'Erreur lors de l\'écriture du tag NFC'),
+        NfcTagReadFailure(message: "Erreur lors de l'écriture du tag NFC"),
       );
     }
   }

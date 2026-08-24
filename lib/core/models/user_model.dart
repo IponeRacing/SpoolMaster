@@ -1,16 +1,10 @@
 /// Modèle utilisateur
 class UserModel {
-  final String userId;
-  final String email;
-  final String? name;
-  final String provider; // 'apple' ou 'google'
-  final String? avatarUrl;
 
   const UserModel({
     required this.userId,
     required this.email,
-    this.name,
-    required this.provider,
+    required this.provider, this.name,
     this.avatarUrl,
   });
 
@@ -23,6 +17,11 @@ class UserModel {
       avatarUrl: json['avatar_url'] as String?,
     );
   }
+  final String userId;
+  final String email;
+  final String? name;
+  final String provider; // 'apple' ou 'google'
+  final String? avatarUrl;
 
   Map<String, dynamic> toJson() {
     return {
@@ -37,10 +36,6 @@ class UserModel {
 
 /// Modèle de réponse d'authentification
 class AuthResponse {
-  final UserModel user;
-  final String accessToken;
-  final String refreshToken;
-  final int expiresIn;
 
   const AuthResponse({
     required this.user,
@@ -58,4 +53,8 @@ class AuthResponse {
       expiresIn: data['expires_in'] as int,
     );
   }
+  final UserModel user;
+  final String accessToken;
+  final String refreshToken;
+  final int expiresIn;
 }

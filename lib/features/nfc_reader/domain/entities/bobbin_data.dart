@@ -1,29 +1,51 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+class BobbinData {
+  const BobbinData({
+    required this.filamentType,
+    required this.color,
+    required this.weightGrams,
+    this.manufactureDate,
+    this.batchNumber,
+    this.colorRgb,
+    this.extruderTempMin,
+    this.extruderTempMax,
+    this.bedTempMin,
+    this.bedTempMax,
+    this.diameter,
+    this.spoolLength,
+    this.price,
+    this.remainingWeight,
+    this.brand,
+    this.detailedType,
+    this.dryingTemp,
+    this.dryingTime,
+    this.materialVariantId,
+    this.materialId,
+    this.nozzleSize,
+    this.vendorCode,
+    this.productCode,
+  });
 
-part 'bobbin_data.freezed.dart';
-
-@freezed
-class BobbinData with _$BobbinData {
-  const factory BobbinData({
-    required String filamentType,
-    required String color,
-    required double weightGrams,
-    DateTime? manufactureDate,
-    String? batchNumber,
-    int? colorRgb, // RGB color as integer (0xRRGGBB)
-    int? extruderTempMin, // Température extrudeur min (°C)
-    int? extruderTempMax, // Température extrudeur max (°C)
-    int? bedTempMin, // Température plateau min (°C)
-    int? bedTempMax, // Température plateau max (°C)
-    double? diameter, // Diamètre filament (mm)
-    int? spoolLength, // Longueur bobine (mètres)
-    double? price, // Prix d'achat (CHF)
-    double? remainingWeight, // Poids restant (grammes)
-    String? brand, // Marque
-    String? detailedType, // Type détaillé Bambu Lab (ex: "PLA Matte")
-    int? dryingTemp, // Température séchage (°C)
-    int? dryingTime, // Durée séchage (heures)
-    String? materialVariantId, // Bambu Lab variant ID (ex: "A50-K0")
-    String? materialId, // Bambu Lab material ID (ex: "GFA50")
-  }) = _BobbinData;
+  final String filamentType;
+  final String color;
+  final double weightGrams;
+  final DateTime? manufactureDate;
+  final String? batchNumber;
+  final int? colorRgb;
+  final int? extruderTempMin;
+  final int? extruderTempMax;
+  final int? bedTempMin;
+  final int? bedTempMax;
+  final double? diameter;
+  final int? spoolLength;
+  final double? price;
+  final double? remainingWeight;
+  final String? brand;
+  final String? detailedType;
+  final int? dryingTemp;
+  final int? dryingTime;
+  final String? materialVariantId;
+  final String? materialId;
+  final double? nozzleSize;
+  final String? vendorCode;
+  final String? productCode;
 }

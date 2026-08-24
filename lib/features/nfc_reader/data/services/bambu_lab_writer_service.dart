@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:nfc_filament/features/nfc_reader/data/models/cloned_tag_model.dart';
 
@@ -10,7 +11,7 @@ class BambuLabWriterService {
   static Future<void> writeClonedTag(ClonedTagModel clone) async {
     try {
       // Convertir les blocs en format attendu par le plugin natif
-      final Map<String, List<int>> blocks = {};
+      final blocks = <String, List<int>>{};
       for (final entry in clone.rawBlocks.entries) {
         blocks[entry.key.toString()] = entry.value;
       }
@@ -20,11 +21,13 @@ class BambuLabWriterService {
         'blocks': blocks,
       });
 
-      print('✅ Clone Bambu Lab écrit avec succès sur carte CUID');
+      debugPrint('✅ Clone Bambu Lab écrit avec succès sur carte CUID');
     } on PlatformException catch (e) {
+      debugPrint('❌ Erreur écriture clone (Platform): ${e.code} - ${e.message}');
       throw Exception('Erreur écriture clone: ${e.message}');
     } catch (e) {
-      throw Exception('Erreur lors de l\'écriture du clone: $e');
+      debugPrint('❌ Erreur écriture clone: $e\n${e is Error ? e.stackTrace : ""}');
+      throw Exception("Erreur lors de l'écriture du clone: $e");
     }
   }
 }

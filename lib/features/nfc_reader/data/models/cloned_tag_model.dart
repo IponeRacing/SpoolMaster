@@ -4,11 +4,6 @@ import 'package:nfc_filament/features/nfc_reader/domain/entities/bobbin_data.dar
 
 /// Modèle pour sauvegarder un tag NFC Bambu Lab cloné
 class ClonedTagModel {
-  final String id;
-  final DateTime clonedAt;
-  final BobbinData bobbinData;
-  final Map<int, List<int>> rawBlocks; // Tous les blocs bruts
-  final String? customName;
 
   ClonedTagModel({
     required this.id,
@@ -25,7 +20,7 @@ class ClonedTagModel {
     String? customName,
   }) {
     // Convertir les blocs de String keys vers int keys
-    final Map<int, List<int>> blocksMap = {};
+    final blocksMap = <int, List<int>>{};
     for (final entry in rawBlocks.entries) {
       // Format: "block_5" -> 5
       final blockNum = int.parse(entry.key.replaceAll('block_', ''));
@@ -42,19 +37,6 @@ class ClonedTagModel {
     );
   }
 
-  /// Convertir en JSON pour sauvegarde
-  Map<String, dynamic> toJson() {
-    final bobbinModel = BobbinDataModel.fromEntity(bobbinData);
-
-    return {
-      'id': id,
-      'clonedAt': clonedAt.toIso8601String(),
-      'bobbinData': bobbinModel.toJson(),
-      'rawBlocks': rawBlocks.map((key, value) => MapEntry(key.toString(), value)),
-      'customName': customName,
-    };
-  }
-
   /// Créer depuis JSON
   factory ClonedTagModel.fromJson(Map<String, dynamic> json) {
     final bobbinDataJson = json['bobbinData'] as Map<String, dynamic>;
@@ -62,7 +44,7 @@ class ClonedTagModel {
 
     // Convertir rawBlocks
     final rawBlocksJson = json['rawBlocks'] as Map<String, dynamic>;
-    final Map<int, List<int>> blocksMap = {};
+    final blocksMap = <int, List<int>>{};
     for (final entry in rawBlocksJson.entries) {
       final blockNum = int.parse(entry.key);
       final blockData = (entry.value as List).cast<int>();
@@ -78,13 +60,31 @@ class ClonedTagModel {
     );
   }
 
-  String toJsonString() => json.encode(toJson());
-
   factory ClonedTagModel.fromJsonString(String jsonString) {
     return ClonedTagModel.fromJson(
       json.decode(jsonString) as Map<String, dynamic>,
     );
   }
+  final String id;
+  final DateTime clonedAt;
+  final BobbinData bobbinData;
+  final Map<int, List<int>> rawBlocks; // Tous les blocs bruts
+  final String? customName;
+
+  /// Convertir en JSON pour sauvegarde
+  Map<String, dynamic> toJson() {
+    final bobbinModel = BobbinDataModel.fromEntity(bobbinData);
+
+    return {
+      'id': id,
+      'clonedAt': clonedAt.toIso8601String(),
+      'bobbinData': bobbinModel.toJson(),
+      'rawBlocks': rawBlocks.map((key, value) => MapEntry(key.toString(), value)),
+      'customName': customName,
+    };
+  }
+
+  String toJsonString() => json.encode(toJson());
 
   /// Obtenir une description lisible du clone
   String get displayName {

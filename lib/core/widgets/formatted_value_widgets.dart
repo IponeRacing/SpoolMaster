@@ -4,14 +4,13 @@ import 'package:nfc_filament/core/services/user_preferences_service.dart';
 
 /// Widget qui affiche un prix avec la devise de l'utilisateur
 class FormattedPrice extends StatefulWidget {
-  final double price;
-  final TextStyle? style;
 
   const FormattedPrice({
-    super.key,
-    required this.price,
+    required this.price, super.key,
     this.style,
   });
+  final double price;
+  final TextStyle? style;
 
   @override
   State<FormattedPrice> createState() => _FormattedPriceState();
@@ -60,11 +59,11 @@ class _FormattedPriceState extends State<FormattedPrice> {
       case 'EUR':
         return '€';
       case 'USD':
-        return '\$';
+        return r'$';
       case 'GBP':
         return '£';
       case 'CAD':
-        return 'CAD \$';
+        return r'CAD $';
       default:
         return currency;
     }
@@ -73,16 +72,15 @@ class _FormattedPriceState extends State<FormattedPrice> {
 
 /// Widget qui affiche un poids avec l'unité de l'utilisateur
 class FormattedWeight extends StatefulWidget {
-  final double weightInGrams;
-  final TextStyle? style;
-  final int decimals;
 
   const FormattedWeight({
-    super.key,
-    required this.weightInGrams,
+    required this.weightInGrams, super.key,
     this.style,
     this.decimals = 0,
   });
+  final double weightInGrams;
+  final TextStyle? style;
+  final int decimals;
 
   @override
   State<FormattedWeight> createState() => _FormattedWeightState();
@@ -126,18 +124,17 @@ class _FormattedWeightState extends State<FormattedWeight> {
 
 /// Widget qui affiche une longueur avec l'unité de l'utilisateur
 class FormattedLength extends StatefulWidget {
-  final double lengthInMm;
-  final TextStyle? style;
-  final int decimals;
-  final bool showMetersForMetric;
 
   const FormattedLength({
-    super.key,
-    required this.lengthInMm,
+    required this.lengthInMm, super.key,
     this.style,
     this.decimals = 1,
     this.showMetersForMetric = false,
   });
+  final double lengthInMm;
+  final TextStyle? style;
+  final int decimals;
+  final bool showMetersForMetric;
 
   @override
   State<FormattedLength> createState() => _FormattedLengthState();
@@ -190,14 +187,13 @@ class _FormattedLengthState extends State<FormattedLength> {
 
 /// Widget qui affiche une température avec l'unité de l'utilisateur
 class FormattedTemperature extends StatefulWidget {
-  final double temperatureInCelsius;
-  final TextStyle? style;
 
   const FormattedTemperature({
-    super.key,
-    required this.temperatureInCelsius,
+    required this.temperatureInCelsius, super.key,
     this.style,
   });
+  final double temperatureInCelsius;
+  final TextStyle? style;
 
   @override
   State<FormattedTemperature> createState() => _FormattedTemperatureState();
@@ -241,16 +237,14 @@ class _FormattedTemperatureState extends State<FormattedTemperature> {
 
 /// Widget qui affiche une plage de température
 class FormattedTemperatureRange extends StatefulWidget {
+
+  const FormattedTemperatureRange({
+    required this.minTempCelsius, required this.maxTempCelsius, super.key,
+    this.style,
+  });
   final double minTempCelsius;
   final double maxTempCelsius;
   final TextStyle? style;
-
-  const FormattedTemperatureRange({
-    super.key,
-    required this.minTempCelsius,
-    required this.maxTempCelsius,
-    this.style,
-  });
 
   @override
   State<FormattedTemperatureRange> createState() => _FormattedTemperatureRangeState();
@@ -315,11 +309,11 @@ Future<String> getCurrencySymbol() async {
     case 'EUR':
       return '€';
     case 'USD':
-      return '\$';
+      return r'$';
     case 'GBP':
       return '£';
     case 'CAD':
-      return 'CAD\$';
+      return r'CAD$';
     default:
       return currency;
   }

@@ -26,7 +26,7 @@ class BambuLabReaderService {
         throw const NfcTagReadFailure(message: 'Aucune donnée reçue du tag Bambu Lab');
       }
 
-      final data = Map<String, dynamic>.from(result as Map);
+      final data = Map<String, dynamic>.from(result is Map ? result : {});
 
       // Capturer les raw bytes pour diagnostic en cas d'erreur
       final rawBytes = (data['rawBytes'] as List<dynamic>?)?.cast<int>() ?? [];
@@ -47,7 +47,9 @@ class BambuLabReaderService {
 
       // Sauvegarder le clone automatiquement si demandé (seulement pour Bambu Lab)
       if (saveClone) {
-        final rawBlocks = data['rawBlocks'] as Map<String, dynamic>?;
+        final rawBlocks = data['rawBlocks'] != null
+            ? Map<String, dynamic>.from(data['rawBlocks'] is Map ? data['rawBlocks'] as Map : {})
+            : null;
         if (rawBlocks != null) {
           final clone = ClonedTagModel.fromNativeData(
             bobbinData: bobbinData,
@@ -65,6 +67,7 @@ class BambuLabReaderService {
     } on NfcTagReadFailure {
       rethrow;
     } catch (e) {
+      debugPrint('❌ Erreur parsing Bambu Lab: $e\n${e is Error ? e.stackTrace : ""}');
       throw NfcTagReadFailure(
         message: 'Erreur parsing tag Bambu Lab: $e',
         rawTagData: rawHexDump,
@@ -86,8 +89,8 @@ class BambuLabReaderService {
     final skuMatch = RegExp(r'A[A-Z]{3,5}[A-Z]{2}-\d{3}').firstMatch(dataString);
     final sku = skuMatch?.group(0) ?? '';
 
-    String filamentType = 'PLA';
-    String color = 'Unknown';
+    var filamentType = 'PLA';
+    var color = 'Unknown';
     int? colorRgb;
 
     if (sku.isNotEmpty) {
@@ -148,8 +151,12 @@ class BambuLabReaderService {
     }
 
     // Parse temperatures and advanced settings
-    int? extruderMin, extruderMax, bedMin, bedMax, spoolLength;
-    double weight = 1000.0;
+    int? extruderMin;
+    int? extruderMax;
+    int? bedMin;
+    int? bedMax;
+    int? spoolLength;
+    double weight = 1000;
     double? diameter;
 
     if (rawBytes.length >= 128) {
@@ -160,7 +167,7 @@ class BambuLabReaderService {
       final diameterRaw = rawBytes[120] | (rawBytes[121] << 8);
       diameter = diameterRaw / 100.0;
       spoolLength = rawBytes[122] | (rawBytes[123] << 8);
-      weight = ((rawBytes[124] | (rawBytes[125] << 8))).toDouble();
+      weight = (rawBytes[124] | (rawBytes[125] << 8)).toDouble();
     }
 
     return BobbinData(
@@ -189,7 +196,7 @@ class BambuLabReaderService {
   static BobbinData _parseNativeData(Map<String, dynamic> data) {
     // Extract material index and get material name from database
     final materialIndex = data['materialIndex'] as int? ?? 0;
-    String filamentType = 'PLA';
+    var filamentType = 'PLA';
     if (materialIndex >= 0 && materialIndex < BambuLabDatabase.materials.length) {
       filamentType = BambuLabDatabase.materials[materialIndex];
     }
@@ -204,8 +211,8 @@ class BambuLabReaderService {
     final colorRgb = data['colorRgb'] as int? ?? 0xFFFFFFFF;
 
     // Find closest color name from database
-    String colorName = 'White';
-    int closestColorDiff = 999999999;
+    var colorName = 'White';
+    var closestColorDiff = 999999999;
 
     final colors = BambuLabDatabase.getColorsForMaterial(filamentType);
     for (final entry in colors.entries) {
@@ -255,7 +262,6 @@ class BambuLabReaderService {
       spoolLength: spoolLength,
       manufactureDate: manufactureDate,
       brand: 'Bambu Lab',
-      batchNumber: null, // Non disponible dans les tags Bambu Lab
       remainingWeight: weightGrams, // Poids initial = poids restant pour nouveau tag
     );
   }

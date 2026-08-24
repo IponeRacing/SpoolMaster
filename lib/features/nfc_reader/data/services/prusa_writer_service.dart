@@ -130,6 +130,15 @@ class PrusaWriterService {
       ]);
     }
 
+    // 0x07: Drying temperature (2 bytes LE)
+    if (data.dryingTemp != null) {
+      payload.addAll([
+        0x07, 0x02,
+        data.dryingTemp! & 0xFF,
+        (data.dryingTemp! >> 8) & 0xFF,
+      ]);
+    }
+
     // 0x08: Total weight in grams (2 bytes LE)
     final weight = data.weightGrams.toInt();
     payload.addAll([
@@ -138,6 +147,25 @@ class PrusaWriterService {
       (weight >> 8) & 0xFF,
     ]);
 
+    // 0x09: Remaining weight in grams (2 bytes LE)
+    if (data.remainingWeight != null) {
+      final remaining = data.remainingWeight!.toInt();
+      payload.addAll([
+        0x09, 0x02,
+        remaining & 0xFF,
+        (remaining >> 8) & 0xFF,
+      ]);
+    }
+
+    // 0x0A: Spool length in meters (2 bytes LE)
+    if (data.spoolLength != null) {
+      payload.addAll([
+        0x0A, 0x02,
+        data.spoolLength! & 0xFF,
+        (data.spoolLength! >> 8) & 0xFF,
+      ]);
+    }
+
     // 0x0B: Diameter in 0.01mm units (2 bytes LE)
     if (data.diameter != null) {
       final diamRaw = (data.diameter! * 100).toInt();
@@ -145,6 +173,15 @@ class PrusaWriterService {
         0x0B, 0x02,
         diamRaw & 0xFF,
         (diamRaw >> 8) & 0xFF,
+      ]);
+    }
+
+    // 0x0C: Drying time in minutes (2 bytes LE)
+    if (data.dryingTime != null) {
+      payload.addAll([
+        0x0C, 0x02,
+        data.dryingTime! & 0xFF,
+        (data.dryingTime! >> 8) & 0xFF,
       ]);
     }
 
@@ -160,6 +197,12 @@ class PrusaWriterService {
     final materialBytes = utf8.encode(data.filamentType);
     if (materialBytes.length <= 31) {
       payload.addAll([0x3B, materialBytes.length, ...materialBytes]);
+    }
+
+    // 0x3C: Nozzle size in 0.01mm units (1 byte)
+    if (data.nozzleSize != null) {
+      final nozzleRaw = (data.nozzleSize! * 100).toInt() & 0xFF;
+      payload.addAll([0x3C, 0x01, nozzleRaw]);
     }
 
     developer.log('📦 OpenPrintTag payload: ${payload.length} bytes');
@@ -188,17 +231,16 @@ class PrusaWriterService {
     ];
 
     // Build TLV: type=0x03 (NDEF Message), length, data
-    final ndefTlv = <int>[];
-    ndefTlv.add(0x03); // NDEF Message TLV type
+    final ndefTlv = <int>[0x03]; // NDEF Message TLV type
     if (ndefRecord.length < 0xFF) {
       ndefTlv.add(ndefRecord.length);
     } else {
       ndefTlv.addAll([0xFF, (ndefRecord.length >> 8) & 0xFF, ndefRecord.length & 0xFF]);
     }
-    ndefTlv.addAll(ndefRecord);
-
-    // Terminator TLV
-    ndefTlv.add(0xFE);
+    ndefTlv
+      ..addAll(ndefRecord)
+      // Terminator TLV
+      ..add(0xFE);
 
     // Capability Container (4 bytes)
     // E1 = NDEF magic, 40 = version 1.0 + read/write access

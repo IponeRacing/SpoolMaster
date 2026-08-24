@@ -19,13 +19,14 @@ class CrealityReaderService {
         throw const NfcTagReadFailure(message: 'Aucune donnée reçue du tag Creality CFS');
       }
 
-      final data = Map<String, dynamic>.from(result as Map);
+      final data = Map<String, dynamic>.from(result is Map ? result : {});
       return _parseNativeData(data);
     } on PlatformException {
       rethrow;
     } on NfcTagReadFailure {
       rethrow;
     } catch (e) {
+      debugPrint('❌ Erreur parsing Creality CFS: $e\n${e is Error ? e.stackTrace : ""}');
       throw NfcTagReadFailure(message: 'Erreur parsing tag Creality CFS: $e');
     }
   }
@@ -116,8 +117,8 @@ class CrealityReaderService {
       'Cyan': 0x00FFFF,
     };
 
-    String closest = 'White';
-    int minDist = 999999;
+    var closest = 'White';
+    var minDist = 999999;
 
     for (final entry in colors.entries) {
       final cr = (entry.value >> 16) & 0xFF;

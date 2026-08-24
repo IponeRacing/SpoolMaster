@@ -221,22 +221,22 @@ class BambuLabDatabase {
     final normalizedMaterial = material.toUpperCase().trim();
 
     if (normalizedMaterial.contains('PLA')) {
-      return 330.0; // 1000g = 330m
+      return 330; // 1000g = 330m
     } else if (normalizedMaterial.contains('PETG')) {
-      return 285.0; // Plus dense
+      return 285; // Plus dense
     } else if (normalizedMaterial.contains('ABS') ||
                normalizedMaterial.contains('ASA')) {
-      return 360.0; // Moins dense
+      return 360; // Moins dense
     } else if (normalizedMaterial.contains('TPU')) {
-      return 240.0; // Très flexible, plus dense
+      return 240; // Très flexible, plus dense
     } else if (normalizedMaterial.contains('NYLON') ||
                normalizedMaterial.contains('PA')) {
-      return 320.0;
+      return 320;
     } else if (normalizedMaterial.contains('PC')) {
-      return 270.0; // Polycarbonate, dense
+      return 270; // Polycarbonate, dense
     }
 
     // Ratio par défaut (PLA)
-    return 330.0;
+    return 330;
   }
 }

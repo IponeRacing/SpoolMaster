@@ -5,9 +5,9 @@ import 'package:nfc_filament/features/nfc_reader/domain/repositories/nfc_reposit
 
 @lazySingleton
 class CheckNfcAvailability {
-  final NfcRepository repository;
 
   CheckNfcAvailability(this.repository);
+  final NfcRepository repository;
 
   Future<Either<Failure, bool>> call() async {
     return repository.isNfcAvailable();

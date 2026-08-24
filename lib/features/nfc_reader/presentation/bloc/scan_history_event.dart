@@ -13,18 +13,18 @@ class LoadScanHistoryEvent extends ScanHistoryEvent {
 }
 
 class SaveScanEvent extends ScanHistoryEvent {
-  final ScanHistory scan;
 
   const SaveScanEvent(this.scan);
+  final ScanHistory scan;
 
   @override
   List<Object?> get props => [scan];
 }
 
 class DeleteScanEvent extends ScanHistoryEvent {
-  final String id;
 
   const DeleteScanEvent(this.id);
+  final String id;
 
   @override
   List<Object?> get props => [id];

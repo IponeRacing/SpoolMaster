@@ -9,7 +9,8 @@ abstract class NfcDataSource {
   Future<NfcTagModel> readNfcTag();
 
   /// Read bobbin data from NFC tag
-  Future<BobbinDataModel> readBobbinData();
+  /// [nfcMode] overrides the saved user preference if provided
+  Future<BobbinDataModel> readBobbinData({String? nfcMode});
 
   /// Read bobbin data with auto-detection of tag type
   Future<BobbinDataModel> readBobbinDataAutoDetect();

@@ -1,14 +1,15 @@
 import 'dart:async';
 import 'dart:io';
+
+import 'package:app_tracking_transparency/app_tracking_transparency.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:app_tracking_transparency/app_tracking_transparency.dart';
 
 /// Gestionnaire de consentements pour ATT (iOS) et UMP (GDPR)
 class ConsentManager {
-  static final ConsentManager _instance = ConsentManager._internal();
   factory ConsentManager() => _instance;
   ConsentManager._internal();
+  static final ConsentManager _instance = ConsentManager._internal();
 
   bool _hasRequestedATT = false;
   bool _hasRequestedUMP = false;
@@ -72,7 +73,7 @@ class ConsentManager {
           debugPrint('🔐 [UMP] Consent info updated successfully');
 
           // Charger et afficher le formulaire si nécessaire
-          ConsentForm.loadAndShowConsentFormIfRequired((loadAndShowError) {
+          unawaited(ConsentForm.loadAndShowConsentFormIfRequired((loadAndShowError) {
             if (loadAndShowError != null) {
               debugPrint('❌ [UMP] Form error: ${loadAndShowError.message}');
               completer.complete(false);
@@ -80,7 +81,7 @@ class ConsentManager {
               debugPrint('✅ [UMP] Consent form completed');
               completer.complete(true);
             }
-          });
+          }));
         },
         (FormError error) {
           // Erreur lors de la mise à jour

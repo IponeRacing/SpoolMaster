@@ -3,16 +3,14 @@ import 'package:flutter/services.dart';
 import 'package:nfc_filament/l10n/app_localizations.dart';
 
 class ColorPickerWidget extends StatefulWidget {
+
+  const ColorPickerWidget({
+    required this.initialColor, required this.onColorChanged, super.key,
+    this.showOpacitySlider = true,
+  });
   final Color initialColor;
   final ValueChanged<Color> onColorChanged;
   final bool showOpacitySlider;
-
-  const ColorPickerWidget({
-    super.key,
-    required this.initialColor,
-    required this.onColorChanged,
-    this.showOpacitySlider = true,
-  });
 
   @override
   State<ColorPickerWidget> createState() => _ColorPickerWidgetState();
@@ -112,20 +110,24 @@ class _ColorPickerWidgetState extends State<ColorPickerWidget> with SingleTicker
   }
 
   String _colorToHex(Color color) {
-    return '${color.alpha.toRadixString(16).padLeft(2, '0')}'
-           '${color.red.toRadixString(16).padLeft(2, '0')}'
-           '${color.green.toRadixString(16).padLeft(2, '0')}'
-           '${color.blue.toRadixString(16).padLeft(2, '0')}'.toUpperCase();
+    final a = (color.a * 255.0).round().clamp(0, 255);
+    final r = (color.r * 255.0).round().clamp(0, 255);
+    final g = (color.g * 255.0).round().clamp(0, 255);
+    final b = (color.b * 255.0).round().clamp(0, 255);
+    return '${a.toRadixString(16).padLeft(2, '0')}'
+           '${r.toRadixString(16).padLeft(2, '0')}'
+           '${g.toRadixString(16).padLeft(2, '0')}'
+           '${b.toRadixString(16).padLeft(2, '0')}'.toUpperCase();
   }
 
   Color? _hexToColor(String hex) {
-    hex = hex.replaceAll('#', '').trim();
-    if (hex.length == 6) {
-      hex = 'FF$hex'; // Add full opacity if not specified
+    var sanitized = hex.replaceAll('#', '').trim();
+    if (sanitized.length == 6) {
+      sanitized = 'FF$sanitized'; // Add full opacity if not specified
     }
-    if (hex.length == 8) {
+    if (sanitized.length == 8) {
       try {
-        return Color(int.parse(hex, radix: 16));
+        return Color(int.parse(sanitized, radix: 16));
       } catch (e) {
         return null;
       }
@@ -182,7 +184,7 @@ class _ColorPickerWidgetState extends State<ColorPickerWidget> with SingleTicker
   }
 
   Widget _buildGridPicker() {
-    final alpha = _selectedColor.alpha;
+    final alpha = (_selectedColor.a * 255.0).round().clamp(0, 255);
 
     return Padding(
       padding: const EdgeInsets.all(16),
@@ -195,9 +197,9 @@ class _ColorPickerWidgetState extends State<ColorPickerWidget> with SingleTicker
         itemCount: _predefinedColors.length,
         itemBuilder: (context, index) {
           final color = _predefinedColors[index];
-          final isSelected = (_selectedColor.red == color.red &&
-              _selectedColor.green == color.green &&
-              _selectedColor.blue == color.blue);
+          final isSelected = ((_selectedColor.r * 255.0).round().clamp(0, 255)) == ((color.r * 255.0).round().clamp(0, 255)) &&
+              ((_selectedColor.g * 255.0).round().clamp(0, 255)) == ((color.g * 255.0).round().clamp(0, 255)) &&
+              ((_selectedColor.b * 255.0).round().clamp(0, 255)) == ((color.b * 255.0).round().clamp(0, 255));
 
           return GestureDetector(
             onTap: () => _selectColor(color.withAlpha(alpha)),
@@ -212,7 +214,7 @@ class _ColorPickerWidgetState extends State<ColorPickerWidget> with SingleTicker
                 boxShadow: isSelected
                     ? [
                         BoxShadow(
-                          color: Colors.blue.withOpacity(0.5),
+                          color: Colors.blue.withValues(alpha: 0.5),
                           blurRadius: 4,
                           spreadRadius: 1,
                         ),
@@ -231,7 +233,7 @@ class _ColorPickerWidgetState extends State<ColorPickerWidget> with SingleTicker
 
   Widget _buildSpectrumPicker() {
     final hsv = HSVColor.fromColor(_selectedColor);
-    final alpha = _selectedColor.alpha;
+    final alpha = (_selectedColor.a * 255.0).round().clamp(0, 255);
 
     return Padding(
       padding: const EdgeInsets.all(16),
@@ -253,7 +255,7 @@ class _ColorPickerWidgetState extends State<ColorPickerWidget> with SingleTicker
                       // Spectre de couleur (hue en arrière-plan)
                       Container(
                         decoration: BoxDecoration(
-                          color: HSVColor.fromAHSV(1.0, hsv.hue, 1.0, 1.0).toColor(),
+                          color: HSVColor.fromAHSV(1, hsv.hue, 1, 1).toColor(),
                           borderRadius: BorderRadius.circular(8),
                           border: Border.all(color: Colors.grey.shade300, width: 2),
                         ),
@@ -263,8 +265,6 @@ class _ColorPickerWidgetState extends State<ColorPickerWidget> with SingleTicker
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8),
                           gradient: const LinearGradient(
-                            begin: Alignment.centerLeft,
-                            end: Alignment.centerRight,
                             colors: [Colors.white, Colors.transparent],
                           ),
                         ),
@@ -353,31 +353,31 @@ class _ColorPickerWidgetState extends State<ColorPickerWidget> with SingleTicker
   }
 
   void _updateColorFromSpectrum(Offset position) {
-    final RenderBox? box = context.findRenderObject() as RenderBox?;
+    final box = context.findRenderObject() as RenderBox?;
     if (box == null) return;
 
     final hsv = HSVColor.fromColor(_selectedColor);
     final saturation = (position.dx / box.size.width).clamp(0.0, 1.0);
     final value = 1.0 - (position.dy / box.size.height).clamp(0.0, 1.0);
 
-    _selectColor(HSVColor.fromAHSV(_selectedColor.opacity, hsv.hue, saturation, value).toColor());
+    _selectColor(HSVColor.fromAHSV(_selectedColor.a, hsv.hue, saturation, value).toColor());
   }
 
   void _updateHue(double dx, BuildContext context) {
-    final RenderBox? box = context.findRenderObject() as RenderBox?;
+    final box = context.findRenderObject() as RenderBox?;
     if (box == null) return;
 
     final hsv = HSVColor.fromColor(_selectedColor);
     final hue = (dx / box.size.width).clamp(0.0, 1.0) * 360;
 
-    _selectColor(HSVColor.fromAHSV(_selectedColor.opacity, hue, hsv.saturation, hsv.value).toColor());
+    _selectColor(HSVColor.fromAHSV(_selectedColor.a, hue, hsv.saturation, hsv.value).toColor());
   }
 
   Widget _buildSlidersPicker() {
-    final red = _selectedColor.red;
-    final green = _selectedColor.green;
-    final blue = _selectedColor.blue;
-    final alpha = _selectedColor.alpha;
+    final red = (_selectedColor.r * 255.0).round().clamp(0, 255);
+    final green = (_selectedColor.g * 255.0).round().clamp(0, 255);
+    final blue = (_selectedColor.b * 255.0).round().clamp(0, 255);
+    final alpha = (_selectedColor.a * 255.0).round().clamp(0, 255);
 
     return SingleChildScrollView(
       padding: const EdgeInsets.all(16),
@@ -450,7 +450,7 @@ class _ColorPickerWidgetState extends State<ColorPickerWidget> with SingleTicker
               prefixText: '#',
             ),
             inputFormatters: [
-              FilteringTextInputFormatter.allow(RegExp(r'[0-9A-Fa-f]')),
+              FilteringTextInputFormatter.allow(RegExp('[0-9A-Fa-f]')),
               LengthLimitingTextInputFormatter(8),
             ],
             onSubmitted: (value) {

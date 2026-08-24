@@ -9,11 +9,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 @LazySingleton(as: ScanHistoryLocalDataSource)
 class ScanHistoryLocalDataSourceImpl implements ScanHistoryLocalDataSource {
+
+  ScanHistoryLocalDataSourceImpl(this.sharedPreferences);
   static const String _storageKeyPrefix = 'scan_history';
 
   final SharedPreferences sharedPreferences;
-
-  ScanHistoryLocalDataSourceImpl(this.sharedPreferences);
 
   /// Get storage key scoped by user_id
   Future<String> _getStorageKey() async {

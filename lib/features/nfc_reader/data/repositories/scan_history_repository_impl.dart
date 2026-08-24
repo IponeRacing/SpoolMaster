@@ -10,9 +10,9 @@ import 'package:nfc_filament/features/nfc_reader/domain/repositories/scan_histor
 
 @LazySingleton(as: ScanHistoryRepository)
 class ScanHistoryRepositoryImpl implements ScanHistoryRepository {
-  final ScanHistoryLocalDataSource localDataSource;
 
   ScanHistoryRepositoryImpl(this.localDataSource);
+  final ScanHistoryLocalDataSource localDataSource;
 
   @override
   Future<Either<Failure, void>> saveScan(ScanHistory scan) async {

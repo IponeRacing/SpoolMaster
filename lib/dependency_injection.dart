@@ -9,8 +9,8 @@ final getIt = GetIt.instance;
 Future<void> configureDependencies() async {
   // Register SharedPreferences
   final sharedPreferences = await SharedPreferences.getInstance();
-  getIt.registerSingleton<SharedPreferences>(sharedPreferences);
-
-  // Initialize injectable dependencies
-  getIt.init();
+  getIt
+    ..registerSingleton<SharedPreferences>(sharedPreferences)
+    // Initialize injectable dependencies
+    ..init();
 }

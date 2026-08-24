@@ -11,7 +11,8 @@ abstract class NfcRepository {
   Future<Either<Failure, NfcTag>> readNfcTag();
 
   /// Read an NFC tag and parse bobbin data
-  Future<Either<Failure, BobbinData>> readBobbinData();
+  /// [nfcMode] overrides the saved user preference if provided
+  Future<Either<Failure, BobbinData>> readBobbinData({String? nfcMode});
 
   /// Read an NFC tag with auto-detection of tag type
   Future<Either<Failure, BobbinData>> readBobbinDataAutoDetect();

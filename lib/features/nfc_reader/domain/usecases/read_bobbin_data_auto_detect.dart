@@ -6,9 +6,9 @@ import 'package:nfc_filament/features/nfc_reader/domain/repositories/nfc_reposit
 
 @lazySingleton
 class ReadBobbinDataAutoDetect {
-  final NfcRepository repository;
 
   ReadBobbinDataAutoDetect(this.repository);
+  final NfcRepository repository;
 
   Future<Either<Failure, BobbinData>> call() async {
     return repository.readBobbinDataAutoDetect();

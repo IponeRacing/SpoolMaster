@@ -1,13 +1,13 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+class NfcTag {
+  const NfcTag({
+    required this.id,
+    required this.type,
+    this.manufacturer,
+    this.data,
+  });
 
-part 'nfc_tag.freezed.dart';
-
-@freezed
-class NfcTag with _$NfcTag {
-  const factory NfcTag({
-    required String id,
-    required String type,
-    String? manufacturer,
-    Map<String, dynamic>? data,
-  }) = _NfcTag;
+  final String id;
+  final String type;
+  final String? manufacturer;
+  final Map<String, dynamic>? data;
 }
