@@ -72,7 +72,13 @@ _Aucune urgence/deadline. Toolchain saine : Kotlin 2.2.20, AGP 8.12.1, Gradle 8.
 - [ ] `flutter_secure_storage` 11 + `package_info_plus` 10 + `device_info_plus` 13 : **BLOQUÉS ENSEMBLE** — secure_storage 11 exige **compileSdk 37** (Android très récent, on est en 36) et les 3 sont liés par `win32 ^6`. Restés en 10/9/11.
   - → **Ces 3 se débloqueront avec l'upgrade Flutter/compileSdk (via FVM).** À refaire dans la même passe que le SDK, PAS avant.
 
-**Ordre correct de la suite** : (1) FVM + Flutter 3.47 (monte compileSdk) → (2) refaire secure_storage 11 / package_info 10 / device_info 13 → (3) google_mobile_ads 9 quand le plugin corrige le header. Tester login/token, pubs, analytics à chaque fois.
+**FAIT le 24/08 : projet pinné Flutter 3.47.1 via FVM** (`.fvmrc`, per-projet). Utiliser `fvm flutter ...` désormais. Build vert 2 plateformes + 37 tests.
+⚠️ **AVANT de shipper une release sur 3.47 : smoke test sur vrai device (scan NFC + achat IAP)** — jamais testé en runtime sur 3.47.
+
+**Le trio majeur reste BLOQUÉ même sur 3.47** :
+- secure_storage 11 + package_info 10 : OK sur 3.47 (compileSdk 37) MAIS liés par win32 ^6 à device_info_plus qui doit alors être 13.
+- **device_info_plus 13 casse le build iOS** (`isiOSAppOnVision`, sélecteur visionOS absent du SDK Xcode courant → il faudrait un Xcode plus récent OU bumper le deployment target iOS).
+- → Trio en attente d'un fix iOS de device_info_plus (ou d'un Xcode plus récent). google_mobile_ads 9 idem (attendre patch header).
 
 **Deadlines calendrier (rappel)**
 - Août 2027 : targetSdk 36 (Android 16) requis par Google Play → un upgrade Flutter le règlera.
