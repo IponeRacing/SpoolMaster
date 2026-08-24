@@ -54,48 +54,65 @@ class AdMobService {
   /// ID TEST pour développement (interstitiel)
   static const String _testInterstitialId = 'ca-app-pub-3940256099942544/1033173712';
 
-  // IMPORTANT: Remplacer ces IDs par vos vrais IDs AdMob en production
+  // IMPORTANT: chaque ad unit AdMob appartient à UNE app (iOS ou Android).
+  // iOS = app ~5635737882, Android = app ~1305637252. Il faut donc un ID
+  // distinct par plateforme, sinon la plateforme qui reçoit l'ID de l'autre
+  // app ne remplit jamais (mismatch d'app AdMob).
 
   /// Banner ID pour page NFC Reader
   String get nfcReaderBannerId {
     if (kDebugMode) return _testBannerId;
-    return 'ca-app-pub-1694665328356929/7028710600';
+    return Platform.isIOS
+        ? 'ca-app-pub-1694665328356929/7028710600'
+        : 'ca-app-pub-1694665328356929/6286501192';
   }
 
   /// Banner ID pour page NFC Writer
   String get nfcWriterBannerId {
     if (kDebugMode) return _testBannerId;
-    return 'ca-app-pub-1694665328356929/7687186157';
+    return Platform.isIOS
+        ? 'ca-app-pub-1694665328356929/7687186157'
+        : 'ca-app-pub-1694665328356929/8006776973';
   }
 
   /// Banner ID pour page Stock
   String get stockBannerId {
     if (kDebugMode) return _testBannerId;
-    return 'ca-app-pub-1694665328356929/9654873940';
+    return Platform.isIOS
+        ? 'ca-app-pub-1694665328356929/9654873940'
+        : 'ca-app-pub-1694665328356929/6708516484';
   }
 
   /// Banner ID pour page Analytics
   String get analyticsBannerId {
     if (kDebugMode) return _testBannerId;
-    return 'ca-app-pub-1694665328356929/3747941147';
+    return Platform.isIOS
+        ? 'ca-app-pub-1694665328356929/3747941147'
+        : 'ca-app-pub-1694665328356929/9693772474';
   }
 
   /// Banner ID pour liste Stock (in-list ads)
   String get stockListBannerId {
     if (kDebugMode) return _testBannerId;
-    return 'ca-app-pub-1694665328356929/8808696135';
+    return Platform.isIOS
+        ? 'ca-app-pub-1694665328356929/8808696135'
+        : 'ca-app-pub-1694665328356929/5380613632';
   }
 
   /// Banner ID pour liste Commissions (in-list ads)
   String get commissionsListBannerId {
     if (kDebugMode) return _testBannerId;
-    return 'ca-app-pub-1694665328356929/4869451128';
+    return Platform.isIOS
+        ? 'ca-app-pub-1694665328356929/4869451128'
+        : 'ca-app-pub-1694665328356929/1296407706';
   }
 
   /// Banner ID pour historique NFC
   String get nfcHistoryBannerId {
     if (kDebugMode) return _testBannerId;
-    return 'ca-app-pub-1694665328356929/1233458449';
+    return Platform.isIOS
+        ? 'ca-app-pub-1694665328356929/1233458449'
+        : 'ca-app-pub-1694665328356929/1562672029';
   }
 
   /// Interstitial ID pour après les scans NFC
