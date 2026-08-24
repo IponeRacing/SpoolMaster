@@ -10,7 +10,7 @@ class AdBannerWidget extends StatefulWidget {
 
   const AdBannerWidget({
     required this.adUnitId, super.key,
-    this.margin = const EdgeInsets.symmetric(vertical: 8),
+    this.margin = EdgeInsets.zero,
   });
   final String adUnitId;
   final EdgeInsets margin;
@@ -61,12 +61,15 @@ class _AdBannerWidgetState extends State<AdBannerWidget> {
       return;
     }
 
-    // Adaptive banner basé sur la largeur de l'écran
+    // Anchored adaptive banner STANDARD (hauteur calée sur la largeur, ~50-60px).
+    // On évite volontairement la variante "Large" : elle réserve un slot jusqu'à
+    // ~100px de haut et laisse AdMob letterboxer les créas 50px → bandes sombres
+    // au-dessus/dessous de la pub. Le standard remplit pleinement le slot.
     final width = MediaQuery.of(context).size.width.truncate();
-    final adaptiveSize = await AdSize.getLargeAnchoredAdaptiveBannerAdSizeWithOrientation(
-      Orientation.portrait,
-      width,
-    );
+    // Le remplaçant suggéré (getLargeAnchoredAdaptiveBannerAdSize) est justement
+    // celui qui cause les bandes sombres → on garde le standard sciemment.
+    // ignore: deprecated_member_use
+    final adaptiveSize = await AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(width);
     final adSize = adaptiveSize ?? AdSize.banner;
 
     _bannerAd = _adMobService.createBannerAd(

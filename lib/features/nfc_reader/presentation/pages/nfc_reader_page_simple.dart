@@ -477,10 +477,6 @@ class _NfcReaderViewState extends State<_NfcReaderView> {
             );
           },
         ),
-        title: Text(
-          AppLocalizations.of(context)!.nfcEncoder,
-          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-        ),
         actions: [
           IconButton(
             icon: const Icon(Icons.person),

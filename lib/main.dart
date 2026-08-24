@@ -430,10 +430,6 @@ class _StockListPageState extends State<StockListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          AppLocalizations.of(context)!.stock,
-          style: const TextStyle(fontWeight: FontWeight.bold),
-        ),
         actions: [
           IconButton(
             icon: const Icon(Icons.person),
@@ -1180,10 +1176,6 @@ class _StatisticsPageState extends State<StatisticsPage> {
           icon: const Icon(Icons.refresh),
           onPressed: _loadSpools,
           tooltip: AppLocalizations.of(context)!.refresh,
-        ),
-        title: Text(
-          AppLocalizations.of(context)!.statistics,
-          style: const TextStyle(fontWeight: FontWeight.bold),
         ),
         actions: [
           IconButton(

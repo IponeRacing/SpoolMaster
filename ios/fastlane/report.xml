@@ -5,17 +5,27 @@
     
     
       
-      <testcase classname="fastlane.lanes" name="0: default_platform" time="0.000298">
+      <testcase classname="fastlane.lanes" name="0: default_platform" time="0.000319">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="1: app_store_connect_api_key" time="0.001784">
+      <testcase classname="fastlane.lanes" name="1: app_store_connect_api_key" time="0.002131">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="2: pilot" time="88.973552">
+      <testcase classname="fastlane.lanes" name="2: pilot" time="113.03522">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="3: cd /Users/sebastiengirod/Development/projects/nfcAnycubic/build/ios/archive/Runner.xcarchive &amp;&amp; zip -rq /Users/sebastiengirod/Development/projects/nfcAnycubic/build/ios/dSYMs.zip dSYMs" time="4.564212">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="4: upload_symbols_to_crashlytics" time="81.13314">
         
       </testcase>
     

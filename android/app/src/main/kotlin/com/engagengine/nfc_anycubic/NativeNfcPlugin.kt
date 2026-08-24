@@ -48,6 +48,10 @@ class NativeNfcPlugin private constructor(
         private const val CMD_AUTH_KEY_A: Byte = 0x60
         private const val CMD_AUTH_KEY_B: Byte = 0x61
 
+        // Nombre de passes complètes de lecture avant d'abandonner (0 octet).
+        // Récupère les décrochages transitoires quand le tag bouge un peu.
+        private const val READ_ATTEMPTS: Int = 3
+
         // Default MiFare Classic key
         private val DEFAULT_KEY = byteArrayOf(
             0xFF.toByte(), 0xFF.toByte(), 0xFF.toByte(),
@@ -615,11 +619,25 @@ class NativeNfcPlugin private constructor(
 
     /**
      * Lit toutes les pages d'un tag Ultralight/NTAG avec retry.
-     * Sur IOException : reconnexion + nouvelle tentative de la page (1x),
-     * puis abandon en retournant ce qui a été lu. Corrige les lectures
-     * "0 bytes" observées sur Samsung (la 1ère page échouait → succès vide).
+     * Deux niveaux de robustesse :
+     *  - par-page : sur IOException, reconnexion + nouvelle tentative de la page ;
+     *  - lecture complète : si une passe rend 0 octet (décrochage de la connexion
+     *    dès la 1ère page), on reconnecte et on relance TOUTE la passe, jusqu'à
+     *    READ_ATTEMPTS fois. Corrige les lectures "0 bytes" intermittentes
+     *    observées sur Samsung/A55 quand le tag bouge légèrement pendant la lecture
+     *    (l'utilisateur n'a plus à immobiliser parfaitement le téléphone).
      */
     private fun readUltralightAllPages(mifare: MifareUltralight): ByteArray {
+        for (attempt in 1..READ_ATTEMPTS) {
+            val data = readUltralightAllPagesOnce(mifare)
+            if (data.isNotEmpty()) return data
+            Log.w(TAG, "Ultralight full-read attempt $attempt returned 0 bytes — reconnecting for full retry")
+            if (attempt < READ_ATTEMPTS) reconnect(mifare) { mifare.connect(); mifare.timeout = 2000 }
+        }
+        return ByteArray(0)
+    }
+
+    private fun readUltralightAllPagesOnce(mifare: MifareUltralight): ByteArray {
         val allData = ByteArray(160) // 40 pages * 4 bytes
         var offset = 0
 
@@ -652,8 +670,29 @@ class NativeNfcPlugin private constructor(
         return allData.copyOf(offset)
     }
 
+    /** Ferme puis rouvre une connexion tag, en avalant les exceptions (best effort). */
+    private fun reconnect(tag: android.nfc.tech.TagTechnology, connect: () -> Unit) {
+        try {
+            tag.close()
+            Thread.sleep(80)
+            connect()
+        } catch (e: Exception) {
+            Log.w(TAG, "reconnect() failed: ${e.message}")
+        }
+    }
+
     /** Lit toutes les pages via commandes NfcA brutes avec retry/reconnexion. */
     private fun readNfcAAllPages(nfcA: NfcA): ByteArray {
+        for (attempt in 1..READ_ATTEMPTS) {
+            val data = readNfcAAllPagesOnce(nfcA)
+            if (data.isNotEmpty()) return data
+            Log.w(TAG, "NfcA full-read attempt $attempt returned 0 bytes — reconnecting for full retry")
+            if (attempt < READ_ATTEMPTS) reconnect(nfcA) { nfcA.connect(); nfcA.timeout = 2000 }
+        }
+        return ByteArray(0)
+    }
+
+    private fun readNfcAAllPagesOnce(nfcA: NfcA): ByteArray {
         val allData = mutableListOf<Byte>()
 
         var page = 0
