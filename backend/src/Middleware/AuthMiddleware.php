@@ -58,4 +58,19 @@ class AuthMiddleware {
         $decoded = self::authenticate();
         return $decoded->data->user_id ?? null;
     }
+
+    /**
+     * Récupère l'user_id SANS rejeter (401) si absent/invalide.
+     * Pour les endpoints qui acceptent l'anonyme (ex: analytics des scans
+     * effectués sans être connecté). Retourne null si pas de token valide.
+     */
+    public static function getUserIdOptional(): ?string {
+        $jwt = new JWTHandler();
+        $token = $jwt->getBearerToken();
+        if (!$token) return null;
+        $decoded = $jwt->verifyToken($token);
+        if (!$decoded) return null;
+        if (isset($decoded->jti) && $jwt->isTokenRevoked($decoded->jti)) return null;
+        return $decoded->data->user_id ?? null;
+    }
 }

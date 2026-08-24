@@ -138,7 +138,7 @@ CREATE TABLE IF NOT EXISTS sync_history (
 -- Table des analytics (conformité GDPR)
 CREATE TABLE IF NOT EXISTS analytics (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id VARCHAR(255) NOT NULL,
+    user_id VARCHAR(255) NULL COMMENT 'NULL = scan anonyme (invité non connecté)',
     event_type VARCHAR(100) NOT NULL COMMENT 'scan_nfc, add_spool, etc.',
     event_data JSON COMMENT 'Données anonymisées',
 

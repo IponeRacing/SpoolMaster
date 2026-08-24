@@ -51,21 +51,22 @@ class AnalyticsService {
       final devicePlatform = Platform.isIOS ? 'ios' : 'android';
       final appVersion = _cachedAppVersion ?? 'unknown';
 
-      final response = await _authService.authenticatedRequest((token) =>
-        http.post(
-          Uri.parse('${ApiConfig.baseUrl}${ApiConfig.logEvent}'),
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer $token',
-          },
-          body: jsonEncode({
-            'event_type': eventType,
-            'event_data': eventData,
-            'device_platform': devicePlatform,
-            'app_version': appVersion,
-          }),
-        ).timeout(ApiConfig.connectTimeout),
-      );
+      // Envoie l'event même si l'utilisateur n'est pas connecté (invité) :
+      // le backend accepte l'anonyme (user_id null). Ajoute le token si dispo.
+      final token = await _authService.getAccessToken();
+      final response = await http.post(
+        Uri.parse('${ApiConfig.baseUrl}${ApiConfig.logEvent}'),
+        headers: {
+          'Content-Type': 'application/json',
+          if (token != null) 'Authorization': 'Bearer $token',
+        },
+        body: jsonEncode({
+          'event_type': eventType,
+          'event_data': eventData,
+          'device_platform': devicePlatform,
+          'app_version': appVersion,
+        }),
+      ).timeout(ApiConfig.connectTimeout);
 
       if (response.statusCode == 200) {
         debugPrint('✅ [Analytics] Event logged: $eventType');

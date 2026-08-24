@@ -17,8 +17,9 @@ class AnalyticsController {
      * Body: { "event_type": "scan_nfc", "event_data": {...}, "device_platform": "ios", "app_version": "1.0.0" }
      */
     public function logEvent() {
-        $userId = AuthMiddleware::getUserId();
-        if (!$userId) return;
+        // Accepte l'anonyme : les scans faits sans être connecté doivent
+        // aussi être loggués (sinon angle mort de diagnostic). user_id = null.
+        $userId = AuthMiddleware::getUserIdOptional();
 
         $input = json_decode(file_get_contents('php://input'), true);
 
@@ -67,7 +68,7 @@ class AnalyticsController {
     /**
      * Envoie un mail unique contenant les raw data ET le feedback utilisateur
      */
-    private function notifyUnmatchedScan(int $userId, array $eventData, string $platform, string $appVersion, string $eventType): void {
+    private function notifyUnmatchedScan(?string $userId, array $eventData, string $platform, string $appVersion, string $eventType): void {
         $to = 'info@engageengine.ch';
         $isFeedback = $eventType === 'scan_feedback';
         $subject = $isFeedback
@@ -87,7 +88,7 @@ class AnalyticsController {
         $tagWasDetected = isset($eventData['tag_was_detected']) ? ($eventData['tag_was_detected'] ? 'Yes' : 'No') : 'N/A';
 
         $body = "Un utilisateur a scanne un tag NFC non reconnu.\n\n";
-        $body .= "User ID: $userId\n";
+        $body .= "User ID: " . ($userId ?? 'anonyme (invité)') . "\n";
         $body .= "Platform: $platform\n";
         $body .= "App version: $appVersion\n";
         $body .= "Device: $deviceModel\n";
@@ -121,7 +122,14 @@ class AnalyticsController {
         $headers = "From: noreply@engageengine.ch\r\n";
         $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
 
-        @mail($to, $subject, $body, $headers);
+        // mail() est désactivé sur Infomaniak (SMTP uniquement) → ne pas
+        // fataliser l'endpoint. On logge l'alerte ; l'INSERT analytics a déjà
+        // eu lieu en amont. (TODO: brancher sur le smtpSend du ReportController.)
+        if (\function_exists('mail')) {
+            @\mail($to, $subject, $body, $headers);
+        } else {
+            \error_log("⚠️ [scan non reconnu] " . str_replace("\n", " | ", $body));
+        }
     }
 
     /**
