@@ -56,3 +56,6 @@ Rinkhals-*/
 ios/vendor/
 ios/fastlane/metadata/
 ios/.bundle/
+
+# FVM Version Cache
+.fvm/

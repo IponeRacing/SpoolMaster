@@ -17,6 +17,8 @@ linter:
     # Désactiver certaines règles trop strictes
     public_member_api_docs: false
     lines_longer_than_80_chars: false
+    discarded_futures: false
+    avoid_catches_without_on_clauses: false
 
 analyzer:
   errors:
@@ -26,3 +28,10 @@ analyzer:
     - "**/*.freezed.dart"
     - "**/*.config.dart"
     - "lib/generated/**"
+    - build/**
+    - android/**
+    - ios/**
+    - web/**
+    - windows/**
+    - macos/**
+    - linux/**
