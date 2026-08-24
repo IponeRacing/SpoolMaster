@@ -399,23 +399,16 @@ extension NativeNfcPlugin: NFCTagReaderSessionDelegate {
                     self.isBambuLabMode = false
                     self.isAutoDetectMode = false
                 default:
-                    if self.isAutoDetectMode {
-                        // En auto-detect, un tag .unknown est probablement MiFare Classic
-                        print("⚠️ Type MiFare inconnu (\(tagFamily.rawValue)) - probablement MiFare Classic, non supporté sur iOS")
-                        session.invalidate(errorMessage: "Type de tag non supporté sur iOS")
-                        self.result?(FlutterError(
-                            code: "PLATFORM_NOT_SUPPORTED",
-                            message: "Tag MiFare de type inconnu détecté (probablement MiFare Classic). Apple CoreNFC ne supporte pas ce type de tag. Utilisez un appareil Android.",
-                            details: self.buildSessionDiagnostics(tagType: "mifare_unknown_\(tagFamily.rawValue)")
-                        ))
-                        self.result = nil
-                        self.isBambuLabMode = false
-                        self.isAutoDetectMode = false
-                    } else {
-                        // En mode dédié (non auto-detect), tenter Ultralight comme fallback
-                        print("���️ Type MiFare inconnu (\(tagFamily.rawValue)), tentative en mode Ultralight")
-                        self.readAllPagesWithTagType(mifareTag: mifareTag, session: session, tagType: "ultralight")
-                    }
+                    // Un tag .unknown est TRÈS souvent un NTAG Anycubic/Elegoo/TigerTag
+                    // que CoreNFC n'a pas su classer .ultralight (fréquent sur iPhone
+                    // récents / iOS 26). On tente donc TOUJOURS une lecture Ultralight
+                    // — comme le mode manuel qui, lui, fonctionne. Si le tag est un vrai
+                    // MiFare Classic (Bambu/Creality), la lecture de pages échouera et
+                    // remontera une erreur générique côté Dart. Ne PAS rejeter d'emblée :
+                    // c'était la cause du "MiFare inconnu" en auto-detect alors que le
+                    // même tag se lisait en mode Anycubic.
+                    print("🔎 Type MiFare inconnu (\(tagFamily.rawValue)), tentative de lecture Ultralight (NTAG probable)")
+                    self.readAllPagesWithTagType(mifareTag: mifareTag, session: session, tagType: "ultralight")
                 }
             } else {
                 self.readAllPages(mifareTag: mifareTag, session: session)

@@ -396,7 +396,8 @@ class NativeNfcPlugin private constructor(
                 try {
                     val flags = NfcAdapter.FLAG_READER_NFC_A or
                                NfcAdapter.FLAG_READER_NFC_B or
-                               NfcAdapter.FLAG_READER_NFC_V
+                               NfcAdapter.FLAG_READER_NFC_V or
+                               NfcAdapter.FLAG_READER_SKIP_NDEF_CHECK
                     val extras = android.os.Bundle()
                     extras.putInt(NfcAdapter.EXTRA_READER_PRESENCE_CHECK_DELAY, 500)
                     nfcAdapter?.enableReaderMode(activity, this, flags, extras)
@@ -411,9 +412,13 @@ class NativeNfcPlugin private constructor(
         } else {
             // Non-Samsung: reader mode as primary (direct callback, blocks other NFC handlers)
             try {
+                // SKIP_NDEF_CHECK : sans lui, Android tente une lecture NDEF auto
+                // sur chaque tag détecté, ce qui peut "perdre" les tags raw
+                // (Anycubic/TigerTag) et provoquer des timeouts de détection.
                 val flags = NfcAdapter.FLAG_READER_NFC_A or
                            NfcAdapter.FLAG_READER_NFC_B or
-                           NfcAdapter.FLAG_READER_NFC_V
+                           NfcAdapter.FLAG_READER_NFC_V or
+                           NfcAdapter.FLAG_READER_SKIP_NDEF_CHECK
 
                 val extras = android.os.Bundle()
                 extras.putInt(NfcAdapter.EXTRA_READER_PRESENCE_CHECK_DELAY, 500)
