@@ -55,12 +55,26 @@ _Revue faite le 17/08/2026. Le flow est sain et à jour sur l'axe critique (Bill
 - [ ] OpenTag3D : mettre à jour le lien repo → GooborgStudios/OpenTag3D (cosmétique ; parseur 1.001 déjà compatible).
 - Rien à faire : Bambu, Creality, OpenSpool, Elegoo (déjà structuré), iOS/Android (inchangés).
 
-## 🟢 Optionnel — maintenance (aucune urgence, à tester avant)
+## 🟢 Plan de maintenance dépendances/toolchain (audit 24/08/2026)
 
-- [ ] Bumps majeurs à faire dans une passe tranquille (pas mélanger avec le paiement) :
-  - `google_mobile_ads` 8 → 9.1.0
-  - `device_info_plus` 11 → 13, `package_info_plus` 9 → 10
-  - Correctifs mineurs : firebase, google_sign_in, url_launcher, shared_preferences
+_Aucune urgence/deadline. Toolchain saine : Kotlin 2.2.20, AGP 8.12.1, Gradle 8.14, targetSdk 35 (OK jusqu'à août 2027), iOS 15.0. À faire par vagues, chacune suivie de la suite de tests + build 2 plateformes._
+
+**Vague 1 — sûr, à faire en premier (patchs, faible risque)**
+- [ ] Flutter 3.44 → 3.47.1 (SDK/Dart, correctifs sécu). Faire un `flutter test` + build complet après (peut changer le comportement de build).
+- [ ] Firebase patchs : `firebase_core` 4.9→4.13, `firebase_crashlytics` 5.2.2→5.2.7.
+- [ ] `sign_in_with_apple` 8.0→8.1, `equatable` 2.0.8→2.1.0, `path_provider`, `url_launcher_android`, `shared_preferences_android`, `google_sign_in_android` (patchs).
+- [ ] Dev deps : `build_runner` 2.16, `json_serializable`, `injectable_generator`, `very_good_analysis` 10.3 (relancer `dart run build_runner build`).
+
+**Vague 2 — majeurs, tester le flux concerné**
+- [ ] `google_mobile_ads` 8 → 9.1.0 (SDK AdMob courant — tester bannières + interstitiel).
+- [ ] `flutter_secure_storage` 10 → 11 (stocke les tokens auth — **tester login + refresh token + logout**).
+- [ ] `device_info_plus` 11 → 13, `package_info_plus` 9 → 10 (tester analytics device_model/os + X-App-Version).
+
+**Ne PAS mélanger** la vague 2 avec un changement de paiement. Faire google_mobile_ads et secure_storage sur des versions séparées si possible.
+
+**Deadlines calendrier (rappel)**
+- Août 2027 : targetSdk 36 (Android 16) requis par Google Play → un upgrade Flutter le règlera.
+- ~avril chaque année : dernier SDK Apple (garder Xcode à jour).
 
 ## ✅ Fait récemment (contexte)
 
