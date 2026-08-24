@@ -65,12 +65,14 @@ _Aucune urgence/deadline. Toolchain saine : Kotlin 2.2.20, AGP 8.12.1, Gradle 8.
 - [ ] `sign_in_with_apple` 8.0→8.1, `equatable` 2.0.8→2.1.0, `path_provider`, `url_launcher_android`, `shared_preferences_android`, `google_sign_in_android` (patchs).
 - [ ] Dev deps : `build_runner` 2.16, `json_serializable`, `injectable_generator`, `very_good_analysis` 10.3 (relancer `dart run build_runner build`).
 
-**Vague 2 — majeurs, tester le flux concerné**
-- [ ] `google_mobile_ads` 8 → 9.1.0 (SDK AdMob courant — tester bannières + interstitiel).
-- [ ] `flutter_secure_storage` 10 → 11 (stocke les tokens auth — **tester login + refresh token + logout**).
-- [ ] `device_info_plus` 11 → 13, `package_info_plus` 9 → 10 (tester analytics device_model/os + X-App-Version).
+**Vague 1 — FAITE le 24/08 (committée).** firebase 4.13, apple 8.1, equatable 2.1, patchs plateforme, dev deps, code régénéré.
 
-**Ne PAS mélanger** la vague 2 avec un changement de paiement. Faire google_mobile_ads et secure_storage sur des versions séparées si possible.
+**Vague 2 — TENTÉE le 24/08, toute BLOQUÉE (revert propre) :**
+- [ ] `google_mobile_ads` 8 → 9 : **BLOQUÉ** — 9.1 casse le build iOS (Google-Mobile-Ads-SDK 13.7/13.8 header beta non-modulaire `GoogleMobileAds_Beta.h`). Attendre un patch du plugin. Resté en 8 (stable). Réglage `CLANG_ALLOW_NON_MODULAR_INCLUDES` déjà ajouté au Podfile pour le jour où.
+- [ ] `flutter_secure_storage` 11 + `package_info_plus` 10 + `device_info_plus` 13 : **BLOQUÉS ENSEMBLE** — secure_storage 11 exige **compileSdk 37** (Android très récent, on est en 36) et les 3 sont liés par `win32 ^6`. Restés en 10/9/11.
+  - → **Ces 3 se débloqueront avec l'upgrade Flutter/compileSdk (via FVM).** À refaire dans la même passe que le SDK, PAS avant.
+
+**Ordre correct de la suite** : (1) FVM + Flutter 3.47 (monte compileSdk) → (2) refaire secure_storage 11 / package_info 10 / device_info 13 → (3) google_mobile_ads 9 quand le plugin corrige le header. Tester login/token, pubs, analytics à chaque fois.
 
 **Deadlines calendrier (rappel)**
 - Août 2027 : targetSdk 36 (Android 16) requis par Google Play → un upgrade Flutter le règlera.
