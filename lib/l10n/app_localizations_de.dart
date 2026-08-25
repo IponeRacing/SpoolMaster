@@ -1282,4 +1282,34 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get nfcTipAndroid =>
       'Der NFC-Leser befindet sich normalerweise in der Mitte der Rückseite Ihres Telefons. Halten Sie die Rückseite des Telefons auf den NFC-Tag der Spule.';
+
+  @override
+  String get stockSortBy => 'Sortieren';
+
+  @override
+  String get stockFilter => 'Filtern';
+
+  @override
+  String get stockSortRecent => 'Neueste';
+
+  @override
+  String get stockSortBrand => 'Marke';
+
+  @override
+  String get stockSortMaterial => 'Material';
+
+  @override
+  String get stockSortRemaining => 'Restgewicht';
+
+  @override
+  String get stockSortColor => 'Farbe';
+
+  @override
+  String get stockFilterAll => 'Alle';
+
+  @override
+  String get stockResetFilters => 'Zurücksetzen';
+
+  @override
+  String get stockNoMatch => 'Keine Spule entspricht den Filtern';
 }

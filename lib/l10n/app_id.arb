@@ -457,5 +457,15 @@
   "autoDetectAllBrands": "Deteksi otomatis — semua merek",
   "autoDetectAllBrandsDesc": "Anycubic, Elegoo, OpenSpool, OpenTag3D dan lainnya",
   "nfcTipIos": "Pembaca NFC ada di bagian atas iPhone Anda. Letakkan langsung di tag NFC gulungan.",
-  "nfcTipAndroid": "Pembaca NFC biasanya ada di tengah bagian belakang ponsel. Letakkan bagian belakang ponsel di tag NFC gulungan."
+  "nfcTipAndroid": "Pembaca NFC biasanya ada di tengah bagian belakang ponsel. Letakkan bagian belakang ponsel di tag NFC gulungan.",
+  "stockSortBy": "Urutkan",
+  "stockFilter": "Filter",
+  "stockSortRecent": "Terbaru",
+  "stockSortBrand": "Merek",
+  "stockSortMaterial": "Material",
+  "stockSortRemaining": "Sisa berat",
+  "stockSortColor": "Warna",
+  "stockFilterAll": "Semua",
+  "stockResetFilters": "Atur ulang",
+  "stockNoMatch": "Tidak ada gulungan yang cocok dengan filter"
 }

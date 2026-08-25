@@ -1268,4 +1268,34 @@ class AppLocalizationsTr extends AppLocalizations {
   @override
   String get nfcTipAndroid =>
       'NFC okuyucu genellikle telefonunuzun arka yüzünün ortasında bulunur. Telefonun arkasını makaranın NFC etiketine yerleştirin.';
+
+  @override
+  String get stockSortBy => 'Sırala';
+
+  @override
+  String get stockFilter => 'Filtrele';
+
+  @override
+  String get stockSortRecent => 'En yeni';
+
+  @override
+  String get stockSortBrand => 'Marka';
+
+  @override
+  String get stockSortMaterial => 'Malzeme';
+
+  @override
+  String get stockSortRemaining => 'Kalan ağırlık';
+
+  @override
+  String get stockSortColor => 'Renk';
+
+  @override
+  String get stockFilterAll => 'Tümü';
+
+  @override
+  String get stockResetFilters => 'Sıfırla';
+
+  @override
+  String get stockNoMatch => 'Filtrelerle eşleşen makara yok';
 }

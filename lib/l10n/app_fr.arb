@@ -105,7 +105,9 @@
   "spoolsInStockCount": "{count} en stock",
   "@spoolsInStockCount": {
     "placeholders": {
-      "count": { "type": "int" }
+      "count": {
+        "type": "int"
+      }
     }
   },
   "enterMaterial": "Veuillez entrer un matériau",
@@ -466,5 +468,15 @@
   "autoDetectAllBrands": "Détection auto — toutes marques",
   "autoDetectAllBrandsDesc": "Anycubic, Elegoo, OpenSpool, OpenTag3D et plus",
   "nfcTipIos": "Le lecteur NFC est en haut de votre iPhone. Placez-le directement sur le tag NFC de la bobine.",
-  "nfcTipAndroid": "Le lecteur NFC est généralement au centre-arrière de votre téléphone. Placez le dos du téléphone sur le tag NFC de la bobine."
+  "nfcTipAndroid": "Le lecteur NFC est généralement au centre-arrière de votre téléphone. Placez le dos du téléphone sur le tag NFC de la bobine.",
+  "stockSortBy": "Trier",
+  "stockFilter": "Filtrer",
+  "stockSortRecent": "Plus récentes",
+  "stockSortBrand": "Marque",
+  "stockSortMaterial": "Matériau",
+  "stockSortRemaining": "Poids restant",
+  "stockSortColor": "Couleur",
+  "stockFilterAll": "Tous",
+  "stockResetFilters": "Réinitialiser",
+  "stockNoMatch": "Aucune bobine ne correspond aux filtres"
 }

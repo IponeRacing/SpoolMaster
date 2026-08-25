@@ -1268,6 +1268,36 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get nfcTipAndroid =>
       'The NFC reader is usually at the center back of your phone. Place the back of your phone on the spool\'s NFC tag.';
+
+  @override
+  String get stockSortBy => 'Sort';
+
+  @override
+  String get stockFilter => 'Filter';
+
+  @override
+  String get stockSortRecent => 'Most recent';
+
+  @override
+  String get stockSortBrand => 'Brand';
+
+  @override
+  String get stockSortMaterial => 'Material';
+
+  @override
+  String get stockSortRemaining => 'Remaining weight';
+
+  @override
+  String get stockSortColor => 'Color';
+
+  @override
+  String get stockFilterAll => 'All';
+
+  @override
+  String get stockResetFilters => 'Reset';
+
+  @override
+  String get stockNoMatch => 'No spool matches the filters';
 }
 
 /// The translations for English, as used in Australia (`en_AU`).
@@ -2522,6 +2552,36 @@ class AppLocalizationsEnAu extends AppLocalizationsEn {
   @override
   String get nfcTipAndroid =>
       'The NFC reader is usually at the centre back of your phone. Place the back of your phone on the spool\'s NFC tag.';
+
+  @override
+  String get stockSortBy => 'Sort';
+
+  @override
+  String get stockFilter => 'Filter';
+
+  @override
+  String get stockSortRecent => 'Most recent';
+
+  @override
+  String get stockSortBrand => 'Brand';
+
+  @override
+  String get stockSortMaterial => 'Material';
+
+  @override
+  String get stockSortRemaining => 'Remaining weight';
+
+  @override
+  String get stockSortColor => 'Colour';
+
+  @override
+  String get stockFilterAll => 'All';
+
+  @override
+  String get stockResetFilters => 'Reset';
+
+  @override
+  String get stockNoMatch => 'No spool matches the filters';
 }
 
 /// The translations for English, as used in Canada (`en_CA`).
@@ -3776,6 +3836,36 @@ class AppLocalizationsEnCa extends AppLocalizationsEn {
   @override
   String get nfcTipAndroid =>
       'The NFC reader is usually at the center back of your phone. Place the back of your phone on the spool\'s NFC tag.';
+
+  @override
+  String get stockSortBy => 'Sort';
+
+  @override
+  String get stockFilter => 'Filter';
+
+  @override
+  String get stockSortRecent => 'Most recent';
+
+  @override
+  String get stockSortBrand => 'Brand';
+
+  @override
+  String get stockSortMaterial => 'Material';
+
+  @override
+  String get stockSortRemaining => 'Remaining weight';
+
+  @override
+  String get stockSortColor => 'Colour';
+
+  @override
+  String get stockFilterAll => 'All';
+
+  @override
+  String get stockResetFilters => 'Reset';
+
+  @override
+  String get stockNoMatch => 'No spool matches the filters';
 }
 
 /// The translations for English, as used in the United Kingdom (`en_GB`).
@@ -5030,4 +5120,34 @@ class AppLocalizationsEnGb extends AppLocalizationsEn {
   @override
   String get nfcTipAndroid =>
       'The NFC reader is usually at the centre back of your phone. Place the back of your phone on the spool\'s NFC tag.';
+
+  @override
+  String get stockSortBy => 'Sort';
+
+  @override
+  String get stockFilter => 'Filter';
+
+  @override
+  String get stockSortRecent => 'Most recent';
+
+  @override
+  String get stockSortBrand => 'Brand';
+
+  @override
+  String get stockSortMaterial => 'Material';
+
+  @override
+  String get stockSortRemaining => 'Remaining weight';
+
+  @override
+  String get stockSortColor => 'Colour';
+
+  @override
+  String get stockFilterAll => 'All';
+
+  @override
+  String get stockResetFilters => 'Reset';
+
+  @override
+  String get stockNoMatch => 'No spool matches the filters';
 }

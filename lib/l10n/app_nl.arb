@@ -457,5 +457,15 @@
   "autoDetectAllBrands": "Automatische detectie — alle merken",
   "autoDetectAllBrandsDesc": "Anycubic, Elegoo, OpenSpool, OpenTag3D en meer",
   "nfcTipIos": "De NFC-lezer zit bovenaan je iPhone. Plaats hem direct op de NFC-tag van de spoel.",
-  "nfcTipAndroid": "De NFC-lezer zit meestal in het midden van de achterkant van je telefoon. Plaats de achterkant van je telefoon op de NFC-tag van de spoel."
+  "nfcTipAndroid": "De NFC-lezer zit meestal in het midden van de achterkant van je telefoon. Plaats de achterkant van je telefoon op de NFC-tag van de spoel.",
+  "stockSortBy": "Sorteren",
+  "stockFilter": "Filteren",
+  "stockSortRecent": "Nieuwste",
+  "stockSortBrand": "Merk",
+  "stockSortMaterial": "Materiaal",
+  "stockSortRemaining": "Resterend gewicht",
+  "stockSortColor": "Kleur",
+  "stockFilterAll": "Alle",
+  "stockResetFilters": "Opnieuw instellen",
+  "stockNoMatch": "Geen spoel komt overeen met de filters"
 }

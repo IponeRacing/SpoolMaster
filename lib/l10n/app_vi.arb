@@ -457,5 +457,15 @@
   "autoDetectAllBrands": "Nhận dạng tự động — tất cả thương hiệu",
   "autoDetectAllBrandsDesc": "Anycubic, Elegoo, OpenSpool, OpenTag3D và nhiều hơn nữa",
   "nfcTipIos": "Đầu đọc NFC nằm ở đỉnh iPhone. Đặt trực tiếp lên thẻ NFC của cuộn.",
-  "nfcTipAndroid": "Đầu đọc NFC thường nằm ở giữa mặt sau điện thoại. Đặt mặt sau điện thoại lên thẻ NFC của cuộn."
+  "nfcTipAndroid": "Đầu đọc NFC thường nằm ở giữa mặt sau điện thoại. Đặt mặt sau điện thoại lên thẻ NFC của cuộn.",
+  "stockSortBy": "Sắp xếp",
+  "stockFilter": "Bộ lọc",
+  "stockSortRecent": "Mới nhất",
+  "stockSortBrand": "Thương hiệu",
+  "stockSortMaterial": "Vật liệu",
+  "stockSortRemaining": "Khối lượng còn lại",
+  "stockSortColor": "Màu sắc",
+  "stockFilterAll": "Tất cả",
+  "stockResetFilters": "Đặt lại",
+  "stockNoMatch": "Không có cuộn nào khớp với bộ lọc"
 }

@@ -457,5 +457,15 @@
   "autoDetectAllBrands": "Samodejno zaznavanje — vse znamke",
   "autoDetectAllBrandsDesc": "Anycubic, Elegoo, OpenSpool, OpenTag3D in več",
   "nfcTipIos": "Bralnik NFC je na vrhu vašega iPhona. Postavite ga neposredno na NFC oznako koluta.",
-  "nfcTipAndroid": "Bralnik NFC je običajno na sredini zadnje strani telefona. Postavite zadnjo stran telefona na NFC oznako koluta."
+  "nfcTipAndroid": "Bralnik NFC je običajno na sredini zadnje strani telefona. Postavite zadnjo stran telefona na NFC oznako koluta.",
+  "stockSortBy": "Razvrsti",
+  "stockFilter": "Filter",
+  "stockSortRecent": "Najnovejše",
+  "stockSortBrand": "Znamka",
+  "stockSortMaterial": "Material",
+  "stockSortRemaining": "Preostala teža",
+  "stockSortColor": "Barva",
+  "stockFilterAll": "Vse",
+  "stockResetFilters": "Ponastavi",
+  "stockNoMatch": "Nobena tuljava ne ustreza filtrom"
 }

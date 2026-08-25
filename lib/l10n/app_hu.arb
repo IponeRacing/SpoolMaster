@@ -457,5 +457,15 @@
   "autoDetectAllBrands": "Automatikus felismerés — minden márka",
   "autoDetectAllBrandsDesc": "Anycubic, Elegoo, OpenSpool, OpenTag3D és további márkák",
   "nfcTipIos": "Az NFC-olvasó az iPhone tetején található. Helyezze közvetlenül az orsó NFC-címkéjére.",
-  "nfcTipAndroid": "Az NFC-olvasó általában a telefon hátoldalának közepén található. Helyezze a telefon hátoldalát az orsó NFC-címkéjére."
+  "nfcTipAndroid": "Az NFC-olvasó általában a telefon hátoldalának közepén található. Helyezze a telefon hátoldalát az orsó NFC-címkéjére.",
+  "stockSortBy": "Rendezés",
+  "stockFilter": "Szűrő",
+  "stockSortRecent": "Legújabb",
+  "stockSortBrand": "Márka",
+  "stockSortMaterial": "Anyag",
+  "stockSortRemaining": "Fennmaradó tömeg",
+  "stockSortColor": "Szín",
+  "stockFilterAll": "Összes",
+  "stockResetFilters": "Visszaállítás",
+  "stockNoMatch": "Egy tekercs sem felel meg a szűrőknek"
 }

@@ -457,5 +457,15 @@
   "autoDetectAllBrands": "Detecció automàtica — totes les marques",
   "autoDetectAllBrandsDesc": "Anycubic, Elegoo, OpenSpool, OpenTag3D i més",
   "nfcTipIos": "El lector NFC es troba a la part superior del teu iPhone. Col·loca'l directament sobre l'etiqueta NFC de la bobina.",
-  "nfcTipAndroid": "El lector NFC sol estar al centre de la part posterior del telèfon. Col·loca la part posterior del telèfon sobre l'etiqueta NFC de la bobina."
+  "nfcTipAndroid": "El lector NFC sol estar al centre de la part posterior del telèfon. Col·loca la part posterior del telèfon sobre l'etiqueta NFC de la bobina.",
+  "stockSortBy": "Ordena",
+  "stockFilter": "Filtra",
+  "stockSortRecent": "Més recents",
+  "stockSortBrand": "Marca",
+  "stockSortMaterial": "Material",
+  "stockSortRemaining": "Pes restant",
+  "stockSortColor": "Color",
+  "stockFilterAll": "Tots",
+  "stockResetFilters": "Restableix",
+  "stockNoMatch": "Cap bobina coincideix amb els filtres"
 }

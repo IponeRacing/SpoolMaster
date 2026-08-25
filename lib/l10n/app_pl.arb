@@ -457,5 +457,15 @@
   "autoDetectAllBrands": "Automatyczne wykrywanie — wszystkie marki",
   "autoDetectAllBrandsDesc": "Anycubic, Elegoo, OpenSpool, OpenTag3D i więcej",
   "nfcTipIos": "Czytnik NFC znajduje się na górze iPhone'a. Przyłóż go bezpośrednio do znacznika NFC szpuli.",
-  "nfcTipAndroid": "Czytnik NFC znajduje się zazwyczaj w środku tylnej części telefonu. Przyłóż tył telefonu do znacznika NFC szpuli."
+  "nfcTipAndroid": "Czytnik NFC znajduje się zazwyczaj w środku tylnej części telefonu. Przyłóż tył telefonu do znacznika NFC szpuli.",
+  "stockSortBy": "Sortuj",
+  "stockFilter": "Filtruj",
+  "stockSortRecent": "Najnowsze",
+  "stockSortBrand": "Marka",
+  "stockSortMaterial": "Materiał",
+  "stockSortRemaining": "Pozostała waga",
+  "stockSortColor": "Kolor",
+  "stockFilterAll": "Wszystkie",
+  "stockResetFilters": "Resetuj",
+  "stockNoMatch": "Żadna szpula nie pasuje do filtrów"
 }

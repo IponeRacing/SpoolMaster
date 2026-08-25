@@ -457,5 +457,15 @@
   "autoDetectAllBrands": "Auto-Erkennung — alle Marken",
   "autoDetectAllBrandsDesc": "Anycubic, Elegoo, OpenSpool, OpenTag3D und mehr",
   "nfcTipIos": "Der NFC-Leser befindet sich oben an Ihrem iPhone. Halten Sie ihn direkt auf den NFC-Tag der Spule.",
-  "nfcTipAndroid": "Der NFC-Leser befindet sich normalerweise in der Mitte der Rückseite Ihres Telefons. Halten Sie die Rückseite des Telefons auf den NFC-Tag der Spule."
+  "nfcTipAndroid": "Der NFC-Leser befindet sich normalerweise in der Mitte der Rückseite Ihres Telefons. Halten Sie die Rückseite des Telefons auf den NFC-Tag der Spule.",
+  "stockSortBy": "Sortieren",
+  "stockFilter": "Filtern",
+  "stockSortRecent": "Neueste",
+  "stockSortBrand": "Marke",
+  "stockSortMaterial": "Material",
+  "stockSortRemaining": "Restgewicht",
+  "stockSortColor": "Farbe",
+  "stockFilterAll": "Alle",
+  "stockResetFilters": "Zurücksetzen",
+  "stockNoMatch": "Keine Spule entspricht den Filtern"
 }

@@ -1278,4 +1278,34 @@ class AppLocalizationsCa extends AppLocalizations {
   @override
   String get nfcTipAndroid =>
       'El lector NFC sol estar al centre de la part posterior del telèfon. Col·loca la part posterior del telèfon sobre l\'etiqueta NFC de la bobina.';
+
+  @override
+  String get stockSortBy => 'Ordena';
+
+  @override
+  String get stockFilter => 'Filtra';
+
+  @override
+  String get stockSortRecent => 'Més recents';
+
+  @override
+  String get stockSortBrand => 'Marca';
+
+  @override
+  String get stockSortMaterial => 'Material';
+
+  @override
+  String get stockSortRemaining => 'Pes restant';
+
+  @override
+  String get stockSortColor => 'Color';
+
+  @override
+  String get stockFilterAll => 'Tots';
+
+  @override
+  String get stockResetFilters => 'Restableix';
+
+  @override
+  String get stockNoMatch => 'Cap bobina coincideix amb els filtres';
 }

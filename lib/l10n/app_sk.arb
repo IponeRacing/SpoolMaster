@@ -457,5 +457,15 @@
   "autoDetectAllBrands": "Automatická detekcia — všetky značky",
   "autoDetectAllBrandsDesc": "Anycubic, Elegoo, OpenSpool, OpenTag3D a ďalšie",
   "nfcTipIos": "NFC čítačka je hore na vašom iPhone. Priložte ho priamo na NFC tag cievky.",
-  "nfcTipAndroid": "NFC čítačka je zvyčajne v strede zadnej strany telefónu. Priložte zadnú stranu telefónu na NFC tag cievky."
+  "nfcTipAndroid": "NFC čítačka je zvyčajne v strede zadnej strany telefónu. Priložte zadnú stranu telefónu na NFC tag cievky.",
+  "stockSortBy": "Zoradiť",
+  "stockFilter": "Filter",
+  "stockSortRecent": "Najnovšie",
+  "stockSortBrand": "Značka",
+  "stockSortMaterial": "Materiál",
+  "stockSortRemaining": "Zostávajúca hmotnosť",
+  "stockSortColor": "Farba",
+  "stockFilterAll": "Všetko",
+  "stockResetFilters": "Obnoviť",
+  "stockNoMatch": "Žiadna cievka nezodpovedá filtrom"
 }

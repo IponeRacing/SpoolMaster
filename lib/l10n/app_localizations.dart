@@ -2562,6 +2562,66 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Le lecteur NFC est généralement au centre-arrière de votre téléphone. Placez le dos du téléphone sur le tag NFC de la bobine.'**
   String get nfcTipAndroid;
+
+  /// No description provided for @stockSortBy.
+  ///
+  /// In fr, this message translates to:
+  /// **'Trier'**
+  String get stockSortBy;
+
+  /// No description provided for @stockFilter.
+  ///
+  /// In fr, this message translates to:
+  /// **'Filtrer'**
+  String get stockFilter;
+
+  /// No description provided for @stockSortRecent.
+  ///
+  /// In fr, this message translates to:
+  /// **'Plus récentes'**
+  String get stockSortRecent;
+
+  /// No description provided for @stockSortBrand.
+  ///
+  /// In fr, this message translates to:
+  /// **'Marque'**
+  String get stockSortBrand;
+
+  /// No description provided for @stockSortMaterial.
+  ///
+  /// In fr, this message translates to:
+  /// **'Matériau'**
+  String get stockSortMaterial;
+
+  /// No description provided for @stockSortRemaining.
+  ///
+  /// In fr, this message translates to:
+  /// **'Poids restant'**
+  String get stockSortRemaining;
+
+  /// No description provided for @stockSortColor.
+  ///
+  /// In fr, this message translates to:
+  /// **'Couleur'**
+  String get stockSortColor;
+
+  /// No description provided for @stockFilterAll.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tous'**
+  String get stockFilterAll;
+
+  /// No description provided for @stockResetFilters.
+  ///
+  /// In fr, this message translates to:
+  /// **'Réinitialiser'**
+  String get stockResetFilters;
+
+  /// No description provided for @stockNoMatch.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune bobine ne correspond aux filtres'**
+  String get stockNoMatch;
 }
 
 class _AppLocalizationsDelegate

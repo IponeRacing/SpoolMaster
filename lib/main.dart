@@ -372,6 +372,9 @@ class ShoppingListItem {
   }
 }
 
+/// Critères de tri de la liste Stock.
+enum StockSort { recent, brand, material, remaining, color }
+
 class StockListPage extends StatefulWidget {
   const StockListPage({super.key});
 
@@ -383,6 +386,11 @@ class _StockListPageState extends State<StockListPage> {
   List<SpoolInventoryItem> _spools = [];
   bool _isLoading = true;
   int _lowStockThreshold = 20;
+
+  // Tri + filtres de la liste Stock (demande client : filtrer/trier ses bobines)
+  StockSort _sort = StockSort.recent;
+  String? _filterBrand;
+  String? _filterMaterial;
 
   @override
   void initState() {
@@ -420,11 +428,63 @@ class _StockListPageState extends State<StockListPage> {
     }).toList();
   }
 
-  /// Regroupe les bobines identiques (marque + matériau + couleur RGB).
-  /// Chaque bobine reste distincte (poids restant individuel) mais elles
-  /// s'affichent sous une entrée maître dépliable. Ordre préservé.
+  /// Marques distinctes présentes en stock (pour le filtre).
+  List<String> get _availableBrands => _spools
+      .map((s) => s.brand)
+      .where((b) => b.isNotEmpty)
+      .toSet()
+      .toList()
+    ..sort((a, b) => a.toLowerCase().compareTo(b.toLowerCase()));
+
+  /// Matériaux distincts présents en stock (pour le filtre).
+  List<String> get _availableMaterials => _spools
+      .map((s) => s.material)
+      .where((m) => m.isNotEmpty)
+      .toSet()
+      .toList()
+    ..sort((a, b) => a.toLowerCase().compareTo(b.toLowerCase()));
+
+  bool get _hasActiveFilter => _filterBrand != null || _filterMaterial != null;
+
+  /// Applique filtres puis tri sur les bobines.
+  List<SpoolInventoryItem> get _filteredSortedSpools {
+    final list = _spools.where((s) {
+      if (_filterBrand != null && s.brand != _filterBrand) return false;
+      if (_filterMaterial != null && s.material != _filterMaterial) return false;
+      return true;
+    }).toList();
+
+    switch (_sort) {
+      case StockSort.recent:
+        list.sort((a, b) => b.addedDate.compareTo(a.addedDate));
+      case StockSort.brand:
+        list.sort((a, b) => a.brand.toLowerCase().compareTo(b.brand.toLowerCase()));
+      case StockSort.material:
+        list.sort((a, b) => a.material.toLowerCase().compareTo(b.material.toLowerCase()));
+      case StockSort.remaining:
+        list.sort((a, b) => a.remainingWeight.compareTo(b.remainingWeight));
+      case StockSort.color:
+        list.sort((a, b) => a.colorName.toLowerCase().compareTo(b.colorName.toLowerCase()));
+    }
+    return list;
+  }
+
+  /// Regroupe les bobines identiques (marque + matériau + couleur RGB), après
+  /// filtrage + tri. Chaque bobine reste distincte (poids restant individuel)
+  /// mais elles s'affichent sous une entrée maître dépliable.
   List<List<SpoolInventoryItem>> get _groupedSpools =>
-      SpoolStorageService.groupIdentical(_spools);
+      SpoolStorageService.groupIdentical(_filteredSortedSpools);
+
+  String _sortLabel(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
+    return switch (_sort) {
+      StockSort.recent => l.stockSortRecent,
+      StockSort.brand => l.stockSortBrand,
+      StockSort.material => l.stockSortMaterial,
+      StockSort.remaining => l.stockSortRemaining,
+      StockSort.color => l.stockSortColor,
+    };
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -515,11 +575,25 @@ class _StockListPageState extends State<StockListPage> {
                     vertical: 8,
                   ),
                 ),
+                // Barre tri + filtre
+                _buildSortFilterBar(context),
                 // Liste des bobines, regroupées par type
                 Expanded(
                   child: Builder(
                     builder: (context) {
                       final groups = _groupedSpools;
+                      if (groups.isEmpty) {
+                        return Center(
+                          child: Padding(
+                            padding: const EdgeInsets.all(32),
+                            child: Text(
+                              AppLocalizations.of(context)!.stockNoMatch,
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(color: Colors.grey, fontSize: 15),
+                            ),
+                          ),
+                        );
+                      }
                       return ListView.builder(
                         padding: const EdgeInsets.symmetric(horizontal: 16),
                         itemCount: groups.length + (groups.length ~/ 5),
@@ -588,6 +662,132 @@ class _StockListPageState extends State<StockListPage> {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  /// Barre compacte : bouton de tri (menu) + bouton de filtre (bottom sheet).
+  Widget _buildSortFilterBar(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
+      child: Row(
+        children: [
+          Expanded(
+            child: PopupMenuButton<StockSort>(
+              initialValue: _sort,
+              onSelected: (v) => setState(() => _sort = v),
+              itemBuilder: (context) => [
+                CheckedPopupMenuItem(value: StockSort.recent, checked: _sort == StockSort.recent, child: Text(l.stockSortRecent)),
+                CheckedPopupMenuItem(value: StockSort.brand, checked: _sort == StockSort.brand, child: Text(l.stockSortBrand)),
+                CheckedPopupMenuItem(value: StockSort.material, checked: _sort == StockSort.material, child: Text(l.stockSortMaterial)),
+                CheckedPopupMenuItem(value: StockSort.color, checked: _sort == StockSort.color, child: Text(l.stockSortColor)),
+                CheckedPopupMenuItem(value: StockSort.remaining, checked: _sort == StockSort.remaining, child: Text(l.stockSortRemaining)),
+              ],
+              child: InputDecorator(
+                decoration: InputDecoration(
+                  isDense: true,
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                  prefixIcon: const Icon(Icons.sort, size: 20),
+                ),
+                child: Text('${l.stockSortBy} : ${_sortLabel(context)}', overflow: TextOverflow.ellipsis),
+              ),
+            ),
+          ),
+          const SizedBox(width: 8),
+          OutlinedButton.icon(
+            onPressed: () => _showFilterSheet(context),
+            style: OutlinedButton.styleFrom(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
+              foregroundColor: _hasActiveFilter ? AppTheme.anycubicRed : null,
+              side: _hasActiveFilter ? const BorderSide(color: AppTheme.anycubicRed) : null,
+            ),
+            icon: Icon(_hasActiveFilter ? Icons.filter_alt : Icons.filter_alt_outlined, size: 20),
+            label: Text(l.stockFilter),
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// Bottom sheet de filtre : marque + matériau (choix unique par catégorie).
+  void _showFilterSheet(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
+    showModalBottomSheet<void>(
+      context: context,
+      showDragHandle: true,
+      builder: (sheetContext) => StatefulBuilder(
+        builder: (sheetContext, setSheetState) {
+          Widget chips(String title, List<String> values, String? selected, void Function(String?) onPick) {
+            if (values.isEmpty) return const SizedBox.shrink();
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(4, 12, 4, 6),
+                  child: Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
+                ),
+                Wrap(
+                  spacing: 8,
+                  runSpacing: 4,
+                  children: [
+                    ChoiceChip(
+                      label: Text(l.stockFilterAll),
+                      selected: selected == null,
+                      onSelected: (_) => onPick(null),
+                    ),
+                    ...values.map((v) => ChoiceChip(
+                          label: Text(v),
+                          selected: selected == v,
+                          onSelected: (_) => onPick(v),
+                        )),
+                  ],
+                ),
+              ],
+            );
+          }
+
+          return Padding(
+            padding: const EdgeInsets.fromLTRB(16, 0, 16, 24),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                chips(l.stockSortBrand, _availableBrands, _filterBrand, (v) {
+                  setSheetState(() {});
+                  setState(() => _filterBrand = v);
+                }),
+                chips(l.stockSortMaterial, _availableMaterials, _filterMaterial, (v) {
+                  setSheetState(() {});
+                  setState(() => _filterMaterial = v);
+                }),
+                const SizedBox(height: 16),
+                Row(
+                  children: [
+                    if (_hasActiveFilter)
+                      TextButton.icon(
+                        onPressed: () {
+                          setSheetState(() {});
+                          setState(() {
+                            _filterBrand = null;
+                            _filterMaterial = null;
+                          });
+                        },
+                        icon: const Icon(Icons.clear, size: 18),
+                        label: Text(l.stockResetFilters),
+                      ),
+                    const Spacer(),
+                    FilledButton(
+                      onPressed: () => Navigator.pop(sheetContext),
+                      child: Text(MaterialLocalizations.of(context).okButtonLabel),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          );
+        },
       ),
     );
   }

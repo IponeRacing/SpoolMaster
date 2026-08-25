@@ -1269,4 +1269,34 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get nfcTipAndroid =>
       'NFC-считыватель обычно расположен в центре задней панели телефона. Поместите заднюю панель телефона на NFC-метку катушки.';
+
+  @override
+  String get stockSortBy => 'Сортировка';
+
+  @override
+  String get stockFilter => 'Фильтр';
+
+  @override
+  String get stockSortRecent => 'Новейшие';
+
+  @override
+  String get stockSortBrand => 'Бренд';
+
+  @override
+  String get stockSortMaterial => 'Материал';
+
+  @override
+  String get stockSortRemaining => 'Остаток веса';
+
+  @override
+  String get stockSortColor => 'Цвет';
+
+  @override
+  String get stockFilterAll => 'Все';
+
+  @override
+  String get stockResetFilters => 'Сбросить';
+
+  @override
+  String get stockNoMatch => 'Нет катушек, соответствующих фильтрам';
 }

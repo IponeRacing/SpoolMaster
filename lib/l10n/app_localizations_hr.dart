@@ -1269,4 +1269,34 @@ class AppLocalizationsHr extends AppLocalizations {
   @override
   String get nfcTipAndroid =>
       'NFC čitač se obično nalazi na sredini stražnje strane telefona. Postavite stražnju stranu telefona na NFC oznaku kalema.';
+
+  @override
+  String get stockSortBy => 'Razvrstaj';
+
+  @override
+  String get stockFilter => 'Filtar';
+
+  @override
+  String get stockSortRecent => 'Najnovije';
+
+  @override
+  String get stockSortBrand => 'Marka';
+
+  @override
+  String get stockSortMaterial => 'Materijal';
+
+  @override
+  String get stockSortRemaining => 'Preostala težina';
+
+  @override
+  String get stockSortColor => 'Boja';
+
+  @override
+  String get stockFilterAll => 'Sve';
+
+  @override
+  String get stockResetFilters => 'Poništi';
+
+  @override
+  String get stockNoMatch => 'Nijedna špula ne odgovara filtrima';
 }

@@ -1269,4 +1269,34 @@ class AppLocalizationsPl extends AppLocalizations {
   @override
   String get nfcTipAndroid =>
       'Czytnik NFC znajduje się zazwyczaj w środku tylnej części telefonu. Przyłóż tył telefonu do znacznika NFC szpuli.';
+
+  @override
+  String get stockSortBy => 'Sortuj';
+
+  @override
+  String get stockFilter => 'Filtruj';
+
+  @override
+  String get stockSortRecent => 'Najnowsze';
+
+  @override
+  String get stockSortBrand => 'Marka';
+
+  @override
+  String get stockSortMaterial => 'Materiał';
+
+  @override
+  String get stockSortRemaining => 'Pozostała waga';
+
+  @override
+  String get stockSortColor => 'Kolor';
+
+  @override
+  String get stockFilterAll => 'Wszystkie';
+
+  @override
+  String get stockResetFilters => 'Resetuj';
+
+  @override
+  String get stockNoMatch => 'Żadna szpula nie pasuje do filtrów';
 }

@@ -1267,4 +1267,34 @@ class AppLocalizationsSl extends AppLocalizations {
   @override
   String get nfcTipAndroid =>
       'Bralnik NFC je običajno na sredini zadnje strani telefona. Postavite zadnjo stran telefona na NFC oznako koluta.';
+
+  @override
+  String get stockSortBy => 'Razvrsti';
+
+  @override
+  String get stockFilter => 'Filter';
+
+  @override
+  String get stockSortRecent => 'Najnovejše';
+
+  @override
+  String get stockSortBrand => 'Znamka';
+
+  @override
+  String get stockSortMaterial => 'Material';
+
+  @override
+  String get stockSortRemaining => 'Preostala teža';
+
+  @override
+  String get stockSortColor => 'Barva';
+
+  @override
+  String get stockFilterAll => 'Vse';
+
+  @override
+  String get stockResetFilters => 'Ponastavi';
+
+  @override
+  String get stockNoMatch => 'Nobena tuljava ne ustreza filtrom';
 }

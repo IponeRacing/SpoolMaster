@@ -1265,4 +1265,34 @@ class AppLocalizationsCs extends AppLocalizations {
   @override
   String get nfcTipAndroid =>
       'NFC čtečka je obvykle uprostřed zadní strany telefonu. Přiložte zadní stranu telefonu na NFC tag cívky.';
+
+  @override
+  String get stockSortBy => 'Seřadit';
+
+  @override
+  String get stockFilter => 'Filtr';
+
+  @override
+  String get stockSortRecent => 'Nejnovější';
+
+  @override
+  String get stockSortBrand => 'Značka';
+
+  @override
+  String get stockSortMaterial => 'Materiál';
+
+  @override
+  String get stockSortRemaining => 'Zbývající hmotnost';
+
+  @override
+  String get stockSortColor => 'Barva';
+
+  @override
+  String get stockFilterAll => 'Vše';
+
+  @override
+  String get stockResetFilters => 'Obnovit';
+
+  @override
+  String get stockNoMatch => 'Žádná cívka neodpovídá filtrům';
 }

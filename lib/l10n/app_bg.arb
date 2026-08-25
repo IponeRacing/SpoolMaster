@@ -457,5 +457,15 @@
   "autoDetectAllBrands": "Автоматично разпознаване — всички марки",
   "autoDetectAllBrandsDesc": "Anycubic, Elegoo, OpenSpool, OpenTag3D и други",
   "nfcTipIos": "NFC четецът е в горната част на вашия iPhone. Поставете го директно върху NFC маркера на макарата.",
-  "nfcTipAndroid": "NFC четецът обикновено е в средата на задната част на телефона. Поставете задната страна на телефона върху NFC маркера на макарата."
+  "nfcTipAndroid": "NFC четецът обикновено е в средата на задната част на телефона. Поставете задната страна на телефона върху NFC маркера на макарата.",
+  "stockSortBy": "Сортиране",
+  "stockFilter": "Филтър",
+  "stockSortRecent": "Най-нови",
+  "stockSortBrand": "Марка",
+  "stockSortMaterial": "Материал",
+  "stockSortRemaining": "Оставащо тегло",
+  "stockSortColor": "Цвят",
+  "stockFilterAll": "Всички",
+  "stockResetFilters": "Нулиране",
+  "stockNoMatch": "Няма ролка, отговаряща на филтрите"
 }

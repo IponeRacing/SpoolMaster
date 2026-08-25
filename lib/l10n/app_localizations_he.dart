@@ -1262,4 +1262,34 @@ class AppLocalizationsHe extends AppLocalizations {
   @override
   String get nfcTipAndroid =>
       'קורא ה-NFC נמצא בדרך כלל במרכז גב הטלפון. הנח את גב הטלפון על תג ה-NFC של הסליל.';
+
+  @override
+  String get stockSortBy => 'מיון';
+
+  @override
+  String get stockFilter => 'סינון';
+
+  @override
+  String get stockSortRecent => 'החדשות ביותר';
+
+  @override
+  String get stockSortBrand => 'מותג';
+
+  @override
+  String get stockSortMaterial => 'חומר';
+
+  @override
+  String get stockSortRemaining => 'משקל שנותר';
+
+  @override
+  String get stockSortColor => 'צבע';
+
+  @override
+  String get stockFilterAll => 'הכול';
+
+  @override
+  String get stockResetFilters => 'איפוס';
+
+  @override
+  String get stockNoMatch => 'אין סליל התואם את המסננים';
 }

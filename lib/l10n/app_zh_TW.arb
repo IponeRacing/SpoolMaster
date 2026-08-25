@@ -457,5 +457,15 @@
   "autoDetectAllBrands": "自動檢測 — 所有品牌",
   "autoDetectAllBrandsDesc": "Anycubic、Elegoo、OpenSpool、OpenTag3D 等",
   "nfcTipIos": "NFC讀卡器位於iPhone頂部。請將其直接放在線軸的NFC標籤上。",
-  "nfcTipAndroid": "NFC讀卡器通常位於手機背面中央。請將手機背面放在線軸的NFC標籤上。"
+  "nfcTipAndroid": "NFC讀卡器通常位於手機背面中央。請將手機背面放在線軸的NFC標籤上。",
+  "stockSortBy": "排序",
+  "stockFilter": "篩選",
+  "stockSortRecent": "最新",
+  "stockSortBrand": "品牌",
+  "stockSortMaterial": "材料",
+  "stockSortRemaining": "剩餘重量",
+  "stockSortColor": "顏色",
+  "stockFilterAll": "全部",
+  "stockResetFilters": "重設",
+  "stockNoMatch": "沒有符合篩選條件的線軸"
 }

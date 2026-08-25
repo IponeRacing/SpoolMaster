@@ -457,5 +457,15 @@
   "autoDetectAllBrands": "자동 감지 — 모든 브랜드",
   "autoDetectAllBrandsDesc": "Anycubic, Elegoo, OpenSpool, OpenTag3D 등",
   "nfcTipIos": "NFC 리더는 iPhone 상단에 있습니다. 스풀의 NFC 태그에 직접 놓으세요.",
-  "nfcTipAndroid": "NFC 리더는 보통 전화기 뒷면 중앙에 있습니다. 전화기 뒷면을 스풀의 NFC 태그에 놓으세요."
+  "nfcTipAndroid": "NFC 리더는 보통 전화기 뒷면 중앙에 있습니다. 전화기 뒷면을 스풀의 NFC 태그에 놓으세요.",
+  "stockSortBy": "정렬",
+  "stockFilter": "필터",
+  "stockSortRecent": "최신순",
+  "stockSortBrand": "브랜드",
+  "stockSortMaterial": "소재",
+  "stockSortRemaining": "남은 무게",
+  "stockSortColor": "색상",
+  "stockFilterAll": "전체",
+  "stockResetFilters": "초기화",
+  "stockNoMatch": "필터와 일치하는 스풀이 없습니다"
 }

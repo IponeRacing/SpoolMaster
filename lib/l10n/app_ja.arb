@@ -457,5 +457,15 @@
   "autoDetectAllBrands": "自動検出 — すべてのブランド",
   "autoDetectAllBrandsDesc": "Anycubic、Elegoo、OpenSpool、OpenTag3Dなど",
   "nfcTipIos": "NFCリーダーはiPhoneの上部にあります。スプールのNFCタグに直接かざしてください。",
-  "nfcTipAndroid": "NFCリーダーは通常、電話の背面中央にあります。電話の背面をスプールのNFCタグにかざしてください。"
+  "nfcTipAndroid": "NFCリーダーは通常、電話の背面中央にあります。電話の背面をスプールのNFCタグにかざしてください。",
+  "stockSortBy": "並べ替え",
+  "stockFilter": "フィルター",
+  "stockSortRecent": "最新",
+  "stockSortBrand": "ブランド",
+  "stockSortMaterial": "素材",
+  "stockSortRemaining": "残量",
+  "stockSortColor": "色",
+  "stockFilterAll": "すべて",
+  "stockResetFilters": "リセット",
+  "stockNoMatch": "フィルターに一致するスプールがありません"
 }

@@ -457,5 +457,15 @@
   "autoDetectAllBrands": "Detectare automată — toate mărcile",
   "autoDetectAllBrandsDesc": "Anycubic, Elegoo, OpenSpool, OpenTag3D și altele",
   "nfcTipIos": "Cititorul NFC se află în partea de sus a iPhone-ului. Plasați-l direct pe eticheta NFC a bobinei.",
-  "nfcTipAndroid": "Cititorul NFC se află de obicei în centrul părții din spate a telefonului. Plasați spatele telefonului pe eticheta NFC a bobinei."
+  "nfcTipAndroid": "Cititorul NFC se află de obicei în centrul părții din spate a telefonului. Plasați spatele telefonului pe eticheta NFC a bobinei.",
+  "stockSortBy": "Sortează",
+  "stockFilter": "Filtrează",
+  "stockSortRecent": "Cele mai recente",
+  "stockSortBrand": "Marcă",
+  "stockSortMaterial": "Material",
+  "stockSortRemaining": "Greutate rămasă",
+  "stockSortColor": "Culoare",
+  "stockFilterAll": "Toate",
+  "stockResetFilters": "Resetează",
+  "stockNoMatch": "Nicio bobină nu corespunde filtrelor"
 }

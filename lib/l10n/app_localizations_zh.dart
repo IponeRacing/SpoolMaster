@@ -1237,6 +1237,36 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get nfcTipAndroid => 'NFC读卡器通常位于手机背面中央。请将手机背面放在线轴的NFC标签上。';
+
+  @override
+  String get stockSortBy => '排序';
+
+  @override
+  String get stockFilter => '筛选';
+
+  @override
+  String get stockSortRecent => '最新';
+
+  @override
+  String get stockSortBrand => '品牌';
+
+  @override
+  String get stockSortMaterial => '材料';
+
+  @override
+  String get stockSortRemaining => '剩余重量';
+
+  @override
+  String get stockSortColor => '颜色';
+
+  @override
+  String get stockFilterAll => '全部';
+
+  @override
+  String get stockResetFilters => '重置';
+
+  @override
+  String get stockNoMatch => '没有符合筛选条件的线卷';
 }
 
 /// The translations for Chinese, as used in Taiwan (`zh_TW`).
@@ -2460,4 +2490,34 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String get nfcTipAndroid => 'NFC讀卡器通常位於手機背面中央。請將手機背面放在線軸的NFC標籤上。';
+
+  @override
+  String get stockSortBy => '排序';
+
+  @override
+  String get stockFilter => '篩選';
+
+  @override
+  String get stockSortRecent => '最新';
+
+  @override
+  String get stockSortBrand => '品牌';
+
+  @override
+  String get stockSortMaterial => '材料';
+
+  @override
+  String get stockSortRemaining => '剩餘重量';
+
+  @override
+  String get stockSortColor => '顏色';
+
+  @override
+  String get stockFilterAll => '全部';
+
+  @override
+  String get stockResetFilters => '重設';
+
+  @override
+  String get stockNoMatch => '沒有符合篩選條件的線軸';
 }

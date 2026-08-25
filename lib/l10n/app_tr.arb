@@ -457,5 +457,15 @@
   "autoDetectAllBrands": "Otomatik algılama — tüm markalar",
   "autoDetectAllBrandsDesc": "Anycubic, Elegoo, OpenSpool, OpenTag3D ve daha fazlası",
   "nfcTipIos": "NFC okuyucu iPhone'unuzun üst kısmında bulunur. Makaranın NFC etiketine doğrudan yerleştirin.",
-  "nfcTipAndroid": "NFC okuyucu genellikle telefonunuzun arka yüzünün ortasında bulunur. Telefonun arkasını makaranın NFC etiketine yerleştirin."
+  "nfcTipAndroid": "NFC okuyucu genellikle telefonunuzun arka yüzünün ortasında bulunur. Telefonun arkasını makaranın NFC etiketine yerleştirin.",
+  "stockSortBy": "Sırala",
+  "stockFilter": "Filtrele",
+  "stockSortRecent": "En yeni",
+  "stockSortBrand": "Marka",
+  "stockSortMaterial": "Malzeme",
+  "stockSortRemaining": "Kalan ağırlık",
+  "stockSortColor": "Renk",
+  "stockFilterAll": "Tümü",
+  "stockResetFilters": "Sıfırla",
+  "stockNoMatch": "Filtrelerle eşleşen makara yok"
 }

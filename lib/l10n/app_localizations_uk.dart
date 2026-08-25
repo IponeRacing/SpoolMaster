@@ -1271,4 +1271,34 @@ class AppLocalizationsUk extends AppLocalizations {
   @override
   String get nfcTipAndroid =>
       'Зчитувач NFC зазвичай знаходиться в центрі задньої панелі телефону. Помістіть задню панель телефону на NFC-мітку котушки.';
+
+  @override
+  String get stockSortBy => 'Сортувати';
+
+  @override
+  String get stockFilter => 'Фільтр';
+
+  @override
+  String get stockSortRecent => 'Найновіші';
+
+  @override
+  String get stockSortBrand => 'Бренд';
+
+  @override
+  String get stockSortMaterial => 'Матеріал';
+
+  @override
+  String get stockSortRemaining => 'Залишкова вага';
+
+  @override
+  String get stockSortColor => 'Колір';
+
+  @override
+  String get stockFilterAll => 'Усі';
+
+  @override
+  String get stockResetFilters => 'Скинути';
+
+  @override
+  String get stockNoMatch => 'Немає котушок, що відповідають фільтрам';
 }

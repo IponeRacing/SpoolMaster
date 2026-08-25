@@ -457,5 +457,15 @@
   "autoDetectAllBrands": "الكشف التلقائي — جميع العلامات التجارية",
   "autoDetectAllBrandsDesc": "Anycubic وElegoo وOpenSpool وOpenTag3D والمزيد",
   "nfcTipIos": "قارئ NFC في أعلى iPhone. ضعه مباشرة على علامة NFC الخاصة بالبكرة.",
-  "nfcTipAndroid": "قارئ NFC عادة في وسط الجهة الخلفية من هاتفك. ضع الجهة الخلفية من الهاتف على علامة NFC الخاصة بالبكرة."
+  "nfcTipAndroid": "قارئ NFC عادة في وسط الجهة الخلفية من هاتفك. ضع الجهة الخلفية من الهاتف على علامة NFC الخاصة بالبكرة.",
+  "stockSortBy": "فرز",
+  "stockFilter": "تصفية",
+  "stockSortRecent": "الأحدث",
+  "stockSortBrand": "العلامة التجارية",
+  "stockSortMaterial": "المادة",
+  "stockSortRemaining": "الوزن المتبقي",
+  "stockSortColor": "اللون",
+  "stockFilterAll": "الكل",
+  "stockResetFilters": "إعادة تعيين",
+  "stockNoMatch": "لا توجد بكرة تطابق عوامل التصفية"
 }

@@ -457,5 +457,15 @@
   "autoDetectAllBrands": "ตรวจจับอัตโนมัติ — ทุกแบรนด์",
   "autoDetectAllBrandsDesc": "Anycubic, Elegoo, OpenSpool, OpenTag3D และอื่น ๆ",
   "nfcTipIos": "ตัวอ่าน NFC อยู่ที่ด้านบนของ iPhone วางลงบนแท็ก NFC ของม้วนโดยตรง",
-  "nfcTipAndroid": "ตัวอ่าน NFC มักอยู่ตรงกลางด้านหลังของโทรศัพท์ วางด้านหลังของโทรศัพท์ลงบนแท็ก NFC ของม้วน"
+  "nfcTipAndroid": "ตัวอ่าน NFC มักอยู่ตรงกลางด้านหลังของโทรศัพท์ วางด้านหลังของโทรศัพท์ลงบนแท็ก NFC ของม้วน",
+  "stockSortBy": "จัดเรียง",
+  "stockFilter": "ตัวกรอง",
+  "stockSortRecent": "ล่าสุด",
+  "stockSortBrand": "แบรนด์",
+  "stockSortMaterial": "วัสดุ",
+  "stockSortRemaining": "น้ำหนักคงเหลือ",
+  "stockSortColor": "สี",
+  "stockFilterAll": "ทั้งหมด",
+  "stockResetFilters": "รีเซ็ต",
+  "stockNoMatch": "ไม่มีม้วนที่ตรงกับตัวกรอง"
 }

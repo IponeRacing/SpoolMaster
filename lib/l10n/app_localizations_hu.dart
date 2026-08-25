@@ -1271,4 +1271,34 @@ class AppLocalizationsHu extends AppLocalizations {
   @override
   String get nfcTipAndroid =>
       'Az NFC-olvasó általában a telefon hátoldalának közepén található. Helyezze a telefon hátoldalát az orsó NFC-címkéjére.';
+
+  @override
+  String get stockSortBy => 'Rendezés';
+
+  @override
+  String get stockFilter => 'Szűrő';
+
+  @override
+  String get stockSortRecent => 'Legújabb';
+
+  @override
+  String get stockSortBrand => 'Márka';
+
+  @override
+  String get stockSortMaterial => 'Anyag';
+
+  @override
+  String get stockSortRemaining => 'Fennmaradó tömeg';
+
+  @override
+  String get stockSortColor => 'Szín';
+
+  @override
+  String get stockFilterAll => 'Összes';
+
+  @override
+  String get stockResetFilters => 'Visszaállítás';
+
+  @override
+  String get stockNoMatch => 'Egy tekercs sem felel meg a szűrőknek';
 }

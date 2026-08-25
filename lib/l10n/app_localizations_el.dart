@@ -1277,4 +1277,34 @@ class AppLocalizationsEl extends AppLocalizations {
   @override
   String get nfcTipAndroid =>
       'Ο αναγνώστης NFC βρίσκεται συνήθως στο κέντρο του πίσω μέρους του τηλεφώνου. Τοποθετήστε το πίσω μέρος του τηλεφώνου πάνω στην ετικέτα NFC του ρολού.';
+
+  @override
+  String get stockSortBy => 'Ταξινόμηση';
+
+  @override
+  String get stockFilter => 'Φίλτρο';
+
+  @override
+  String get stockSortRecent => 'Πιο πρόσφατα';
+
+  @override
+  String get stockSortBrand => 'Μάρκα';
+
+  @override
+  String get stockSortMaterial => 'Υλικό';
+
+  @override
+  String get stockSortRemaining => 'Υπόλοιπο βάρος';
+
+  @override
+  String get stockSortColor => 'Χρώμα';
+
+  @override
+  String get stockFilterAll => 'Όλα';
+
+  @override
+  String get stockResetFilters => 'Επαναφορά';
+
+  @override
+  String get stockNoMatch => 'Καμία μπομπίνα δεν ταιριάζει με τα φίλτρα';
 }

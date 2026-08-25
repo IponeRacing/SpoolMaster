@@ -457,5 +457,15 @@
   "autoDetectAllBrands": "זיהוי אוטומטי — כל המותגים",
   "autoDetectAllBrandsDesc": "Anycubic, Elegoo, OpenSpool, OpenTag3D ועוד",
   "nfcTipIos": "קורא ה-NFC נמצא בחלק העליון של האייפון. הנח אותו ישירות על תג ה-NFC של הסליל.",
-  "nfcTipAndroid": "קורא ה-NFC נמצא בדרך כלל במרכז גב הטלפון. הנח את גב הטלפון על תג ה-NFC של הסליל."
+  "nfcTipAndroid": "קורא ה-NFC נמצא בדרך כלל במרכז גב הטלפון. הנח את גב הטלפון על תג ה-NFC של הסליל.",
+  "stockSortBy": "מיון",
+  "stockFilter": "סינון",
+  "stockSortRecent": "החדשות ביותר",
+  "stockSortBrand": "מותג",
+  "stockSortMaterial": "חומר",
+  "stockSortRemaining": "משקל שנותר",
+  "stockSortColor": "צבע",
+  "stockFilterAll": "הכול",
+  "stockResetFilters": "איפוס",
+  "stockNoMatch": "אין סליל התואם את המסננים"
 }

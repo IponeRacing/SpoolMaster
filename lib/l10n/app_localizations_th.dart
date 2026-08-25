@@ -1267,4 +1267,34 @@ class AppLocalizationsTh extends AppLocalizations {
   @override
   String get nfcTipAndroid =>
       'ตัวอ่าน NFC มักอยู่ตรงกลางด้านหลังของโทรศัพท์ วางด้านหลังของโทรศัพท์ลงบนแท็ก NFC ของม้วน';
+
+  @override
+  String get stockSortBy => 'จัดเรียง';
+
+  @override
+  String get stockFilter => 'ตัวกรอง';
+
+  @override
+  String get stockSortRecent => 'ล่าสุด';
+
+  @override
+  String get stockSortBrand => 'แบรนด์';
+
+  @override
+  String get stockSortMaterial => 'วัสดุ';
+
+  @override
+  String get stockSortRemaining => 'น้ำหนักคงเหลือ';
+
+  @override
+  String get stockSortColor => 'สี';
+
+  @override
+  String get stockFilterAll => 'ทั้งหมด';
+
+  @override
+  String get stockResetFilters => 'รีเซ็ต';
+
+  @override
+  String get stockNoMatch => 'ไม่มีม้วนที่ตรงกับตัวกรอง';
 }

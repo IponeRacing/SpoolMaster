@@ -1267,4 +1267,34 @@ class AppLocalizationsSk extends AppLocalizations {
   @override
   String get nfcTipAndroid =>
       'NFC čítačka je zvyčajne v strede zadnej strany telefónu. Priložte zadnú stranu telefónu na NFC tag cievky.';
+
+  @override
+  String get stockSortBy => 'Zoradiť';
+
+  @override
+  String get stockFilter => 'Filter';
+
+  @override
+  String get stockSortRecent => 'Najnovšie';
+
+  @override
+  String get stockSortBrand => 'Značka';
+
+  @override
+  String get stockSortMaterial => 'Materiál';
+
+  @override
+  String get stockSortRemaining => 'Zostávajúca hmotnosť';
+
+  @override
+  String get stockSortColor => 'Farba';
+
+  @override
+  String get stockFilterAll => 'Všetko';
+
+  @override
+  String get stockResetFilters => 'Obnoviť';
+
+  @override
+  String get stockNoMatch => 'Žiadna cievka nezodpovedá filtrom';
 }

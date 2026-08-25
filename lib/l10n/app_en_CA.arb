@@ -457,5 +457,15 @@
   "autoDetectAllBrands": "Auto-detect — all brands",
   "autoDetectAllBrandsDesc": "Anycubic, Elegoo, OpenSpool, OpenTag3D and more",
   "nfcTipIos": "The NFC reader is at the top of your iPhone. Place it directly on the spool's NFC tag.",
-  "nfcTipAndroid": "The NFC reader is usually at the center back of your phone. Place the back of your phone on the spool's NFC tag."
+  "nfcTipAndroid": "The NFC reader is usually at the center back of your phone. Place the back of your phone on the spool's NFC tag.",
+  "stockSortBy": "Sort",
+  "stockFilter": "Filter",
+  "stockSortRecent": "Most recent",
+  "stockSortBrand": "Brand",
+  "stockSortMaterial": "Material",
+  "stockSortRemaining": "Remaining weight",
+  "stockSortColor": "Colour",
+  "stockFilterAll": "All",
+  "stockResetFilters": "Reset",
+  "stockNoMatch": "No spool matches the filters"
 }

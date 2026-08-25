@@ -457,5 +457,15 @@
   "autoDetectAllBrands": "Авто-определение — все бренды",
   "autoDetectAllBrandsDesc": "Anycubic, Elegoo, OpenSpool, OpenTag3D и другие",
   "nfcTipIos": "NFC-считыватель расположен в верхней части вашего iPhone. Поместите его прямо на NFC-метку катушки.",
-  "nfcTipAndroid": "NFC-считыватель обычно расположен в центре задней панели телефона. Поместите заднюю панель телефона на NFC-метку катушки."
+  "nfcTipAndroid": "NFC-считыватель обычно расположен в центре задней панели телефона. Поместите заднюю панель телефона на NFC-метку катушки.",
+  "stockSortBy": "Сортировка",
+  "stockFilter": "Фильтр",
+  "stockSortRecent": "Новейшие",
+  "stockSortBrand": "Бренд",
+  "stockSortMaterial": "Материал",
+  "stockSortRemaining": "Остаток веса",
+  "stockSortColor": "Цвет",
+  "stockFilterAll": "Все",
+  "stockResetFilters": "Сбросить",
+  "stockNoMatch": "Нет катушек, соответствующих фильтрам"
 }

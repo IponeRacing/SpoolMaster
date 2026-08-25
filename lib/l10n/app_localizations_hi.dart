@@ -1269,4 +1269,34 @@ class AppLocalizationsHi extends AppLocalizations {
   @override
   String get nfcTipAndroid =>
       'NFC रीडर आमतौर पर आपके फोन के पीछे केंद्र में होता है। फोन के पिछले हिस्से को स्पूल के NFC टैग पर रखें।';
+
+  @override
+  String get stockSortBy => 'क्रमबद्ध करें';
+
+  @override
+  String get stockFilter => 'फ़िल्टर';
+
+  @override
+  String get stockSortRecent => 'सबसे नए';
+
+  @override
+  String get stockSortBrand => 'ब्रांड';
+
+  @override
+  String get stockSortMaterial => 'सामग्री';
+
+  @override
+  String get stockSortRemaining => 'शेष वज़न';
+
+  @override
+  String get stockSortColor => 'रंग';
+
+  @override
+  String get stockFilterAll => 'सभी';
+
+  @override
+  String get stockResetFilters => 'रीसेट करें';
+
+  @override
+  String get stockNoMatch => 'कोई स्पूल फ़िल्टर से मेल नहीं खाता';
 }

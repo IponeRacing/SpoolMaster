@@ -1268,4 +1268,34 @@ class AppLocalizationsNl extends AppLocalizations {
   @override
   String get nfcTipAndroid =>
       'De NFC-lezer zit meestal in het midden van de achterkant van je telefoon. Plaats de achterkant van je telefoon op de NFC-tag van de spoel.';
+
+  @override
+  String get stockSortBy => 'Sorteren';
+
+  @override
+  String get stockFilter => 'Filteren';
+
+  @override
+  String get stockSortRecent => 'Nieuwste';
+
+  @override
+  String get stockSortBrand => 'Merk';
+
+  @override
+  String get stockSortMaterial => 'Materiaal';
+
+  @override
+  String get stockSortRemaining => 'Resterend gewicht';
+
+  @override
+  String get stockSortColor => 'Kleur';
+
+  @override
+  String get stockFilterAll => 'Alle';
+
+  @override
+  String get stockResetFilters => 'Opnieuw instellen';
+
+  @override
+  String get stockNoMatch => 'Geen spoel komt overeen met de filters';
 }

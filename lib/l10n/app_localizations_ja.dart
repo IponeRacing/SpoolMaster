@@ -1250,4 +1250,34 @@ class AppLocalizationsJa extends AppLocalizations {
   @override
   String get nfcTipAndroid =>
       'NFCリーダーは通常、電話の背面中央にあります。電話の背面をスプールのNFCタグにかざしてください。';
+
+  @override
+  String get stockSortBy => '並べ替え';
+
+  @override
+  String get stockFilter => 'フィルター';
+
+  @override
+  String get stockSortRecent => '最新';
+
+  @override
+  String get stockSortBrand => 'ブランド';
+
+  @override
+  String get stockSortMaterial => '素材';
+
+  @override
+  String get stockSortRemaining => '残量';
+
+  @override
+  String get stockSortColor => '色';
+
+  @override
+  String get stockFilterAll => 'すべて';
+
+  @override
+  String get stockResetFilters => 'リセット';
+
+  @override
+  String get stockNoMatch => 'フィルターに一致するスプールがありません';
 }

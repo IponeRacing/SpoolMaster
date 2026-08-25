@@ -457,5 +457,15 @@
   "autoDetectAllBrands": "Automatisk registrering — alle mærker",
   "autoDetectAllBrandsDesc": "Anycubic, Elegoo, OpenSpool, OpenTag3D og flere",
   "nfcTipIos": "NFC-læseren sidder øverst på din iPhone. Placér den direkte på spolens NFC-tag.",
-  "nfcTipAndroid": "NFC-læseren sidder normalt midt på bagsiden af din telefon. Placér bagsiden af telefonen på spolens NFC-tag."
+  "nfcTipAndroid": "NFC-læseren sidder normalt midt på bagsiden af din telefon. Placér bagsiden af telefonen på spolens NFC-tag.",
+  "stockSortBy": "Sortér",
+  "stockFilter": "Filtrér",
+  "stockSortRecent": "Nyeste",
+  "stockSortBrand": "Mærke",
+  "stockSortMaterial": "Materiale",
+  "stockSortRemaining": "Resterende vægt",
+  "stockSortColor": "Farve",
+  "stockFilterAll": "Alle",
+  "stockResetFilters": "Nulstil",
+  "stockNoMatch": "Ingen spole matcher filtrene"
 }

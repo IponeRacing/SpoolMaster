@@ -1263,4 +1263,34 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get nfcTipAndroid =>
       'قارئ NFC عادة في وسط الجهة الخلفية من هاتفك. ضع الجهة الخلفية من الهاتف على علامة NFC الخاصة بالبكرة.';
+
+  @override
+  String get stockSortBy => 'فرز';
+
+  @override
+  String get stockFilter => 'تصفية';
+
+  @override
+  String get stockSortRecent => 'الأحدث';
+
+  @override
+  String get stockSortBrand => 'العلامة التجارية';
+
+  @override
+  String get stockSortMaterial => 'المادة';
+
+  @override
+  String get stockSortRemaining => 'الوزن المتبقي';
+
+  @override
+  String get stockSortColor => 'اللون';
+
+  @override
+  String get stockFilterAll => 'الكل';
+
+  @override
+  String get stockResetFilters => 'إعادة تعيين';
+
+  @override
+  String get stockNoMatch => 'لا توجد بكرة تطابق عوامل التصفية';
 }

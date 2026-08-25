@@ -457,5 +457,15 @@
   "autoDetectAllBrands": "Αυτόματη ανίχνευση — όλες οι μάρκες",
   "autoDetectAllBrandsDesc": "Anycubic, Elegoo, OpenSpool, OpenTag3D και άλλα",
   "nfcTipIos": "Ο αναγνώστης NFC βρίσκεται στο πάνω μέρος του iPhone σας. Τοποθετήστε τον απευθείας πάνω στην ετικέτα NFC του ρολού.",
-  "nfcTipAndroid": "Ο αναγνώστης NFC βρίσκεται συνήθως στο κέντρο του πίσω μέρους του τηλεφώνου. Τοποθετήστε το πίσω μέρος του τηλεφώνου πάνω στην ετικέτα NFC του ρολού."
+  "nfcTipAndroid": "Ο αναγνώστης NFC βρίσκεται συνήθως στο κέντρο του πίσω μέρους του τηλεφώνου. Τοποθετήστε το πίσω μέρος του τηλεφώνου πάνω στην ετικέτα NFC του ρολού.",
+  "stockSortBy": "Ταξινόμηση",
+  "stockFilter": "Φίλτρο",
+  "stockSortRecent": "Πιο πρόσφατα",
+  "stockSortBrand": "Μάρκα",
+  "stockSortMaterial": "Υλικό",
+  "stockSortRemaining": "Υπόλοιπο βάρος",
+  "stockSortColor": "Χρώμα",
+  "stockFilterAll": "Όλα",
+  "stockResetFilters": "Επαναφορά",
+  "stockNoMatch": "Καμία μπομπίνα δεν ταιριάζει με τα φίλτρα"
 }

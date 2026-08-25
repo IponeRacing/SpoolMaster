@@ -457,5 +457,15 @@
   "autoDetectAllBrands": "Auto-detección — todas las marcas",
   "autoDetectAllBrandsDesc": "Anycubic, Elegoo, OpenSpool, OpenTag3D y más",
   "nfcTipIos": "El lector NFC está en la parte superior de tu iPhone. Colócalo directamente sobre la etiqueta NFC de la bobina.",
-  "nfcTipAndroid": "El lector NFC suele estar en el centro de la parte trasera del teléfono. Coloca la parte trasera del teléfono sobre la etiqueta NFC de la bobina."
+  "nfcTipAndroid": "El lector NFC suele estar en el centro de la parte trasera del teléfono. Coloca la parte trasera del teléfono sobre la etiqueta NFC de la bobina.",
+  "stockSortBy": "Ordenar",
+  "stockFilter": "Filtrar",
+  "stockSortRecent": "Más recientes",
+  "stockSortBrand": "Marca",
+  "stockSortMaterial": "Material",
+  "stockSortRemaining": "Peso restante",
+  "stockSortColor": "Color",
+  "stockFilterAll": "Todos",
+  "stockResetFilters": "Restablecer",
+  "stockNoMatch": "Ninguna bobina coincide con los filtros"
 }

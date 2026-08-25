@@ -1252,4 +1252,34 @@ class AppLocalizationsKo extends AppLocalizations {
   @override
   String get nfcTipAndroid =>
       'NFC 리더는 보통 전화기 뒷면 중앙에 있습니다. 전화기 뒷면을 스풀의 NFC 태그에 놓으세요.';
+
+  @override
+  String get stockSortBy => '정렬';
+
+  @override
+  String get stockFilter => '필터';
+
+  @override
+  String get stockSortRecent => '최신순';
+
+  @override
+  String get stockSortBrand => '브랜드';
+
+  @override
+  String get stockSortMaterial => '소재';
+
+  @override
+  String get stockSortRemaining => '남은 무게';
+
+  @override
+  String get stockSortColor => '색상';
+
+  @override
+  String get stockFilterAll => '전체';
+
+  @override
+  String get stockResetFilters => '초기화';
+
+  @override
+  String get stockNoMatch => '필터와 일치하는 스풀이 없습니다';
 }

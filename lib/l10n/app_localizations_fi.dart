@@ -1268,4 +1268,34 @@ class AppLocalizationsFi extends AppLocalizations {
   @override
   String get nfcTipAndroid =>
       'NFC-lukija on yleensä puhelimen takaosan keskellä. Aseta puhelimen takaosa kelan NFC-tagin päälle.';
+
+  @override
+  String get stockSortBy => 'Lajittele';
+
+  @override
+  String get stockFilter => 'Suodata';
+
+  @override
+  String get stockSortRecent => 'Uusimmat';
+
+  @override
+  String get stockSortBrand => 'Merkki';
+
+  @override
+  String get stockSortMaterial => 'Materiaali';
+
+  @override
+  String get stockSortRemaining => 'Jäljellä oleva paino';
+
+  @override
+  String get stockSortColor => 'Väri';
+
+  @override
+  String get stockFilterAll => 'Kaikki';
+
+  @override
+  String get stockResetFilters => 'Nollaa';
+
+  @override
+  String get stockNoMatch => 'Mikään rulla ei vastaa suodattimia';
 }

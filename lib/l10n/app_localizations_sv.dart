@@ -1268,4 +1268,34 @@ class AppLocalizationsSv extends AppLocalizations {
   @override
   String get nfcTipAndroid =>
       'NFC-läsaren sitter vanligtvis mitt på baksidan av din telefon. Placera baksidan av telefonen på spolens NFC-tagg.';
+
+  @override
+  String get stockSortBy => 'Sortera';
+
+  @override
+  String get stockFilter => 'Filtrera';
+
+  @override
+  String get stockSortRecent => 'Senaste';
+
+  @override
+  String get stockSortBrand => 'Märke';
+
+  @override
+  String get stockSortMaterial => 'Material';
+
+  @override
+  String get stockSortRemaining => 'Återstående vikt';
+
+  @override
+  String get stockSortColor => 'Färg';
+
+  @override
+  String get stockFilterAll => 'Alla';
+
+  @override
+  String get stockResetFilters => 'Återställ';
+
+  @override
+  String get stockNoMatch => 'Ingen spole matchar filtren';
 }

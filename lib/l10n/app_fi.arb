@@ -457,5 +457,15 @@
   "autoDetectAllBrands": "Automaattinen tunnistus — kaikki merkit",
   "autoDetectAllBrandsDesc": "Anycubic, Elegoo, OpenSpool, OpenTag3D ja muut",
   "nfcTipIos": "NFC-lukija on iPhonesi yläosassa. Aseta se suoraan kelan NFC-tagin päälle.",
-  "nfcTipAndroid": "NFC-lukija on yleensä puhelimen takaosan keskellä. Aseta puhelimen takaosa kelan NFC-tagin päälle."
+  "nfcTipAndroid": "NFC-lukija on yleensä puhelimen takaosan keskellä. Aseta puhelimen takaosa kelan NFC-tagin päälle.",
+  "stockSortBy": "Lajittele",
+  "stockFilter": "Suodata",
+  "stockSortRecent": "Uusimmat",
+  "stockSortBrand": "Merkki",
+  "stockSortMaterial": "Materiaali",
+  "stockSortRemaining": "Jäljellä oleva paino",
+  "stockSortColor": "Väri",
+  "stockFilterAll": "Kaikki",
+  "stockResetFilters": "Nollaa",
+  "stockNoMatch": "Mikään rulla ei vastaa suodattimia"
 }

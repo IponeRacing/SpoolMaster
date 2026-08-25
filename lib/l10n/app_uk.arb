@@ -457,5 +457,15 @@
   "autoDetectAllBrands": "Автовизначення — усі бренди",
   "autoDetectAllBrandsDesc": "Anycubic, Elegoo, OpenSpool, OpenTag3D та інші",
   "nfcTipIos": "Зчитувач NFC знаходиться у верхній частині вашого iPhone. Помістіть його безпосередньо на NFC-мітку котушки.",
-  "nfcTipAndroid": "Зчитувач NFC зазвичай знаходиться в центрі задньої панелі телефону. Помістіть задню панель телефону на NFC-мітку котушки."
+  "nfcTipAndroid": "Зчитувач NFC зазвичай знаходиться в центрі задньої панелі телефону. Помістіть задню панель телефону на NFC-мітку котушки.",
+  "stockSortBy": "Сортувати",
+  "stockFilter": "Фільтр",
+  "stockSortRecent": "Найновіші",
+  "stockSortBrand": "Бренд",
+  "stockSortMaterial": "Матеріал",
+  "stockSortRemaining": "Залишкова вага",
+  "stockSortColor": "Колір",
+  "stockFilterAll": "Усі",
+  "stockResetFilters": "Скинути",
+  "stockNoMatch": "Немає котушок, що відповідають фільтрам"
 }

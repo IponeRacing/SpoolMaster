@@ -1270,4 +1270,34 @@ class AppLocalizationsVi extends AppLocalizations {
   @override
   String get nfcTipAndroid =>
       'Đầu đọc NFC thường nằm ở giữa mặt sau điện thoại. Đặt mặt sau điện thoại lên thẻ NFC của cuộn.';
+
+  @override
+  String get stockSortBy => 'Sắp xếp';
+
+  @override
+  String get stockFilter => 'Bộ lọc';
+
+  @override
+  String get stockSortRecent => 'Mới nhất';
+
+  @override
+  String get stockSortBrand => 'Thương hiệu';
+
+  @override
+  String get stockSortMaterial => 'Vật liệu';
+
+  @override
+  String get stockSortRemaining => 'Khối lượng còn lại';
+
+  @override
+  String get stockSortColor => 'Màu sắc';
+
+  @override
+  String get stockFilterAll => 'Tất cả';
+
+  @override
+  String get stockResetFilters => 'Đặt lại';
+
+  @override
+  String get stockNoMatch => 'Không có cuộn nào khớp với bộ lọc';
 }

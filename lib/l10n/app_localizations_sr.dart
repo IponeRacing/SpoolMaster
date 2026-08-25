@@ -1269,4 +1269,34 @@ class AppLocalizationsSr extends AppLocalizations {
   @override
   String get nfcTipAndroid =>
       'NFC читач се обично налази у средини задње стране телефона. Поставите задњу страну телефона на NFC ознаку калема.';
+
+  @override
+  String get stockSortBy => 'Сортирај';
+
+  @override
+  String get stockFilter => 'Филтер';
+
+  @override
+  String get stockSortRecent => 'Најновије';
+
+  @override
+  String get stockSortBrand => 'Бренд';
+
+  @override
+  String get stockSortMaterial => 'Материјал';
+
+  @override
+  String get stockSortRemaining => 'Преостала тежина';
+
+  @override
+  String get stockSortColor => 'Боја';
+
+  @override
+  String get stockFilterAll => 'Све';
+
+  @override
+  String get stockResetFilters => 'Ресетуј';
+
+  @override
+  String get stockNoMatch => 'Ниједан калем не одговара филтерима';
 }

@@ -1269,4 +1269,34 @@ class AppLocalizationsMs extends AppLocalizations {
   @override
   String get nfcTipAndroid =>
       'Pembaca NFC biasanya berada di tengah belakang telefon anda. Letakkan bahagian belakang telefon pada tag NFC kili.';
+
+  @override
+  String get stockSortBy => 'Isih';
+
+  @override
+  String get stockFilter => 'Tapis';
+
+  @override
+  String get stockSortRecent => 'Terbaharu';
+
+  @override
+  String get stockSortBrand => 'Jenama';
+
+  @override
+  String get stockSortMaterial => 'Bahan';
+
+  @override
+  String get stockSortRemaining => 'Berat baki';
+
+  @override
+  String get stockSortColor => 'Warna';
+
+  @override
+  String get stockFilterAll => 'Semua';
+
+  @override
+  String get stockResetFilters => 'Set semula';
+
+  @override
+  String get stockNoMatch => 'Tiada gegelung sepadan dengan penapis';
 }

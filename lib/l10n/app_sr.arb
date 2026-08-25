@@ -457,5 +457,15 @@
   "autoDetectAllBrands": "Аутоматско препознавање — све марке",
   "autoDetectAllBrandsDesc": "Anycubic, Elegoo, OpenSpool, OpenTag3D и више",
   "nfcTipIos": "NFC читач се налази на врху вашег iPhone-а. Поставите га директно на NFC ознаку калема.",
-  "nfcTipAndroid": "NFC читач се обично налази у средини задње стране телефона. Поставите задњу страну телефона на NFC ознаку калема."
+  "nfcTipAndroid": "NFC читач се обично налази у средини задње стране телефона. Поставите задњу страну телефона на NFC ознаку калема.",
+  "stockSortBy": "Сортирај",
+  "stockFilter": "Филтер",
+  "stockSortRecent": "Најновије",
+  "stockSortBrand": "Бренд",
+  "stockSortMaterial": "Материјал",
+  "stockSortRemaining": "Преостала тежина",
+  "stockSortColor": "Боја",
+  "stockFilterAll": "Све",
+  "stockResetFilters": "Ресетуј",
+  "stockNoMatch": "Ниједан калем не одговара филтерима"
 }

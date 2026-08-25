@@ -1268,4 +1268,34 @@ class AppLocalizationsId extends AppLocalizations {
   @override
   String get nfcTipAndroid =>
       'Pembaca NFC biasanya ada di tengah bagian belakang ponsel. Letakkan bagian belakang ponsel di tag NFC gulungan.';
+
+  @override
+  String get stockSortBy => 'Urutkan';
+
+  @override
+  String get stockFilter => 'Filter';
+
+  @override
+  String get stockSortRecent => 'Terbaru';
+
+  @override
+  String get stockSortBrand => 'Merek';
+
+  @override
+  String get stockSortMaterial => 'Material';
+
+  @override
+  String get stockSortRemaining => 'Sisa berat';
+
+  @override
+  String get stockSortColor => 'Warna';
+
+  @override
+  String get stockFilterAll => 'Semua';
+
+  @override
+  String get stockResetFilters => 'Atur ulang';
+
+  @override
+  String get stockNoMatch => 'Tidak ada gulungan yang cocok dengan filter';
 }

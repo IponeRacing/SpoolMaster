@@ -457,5 +457,15 @@
   "autoDetectAllBrands": "ऑटो-डिटेक्ट — सभी ब्रांड",
   "autoDetectAllBrandsDesc": "Anycubic, Elegoo, OpenSpool, OpenTag3D और अधिक",
   "nfcTipIos": "NFC रीडर आपके iPhone के शीर्ष पर है। इसे सीधे स्पूल के NFC टैग पर रखें।",
-  "nfcTipAndroid": "NFC रीडर आमतौर पर आपके फोन के पीछे केंद्र में होता है। फोन के पिछले हिस्से को स्पूल के NFC टैग पर रखें।"
+  "nfcTipAndroid": "NFC रीडर आमतौर पर आपके फोन के पीछे केंद्र में होता है। फोन के पिछले हिस्से को स्पूल के NFC टैग पर रखें।",
+  "stockSortBy": "क्रमबद्ध करें",
+  "stockFilter": "फ़िल्टर",
+  "stockSortRecent": "सबसे नए",
+  "stockSortBrand": "ब्रांड",
+  "stockSortMaterial": "सामग्री",
+  "stockSortRemaining": "शेष वज़न",
+  "stockSortColor": "रंग",
+  "stockFilterAll": "सभी",
+  "stockResetFilters": "रीसेट करें",
+  "stockNoMatch": "कोई स्पूल फ़िल्टर से मेल नहीं खाता"
 }

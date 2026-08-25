@@ -1269,4 +1269,34 @@ class AppLocalizationsRo extends AppLocalizations {
   @override
   String get nfcTipAndroid =>
       'Cititorul NFC se află de obicei în centrul părții din spate a telefonului. Plasați spatele telefonului pe eticheta NFC a bobinei.';
+
+  @override
+  String get stockSortBy => 'Sortează';
+
+  @override
+  String get stockFilter => 'Filtrează';
+
+  @override
+  String get stockSortRecent => 'Cele mai recente';
+
+  @override
+  String get stockSortBrand => 'Marcă';
+
+  @override
+  String get stockSortMaterial => 'Material';
+
+  @override
+  String get stockSortRemaining => 'Greutate rămasă';
+
+  @override
+  String get stockSortColor => 'Culoare';
+
+  @override
+  String get stockFilterAll => 'Toate';
+
+  @override
+  String get stockResetFilters => 'Resetează';
+
+  @override
+  String get stockNoMatch => 'Nicio bobină nu corespunde filtrelor';
 }

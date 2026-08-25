@@ -1273,6 +1273,36 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get nfcTipAndroid =>
       'Le lecteur NFC est généralement au centre-arrière de votre téléphone. Placez le dos du téléphone sur le tag NFC de la bobine.';
+
+  @override
+  String get stockSortBy => 'Trier';
+
+  @override
+  String get stockFilter => 'Filtrer';
+
+  @override
+  String get stockSortRecent => 'Plus récentes';
+
+  @override
+  String get stockSortBrand => 'Marque';
+
+  @override
+  String get stockSortMaterial => 'Matériau';
+
+  @override
+  String get stockSortRemaining => 'Poids restant';
+
+  @override
+  String get stockSortColor => 'Couleur';
+
+  @override
+  String get stockFilterAll => 'Tous';
+
+  @override
+  String get stockResetFilters => 'Réinitialiser';
+
+  @override
+  String get stockNoMatch => 'Aucune bobine ne correspond aux filtres';
 }
 
 /// The translations for French, as used in Canada (`fr_CA`).
@@ -2532,4 +2562,34 @@ class AppLocalizationsFrCa extends AppLocalizationsFr {
   @override
   String get nfcTipAndroid =>
       'Le lecteur NFC est généralement au centre-arrière de votre téléphone. Placez le dos du téléphone sur le tag NFC de la bobine.';
+
+  @override
+  String get stockSortBy => 'Trier';
+
+  @override
+  String get stockFilter => 'Filtrer';
+
+  @override
+  String get stockSortRecent => 'Plus récentes';
+
+  @override
+  String get stockSortBrand => 'Marque';
+
+  @override
+  String get stockSortMaterial => 'Matériau';
+
+  @override
+  String get stockSortRemaining => 'Poids restant';
+
+  @override
+  String get stockSortColor => 'Couleur';
+
+  @override
+  String get stockFilterAll => 'Tous';
+
+  @override
+  String get stockResetFilters => 'Réinitialiser';
+
+  @override
+  String get stockNoMatch => 'Aucune bobine ne correspond aux filtres';
 }

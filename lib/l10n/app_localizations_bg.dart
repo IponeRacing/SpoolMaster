@@ -1271,4 +1271,34 @@ class AppLocalizationsBg extends AppLocalizations {
   @override
   String get nfcTipAndroid =>
       'NFC четецът обикновено е в средата на задната част на телефона. Поставете задната страна на телефона върху NFC маркера на макарата.';
+
+  @override
+  String get stockSortBy => 'Сортиране';
+
+  @override
+  String get stockFilter => 'Филтър';
+
+  @override
+  String get stockSortRecent => 'Най-нови';
+
+  @override
+  String get stockSortBrand => 'Марка';
+
+  @override
+  String get stockSortMaterial => 'Материал';
+
+  @override
+  String get stockSortRemaining => 'Оставащо тегло';
+
+  @override
+  String get stockSortColor => 'Цвят';
+
+  @override
+  String get stockFilterAll => 'Всички';
+
+  @override
+  String get stockResetFilters => 'Нулиране';
+
+  @override
+  String get stockNoMatch => 'Няма ролка, отговаряща на филтрите';
 }
