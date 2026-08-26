@@ -1306,4 +1306,20 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get nfcDisabledMessage =>
       'NFC отключён. Включите его в настройках телефона, чтобы сканировать катушки.';
+
+  @override
+  String get updateAvailableTitle => 'Доступно обновление';
+
+  @override
+  String get updateAvailableMessage => 'Доступна новая версия Spool Master.';
+
+  @override
+  String get updateForcedMessage =>
+      'Эта версия больше не поддерживается. Обновите приложение, чтобы продолжить.';
+
+  @override
+  String get updateNow => 'Обновить';
+
+  @override
+  String get updateLater => 'Позже';
 }

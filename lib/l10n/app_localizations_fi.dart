@@ -1305,4 +1305,21 @@ class AppLocalizationsFi extends AppLocalizations {
   @override
   String get nfcDisabledMessage =>
       'NFC on pois käytöstä. Ota se käyttöön puhelimen asetuksista skannataksesi rullat.';
+
+  @override
+  String get updateAvailableTitle => 'Päivitys saatavilla';
+
+  @override
+  String get updateAvailableMessage =>
+      'Spool Masterista on saatavilla uusi versio.';
+
+  @override
+  String get updateForcedMessage =>
+      'Tätä versiota ei enää tueta. Päivitä jatkaaksesi.';
+
+  @override
+  String get updateNow => 'Päivitä';
+
+  @override
+  String get updateLater => 'Myöhemmin';
 }

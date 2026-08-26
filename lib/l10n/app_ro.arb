@@ -469,5 +469,10 @@
   "stockResetFilters": "Resetează",
   "stockNoMatch": "Nicio bobină nu corespunde filtrelor",
   "nfcDisabledTitle": "NFC dezactivat",
-  "nfcDisabledMessage": "NFC este dezactivat. Activează-l din setările telefonului pentru a scana bobinele."
+  "nfcDisabledMessage": "NFC este dezactivat. Activează-l din setările telefonului pentru a scana bobinele.",
+  "updateAvailableTitle": "Actualizare disponibilă",
+  "updateAvailableMessage": "O nouă versiune de Spool Master este disponibilă.",
+  "updateForcedMessage": "Această versiune nu mai este acceptată. Actualizează pentru a continua.",
+  "updateNow": "Actualizează",
+  "updateLater": "Mai târziu"
 }

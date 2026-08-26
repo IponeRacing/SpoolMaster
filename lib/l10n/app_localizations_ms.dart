@@ -1306,4 +1306,20 @@ class AppLocalizationsMs extends AppLocalizations {
   @override
   String get nfcDisabledMessage =>
       'NFC dimatikan. Hidupkannya dalam tetapan telefon untuk mengimbas gegelung anda.';
+
+  @override
+  String get updateAvailableTitle => 'Kemas kini tersedia';
+
+  @override
+  String get updateAvailableMessage => 'Versi baharu Spool Master tersedia.';
+
+  @override
+  String get updateForcedMessage =>
+      'Versi ini tidak lagi disokong. Sila kemas kini untuk meneruskan.';
+
+  @override
+  String get updateNow => 'Kemas kini';
+
+  @override
+  String get updateLater => 'Kemudian';
 }

@@ -1287,4 +1287,19 @@ class AppLocalizationsJa extends AppLocalizations {
   @override
   String get nfcDisabledMessage =>
       'NFCがオフになっています。スプールをスキャンするには、端末の設定でオンにしてください。';
+
+  @override
+  String get updateAvailableTitle => 'アップデートがあります';
+
+  @override
+  String get updateAvailableMessage => 'Spool Master の新しいバージョンが利用可能です。';
+
+  @override
+  String get updateForcedMessage => 'このバージョンはサポートされていません。続けるには更新してください。';
+
+  @override
+  String get updateNow => '更新';
+
+  @override
+  String get updateLater => '後で';
 }

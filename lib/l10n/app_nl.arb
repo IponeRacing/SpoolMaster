@@ -469,5 +469,10 @@
   "stockResetFilters": "Opnieuw instellen",
   "stockNoMatch": "Geen spoel komt overeen met de filters",
   "nfcDisabledTitle": "NFC uitgeschakeld",
-  "nfcDisabledMessage": "NFC is uitgeschakeld. Schakel het in via de telefooninstellingen om je spoelen te scannen."
+  "nfcDisabledMessage": "NFC is uitgeschakeld. Schakel het in via de telefooninstellingen om je spoelen te scannen.",
+  "updateAvailableTitle": "Update beschikbaar",
+  "updateAvailableMessage": "Er is een nieuwe versie van Spool Master beschikbaar.",
+  "updateForcedMessage": "Deze versie wordt niet meer ondersteund. Werk bij om door te gaan.",
+  "updateNow": "Bijwerken",
+  "updateLater": "Later"
 }

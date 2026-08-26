@@ -1305,6 +1305,23 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get nfcDisabledMessage =>
       'NFC is turned off. Turn it on in your phone settings to scan your spools.';
+
+  @override
+  String get updateAvailableTitle => 'Update available';
+
+  @override
+  String get updateAvailableMessage =>
+      'A new version of Spool Master is available.';
+
+  @override
+  String get updateForcedMessage =>
+      'This version is no longer supported. Please update to continue.';
+
+  @override
+  String get updateNow => 'Update';
+
+  @override
+  String get updateLater => 'Later';
 }
 
 /// The translations for English, as used in Australia (`en_AU`).
@@ -2596,6 +2613,23 @@ class AppLocalizationsEnAu extends AppLocalizationsEn {
   @override
   String get nfcDisabledMessage =>
       'NFC is turned off. Turn it on in your phone settings to scan your spools.';
+
+  @override
+  String get updateAvailableTitle => 'Update available';
+
+  @override
+  String get updateAvailableMessage =>
+      'A new version of Spool Master is available.';
+
+  @override
+  String get updateForcedMessage =>
+      'This version is no longer supported. Please update to continue.';
+
+  @override
+  String get updateNow => 'Update';
+
+  @override
+  String get updateLater => 'Later';
 }
 
 /// The translations for English, as used in Canada (`en_CA`).
@@ -3887,6 +3921,23 @@ class AppLocalizationsEnCa extends AppLocalizationsEn {
   @override
   String get nfcDisabledMessage =>
       'NFC is turned off. Turn it on in your phone settings to scan your spools.';
+
+  @override
+  String get updateAvailableTitle => 'Update available';
+
+  @override
+  String get updateAvailableMessage =>
+      'A new version of Spool Master is available.';
+
+  @override
+  String get updateForcedMessage =>
+      'This version is no longer supported. Please update to continue.';
+
+  @override
+  String get updateNow => 'Update';
+
+  @override
+  String get updateLater => 'Later';
 }
 
 /// The translations for English, as used in the United Kingdom (`en_GB`).
@@ -5178,4 +5229,21 @@ class AppLocalizationsEnGb extends AppLocalizationsEn {
   @override
   String get nfcDisabledMessage =>
       'NFC is turned off. Turn it on in your phone settings to scan your spools.';
+
+  @override
+  String get updateAvailableTitle => 'Update available';
+
+  @override
+  String get updateAvailableMessage =>
+      'A new version of Spool Master is available.';
+
+  @override
+  String get updateForcedMessage =>
+      'This version is no longer supported. Please update to continue.';
+
+  @override
+  String get updateNow => 'Update';
+
+  @override
+  String get updateLater => 'Later';
 }

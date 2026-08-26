@@ -1273,6 +1273,21 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get nfcDisabledMessage => 'NFC 已关闭。请在手机设置中开启，以扫描线卷。';
+
+  @override
+  String get updateAvailableTitle => '有可用更新';
+
+  @override
+  String get updateAvailableMessage => 'Spool Master 有新版本可用。';
+
+  @override
+  String get updateForcedMessage => '此版本已不再受支持。请更新以继续。';
+
+  @override
+  String get updateNow => '更新';
+
+  @override
+  String get updateLater => '稍后';
 }
 
 /// The translations for Chinese, as used in Taiwan (`zh_TW`).
@@ -2532,4 +2547,19 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String get nfcDisabledMessage => 'NFC 已關閉。請在手機設定中開啟，以掃描線軸。';
+
+  @override
+  String get updateAvailableTitle => '有可用更新';
+
+  @override
+  String get updateAvailableMessage => 'Spool Master 有新版本可用。';
+
+  @override
+  String get updateForcedMessage => '此版本已不再支援。請更新以繼續。';
+
+  @override
+  String get updateNow => '更新';
+
+  @override
+  String get updateLater => '稍後';
 }

@@ -469,5 +469,10 @@
   "stockResetFilters": "איפוס",
   "stockNoMatch": "אין סליל התואם את המסננים",
   "nfcDisabledTitle": "‏NFC מושבת",
-  "nfcDisabledMessage": "‏NFC מושבת. הפעל אותו בהגדרות הטלפון כדי לסרוק את הסלילים."
+  "nfcDisabledMessage": "‏NFC מושבת. הפעל אותו בהגדרות הטלפון כדי לסרוק את הסלילים.",
+  "updateAvailableTitle": "עדכון זמין",
+  "updateAvailableMessage": "גרסה חדשה של Spool Master זמינה.",
+  "updateForcedMessage": "גרסה זו אינה נתמכת עוד. עדכן כדי להמשיך.",
+  "updateNow": "עדכן",
+  "updateLater": "מאוחר יותר"
 }

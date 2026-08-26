@@ -1308,4 +1308,20 @@ class AppLocalizationsUk extends AppLocalizations {
   @override
   String get nfcDisabledMessage =>
       'NFC вимкнено. Увімкніть його в налаштуваннях телефона, щоб сканувати котушки.';
+
+  @override
+  String get updateAvailableTitle => 'Доступне оновлення';
+
+  @override
+  String get updateAvailableMessage => 'Доступна нова версія Spool Master.';
+
+  @override
+  String get updateForcedMessage =>
+      'Ця версія більше не підтримується. Оновіть, щоб продовжити.';
+
+  @override
+  String get updateNow => 'Оновити';
+
+  @override
+  String get updateLater => 'Пізніше';
 }

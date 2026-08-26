@@ -480,5 +480,10 @@
   "stockResetFilters": "Reset",
   "stockNoMatch": "No spool matches the filters",
   "nfcDisabledTitle": "NFC turned off",
-  "nfcDisabledMessage": "NFC is turned off. Turn it on in your phone settings to scan your spools."
+  "nfcDisabledMessage": "NFC is turned off. Turn it on in your phone settings to scan your spools.",
+  "updateAvailableTitle": "Update available",
+  "updateAvailableMessage": "A new version of Spool Master is available.",
+  "updateForcedMessage": "This version is no longer supported. Please update to continue.",
+  "updateNow": "Update",
+  "updateLater": "Later"
 }

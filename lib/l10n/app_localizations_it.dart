@@ -1311,4 +1311,21 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get nfcDisabledMessage =>
       'L\'NFC è disattivato. Attivalo nelle impostazioni del telefono per scansionare le bobine.';
+
+  @override
+  String get updateAvailableTitle => 'Aggiornamento disponibile';
+
+  @override
+  String get updateAvailableMessage =>
+      'È disponibile una nuova versione di Spool Master.';
+
+  @override
+  String get updateForcedMessage =>
+      'Questa versione non è più supportata. Aggiorna per continuare.';
+
+  @override
+  String get updateNow => 'Aggiorna';
+
+  @override
+  String get updateLater => 'Più tardi';
 }

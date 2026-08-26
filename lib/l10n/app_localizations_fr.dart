@@ -1310,6 +1310,23 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get nfcDisabledMessage =>
       'Le NFC est désactivé. Activez-le dans les réglages de votre téléphone pour scanner vos bobines.';
+
+  @override
+  String get updateAvailableTitle => 'Mise à jour disponible';
+
+  @override
+  String get updateAvailableMessage =>
+      'Une nouvelle version de Spool Master est disponible.';
+
+  @override
+  String get updateForcedMessage =>
+      'Cette version n\'est plus prise en charge. Veuillez mettre à jour pour continuer.';
+
+  @override
+  String get updateNow => 'Mettre à jour';
+
+  @override
+  String get updateLater => 'Plus tard';
 }
 
 /// The translations for French, as used in Canada (`fr_CA`).
@@ -2606,4 +2623,21 @@ class AppLocalizationsFrCa extends AppLocalizationsFr {
   @override
   String get nfcDisabledMessage =>
       'Le NFC est désactivé. Activez-le dans les réglages de votre téléphone pour scanner vos bobines.';
+
+  @override
+  String get updateAvailableTitle => 'Mise à jour disponible';
+
+  @override
+  String get updateAvailableMessage =>
+      'Une nouvelle version de Spool Master est disponible.';
+
+  @override
+  String get updateForcedMessage =>
+      'Cette version n\'est plus prise en charge. Veuillez mettre à jour pour continuer.';
+
+  @override
+  String get updateNow => 'Mettre à jour';
+
+  @override
+  String get updateLater => 'Plus tard';
 }

@@ -1314,4 +1314,21 @@ class AppLocalizationsEl extends AppLocalizations {
   @override
   String get nfcDisabledMessage =>
       'Το NFC είναι απενεργοποιημένο. Ενεργοποιήστε το στις ρυθμίσεις του τηλεφώνου για να σαρώσετε τις μπομπίνες.';
+
+  @override
+  String get updateAvailableTitle => 'Διαθέσιμη ενημέρωση';
+
+  @override
+  String get updateAvailableMessage =>
+      'Είναι διαθέσιμη μια νέα έκδοση του Spool Master.';
+
+  @override
+  String get updateForcedMessage =>
+      'Αυτή η έκδοση δεν υποστηρίζεται πλέον. Ενημερώστε για να συνεχίσετε.';
+
+  @override
+  String get updateNow => 'Ενημέρωση';
+
+  @override
+  String get updateLater => 'Αργότερα';
 }

@@ -469,5 +469,10 @@
   "stockResetFilters": "重設",
   "stockNoMatch": "沒有符合篩選條件的線軸",
   "nfcDisabledTitle": "NFC 已關閉",
-  "nfcDisabledMessage": "NFC 已關閉。請在手機設定中開啟，以掃描線軸。"
+  "nfcDisabledMessage": "NFC 已關閉。請在手機設定中開啟，以掃描線軸。",
+  "updateAvailableTitle": "有可用更新",
+  "updateAvailableMessage": "Spool Master 有新版本可用。",
+  "updateForcedMessage": "此版本已不再支援。請更新以繼續。",
+  "updateNow": "更新",
+  "updateLater": "稍後"
 }

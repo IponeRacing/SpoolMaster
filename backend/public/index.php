@@ -95,6 +95,7 @@ use NfcAnycubic\Controllers\AppleServerNotificationController;
 use NfcAnycubic\Controllers\GooglePlayWebhookController;
 use NfcAnycubic\Controllers\ShoppingListController;
 use NfcAnycubic\Controllers\ReportController;
+use NfcAnycubic\Controllers\AppController;
 
 // Error handling
 error_reporting(E_ALL);
@@ -129,6 +130,9 @@ $router->get('/health', function() {
         'timestamp' => time()
     ];
 });
+
+// Version check (prompt de mise à jour in-app) — public, appelé au lancement
+$router->get('/app/version-check', [AppController::class, 'versionCheck']);
 
 // OAuth endpoints
 $router->post('/auth/apple', [AuthController::class, 'loginWithApple']);

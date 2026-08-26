@@ -1304,4 +1304,20 @@ class AppLocalizationsSk extends AppLocalizations {
   @override
   String get nfcDisabledMessage =>
       'NFC je vypnuté. Zapnite ho v nastaveniach telefónu, aby ste mohli skenovať cievky.';
+
+  @override
+  String get updateAvailableTitle => 'Dostupná aktualizácia';
+
+  @override
+  String get updateAvailableMessage => 'Je dostupná nová verzia Spool Master.';
+
+  @override
+  String get updateForcedMessage =>
+      'Táto verzia už nie je podporovaná. Aktualizujte, prosím, aby ste mohli pokračovať.';
+
+  @override
+  String get updateNow => 'Aktualizovať';
+
+  @override
+  String get updateLater => 'Neskôr';
 }

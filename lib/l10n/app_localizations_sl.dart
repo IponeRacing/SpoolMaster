@@ -1304,4 +1304,21 @@ class AppLocalizationsSl extends AppLocalizations {
   @override
   String get nfcDisabledMessage =>
       'NFC je izklopljen. Vklopite ga v nastavitvah telefona za skeniranje tuljav.';
+
+  @override
+  String get updateAvailableTitle => 'Na voljo je posodobitev';
+
+  @override
+  String get updateAvailableMessage =>
+      'Na voljo je nova različica aplikacije Spool Master.';
+
+  @override
+  String get updateForcedMessage =>
+      'Ta različica ni več podprta. Za nadaljevanje posodobite.';
+
+  @override
+  String get updateNow => 'Posodobi';
+
+  @override
+  String get updateLater => 'Pozneje';
 }

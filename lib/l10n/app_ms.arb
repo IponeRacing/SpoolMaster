@@ -469,5 +469,10 @@
   "stockResetFilters": "Set semula",
   "stockNoMatch": "Tiada gegelung sepadan dengan penapis",
   "nfcDisabledTitle": "NFC dimatikan",
-  "nfcDisabledMessage": "NFC dimatikan. Hidupkannya dalam tetapan telefon untuk mengimbas gegelung anda."
+  "nfcDisabledMessage": "NFC dimatikan. Hidupkannya dalam tetapan telefon untuk mengimbas gegelung anda.",
+  "updateAvailableTitle": "Kemas kini tersedia",
+  "updateAvailableMessage": "Versi baharu Spool Master tersedia.",
+  "updateForcedMessage": "Versi ini tidak lagi disokong. Sila kemas kini untuk meneruskan.",
+  "updateNow": "Kemas kini",
+  "updateLater": "Kemudian"
 }

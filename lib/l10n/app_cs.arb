@@ -469,5 +469,10 @@
   "stockResetFilters": "Obnovit",
   "stockNoMatch": "Žádná cívka neodpovídá filtrům",
   "nfcDisabledTitle": "NFC vypnuto",
-  "nfcDisabledMessage": "NFC je vypnuté. Zapněte ho v nastavení telefonu, abyste mohli skenovat cívky."
+  "nfcDisabledMessage": "NFC je vypnuté. Zapněte ho v nastavení telefonu, abyste mohli skenovat cívky.",
+  "updateAvailableTitle": "Dostupná aktualizace",
+  "updateAvailableMessage": "Je dostupná nová verze Spool Master.",
+  "updateForcedMessage": "Tato verze již není podporována. Aktualizujte prosím, abyste mohli pokračovat.",
+  "updateNow": "Aktualizovat",
+  "updateLater": "Později"
 }

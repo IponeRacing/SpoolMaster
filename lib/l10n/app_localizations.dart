@@ -2634,6 +2634,36 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Le NFC est désactivé. Activez-le dans les réglages de votre téléphone pour scanner vos bobines.'**
   String get nfcDisabledMessage;
+
+  /// No description provided for @updateAvailableTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mise à jour disponible'**
+  String get updateAvailableTitle;
+
+  /// No description provided for @updateAvailableMessage.
+  ///
+  /// In fr, this message translates to:
+  /// **'Une nouvelle version de Spool Master est disponible.'**
+  String get updateAvailableMessage;
+
+  /// No description provided for @updateForcedMessage.
+  ///
+  /// In fr, this message translates to:
+  /// **'Cette version n\'est plus prise en charge. Veuillez mettre à jour pour continuer.'**
+  String get updateForcedMessage;
+
+  /// No description provided for @updateNow.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mettre à jour'**
+  String get updateNow;
+
+  /// No description provided for @updateLater.
+  ///
+  /// In fr, this message translates to:
+  /// **'Plus tard'**
+  String get updateLater;
 }
 
 class _AppLocalizationsDelegate

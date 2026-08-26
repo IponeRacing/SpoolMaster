@@ -469,5 +469,10 @@
   "stockResetFilters": "Ресетуј",
   "stockNoMatch": "Ниједан калем не одговара филтерима",
   "nfcDisabledTitle": "NFC искључен",
-  "nfcDisabledMessage": "NFC је искључен. Укључите га у подешавањима телефона да бисте скенирали калемове."
+  "nfcDisabledMessage": "NFC је искључен. Укључите га у подешавањима телефона да бисте скенирали калемове.",
+  "updateAvailableTitle": "Доступно ажурирање",
+  "updateAvailableMessage": "Доступна је нова верзија апликације Spool Master.",
+  "updateForcedMessage": "Ова верзија више није подржана. Ажурирајте да бисте наставили.",
+  "updateNow": "Ажурирај",
+  "updateLater": "Касније"
 }

@@ -469,5 +469,10 @@
   "stockResetFilters": "Resetuj",
   "stockNoMatch": "Żadna szpula nie pasuje do filtrów",
   "nfcDisabledTitle": "NFC wyłączone",
-  "nfcDisabledMessage": "NFC jest wyłączone. Włącz je w ustawieniach telefonu, aby skanować szpule."
+  "nfcDisabledMessage": "NFC jest wyłączone. Włącz je w ustawieniach telefonu, aby skanować szpule.",
+  "updateAvailableTitle": "Dostępna aktualizacja",
+  "updateAvailableMessage": "Dostępna jest nowa wersja Spool Master.",
+  "updateForcedMessage": "Ta wersja nie jest już obsługiwana. Zaktualizuj, aby kontynuować.",
+  "updateNow": "Aktualizuj",
+  "updateLater": "Później"
 }

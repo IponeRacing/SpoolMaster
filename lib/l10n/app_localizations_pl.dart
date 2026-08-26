@@ -1306,4 +1306,21 @@ class AppLocalizationsPl extends AppLocalizations {
   @override
   String get nfcDisabledMessage =>
       'NFC jest wyłączone. Włącz je w ustawieniach telefonu, aby skanować szpule.';
+
+  @override
+  String get updateAvailableTitle => 'Dostępna aktualizacja';
+
+  @override
+  String get updateAvailableMessage =>
+      'Dostępna jest nowa wersja Spool Master.';
+
+  @override
+  String get updateForcedMessage =>
+      'Ta wersja nie jest już obsługiwana. Zaktualizuj, aby kontynuować.';
+
+  @override
+  String get updateNow => 'Aktualizuj';
+
+  @override
+  String get updateLater => 'Później';
 }

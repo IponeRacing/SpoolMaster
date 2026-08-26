@@ -469,5 +469,10 @@
   "stockResetFilters": "Ponastavi",
   "stockNoMatch": "Nobena tuljava ne ustreza filtrom",
   "nfcDisabledTitle": "NFC izklopljen",
-  "nfcDisabledMessage": "NFC je izklopljen. Vklopite ga v nastavitvah telefona za skeniranje tuljav."
+  "nfcDisabledMessage": "NFC je izklopljen. Vklopite ga v nastavitvah telefona za skeniranje tuljav.",
+  "updateAvailableTitle": "Na voljo je posodobitev",
+  "updateAvailableMessage": "Na voljo je nova različica aplikacije Spool Master.",
+  "updateForcedMessage": "Ta različica ni več podprta. Za nadaljevanje posodobite.",
+  "updateNow": "Posodobi",
+  "updateLater": "Pozneje"
 }

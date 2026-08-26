@@ -469,5 +469,10 @@
   "stockResetFilters": "Tilbakestill",
   "stockNoMatch": "Ingen spole samsvarer med filtrene",
   "nfcDisabledTitle": "NFC av",
-  "nfcDisabledMessage": "NFC er av. Slå det på i telefoninnstillingene for å skanne spolene dine."
+  "nfcDisabledMessage": "NFC er av. Slå det på i telefoninnstillingene for å skanne spolene dine.",
+  "updateAvailableTitle": "Oppdatering tilgjengelig",
+  "updateAvailableMessage": "En ny versjon av Spool Master er tilgjengelig.",
+  "updateForcedMessage": "Denne versjonen støttes ikke lenger. Oppdater for å fortsette.",
+  "updateNow": "Oppdater",
+  "updateLater": "Senere"
 }

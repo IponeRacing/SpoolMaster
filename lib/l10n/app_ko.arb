@@ -469,5 +469,10 @@
   "stockResetFilters": "초기화",
   "stockNoMatch": "필터와 일치하는 스풀이 없습니다",
   "nfcDisabledTitle": "NFC 꺼짐",
-  "nfcDisabledMessage": "NFC가 꺼져 있습니다. 스풀을 스캔하려면 휴대폰 설정에서 켜세요."
+  "nfcDisabledMessage": "NFC가 꺼져 있습니다. 스풀을 스캔하려면 휴대폰 설정에서 켜세요.",
+  "updateAvailableTitle": "업데이트 사용 가능",
+  "updateAvailableMessage": "Spool Master의 새 버전이 있습니다.",
+  "updateForcedMessage": "이 버전은 더 이상 지원되지 않습니다. 계속하려면 업데이트하세요.",
+  "updateNow": "업데이트",
+  "updateLater": "나중에"
 }

@@ -1307,4 +1307,20 @@ class AppLocalizationsVi extends AppLocalizations {
   @override
   String get nfcDisabledMessage =>
       'NFC đã tắt. Bật trong cài đặt điện thoại để quét cuộn của bạn.';
+
+  @override
+  String get updateAvailableTitle => 'Đã có bản cập nhật';
+
+  @override
+  String get updateAvailableMessage => 'Đã có phiên bản mới của Spool Master.';
+
+  @override
+  String get updateForcedMessage =>
+      'Phiên bản này không còn được hỗ trợ. Vui lòng cập nhật để tiếp tục.';
+
+  @override
+  String get updateNow => 'Cập nhật';
+
+  @override
+  String get updateLater => 'Để sau';
 }

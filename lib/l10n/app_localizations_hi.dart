@@ -1306,4 +1306,20 @@ class AppLocalizationsHi extends AppLocalizations {
   @override
   String get nfcDisabledMessage =>
       'NFC बंद है। अपनी स्पूल स्कैन करने के लिए इसे फ़ोन सेटिंग में चालू करें।';
+
+  @override
+  String get updateAvailableTitle => 'अपडेट उपलब्ध';
+
+  @override
+  String get updateAvailableMessage => 'Spool Master का नया वर्शन उपलब्ध है।';
+
+  @override
+  String get updateForcedMessage =>
+      'यह वर्शन अब समर्थित नहीं है। जारी रखने के लिए कृपया अपडेट करें।';
+
+  @override
+  String get updateNow => 'अपडेट करें';
+
+  @override
+  String get updateLater => 'बाद में';
 }

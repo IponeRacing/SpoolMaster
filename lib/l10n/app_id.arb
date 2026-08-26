@@ -469,5 +469,10 @@
   "stockResetFilters": "Atur ulang",
   "stockNoMatch": "Tidak ada gulungan yang cocok dengan filter",
   "nfcDisabledTitle": "NFC nonaktif",
-  "nfcDisabledMessage": "NFC nonaktif. Aktifkan di pengaturan ponsel untuk memindai gulungan Anda."
+  "nfcDisabledMessage": "NFC nonaktif. Aktifkan di pengaturan ponsel untuk memindai gulungan Anda.",
+  "updateAvailableTitle": "Pembaruan tersedia",
+  "updateAvailableMessage": "Versi baru Spool Master tersedia.",
+  "updateForcedMessage": "Versi ini tidak lagi didukung. Perbarui untuk melanjutkan.",
+  "updateNow": "Perbarui",
+  "updateLater": "Nanti"
 }

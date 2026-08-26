@@ -469,5 +469,10 @@
   "stockResetFilters": "Đặt lại",
   "stockNoMatch": "Không có cuộn nào khớp với bộ lọc",
   "nfcDisabledTitle": "NFC đã tắt",
-  "nfcDisabledMessage": "NFC đã tắt. Bật trong cài đặt điện thoại để quét cuộn của bạn."
+  "nfcDisabledMessage": "NFC đã tắt. Bật trong cài đặt điện thoại để quét cuộn của bạn.",
+  "updateAvailableTitle": "Đã có bản cập nhật",
+  "updateAvailableMessage": "Đã có phiên bản mới của Spool Master.",
+  "updateForcedMessage": "Phiên bản này không còn được hỗ trợ. Vui lòng cập nhật để tiếp tục.",
+  "updateNow": "Cập nhật",
+  "updateLater": "Để sau"
 }

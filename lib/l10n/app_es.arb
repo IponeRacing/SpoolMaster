@@ -469,5 +469,10 @@
   "stockResetFilters": "Restablecer",
   "stockNoMatch": "Ninguna bobina coincide con los filtros",
   "nfcDisabledTitle": "NFC desactivado",
-  "nfcDisabledMessage": "El NFC está desactivado. Actívalo en los ajustes del teléfono para escanear tus bobinas."
+  "nfcDisabledMessage": "El NFC está desactivado. Actívalo en los ajustes del teléfono para escanear tus bobinas.",
+  "updateAvailableTitle": "Actualización disponible",
+  "updateAvailableMessage": "Hay una nueva versión de Spool Master disponible.",
+  "updateForcedMessage": "Esta versión ya no es compatible. Actualiza para continuar.",
+  "updateNow": "Actualizar",
+  "updateLater": "Más tarde"
 }

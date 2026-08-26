@@ -469,5 +469,10 @@
   "stockResetFilters": "リセット",
   "stockNoMatch": "フィルターに一致するスプールがありません",
   "nfcDisabledTitle": "NFCがオフです",
-  "nfcDisabledMessage": "NFCがオフになっています。スプールをスキャンするには、端末の設定でオンにしてください。"
+  "nfcDisabledMessage": "NFCがオフになっています。スプールをスキャンするには、端末の設定でオンにしてください。",
+  "updateAvailableTitle": "アップデートがあります",
+  "updateAvailableMessage": "Spool Master の新しいバージョンが利用可能です。",
+  "updateForcedMessage": "このバージョンはサポートされていません。続けるには更新してください。",
+  "updateNow": "更新",
+  "updateLater": "後で"
 }

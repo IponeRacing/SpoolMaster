@@ -1299,4 +1299,19 @@ class AppLocalizationsHe extends AppLocalizations {
   @override
   String get nfcDisabledMessage =>
       '‏NFC מושבת. הפעל אותו בהגדרות הטלפון כדי לסרוק את הסלילים.';
+
+  @override
+  String get updateAvailableTitle => 'עדכון זמין';
+
+  @override
+  String get updateAvailableMessage => 'גרסה חדשה של Spool Master זמינה.';
+
+  @override
+  String get updateForcedMessage => 'גרסה זו אינה נתמכת עוד. עדכן כדי להמשיך.';
+
+  @override
+  String get updateNow => 'עדכן';
+
+  @override
+  String get updateLater => 'מאוחר יותר';
 }

@@ -1305,4 +1305,20 @@ class AppLocalizationsId extends AppLocalizations {
   @override
   String get nfcDisabledMessage =>
       'NFC nonaktif. Aktifkan di pengaturan ponsel untuk memindai gulungan Anda.';
+
+  @override
+  String get updateAvailableTitle => 'Pembaruan tersedia';
+
+  @override
+  String get updateAvailableMessage => 'Versi baru Spool Master tersedia.';
+
+  @override
+  String get updateForcedMessage =>
+      'Versi ini tidak lagi didukung. Perbarui untuk melanjutkan.';
+
+  @override
+  String get updateNow => 'Perbarui';
+
+  @override
+  String get updateLater => 'Nanti';
 }

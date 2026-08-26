@@ -1288,4 +1288,19 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get nfcDisabledMessage => 'NFC가 꺼져 있습니다. 스풀을 스캔하려면 휴대폰 설정에서 켜세요.';
+
+  @override
+  String get updateAvailableTitle => '업데이트 사용 가능';
+
+  @override
+  String get updateAvailableMessage => 'Spool Master의 새 버전이 있습니다.';
+
+  @override
+  String get updateForcedMessage => '이 버전은 더 이상 지원되지 않습니다. 계속하려면 업데이트하세요.';
+
+  @override
+  String get updateNow => '업데이트';
+
+  @override
+  String get updateLater => '나중에';
 }

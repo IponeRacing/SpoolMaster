@@ -11,6 +11,7 @@ import 'package:nfc_filament/core/models/spool_inventory_item.dart';
 import 'package:nfc_filament/core/services/admob_service.dart';
 import 'package:nfc_filament/core/services/analytics_service.dart';
 import 'package:nfc_filament/core/services/shopping_list_service.dart';
+import 'package:nfc_filament/core/services/update_service.dart';
 import 'package:nfc_filament/core/services/spool_storage_service.dart';
 import 'package:nfc_filament/core/services/subscription_service.dart';
 import 'package:nfc_filament/core/services/user_preferences_service.dart';
@@ -242,6 +243,19 @@ class MainNavigationPage extends StatefulWidget {
 class MainNavigationPageState extends State<MainNavigationPage> {
   int _selectedIndex = 0;
   final _statisticsKey = GlobalKey<_StatisticsPageState>();
+
+  @override
+  void initState() {
+    super.initState();
+    // Prompt de mise à jour après l'affichage de l'UI. Non-bloquant, fail-open.
+    // Petit délai pour ne pas empiler avec les dialogues de démarrage
+    // (ATT / consentement UMP gérés dans le SplashPage).
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Future.delayed(const Duration(seconds: 2), () {
+        if (mounted) unawaited(UpdateService.maybePrompt(context));
+      });
+    });
+  }
 
   // Méthode pour forcer le rebuild de toutes les pages
   void refreshPages() {

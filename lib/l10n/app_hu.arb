@@ -469,5 +469,10 @@
   "stockResetFilters": "Visszaállítás",
   "stockNoMatch": "Egy tekercs sem felel meg a szűrőknek",
   "nfcDisabledTitle": "NFC kikapcsolva",
-  "nfcDisabledMessage": "Az NFC ki van kapcsolva. Kapcsolja be a telefon beállításaiban a tekercsek beolvasásához."
+  "nfcDisabledMessage": "Az NFC ki van kapcsolva. Kapcsolja be a telefon beállításaiban a tekercsek beolvasásához.",
+  "updateAvailableTitle": "Frissítés érhető el",
+  "updateAvailableMessage": "Elérhető a Spool Master új verziója.",
+  "updateForcedMessage": "Ez a verzió már nem támogatott. A folytatáshoz frissítsen.",
+  "updateNow": "Frissítés",
+  "updateLater": "Később"
 }

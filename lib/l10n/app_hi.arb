@@ -469,5 +469,10 @@
   "stockResetFilters": "रीसेट करें",
   "stockNoMatch": "कोई स्पूल फ़िल्टर से मेल नहीं खाता",
   "nfcDisabledTitle": "NFC बंद है",
-  "nfcDisabledMessage": "NFC बंद है। अपनी स्पूल स्कैन करने के लिए इसे फ़ोन सेटिंग में चालू करें।"
+  "nfcDisabledMessage": "NFC बंद है। अपनी स्पूल स्कैन करने के लिए इसे फ़ोन सेटिंग में चालू करें।",
+  "updateAvailableTitle": "अपडेट उपलब्ध",
+  "updateAvailableMessage": "Spool Master का नया वर्शन उपलब्ध है।",
+  "updateForcedMessage": "यह वर्शन अब समर्थित नहीं है। जारी रखने के लिए कृपया अपडेट करें।",
+  "updateNow": "अपडेट करें",
+  "updateLater": "बाद में"
 }

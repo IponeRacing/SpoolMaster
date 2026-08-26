@@ -469,5 +469,10 @@
   "stockResetFilters": "Нулиране",
   "stockNoMatch": "Няма ролка, отговаряща на филтрите",
   "nfcDisabledTitle": "NFC е изключено",
-  "nfcDisabledMessage": "NFC е изключено. Включете го в настройките на телефона, за да сканирате ролките."
+  "nfcDisabledMessage": "NFC е изключено. Включете го в настройките на телефона, за да сканирате ролките.",
+  "updateAvailableTitle": "Налична актуализация",
+  "updateAvailableMessage": "Налична е нова версия на Spool Master.",
+  "updateForcedMessage": "Тази версия вече не се поддържа. Моля, актуализирайте, за да продължите.",
+  "updateNow": "Актуализиране",
+  "updateLater": "По-късно"
 }

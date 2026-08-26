@@ -1308,4 +1308,20 @@ class AppLocalizationsBg extends AppLocalizations {
   @override
   String get nfcDisabledMessage =>
       'NFC е изключено. Включете го в настройките на телефона, за да сканирате ролките.';
+
+  @override
+  String get updateAvailableTitle => 'Налична актуализация';
+
+  @override
+  String get updateAvailableMessage => 'Налична е нова версия на Spool Master.';
+
+  @override
+  String get updateForcedMessage =>
+      'Тази версия вече не се поддържа. Моля, актуализирайте, за да продължите.';
+
+  @override
+  String get updateNow => 'Актуализиране';
+
+  @override
+  String get updateLater => 'По-късно';
 }

@@ -1315,4 +1315,21 @@ class AppLocalizationsCa extends AppLocalizations {
   @override
   String get nfcDisabledMessage =>
       'L\'NFC està desactivat. Activa\'l als ajustos del telèfon per escanejar les bobines.';
+
+  @override
+  String get updateAvailableTitle => 'Actualització disponible';
+
+  @override
+  String get updateAvailableMessage =>
+      'Hi ha una nova versió de Spool Master disponible.';
+
+  @override
+  String get updateForcedMessage =>
+      'Aquesta versió ja no és compatible. Actualitza per continuar.';
+
+  @override
+  String get updateNow => 'Actualitza';
+
+  @override
+  String get updateLater => 'Més tard';
 }

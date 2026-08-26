@@ -1306,4 +1306,21 @@ class AppLocalizationsRo extends AppLocalizations {
   @override
   String get nfcDisabledMessage =>
       'NFC este dezactivat. Activează-l din setările telefonului pentru a scana bobinele.';
+
+  @override
+  String get updateAvailableTitle => 'Actualizare disponibilă';
+
+  @override
+  String get updateAvailableMessage =>
+      'O nouă versiune de Spool Master este disponibilă.';
+
+  @override
+  String get updateForcedMessage =>
+      'Această versiune nu mai este acceptată. Actualizează pentru a continua.';
+
+  @override
+  String get updateNow => 'Actualizează';
+
+  @override
+  String get updateLater => 'Mai târziu';
 }

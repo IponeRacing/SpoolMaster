@@ -1304,4 +1304,20 @@ class AppLocalizationsTh extends AppLocalizations {
   @override
   String get nfcDisabledMessage =>
       'NFC ปิดอยู่ เปิดใช้งานในการตั้งค่าโทรศัพท์เพื่อสแกนม้วนวัสดุของคุณ';
+
+  @override
+  String get updateAvailableTitle => 'มีอัปเดต';
+
+  @override
+  String get updateAvailableMessage => 'มี Spool Master เวอร์ชันใหม่ให้ใช้งาน';
+
+  @override
+  String get updateForcedMessage =>
+      'เวอร์ชันนี้ไม่รองรับอีกต่อไป โปรดอัปเดตเพื่อดำเนินการต่อ';
+
+  @override
+  String get updateNow => 'อัปเดต';
+
+  @override
+  String get updateLater => 'ภายหลัง';
 }

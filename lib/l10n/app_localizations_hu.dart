@@ -1308,4 +1308,20 @@ class AppLocalizationsHu extends AppLocalizations {
   @override
   String get nfcDisabledMessage =>
       'Az NFC ki van kapcsolva. Kapcsolja be a telefon beállításaiban a tekercsek beolvasásához.';
+
+  @override
+  String get updateAvailableTitle => 'Frissítés érhető el';
+
+  @override
+  String get updateAvailableMessage => 'Elérhető a Spool Master új verziója.';
+
+  @override
+  String get updateForcedMessage =>
+      'Ez a verzió már nem támogatott. A folytatáshoz frissítsen.';
+
+  @override
+  String get updateNow => 'Frissítés';
+
+  @override
+  String get updateLater => 'Később';
 }

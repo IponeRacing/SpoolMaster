@@ -1305,4 +1305,21 @@ class AppLocalizationsTr extends AppLocalizations {
   @override
   String get nfcDisabledMessage =>
       'NFC kapalı. Makaralarınızı taramak için telefon ayarlarından açın.';
+
+  @override
+  String get updateAvailableTitle => 'Güncelleme mevcut';
+
+  @override
+  String get updateAvailableMessage =>
+      'Spool Master\'ın yeni bir sürümü mevcut.';
+
+  @override
+  String get updateForcedMessage =>
+      'Bu sürüm artık desteklenmiyor. Devam etmek için lütfen güncelleyin.';
+
+  @override
+  String get updateNow => 'Güncelle';
+
+  @override
+  String get updateLater => 'Daha sonra';
 }

@@ -469,5 +469,10 @@
   "stockResetFilters": "Sıfırla",
   "stockNoMatch": "Filtrelerle eşleşen makara yok",
   "nfcDisabledTitle": "NFC kapalı",
-  "nfcDisabledMessage": "NFC kapalı. Makaralarınızı taramak için telefon ayarlarından açın."
+  "nfcDisabledMessage": "NFC kapalı. Makaralarınızı taramak için telefon ayarlarından açın.",
+  "updateAvailableTitle": "Güncelleme mevcut",
+  "updateAvailableMessage": "Spool Master'ın yeni bir sürümü mevcut.",
+  "updateForcedMessage": "Bu sürüm artık desteklenmiyor. Devam etmek için lütfen güncelleyin.",
+  "updateNow": "Güncelle",
+  "updateLater": "Daha sonra"
 }

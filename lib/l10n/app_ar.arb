@@ -469,5 +469,10 @@
   "stockResetFilters": "إعادة تعيين",
   "stockNoMatch": "لا توجد بكرة تطابق عوامل التصفية",
   "nfcDisabledTitle": "‏NFC معطّل",
-  "nfcDisabledMessage": "‏NFC معطّل. فعّله من إعدادات الهاتف لمسح البكرات."
+  "nfcDisabledMessage": "‏NFC معطّل. فعّله من إعدادات الهاتف لمسح البكرات.",
+  "updateAvailableTitle": "تحديث متوفر",
+  "updateAvailableMessage": "يتوفر إصدار جديد من Spool Master.",
+  "updateForcedMessage": "لم يعد هذا الإصدار مدعومًا. يرجى التحديث للمتابعة.",
+  "updateNow": "تحديث",
+  "updateLater": "لاحقًا"
 }

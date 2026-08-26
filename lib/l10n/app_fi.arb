@@ -469,5 +469,10 @@
   "stockResetFilters": "Nollaa",
   "stockNoMatch": "Mikään rulla ei vastaa suodattimia",
   "nfcDisabledTitle": "NFC pois käytöstä",
-  "nfcDisabledMessage": "NFC on pois käytöstä. Ota se käyttöön puhelimen asetuksista skannataksesi rullat."
+  "nfcDisabledMessage": "NFC on pois käytöstä. Ota se käyttöön puhelimen asetuksista skannataksesi rullat.",
+  "updateAvailableTitle": "Päivitys saatavilla",
+  "updateAvailableMessage": "Spool Masterista on saatavilla uusi versio.",
+  "updateForcedMessage": "Tätä versiota ei enää tueta. Päivitä jatkaaksesi.",
+  "updateNow": "Päivitä",
+  "updateLater": "Myöhemmin"
 }

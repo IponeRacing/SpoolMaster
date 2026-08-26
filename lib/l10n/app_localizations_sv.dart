@@ -1305,4 +1305,21 @@ class AppLocalizationsSv extends AppLocalizations {
   @override
   String get nfcDisabledMessage =>
       'NFC är avstängt. Slå på det i telefonens inställningar för att skanna dina spolar.';
+
+  @override
+  String get updateAvailableTitle => 'Uppdatering tillgänglig';
+
+  @override
+  String get updateAvailableMessage =>
+      'En ny version av Spool Master är tillgänglig.';
+
+  @override
+  String get updateForcedMessage =>
+      'Den här versionen stöds inte längre. Uppdatera för att fortsätta.';
+
+  @override
+  String get updateNow => 'Uppdatera';
+
+  @override
+  String get updateLater => 'Senare';
 }

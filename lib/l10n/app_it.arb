@@ -469,5 +469,10 @@
   "stockResetFilters": "Reimposta",
   "stockNoMatch": "Nessuna bobina corrisponde ai filtri",
   "nfcDisabledTitle": "NFC disattivato",
-  "nfcDisabledMessage": "L'NFC è disattivato. Attivalo nelle impostazioni del telefono per scansionare le bobine."
+  "nfcDisabledMessage": "L'NFC è disattivato. Attivalo nelle impostazioni del telefono per scansionare le bobine.",
+  "updateAvailableTitle": "Aggiornamento disponibile",
+  "updateAvailableMessage": "È disponibile una nuova versione di Spool Master.",
+  "updateForcedMessage": "Questa versione non è più supportata. Aggiorna per continuare.",
+  "updateNow": "Aggiorna",
+  "updateLater": "Più tardi"
 }

@@ -469,5 +469,10 @@
   "stockResetFilters": "重置",
   "stockNoMatch": "没有符合筛选条件的线卷",
   "nfcDisabledTitle": "NFC 已关闭",
-  "nfcDisabledMessage": "NFC 已关闭。请在手机设置中开启，以扫描线卷。"
+  "nfcDisabledMessage": "NFC 已关闭。请在手机设置中开启，以扫描线卷。",
+  "updateAvailableTitle": "有可用更新",
+  "updateAvailableMessage": "Spool Master 有新版本可用。",
+  "updateForcedMessage": "此版本已不再受支持。请更新以继续。",
+  "updateNow": "更新",
+  "updateLater": "稍后"
 }

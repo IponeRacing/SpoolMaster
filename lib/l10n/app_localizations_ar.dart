@@ -1300,4 +1300,20 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get nfcDisabledMessage =>
       '‏NFC معطّل. فعّله من إعدادات الهاتف لمسح البكرات.';
+
+  @override
+  String get updateAvailableTitle => 'تحديث متوفر';
+
+  @override
+  String get updateAvailableMessage => 'يتوفر إصدار جديد من Spool Master.';
+
+  @override
+  String get updateForcedMessage =>
+      'لم يعد هذا الإصدار مدعومًا. يرجى التحديث للمتابعة.';
+
+  @override
+  String get updateNow => 'تحديث';
+
+  @override
+  String get updateLater => 'لاحقًا';
 }

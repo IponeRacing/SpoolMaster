@@ -469,5 +469,10 @@
   "stockResetFilters": "Сбросить",
   "stockNoMatch": "Нет катушек, соответствующих фильтрам",
   "nfcDisabledTitle": "NFC отключён",
-  "nfcDisabledMessage": "NFC отключён. Включите его в настройках телефона, чтобы сканировать катушки."
+  "nfcDisabledMessage": "NFC отключён. Включите его в настройках телефона, чтобы сканировать катушки.",
+  "updateAvailableTitle": "Доступно обновление",
+  "updateAvailableMessage": "Доступна новая версия Spool Master.",
+  "updateForcedMessage": "Эта версия больше не поддерживается. Обновите приложение, чтобы продолжить.",
+  "updateNow": "Обновить",
+  "updateLater": "Позже"
 }
