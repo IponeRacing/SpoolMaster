@@ -89,3 +89,19 @@ _Aucune urgence/deadline. Toolchain saine : Kotlin 2.2.20, AGP 8.12.1, Gradle 8.
 - 1.3.4 (build 72) déployée le 17/08 : iOS en review Apple, Android promu en production Google.
 - Contenu 1.3.4 : fix bannière pub (activation premium), vérif achats Google Play réparée (service account déployé), fix stock/centrage/quantité (Fricke), carte « Auto-détection toutes marques », header `X-App-Version`, 40 langues.
 - targetSdk 35 (Android 15) : déjà conforme. iOS deployment 15.0.
+
+## 🟣 Reconnaissance des tags — roadmap (analyse 26/08/2026)
+
+**Conclusion clé (recherche web + réalité des formats) :** un **lookup crowdsourcé raw→filament servi aux users = À ABANDONNER** (redondant/inefficace) :
+- **Chiffré** (Bambu/Creality/Qidi, MiFare Classic) : raw non décodable sans clé, unique par tag → impossible à crowdsourcer.
+- **Registry** (TigerTag) : le tag ne stocke que des IDs → refresh l'API, pas crowdsourcer.
+- **Open** (OpenSpool/OpenTag3D/OpenPrintTag) : auto-descriptif → implémenter le parseur.
+- **Métadonnée filament** : déjà couverte par la communauté (FilaMan : 24k filaments / 926 marques / API REST).
+
+**Ce qui bouge vraiment l'aiguille (par impact) :**
+- [x] **1. Parseur TigerTag** — FAIT (commit `a70b343`, part en 1.4.7). 2,5M puces (Sunlu/eSUN/Rosa3D/Landu…), NTAG21x plain, iOS+Android.
+- [ ] **2. Refresh registre TigerTag** (complément du #1) : rafraîchir `tigertag_registry.dart` depuis l'API TigerTag (nouveaux matériaux/marques/couleurs) via un cron/script. Sinon on rate les IDs récents.
+- [ ] **3. Intégrer FilaMan** (autocomplete/validation à la saisie manuelle post-échec) : contre les 24k filaments (API REST). Vérifier licence/API d'abord. Meilleure UX + données propres, sans crowdsourcer soi-même.
+- [ ] **4. Corpus dev des tags inconnus** (PAS user-facing) : structurer les `scan_feedback` (raw + `tag_tech` + UID/SAK/ATQA + parseurs échoués) dans une table interrogeable au lieu des emails → repérer/reverse-engineerer un nouveau format propriétaire plain. Faible priorité (niche).
+
+**Abandonné :** table `tag_library` crowdsourcée + auto-reconnaissance user (le plan initial) — voir conclusion ci-dessus.
