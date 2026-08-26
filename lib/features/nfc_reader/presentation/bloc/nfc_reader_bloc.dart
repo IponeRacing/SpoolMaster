@@ -112,6 +112,24 @@ class NfcReaderBloc extends Bloc<NfcReaderEvent, NfcReaderState> {
     return m.contains('out of date') || m.contains('tag was lost') || m.contains('taglost');
   }
 
+  /// Code d'erreur normalisé (taxonomie) pour l'analytics — agrégation propre.
+  String _errorCode(NfcFailureType type) {
+    switch (type) {
+      case NfcFailureType.tagNotDetected:
+        return 'TAG_NOT_DETECTED';
+      case NfcFailureType.incompatibleTag:
+        return 'INCOMPATIBLE_TAG';
+      case NfcFailureType.authError:
+        return 'AUTH_ERROR';
+      case NfcFailureType.nfcDisabled:
+        return 'NFC_DISABLED';
+      case NfcFailureType.tagMoved:
+        return 'TAG_MOVED';
+      case NfcFailureType.readError:
+        return 'READ_ERROR';
+    }
+  }
+
   /// Déduit le mode NFC à partir de la marque détectée
   String _detectModeFromBrand(String? brand) {
     switch (brand?.toLowerCase()) {
@@ -134,6 +152,7 @@ class NfcReaderBloc extends Bloc<NfcReaderEvent, NfcReaderState> {
 
     // Mode NFC : override (fallback B) ou préférence utilisateur
     final nfcMode = event.overrideMode ?? await UserPreferencesService.getNfcMode();
+    AnalyticsService.setScanContext(nfcMode: nfcMode, entryPoint: event.entryPoint);
 
     final result = await readBobbinData(nfcMode: nfcMode);
 
@@ -152,7 +171,7 @@ class NfcReaderBloc extends Bloc<NfcReaderEvent, NfcReaderState> {
           developer.log('📴 [BLOC] NFC désactivé sur appareil');
           unawaited(AnalyticsService.logNfcScan(
             scanType: 'scan_nfc', brand: _brandFromMode(nfcMode),
-            success: false, errorMessage: 'NFC_DISABLED',
+            success: false, errorMessage: 'NFC_DISABLED', errorCode: 'NFC_DISABLED',
             nfcMode: nfcMode, entryPoint: event.entryPoint,
           ));
           emit(const NfcReaderFailure('', failureType: NfcFailureType.nfcDisabled));
@@ -165,7 +184,7 @@ class NfcReaderBloc extends Bloc<NfcReaderEvent, NfcReaderState> {
           developer.log('📴 [BLOC] Tag bougé pendant la lecture');
           unawaited(AnalyticsService.logNfcScan(
             scanType: 'scan_nfc', brand: _brandFromMode(nfcMode),
-            success: false, errorMessage: 'TAG_MOVED',
+            success: false, errorMessage: 'TAG_MOVED', errorCode: 'TAG_MOVED',
             nfcMode: nfcMode, entryPoint: event.entryPoint,
           ));
           emit(const NfcReaderFailure('', failureType: NfcFailureType.tagMoved));
@@ -251,6 +270,7 @@ class NfcReaderBloc extends Bloc<NfcReaderEvent, NfcReaderState> {
           brand: _brandFromMode(nfcMode),
           success: false,
           errorMessage: failure.message,
+          errorCode: _errorCode(failureType),
           nfcMode: nfcMode,
           entryPoint: event.entryPoint,
           rawTagData: failure is NfcTagReadFailure ? failure.rawTagData : null,
@@ -330,6 +350,7 @@ class NfcReaderBloc extends Bloc<NfcReaderEvent, NfcReaderState> {
     Emitter<NfcReaderState> emit,
   ) async {
     emit(const NfcReaderLoading());
+    AnalyticsService.setScanContext(nfcMode: 'auto', entryPoint: event.entryPoint);
 
     final result = await readBobbinDataAutoDetect();
 
@@ -345,7 +366,7 @@ class NfcReaderBloc extends Bloc<NfcReaderEvent, NfcReaderState> {
           developer.log('📴 [BLOC] NFC désactivé sur appareil (auto-detect)');
           unawaited(AnalyticsService.logNfcScan(
             scanType: 'scan_nfc_auto_detect', success: false,
-            errorMessage: 'NFC_DISABLED', nfcMode: 'auto',
+            errorMessage: 'NFC_DISABLED', errorCode: 'NFC_DISABLED', nfcMode: 'auto',
             entryPoint: event.entryPoint,
           ));
           emit(const NfcReaderFailure('', failureType: NfcFailureType.nfcDisabled));
@@ -356,7 +377,7 @@ class NfcReaderBloc extends Bloc<NfcReaderEvent, NfcReaderState> {
           developer.log('📴 [BLOC] Tag bougé pendant la lecture (auto-detect)');
           unawaited(AnalyticsService.logNfcScan(
             scanType: 'scan_nfc_auto_detect', success: false,
-            errorMessage: 'TAG_MOVED', nfcMode: 'auto',
+            errorMessage: 'TAG_MOVED', errorCode: 'TAG_MOVED', nfcMode: 'auto',
             entryPoint: event.entryPoint,
           ));
           emit(const NfcReaderFailure('', failureType: NfcFailureType.tagMoved));
@@ -388,6 +409,7 @@ class NfcReaderBloc extends Bloc<NfcReaderEvent, NfcReaderState> {
           scanType: 'scan_nfc_auto_detect',
           success: false,
           errorMessage: failure.message,
+          errorCode: _errorCode(failureType),
           nfcMode: 'auto',
           entryPoint: event.entryPoint,
           sessionDurationMs: sessionDurationMs,

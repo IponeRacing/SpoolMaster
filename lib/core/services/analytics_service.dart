@@ -1,12 +1,15 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
 
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:nfc_filament/core/api/api_config.dart';
 import 'package:nfc_filament/core/services/auth_service.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 /// Service pour tracker les événements analytics
 class AnalyticsService {
@@ -15,6 +18,47 @@ class AnalyticsService {
   static String? _cachedAppVersion;
   static String? _cachedDeviceModel;
   static String? _cachedOsVersion;
+
+  /// Identifiant d'installation anonyme (UUID v4 aléatoire, persistant, non-PII,
+  /// réinitialisé à la réinstallation / effacement des données → GDPR-friendly).
+  /// Permet de distinguer les invités (user_id null) et corréler leurs événements.
+  static String? _installId;
+  static String? get installId => _installId;
+
+  static String _generateInstallId() {
+    final r = Random.secure();
+    final b = List<int>.generate(16, (_) => r.nextInt(256));
+    b[6] = (b[6] & 0x0f) | 0x40; // version 4
+    b[8] = (b[8] & 0x3f) | 0x80; // variant
+    final h = b.map((x) => x.toRadixString(16).padLeft(2, '0')).join();
+    return '${h.substring(0, 8)}-${h.substring(8, 12)}-${h.substring(12, 16)}-${h.substring(16, 20)}-${h.substring(20)}';
+  }
+
+  static Future<void> _loadInstallId() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      var id = prefs.getString('install_id');
+      if (id == null || id.isEmpty) {
+        id = _generateInstallId();
+        await prefs.setString('install_id', id);
+      }
+      _installId = id;
+    } catch (_) {
+      _installId = null;
+    }
+  }
+
+  /// Attache le contexte du scan en cours aux futurs crashes (custom keys
+  /// Crashlytics). À appeler au démarrage d'un scan.
+  static void setScanContext({required String nfcMode, String? entryPoint}) {
+    try {
+      FirebaseCrashlytics.instance.setCustomKey('nfc_mode', nfcMode);
+      if (entryPoint != null) {
+        FirebaseCrashlytics.instance.setCustomKey('entry_point', entryPoint);
+      }
+      FirebaseCrashlytics.instance.log('scan start: mode=$nfcMode entry=${entryPoint ?? "-"}');
+    } catch (_) {}
+  }
 
   /// Initialize device and app info (call once at startup)
   static Future<void> initialize() async {
@@ -40,6 +84,18 @@ class AnalyticsService {
       _cachedDeviceModel = 'unknown';
       _cachedOsVersion = 'unknown';
     }
+
+    await _loadInstallId();
+
+    // Corrélation crash ↔ contexte : attache l'ID d'install + méta à Crashlytics.
+    try {
+      final crashlytics = FirebaseCrashlytics.instance;
+      await crashlytics.setUserIdentifier(_installId ?? 'unknown');
+      await crashlytics.setCustomKey('install_id', _installId ?? 'unknown');
+      await crashlytics.setCustomKey('platform', Platform.isIOS ? 'ios' : 'android');
+      await crashlytics.setCustomKey('app_version', _cachedAppVersion ?? 'unknown');
+      await crashlytics.setCustomKey('device_model', _cachedDeviceModel ?? 'unknown');
+    } catch (_) {}
   }
 
   /// Log un événement analytics sur le backend
@@ -53,6 +109,13 @@ class AnalyticsService {
 
       // Envoie l'event même si l'utilisateur n'est pas connecté (invité) :
       // le backend accepte l'anonyme (user_id null). Ajoute le token si dispo.
+      // Injecte l'ID d'install anonyme dans event_data (queryable via JSON,
+      // pas de changement de schéma) → distingue les invités + corrélation.
+      final enrichedData = <String, dynamic>{
+        ...?eventData,
+        'install_id': _installId,
+      };
+
       final token = await _authService.getAccessToken();
       final response = await http.post(
         Uri.parse('${ApiConfig.baseUrl}${ApiConfig.logEvent}'),
@@ -62,7 +125,7 @@ class AnalyticsService {
         },
         body: jsonEncode({
           'event_type': eventType,
-          'event_data': eventData,
+          'event_data': enrichedData,
           'device_platform': devicePlatform,
           'app_version': appVersion,
         }),
@@ -87,6 +150,7 @@ class AnalyticsService {
     String? color,
     bool? success,
     String? errorMessage,
+    String? errorCode,
     String? rawTagData,
     int? rawBytesCount,
     String? nfcMode,
@@ -114,6 +178,9 @@ class AnalyticsService {
         // wishlist) — clé pour attribuer un échec à un parcours UI précis.
         if (entryPoint != null) 'entry_point': entryPoint,
         'error_message': errorMessage ?? '',
+        // Code d'erreur normalisé (taxonomie) → agrégation propre, sans parser
+        // le message libre. Ex: TAG_NOT_DETECTED, NFC_DISABLED, TAG_MOVED…
+        if (errorCode != null) 'error_code': errorCode,
         if (rawTagData != null) 'raw_tag_data': rawTagData,
         if (rawBytesCount != null) 'raw_bytes_count': rawBytesCount,
         if (sessionDurationMs != null) 'session_duration_ms': sessionDurationMs,
