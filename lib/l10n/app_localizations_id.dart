@@ -1321,4 +1321,15 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get updateLater => 'Nanti';
+
+  @override
+  String get nfcScanGuidance =>
+      'Tahan tag diam di bagian atas atau belakang ponsel.';
+
+  @override
+  String get tagMovedTitle => 'Tag bergerak';
+
+  @override
+  String get tagMovedMessage =>
+      'Tag bergerak saat membaca. Tempelkan lagi dan tahan ponsel tetap diam.';
 }

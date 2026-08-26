@@ -1322,4 +1322,15 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get updateLater => 'Позже';
+
+  @override
+  String get nfcScanGuidance =>
+      'Держите метку неподвижно у верхней или задней части телефона.';
+
+  @override
+  String get tagMovedTitle => 'Метка сдвинулась';
+
+  @override
+  String get tagMovedMessage =>
+      'Метка сдвинулась во время чтения. Приложите её снова и держите телефон неподвижно.';
 }

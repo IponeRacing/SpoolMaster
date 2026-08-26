@@ -474,5 +474,8 @@
   "updateAvailableMessage": "Spool Master の新しいバージョンが利用可能です。",
   "updateForcedMessage": "このバージョンはサポートされていません。続けるには更新してください。",
   "updateNow": "更新",
-  "updateLater": "後で"
+  "updateLater": "後で",
+  "nfcScanGuidance": "タグを動かさず、スマホの上部または背面に当ててください。",
+  "tagMovedTitle": "タグが動きました",
+  "tagMovedMessage": "読み取り中にタグが動きました。もう一度当てて、スマホを動かさないでください。"
 }

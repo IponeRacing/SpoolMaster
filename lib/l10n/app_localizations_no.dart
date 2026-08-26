@@ -1322,4 +1322,15 @@ class AppLocalizationsNo extends AppLocalizations {
 
   @override
   String get updateLater => 'Senere';
+
+  @override
+  String get nfcScanGuidance =>
+      'Hold taggen stille mot toppen eller baksiden av telefonen.';
+
+  @override
+  String get tagMovedTitle => 'Taggen flyttet seg';
+
+  @override
+  String get tagMovedMessage =>
+      'Taggen flyttet seg under lesing. Legg den tilbake og hold telefonen stille.';
 }

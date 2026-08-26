@@ -474,5 +474,8 @@
   "updateAvailableMessage": "Hi ha una nova versió de Spool Master disponible.",
   "updateForcedMessage": "Aquesta versió ja no és compatible. Actualitza per continuar.",
   "updateNow": "Actualitza",
-  "updateLater": "Més tard"
+  "updateLater": "Més tard",
+  "nfcScanGuidance": "Mantén l'etiqueta immòbil contra la part superior o posterior del telèfon.",
+  "tagMovedTitle": "Etiqueta moguda",
+  "tagMovedMessage": "L'etiqueta s'ha mogut durant la lectura. Torna a col·locar-la i mantén el telèfon immòbil."
 }

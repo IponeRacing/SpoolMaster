@@ -1316,4 +1316,14 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get updateLater => 'لاحقًا';
+
+  @override
+  String get nfcScanGuidance => 'أمسك البطاقة ثابتة عند أعلى الهاتف أو ظهره.';
+
+  @override
+  String get tagMovedTitle => 'تحرّكت البطاقة';
+
+  @override
+  String get tagMovedMessage =>
+      'تحرّكت البطاقة أثناء القراءة. أعد وضعها وأبقِ الهاتف ثابتًا.';
 }

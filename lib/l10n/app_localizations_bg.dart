@@ -1324,4 +1324,15 @@ class AppLocalizationsBg extends AppLocalizations {
 
   @override
   String get updateLater => 'По-късно';
+
+  @override
+  String get nfcScanGuidance =>
+      'Дръжте тага неподвижно към горната или задната част на телефона.';
+
+  @override
+  String get tagMovedTitle => 'Тагът се премести';
+
+  @override
+  String get tagMovedMessage =>
+      'Тагът се премести по време на четенето. Поставете го отново и дръжте телефона неподвижно.';
 }

@@ -474,5 +474,8 @@
   "updateAvailableMessage": "يتوفر إصدار جديد من Spool Master.",
   "updateForcedMessage": "لم يعد هذا الإصدار مدعومًا. يرجى التحديث للمتابعة.",
   "updateNow": "تحديث",
-  "updateLater": "لاحقًا"
+  "updateLater": "لاحقًا",
+  "nfcScanGuidance": "أمسك البطاقة ثابتة عند أعلى الهاتف أو ظهره.",
+  "tagMovedTitle": "تحرّكت البطاقة",
+  "tagMovedMessage": "تحرّكت البطاقة أثناء القراءة. أعد وضعها وأبقِ الهاتف ثابتًا."
 }

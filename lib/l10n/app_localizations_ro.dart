@@ -1323,4 +1323,15 @@ class AppLocalizationsRo extends AppLocalizations {
 
   @override
   String get updateLater => 'Mai târziu';
+
+  @override
+  String get nfcScanGuidance =>
+      'Ține tag-ul nemișcat lângă partea de sus sau spatele telefonului.';
+
+  @override
+  String get tagMovedTitle => 'Tag mișcat';
+
+  @override
+  String get tagMovedMessage =>
+      'Tag-ul s-a mișcat în timpul citirii. Pune-l la loc și ține telefonul nemișcat.';
 }

@@ -1323,4 +1323,15 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get updateLater => 'Để sau';
+
+  @override
+  String get nfcScanGuidance =>
+      'Giữ thẻ cố định ở phía trên hoặc mặt sau điện thoại.';
+
+  @override
+  String get tagMovedTitle => 'Thẻ bị di chuyển';
+
+  @override
+  String get tagMovedMessage =>
+      'Thẻ đã di chuyển khi đang đọc. Đặt lại và giữ điện thoại cố định.';
 }

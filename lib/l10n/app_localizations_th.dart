@@ -1320,4 +1320,15 @@ class AppLocalizationsTh extends AppLocalizations {
 
   @override
   String get updateLater => 'ภายหลัง';
+
+  @override
+  String get nfcScanGuidance =>
+      'ถือแท็กให้นิ่งแนบกับด้านบนหรือด้านหลังของโทรศัพท์';
+
+  @override
+  String get tagMovedTitle => 'แท็กขยับ';
+
+  @override
+  String get tagMovedMessage =>
+      'แท็กขยับระหว่างการอ่าน วางกลับและถือโทรศัพท์ให้นิ่ง';
 }

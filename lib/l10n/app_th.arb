@@ -474,5 +474,8 @@
   "updateAvailableMessage": "มี Spool Master เวอร์ชันใหม่ให้ใช้งาน",
   "updateForcedMessage": "เวอร์ชันนี้ไม่รองรับอีกต่อไป โปรดอัปเดตเพื่อดำเนินการต่อ",
   "updateNow": "อัปเดต",
-  "updateLater": "ภายหลัง"
+  "updateLater": "ภายหลัง",
+  "nfcScanGuidance": "ถือแท็กให้นิ่งแนบกับด้านบนหรือด้านหลังของโทรศัพท์",
+  "tagMovedTitle": "แท็กขยับ",
+  "tagMovedMessage": "แท็กขยับระหว่างการอ่าน วางกลับและถือโทรศัพท์ให้นิ่ง"
 }

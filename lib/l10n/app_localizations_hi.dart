@@ -1322,4 +1322,15 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get updateLater => 'बाद में';
+
+  @override
+  String get nfcScanGuidance =>
+      'टैग को फ़ोन के ऊपरी या पिछले हिस्से पर स्थिर रखें।';
+
+  @override
+  String get tagMovedTitle => 'टैग हिल गया';
+
+  @override
+  String get tagMovedMessage =>
+      'पढ़ते समय टैग हिल गया। इसे दोबारा रखें और फ़ोन को स्थिर रखें।';
 }

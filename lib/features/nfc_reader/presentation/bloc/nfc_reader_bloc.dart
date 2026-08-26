@@ -105,6 +105,13 @@ class NfcReaderBloc extends Bloc<NfcReaderEvent, NfcReaderState> {
     return m.contains('nfc_disabled') || m.contains('nfc is disabled');
   }
 
+  /// Vrai si le tag a été perdu/bougé pendant la lecture (Android : "Tag is out
+  /// of date" / TagLostException). Best practice : inviter à re-taper sans bouger.
+  bool _isTagMovedFailure(Failure failure) {
+    final m = failure.message.toLowerCase();
+    return m.contains('out of date') || m.contains('tag was lost') || m.contains('taglost');
+  }
+
   /// Déduit le mode NFC à partir de la marque détectée
   String _detectModeFromBrand(String? brand) {
     switch (brand?.toLowerCase()) {
@@ -149,6 +156,19 @@ class NfcReaderBloc extends Bloc<NfcReaderEvent, NfcReaderState> {
             nfcMode: nfcMode, entryPoint: event.entryPoint,
           ));
           emit(const NfcReaderFailure('', failureType: NfcFailureType.nfcDisabled));
+          return;
+        }
+
+        // Tag bougé/perdu pendant la lecture : message dédié « retapez sans bouger »,
+        // pas de fallback (le tag n'est plus dans le champ).
+        if (_isTagMovedFailure(failure)) {
+          developer.log('📴 [BLOC] Tag bougé pendant la lecture');
+          unawaited(AnalyticsService.logNfcScan(
+            scanType: 'scan_nfc', brand: _brandFromMode(nfcMode),
+            success: false, errorMessage: 'TAG_MOVED',
+            nfcMode: nfcMode, entryPoint: event.entryPoint,
+          ));
+          emit(const NfcReaderFailure('', failureType: NfcFailureType.tagMoved));
           return;
         }
 
@@ -329,6 +349,17 @@ class NfcReaderBloc extends Bloc<NfcReaderEvent, NfcReaderState> {
             entryPoint: event.entryPoint,
           ));
           emit(const NfcReaderFailure('', failureType: NfcFailureType.nfcDisabled));
+          return;
+        }
+
+        if (_isTagMovedFailure(failure)) {
+          developer.log('📴 [BLOC] Tag bougé pendant la lecture (auto-detect)');
+          unawaited(AnalyticsService.logNfcScan(
+            scanType: 'scan_nfc_auto_detect', success: false,
+            errorMessage: 'TAG_MOVED', nfcMode: 'auto',
+            entryPoint: event.entryPoint,
+          ));
+          emit(const NfcReaderFailure('', failureType: NfcFailureType.tagMoved));
           return;
         }
 

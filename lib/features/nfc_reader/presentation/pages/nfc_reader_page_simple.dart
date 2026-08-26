@@ -1,6 +1,7 @@
 import 'dart:io' show Platform;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nfc_filament/core/services/admob_service.dart';
 import 'package:nfc_filament/core/services/analytics_service.dart';
@@ -498,6 +499,12 @@ class _NfcReaderViewState extends State<_NfcReaderView> {
           Expanded(
             child: BlocConsumer<NfcReaderBloc, NfcReaderState>(
               listener: (context, state) {
+                // Retour haptique : succès (impact moyen) vs échec (vibration).
+                if (state is BobbinDataReadSuccess || state is BobbinDataReadSuccessWithFallback) {
+                  HapticFeedback.mediumImpact();
+                } else if (state is NfcReaderFailure) {
+                  HapticFeedback.heavyImpact();
+                }
                 if (state is BobbinDataReadSuccessWithFallback) {
                   final modeName = state.detectedMode == 'bambu' ? 'Bambu Lab' : state.detectedMode[0].toUpperCase() + state.detectedMode.substring(1);
                   ScaffoldMessenger.of(context).showSnackBar(
@@ -575,6 +582,11 @@ class _NfcReaderViewState extends State<_NfcReaderView> {
                 failureColor = Colors.orange;
                 failureTitle = AppLocalizations.of(context)!.nfcDisabledTitle;
                 failureDetail = AppLocalizations.of(context)!.nfcDisabledMessage;
+              case NfcFailureType.tagMoved:
+                failureIcon = Icons.vibration;
+                failureColor = Colors.orange;
+                failureTitle = AppLocalizations.of(context)!.tagMovedTitle;
+                failureDetail = AppLocalizations.of(context)!.tagMovedMessage;
             }
 
             return Center(
@@ -1382,6 +1394,8 @@ class _NfcScanningAnimationState extends State<_NfcScanningAnimation>
   @override
   void initState() {
     super.initState();
+    // Retour haptique léger : confirme tactilement que la recherche NFC démarre.
+    HapticFeedback.selectionClick();
     _pulseController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 1500),
@@ -1446,7 +1460,16 @@ class _NfcScanningAnimationState extends State<_NfcScanningAnimation>
               ),
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: 10),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Text(
+                l10n.nfcScanGuidance,
+                style: TextStyle(fontSize: 14, color: Colors.grey.shade600),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            const SizedBox(height: 16),
             const SizedBox(
               width: 200,
               child: LinearProgressIndicator(

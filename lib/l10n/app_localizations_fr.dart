@@ -1327,6 +1327,17 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get updateLater => 'Plus tard';
+
+  @override
+  String get nfcScanGuidance =>
+      'Maintenez le tag immobile contre le haut ou l\'arrière du téléphone.';
+
+  @override
+  String get tagMovedTitle => 'Tag bougé';
+
+  @override
+  String get tagMovedMessage =>
+      'Le tag a bougé pendant la lecture. Reposez-le et gardez le téléphone immobile.';
 }
 
 /// The translations for French, as used in Canada (`fr_CA`).
@@ -2640,4 +2651,15 @@ class AppLocalizationsFrCa extends AppLocalizationsFr {
 
   @override
   String get updateLater => 'Plus tard';
+
+  @override
+  String get nfcScanGuidance =>
+      'Maintenez le tag immobile contre le haut ou l\'arrière du téléphone.';
+
+  @override
+  String get tagMovedTitle => 'Tag bougé';
+
+  @override
+  String get tagMovedMessage =>
+      'Le tag a bougé pendant la lecture. Reposez-le et gardez le téléphone immobile.';
 }

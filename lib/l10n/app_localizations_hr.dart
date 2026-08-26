@@ -1323,4 +1323,15 @@ class AppLocalizationsHr extends AppLocalizations {
 
   @override
   String get updateLater => 'Kasnije';
+
+  @override
+  String get nfcScanGuidance =>
+      'Držite oznaku mirno uz vrh ili stražnju stranu telefona.';
+
+  @override
+  String get tagMovedTitle => 'Oznaka se pomaknula';
+
+  @override
+  String get tagMovedMessage =>
+      'Oznaka se pomaknula tijekom čitanja. Vratite je i držite telefon mirno.';
 }

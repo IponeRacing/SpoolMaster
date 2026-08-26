@@ -1318,4 +1318,15 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get updateLater => 'Později';
+
+  @override
+  String get nfcScanGuidance =>
+      'Držte tag nehybně u horní nebo zadní části telefonu.';
+
+  @override
+  String get tagMovedTitle => 'Tag se pohnul';
+
+  @override
+  String get tagMovedMessage =>
+      'Tag se během čtení pohnul. Přiložte ho znovu a držte telefon nehybně.';
 }

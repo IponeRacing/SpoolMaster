@@ -1288,6 +1288,15 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get updateLater => '稍后';
+
+  @override
+  String get nfcScanGuidance => '将标签靠在手机顶部或背面并保持不动。';
+
+  @override
+  String get tagMovedTitle => '标签移动了';
+
+  @override
+  String get tagMovedMessage => '读取时标签移动了。请重新贴合并保持手机不动。';
 }
 
 /// The translations for Chinese, as used in Taiwan (`zh_TW`).
@@ -2562,4 +2571,13 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String get updateLater => '稍後';
+
+  @override
+  String get nfcScanGuidance => '將標籤靠在手機頂部或背面並保持不動。';
+
+  @override
+  String get tagMovedTitle => '標籤移動了';
+
+  @override
+  String get tagMovedMessage => '讀取時標籤移動了。請重新貼合並保持手機不動。';
 }

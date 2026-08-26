@@ -1324,4 +1324,15 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get updateLater => 'Пізніше';
+
+  @override
+  String get nfcScanGuidance =>
+      'Тримайте мітку нерухомо біля верхньої або задньої частини телефона.';
+
+  @override
+  String get tagMovedTitle => 'Мітка зсунулася';
+
+  @override
+  String get tagMovedMessage =>
+      'Мітка зсунулася під час зчитування. Прикладіть її знову й тримайте телефон нерухомо.';
 }

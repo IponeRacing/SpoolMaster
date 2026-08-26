@@ -474,5 +474,8 @@
   "updateAvailableMessage": "Đã có phiên bản mới của Spool Master.",
   "updateForcedMessage": "Phiên bản này không còn được hỗ trợ. Vui lòng cập nhật để tiếp tục.",
   "updateNow": "Cập nhật",
-  "updateLater": "Để sau"
+  "updateLater": "Để sau",
+  "nfcScanGuidance": "Giữ thẻ cố định ở phía trên hoặc mặt sau điện thoại.",
+  "tagMovedTitle": "Thẻ bị di chuyển",
+  "tagMovedMessage": "Thẻ đã di chuyển khi đang đọc. Đặt lại và giữ điện thoại cố định."
 }

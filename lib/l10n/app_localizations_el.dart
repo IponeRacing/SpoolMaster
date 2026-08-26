@@ -1331,4 +1331,15 @@ class AppLocalizationsEl extends AppLocalizations {
 
   @override
   String get updateLater => 'Αργότερα';
+
+  @override
+  String get nfcScanGuidance =>
+      'Κρατήστε το tag ακίνητο στο πάνω ή πίσω μέρος του τηλεφώνου.';
+
+  @override
+  String get tagMovedTitle => 'Το tag μετακινήθηκε';
+
+  @override
+  String get tagMovedMessage =>
+      'Το tag μετακινήθηκε κατά την ανάγνωση. Τοποθετήστε το ξανά και κρατήστε το τηλέφωνο ακίνητο.';
 }

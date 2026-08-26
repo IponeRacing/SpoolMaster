@@ -1314,4 +1314,15 @@ class AppLocalizationsHe extends AppLocalizations {
 
   @override
   String get updateLater => 'מאוחר יותר';
+
+  @override
+  String get nfcScanGuidance =>
+      'החזק את התג ללא תנועה מול החלק העליון או האחורי של הטלפון.';
+
+  @override
+  String get tagMovedTitle => 'התג זז';
+
+  @override
+  String get tagMovedMessage =>
+      'התג זז במהלך הקריאה. הנח אותו שוב והחזק את הטלפון ללא תנועה.';
 }

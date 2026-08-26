@@ -474,5 +474,8 @@
   "updateAvailableMessage": "Spool Master 有新版本可用。",
   "updateForcedMessage": "此版本已不再支援。請更新以繼續。",
   "updateNow": "更新",
-  "updateLater": "稍後"
+  "updateLater": "稍後",
+  "nfcScanGuidance": "將標籤靠在手機頂部或背面並保持不動。",
+  "tagMovedTitle": "標籤移動了",
+  "tagMovedMessage": "讀取時標籤移動了。請重新貼合並保持手機不動。"
 }

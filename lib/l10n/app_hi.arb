@@ -474,5 +474,8 @@
   "updateAvailableMessage": "Spool Master का नया वर्शन उपलब्ध है।",
   "updateForcedMessage": "यह वर्शन अब समर्थित नहीं है। जारी रखने के लिए कृपया अपडेट करें।",
   "updateNow": "अपडेट करें",
-  "updateLater": "बाद में"
+  "updateLater": "बाद में",
+  "nfcScanGuidance": "टैग को फ़ोन के ऊपरी या पिछले हिस्से पर स्थिर रखें।",
+  "tagMovedTitle": "टैग हिल गया",
+  "tagMovedMessage": "पढ़ते समय टैग हिल गया। इसे दोबारा रखें और फ़ोन को स्थिर रखें।"
 }

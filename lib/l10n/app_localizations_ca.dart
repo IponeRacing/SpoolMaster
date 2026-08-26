@@ -1332,4 +1332,15 @@ class AppLocalizationsCa extends AppLocalizations {
 
   @override
   String get updateLater => 'Més tard';
+
+  @override
+  String get nfcScanGuidance =>
+      'Mantén l\'etiqueta immòbil contra la part superior o posterior del telèfon.';
+
+  @override
+  String get tagMovedTitle => 'Etiqueta moguda';
+
+  @override
+  String get tagMovedMessage =>
+      'L\'etiqueta s\'ha mogut durant la lectura. Torna a col·locar-la i mantén el telèfon immòbil.';
 }

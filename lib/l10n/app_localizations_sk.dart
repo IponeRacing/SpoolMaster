@@ -1320,4 +1320,15 @@ class AppLocalizationsSk extends AppLocalizations {
 
   @override
   String get updateLater => 'Neskôr';
+
+  @override
+  String get nfcScanGuidance =>
+      'Držte tag nehybne pri hornej alebo zadnej časti telefónu.';
+
+  @override
+  String get tagMovedTitle => 'Tag sa pohol';
+
+  @override
+  String get tagMovedMessage =>
+      'Tag sa počas čítania pohol. Priložte ho znova a držte telefón nehybne.';
 }

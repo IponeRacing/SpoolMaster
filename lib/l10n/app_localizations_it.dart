@@ -1328,4 +1328,15 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get updateLater => 'Più tardi';
+
+  @override
+  String get nfcScanGuidance =>
+      'Tieni il tag fermo contro la parte superiore o posteriore del telefono.';
+
+  @override
+  String get tagMovedTitle => 'Tag spostato';
+
+  @override
+  String get tagMovedMessage =>
+      'Il tag si è spostato durante la lettura. Riappoggialo e tieni il telefono fermo.';
 }

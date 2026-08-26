@@ -1324,4 +1324,15 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String get updateLater => 'Később';
+
+  @override
+  String get nfcScanGuidance =>
+      'Tartsa a címkét mozdulatlanul a telefon teteje vagy hátulja felé.';
+
+  @override
+  String get tagMovedTitle => 'A címke elmozdult';
+
+  @override
+  String get tagMovedMessage =>
+      'A címke olvasás közben elmozdult. Helyezze vissza, és tartsa a telefont mozdulatlanul.';
 }

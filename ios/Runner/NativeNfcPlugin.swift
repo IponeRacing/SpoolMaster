@@ -23,6 +23,28 @@ class NativeNfcPlugin: NSObject, FlutterPlugin {
     private var tagDetectedTime: Date?
     private var tagDetected = false
 
+    // Retry sur code 202 (iOS 26 « session terminée inopinément »). Best practice :
+    // restartPolling ne marche pas sur une session invalidée → recréer une NOUVELLE
+    // session, après un délai (éviter le 203 « système occupé »), 1 seule fois.
+    private var currentPolling: NFCTagReaderSession.PollingOption = .iso14443
+    private var currentAlert = "Maintenez votre téléphone près du tag NFC"
+    private var session202Retries = 0
+    private let maxSession202Retries = 1
+
+    /// Démarre (ou redémarre) une session NFC en mémorisant sa config pour un
+    /// éventuel retry sur code 202. `isNewScan` remet le compteur de retry à zéro.
+    private func beginSession(pollingOption: NFCTagReaderSession.PollingOption,
+                              alertMessage: String,
+                              isNewScan: Bool) {
+        if isNewScan { session202Retries = 0 }
+        currentPolling = pollingOption
+        currentAlert = alertMessage
+        session = NFCTagReaderSession(pollingOption: pollingOption, delegate: self)
+        session?.alertMessage = alertMessage
+        startSessionTracking()
+        session?.begin()
+    }
+
     func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
         switch call.method {
         case "checkNfcAvailability":
@@ -77,10 +99,9 @@ class NativeNfcPlugin: NSObject, FlutterPlugin {
     private func startReadSession(result: @escaping FlutterResult) {
         self.result = result
 
-        session = NFCTagReaderSession(pollingOption: .iso14443, delegate: self)
-        session?.alertMessage = "Maintenez votre téléphone près du tag NFC"
-        startSessionTracking()
-        session?.begin()
+        beginSession(pollingOption: .iso14443,
+                     alertMessage: "Maintenez votre téléphone près du tag NFC",
+                     isNewScan: true)
     }
 
     private func stopSession(result: @escaping FlutterResult) {
@@ -110,30 +131,27 @@ class NativeNfcPlugin: NSObject, FlutterPlugin {
         self.pagesToWrite = pages
         self.isBambuLabMode = false
 
-        session = NFCTagReaderSession(pollingOption: .iso14443, delegate: self)
-        session?.alertMessage = "Maintenez votre téléphone près du tag NFC pour écriture"
-        startSessionTracking()
-        session?.begin()
+        beginSession(pollingOption: .iso14443,
+                     alertMessage: "Maintenez votre téléphone près du tag NFC pour écriture",
+                     isNewScan: true)
     }
 
     private func startBambuLabReadSession(result: @escaping FlutterResult) {
         self.result = result
         self.isBambuLabMode = true
 
-        session = NFCTagReaderSession(pollingOption: .iso14443, delegate: self)
-        session?.alertMessage = "Maintenez votre téléphone près du tag NFC"
-        startSessionTracking()
-        session?.begin()
+        beginSession(pollingOption: .iso14443,
+                     alertMessage: "Maintenez votre téléphone près du tag NFC",
+                     isNewScan: true)
     }
 
     private func startOpenPrintTagReadSession(result: @escaping FlutterResult) {
         self.result = result
         self.isOpenPrintTagMode = true
 
-        session = NFCTagReaderSession(pollingOption: [.iso15693], delegate: self)
-        session?.alertMessage = "Maintenez votre téléphone près du tag NFC Prusa"
-        startSessionTracking()
-        session?.begin()
+        beginSession(pollingOption: [.iso15693],
+                     alertMessage: "Maintenez votre téléphone près du tag NFC Prusa",
+                     isNewScan: true)
     }
 
     private func startAutoDetectReadSession(iso14443Only: Bool = false, result: @escaping FlutterResult) {
@@ -142,10 +160,9 @@ class NativeNfcPlugin: NSObject, FlutterPlugin {
 
         let polling: NFCTagReaderSession.PollingOption =
             iso14443Only ? .iso14443 : [.iso14443, .iso15693]
-        session = NFCTagReaderSession(pollingOption: polling, delegate: self)
-        session?.alertMessage = "Maintenez votre téléphone près du tag NFC"
-        startSessionTracking()
-        session?.begin()
+        beginSession(pollingOption: polling,
+                     alertMessage: "Maintenez votre téléphone près du tag NFC",
+                     isNewScan: true)
     }
 
     private func startOpenPrintTagWriteSession(data: [UInt8], result: @escaping FlutterResult) {
@@ -153,20 +170,18 @@ class NativeNfcPlugin: NSObject, FlutterPlugin {
         self.openPrintTagDataToWrite = data
         self.isOpenPrintTagWriteMode = true
 
-        session = NFCTagReaderSession(pollingOption: [.iso15693], delegate: self)
-        session?.alertMessage = "Maintenez votre téléphone près du tag NFC ISO 15693 vierge"
-        startSessionTracking()
-        session?.begin()
+        beginSession(pollingOption: [.iso15693],
+                     alertMessage: "Maintenez votre téléphone près du tag NFC ISO 15693 vierge",
+                     isNewScan: true)
     }
 
     private func startBambuLabWriteSession(blocks: [String: [UInt8]], result: @escaping FlutterResult) {
         self.result = result
         self.bambuBlocksToWrite = blocks
 
-        session = NFCTagReaderSession(pollingOption: .iso14443, delegate: self)
-        session?.alertMessage = "Maintenez votre téléphone près de la carte CUID vierge"
-        startSessionTracking()
-        session?.begin()
+        beginSession(pollingOption: .iso14443,
+                     alertMessage: "Maintenez votre téléphone près de la carte CUID vierge",
+                     isNewScan: true)
     }
 
     private func buildSessionDiagnostics(tagType: String? = nil) -> [String: Any] {
@@ -237,9 +252,23 @@ extension NativeNfcPlugin: NFCTagReaderSessionDelegate {
             return
         }
 
-        // Code 202: Session terminée de façon inattendue (iOS 26+ peut forcer l'arrêt)
+        // Code 202: Session terminée de façon inattendue (iOS 26+ peut forcer l'arrêt).
+        // Best practice : recréer une NOUVELLE session (restartPolling est inopérant
+        // sur une session invalidée), après un délai (éviter le 203), 1 seule fois.
+        // On préserve le mode (on ne reset pas les flags) pour rescanner à l'identique.
         if nsError.domain == "NFCError" && nsError.code == 202 {
-            print("⚠️ Session NFC interrompue par le système (code 202)")
+            if session202Retries < maxSession202Retries {
+                session202Retries += 1
+                print("⚠️ Session 202 → retry \(session202Retries)/\(maxSession202Retries) (nouvelle session)")
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) { [weak self] in
+                    guard let self = self, self.result != nil else { return }
+                    self.beginSession(pollingOption: self.currentPolling,
+                                      alertMessage: self.currentAlert,
+                                      isNewScan: false)
+                }
+                return
+            }
+            print("⚠️ Session NFC interrompue par le système (code 202) — retry épuisé")
             result?(FlutterError(code: "SESSION_TERMINATED", message: "Session NFC interrompue par le système. Réessayez.", details: buildSessionDiagnostics()))
             self.result = nil
             self.isBambuLabMode = false

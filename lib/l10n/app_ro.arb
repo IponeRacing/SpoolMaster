@@ -474,5 +474,8 @@
   "updateAvailableMessage": "O nouă versiune de Spool Master este disponibilă.",
   "updateForcedMessage": "Această versiune nu mai este acceptată. Actualizează pentru a continua.",
   "updateNow": "Actualizează",
-  "updateLater": "Mai târziu"
+  "updateLater": "Mai târziu",
+  "nfcScanGuidance": "Ține tag-ul nemișcat lângă partea de sus sau spatele telefonului.",
+  "tagMovedTitle": "Tag mișcat",
+  "tagMovedMessage": "Tag-ul s-a mișcat în timpul citirii. Pune-l la loc și ține telefonul nemișcat."
 }

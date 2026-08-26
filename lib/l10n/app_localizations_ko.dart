@@ -1303,4 +1303,13 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get updateLater => '나중에';
+
+  @override
+  String get nfcScanGuidance => '태그를 휴대폰 상단이나 뒷면에 움직이지 않게 대세요.';
+
+  @override
+  String get tagMovedTitle => '태그가 움직임';
+
+  @override
+  String get tagMovedMessage => '읽는 중 태그가 움직였습니다. 다시 대고 휴대폰을 움직이지 마세요.';
 }

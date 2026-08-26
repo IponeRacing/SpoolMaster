@@ -474,5 +474,8 @@
   "updateAvailableMessage": "גרסה חדשה של Spool Master זמינה.",
   "updateForcedMessage": "גרסה זו אינה נתמכת עוד. עדכן כדי להמשיך.",
   "updateNow": "עדכן",
-  "updateLater": "מאוחר יותר"
+  "updateLater": "מאוחר יותר",
+  "nfcScanGuidance": "החזק את התג ללא תנועה מול החלק העליון או האחורי של הטלפון.",
+  "tagMovedTitle": "התג זז",
+  "tagMovedMessage": "התג זז במהלך הקריאה. הנח אותו שוב והחזק את הטלפון ללא תנועה."
 }

@@ -1322,4 +1322,15 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get updateLater => 'Daha sonra';
+
+  @override
+  String get nfcScanGuidance =>
+      'Etiketi telefonun üst veya arka kısmına sabit tutun.';
+
+  @override
+  String get tagMovedTitle => 'Etiket oynadı';
+
+  @override
+  String get tagMovedMessage =>
+      'Okuma sırasında etiket oynadı. Tekrar yerleştirin ve telefonu sabit tutun.';
 }

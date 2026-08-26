@@ -1322,4 +1322,15 @@ class AppLocalizationsFi extends AppLocalizations {
 
   @override
   String get updateLater => 'Myöhemmin';
+
+  @override
+  String get nfcScanGuidance =>
+      'Pidä tagia paikallaan puhelimen ylä- tai takaosaa vasten.';
+
+  @override
+  String get tagMovedTitle => 'Tagi liikkui';
+
+  @override
+  String get tagMovedMessage =>
+      'Tagi liikkui lukemisen aikana. Aseta se takaisin ja pidä puhelin paikallaan.';
 }

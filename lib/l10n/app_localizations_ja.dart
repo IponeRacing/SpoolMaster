@@ -1302,4 +1302,13 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get updateLater => '後で';
+
+  @override
+  String get nfcScanGuidance => 'タグを動かさず、スマホの上部または背面に当ててください。';
+
+  @override
+  String get tagMovedTitle => 'タグが動きました';
+
+  @override
+  String get tagMovedMessage => '読み取り中にタグが動きました。もう一度当てて、スマホを動かさないでください。';
 }

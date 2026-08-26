@@ -474,5 +474,8 @@
   "updateAvailableMessage": "Je dostupná nová verze Spool Master.",
   "updateForcedMessage": "Tato verze již není podporována. Aktualizujte prosím, abyste mohli pokračovat.",
   "updateNow": "Aktualizovat",
-  "updateLater": "Později"
+  "updateLater": "Později",
+  "nfcScanGuidance": "Držte tag nehybně u horní nebo zadní části telefonu.",
+  "tagMovedTitle": "Tag se pohnul",
+  "tagMovedMessage": "Tag se během čtení pohnul. Přiložte ho znovu a držte telefon nehybně."
 }

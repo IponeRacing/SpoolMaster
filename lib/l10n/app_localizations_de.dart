@@ -1336,4 +1336,15 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get updateLater => 'Später';
+
+  @override
+  String get nfcScanGuidance =>
+      'Halten Sie den Tag ruhig an die Ober- oder Rückseite des Telefons.';
+
+  @override
+  String get tagMovedTitle => 'Tag bewegt';
+
+  @override
+  String get tagMovedMessage =>
+      'Der Tag hat sich während des Lesens bewegt. Legen Sie ihn wieder an und halten Sie das Telefon ruhig.';
 }

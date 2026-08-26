@@ -485,5 +485,8 @@
   "updateAvailableMessage": "A new version of Spool Master is available.",
   "updateForcedMessage": "This version is no longer supported. Please update to continue.",
   "updateNow": "Update",
-  "updateLater": "Later"
+  "updateLater": "Later",
+  "nfcScanGuidance": "Hold the tag still against the top or back of your phone.",
+  "tagMovedTitle": "Tag moved",
+  "tagMovedMessage": "The tag moved during reading. Place it back and keep the phone still."
 }

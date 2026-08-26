@@ -2664,6 +2664,24 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Plus tard'**
   String get updateLater;
+
+  /// No description provided for @nfcScanGuidance.
+  ///
+  /// In fr, this message translates to:
+  /// **'Maintenez le tag immobile contre le haut ou l\'arrière du téléphone.'**
+  String get nfcScanGuidance;
+
+  /// No description provided for @tagMovedTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tag bougé'**
+  String get tagMovedTitle;
+
+  /// No description provided for @tagMovedMessage.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le tag a bougé pendant la lecture. Reposez-le et gardez le téléphone immobile.'**
+  String get tagMovedMessage;
 }
 
 class _AppLocalizationsDelegate

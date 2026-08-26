@@ -474,5 +474,8 @@
   "updateAvailableMessage": "Spool Master'ın yeni bir sürümü mevcut.",
   "updateForcedMessage": "Bu sürüm artık desteklenmiyor. Devam etmek için lütfen güncelleyin.",
   "updateNow": "Güncelle",
-  "updateLater": "Daha sonra"
+  "updateLater": "Daha sonra",
+  "nfcScanGuidance": "Etiketi telefonun üst veya arka kısmına sabit tutun.",
+  "tagMovedTitle": "Etiket oynadı",
+  "tagMovedMessage": "Okuma sırasında etiket oynadı. Tekrar yerleştirin ve telefonu sabit tutun."
 }

@@ -474,5 +474,8 @@
   "updateAvailableMessage": "Spool Masterista on saatavilla uusi versio.",
   "updateForcedMessage": "Tätä versiota ei enää tueta. Päivitä jatkaaksesi.",
   "updateNow": "Päivitä",
-  "updateLater": "Myöhemmin"
+  "updateLater": "Myöhemmin",
+  "nfcScanGuidance": "Pidä tagia paikallaan puhelimen ylä- tai takaosaa vasten.",
+  "tagMovedTitle": "Tagi liikkui",
+  "tagMovedMessage": "Tagi liikkui lukemisen aikana. Aseta se takaisin ja pidä puhelin paikallaan."
 }

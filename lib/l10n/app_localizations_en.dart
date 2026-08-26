@@ -1322,6 +1322,17 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get updateLater => 'Later';
+
+  @override
+  String get nfcScanGuidance =>
+      'Hold the tag still against the top or back of your phone.';
+
+  @override
+  String get tagMovedTitle => 'Tag moved';
+
+  @override
+  String get tagMovedMessage =>
+      'The tag moved during reading. Place it back and keep the phone still.';
 }
 
 /// The translations for English, as used in Australia (`en_AU`).
@@ -2630,6 +2641,17 @@ class AppLocalizationsEnAu extends AppLocalizationsEn {
 
   @override
   String get updateLater => 'Later';
+
+  @override
+  String get nfcScanGuidance =>
+      'Hold the tag still against the top or back of your phone.';
+
+  @override
+  String get tagMovedTitle => 'Tag moved';
+
+  @override
+  String get tagMovedMessage =>
+      'The tag moved during reading. Place it back and keep the phone still.';
 }
 
 /// The translations for English, as used in Canada (`en_CA`).
@@ -3938,6 +3960,17 @@ class AppLocalizationsEnCa extends AppLocalizationsEn {
 
   @override
   String get updateLater => 'Later';
+
+  @override
+  String get nfcScanGuidance =>
+      'Hold the tag still against the top or back of your phone.';
+
+  @override
+  String get tagMovedTitle => 'Tag moved';
+
+  @override
+  String get tagMovedMessage =>
+      'The tag moved during reading. Place it back and keep the phone still.';
 }
 
 /// The translations for English, as used in the United Kingdom (`en_GB`).
@@ -5246,4 +5279,15 @@ class AppLocalizationsEnGb extends AppLocalizationsEn {
 
   @override
   String get updateLater => 'Later';
+
+  @override
+  String get nfcScanGuidance =>
+      'Hold the tag still against the top or back of your phone.';
+
+  @override
+  String get tagMovedTitle => 'Tag moved';
+
+  @override
+  String get tagMovedMessage =>
+      'The tag moved during reading. Place it back and keep the phone still.';
 }

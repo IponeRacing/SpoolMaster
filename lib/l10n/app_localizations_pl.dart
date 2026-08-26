@@ -1323,4 +1323,15 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get updateLater => 'Później';
+
+  @override
+  String get nfcScanGuidance =>
+      'Trzymaj tag nieruchomo przy górnej lub tylnej części telefonu.';
+
+  @override
+  String get tagMovedTitle => 'Tag się poruszył';
+
+  @override
+  String get tagMovedMessage =>
+      'Tag poruszył się podczas odczytu. Przyłóż go ponownie i trzymaj telefon nieruchomo.';
 }

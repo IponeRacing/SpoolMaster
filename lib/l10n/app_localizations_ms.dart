@@ -1322,4 +1322,15 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get updateLater => 'Kemudian';
+
+  @override
+  String get nfcScanGuidance =>
+      'Pegang tag tanpa bergerak pada bahagian atas atau belakang telefon.';
+
+  @override
+  String get tagMovedTitle => 'Tag bergerak';
+
+  @override
+  String get tagMovedMessage =>
+      'Tag bergerak semasa membaca. Letakkan semula dan pegang telefon tanpa bergerak.';
 }

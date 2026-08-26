@@ -474,5 +474,8 @@
   "updateAvailableMessage": "Elérhető a Spool Master új verziója.",
   "updateForcedMessage": "Ez a verzió már nem támogatott. A folytatáshoz frissítsen.",
   "updateNow": "Frissítés",
-  "updateLater": "Később"
+  "updateLater": "Később",
+  "nfcScanGuidance": "Tartsa a címkét mozdulatlanul a telefon teteje vagy hátulja felé.",
+  "tagMovedTitle": "A címke elmozdult",
+  "tagMovedMessage": "A címke olvasás közben elmozdult. Helyezze vissza, és tartsa a telefont mozdulatlanul."
 }

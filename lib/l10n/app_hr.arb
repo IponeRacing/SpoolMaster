@@ -474,5 +474,8 @@
   "updateAvailableMessage": "Dostupna je nova verzija aplikacije Spool Master.",
   "updateForcedMessage": "Ova verzija više nije podržana. Ažurirajte za nastavak.",
   "updateNow": "Ažuriraj",
-  "updateLater": "Kasnije"
+  "updateLater": "Kasnije",
+  "nfcScanGuidance": "Držite oznaku mirno uz vrh ili stražnju stranu telefona.",
+  "tagMovedTitle": "Oznaka se pomaknula",
+  "tagMovedMessage": "Oznaka se pomaknula tijekom čitanja. Vratite je i držite telefon mirno."
 }
