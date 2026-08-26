@@ -1295,4 +1295,11 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get stockNoMatch => 'Žádná cívka neodpovídá filtrům';
+
+  @override
+  String get nfcDisabledTitle => 'NFC vypnuto';
+
+  @override
+  String get nfcDisabledMessage =>
+      'NFC je vypnuté. Zapněte ho v nastavení telefonu, abyste mohli skenovat cívky.';
 }

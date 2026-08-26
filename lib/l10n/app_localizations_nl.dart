@@ -1298,4 +1298,11 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get stockNoMatch => 'Geen spoel komt overeen met de filters';
+
+  @override
+  String get nfcDisabledTitle => 'NFC uitgeschakeld';
+
+  @override
+  String get nfcDisabledMessage =>
+      'NFC is uitgeschakeld. Schakel het in via de telefooninstellingen om je spoelen te scannen.';
 }

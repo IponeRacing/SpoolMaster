@@ -1312,4 +1312,11 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get stockNoMatch => 'Keine Spule entspricht den Filtern';
+
+  @override
+  String get nfcDisabledTitle => 'NFC deaktiviert';
+
+  @override
+  String get nfcDisabledMessage =>
+      'NFC ist deaktiviert. Aktivieren Sie es in den Telefoneinstellungen, um Ihre Spulen zu scannen.';
 }

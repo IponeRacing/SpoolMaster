@@ -1282,4 +1282,10 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get stockNoMatch => '필터와 일치하는 스풀이 없습니다';
+
+  @override
+  String get nfcDisabledTitle => 'NFC 꺼짐';
+
+  @override
+  String get nfcDisabledMessage => 'NFC가 꺼져 있습니다. 스풀을 스캔하려면 휴대폰 설정에서 켜세요.';
 }

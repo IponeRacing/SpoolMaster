@@ -1299,4 +1299,11 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get stockNoMatch => 'Żadna szpula nie pasuje do filtrów';
+
+  @override
+  String get nfcDisabledTitle => 'NFC wyłączone';
+
+  @override
+  String get nfcDisabledMessage =>
+      'NFC jest wyłączone. Włącz je w ustawieniach telefonu, aby skanować szpule.';
 }

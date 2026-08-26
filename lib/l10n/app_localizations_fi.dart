@@ -1298,4 +1298,11 @@ class AppLocalizationsFi extends AppLocalizations {
 
   @override
   String get stockNoMatch => 'Mikään rulla ei vastaa suodattimia';
+
+  @override
+  String get nfcDisabledTitle => 'NFC pois käytöstä';
+
+  @override
+  String get nfcDisabledMessage =>
+      'NFC on pois käytöstä. Ota se käyttöön puhelimen asetuksista skannataksesi rullat.';
 }

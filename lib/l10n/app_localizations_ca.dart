@@ -1308,4 +1308,11 @@ class AppLocalizationsCa extends AppLocalizations {
 
   @override
   String get stockNoMatch => 'Cap bobina coincideix amb els filtres';
+
+  @override
+  String get nfcDisabledTitle => 'NFC desactivat';
+
+  @override
+  String get nfcDisabledMessage =>
+      'L\'NFC està desactivat. Activa\'l als ajustos del telèfon per escanejar les bobines.';
 }

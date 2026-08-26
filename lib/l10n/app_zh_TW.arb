@@ -467,5 +467,7 @@
   "stockSortColor": "顏色",
   "stockFilterAll": "全部",
   "stockResetFilters": "重設",
-  "stockNoMatch": "沒有符合篩選條件的線軸"
+  "stockNoMatch": "沒有符合篩選條件的線軸",
+  "nfcDisabledTitle": "NFC 已關閉",
+  "nfcDisabledMessage": "NFC 已關閉。請在手機設定中開啟，以掃描線軸。"
 }

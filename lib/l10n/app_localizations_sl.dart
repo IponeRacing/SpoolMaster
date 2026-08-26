@@ -1297,4 +1297,11 @@ class AppLocalizationsSl extends AppLocalizations {
 
   @override
   String get stockNoMatch => 'Nobena tuljava ne ustreza filtrom';
+
+  @override
+  String get nfcDisabledTitle => 'NFC izklopljen';
+
+  @override
+  String get nfcDisabledMessage =>
+      'NFC je izklopljen. Vklopite ga v nastavitvah telefona za skeniranje tuljav.';
 }

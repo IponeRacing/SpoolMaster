@@ -1304,4 +1304,11 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get stockNoMatch => 'Nessuna bobina corrisponde ai filtri';
+
+  @override
+  String get nfcDisabledTitle => 'NFC disattivato';
+
+  @override
+  String get nfcDisabledMessage =>
+      'L\'NFC è disattivato. Attivalo nelle impostazioni del telefono per scansionare le bobine.';
 }

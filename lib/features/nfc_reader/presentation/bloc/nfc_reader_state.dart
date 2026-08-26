@@ -82,4 +82,5 @@ enum NfcFailureType {
   tagNotDetected,
   incompatibleTag,
   authError,
+  nfcDisabled,
 }

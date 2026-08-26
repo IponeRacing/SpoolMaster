@@ -467,5 +467,7 @@
   "stockSortColor": "Warna",
   "stockFilterAll": "Semua",
   "stockResetFilters": "Atur ulang",
-  "stockNoMatch": "Tidak ada gulungan yang cocok dengan filter"
+  "stockNoMatch": "Tidak ada gulungan yang cocok dengan filter",
+  "nfcDisabledTitle": "NFC nonaktif",
+  "nfcDisabledMessage": "NFC nonaktif. Aktifkan di pengaturan ponsel untuk memindai gulungan Anda."
 }

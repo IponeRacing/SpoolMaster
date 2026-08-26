@@ -467,5 +467,7 @@
   "stockSortColor": "اللون",
   "stockFilterAll": "الكل",
   "stockResetFilters": "إعادة تعيين",
-  "stockNoMatch": "لا توجد بكرة تطابق عوامل التصفية"
+  "stockNoMatch": "لا توجد بكرة تطابق عوامل التصفية",
+  "nfcDisabledTitle": "‏NFC معطّل",
+  "nfcDisabledMessage": "‏NFC معطّل. فعّله من إعدادات الهاتف لمسح البكرات."
 }

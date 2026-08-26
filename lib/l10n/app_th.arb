@@ -467,5 +467,7 @@
   "stockSortColor": "สี",
   "stockFilterAll": "ทั้งหมด",
   "stockResetFilters": "รีเซ็ต",
-  "stockNoMatch": "ไม่มีม้วนที่ตรงกับตัวกรอง"
+  "stockNoMatch": "ไม่มีม้วนที่ตรงกับตัวกรอง",
+  "nfcDisabledTitle": "ปิด NFC อยู่",
+  "nfcDisabledMessage": "NFC ปิดอยู่ เปิดใช้งานในการตั้งค่าโทรศัพท์เพื่อสแกนม้วนวัสดุของคุณ"
 }

@@ -467,5 +467,7 @@
   "stockSortColor": "Color",
   "stockFilterAll": "Tots",
   "stockResetFilters": "Restableix",
-  "stockNoMatch": "Cap bobina coincideix amb els filtres"
+  "stockNoMatch": "Cap bobina coincideix amb els filtres",
+  "nfcDisabledTitle": "NFC desactivat",
+  "nfcDisabledMessage": "L'NFC està desactivat. Activa'l als ajustos del telèfon per escanejar les bobines."
 }

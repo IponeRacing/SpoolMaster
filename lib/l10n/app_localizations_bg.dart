@@ -1301,4 +1301,11 @@ class AppLocalizationsBg extends AppLocalizations {
 
   @override
   String get stockNoMatch => 'Няма ролка, отговаряща на филтрите';
+
+  @override
+  String get nfcDisabledTitle => 'NFC е изключено';
+
+  @override
+  String get nfcDisabledMessage =>
+      'NFC е изключено. Включете го в настройките на телефона, за да сканирате ролките.';
 }

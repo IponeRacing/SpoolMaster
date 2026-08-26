@@ -1301,4 +1301,11 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get stockNoMatch => 'Немає котушок, що відповідають фільтрам';
+
+  @override
+  String get nfcDisabledTitle => 'NFC вимкнено';
+
+  @override
+  String get nfcDisabledMessage =>
+      'NFC вимкнено. Увімкніть його в налаштуваннях телефона, щоб сканувати котушки.';
 }

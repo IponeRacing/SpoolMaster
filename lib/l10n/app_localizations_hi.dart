@@ -1299,4 +1299,11 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get stockNoMatch => 'कोई स्पूल फ़िल्टर से मेल नहीं खाता';
+
+  @override
+  String get nfcDisabledTitle => 'NFC बंद है';
+
+  @override
+  String get nfcDisabledMessage =>
+      'NFC बंद है। अपनी स्पूल स्कैन करने के लिए इसे फ़ोन सेटिंग में चालू करें।';
 }

@@ -467,5 +467,7 @@
   "stockSortColor": "Farbe",
   "stockFilterAll": "Alle",
   "stockResetFilters": "Zurücksetzen",
-  "stockNoMatch": "Keine Spule entspricht den Filtern"
+  "stockNoMatch": "Keine Spule entspricht den Filtern",
+  "nfcDisabledTitle": "NFC deaktiviert",
+  "nfcDisabledMessage": "NFC ist deaktiviert. Aktivieren Sie es in den Telefoneinstellungen, um Ihre Spulen zu scannen."
 }

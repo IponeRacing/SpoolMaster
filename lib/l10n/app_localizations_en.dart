@@ -1298,6 +1298,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get stockNoMatch => 'No spool matches the filters';
+
+  @override
+  String get nfcDisabledTitle => 'NFC turned off';
+
+  @override
+  String get nfcDisabledMessage =>
+      'NFC is turned off. Turn it on in your phone settings to scan your spools.';
 }
 
 /// The translations for English, as used in Australia (`en_AU`).
@@ -2582,6 +2589,13 @@ class AppLocalizationsEnAu extends AppLocalizationsEn {
 
   @override
   String get stockNoMatch => 'No spool matches the filters';
+
+  @override
+  String get nfcDisabledTitle => 'NFC turned off';
+
+  @override
+  String get nfcDisabledMessage =>
+      'NFC is turned off. Turn it on in your phone settings to scan your spools.';
 }
 
 /// The translations for English, as used in Canada (`en_CA`).
@@ -3866,6 +3880,13 @@ class AppLocalizationsEnCa extends AppLocalizationsEn {
 
   @override
   String get stockNoMatch => 'No spool matches the filters';
+
+  @override
+  String get nfcDisabledTitle => 'NFC turned off';
+
+  @override
+  String get nfcDisabledMessage =>
+      'NFC is turned off. Turn it on in your phone settings to scan your spools.';
 }
 
 /// The translations for English, as used in the United Kingdom (`en_GB`).
@@ -5150,4 +5171,11 @@ class AppLocalizationsEnGb extends AppLocalizationsEn {
 
   @override
   String get stockNoMatch => 'No spool matches the filters';
+
+  @override
+  String get nfcDisabledTitle => 'NFC turned off';
+
+  @override
+  String get nfcDisabledMessage =>
+      'NFC is turned off. Turn it on in your phone settings to scan your spools.';
 }

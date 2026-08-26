@@ -467,5 +467,7 @@
   "stockSortColor": "Kleur",
   "stockFilterAll": "Alle",
   "stockResetFilters": "Opnieuw instellen",
-  "stockNoMatch": "Geen spoel komt overeen met de filters"
+  "stockNoMatch": "Geen spoel komt overeen met de filters",
+  "nfcDisabledTitle": "NFC uitgeschakeld",
+  "nfcDisabledMessage": "NFC is uitgeschakeld. Schakel het in via de telefooninstellingen om je spoelen te scannen."
 }

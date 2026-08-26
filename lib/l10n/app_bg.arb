@@ -467,5 +467,7 @@
   "stockSortColor": "Цвят",
   "stockFilterAll": "Всички",
   "stockResetFilters": "Нулиране",
-  "stockNoMatch": "Няма ролка, отговаряща на филтрите"
+  "stockNoMatch": "Няма ролка, отговаряща на филтрите",
+  "nfcDisabledTitle": "NFC е изключено",
+  "nfcDisabledMessage": "NFC е изключено. Включете го в настройките на телефона, за да сканирате ролките."
 }

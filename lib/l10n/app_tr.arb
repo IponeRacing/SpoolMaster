@@ -467,5 +467,7 @@
   "stockSortColor": "Renk",
   "stockFilterAll": "Tümü",
   "stockResetFilters": "Sıfırla",
-  "stockNoMatch": "Filtrelerle eşleşen makara yok"
+  "stockNoMatch": "Filtrelerle eşleşen makara yok",
+  "nfcDisabledTitle": "NFC kapalı",
+  "nfcDisabledMessage": "NFC kapalı. Makaralarınızı taramak için telefon ayarlarından açın."
 }

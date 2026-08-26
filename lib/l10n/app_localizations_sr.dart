@@ -1299,4 +1299,11 @@ class AppLocalizationsSr extends AppLocalizations {
 
   @override
   String get stockNoMatch => 'Ниједан калем не одговара филтерима';
+
+  @override
+  String get nfcDisabledTitle => 'NFC искључен';
+
+  @override
+  String get nfcDisabledMessage =>
+      'NFC је искључен. Укључите га у подешавањима телефона да бисте скенирали калемове.';
 }

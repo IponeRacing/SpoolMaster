@@ -478,5 +478,7 @@
   "stockSortColor": "Color",
   "stockFilterAll": "All",
   "stockResetFilters": "Reset",
-  "stockNoMatch": "No spool matches the filters"
+  "stockNoMatch": "No spool matches the filters",
+  "nfcDisabledTitle": "NFC turned off",
+  "nfcDisabledMessage": "NFC is turned off. Turn it on in your phone settings to scan your spools."
 }

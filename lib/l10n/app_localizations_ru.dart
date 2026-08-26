@@ -1299,4 +1299,11 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get stockNoMatch => 'Нет катушек, соответствующих фильтрам';
+
+  @override
+  String get nfcDisabledTitle => 'NFC отключён';
+
+  @override
+  String get nfcDisabledMessage =>
+      'NFC отключён. Включите его в настройках телефона, чтобы сканировать катушки.';
 }

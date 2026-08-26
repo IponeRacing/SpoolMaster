@@ -467,5 +467,7 @@
   "stockSortColor": "Màu sắc",
   "stockFilterAll": "Tất cả",
   "stockResetFilters": "Đặt lại",
-  "stockNoMatch": "Không có cuộn nào khớp với bộ lọc"
+  "stockNoMatch": "Không có cuộn nào khớp với bộ lọc",
+  "nfcDisabledTitle": "NFC đã tắt",
+  "nfcDisabledMessage": "NFC đã tắt. Bật trong cài đặt điện thoại để quét cuộn của bạn."
 }

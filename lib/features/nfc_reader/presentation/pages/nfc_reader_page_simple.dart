@@ -570,6 +570,11 @@ class _NfcReaderViewState extends State<_NfcReaderView> {
                 failureColor = AppTheme.anycubicRed;
                 failureTitle = AppLocalizations.of(context)!.errorReadingNfc;
                 failureDetail = null;
+              case NfcFailureType.nfcDisabled:
+                failureIcon = Icons.nfc_outlined;
+                failureColor = Colors.orange;
+                failureTitle = AppLocalizations.of(context)!.nfcDisabledTitle;
+                failureDetail = AppLocalizations.of(context)!.nfcDisabledMessage;
             }
 
             return Center(

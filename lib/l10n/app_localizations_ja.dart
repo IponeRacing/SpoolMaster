@@ -1280,4 +1280,11 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get stockNoMatch => 'フィルターに一致するスプールがありません';
+
+  @override
+  String get nfcDisabledTitle => 'NFCがオフです';
+
+  @override
+  String get nfcDisabledMessage =>
+      'NFCがオフになっています。スプールをスキャンするには、端末の設定でオンにしてください。';
 }

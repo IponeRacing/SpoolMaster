@@ -467,5 +467,7 @@
   "stockSortColor": "Kolor",
   "stockFilterAll": "Wszystkie",
   "stockResetFilters": "Resetuj",
-  "stockNoMatch": "Żadna szpula nie pasuje do filtrów"
+  "stockNoMatch": "Żadna szpula nie pasuje do filtrów",
+  "nfcDisabledTitle": "NFC wyłączone",
+  "nfcDisabledMessage": "NFC jest wyłączone. Włącz je w ustawieniach telefonu, aby skanować szpule."
 }

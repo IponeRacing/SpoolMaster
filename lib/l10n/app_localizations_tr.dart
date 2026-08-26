@@ -1298,4 +1298,11 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get stockNoMatch => 'Filtrelerle eşleşen makara yok';
+
+  @override
+  String get nfcDisabledTitle => 'NFC kapalı';
+
+  @override
+  String get nfcDisabledMessage =>
+      'NFC kapalı. Makaralarınızı taramak için telefon ayarlarından açın.';
 }

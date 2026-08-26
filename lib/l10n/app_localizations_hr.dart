@@ -1299,4 +1299,11 @@ class AppLocalizationsHr extends AppLocalizations {
 
   @override
   String get stockNoMatch => 'Nijedna špula ne odgovara filtrima';
+
+  @override
+  String get nfcDisabledTitle => 'NFC isključen';
+
+  @override
+  String get nfcDisabledMessage =>
+      'NFC je isključen. Uključite ga u postavkama telefona da biste skenirali špule.';
 }

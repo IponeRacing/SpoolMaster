@@ -1292,4 +1292,11 @@ class AppLocalizationsHe extends AppLocalizations {
 
   @override
   String get stockNoMatch => 'אין סליל התואם את המסננים';
+
+  @override
+  String get nfcDisabledTitle => '‏NFC מושבת';
+
+  @override
+  String get nfcDisabledMessage =>
+      '‏NFC מושבת. הפעל אותו בהגדרות הטלפון כדי לסרוק את הסלילים.';
 }

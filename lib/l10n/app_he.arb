@@ -467,5 +467,7 @@
   "stockSortColor": "צבע",
   "stockFilterAll": "הכול",
   "stockResetFilters": "איפוס",
-  "stockNoMatch": "אין סליל התואם את המסננים"
+  "stockNoMatch": "אין סליל התואם את המסננים",
+  "nfcDisabledTitle": "‏NFC מושבת",
+  "nfcDisabledMessage": "‏NFC מושבת. הפעל אותו בהגדרות הטלפון כדי לסרוק את הסלילים."
 }

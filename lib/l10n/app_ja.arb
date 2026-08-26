@@ -467,5 +467,7 @@
   "stockSortColor": "色",
   "stockFilterAll": "すべて",
   "stockResetFilters": "リセット",
-  "stockNoMatch": "フィルターに一致するスプールがありません"
+  "stockNoMatch": "フィルターに一致するスプールがありません",
+  "nfcDisabledTitle": "NFCがオフです",
+  "nfcDisabledMessage": "NFCがオフになっています。スプールをスキャンするには、端末の設定でオンにしてください。"
 }

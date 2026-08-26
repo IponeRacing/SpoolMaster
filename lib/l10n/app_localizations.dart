@@ -2622,6 +2622,18 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Aucune bobine ne correspond aux filtres'**
   String get stockNoMatch;
+
+  /// No description provided for @nfcDisabledTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'NFC désactivé'**
+  String get nfcDisabledTitle;
+
+  /// No description provided for @nfcDisabledMessage.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le NFC est désactivé. Activez-le dans les réglages de votre téléphone pour scanner vos bobines.'**
+  String get nfcDisabledMessage;
 }
 
 class _AppLocalizationsDelegate

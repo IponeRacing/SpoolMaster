@@ -467,5 +467,7 @@
   "stockSortColor": "颜色",
   "stockFilterAll": "全部",
   "stockResetFilters": "重置",
-  "stockNoMatch": "没有符合筛选条件的线卷"
+  "stockNoMatch": "没有符合筛选条件的线卷",
+  "nfcDisabledTitle": "NFC 已关闭",
+  "nfcDisabledMessage": "NFC 已关闭。请在手机设置中开启，以扫描线卷。"
 }

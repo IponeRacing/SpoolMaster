@@ -1298,4 +1298,11 @@ class AppLocalizationsNo extends AppLocalizations {
 
   @override
   String get stockNoMatch => 'Ingen spole samsvarer med filtrene';
+
+  @override
+  String get nfcDisabledTitle => 'NFC av';
+
+  @override
+  String get nfcDisabledMessage =>
+      'NFC er av. Slå det på i telefoninnstillingene for å skanne spolene dine.';
 }

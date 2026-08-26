@@ -1300,4 +1300,11 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get stockNoMatch => 'Không có cuộn nào khớp với bộ lọc';
+
+  @override
+  String get nfcDisabledTitle => 'NFC đã tắt';
+
+  @override
+  String get nfcDisabledMessage =>
+      'NFC đã tắt. Bật trong cài đặt điện thoại để quét cuộn của bạn.';
 }

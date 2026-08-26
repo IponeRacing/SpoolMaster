@@ -467,5 +467,7 @@
   "stockSortColor": "Barva",
   "stockFilterAll": "Vse",
   "stockResetFilters": "Ponastavi",
-  "stockNoMatch": "Nobena tuljava ne ustreza filtrom"
+  "stockNoMatch": "Nobena tuljava ne ustreza filtrom",
+  "nfcDisabledTitle": "NFC izklopljen",
+  "nfcDisabledMessage": "NFC je izklopljen. Vklopite ga v nastavitvah telefona za skeniranje tuljav."
 }

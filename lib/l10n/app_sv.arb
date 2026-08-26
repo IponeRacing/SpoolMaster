@@ -467,5 +467,7 @@
   "stockSortColor": "Färg",
   "stockFilterAll": "Alla",
   "stockResetFilters": "Återställ",
-  "stockNoMatch": "Ingen spole matchar filtren"
+  "stockNoMatch": "Ingen spole matchar filtren",
+  "nfcDisabledTitle": "NFC avstängt",
+  "nfcDisabledMessage": "NFC är avstängt. Slå på det i telefonens inställningar för att skanna dina spolar."
 }

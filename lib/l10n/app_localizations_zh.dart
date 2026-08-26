@@ -1267,6 +1267,12 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get stockNoMatch => '没有符合筛选条件的线卷';
+
+  @override
+  String get nfcDisabledTitle => 'NFC 已关闭';
+
+  @override
+  String get nfcDisabledMessage => 'NFC 已关闭。请在手机设置中开启，以扫描线卷。';
 }
 
 /// The translations for Chinese, as used in Taiwan (`zh_TW`).
@@ -2520,4 +2526,10 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String get stockNoMatch => '沒有符合篩選條件的線軸';
+
+  @override
+  String get nfcDisabledTitle => 'NFC 已關閉';
+
+  @override
+  String get nfcDisabledMessage => 'NFC 已關閉。請在手機設定中開啟，以掃描線軸。';
 }

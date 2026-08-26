@@ -467,5 +467,7 @@
   "stockSortColor": "Farba",
   "stockFilterAll": "Všetko",
   "stockResetFilters": "Obnoviť",
-  "stockNoMatch": "Žiadna cievka nezodpovedá filtrom"
+  "stockNoMatch": "Žiadna cievka nezodpovedá filtrom",
+  "nfcDisabledTitle": "NFC vypnuté",
+  "nfcDisabledMessage": "NFC je vypnuté. Zapnite ho v nastaveniach telefónu, aby ste mohli skenovať cievky."
 }

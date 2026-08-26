@@ -467,5 +467,7 @@
   "stockSortColor": "रंग",
   "stockFilterAll": "सभी",
   "stockResetFilters": "रीसेट करें",
-  "stockNoMatch": "कोई स्पूल फ़िल्टर से मेल नहीं खाता"
+  "stockNoMatch": "कोई स्पूल फ़िल्टर से मेल नहीं खाता",
+  "nfcDisabledTitle": "NFC बंद है",
+  "nfcDisabledMessage": "NFC बंद है। अपनी स्पूल स्कैन करने के लिए इसे फ़ोन सेटिंग में चालू करें।"
 }

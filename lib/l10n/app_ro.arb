@@ -467,5 +467,7 @@
   "stockSortColor": "Culoare",
   "stockFilterAll": "Toate",
   "stockResetFilters": "Resetează",
-  "stockNoMatch": "Nicio bobină nu corespunde filtrelor"
+  "stockNoMatch": "Nicio bobină nu corespunde filtrelor",
+  "nfcDisabledTitle": "NFC dezactivat",
+  "nfcDisabledMessage": "NFC este dezactivat. Activează-l din setările telefonului pentru a scana bobinele."
 }

@@ -467,5 +467,7 @@
   "stockSortColor": "Boja",
   "stockFilterAll": "Sve",
   "stockResetFilters": "Poništi",
-  "stockNoMatch": "Nijedna špula ne odgovara filtrima"
+  "stockNoMatch": "Nijedna špula ne odgovara filtrima",
+  "nfcDisabledTitle": "NFC isključen",
+  "nfcDisabledMessage": "NFC je isključen. Uključite ga u postavkama telefona da biste skenirali špule."
 }

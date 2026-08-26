@@ -1299,4 +1299,11 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get stockNoMatch => 'Tiada gegelung sepadan dengan penapis';
+
+  @override
+  String get nfcDisabledTitle => 'NFC dimatikan';
+
+  @override
+  String get nfcDisabledMessage =>
+      'NFC dimatikan. Hidupkannya dalam tetapan telefon untuk mengimbas gegelung anda.';
 }

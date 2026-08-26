@@ -467,5 +467,7 @@
   "stockSortColor": "Väri",
   "stockFilterAll": "Kaikki",
   "stockResetFilters": "Nollaa",
-  "stockNoMatch": "Mikään rulla ei vastaa suodattimia"
+  "stockNoMatch": "Mikään rulla ei vastaa suodattimia",
+  "nfcDisabledTitle": "NFC pois käytöstä",
+  "nfcDisabledMessage": "NFC on pois käytöstä. Ota se käyttöön puhelimen asetuksista skannataksesi rullat."
 }

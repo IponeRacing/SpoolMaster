@@ -1298,4 +1298,11 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get stockNoMatch => 'Tidak ada gulungan yang cocok dengan filter';
+
+  @override
+  String get nfcDisabledTitle => 'NFC nonaktif';
+
+  @override
+  String get nfcDisabledMessage =>
+      'NFC nonaktif. Aktifkan di pengaturan ponsel untuk memindai gulungan Anda.';
 }

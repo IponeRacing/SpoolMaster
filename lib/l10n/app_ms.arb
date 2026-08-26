@@ -467,5 +467,7 @@
   "stockSortColor": "Warna",
   "stockFilterAll": "Semua",
   "stockResetFilters": "Set semula",
-  "stockNoMatch": "Tiada gegelung sepadan dengan penapis"
+  "stockNoMatch": "Tiada gegelung sepadan dengan penapis",
+  "nfcDisabledTitle": "NFC dimatikan",
+  "nfcDisabledMessage": "NFC dimatikan. Hidupkannya dalam tetapan telefon untuk mengimbas gegelung anda."
 }

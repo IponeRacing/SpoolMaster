@@ -1301,4 +1301,11 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String get stockNoMatch => 'Egy tekercs sem felel meg a szűrőknek';
+
+  @override
+  String get nfcDisabledTitle => 'NFC kikapcsolva';
+
+  @override
+  String get nfcDisabledMessage =>
+      'Az NFC ki van kapcsolva. Kapcsolja be a telefon beállításaiban a tekercsek beolvasásához.';
 }

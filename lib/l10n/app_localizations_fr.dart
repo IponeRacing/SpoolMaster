@@ -1303,6 +1303,13 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get stockNoMatch => 'Aucune bobine ne correspond aux filtres';
+
+  @override
+  String get nfcDisabledTitle => 'NFC désactivé';
+
+  @override
+  String get nfcDisabledMessage =>
+      'Le NFC est désactivé. Activez-le dans les réglages de votre téléphone pour scanner vos bobines.';
 }
 
 /// The translations for French, as used in Canada (`fr_CA`).
@@ -2592,4 +2599,11 @@ class AppLocalizationsFrCa extends AppLocalizationsFr {
 
   @override
   String get stockNoMatch => 'Aucune bobine ne correspond aux filtres';
+
+  @override
+  String get nfcDisabledTitle => 'NFC désactivé';
+
+  @override
+  String get nfcDisabledMessage =>
+      'Le NFC est désactivé. Activez-le dans les réglages de votre téléphone pour scanner vos bobines.';
 }

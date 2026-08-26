@@ -1307,4 +1307,11 @@ class AppLocalizationsEl extends AppLocalizations {
 
   @override
   String get stockNoMatch => 'Καμία μπομπίνα δεν ταιριάζει με τα φίλτρα';
+
+  @override
+  String get nfcDisabledTitle => 'Το NFC είναι απενεργοποιημένο';
+
+  @override
+  String get nfcDisabledMessage =>
+      'Το NFC είναι απενεργοποιημένο. Ενεργοποιήστε το στις ρυθμίσεις του τηλεφώνου για να σαρώσετε τις μπομπίνες.';
 }

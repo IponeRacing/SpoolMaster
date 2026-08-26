@@ -467,5 +467,7 @@
   "stockSortColor": "Farge",
   "stockFilterAll": "Alle",
   "stockResetFilters": "Tilbakestill",
-  "stockNoMatch": "Ingen spole samsvarer med filtrene"
+  "stockNoMatch": "Ingen spole samsvarer med filtrene",
+  "nfcDisabledTitle": "NFC av",
+  "nfcDisabledMessage": "NFC er av. Slå det på i telefoninnstillingene for å skanne spolene dine."
 }

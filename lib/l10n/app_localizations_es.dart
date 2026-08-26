@@ -1302,4 +1302,11 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get stockNoMatch => 'Ninguna bobina coincide con los filtros';
+
+  @override
+  String get nfcDisabledTitle => 'NFC desactivado';
+
+  @override
+  String get nfcDisabledMessage =>
+      'El NFC está desactivado. Actívalo en los ajustes del teléfono para escanear tus bobinas.';
 }

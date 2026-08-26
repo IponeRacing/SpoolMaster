@@ -1297,4 +1297,11 @@ class AppLocalizationsTh extends AppLocalizations {
 
   @override
   String get stockNoMatch => 'ไม่มีม้วนที่ตรงกับตัวกรอง';
+
+  @override
+  String get nfcDisabledTitle => 'ปิด NFC อยู่';
+
+  @override
+  String get nfcDisabledMessage =>
+      'NFC ปิดอยู่ เปิดใช้งานในการตั้งค่าโทรศัพท์เพื่อสแกนม้วนวัสดุของคุณ';
 }

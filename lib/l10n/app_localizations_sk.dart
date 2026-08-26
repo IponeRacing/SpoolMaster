@@ -1297,4 +1297,11 @@ class AppLocalizationsSk extends AppLocalizations {
 
   @override
   String get stockNoMatch => 'Žiadna cievka nezodpovedá filtrom';
+
+  @override
+  String get nfcDisabledTitle => 'NFC vypnuté';
+
+  @override
+  String get nfcDisabledMessage =>
+      'NFC je vypnuté. Zapnite ho v nastaveniach telefónu, aby ste mohli skenovať cievky.';
 }

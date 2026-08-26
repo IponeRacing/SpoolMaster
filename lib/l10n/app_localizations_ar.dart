@@ -1293,4 +1293,11 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get stockNoMatch => 'لا توجد بكرة تطابق عوامل التصفية';
+
+  @override
+  String get nfcDisabledTitle => '‏NFC معطّل';
+
+  @override
+  String get nfcDisabledMessage =>
+      '‏NFC معطّل. فعّله من إعدادات الهاتف لمسح البكرات.';
 }

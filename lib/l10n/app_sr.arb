@@ -467,5 +467,7 @@
   "stockSortColor": "Боја",
   "stockFilterAll": "Све",
   "stockResetFilters": "Ресетуј",
-  "stockNoMatch": "Ниједан калем не одговара филтерима"
+  "stockNoMatch": "Ниједан калем не одговара филтерима",
+  "nfcDisabledTitle": "NFC искључен",
+  "nfcDisabledMessage": "NFC је искључен. Укључите га у подешавањима телефона да бисте скенирали калемове."
 }

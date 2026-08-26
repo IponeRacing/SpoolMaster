@@ -467,5 +467,7 @@
   "stockSortColor": "Цвет",
   "stockFilterAll": "Все",
   "stockResetFilters": "Сбросить",
-  "stockNoMatch": "Нет катушек, соответствующих фильтрам"
+  "stockNoMatch": "Нет катушек, соответствующих фильтрам",
+  "nfcDisabledTitle": "NFC отключён",
+  "nfcDisabledMessage": "NFC отключён. Включите его в настройках телефона, чтобы сканировать катушки."
 }

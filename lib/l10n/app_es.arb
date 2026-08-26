@@ -467,5 +467,7 @@
   "stockSortColor": "Color",
   "stockFilterAll": "Todos",
   "stockResetFilters": "Restablecer",
-  "stockNoMatch": "Ninguna bobina coincide con los filtros"
+  "stockNoMatch": "Ninguna bobina coincide con los filtros",
+  "nfcDisabledTitle": "NFC desactivado",
+  "nfcDisabledMessage": "El NFC está desactivado. Actívalo en los ajustes del teléfono para escanear tus bobinas."
 }

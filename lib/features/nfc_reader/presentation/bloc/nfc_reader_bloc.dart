@@ -97,6 +97,14 @@ class NfcReaderBloc extends Bloc<NfcReaderEvent, NfcReaderState> {
     }
   }
 
+  /// Vrai si l'échec vient d'un NFC désactivé sur l'appareil. Le natif renvoie
+  /// le code "NFC_DISABLED" / message "NFC is disabled" (stable, contrôlé par
+  /// nous), éventuellement enveloppé dans un message de brand.
+  bool _isNfcDisabledFailure(Failure failure) {
+    final m = failure.message.toLowerCase();
+    return m.contains('nfc_disabled') || m.contains('nfc is disabled');
+  }
+
   /// Déduit le mode NFC à partir de la marque détectée
   String _detectModeFromBrand(String? brand) {
     switch (brand?.toLowerCase()) {
@@ -128,6 +136,19 @@ class NfcReaderBloc extends Bloc<NfcReaderEvent, NfcReaderState> {
         if (failure is NfcSessionCancelledFailure) {
           developer.log("ℹ️ [BLOC] Scan annulé par l'utilisateur");
           emit(const NfcAvailable());
+          return;
+        }
+
+        // NFC désactivé : message dédié (pas d'erreur brute "NFC is disabled"),
+        // et on ne tente pas le fallback auto-detect (inutile, échouera pareil).
+        if (_isNfcDisabledFailure(failure)) {
+          developer.log('📴 [BLOC] NFC désactivé sur appareil');
+          unawaited(AnalyticsService.logNfcScan(
+            scanType: 'scan_nfc', brand: _brandFromMode(nfcMode),
+            success: false, errorMessage: 'NFC_DISABLED',
+            nfcMode: nfcMode, entryPoint: event.entryPoint,
+          ));
+          emit(const NfcReaderFailure('', failureType: NfcFailureType.nfcDisabled));
           return;
         }
 
@@ -296,6 +317,18 @@ class NfcReaderBloc extends Bloc<NfcReaderEvent, NfcReaderState> {
       (failure) async {
         if (failure is NfcSessionCancelledFailure) {
           emit(const NfcAvailable());
+          return;
+        }
+
+        // NFC désactivé : message dédié localisé (pas d'erreur brute).
+        if (_isNfcDisabledFailure(failure)) {
+          developer.log('📴 [BLOC] NFC désactivé sur appareil (auto-detect)');
+          unawaited(AnalyticsService.logNfcScan(
+            scanType: 'scan_nfc_auto_detect', success: false,
+            errorMessage: 'NFC_DISABLED', nfcMode: 'auto',
+            entryPoint: event.entryPoint,
+          ));
+          emit(const NfcReaderFailure('', failureType: NfcFailureType.nfcDisabled));
           return;
         }
 

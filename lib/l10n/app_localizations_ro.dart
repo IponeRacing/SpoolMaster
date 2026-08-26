@@ -1299,4 +1299,11 @@ class AppLocalizationsRo extends AppLocalizations {
 
   @override
   String get stockNoMatch => 'Nicio bobină nu corespunde filtrelor';
+
+  @override
+  String get nfcDisabledTitle => 'NFC dezactivat';
+
+  @override
+  String get nfcDisabledMessage =>
+      'NFC este dezactivat. Activează-l din setările telefonului pentru a scana bobinele.';
 }
