@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:nfc_filament/core/models/spool_inventory_item.dart';
+import 'package:nfc_filament/core/widgets/filament_autocomplete_field.dart';
+import 'package:nfc_filament/features/nfc_reader/data/services/filament_library.dart';
 import 'package:nfc_filament/core/services/brands_materials_service.dart';
 import 'package:nfc_filament/core/services/user_preferences_service.dart';
 import 'package:nfc_filament/core/widgets/formatted_value_widgets.dart';
@@ -234,8 +236,9 @@ class _ManualAddSpoolPageState extends State<ManualAddSpoolPage> {
               Row(
                 children: [
                   Expanded(
-                    child: TextFormField(
+                    child: FilamentAutocompleteField(
                       controller: _brandController,
+                      options: kFilamentBrands,
                       decoration: InputDecoration(
                         labelText: AppLocalizations.of(context)!.customBrand,
                         hintText: AppLocalizations.of(context)!.customBrandHint,
@@ -301,8 +304,10 @@ class _ManualAddSpoolPageState extends State<ManualAddSpoolPage> {
               Row(
                 children: [
                   Expanded(
-                    child: TextFormField(
+                    child: FilamentAutocompleteField(
                       controller: _materialController,
+                      options: kFilamentMaterials,
+                      textCapitalization: TextCapitalization.characters,
                       decoration: InputDecoration(
                         labelText: AppLocalizations.of(context)!.customMaterial,
                         hintText: AppLocalizations.of(
