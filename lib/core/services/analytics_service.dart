@@ -8,6 +8,7 @@ import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:nfc_filament/core/api/api_config.dart';
 import 'package:nfc_filament/core/services/auth_service.dart';
+import 'package:nfc_filament/core/services/nfc_scan_diagnostics.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -181,6 +182,12 @@ class AnalyticsService {
         // Code d'erreur normalisé (taxonomie) → agrégation propre, sans parser
         // le message libre. Ex: TAG_NOT_DETECTED, NFC_DISABLED, TAG_MOVED…
         if (errorCode != null) 'error_code': errorCode,
+        // Télémétrie de lecture (renseignée par le natif via NfcScanDiagnostics) :
+        // read_attempts>1 = un retry a sauvé le scan ; tag_tech = techno du chip.
+        if (NfcScanDiagnostics.readAttempts != null) 'read_attempts': NfcScanDiagnostics.readAttempts,
+        if (NfcScanDiagnostics.tagTech != null) 'tag_tech': NfcScanDiagnostics.tagTech,
+        if (NfcScanDiagnostics.sessionRetries != null) 'session_retries': NfcScanDiagnostics.sessionRetries,
+        if (NfcScanDiagnostics.detectDelayMs != null) 'detect_delay_ms': NfcScanDiagnostics.detectDelayMs,
         if (rawTagData != null) 'raw_tag_data': rawTagData,
         if (rawBytesCount != null) 'raw_bytes_count': rawBytesCount,
         if (sessionDurationMs != null) 'session_duration_ms': sessionDurationMs,

@@ -6,6 +6,7 @@ import 'package:injectable/injectable.dart';
 import 'package:nfc_filament/core/errors/failures.dart';
 import 'package:nfc_filament/core/services/admob_service.dart';
 import 'package:nfc_filament/core/services/analytics_service.dart';
+import 'package:nfc_filament/core/services/nfc_scan_diagnostics.dart';
 import 'package:nfc_filament/core/services/review_service.dart';
 import 'package:nfc_filament/core/services/user_preferences_service.dart';
 import 'package:nfc_filament/features/nfc_reader/data/models/scan_history_model.dart';
@@ -153,6 +154,7 @@ class NfcReaderBloc extends Bloc<NfcReaderEvent, NfcReaderState> {
     // Mode NFC : override (fallback B) ou préférence utilisateur
     final nfcMode = event.overrideMode ?? await UserPreferencesService.getNfcMode();
     AnalyticsService.setScanContext(nfcMode: nfcMode, entryPoint: event.entryPoint);
+    NfcScanDiagnostics.reset();
 
     final result = await readBobbinData(nfcMode: nfcMode);
 
@@ -351,6 +353,7 @@ class NfcReaderBloc extends Bloc<NfcReaderEvent, NfcReaderState> {
   ) async {
     emit(const NfcReaderLoading());
     AnalyticsService.setScanContext(nfcMode: 'auto', entryPoint: event.entryPoint);
+    NfcScanDiagnostics.reset();
 
     final result = await readBobbinDataAutoDetect();
 

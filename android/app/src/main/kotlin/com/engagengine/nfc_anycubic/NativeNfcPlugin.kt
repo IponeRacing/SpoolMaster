@@ -94,6 +94,11 @@ class NativeNfcPlugin private constructor(
     private var nfcAdapter: NfcAdapter? = null
     private var pendingResult: MethodChannel.Result? = null
     private var currentMode: NfcMode = NfcMode.IDLE
+    // Télémétrie : nb de passes de lecture ayant réussi (mesure l'utilité du
+    // retry) et technologie du tag détecté (quels chips réussissent/échouent).
+    private var lastReadAttempts = 0
+    private var lastTagTech = ""
+    private var lastDetectDelayMs = -1L
     private var pagesToWrite: List<Map<String, Any>>? = null
     private var bambuBlocksToWrite: Map<String, List<Int>>? = null
 
@@ -549,6 +554,10 @@ class NativeNfcPlugin private constructor(
         val detectDelay = if (sessionStartTimeMs > 0) System.currentTimeMillis() - sessionStartTimeMs else -1
         val nfcA = tag?.let { NfcA.get(it) }
         Log.i(TAG, "📡 Tag discovered: techs=[${tag?.techList?.joinToString()}], id=${tag?.id?.joinToString(":") { String.format("%02x", it) }}, SAK=${nfcA?.sak}, ATQA=${nfcA?.atqa?.joinToString(" ") { String.format("%02X", it) }}, detect_delay=${detectDelay}ms, mode=$currentMode")
+        // Télémétrie : technologie du tag (sans le préfixe android.nfc.tech.) + reset attempts.
+        lastTagTech = tag?.techList?.joinToString(",") { it.substringAfterLast('.') } ?: ""
+        lastDetectDelayMs = detectDelay
+        lastReadAttempts = 0
         cancelTimeout() // Tag found, cancel the timeout
         tagWasDetected = true
         tagDetectedTimeMs = System.currentTimeMillis()
@@ -630,10 +639,11 @@ class NativeNfcPlugin private constructor(
     private fun readUltralightAllPages(mifare: MifareUltralight): ByteArray {
         for (attempt in 1..READ_ATTEMPTS) {
             val data = readUltralightAllPagesOnce(mifare)
-            if (data.isNotEmpty()) return data
+            if (data.isNotEmpty()) { lastReadAttempts = attempt; return data }
             Log.w(TAG, "Ultralight full-read attempt $attempt returned 0 bytes — reconnecting for full retry")
             if (attempt < READ_ATTEMPTS) reconnect(mifare) { mifare.connect(); mifare.timeout = 2000 }
         }
+        lastReadAttempts = READ_ATTEMPTS
         return ByteArray(0)
     }
 
@@ -685,10 +695,11 @@ class NativeNfcPlugin private constructor(
     private fun readNfcAAllPages(nfcA: NfcA): ByteArray {
         for (attempt in 1..READ_ATTEMPTS) {
             val data = readNfcAAllPagesOnce(nfcA)
-            if (data.isNotEmpty()) return data
+            if (data.isNotEmpty()) { lastReadAttempts = attempt; return data }
             Log.w(TAG, "NfcA full-read attempt $attempt returned 0 bytes — reconnecting for full retry")
             if (attempt < READ_ATTEMPTS) reconnect(nfcA) { nfcA.connect(); nfcA.timeout = 2000 }
         }
+        lastReadAttempts = READ_ATTEMPTS
         return ByteArray(0)
     }
 
@@ -737,7 +748,10 @@ class NativeNfcPlugin private constructor(
 
             val resultData = mapOf(
                 "data" to readData.decodeToStringOrEmpty(),
-                "rawBytes" to readData.map { it.toInt() and 0xFF }
+                "rawBytes" to readData.map { it.toInt() and 0xFF },
+                "read_attempts" to lastReadAttempts,
+                "tag_tech" to lastTagTech,
+                "detect_delay_ms" to lastDetectDelayMs
             )
 
             sendSuccess(resultData)
@@ -765,7 +779,10 @@ class NativeNfcPlugin private constructor(
 
             val resultData = mapOf(
                 "data" to readData.decodeToStringOrEmpty(),
-                "rawBytes" to readData.map { it.toInt() and 0xFF }
+                "rawBytes" to readData.map { it.toInt() and 0xFF },
+                "read_attempts" to lastReadAttempts,
+                "tag_tech" to lastTagTech,
+                "detect_delay_ms" to lastDetectDelayMs
             )
 
             sendSuccess(resultData)
@@ -969,6 +986,9 @@ class NativeNfcPlugin private constructor(
             val resultData = mapOf(
                 "data" to readData.decodeToStringOrEmpty(),
                 "rawBytes" to readData.map { it.toInt() and 0xFF },
+                "read_attempts" to lastReadAttempts,
+                "tag_tech" to lastTagTech,
+                "detect_delay_ms" to lastDetectDelayMs,
                 "tagType" to tagType
             )
 
@@ -996,6 +1016,9 @@ class NativeNfcPlugin private constructor(
             val resultData = mapOf(
                 "data" to readData.decodeToStringOrEmpty(),
                 "rawBytes" to readData.map { it.toInt() and 0xFF },
+                "read_attempts" to lastReadAttempts,
+                "tag_tech" to lastTagTech,
+                "detect_delay_ms" to lastDetectDelayMs,
                 "tagType" to tagType
             )
 

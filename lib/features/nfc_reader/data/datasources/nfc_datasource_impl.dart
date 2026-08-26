@@ -5,6 +5,7 @@ import 'dart:developer' as developer;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:injectable/injectable.dart';
+import 'package:nfc_filament/core/services/nfc_scan_diagnostics.dart';
 import 'package:nfc_filament/core/errors/failures.dart';
 import 'package:nfc_filament/core/services/user_preferences_service.dart';
 import 'package:nfc_filament/features/nfc_reader/data/datasources/nfc_datasource.dart';
@@ -248,6 +249,7 @@ class NfcDataSourceImpl implements NfcDataSource {
 
     try {
       final result = await NativeNfc.startReadSession();
+      NfcScanDiagnostics.updateFromNative(result);
 
       final data = <String, dynamic>{
         'data': result['data'] as String? ?? '',
@@ -314,6 +316,7 @@ class NfcDataSourceImpl implements NfcDataSource {
     try {
       // Utiliser le plugin natif qui gère correctement la connexion (Anycubic)
       final result = await NativeNfc.startReadSession();
+      NfcScanDiagnostics.updateFromNative(result);
 
       // Récupérer les bytes bruts (pas la string UTF8 qui échoue)
       rawBytes =
@@ -754,6 +757,7 @@ class NfcDataSourceImpl implements NfcDataSource {
       final result = await NativeNfc.startAutoDetectReadSession(
         iso14443Only: !kIsWeb && defaultTargetPlatform == TargetPlatform.iOS,
       );
+      NfcScanDiagnostics.updateFromNative(result);
       final tagType = result['tagType'] as String?;
       developer.log('🔍 Auto-detect tagType: $tagType');
 
