@@ -2559,6 +2559,18 @@ class AppLocalizationsEnAu extends AppLocalizationsEn {
   String get colorHintExamples => 'Red, Blue, Black...';
 
   @override
+  String get dryingTemp => 'Drying temperature';
+
+  @override
+  String get dryingTempHint => 'e.g. 55';
+
+  @override
+  String get dryingTime => 'Drying time (hours)';
+
+  @override
+  String get dryingTimeHint => 'e.g. 8';
+
+  @override
   String fallbackDetectedAs(String mode) {
     return 'Tag detected as $mode — switch tab for next scans';
   }
@@ -3878,6 +3890,18 @@ class AppLocalizationsEnCa extends AppLocalizationsEn {
   String get colorHintExamples => 'Red, Blue, Black...';
 
   @override
+  String get dryingTemp => 'Drying temperature';
+
+  @override
+  String get dryingTempHint => 'e.g. 55';
+
+  @override
+  String get dryingTime => 'Drying time (hours)';
+
+  @override
+  String get dryingTimeHint => 'e.g. 8';
+
+  @override
   String fallbackDetectedAs(String mode) {
     return 'Tag detected as $mode — switch tab for next scans';
   }
@@ -5195,6 +5219,18 @@ class AppLocalizationsEnGb extends AppLocalizationsEn {
 
   @override
   String get colorHintExamples => 'Red, Blue, Black...';
+
+  @override
+  String get dryingTemp => 'Drying temperature';
+
+  @override
+  String get dryingTempHint => 'e.g. 55';
+
+  @override
+  String get dryingTime => 'Drying time (hours)';
+
+  @override
+  String get dryingTimeHint => 'e.g. 8';
 
   @override
   String fallbackDetectedAs(String mode) {

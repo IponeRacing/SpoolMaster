@@ -1225,16 +1225,16 @@ class AppLocalizationsCs extends AppLocalizations {
   String get colorHintExamples => 'Červená, Modrá, Černá...';
 
   @override
-  String get dryingTemp => 'Température de séchage';
+  String get dryingTemp => 'Teplota sušení';
 
   @override
-  String get dryingTempHint => 'ex. 55';
+  String get dryingTempHint => 'např. 55';
 
   @override
-  String get dryingTime => 'Temps de séchage (heures)';
+  String get dryingTime => 'Doba sušení (hodiny)';
 
   @override
-  String get dryingTimeHint => 'ex. 8';
+  String get dryingTimeHint => 'např. 8';
 
   @override
   String fallbackDetectedAs(String mode) {

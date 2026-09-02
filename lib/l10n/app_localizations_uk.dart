@@ -1231,16 +1231,16 @@ class AppLocalizationsUk extends AppLocalizations {
   String get colorHintExamples => 'Червоний, Синій, Чорний...';
 
   @override
-  String get dryingTemp => 'Température de séchage';
+  String get dryingTemp => 'Температура сушіння';
 
   @override
-  String get dryingTempHint => 'ex. 55';
+  String get dryingTempHint => 'напр. 55';
 
   @override
-  String get dryingTime => 'Temps de séchage (heures)';
+  String get dryingTime => 'Час сушіння (години)';
 
   @override
-  String get dryingTimeHint => 'ex. 8';
+  String get dryingTimeHint => 'напр. 8';
 
   @override
   String fallbackDetectedAs(String mode) {

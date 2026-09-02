@@ -477,5 +477,9 @@
   "updateLater": "Kemudian",
   "nfcScanGuidance": "Pegang tag tanpa bergerak pada bahagian atas atau belakang telefon.",
   "tagMovedTitle": "Tag bergerak",
-  "tagMovedMessage": "Tag bergerak semasa membaca. Letakkan semula dan pegang telefon tanpa bergerak."
+  "tagMovedMessage": "Tag bergerak semasa membaca. Letakkan semula dan pegang telefon tanpa bergerak.",
+  "dryingTemp": "Suhu pengeringan",
+  "dryingTempHint": "cth. 55",
+  "dryingTime": "Masa pengeringan (jam)",
+  "dryingTimeHint": "cth. 8"
 }

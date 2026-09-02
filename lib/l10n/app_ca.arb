@@ -477,5 +477,9 @@
   "updateLater": "Més tard",
   "nfcScanGuidance": "Mantén l'etiqueta immòbil contra la part superior o posterior del telèfon.",
   "tagMovedTitle": "Etiqueta moguda",
-  "tagMovedMessage": "L'etiqueta s'ha mogut durant la lectura. Torna a col·locar-la i mantén el telèfon immòbil."
+  "tagMovedMessage": "L'etiqueta s'ha mogut durant la lectura. Torna a col·locar-la i mantén el telèfon immòbil.",
+  "dryingTemp": "Temperatura d'assecatge",
+  "dryingTempHint": "p. ex. 55",
+  "dryingTime": "Temps d'assecatge (hores)",
+  "dryingTimeHint": "p. ex. 8"
 }

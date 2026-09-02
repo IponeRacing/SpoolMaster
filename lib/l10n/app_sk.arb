@@ -477,5 +477,9 @@
   "updateLater": "Neskôr",
   "nfcScanGuidance": "Držte tag nehybne pri hornej alebo zadnej časti telefónu.",
   "tagMovedTitle": "Tag sa pohol",
-  "tagMovedMessage": "Tag sa počas čítania pohol. Priložte ho znova a držte telefón nehybne."
+  "tagMovedMessage": "Tag sa počas čítania pohol. Priložte ho znova a držte telefón nehybne.",
+  "dryingTemp": "Teplota sušenia",
+  "dryingTempHint": "napr. 55",
+  "dryingTime": "Čas sušenia (hodiny)",
+  "dryingTimeHint": "napr. 8"
 }

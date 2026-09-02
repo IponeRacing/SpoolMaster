@@ -1229,16 +1229,16 @@ class AppLocalizationsSr extends AppLocalizations {
   String get colorHintExamples => 'Црвена, Плава, Црна...';
 
   @override
-  String get dryingTemp => 'Température de séchage';
+  String get dryingTemp => 'Температура сушења';
 
   @override
-  String get dryingTempHint => 'ex. 55';
+  String get dryingTempHint => 'нпр. 55';
 
   @override
-  String get dryingTime => 'Temps de séchage (heures)';
+  String get dryingTime => 'Време сушења (сати)';
 
   @override
-  String get dryingTimeHint => 'ex. 8';
+  String get dryingTimeHint => 'нпр. 8';
 
   @override
   String fallbackDetectedAs(String mode) {

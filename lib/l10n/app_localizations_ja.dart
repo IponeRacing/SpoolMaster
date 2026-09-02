@@ -1212,16 +1212,16 @@ class AppLocalizationsJa extends AppLocalizations {
   String get colorHintExamples => '赤、青、黒...';
 
   @override
-  String get dryingTemp => 'Température de séchage';
+  String get dryingTemp => '乾燥温度';
 
   @override
-  String get dryingTempHint => 'ex. 55';
+  String get dryingTempHint => '例: 55';
 
   @override
-  String get dryingTime => 'Temps de séchage (heures)';
+  String get dryingTime => '乾燥時間（時間）';
 
   @override
-  String get dryingTimeHint => 'ex. 8';
+  String get dryingTimeHint => '例: 8';
 
   @override
   String fallbackDetectedAs(String mode) {

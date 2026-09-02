@@ -477,5 +477,9 @@
   "updateLater": "後で",
   "nfcScanGuidance": "タグを動かさず、スマホの上部または背面に当ててください。",
   "tagMovedTitle": "タグが動きました",
-  "tagMovedMessage": "読み取り中にタグが動きました。もう一度当てて、スマホを動かさないでください。"
+  "tagMovedMessage": "読み取り中にタグが動きました。もう一度当てて、スマホを動かさないでください。",
+  "dryingTemp": "乾燥温度",
+  "dryingTempHint": "例: 55",
+  "dryingTime": "乾燥時間（時間）",
+  "dryingTimeHint": "例: 8"
 }

@@ -1213,16 +1213,16 @@ class AppLocalizationsKo extends AppLocalizations {
   String get colorHintExamples => '빨강, 파랑, 검정...';
 
   @override
-  String get dryingTemp => 'Température de séchage';
+  String get dryingTemp => '건조 온도';
 
   @override
-  String get dryingTempHint => 'ex. 55';
+  String get dryingTempHint => '예: 55';
 
   @override
-  String get dryingTime => 'Temps de séchage (heures)';
+  String get dryingTime => '건조 시간(시간)';
 
   @override
-  String get dryingTimeHint => 'ex. 8';
+  String get dryingTimeHint => '예: 8';
 
   @override
   String fallbackDetectedAs(String mode) {

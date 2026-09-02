@@ -477,5 +477,9 @@
   "updateLater": "Później",
   "nfcScanGuidance": "Trzymaj tag nieruchomo przy górnej lub tylnej części telefonu.",
   "tagMovedTitle": "Tag się poruszył",
-  "tagMovedMessage": "Tag poruszył się podczas odczytu. Przyłóż go ponownie i trzymaj telefon nieruchomo."
+  "tagMovedMessage": "Tag poruszył się podczas odczytu. Przyłóż go ponownie i trzymaj telefon nieruchomo.",
+  "dryingTemp": "Temperatura suszenia",
+  "dryingTempHint": "np. 55",
+  "dryingTime": "Czas suszenia (godziny)",
+  "dryingTimeHint": "np. 8"
 }

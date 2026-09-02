@@ -1229,13 +1229,13 @@ class AppLocalizationsRo extends AppLocalizations {
   String get colorHintExamples => 'Roșu, Albastru, Negru...';
 
   @override
-  String get dryingTemp => 'Température de séchage';
+  String get dryingTemp => 'Temperatură de uscare';
 
   @override
   String get dryingTempHint => 'ex. 55';
 
   @override
-  String get dryingTime => 'Temps de séchage (heures)';
+  String get dryingTime => 'Timp de uscare (ore)';
 
   @override
   String get dryingTimeHint => 'ex. 8';

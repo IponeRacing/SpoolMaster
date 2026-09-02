@@ -477,5 +477,9 @@
   "updateLater": "Kasnije",
   "nfcScanGuidance": "Držite oznaku mirno uz vrh ili stražnju stranu telefona.",
   "tagMovedTitle": "Oznaka se pomaknula",
-  "tagMovedMessage": "Oznaka se pomaknula tijekom čitanja. Vratite je i držite telefon mirno."
+  "tagMovedMessage": "Oznaka se pomaknula tijekom čitanja. Vratite je i držite telefon mirno.",
+  "dryingTemp": "Temperatura sušenja",
+  "dryingTempHint": "npr. 55",
+  "dryingTime": "Vrijeme sušenja (sati)",
+  "dryingTimeHint": "npr. 8"
 }

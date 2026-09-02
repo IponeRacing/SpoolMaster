@@ -477,5 +477,9 @@
   "updateLater": "Később",
   "nfcScanGuidance": "Tartsa a címkét mozdulatlanul a telefon teteje vagy hátulja felé.",
   "tagMovedTitle": "A címke elmozdult",
-  "tagMovedMessage": "A címke olvasás közben elmozdult. Helyezze vissza, és tartsa a telefont mozdulatlanul."
+  "tagMovedMessage": "A címke olvasás közben elmozdult. Helyezze vissza, és tartsa a telefont mozdulatlanul.",
+  "dryingTemp": "Szárítási hőmérséklet",
+  "dryingTempHint": "pl. 55",
+  "dryingTime": "Szárítási idő (óra)",
+  "dryingTimeHint": "pl. 8"
 }

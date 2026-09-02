@@ -477,5 +477,9 @@
   "updateLater": "Más tarde",
   "nfcScanGuidance": "Mantén el tag inmóvil contra la parte superior o trasera del teléfono.",
   "tagMovedTitle": "Tag movido",
-  "tagMovedMessage": "El tag se movió durante la lectura. Vuelve a colocarlo y mantén el teléfono inmóvil."
+  "tagMovedMessage": "El tag se movió durante la lectura. Vuelve a colocarlo y mantén el teléfono inmóvil.",
+  "dryingTemp": "Temperatura de secado",
+  "dryingTempHint": "p. ej. 55",
+  "dryingTime": "Tiempo de secado (horas)",
+  "dryingTimeHint": "p. ej. 8"
 }

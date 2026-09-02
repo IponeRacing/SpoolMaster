@@ -477,5 +477,9 @@
   "updateLater": "Để sau",
   "nfcScanGuidance": "Giữ thẻ cố định ở phía trên hoặc mặt sau điện thoại.",
   "tagMovedTitle": "Thẻ bị di chuyển",
-  "tagMovedMessage": "Thẻ đã di chuyển khi đang đọc. Đặt lại và giữ điện thoại cố định."
+  "tagMovedMessage": "Thẻ đã di chuyển khi đang đọc. Đặt lại và giữ điện thoại cố định.",
+  "dryingTemp": "Nhiệt độ sấy",
+  "dryingTempHint": "vd. 55",
+  "dryingTime": "Thời gian sấy (giờ)",
+  "dryingTimeHint": "vd. 8"
 }

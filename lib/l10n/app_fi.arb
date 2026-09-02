@@ -477,5 +477,9 @@
   "updateLater": "Myöhemmin",
   "nfcScanGuidance": "Pidä tagia paikallaan puhelimen ylä- tai takaosaa vasten.",
   "tagMovedTitle": "Tagi liikkui",
-  "tagMovedMessage": "Tagi liikkui lukemisen aikana. Aseta se takaisin ja pidä puhelin paikallaan."
+  "tagMovedMessage": "Tagi liikkui lukemisen aikana. Aseta se takaisin ja pidä puhelin paikallaan.",
+  "dryingTemp": "Kuivauslämpötila",
+  "dryingTempHint": "esim. 55",
+  "dryingTime": "Kuivausaika (tunnit)",
+  "dryingTimeHint": "esim. 8"
 }

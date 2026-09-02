@@ -477,5 +477,9 @@
   "updateLater": "Senere",
   "nfcScanGuidance": "Hold taggen stille mot toppen eller baksiden av telefonen.",
   "tagMovedTitle": "Taggen flyttet seg",
-  "tagMovedMessage": "Taggen flyttet seg under lesing. Legg den tilbake og hold telefonen stille."
+  "tagMovedMessage": "Taggen flyttet seg under lesing. Legg den tilbake og hold telefonen stille.",
+  "dryingTemp": "Tørketemperatur",
+  "dryingTempHint": "f.eks. 55",
+  "dryingTime": "Tørketid (timer)",
+  "dryingTimeHint": "f.eks. 8"
 }

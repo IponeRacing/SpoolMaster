@@ -1228,16 +1228,16 @@ class AppLocalizationsFi extends AppLocalizations {
   String get colorHintExamples => 'Punainen, Sininen, Musta...';
 
   @override
-  String get dryingTemp => 'Température de séchage';
+  String get dryingTemp => 'Kuivauslämpötila';
 
   @override
-  String get dryingTempHint => 'ex. 55';
+  String get dryingTempHint => 'esim. 55';
 
   @override
-  String get dryingTime => 'Temps de séchage (heures)';
+  String get dryingTime => 'Kuivausaika (tunnit)';
 
   @override
-  String get dryingTimeHint => 'ex. 8';
+  String get dryingTimeHint => 'esim. 8';
 
   @override
   String fallbackDetectedAs(String mode) {

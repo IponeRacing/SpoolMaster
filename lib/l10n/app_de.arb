@@ -477,5 +477,9 @@
   "updateLater": "Später",
   "nfcScanGuidance": "Halten Sie den Tag ruhig an die Ober- oder Rückseite des Telefons.",
   "tagMovedTitle": "Tag bewegt",
-  "tagMovedMessage": "Der Tag hat sich während des Lesens bewegt. Legen Sie ihn wieder an und halten Sie das Telefon ruhig."
+  "tagMovedMessage": "Der Tag hat sich während des Lesens bewegt. Legen Sie ihn wieder an und halten Sie das Telefon ruhig.",
+  "dryingTemp": "Trocknungstemperatur",
+  "dryingTempHint": "z. B. 55",
+  "dryingTime": "Trocknungszeit (Stunden)",
+  "dryingTimeHint": "z. B. 8"
 }

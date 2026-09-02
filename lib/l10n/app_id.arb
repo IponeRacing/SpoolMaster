@@ -477,5 +477,9 @@
   "updateLater": "Nanti",
   "nfcScanGuidance": "Tahan tag diam di bagian atas atau belakang ponsel.",
   "tagMovedTitle": "Tag bergerak",
-  "tagMovedMessage": "Tag bergerak saat membaca. Tempelkan lagi dan tahan ponsel tetap diam."
+  "tagMovedMessage": "Tag bergerak saat membaca. Tempelkan lagi dan tahan ponsel tetap diam.",
+  "dryingTemp": "Suhu pengeringan",
+  "dryingTempHint": "mis. 55",
+  "dryingTime": "Waktu pengeringan (jam)",
+  "dryingTimeHint": "mis. 8"
 }

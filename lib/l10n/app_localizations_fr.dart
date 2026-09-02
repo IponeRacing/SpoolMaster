@@ -2569,6 +2569,18 @@ class AppLocalizationsFrCa extends AppLocalizationsFr {
   String get colorHintExamples => 'Rouge, Bleu, Noir...';
 
   @override
+  String get dryingTemp => 'Température de séchage';
+
+  @override
+  String get dryingTempHint => 'ex. 55';
+
+  @override
+  String get dryingTime => 'Temps de séchage (heures)';
+
+  @override
+  String get dryingTimeHint => 'ex. 8';
+
+  @override
   String fallbackDetectedAs(String mode) {
     return 'Tag détecté en mode $mode — changez d\'onglet pour les prochains scans';
   }

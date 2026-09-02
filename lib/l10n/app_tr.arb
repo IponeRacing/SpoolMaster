@@ -477,5 +477,9 @@
   "updateLater": "Daha sonra",
   "nfcScanGuidance": "Etiketi telefonun üst veya arka kısmına sabit tutun.",
   "tagMovedTitle": "Etiket oynadı",
-  "tagMovedMessage": "Okuma sırasında etiket oynadı. Tekrar yerleştirin ve telefonu sabit tutun."
+  "tagMovedMessage": "Okuma sırasında etiket oynadı. Tekrar yerleştirin ve telefonu sabit tutun.",
+  "dryingTemp": "Kurutma sıcaklığı",
+  "dryingTempHint": "örn. 55",
+  "dryingTime": "Kurutma süresi (saat)",
+  "dryingTimeHint": "örn. 8"
 }

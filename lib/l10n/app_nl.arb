@@ -477,5 +477,9 @@
   "updateLater": "Later",
   "nfcScanGuidance": "Houd de tag stil tegen de boven- of achterkant van je telefoon.",
   "tagMovedTitle": "Tag bewogen",
-  "tagMovedMessage": "De tag bewoog tijdens het lezen. Leg hem terug en houd de telefoon stil."
+  "tagMovedMessage": "De tag bewoog tijdens het lezen. Leg hem terug en houd de telefoon stil.",
+  "dryingTemp": "Droogtemperatuur",
+  "dryingTempHint": "bijv. 55",
+  "dryingTime": "Droogtijd (uren)",
+  "dryingTimeHint": "bijv. 8"
 }

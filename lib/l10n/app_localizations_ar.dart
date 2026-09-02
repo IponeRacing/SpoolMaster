@@ -1223,16 +1223,16 @@ class AppLocalizationsAr extends AppLocalizations {
   String get colorHintExamples => 'أحمر، أزرق، أسود...';
 
   @override
-  String get dryingTemp => 'Température de séchage';
+  String get dryingTemp => 'درجة حرارة التجفيف';
 
   @override
-  String get dryingTempHint => 'ex. 55';
+  String get dryingTempHint => 'مثال 55';
 
   @override
-  String get dryingTime => 'Temps de séchage (heures)';
+  String get dryingTime => 'وقت التجفيف (ساعات)';
 
   @override
-  String get dryingTimeHint => 'ex. 8';
+  String get dryingTimeHint => 'مثال 8';
 
   @override
   String fallbackDetectedAs(String mode) {

@@ -477,5 +477,9 @@
   "updateLater": "Později",
   "nfcScanGuidance": "Držte tag nehybně u horní nebo zadní části telefonu.",
   "tagMovedTitle": "Tag se pohnul",
-  "tagMovedMessage": "Tag se během čtení pohnul. Přiložte ho znovu a držte telefon nehybně."
+  "tagMovedMessage": "Tag se během čtení pohnul. Přiložte ho znovu a držte telefon nehybně.",
+  "dryingTemp": "Teplota sušení",
+  "dryingTempHint": "např. 55",
+  "dryingTime": "Doba sušení (hodiny)",
+  "dryingTimeHint": "např. 8"
 }

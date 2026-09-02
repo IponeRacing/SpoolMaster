@@ -1227,16 +1227,16 @@ class AppLocalizationsTh extends AppLocalizations {
   String get colorHintExamples => 'แดง, น้ำเงิน, ดำ...';
 
   @override
-  String get dryingTemp => 'Température de séchage';
+  String get dryingTemp => 'อุณหภูมิการอบแห้ง';
 
   @override
-  String get dryingTempHint => 'ex. 55';
+  String get dryingTempHint => 'เช่น 55';
 
   @override
-  String get dryingTime => 'Temps de séchage (heures)';
+  String get dryingTime => 'เวลาอบแห้ง (ชั่วโมง)';
 
   @override
-  String get dryingTimeHint => 'ex. 8';
+  String get dryingTimeHint => 'เช่น 8';
 
   @override
   String fallbackDetectedAs(String mode) {

@@ -477,5 +477,9 @@
   "updateLater": "Later",
   "nfcScanGuidance": "Hold the tag still against the top or back of your phone.",
   "tagMovedTitle": "Tag moved",
-  "tagMovedMessage": "The tag moved during reading. Place it back and keep the phone still."
+  "tagMovedMessage": "The tag moved during reading. Place it back and keep the phone still.",
+  "dryingTemp": "Drying temperature",
+  "dryingTempHint": "e.g. 55",
+  "dryingTime": "Drying time (hours)",
+  "dryingTimeHint": "e.g. 8"
 }

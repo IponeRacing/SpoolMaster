@@ -477,5 +477,9 @@
   "updateLater": "稍後",
   "nfcScanGuidance": "將標籤靠在手機頂部或背面並保持不動。",
   "tagMovedTitle": "標籤移動了",
-  "tagMovedMessage": "讀取時標籤移動了。請重新貼合並保持手機不動。"
+  "tagMovedMessage": "讀取時標籤移動了。請重新貼合並保持手機不動。",
+  "dryingTemp": "乾燥溫度",
+  "dryingTempHint": "例如 55",
+  "dryingTime": "乾燥時間（小時）",
+  "dryingTimeHint": "例如 8"
 }

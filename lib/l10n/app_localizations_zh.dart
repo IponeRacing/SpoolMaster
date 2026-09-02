@@ -1201,16 +1201,16 @@ class AppLocalizationsZh extends AppLocalizations {
   String get colorHintExamples => '红色、蓝色、黑色...';
 
   @override
-  String get dryingTemp => 'Température de séchage';
+  String get dryingTemp => '干燥温度';
 
   @override
-  String get dryingTempHint => 'ex. 55';
+  String get dryingTempHint => '例如 55';
 
   @override
-  String get dryingTime => 'Temps de séchage (heures)';
+  String get dryingTime => '干燥时间（小时）';
 
   @override
-  String get dryingTimeHint => 'ex. 8';
+  String get dryingTimeHint => '例如 8';
 
   @override
   String fallbackDetectedAs(String mode) {
@@ -2494,6 +2494,18 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String get colorHintExamples => '紅色、藍色、黑色...';
+
+  @override
+  String get dryingTemp => '乾燥溫度';
+
+  @override
+  String get dryingTempHint => '例如 55';
+
+  @override
+  String get dryingTime => '乾燥時間（小時）';
+
+  @override
+  String get dryingTimeHint => '例如 8';
 
   @override
   String fallbackDetectedAs(String mode) {

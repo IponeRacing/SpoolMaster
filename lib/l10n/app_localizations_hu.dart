@@ -1231,16 +1231,16 @@ class AppLocalizationsHu extends AppLocalizations {
   String get colorHintExamples => 'Piros, Kék, Fekete...';
 
   @override
-  String get dryingTemp => 'Température de séchage';
+  String get dryingTemp => 'Szárítási hőmérséklet';
 
   @override
-  String get dryingTempHint => 'ex. 55';
+  String get dryingTempHint => 'pl. 55';
 
   @override
-  String get dryingTime => 'Temps de séchage (heures)';
+  String get dryingTime => 'Szárítási idő (óra)';
 
   @override
-  String get dryingTimeHint => 'ex. 8';
+  String get dryingTimeHint => 'pl. 8';
 
   @override
   String fallbackDetectedAs(String mode) {

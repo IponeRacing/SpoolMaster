@@ -1237,16 +1237,16 @@ class AppLocalizationsEl extends AppLocalizations {
   String get colorHintExamples => 'Κόκκινο, Μπλε, Μαύρο...';
 
   @override
-  String get dryingTemp => 'Température de séchage';
+  String get dryingTemp => 'Θερμοκρασία στεγνώματος';
 
   @override
-  String get dryingTempHint => 'ex. 55';
+  String get dryingTempHint => 'π.χ. 55';
 
   @override
-  String get dryingTime => 'Temps de séchage (heures)';
+  String get dryingTime => 'Χρόνος στεγνώματος (ώρες)';
 
   @override
-  String get dryingTimeHint => 'ex. 8';
+  String get dryingTimeHint => 'π.χ. 8';
 
   @override
   String fallbackDetectedAs(String mode) {

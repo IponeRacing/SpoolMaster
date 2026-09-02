@@ -1230,16 +1230,16 @@ class AppLocalizationsVi extends AppLocalizations {
   String get colorHintExamples => 'Đỏ, Xanh dương, Đen...';
 
   @override
-  String get dryingTemp => 'Température de séchage';
+  String get dryingTemp => 'Nhiệt độ sấy';
 
   @override
-  String get dryingTempHint => 'ex. 55';
+  String get dryingTempHint => 'vd. 55';
 
   @override
-  String get dryingTime => 'Temps de séchage (heures)';
+  String get dryingTime => 'Thời gian sấy (giờ)';
 
   @override
-  String get dryingTimeHint => 'ex. 8';
+  String get dryingTimeHint => 'vd. 8';
 
   @override
   String fallbackDetectedAs(String mode) {

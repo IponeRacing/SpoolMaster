@@ -1228,16 +1228,16 @@ class AppLocalizationsId extends AppLocalizations {
   String get colorHintExamples => 'Merah, Biru, Hitam...';
 
   @override
-  String get dryingTemp => 'Température de séchage';
+  String get dryingTemp => 'Suhu pengeringan';
 
   @override
-  String get dryingTempHint => 'ex. 55';
+  String get dryingTempHint => 'mis. 55';
 
   @override
-  String get dryingTime => 'Temps de séchage (heures)';
+  String get dryingTime => 'Waktu pengeringan (jam)';
 
   @override
-  String get dryingTimeHint => 'ex. 8';
+  String get dryingTimeHint => 'mis. 8';
 
   @override
   String fallbackDetectedAs(String mode) {

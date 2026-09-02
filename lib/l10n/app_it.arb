@@ -477,5 +477,9 @@
   "updateLater": "Più tardi",
   "nfcScanGuidance": "Tieni il tag fermo contro la parte superiore o posteriore del telefono.",
   "tagMovedTitle": "Tag spostato",
-  "tagMovedMessage": "Il tag si è spostato durante la lettura. Riappoggialo e tieni il telefono fermo."
+  "tagMovedMessage": "Il tag si è spostato durante la lettura. Riappoggialo e tieni il telefono fermo.",
+  "dryingTemp": "Temperatura di essiccazione",
+  "dryingTempHint": "es. 55",
+  "dryingTime": "Tempo di essiccazione (ore)",
+  "dryingTimeHint": "es. 8"
 }

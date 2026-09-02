@@ -477,5 +477,9 @@
   "updateLater": "Mais tarde",
   "nfcScanGuidance": "Mantenha a tag imóvel contra a parte superior ou traseira do telefone.",
   "tagMovedTitle": "Tag movida",
-  "tagMovedMessage": "A tag moveu-se durante a leitura. Coloque-a novamente e mantenha o telefone imóvel."
+  "tagMovedMessage": "A tag moveu-se durante a leitura. Coloque-a novamente e mantenha o telefone imóvel.",
+  "dryingTemp": "Temperatura de secagem",
+  "dryingTempHint": "ex. 55",
+  "dryingTime": "Tempo de secagem (horas)",
+  "dryingTimeHint": "ex. 8"
 }
