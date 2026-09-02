@@ -13,6 +13,7 @@ import 'package:nfc_filament/features/nfc_reader/domain/entities/bobbin_data.dar
 import 'package:nfc_filament/features/nfc_reader/presentation/bloc/nfc_reader_bloc.dart';
 import 'package:nfc_filament/features/nfc_reader/presentation/bloc/nfc_reader_event.dart';
 import 'package:nfc_filament/features/nfc_reader/presentation/bloc/nfc_reader_state.dart';
+import 'package:nfc_filament/features/nfc_reader/presentation/utils/nfc_failure_localizer.dart';
 import 'package:nfc_filament/features/nfc_reader/presentation/widgets/color_picker_widget.dart';
 import 'package:nfc_filament/l10n/app_localizations.dart';
 
@@ -273,7 +274,7 @@ class _NfcWriterPageState extends State<NfcWriterPage> {
               ScaffoldMessenger.of(context).clearSnackBars();
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                  content: Text(state.message),
+                  content: Text(localizedNfcFailureMessage(context, state, isWrite: true)),
                   backgroundColor: Colors.red,
                 ),
               );

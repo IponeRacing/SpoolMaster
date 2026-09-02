@@ -481,5 +481,12 @@
   "dryingTemp": "Suhu pengeringan",
   "dryingTempHint": "mis. 55",
   "dryingTime": "Waktu pengeringan (jam)",
-  "dryingTimeHint": "mis. 8"
+  "dryingTimeHint": "mis. 8",
+  "lightBlue": "Biru muda",
+  "transparent": "Transparan",
+  "nfcActiveApproachTag": "NFC aktif — dekatkan tag",
+  "addedToShoppingList": "{item} ditambahkan ke daftar belanja",
+  "deleteAccountFailed": "Penghapusan akun gagal. Silakan coba lagi.",
+  "scanHistoryError": "Kesalahan mengakses riwayat pemindaian",
+  "genericBrand": "Generik"
 }

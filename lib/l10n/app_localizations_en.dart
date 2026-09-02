@@ -1333,6 +1333,30 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get tagMovedMessage =>
       'The tag moved during reading. Place it back and keep the phone still.';
+
+  @override
+  String get lightBlue => 'Light blue';
+
+  @override
+  String get transparent => 'Transparent';
+
+  @override
+  String get nfcActiveApproachTag => 'NFC active — hold the tag close';
+
+  @override
+  String addedToShoppingList(String item) {
+    return '$item added to shopping list';
+  }
+
+  @override
+  String get deleteAccountFailed =>
+      'Account deletion failed. Please try again.';
+
+  @override
+  String get scanHistoryError => 'Error accessing scan history';
+
+  @override
+  String get genericBrand => 'Generic';
 }
 
 /// The translations for English, as used in Australia (`en_AU`).
@@ -2664,6 +2688,30 @@ class AppLocalizationsEnAu extends AppLocalizationsEn {
   @override
   String get tagMovedMessage =>
       'The tag moved during reading. Place it back and keep the phone still.';
+
+  @override
+  String get lightBlue => 'Light blue';
+
+  @override
+  String get transparent => 'Transparent';
+
+  @override
+  String get nfcActiveApproachTag => 'NFC active — hold the tag close';
+
+  @override
+  String addedToShoppingList(String item) {
+    return '$item added to shopping list';
+  }
+
+  @override
+  String get deleteAccountFailed =>
+      'Account deletion failed. Please try again.';
+
+  @override
+  String get scanHistoryError => 'Error accessing scan history';
+
+  @override
+  String get genericBrand => 'Generic';
 }
 
 /// The translations for English, as used in Canada (`en_CA`).
@@ -3995,6 +4043,30 @@ class AppLocalizationsEnCa extends AppLocalizationsEn {
   @override
   String get tagMovedMessage =>
       'The tag moved during reading. Place it back and keep the phone still.';
+
+  @override
+  String get lightBlue => 'Light blue';
+
+  @override
+  String get transparent => 'Transparent';
+
+  @override
+  String get nfcActiveApproachTag => 'NFC active — hold the tag close';
+
+  @override
+  String addedToShoppingList(String item) {
+    return '$item added to shopping list';
+  }
+
+  @override
+  String get deleteAccountFailed =>
+      'Account deletion failed. Please try again.';
+
+  @override
+  String get scanHistoryError => 'Error accessing scan history';
+
+  @override
+  String get genericBrand => 'Generic';
 }
 
 /// The translations for English, as used in the United Kingdom (`en_GB`).
@@ -5326,4 +5398,28 @@ class AppLocalizationsEnGb extends AppLocalizationsEn {
   @override
   String get tagMovedMessage =>
       'The tag moved during reading. Place it back and keep the phone still.';
+
+  @override
+  String get lightBlue => 'Light blue';
+
+  @override
+  String get transparent => 'Transparent';
+
+  @override
+  String get nfcActiveApproachTag => 'NFC active — hold the tag close';
+
+  @override
+  String addedToShoppingList(String item) {
+    return '$item added to shopping list';
+  }
+
+  @override
+  String get deleteAccountFailed =>
+      'Account deletion failed. Please try again.';
+
+  @override
+  String get scanHistoryError => 'Error accessing scan history';
+
+  @override
+  String get genericBrand => 'Generic';
 }

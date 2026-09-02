@@ -40,41 +40,9 @@ export 'package:nfc_filament/core/services/spool_storage_service.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Initialize all locales for date formatting (parallelized)
-  await Future.wait([
-    initializeDateFormatting('fr_FR'),
-    initializeDateFormatting('en_US'),
-    initializeDateFormatting('de_DE'),
-    initializeDateFormatting('it_IT'),
-    initializeDateFormatting('es_ES'),
-    initializeDateFormatting('nl_NL'),
-    initializeDateFormatting('pl_PL'),
-    initializeDateFormatting('cs_CZ'),
-    initializeDateFormatting('pt_PT'),
-    initializeDateFormatting('ru_RU'),
-    initializeDateFormatting('ja_JP'),
-    initializeDateFormatting('ko_KR'),
-    initializeDateFormatting('zh_CN'),
-    initializeDateFormatting('sv_SE'),
-    initializeDateFormatting('tr_TR'),
-    initializeDateFormatting('ro_RO'),
-    initializeDateFormatting('hu_HU'),
-    initializeDateFormatting('el_GR'),
-    initializeDateFormatting('bg_BG'),
-    initializeDateFormatting('hr_HR'),
-    initializeDateFormatting('sk_SK'),
-    initializeDateFormatting('sl_SI'),
-    initializeDateFormatting('sr_RS'),
-    initializeDateFormatting('uk_UA'),
-    initializeDateFormatting('da_DK'),
-    initializeDateFormatting('nb_NO'),
-    initializeDateFormatting('fi_FI'),
-    initializeDateFormatting('th_TH'),
-    initializeDateFormatting('vi_VN'),
-    initializeDateFormatting('id_ID'),
-    initializeDateFormatting('ms_MY'),
-    initializeDateFormatting('hi_IN'),
-  ]);
+  // Initialise les symboles de date pour toutes les locales supportées
+  // (intl récent : un seul appel charge toutes les locales)
+  await initializeDateFormatting();
 
   // Enable edge-to-edge display
   await SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
@@ -888,8 +856,12 @@ class _StockListPageState extends State<StockListPage> {
                     ),
                   ),
                   const SizedBox(width: 8),
+                  FormattedWeight(
+                    weightInGrams: totalRemaining,
+                    style: TextStyle(fontSize: 12, color: Colors.grey.shade600),
+                  ),
                   Text(
-                    '${totalRemaining.toStringAsFixed(0)} g (${pct.toStringAsFixed(0)}%)',
+                    ' (${pct.toStringAsFixed(0)}%)',
                     style: TextStyle(fontSize: 12, color: Colors.grey.shade600),
                   ),
                 ],
@@ -1183,7 +1155,7 @@ class _StockListPageState extends State<StockListPage> {
                   id: DateTime.now().millisecondsSinceEpoch.toString(),
                   brand:
                       bobbinData.brand ??
-                      _extractBrandFromBatchNumber(bobbinData.batchNumber),
+                      _extractBrandFromBatchNumber(context, bobbinData.batchNumber),
                   material: bobbinData.filamentType,
                   colorName: bobbinData.color,
                   colorRgb: bobbinData.colorRgb ?? 0xFFFF8000,
@@ -1229,8 +1201,9 @@ class _StockListPageState extends State<StockListPage> {
     ));
   }
 
-  String _extractBrandFromBatchNumber(String? batchNumber) {
-    if (batchNumber == null) return 'Generic';
+  String _extractBrandFromBatchNumber(BuildContext context, String? batchNumber) {
+    final genericBrand = AppLocalizations.of(context)!.genericBrand;
+    if (batchNumber == null) return genericBrand;
 
     // Si c'est un SKU Anycubic (ex: AHPLOR-001)
     if (batchNumber.contains(RegExp(r'[A-Z]{4,}-\d{3}'))) {
@@ -1242,7 +1215,7 @@ class _StockListPageState extends State<StockListPage> {
       return batchNumber.split(' - ').first;
     }
 
-    return 'Generic';
+    return genericBrand;
   }
 
   void _showManualAddForm() {
@@ -1630,6 +1603,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
               ),
               subtitle: Text(AppLocalizations.of(context)!.scanNfcChip),
               onTap: () async {
+                final unknownBrandLabel = AppLocalizations.of(context)!.unknown;
                 Navigator.pop(context);
                 // Lancer le scan direct
                 final result = await Navigator.of(context).push(
@@ -1643,7 +1617,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
                     // Créer une bobine à partir des données NFC
                     final spool = SpoolInventoryItem(
                       id: DateTime.now().millisecondsSinceEpoch.toString(),
-                      brand: bobbinData.brand ?? 'Inconnu',
+                      brand: bobbinData.brand ?? unknownBrandLabel,
                       material: bobbinData.filamentType,
                       colorName: bobbinData.color,
                       colorRgb: bobbinData.colorRgb ?? 0xFFFFFFFF,
@@ -1667,7 +1641,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           content: Text(
-                            '${spool.brand} ${spool.material} ajouté à la liste',
+                            AppLocalizations.of(context)!.addedToShoppingList('${spool.brand} ${spool.material}'),
                           ),
                           duration: const Duration(seconds: 2),
                         ),
@@ -1713,7 +1687,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text(
-                    '${spool.brand} ${spool.material} ajouté à la liste de courses',
+                    AppLocalizations.of(context)!.addedToShoppingList('${spool.brand} ${spool.material}'),
                   ),
                   duration: const Duration(seconds: 2),
                 ),

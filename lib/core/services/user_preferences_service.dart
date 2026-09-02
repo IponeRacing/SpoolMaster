@@ -75,10 +75,6 @@ class UserPreferencesService {
   // Systèmes d'unités
   static const String unitsMetric = 'metric';
   static const String unitsImperial = 'imperial';
-  static const Map<String, String> unitsNames = {
-    'metric': 'Métrique (mm, g, °C)',
-    'imperial': 'Américain (in, oz, °F)',
-  };
 
   // Getters
   static Future<String> getLanguage() async {

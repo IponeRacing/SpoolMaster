@@ -481,5 +481,12 @@
   "dryingTemp": "Temperatura suszenia",
   "dryingTempHint": "np. 55",
   "dryingTime": "Czas suszenia (godziny)",
-  "dryingTimeHint": "np. 8"
+  "dryingTimeHint": "np. 8",
+  "lightBlue": "Jasnoniebieski",
+  "transparent": "Przezroczysty",
+  "nfcActiveApproachTag": "NFC aktywne — zbliż tag",
+  "addedToShoppingList": "{item} dodano do listy zakupów",
+  "deleteAccountFailed": "Usunięcie konta nie powiodło się. Spróbuj ponownie.",
+  "scanHistoryError": "Błąd dostępu do historii skanów",
+  "genericBrand": "Ogólny"
 }

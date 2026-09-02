@@ -1334,4 +1334,27 @@ class AppLocalizationsVi extends AppLocalizations {
   @override
   String get tagMovedMessage =>
       'Thẻ đã di chuyển khi đang đọc. Đặt lại và giữ điện thoại cố định.';
+
+  @override
+  String get lightBlue => 'Xanh nhạt';
+
+  @override
+  String get transparent => 'Trong suốt';
+
+  @override
+  String get nfcActiveApproachTag => 'NFC đang hoạt động — đưa thẻ lại gần';
+
+  @override
+  String addedToShoppingList(String item) {
+    return 'Đã thêm $item vào danh sách mua sắm';
+  }
+
+  @override
+  String get deleteAccountFailed => 'Xóa tài khoản thất bại. Vui lòng thử lại.';
+
+  @override
+  String get scanHistoryError => 'Lỗi truy cập lịch sử quét';
+
+  @override
+  String get genericBrand => 'Chung';
 }

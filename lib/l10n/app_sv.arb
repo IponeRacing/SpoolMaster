@@ -481,5 +481,12 @@
   "dryingTemp": "Torktemperatur",
   "dryingTempHint": "t.ex. 55",
   "dryingTime": "Torktid (timmar)",
-  "dryingTimeHint": "t.ex. 8"
+  "dryingTimeHint": "t.ex. 8",
+  "lightBlue": "Ljusblå",
+  "transparent": "Transparent",
+  "nfcActiveApproachTag": "NFC aktiv — håll taggen nära",
+  "addedToShoppingList": "{item} tillagd i inköpslistan",
+  "deleteAccountFailed": "Det gick inte att radera kontot. Försök igen.",
+  "scanHistoryError": "Fel vid åtkomst till skanningshistorik",
+  "genericBrand": "Generisk"
 }

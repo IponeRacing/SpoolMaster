@@ -481,5 +481,12 @@
   "dryingTemp": "Droogtemperatuur",
   "dryingTempHint": "bijv. 55",
   "dryingTime": "Droogtijd (uren)",
-  "dryingTimeHint": "bijv. 8"
+  "dryingTimeHint": "bijv. 8",
+  "lightBlue": "Lichtblauw",
+  "transparent": "Transparant",
+  "nfcActiveApproachTag": "NFC actief — houd de tag dichtbij",
+  "addedToShoppingList": "{item} toegevoegd aan boodschappenlijst",
+  "deleteAccountFailed": "Account verwijderen mislukt. Probeer het opnieuw.",
+  "scanHistoryError": "Fout bij toegang tot scangeschiedenis",
+  "genericBrand": "Generiek"
 }

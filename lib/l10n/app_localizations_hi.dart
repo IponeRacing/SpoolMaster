@@ -1333,4 +1333,27 @@ class AppLocalizationsHi extends AppLocalizations {
   @override
   String get tagMovedMessage =>
       'पढ़ते समय टैग हिल गया। इसे दोबारा रखें और फ़ोन को स्थिर रखें।';
+
+  @override
+  String get lightBlue => 'हल्का नीला';
+
+  @override
+  String get transparent => 'पारदर्शी';
+
+  @override
+  String get nfcActiveApproachTag => 'NFC सक्रिय — टैग पास लाएँ';
+
+  @override
+  String addedToShoppingList(String item) {
+    return '$item खरीदारी सूची में जोड़ा गया';
+  }
+
+  @override
+  String get deleteAccountFailed => 'खाता हटाना विफल रहा। पुनः प्रयास करें।';
+
+  @override
+  String get scanHistoryError => 'स्कैन इतिहास तक पहुँचने में त्रुटि';
+
+  @override
+  String get genericBrand => 'सामान्य';
 }

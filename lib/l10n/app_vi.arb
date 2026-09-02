@@ -481,5 +481,12 @@
   "dryingTemp": "Nhiệt độ sấy",
   "dryingTempHint": "vd. 55",
   "dryingTime": "Thời gian sấy (giờ)",
-  "dryingTimeHint": "vd. 8"
+  "dryingTimeHint": "vd. 8",
+  "lightBlue": "Xanh nhạt",
+  "transparent": "Trong suốt",
+  "nfcActiveApproachTag": "NFC đang hoạt động — đưa thẻ lại gần",
+  "addedToShoppingList": "Đã thêm {item} vào danh sách mua sắm",
+  "deleteAccountFailed": "Xóa tài khoản thất bại. Vui lòng thử lại.",
+  "scanHistoryError": "Lỗi truy cập lịch sử quét",
+  "genericBrand": "Chung"
 }

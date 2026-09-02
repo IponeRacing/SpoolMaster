@@ -481,5 +481,12 @@
   "dryingTemp": "Szárítási hőmérséklet",
   "dryingTempHint": "pl. 55",
   "dryingTime": "Szárítási idő (óra)",
-  "dryingTimeHint": "pl. 8"
+  "dryingTimeHint": "pl. 8",
+  "lightBlue": "Világoskék",
+  "transparent": "Átlátszó",
+  "nfcActiveApproachTag": "NFC aktív — közelítse a taget",
+  "addedToShoppingList": "{item} hozzáadva a bevásárlólistához",
+  "deleteAccountFailed": "A fiók törlése nem sikerült. Próbálja újra.",
+  "scanHistoryError": "Hiba a szkennelési előzmények elérésekor",
+  "genericBrand": "Általános"
 }

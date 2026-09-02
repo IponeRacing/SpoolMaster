@@ -1333,4 +1333,28 @@ class AppLocalizationsSv extends AppLocalizations {
   @override
   String get tagMovedMessage =>
       'Taggen rörde sig under avläsningen. Placera tillbaka den och håll telefonen stilla.';
+
+  @override
+  String get lightBlue => 'Ljusblå';
+
+  @override
+  String get transparent => 'Transparent';
+
+  @override
+  String get nfcActiveApproachTag => 'NFC aktiv — håll taggen nära';
+
+  @override
+  String addedToShoppingList(String item) {
+    return '$item tillagd i inköpslistan';
+  }
+
+  @override
+  String get deleteAccountFailed =>
+      'Det gick inte att radera kontot. Försök igen.';
+
+  @override
+  String get scanHistoryError => 'Fel vid åtkomst till skanningshistorik';
+
+  @override
+  String get genericBrand => 'Generisk';
 }

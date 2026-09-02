@@ -287,19 +287,6 @@ class _FormattedTemperatureRangeState extends State<FormattedTemperatureRange> {
   }
 }
 
-/// Helper pour obtenir le label de devise avec préférences
-Future<String> getPriceLabel() async {
-  final currency = await UserPreferencesService.getCurrency();
-  return 'Prix ($currency)';
-}
-
-/// Helper pour obtenir le label de poids avec préférences
-Future<String> getWeightLabel() async {
-  final units = await UserPreferencesService.getUnits();
-  final unit = UserPreferencesService.getWeightUnit(units);
-  return 'Poids ($unit)';
-}
-
 /// Helper pour obtenir le symbole de devise
 Future<String> getCurrencySymbol() async {
   final currency = await UserPreferencesService.getCurrency();

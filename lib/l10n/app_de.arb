@@ -481,5 +481,12 @@
   "dryingTemp": "Trocknungstemperatur",
   "dryingTempHint": "z. B. 55",
   "dryingTime": "Trocknungszeit (Stunden)",
-  "dryingTimeHint": "z. B. 8"
+  "dryingTimeHint": "z. B. 8",
+  "lightBlue": "Hellblau",
+  "transparent": "Transparent",
+  "nfcActiveApproachTag": "NFC aktiv — Tag annähern",
+  "addedToShoppingList": "{item} zur Einkaufsliste hinzugefügt",
+  "deleteAccountFailed": "Kontolöschung fehlgeschlagen. Bitte versuchen Sie es erneut.",
+  "scanHistoryError": "Fehler beim Zugriff auf den Scan-Verlauf",
+  "genericBrand": "Generisch"
 }

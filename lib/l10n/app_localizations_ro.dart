@@ -1334,4 +1334,28 @@ class AppLocalizationsRo extends AppLocalizations {
   @override
   String get tagMovedMessage =>
       'Tag-ul s-a mișcat în timpul citirii. Pune-l la loc și ține telefonul nemișcat.';
+
+  @override
+  String get lightBlue => 'Albastru deschis';
+
+  @override
+  String get transparent => 'Transparent';
+
+  @override
+  String get nfcActiveApproachTag => 'NFC activ — apropiați tagul';
+
+  @override
+  String addedToShoppingList(String item) {
+    return '$item adăugat în lista de cumpărături';
+  }
+
+  @override
+  String get deleteAccountFailed =>
+      'Ștergerea contului a eșuat. Încercați din nou.';
+
+  @override
+  String get scanHistoryError => 'Eroare la accesarea istoricului de scanări';
+
+  @override
+  String get genericBrand => 'Generic';
 }

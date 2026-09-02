@@ -2682,6 +2682,48 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Le tag a bougé pendant la lecture. Reposez-le et gardez le téléphone immobile.'**
   String get tagMovedMessage;
+
+  /// No description provided for @lightBlue.
+  ///
+  /// In fr, this message translates to:
+  /// **'Bleu clair'**
+  String get lightBlue;
+
+  /// No description provided for @transparent.
+  ///
+  /// In fr, this message translates to:
+  /// **'Transparent'**
+  String get transparent;
+
+  /// No description provided for @nfcActiveApproachTag.
+  ///
+  /// In fr, this message translates to:
+  /// **'NFC actif — approchez le tag'**
+  String get nfcActiveApproachTag;
+
+  /// SnackBar après ajout d'une bobine à la liste de courses
+  ///
+  /// In fr, this message translates to:
+  /// **'{item} ajouté à la liste de courses'**
+  String addedToShoppingList(String item);
+
+  /// No description provided for @deleteAccountFailed.
+  ///
+  /// In fr, this message translates to:
+  /// **'La suppression du compte a échoué. Veuillez réessayer.'**
+  String get deleteAccountFailed;
+
+  /// No description provided for @scanHistoryError.
+  ///
+  /// In fr, this message translates to:
+  /// **'Erreur d\'accès à l\'historique des scans'**
+  String get scanHistoryError;
+
+  /// No description provided for @genericBrand.
+  ///
+  /// In fr, this message translates to:
+  /// **'Générique'**
+  String get genericBrand;
 }
 
 class _AppLocalizationsDelegate

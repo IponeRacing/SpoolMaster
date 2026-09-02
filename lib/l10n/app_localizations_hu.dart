@@ -1335,4 +1335,28 @@ class AppLocalizationsHu extends AppLocalizations {
   @override
   String get tagMovedMessage =>
       'A címke olvasás közben elmozdult. Helyezze vissza, és tartsa a telefont mozdulatlanul.';
+
+  @override
+  String get lightBlue => 'Világoskék';
+
+  @override
+  String get transparent => 'Átlátszó';
+
+  @override
+  String get nfcActiveApproachTag => 'NFC aktív — közelítse a taget';
+
+  @override
+  String addedToShoppingList(String item) {
+    return '$item hozzáadva a bevásárlólistához';
+  }
+
+  @override
+  String get deleteAccountFailed =>
+      'A fiók törlése nem sikerült. Próbálja újra.';
+
+  @override
+  String get scanHistoryError => 'Hiba a szkennelési előzmények elérésekor';
+
+  @override
+  String get genericBrand => 'Általános';
 }

@@ -481,5 +481,12 @@
   "dryingTemp": "Температура на сушене",
   "dryingTempHint": "напр. 55",
   "dryingTime": "Време на сушене (часове)",
-  "dryingTimeHint": "напр. 8"
+  "dryingTimeHint": "напр. 8",
+  "lightBlue": "Светлосин",
+  "transparent": "Прозрачен",
+  "nfcActiveApproachTag": "NFC активен — приближете тага",
+  "addedToShoppingList": "{item} добавен в списъка за пазаруване",
+  "deleteAccountFailed": "Изтриването на акаунта не бе успешно. Опитайте отново.",
+  "scanHistoryError": "Грешка при достъп до историята на сканиранията",
+  "genericBrand": "Генерична"
 }

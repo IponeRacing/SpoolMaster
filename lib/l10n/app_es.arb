@@ -481,5 +481,12 @@
   "dryingTemp": "Temperatura de secado",
   "dryingTempHint": "p. ej. 55",
   "dryingTime": "Tiempo de secado (horas)",
-  "dryingTimeHint": "p. ej. 8"
+  "dryingTimeHint": "p. ej. 8",
+  "lightBlue": "Azul claro",
+  "transparent": "Transparente",
+  "nfcActiveApproachTag": "NFC activo — acerque la etiqueta",
+  "addedToShoppingList": "{item} añadido a la lista de compras",
+  "deleteAccountFailed": "Error al eliminar la cuenta. Inténtelo de nuevo.",
+  "scanHistoryError": "Error al acceder al historial de escaneos",
+  "genericBrand": "Genérico"
 }

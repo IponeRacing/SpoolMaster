@@ -481,5 +481,12 @@
   "dryingTemp": "Kurutma sıcaklığı",
   "dryingTempHint": "örn. 55",
   "dryingTime": "Kurutma süresi (saat)",
-  "dryingTimeHint": "örn. 8"
+  "dryingTimeHint": "örn. 8",
+  "lightBlue": "Açık mavi",
+  "transparent": "Şeffaf",
+  "nfcActiveApproachTag": "NFC etkin — etiketi yaklaştırın",
+  "addedToShoppingList": "{item} alışveriş listesine eklendi",
+  "deleteAccountFailed": "Hesap silme başarısız oldu. Lütfen tekrar deneyin.",
+  "scanHistoryError": "Tarama geçmişine erişim hatası",
+  "genericBrand": "Genel"
 }

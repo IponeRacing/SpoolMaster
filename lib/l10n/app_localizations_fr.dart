@@ -1338,6 +1338,30 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get tagMovedMessage =>
       'Le tag a bougé pendant la lecture. Reposez-le et gardez le téléphone immobile.';
+
+  @override
+  String get lightBlue => 'Bleu clair';
+
+  @override
+  String get transparent => 'Transparent';
+
+  @override
+  String get nfcActiveApproachTag => 'NFC actif — approchez le tag';
+
+  @override
+  String addedToShoppingList(String item) {
+    return '$item ajouté à la liste de courses';
+  }
+
+  @override
+  String get deleteAccountFailed =>
+      'La suppression du compte a échoué. Veuillez réessayer.';
+
+  @override
+  String get scanHistoryError => 'Erreur d\'accès à l\'historique des scans';
+
+  @override
+  String get genericBrand => 'Générique';
 }
 
 /// The translations for French, as used in Canada (`fr_CA`).
@@ -2674,4 +2698,28 @@ class AppLocalizationsFrCa extends AppLocalizationsFr {
   @override
   String get tagMovedMessage =>
       'Le tag a bougé pendant la lecture. Reposez-le et gardez le téléphone immobile.';
+
+  @override
+  String get lightBlue => 'Bleu clair';
+
+  @override
+  String get transparent => 'Transparent';
+
+  @override
+  String get nfcActiveApproachTag => 'NFC actif — approchez le tag';
+
+  @override
+  String addedToShoppingList(String item) {
+    return '$item ajouté à la liste de courses';
+  }
+
+  @override
+  String get deleteAccountFailed =>
+      'La suppression du compte a échoué. Veuillez réessayer.';
+
+  @override
+  String get scanHistoryError => 'Erreur d\'accès à l\'historique des scans';
+
+  @override
+  String get genericBrand => 'Générique';
 }

@@ -481,5 +481,12 @@
   "dryingTemp": "Drying temperature",
   "dryingTempHint": "e.g. 55",
   "dryingTime": "Drying time (hours)",
-  "dryingTimeHint": "e.g. 8"
+  "dryingTimeHint": "e.g. 8",
+  "lightBlue": "Light blue",
+  "transparent": "Transparent",
+  "nfcActiveApproachTag": "NFC active — hold the tag close",
+  "addedToShoppingList": "{item} added to shopping list",
+  "deleteAccountFailed": "Account deletion failed. Please try again.",
+  "scanHistoryError": "Error accessing scan history",
+  "genericBrand": "Generic"
 }

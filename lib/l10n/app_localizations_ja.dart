@@ -1311,4 +1311,27 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get tagMovedMessage => '読み取り中にタグが動きました。もう一度当てて、スマホを動かさないでください。';
+
+  @override
+  String get lightBlue => '水色';
+
+  @override
+  String get transparent => '透明';
+
+  @override
+  String get nfcActiveApproachTag => 'NFC作動中 — タグを近づけてください';
+
+  @override
+  String addedToShoppingList(String item) {
+    return '$item を買い物リストに追加しました';
+  }
+
+  @override
+  String get deleteAccountFailed => 'アカウントの削除に失敗しました。もう一度お試しください。';
+
+  @override
+  String get scanHistoryError => 'スキャン履歴へのアクセスエラー';
+
+  @override
+  String get genericBrand => '汎用';
 }

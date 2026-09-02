@@ -1329,4 +1329,28 @@ class AppLocalizationsCs extends AppLocalizations {
   @override
   String get tagMovedMessage =>
       'Tag se během čtení pohnul. Přiložte ho znovu a držte telefon nehybně.';
+
+  @override
+  String get lightBlue => 'Světle modrá';
+
+  @override
+  String get transparent => 'Průhledná';
+
+  @override
+  String get nfcActiveApproachTag => 'NFC aktivní — přibližte tag';
+
+  @override
+  String addedToShoppingList(String item) {
+    return '$item přidáno do nákupního seznamu';
+  }
+
+  @override
+  String get deleteAccountFailed =>
+      'Smazání účtu se nezdařilo. Zkuste to znovu.';
+
+  @override
+  String get scanHistoryError => 'Chyba přístupu k historii skenování';
+
+  @override
+  String get genericBrand => 'Obecná';
 }

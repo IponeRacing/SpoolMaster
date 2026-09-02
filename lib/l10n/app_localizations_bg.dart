@@ -1335,4 +1335,29 @@ class AppLocalizationsBg extends AppLocalizations {
   @override
   String get tagMovedMessage =>
       'Тагът се премести по време на четенето. Поставете го отново и дръжте телефона неподвижно.';
+
+  @override
+  String get lightBlue => 'Светлосин';
+
+  @override
+  String get transparent => 'Прозрачен';
+
+  @override
+  String get nfcActiveApproachTag => 'NFC активен — приближете тага';
+
+  @override
+  String addedToShoppingList(String item) {
+    return '$item добавен в списъка за пазаруване';
+  }
+
+  @override
+  String get deleteAccountFailed =>
+      'Изтриването на акаунта не бе успешно. Опитайте отново.';
+
+  @override
+  String get scanHistoryError =>
+      'Грешка при достъп до историята на сканиранията';
+
+  @override
+  String get genericBrand => 'Генерична';
 }

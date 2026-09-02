@@ -481,5 +481,12 @@
   "dryingTemp": "Teplota sušenia",
   "dryingTempHint": "napr. 55",
   "dryingTime": "Čas sušenia (hodiny)",
-  "dryingTimeHint": "napr. 8"
+  "dryingTimeHint": "napr. 8",
+  "lightBlue": "Svetlomodrá",
+  "transparent": "Priehľadná",
+  "nfcActiveApproachTag": "NFC aktívne — priblížte tag",
+  "addedToShoppingList": "{item} pridané do nákupného zoznamu",
+  "deleteAccountFailed": "Odstránenie účtu zlyhalo. Skúste to znova.",
+  "scanHistoryError": "Chyba prístupu k histórii skenovaní",
+  "genericBrand": "Všeobecná"
 }

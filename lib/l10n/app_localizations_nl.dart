@@ -1333,4 +1333,28 @@ class AppLocalizationsNl extends AppLocalizations {
   @override
   String get tagMovedMessage =>
       'De tag bewoog tijdens het lezen. Leg hem terug en houd de telefoon stil.';
+
+  @override
+  String get lightBlue => 'Lichtblauw';
+
+  @override
+  String get transparent => 'Transparant';
+
+  @override
+  String get nfcActiveApproachTag => 'NFC actief — houd de tag dichtbij';
+
+  @override
+  String addedToShoppingList(String item) {
+    return '$item toegevoegd aan boodschappenlijst';
+  }
+
+  @override
+  String get deleteAccountFailed =>
+      'Account verwijderen mislukt. Probeer het opnieuw.';
+
+  @override
+  String get scanHistoryError => 'Fout bij toegang tot scangeschiedenis';
+
+  @override
+  String get genericBrand => 'Generiek';
 }

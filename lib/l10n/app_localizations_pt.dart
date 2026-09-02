@@ -1337,4 +1337,28 @@ class AppLocalizationsPt extends AppLocalizations {
   @override
   String get tagMovedMessage =>
       'A tag moveu-se durante a leitura. Coloque-a novamente e mantenha o telefone imóvel.';
+
+  @override
+  String get lightBlue => 'Azul claro';
+
+  @override
+  String get transparent => 'Transparente';
+
+  @override
+  String get nfcActiveApproachTag => 'NFC ativo — aproxime a etiqueta';
+
+  @override
+  String addedToShoppingList(String item) {
+    return '$item adicionado à lista de compras';
+  }
+
+  @override
+  String get deleteAccountFailed =>
+      'Falha ao excluir a conta. Tente novamente.';
+
+  @override
+  String get scanHistoryError => 'Erro ao acessar o histórico de leituras';
+
+  @override
+  String get genericBrand => 'Genérico';
 }

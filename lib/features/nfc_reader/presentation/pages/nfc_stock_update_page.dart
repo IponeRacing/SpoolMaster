@@ -14,6 +14,7 @@ import 'package:nfc_filament/features/nfc_reader/domain/entities/bobbin_data.dar
 import 'package:nfc_filament/features/nfc_reader/presentation/bloc/nfc_reader_bloc.dart';
 import 'package:nfc_filament/features/nfc_reader/presentation/bloc/nfc_reader_event.dart';
 import 'package:nfc_filament/features/nfc_reader/presentation/bloc/nfc_reader_state.dart';
+import 'package:nfc_filament/features/nfc_reader/presentation/utils/nfc_failure_localizer.dart';
 import 'package:nfc_filament/l10n/app_localizations.dart';
 
 /// Page for updating stock by scanning existing NFC spools
@@ -100,7 +101,7 @@ class _NfcStockUpdateView extends StatelessWidget {
                       ),
                       const SizedBox(height: 16),
                       Text(
-                        state.message,
+                        l10n.nfcNotAvailableDesc,
                         textAlign: TextAlign.center,
                         style: Theme.of(context).textTheme.titleMedium,
                       ),
@@ -129,7 +130,7 @@ class _NfcStockUpdateView extends StatelessWidget {
                       ),
                       const SizedBox(height: 16),
                       Text(
-                        state.message,
+                        localizedNfcFailureMessage(context, state),
                         textAlign: TextAlign.center,
                         style: Theme.of(context).textTheme.titleMedium,
                       ),
@@ -513,7 +514,7 @@ class _NfcStockUpdateView extends StatelessWidget {
                                 return AppLocalizations.of(context)!.enterValidWeight;
                               }
                               if (weight > spool.remainingWeight) {
-                                return 'Cannot exceed remaining weight';
+                                return AppLocalizations.of(context)!.cannotExceedRemainingWeight;
                               }
                               return null;
                             },
@@ -550,21 +551,21 @@ class _NfcStockUpdateView extends StatelessWidget {
                       ],
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Please enter length';
+                          return AppLocalizations.of(context)!.pleaseEnterLength;
                         }
                         final length = double.tryParse(value);
                         if (length == null) {
-                          return 'Please enter valid length';
+                          return AppLocalizations.of(context)!.pleaseEnterValidLength;
                         }
                         // Check if spool length is available for ratio calculation
                         if (spool.spoolLength == null) {
-                          return 'Spool length not set - cannot convert';
+                          return AppLocalizations.of(context)!.spoolLengthNotSetCannotConvert;
                         }
                         // Convert to weight using spool's specific ratio (g/m)
                         final ratio = spool.weight / spool.spoolLength!;
                         final weight = length * ratio;
                         if (weight > spool.remainingWeight) {
-                          return 'Exceeds remaining weight';
+                          return AppLocalizations.of(context)!.exceedsRemainingWeight;
                         }
                         return null;
                       },

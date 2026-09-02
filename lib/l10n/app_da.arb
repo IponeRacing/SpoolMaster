@@ -481,5 +481,12 @@
   "dryingTemp": "Tørretemperatur",
   "dryingTempHint": "f.eks. 55",
   "dryingTime": "Tørretid (timer)",
-  "dryingTimeHint": "f.eks. 8"
+  "dryingTimeHint": "f.eks. 8",
+  "lightBlue": "Lyseblå",
+  "transparent": "Transparent",
+  "nfcActiveApproachTag": "NFC aktiv — hold tagget tæt på",
+  "addedToShoppingList": "{item} tilføjet til indkøbslisten",
+  "deleteAccountFailed": "Sletning af konto mislykkedes. Prøv igen.",
+  "scanHistoryError": "Fejl ved adgang til scanningshistorik",
+  "genericBrand": "Generisk"
 }

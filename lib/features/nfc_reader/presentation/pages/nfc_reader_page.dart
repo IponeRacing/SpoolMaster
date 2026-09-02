@@ -6,6 +6,7 @@ import 'package:nfc_filament/features/nfc_reader/presentation/bloc/nfc_reader_bl
 import 'package:nfc_filament/features/nfc_reader/presentation/bloc/nfc_reader_event.dart';
 import 'package:nfc_filament/features/nfc_reader/presentation/bloc/nfc_reader_state.dart';
 import 'package:nfc_filament/features/nfc_reader/presentation/pages/scan_history_page.dart';
+import 'package:nfc_filament/features/nfc_reader/presentation/utils/nfc_failure_localizer.dart';
 import 'package:nfc_filament/l10n/app_localizations.dart';
 
 class NfcReaderPage extends StatelessWidget {
@@ -64,7 +65,7 @@ class _NfcReaderView extends StatelessWidget {
                     ),
                     const SizedBox(height: 16),
                     Text(
-                      state.message,
+                      AppLocalizations.of(context)!.nfcNotAvailableDesc,
                       textAlign: TextAlign.center,
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
@@ -88,7 +89,7 @@ class _NfcReaderView extends StatelessWidget {
                     ),
                     const SizedBox(height: 16),
                     Text(
-                      state.message,
+                      localizedNfcFailureMessage(context, state),
                       textAlign: TextAlign.center,
                       style: Theme.of(context).textTheme.titleMedium,
                     ),

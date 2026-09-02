@@ -13,7 +13,8 @@ class ScanDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dateFormat = DateFormat('dd MMMM yyyy à HH:mm', 'fr_FR');
+    final locale = Localizations.localeOf(context).toString();
+    final dateFormat = DateFormat.yMMMMd(locale).add_Hm();
 
     final localizations = AppLocalizations.of(context)!;
 

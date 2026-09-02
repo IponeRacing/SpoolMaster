@@ -1335,4 +1335,28 @@ class AppLocalizationsUk extends AppLocalizations {
   @override
   String get tagMovedMessage =>
       'Мітка зсунулася під час зчитування. Прикладіть її знову й тримайте телефон нерухомо.';
+
+  @override
+  String get lightBlue => 'Блакитний';
+
+  @override
+  String get transparent => 'Прозорий';
+
+  @override
+  String get nfcActiveApproachTag => 'NFC активний — піднесіть мітку';
+
+  @override
+  String addedToShoppingList(String item) {
+    return '$item додано до списку покупок';
+  }
+
+  @override
+  String get deleteAccountFailed =>
+      'Не вдалося видалити обліковий запис. Спробуйте ще раз.';
+
+  @override
+  String get scanHistoryError => 'Помилка доступу до історії сканувань';
+
+  @override
+  String get genericBrand => 'Універсальний';
 }

@@ -481,5 +481,12 @@
   "dryingTemp": "Kuivauslämpötila",
   "dryingTempHint": "esim. 55",
   "dryingTime": "Kuivausaika (tunnit)",
-  "dryingTimeHint": "esim. 8"
+  "dryingTimeHint": "esim. 8",
+  "lightBlue": "Vaaleansininen",
+  "transparent": "Läpinäkyvä",
+  "nfcActiveApproachTag": "NFC aktiivinen — vie tagi lähelle",
+  "addedToShoppingList": "{item} lisätty ostoslistalle",
+  "deleteAccountFailed": "Tilin poistaminen epäonnistui. Yritä uudelleen.",
+  "scanHistoryError": "Virhe skannaushistorian käytössä",
+  "genericBrand": "Yleinen"
 }

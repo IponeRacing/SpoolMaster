@@ -1297,6 +1297,29 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get tagMovedMessage => '读取时标签移动了。请重新贴合并保持手机不动。';
+
+  @override
+  String get lightBlue => '浅蓝色';
+
+  @override
+  String get transparent => '透明';
+
+  @override
+  String get nfcActiveApproachTag => 'NFC已激活 — 请靠近标签';
+
+  @override
+  String addedToShoppingList(String item) {
+    return '$item 已添加到购物清单';
+  }
+
+  @override
+  String get deleteAccountFailed => '删除账户失败,请重试。';
+
+  @override
+  String get scanHistoryError => '访问扫描历史时出错';
+
+  @override
+  String get genericBrand => '通用';
 }
 
 /// The translations for Chinese, as used in Taiwan (`zh_TW`).
@@ -2592,4 +2615,27 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String get tagMovedMessage => '讀取時標籤移動了。請重新貼合並保持手機不動。';
+
+  @override
+  String get lightBlue => '淺藍色';
+
+  @override
+  String get transparent => '透明';
+
+  @override
+  String get nfcActiveApproachTag => 'NFC已啟用 — 請靠近標籤';
+
+  @override
+  String addedToShoppingList(String item) {
+    return '$item 已加入購物清單';
+  }
+
+  @override
+  String get deleteAccountFailed => '刪除帳戶失敗,請重試。';
+
+  @override
+  String get scanHistoryError => '存取掃描歷史時發生錯誤';
+
+  @override
+  String get genericBrand => '通用';
 }

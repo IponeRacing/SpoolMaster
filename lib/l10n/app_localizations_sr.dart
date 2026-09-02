@@ -1334,4 +1334,28 @@ class AppLocalizationsSr extends AppLocalizations {
   @override
   String get tagMovedMessage =>
       'Ознака се померила током читања. Вратите је и држите телефон непомично.';
+
+  @override
+  String get lightBlue => 'Светлоплава';
+
+  @override
+  String get transparent => 'Провидна';
+
+  @override
+  String get nfcActiveApproachTag => 'NFC активан — приближите таг';
+
+  @override
+  String addedToShoppingList(String item) {
+    return '$item додато на листу за куповину';
+  }
+
+  @override
+  String get deleteAccountFailed =>
+      'Брисање налога није успело. Покушајте поново.';
+
+  @override
+  String get scanHistoryError => 'Грешка при приступу историји скенирања';
+
+  @override
+  String get genericBrand => 'Генерички';
 }

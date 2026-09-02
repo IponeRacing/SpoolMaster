@@ -481,5 +481,12 @@
   "dryingTemp": "Temperatură de uscare",
   "dryingTempHint": "ex. 55",
   "dryingTime": "Timp de uscare (ore)",
-  "dryingTimeHint": "ex. 8"
+  "dryingTimeHint": "ex. 8",
+  "lightBlue": "Albastru deschis",
+  "transparent": "Transparent",
+  "nfcActiveApproachTag": "NFC activ — apropiați tagul",
+  "addedToShoppingList": "{item} adăugat în lista de cumpărături",
+  "deleteAccountFailed": "Ștergerea contului a eșuat. Încercați din nou.",
+  "scanHistoryError": "Eroare la accesarea istoricului de scanări",
+  "genericBrand": "Generic"
 }

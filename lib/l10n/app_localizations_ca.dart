@@ -1343,4 +1343,28 @@ class AppLocalizationsCa extends AppLocalizations {
   @override
   String get tagMovedMessage =>
       'L\'etiqueta s\'ha mogut durant la lectura. Torna a col·locar-la i mantén el telèfon immòbil.';
+
+  @override
+  String get lightBlue => 'Blau clar';
+
+  @override
+  String get transparent => 'Transparent';
+
+  @override
+  String get nfcActiveApproachTag => 'NFC actiu — apropeu l\'etiqueta';
+
+  @override
+  String addedToShoppingList(String item) {
+    return '$item afegit a la llista de la compra';
+  }
+
+  @override
+  String get deleteAccountFailed =>
+      'No s\'ha pogut suprimir el compte. Torneu-ho a provar.';
+
+  @override
+  String get scanHistoryError => 'Error en accedir a l\'historial d\'escanejos';
+
+  @override
+  String get genericBrand => 'Genèric';
 }

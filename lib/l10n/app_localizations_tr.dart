@@ -1333,4 +1333,28 @@ class AppLocalizationsTr extends AppLocalizations {
   @override
   String get tagMovedMessage =>
       'Okuma sırasında etiket oynadı. Tekrar yerleştirin ve telefonu sabit tutun.';
+
+  @override
+  String get lightBlue => 'Açık mavi';
+
+  @override
+  String get transparent => 'Şeffaf';
+
+  @override
+  String get nfcActiveApproachTag => 'NFC etkin — etiketi yaklaştırın';
+
+  @override
+  String addedToShoppingList(String item) {
+    return '$item alışveriş listesine eklendi';
+  }
+
+  @override
+  String get deleteAccountFailed =>
+      'Hesap silme başarısız oldu. Lütfen tekrar deneyin.';
+
+  @override
+  String get scanHistoryError => 'Tarama geçmişine erişim hatası';
+
+  @override
+  String get genericBrand => 'Genel';
 }

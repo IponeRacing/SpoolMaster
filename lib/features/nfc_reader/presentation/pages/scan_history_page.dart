@@ -59,7 +59,7 @@ class _ScanHistoryView extends StatelessWidget {
           if (state is ScanHistoryError) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                content: Text(state.message),
+                content: Text(AppLocalizations.of(context)!.scanHistoryError),
                 backgroundColor: Colors.red,
               ),
             );

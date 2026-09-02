@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nfc_filament/core/utils/color_translator.dart';
 import 'package:nfc_filament/dependency_injection.dart';
 import 'package:nfc_filament/features/nfc_reader/domain/entities/bobbin_data.dart';
 import 'package:nfc_filament/features/nfc_reader/presentation/bloc/nfc_reader_bloc.dart';
 import 'package:nfc_filament/features/nfc_reader/presentation/bloc/nfc_reader_event.dart';
 import 'package:nfc_filament/features/nfc_reader/presentation/bloc/nfc_reader_state.dart';
+import 'package:nfc_filament/features/nfc_reader/presentation/utils/nfc_failure_localizer.dart';
 import 'package:nfc_filament/l10n/app_localizations.dart';
 
 class NfcWriterBambuLabPage extends StatefulWidget {
@@ -82,7 +84,7 @@ class _NfcWriterBambuLabPageState extends State<NfcWriterBambuLabPage> {
             } else if (state is NfcReaderFailure) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
-                  content: Text(state.message),
+                  content: Text(localizedNfcFailureMessage(context, state, isWrite: true)),
                   backgroundColor: Colors.red,
                 ),
               );
@@ -228,7 +230,7 @@ class _NfcWriterBambuLabPageState extends State<NfcWriterBambuLabPage> {
                                 ),
                               ),
                               const SizedBox(width: 12),
-                              Text(color),
+                              Text(translateColorName(context, color)),
                             ],
                           ),
                         );

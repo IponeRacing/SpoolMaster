@@ -481,5 +481,12 @@
   "dryingTemp": "सुखाने का तापमान",
   "dryingTempHint": "उदा. 55",
   "dryingTime": "सुखाने का समय (घंटे)",
-  "dryingTimeHint": "उदा. 8"
+  "dryingTimeHint": "उदा. 8",
+  "lightBlue": "हल्का नीला",
+  "transparent": "पारदर्शी",
+  "nfcActiveApproachTag": "NFC सक्रिय — टैग पास लाएँ",
+  "addedToShoppingList": "{item} खरीदारी सूची में जोड़ा गया",
+  "deleteAccountFailed": "खाता हटाना विफल रहा। पुनः प्रयास करें।",
+  "scanHistoryError": "स्कैन इतिहास तक पहुँचने में त्रुटि",
+  "genericBrand": "सामान्य"
 }

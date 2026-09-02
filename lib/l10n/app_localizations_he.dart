@@ -1325,4 +1325,27 @@ class AppLocalizationsHe extends AppLocalizations {
   @override
   String get tagMovedMessage =>
       'התג זז במהלך הקריאה. הנח אותו שוב והחזק את הטלפון ללא תנועה.';
+
+  @override
+  String get lightBlue => 'כחול בהיר';
+
+  @override
+  String get transparent => 'שקוף';
+
+  @override
+  String get nfcActiveApproachTag => 'NFC פעיל — קרב את התג';
+
+  @override
+  String addedToShoppingList(String item) {
+    return '$item נוסף לרשימת הקניות';
+  }
+
+  @override
+  String get deleteAccountFailed => 'מחיקת החשבון נכשלה. נסה שוב.';
+
+  @override
+  String get scanHistoryError => 'שגיאה בגישה להיסטוריית הסריקות';
+
+  @override
+  String get genericBrand => 'כללי';
 }

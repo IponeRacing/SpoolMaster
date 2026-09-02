@@ -11,6 +11,7 @@ import 'package:nfc_filament/features/nfc_reader/presentation/bloc/nfc_reader_bl
 import 'package:nfc_filament/features/nfc_reader/presentation/bloc/nfc_reader_event.dart';
 import 'package:nfc_filament/features/nfc_reader/presentation/bloc/nfc_reader_state.dart';
 import 'package:nfc_filament/features/nfc_reader/presentation/pages/manual_add_spool_page.dart';
+import 'package:nfc_filament/features/nfc_reader/presentation/utils/nfc_failure_localizer.dart';
 import 'package:nfc_filament/l10n/app_localizations.dart';
 import 'package:nfc_filament/native_nfc/native_nfc.dart';
 
@@ -166,10 +167,10 @@ class _DirectScanView extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
                   TextField(
-                    decoration: const InputDecoration(
-                      hintText: 'Red, Blue, Black...',
+                    decoration: InputDecoration(
+                      hintText: localizations.colorHintExamples,
                       isDense: true,
-                      contentPadding: EdgeInsets.symmetric(
+                      contentPadding: const EdgeInsets.symmetric(
                         horizontal: 12,
                         vertical: 10,
                       ),
@@ -318,7 +319,7 @@ class _DirectScanView extends StatelessWidget {
                       ),
                       const SizedBox(height: 16),
                       Text(
-                        state.message,
+                        l10n.nfcNotAvailableDesc,
                         textAlign: TextAlign.center,
                         style: Theme.of(context).textTheme.titleMedium,
                       ),
@@ -347,7 +348,7 @@ class _DirectScanView extends StatelessWidget {
                       ),
                       const SizedBox(height: 16),
                       Text(
-                        state.message,
+                        localizedNfcFailureMessage(context, state),
                         textAlign: TextAlign.center,
                         style: Theme.of(context).textTheme.titleMedium,
                       ),
@@ -602,7 +603,7 @@ class _NfcScanningViewState extends State<_NfcScanningView>
             ),
             const SizedBox(height: 12),
             Text(
-              'NFC actif - approchez le tag',
+              AppLocalizations.of(context)!.nfcActiveApproachTag,
               style: TextStyle(
                 fontSize: 14,
                 color: Colors.grey[400],

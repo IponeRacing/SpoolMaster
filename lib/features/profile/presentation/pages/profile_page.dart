@@ -130,10 +130,11 @@ class _ProfilePageState extends State<ProfilePage> {
         );
       }
     } catch (e) {
+      debugPrint('Subscription purchase error: $e');
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(AppLocalizations.of(context)!.errorMessage(e.toString())),
+            content: Text(AppLocalizations.of(context)!.subscriptionFailedMessage),
             backgroundColor: Colors.red,
           ),
         );
@@ -273,10 +274,11 @@ class _ProfilePageState extends State<ProfilePage> {
         throw Exception('Failed to delete account');
       }
     } catch (e) {
+      debugPrint('Delete account error: $e');
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(AppLocalizations.of(context)!.errorMessage(e.toString())),
+            content: Text(AppLocalizations.of(context)!.deleteAccountFailed),
             backgroundColor: Colors.red,
           ),
         );

@@ -1333,4 +1333,28 @@ class AppLocalizationsRu extends AppLocalizations {
   @override
   String get tagMovedMessage =>
       'Метка сдвинулась во время чтения. Приложите её снова и держите телефон неподвижно.';
+
+  @override
+  String get lightBlue => 'Голубой';
+
+  @override
+  String get transparent => 'Прозрачный';
+
+  @override
+  String get nfcActiveApproachTag => 'NFC активен — поднесите метку';
+
+  @override
+  String addedToShoppingList(String item) {
+    return '$item добавлен в список покупок';
+  }
+
+  @override
+  String get deleteAccountFailed =>
+      'Не удалось удалить аккаунт. Повторите попытку.';
+
+  @override
+  String get scanHistoryError => 'Ошибка доступа к истории сканирований';
+
+  @override
+  String get genericBrand => 'Универсальный';
 }

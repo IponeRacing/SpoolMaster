@@ -539,7 +539,7 @@ class _NfcReaderViewState extends State<_NfcReaderView> {
                     ),
                     const SizedBox(height: 16),
                     Text(
-                      state.message,
+                      AppLocalizations.of(context)!.nfcNotAvailableDesc,
                       textAlign: TextAlign.center,
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
@@ -566,7 +566,9 @@ class _NfcReaderViewState extends State<_NfcReaderView> {
                 failureIcon = Icons.warning_amber_rounded;
                 failureColor = Colors.amber;
                 failureTitle = AppLocalizations.of(context)!.nfcTagIncompatible;
-                failureDetail = state.message;
+                failureDetail = Platform.isIOS
+                    ? AppLocalizations.of(context)!.mifareClassicNotSupportedIos
+                    : null;
               case NfcFailureType.authError:
                 failureIcon = Icons.lock_outline;
                 failureColor = Colors.orange;

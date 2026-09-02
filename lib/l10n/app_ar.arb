@@ -481,5 +481,12 @@
   "dryingTemp": "درجة حرارة التجفيف",
   "dryingTempHint": "مثال 55",
   "dryingTime": "وقت التجفيف (ساعات)",
-  "dryingTimeHint": "مثال 8"
+  "dryingTimeHint": "مثال 8",
+  "lightBlue": "أزرق فاتح",
+  "transparent": "شفاف",
+  "nfcActiveApproachTag": "NFC نشط — قرّب البطاقة",
+  "addedToShoppingList": "تمت إضافة {item} إلى قائمة التسوق",
+  "deleteAccountFailed": "فشل حذف الحساب. حاول مرة أخرى.",
+  "scanHistoryError": "خطأ في الوصول إلى سجل المسح",
+  "genericBrand": "عام"
 }

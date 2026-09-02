@@ -1331,4 +1331,27 @@ class AppLocalizationsTh extends AppLocalizations {
   @override
   String get tagMovedMessage =>
       'แท็กขยับระหว่างการอ่าน วางกลับและถือโทรศัพท์ให้นิ่ง';
+
+  @override
+  String get lightBlue => 'ฟ้าอ่อน';
+
+  @override
+  String get transparent => 'โปร่งใส';
+
+  @override
+  String get nfcActiveApproachTag => 'NFC ทำงานอยู่ — นำแท็กเข้าใกล้';
+
+  @override
+  String addedToShoppingList(String item) {
+    return 'เพิ่ม $item ลงในรายการซื้อแล้ว';
+  }
+
+  @override
+  String get deleteAccountFailed => 'ลบบัญชีไม่สำเร็จ โปรดลองอีกครั้ง';
+
+  @override
+  String get scanHistoryError => 'เกิดข้อผิดพลาดในการเข้าถึงประวัติการสแกน';
+
+  @override
+  String get genericBrand => 'ทั่วไป';
 }

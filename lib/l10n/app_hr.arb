@@ -481,5 +481,12 @@
   "dryingTemp": "Temperatura sušenja",
   "dryingTempHint": "npr. 55",
   "dryingTime": "Vrijeme sušenja (sati)",
-  "dryingTimeHint": "npr. 8"
+  "dryingTimeHint": "npr. 8",
+  "lightBlue": "Svijetloplava",
+  "transparent": "Prozirna",
+  "nfcActiveApproachTag": "NFC aktivan — približite tag",
+  "addedToShoppingList": "{item} dodano na popis za kupnju",
+  "deleteAccountFailed": "Brisanje računa nije uspjelo. Pokušajte ponovno.",
+  "scanHistoryError": "Pogreška pri pristupu povijesti skeniranja",
+  "genericBrand": "Generička"
 }

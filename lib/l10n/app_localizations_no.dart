@@ -1333,4 +1333,27 @@ class AppLocalizationsNo extends AppLocalizations {
   @override
   String get tagMovedMessage =>
       'Taggen flyttet seg under lesing. Legg den tilbake og hold telefonen stille.';
+
+  @override
+  String get lightBlue => 'Lyseblå';
+
+  @override
+  String get transparent => 'Gjennomsiktig';
+
+  @override
+  String get nfcActiveApproachTag => 'NFC aktiv — hold taggen nær';
+
+  @override
+  String addedToShoppingList(String item) {
+    return '$item lagt til i handlelisten';
+  }
+
+  @override
+  String get deleteAccountFailed => 'Sletting av konto mislyktes. Prøv igjen.';
+
+  @override
+  String get scanHistoryError => 'Feil ved tilgang til skannehistorikk';
+
+  @override
+  String get genericBrand => 'Generisk';
 }

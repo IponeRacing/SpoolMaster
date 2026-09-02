@@ -481,5 +481,12 @@
   "dryingTemp": "Температура сушіння",
   "dryingTempHint": "напр. 55",
   "dryingTime": "Час сушіння (години)",
-  "dryingTimeHint": "напр. 8"
+  "dryingTimeHint": "напр. 8",
+  "lightBlue": "Блакитний",
+  "transparent": "Прозорий",
+  "nfcActiveApproachTag": "NFC активний — піднесіть мітку",
+  "addedToShoppingList": "{item} додано до списку покупок",
+  "deleteAccountFailed": "Не вдалося видалити обліковий запис. Спробуйте ще раз.",
+  "scanHistoryError": "Помилка доступу до історії сканувань",
+  "genericBrand": "Універсальний"
 }

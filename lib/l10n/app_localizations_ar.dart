@@ -1326,4 +1326,27 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get tagMovedMessage =>
       'تحرّكت البطاقة أثناء القراءة. أعد وضعها وأبقِ الهاتف ثابتًا.';
+
+  @override
+  String get lightBlue => 'أزرق فاتح';
+
+  @override
+  String get transparent => 'شفاف';
+
+  @override
+  String get nfcActiveApproachTag => 'NFC نشط — قرّب البطاقة';
+
+  @override
+  String addedToShoppingList(String item) {
+    return 'تمت إضافة $item إلى قائمة التسوق';
+  }
+
+  @override
+  String get deleteAccountFailed => 'فشل حذف الحساب. حاول مرة أخرى.';
+
+  @override
+  String get scanHistoryError => 'خطأ في الوصول إلى سجل المسح';
+
+  @override
+  String get genericBrand => 'عام';
 }

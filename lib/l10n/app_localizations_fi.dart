@@ -1333,4 +1333,28 @@ class AppLocalizationsFi extends AppLocalizations {
   @override
   String get tagMovedMessage =>
       'Tagi liikkui lukemisen aikana. Aseta se takaisin ja pidä puhelin paikallaan.';
+
+  @override
+  String get lightBlue => 'Vaaleansininen';
+
+  @override
+  String get transparent => 'Läpinäkyvä';
+
+  @override
+  String get nfcActiveApproachTag => 'NFC aktiivinen — vie tagi lähelle';
+
+  @override
+  String addedToShoppingList(String item) {
+    return '$item lisätty ostoslistalle';
+  }
+
+  @override
+  String get deleteAccountFailed =>
+      'Tilin poistaminen epäonnistui. Yritä uudelleen.';
+
+  @override
+  String get scanHistoryError => 'Virhe skannaushistorian käytössä';
+
+  @override
+  String get genericBrand => 'Yleinen';
 }

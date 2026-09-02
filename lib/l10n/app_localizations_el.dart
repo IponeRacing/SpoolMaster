@@ -1342,4 +1342,28 @@ class AppLocalizationsEl extends AppLocalizations {
   @override
   String get tagMovedMessage =>
       'Το tag μετακινήθηκε κατά την ανάγνωση. Τοποθετήστε το ξανά και κρατήστε το τηλέφωνο ακίνητο.';
+
+  @override
+  String get lightBlue => 'Γαλάζιο';
+
+  @override
+  String get transparent => 'Διαφανές';
+
+  @override
+  String get nfcActiveApproachTag => 'NFC ενεργό — πλησιάστε την ετικέτα';
+
+  @override
+  String addedToShoppingList(String item) {
+    return 'Το $item προστέθηκε στη λίστα αγορών';
+  }
+
+  @override
+  String get deleteAccountFailed =>
+      'Η διαγραφή του λογαριασμού απέτυχε. Δοκιμάστε ξανά.';
+
+  @override
+  String get scanHistoryError => 'Σφάλμα πρόσβασης στο ιστορικό σαρώσεων';
+
+  @override
+  String get genericBrand => 'Γενικό';
 }

@@ -79,10 +79,11 @@ class _LoginPageState extends State<LoginPage> {
       await _authService.signInWithGoogle();
       _navigateAfterLogin();
     } catch (e) {
+      debugPrint('Google sign-in error: $e');
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(AppLocalizations.of(context)!.signInError(e.toString())),
+            content: Text(AppLocalizations.of(context)!.signInFailed),
             backgroundColor: Colors.red,
           ),
         );

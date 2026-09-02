@@ -481,5 +481,12 @@
   "dryingTemp": "טמפרטורת ייבוש",
   "dryingTempHint": "לדוגמה 55",
   "dryingTime": "זמן ייבוש (שעות)",
-  "dryingTimeHint": "לדוגמה 8"
+  "dryingTimeHint": "לדוגמה 8",
+  "lightBlue": "כחול בהיר",
+  "transparent": "שקוף",
+  "nfcActiveApproachTag": "NFC פעיל — קרב את התג",
+  "addedToShoppingList": "{item} נוסף לרשימת הקניות",
+  "deleteAccountFailed": "מחיקת החשבון נכשלה. נסה שוב.",
+  "scanHistoryError": "שגיאה בגישה להיסטוריית הסריקות",
+  "genericBrand": "כללי"
 }

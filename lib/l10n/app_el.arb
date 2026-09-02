@@ -481,5 +481,12 @@
   "dryingTemp": "Θερμοκρασία στεγνώματος",
   "dryingTempHint": "π.χ. 55",
   "dryingTime": "Χρόνος στεγνώματος (ώρες)",
-  "dryingTimeHint": "π.χ. 8"
+  "dryingTimeHint": "π.χ. 8",
+  "lightBlue": "Γαλάζιο",
+  "transparent": "Διαφανές",
+  "nfcActiveApproachTag": "NFC ενεργό — πλησιάστε την ετικέτα",
+  "addedToShoppingList": "Το {item} προστέθηκε στη λίστα αγορών",
+  "deleteAccountFailed": "Η διαγραφή του λογαριασμού απέτυχε. Δοκιμάστε ξανά.",
+  "scanHistoryError": "Σφάλμα πρόσβασης στο ιστορικό σαρώσεων",
+  "genericBrand": "Γενικό"
 }

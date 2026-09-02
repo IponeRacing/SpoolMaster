@@ -1312,4 +1312,27 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get tagMovedMessage => '읽는 중 태그가 움직였습니다. 다시 대고 휴대폰을 움직이지 마세요.';
+
+  @override
+  String get lightBlue => '하늘색';
+
+  @override
+  String get transparent => '투명';
+
+  @override
+  String get nfcActiveApproachTag => 'NFC 활성 — 태그를 가까이 대세요';
+
+  @override
+  String addedToShoppingList(String item) {
+    return '$item이(가) 쇼핑 목록에 추가되었습니다';
+  }
+
+  @override
+  String get deleteAccountFailed => '계정 삭제에 실패했습니다. 다시 시도해 주세요.';
+
+  @override
+  String get scanHistoryError => '스캔 기록 접근 오류';
+
+  @override
+  String get genericBrand => '일반';
 }

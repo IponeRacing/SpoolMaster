@@ -481,5 +481,12 @@
   "dryingTemp": "Suhu pengeringan",
   "dryingTempHint": "cth. 55",
   "dryingTime": "Masa pengeringan (jam)",
-  "dryingTimeHint": "cth. 8"
+  "dryingTimeHint": "cth. 8",
+  "lightBlue": "Biru muda",
+  "transparent": "Lutsinar",
+  "nfcActiveApproachTag": "NFC aktif — dekatkan tag",
+  "addedToShoppingList": "{item} ditambah ke senarai beli-belah",
+  "deleteAccountFailed": "Pemadaman akaun gagal. Sila cuba lagi.",
+  "scanHistoryError": "Ralat mengakses sejarah imbasan",
+  "genericBrand": "Generik"
 }

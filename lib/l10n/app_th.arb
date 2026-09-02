@@ -481,5 +481,12 @@
   "dryingTemp": "อุณหภูมิการอบแห้ง",
   "dryingTempHint": "เช่น 55",
   "dryingTime": "เวลาอบแห้ง (ชั่วโมง)",
-  "dryingTimeHint": "เช่น 8"
+  "dryingTimeHint": "เช่น 8",
+  "lightBlue": "ฟ้าอ่อน",
+  "transparent": "โปร่งใส",
+  "nfcActiveApproachTag": "NFC ทำงานอยู่ — นำแท็กเข้าใกล้",
+  "addedToShoppingList": "เพิ่ม {item} ลงในรายการซื้อแล้ว",
+  "deleteAccountFailed": "ลบบัญชีไม่สำเร็จ โปรดลองอีกครั้ง",
+  "scanHistoryError": "เกิดข้อผิดพลาดในการเข้าถึงประวัติการสแกน",
+  "genericBrand": "ทั่วไป"
 }

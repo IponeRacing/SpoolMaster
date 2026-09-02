@@ -1333,4 +1333,27 @@ class AppLocalizationsMs extends AppLocalizations {
   @override
   String get tagMovedMessage =>
       'Tag bergerak semasa membaca. Letakkan semula dan pegang telefon tanpa bergerak.';
+
+  @override
+  String get lightBlue => 'Biru muda';
+
+  @override
+  String get transparent => 'Lutsinar';
+
+  @override
+  String get nfcActiveApproachTag => 'NFC aktif — dekatkan tag';
+
+  @override
+  String addedToShoppingList(String item) {
+    return '$item ditambah ke senarai beli-belah';
+  }
+
+  @override
+  String get deleteAccountFailed => 'Pemadaman akaun gagal. Sila cuba lagi.';
+
+  @override
+  String get scanHistoryError => 'Ralat mengakses sejarah imbasan';
+
+  @override
+  String get genericBrand => 'Generik';
 }

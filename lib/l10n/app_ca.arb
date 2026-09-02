@@ -481,5 +481,12 @@
   "dryingTemp": "Temperatura d'assecatge",
   "dryingTempHint": "p. ex. 55",
   "dryingTime": "Temps d'assecatge (hores)",
-  "dryingTimeHint": "p. ex. 8"
+  "dryingTimeHint": "p. ex. 8",
+  "lightBlue": "Blau clar",
+  "transparent": "Transparent",
+  "nfcActiveApproachTag": "NFC actiu — apropeu l'etiqueta",
+  "addedToShoppingList": "{item} afegit a la llista de la compra",
+  "deleteAccountFailed": "No s'ha pogut suprimir el compte. Torneu-ho a provar.",
+  "scanHistoryError": "Error en accedir a l'historial d'escanejos",
+  "genericBrand": "Genèric"
 }

@@ -481,5 +481,12 @@
   "dryingTemp": "Temperatura di essiccazione",
   "dryingTempHint": "es. 55",
   "dryingTime": "Tempo di essiccazione (ore)",
-  "dryingTimeHint": "es. 8"
+  "dryingTimeHint": "es. 8",
+  "lightBlue": "Azzurro",
+  "transparent": "Trasparente",
+  "nfcActiveApproachTag": "NFC attivo — avvicina il tag",
+  "addedToShoppingList": "{item} aggiunto alla lista della spesa",
+  "deleteAccountFailed": "Eliminazione dell'account non riuscita. Riprova.",
+  "scanHistoryError": "Errore di accesso alla cronologia delle scansioni",
+  "genericBrand": "Generico"
 }

@@ -481,5 +481,12 @@
   "dryingTemp": "乾燥溫度",
   "dryingTempHint": "例如 55",
   "dryingTime": "乾燥時間（小時）",
-  "dryingTimeHint": "例如 8"
+  "dryingTimeHint": "例如 8",
+  "lightBlue": "淺藍色",
+  "transparent": "透明",
+  "nfcActiveApproachTag": "NFC已啟用 — 請靠近標籤",
+  "addedToShoppingList": "{item} 已加入購物清單",
+  "deleteAccountFailed": "刪除帳戶失敗,請重試。",
+  "scanHistoryError": "存取掃描歷史時發生錯誤",
+  "genericBrand": "通用"
 }

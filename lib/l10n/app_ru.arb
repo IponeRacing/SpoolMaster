@@ -481,5 +481,12 @@
   "dryingTemp": "Температура сушки",
   "dryingTempHint": "напр. 55",
   "dryingTime": "Время сушки (часы)",
-  "dryingTimeHint": "напр. 8"
+  "dryingTimeHint": "напр. 8",
+  "lightBlue": "Голубой",
+  "transparent": "Прозрачный",
+  "nfcActiveApproachTag": "NFC активен — поднесите метку",
+  "addedToShoppingList": "{item} добавлен в список покупок",
+  "deleteAccountFailed": "Не удалось удалить аккаунт. Повторите попытку.",
+  "scanHistoryError": "Ошибка доступа к истории сканирований",
+  "genericBrand": "Универсальный"
 }

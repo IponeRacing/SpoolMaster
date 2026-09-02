@@ -481,5 +481,12 @@
   "dryingTemp": "Température de séchage",
   "dryingTempHint": "ex. 55",
   "dryingTime": "Temps de séchage (heures)",
-  "dryingTimeHint": "ex. 8"
+  "dryingTimeHint": "ex. 8",
+  "lightBlue": "Bleu clair",
+  "transparent": "Transparent",
+  "nfcActiveApproachTag": "NFC actif — approchez le tag",
+  "addedToShoppingList": "{item} ajouté à la liste de courses",
+  "deleteAccountFailed": "La suppression du compte a échoué. Veuillez réessayer.",
+  "scanHistoryError": "Erreur d'accès à l'historique des scans",
+  "genericBrand": "Générique"
 }
