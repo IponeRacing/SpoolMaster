@@ -14,6 +14,7 @@ import 'package:nfc_filament/core/services/shopping_list_service.dart';
 import 'package:nfc_filament/core/services/update_service.dart';
 import 'package:nfc_filament/core/services/spool_storage_service.dart';
 import 'package:nfc_filament/core/services/subscription_service.dart';
+import 'package:nfc_filament/core/services/sync_service.dart';
 import 'package:nfc_filament/core/services/user_preferences_service.dart';
 import 'package:nfc_filament/core/theme/app_theme.dart';
 import 'package:nfc_filament/core/utils/color_translator.dart';
@@ -243,6 +244,7 @@ class MainNavigationPage extends StatefulWidget {
 class MainNavigationPageState extends State<MainNavigationPage> {
   int _selectedIndex = 0;
   final _statisticsKey = GlobalKey<_StatisticsPageState>();
+  final _stockKey = GlobalKey<_StockListPageState>();
 
   @override
   void initState() {
@@ -254,7 +256,23 @@ class MainNavigationPageState extends State<MainNavigationPage> {
       Future.delayed(const Duration(seconds: 2), () {
         if (mounted) unawaited(UpdateService.maybePrompt(context));
       });
+      unawaited(_syncOnLaunch());
     });
+  }
+
+  /// Sync au lancement (si connecté). Le login seul rafraîchissait le stock ;
+  /// un changement serveur survenu hors login (ex: restauration de bobines)
+  /// n'apparaissait jamais tant qu'on ne se reconnectait pas. fullSync =
+  /// push (préserve les ajouts locaux non synchronisés) PUIS pull (fusion) →
+  /// sûr, pas de perte. Rafraîchit ensuite la liste Stock. Fail-open.
+  Future<void> _syncOnLaunch() async {
+    try {
+      if (!await UserPreferencesService.isSignedIn()) return;
+      await SyncService.fullSync();
+      if (mounted) await _stockKey.currentState?._loadData();
+    } catch (_) {
+      // ne jamais bloquer l'app sur une erreur de sync
+    }
   }
 
   // Méthode pour forcer le rebuild de toutes les pages
@@ -290,7 +308,7 @@ class MainNavigationPageState extends State<MainNavigationPage> {
               ),
             ],
           ),
-          const StockListPage(),
+          StockListPage(key: _stockKey),
           StatisticsPage(key: _statisticsKey),
         ],
       ),
