@@ -656,7 +656,10 @@ class NativeNfcPlugin private constructor(
             var data: ByteArray? = null
             try {
                 data = mifare.readPages(startPage)
-            } catch (e: IOException) {
+            } catch (e: Exception) {
+                // Exception (pas juste IOException) : couvre IllegalStateException
+                // "Call connect() first!" quand le tag s'est déconnecté après un
+                // retry (sinon elle remontait non catchée → erreur user parasite).
                 Log.w(TAG, "Read pages $startPage failed: ${e.message} — reconnecting for retry")
                 try {
                     mifare.close()
@@ -711,7 +714,9 @@ class NativeNfcPlugin private constructor(
             var response: ByteArray? = null
             try {
                 response = nfcA.transceive(byteArrayOf(CMD_READ, page.toByte()))
-            } catch (e: IOException) {
+            } catch (e: Exception) {
+                // Exception large : couvre aussi IllegalStateException
+                // "Call connect() first!" (tag déconnecté après un retry).
                 Log.w(TAG, "NfcA read page $page failed: ${e.message} — reconnecting for retry")
                 try {
                     nfcA.close()

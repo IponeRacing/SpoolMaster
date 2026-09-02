@@ -24,6 +24,29 @@ import 'package:nfc_manager/nfc_manager.dart';
 @LazySingleton(as: NfcDataSource)
 class NfcDataSourceImpl implements NfcDataSource {
   /// Parse les données Anycubic depuis une chaîne brute et raw bytes
+  /// Familles de matériau connues (spécifique → générique pour le matching).
+  static const List<String> _materialBases = [
+    'PETG', 'PLA', 'ABS', 'ASA', 'TPU', 'PVA', 'HIPS', 'NYLON', 'PC', 'PA',
+    'TPE', 'PP',
+  ];
+
+  /// Famille de base d'un nom de matériau ('PLA High Speed' → 'PLA'), ou null.
+  String? _materialFamily(String name) {
+    final s = name.toUpperCase().replaceAll(RegExp('[^A-Z0-9]'), '');
+    for (final b in _materialBases) {
+      if (s.startsWith(b)) return b;
+    }
+    return null;
+  }
+
+  /// Nom propre si [raw] (champ matériau dédié) commence par une base connue,
+  /// sinon null (champ vide/garbage → ignoré).
+  String? _recognizedMaterial(String raw) {
+    final clean = raw.trim();
+    if (clean.length < 2 || clean.length > 24) return null;
+    return _materialFamily(clean) == null ? null : clean;
+  }
+
   BobbinDataModel _parseAnycubicData(String data, List<int> rawBytes) {
     // Chercher le SKU (format AHPLBW-107)
     final skuMatch = RegExp(r'A[A-Z]{3,5}[A-Z]{2}-\d{3}').firstMatch(data);
@@ -129,6 +152,28 @@ class NfcDataSourceImpl implements NfcDataSource {
             break;
           }
         }
+      }
+    }
+
+    // FIX PETG→PLA (rapporté ACE Pro 2) : le SKU est peu fiable/absent sur les
+    // spools récents et retombe sur le défaut 'PLA'. Le champ matériau DÉDIÉ
+    // (bytes 60-76 / pages 15-18, ce que le writer écrit) est la source
+    // autoritative. On le préfère UNIQUEMENT si sa FAMILLE diffère de celle du
+    // SKU (ex: champ=PETG mais SKU→PLA) → corrige PETG sans casser les noms de
+    // variantes PLA (PLA High Speed, etc.), et ignore le garbage (famille null).
+    if (rawBytes.length >= 64) {
+      final end = rawBytes.length >= 76 ? 76 : rawBytes.length;
+      final fieldMat = String.fromCharCodes(
+        rawBytes.sublist(60, end).where((b) => b >= 32 && b < 127),
+      ).trim();
+      final fieldName = _recognizedMaterial(fieldMat);
+      if (fieldName != null &&
+          _materialFamily(fieldName) != _materialFamily(filamentType)) {
+        developer.log(
+          '🏷️ Matériau corrigé via champ dédié: "$fieldMat" → $fieldName '
+          '(SKU donnait: $filamentType)',
+        );
+        filamentType = fieldName;
       }
     }
 
