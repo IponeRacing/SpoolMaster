@@ -238,6 +238,40 @@ class AuthService {
     }
   }
 
+  /// Récupère le profil depuis le BACKEND (source de vérité) et le met en cache
+  /// local. Indispensable après une réinstallation : Apple ne renvoie l'email
+  /// qu'à la 1re connexion, donc l'identité doit venir du serveur (qui la stocke
+  /// depuis la première fois). Best practice 2026. Retourne null en cas d'échec
+  /// (fail-open : on ne casse jamais la session).
+  Future<UserModel?> refreshUserFromBackend() async {
+    try {
+      final response = await authenticatedRequest((token) => http.get(
+            Uri.parse('${ApiConfig.baseUrl}${ApiConfig.getUserProfile}'),
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer $token',
+            },
+          ).timeout(ApiConfig.connectTimeout));
+      if (response.statusCode != 200) return null;
+      final body = jsonDecode(response.body) as Map<String, dynamic>;
+      final data = (body['data'] as Map<String, dynamic>?) ?? body;
+      final user = UserModel.fromJson(data);
+      if (user.email.isNotEmpty) {
+        await _secureStorage.write(key: _keyUser, value: jsonEncode(user.toJson()));
+        await UserPreferencesService.setUserInfo(
+          isSignedIn: true,
+          userName: user.name,
+          userEmail: user.email,
+        );
+        debugPrint('✅ Profil rechargé depuis le backend: ${user.email}');
+      }
+      return user;
+    } catch (e) {
+      debugPrint('⚠️ refreshUserFromBackend échec (ignoré): $e');
+      return null;
+    }
+  }
+
   /// Récupérer l'ID utilisateur actuel
   Future<String?> getCurrentUserId() async {
     final user = await getCurrentUser();

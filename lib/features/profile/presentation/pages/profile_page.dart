@@ -52,15 +52,16 @@ class _ProfilePageState extends State<ProfilePage> {
     _isSignedIn = await UserPreferencesService.isSignedIn();
     _userName = await UserPreferencesService.getUserName();
     _userEmail = await UserPreferencesService.getUserEmail();
-    // Fallback: récupérer l'email du compte backend si absent en local
+    // Fallback: récupérer l'email depuis le BACKEND (source de vérité) si absent
+    // en local. Cas réinstallation : le local est vide et Apple ne redonne pas
+    // l'email → on interroge le serveur (getCurrentUser lit seulement le cache
+    // local, vide après réinstall, d'où l'ancien « aucun user »).
     if (_isSignedIn && (_userEmail == null || _userEmail!.isEmpty)) {
-      final user = await AuthService().getCurrentUser();
+      final user = await AuthService().refreshUserFromBackend()
+          ?? await AuthService().getCurrentUser();
       if (user != null && user.email.isNotEmpty) {
+        _userName ??= user.name;
         _userEmail = user.email;
-        await UserPreferencesService.setUserInfo(
-          isSignedIn: true,
-          userEmail: user.email,
-        );
       }
     }
     _selectedLanguage = await UserPreferencesService.getLanguage();
