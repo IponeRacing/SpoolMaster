@@ -670,56 +670,44 @@ class NfcDataSourceImpl implements NfcDataSource {
 
   /// Convert RGB values to human-readable color name
   String _rgbToColorName(int r, int g, int b) {
-    // Détecter les couleurs en utilisant HSV pour une meilleure précision
-    // Si c'est majoritairement rouge (R >> G et R >> B), c'est rouge
-    if (r > 100 && r > g * 3 && r > b * 3) {
-      return 'Red';
-    }
+    // Classification HSV. IMPORTANT : traiter d'abord les couleurs ACHROMATIQUES
+    // (blanc/gris/noir) via la SATURATION, AVANT la teinte. Sinon un blanc froid
+    // (ex. 250,250,255, canal bleu à peine dominant) tombait dans la branche
+    // bleu/violet et était classé « Purple » (bug rapporté : PETG White → Lila).
+    final maxC = r > g ? (r > b ? r : b) : (g > b ? g : b);
+    final minC = r < g ? (r < b ? r : b) : (g < b ? g : b);
+    final delta = maxC - minC;
+    final value = maxC; // luminosité 0-255
+    final sat = maxC == 0 ? 0.0 : delta / maxC; // saturation 0-1
 
-    // Si c'est majoritairement bleu (B >> R et B >> G), c'est bleu/purple
-    if (b > 100 && b > r && b > g) {
-      if (r > 80) {
-        return 'Purple'; // Violet si un peu de rouge
-      }
-      return 'Blue';
-    }
-
-    // Orange : beaucoup de rouge, un peu de vert, peu de bleu
-    if (r > 200 && g > 100 && g < r && b < 100) {
-      return 'Orange';
-    }
-
-    // Vert
-    if (g > 100 && g > r && g > b) {
-      return 'Green';
-    }
-
-    // Jaune
-    if (r > 200 && g > 200 && b < 100) {
-      return 'Yellow';
-    }
-
-    // Rose
-    if (r > 200 && g > 150 && b > 150) {
-      return 'Pink';
-    }
-
-    // Noir/Gris/Blanc (basé sur la luminosité)
-    final brightness = (r + g + b) / 3;
-    if (brightness < 50) {
-      return 'Black';
-    } else if (brightness > 200) {
-      return 'White';
-    } else if ((r - g).abs() < 30 && (g - b).abs() < 30) {
+    // Achromatique : peu saturé OU canaux très proches → blanc/gris/noir
+    if (sat < 0.22 || delta < 32) {
+      if (value >= 200) return 'White';
+      if (value <= 60) return 'Black';
       return 'Gray';
     }
 
-    // Marron (rouge foncé avec un peu de vert)
-    if (r > 80 && g > 20 && g < r && b < 50 && brightness < 120) {
-      return 'Brown';
+    // Teinte en degrés (0-360)
+    double hue;
+    if (maxC == r) {
+      // Dart : le % sur un double renvoie un résultat non négatif → gère g<b.
+      hue = 60 * (((g - b) / delta) % 6);
+    } else if (maxC == g) {
+      hue = 60 * (((b - r) / delta) + 2);
+    } else {
+      hue = 60 * (((r - g) / delta) + 4);
     }
+    if (hue < 0) hue += 360;
 
-    return 'Unknown';
+    // Segmentation par teinte (cyan replié sur Blue, magenta sur Pink/Purple)
+    if (hue < 15 || hue >= 345) return 'Red';
+    if (hue < 45) return value < 150 ? 'Brown' : 'Orange';
+    if (hue < 68) return 'Yellow';
+    if (hue < 168) return 'Green';
+    if (hue < 258) return 'Blue';
+    if (hue < 292) return 'Purple';
+    // 292-345 : magenta/rose → Pink si clair, sinon Purple
+    return value >= 160 ? 'Pink' : 'Purple';
   }
 
   /// Lire un tag Bambu Lab en utilisant le plugin natif iOS
