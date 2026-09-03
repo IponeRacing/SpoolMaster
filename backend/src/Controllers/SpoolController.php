@@ -173,7 +173,64 @@ class SpoolController {
         $stmt->execute(['spool_id' => $spoolId, 'user_id' => $userId]);
 
         if (!$stmt->fetch()) {
-            return $this->error('Spool not found', 404);
+            // UPSERT : le client fait un PUT à chaque ajout de bobine (syncSpool).
+            // Si la ligne n'existe pas encore côté serveur, on la CRÉE au lieu de
+            // renvoyer 404 (ancien comportement = perte silencieuse de données :
+            // toute bobine ajoutée hors login n'était jamais sauvegardée).
+            // Nécessite au minimum les champs obligatoires de la table.
+            if (!isset($input['material'], $input['color_name'], $input['initial_weight'])) {
+                return $this->error('Spool not found', 404);
+            }
+
+            $insert = $db->prepare(
+                "INSERT INTO spools (
+                    user_id, spool_id, brand, material, color_name, color_rgb,
+                    initial_weight, remaining_weight, price, diameter, spool_length,
+                    extruder_temp_min, extruder_temp_max, bed_temp_min, bed_temp_max,
+                    manufacture_date, batch_number, detailed_type, drying_temp, drying_time,
+                    material_variant_id, material_id, purchase_date, notes, last_synced_at
+                ) VALUES (
+                    :user_id, :spool_id, :brand, :material, :color_name, :color_rgb,
+                    :initial_weight, :remaining_weight, :price, :diameter, :spool_length,
+                    :extruder_temp_min, :extruder_temp_max, :bed_temp_min, :bed_temp_max,
+                    :manufacture_date, :batch_number, :detailed_type, :drying_temp, :drying_time,
+                    :material_variant_id, :material_id, :purchase_date, :notes, NOW()
+                )"
+            );
+            $insert->execute([
+                'user_id' => $userId,
+                'spool_id' => $spoolId,
+                'brand' => $input['brand'] ?? null,
+                'material' => $input['material'],
+                'color_name' => $input['color_name'],
+                'color_rgb' => $input['color_rgb'] ?? null,
+                'initial_weight' => $input['initial_weight'],
+                'remaining_weight' => $input['remaining_weight'] ?? $input['initial_weight'],
+                'price' => $input['price'] ?? null,
+                'diameter' => $input['diameter'] ?? null,
+                'spool_length' => $input['spool_length'] ?? null,
+                'extruder_temp_min' => $input['extruder_temp_min'] ?? null,
+                'extruder_temp_max' => $input['extruder_temp_max'] ?? null,
+                'bed_temp_min' => $input['bed_temp_min'] ?? null,
+                'bed_temp_max' => $input['bed_temp_max'] ?? null,
+                'manufacture_date' => $input['manufacture_date'] ?? null,
+                'batch_number' => $input['batch_number'] ?? null,
+                'detailed_type' => $input['detailed_type'] ?? null,
+                'drying_temp' => $input['drying_temp'] ?? null,
+                'drying_time' => $input['drying_time'] ?? null,
+                'material_variant_id' => $input['material_variant_id'] ?? null,
+                'material_id' => $input['material_id'] ?? null,
+                'purchase_date' => $input['purchase_date'] ?? null,
+                'notes' => $input['notes'] ?? null,
+            ]);
+
+            return [
+                'success' => true,
+                'data' => [
+                    'spool_id' => $spoolId,
+                    'message' => 'Spool created (upsert via PUT)'
+                ]
+            ];
         }
 
         // Construire la requête de mise à jour dynamiquement
