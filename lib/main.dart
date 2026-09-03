@@ -209,7 +209,8 @@ class MainNavigationPage extends StatefulWidget {
   State<MainNavigationPage> createState() => MainNavigationPageState();
 }
 
-class MainNavigationPageState extends State<MainNavigationPage> {
+class MainNavigationPageState extends State<MainNavigationPage>
+    with WidgetsBindingObserver {
   int _selectedIndex = 0;
   final _statisticsKey = GlobalKey<_StatisticsPageState>();
   final _stockKey = GlobalKey<_StockListPageState>();
@@ -217,6 +218,7 @@ class MainNavigationPageState extends State<MainNavigationPage> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     // Prompt de mise à jour après l'affichage de l'UI. Non-bloquant, fail-open.
     // Petit délai pour ne pas empiler avec les dialogues de démarrage
     // (ATT / consentement UMP gérés dans le SplashPage).
@@ -226,6 +228,30 @@ class MainNavigationPageState extends State<MainNavigationPage> {
       });
       unawaited(_syncOnLaunch());
     });
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    // Au retour au premier plan : rejouer les opérations de sync en attente
+    // (bobines ajoutées/supprimées hors ligne). Filet de sécurité anti-perte.
+    if (state == AppLifecycleState.resumed) {
+      unawaited(_flushQueueOnResume());
+    }
+  }
+
+  Future<void> _flushQueueOnResume() async {
+    try {
+      if (!await UserPreferencesService.isSignedIn()) return;
+      await SyncService.flushPendingQueue();
+    } catch (_) {
+      // fail-open : ne jamais bloquer sur une erreur de sync
+    }
   }
 
   /// Sync au lancement (si connecté). Le login seul rafraîchissait le stock ;
