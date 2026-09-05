@@ -179,7 +179,7 @@ class SyncController {
 
         // Vérifier si la bobine existe
         $stmt = $db->prepare(
-            "SELECT sync_version, updated_at FROM spools
+            "SELECT sync_version, updated_at, deleted_at FROM spools
              WHERE spool_id = :spool_id AND user_id = :user_id
              LIMIT 1"
         );
@@ -188,6 +188,17 @@ class SyncController {
             'user_id' => $userId
         ]);
         $existing = $stmt->fetch();
+
+        // GARDE-FOU TOMBSTONE : un push en masse ne doit JAMAIS ressusciter une
+        // bobine déjà supprimée côté serveur. Sans ça, une app dont le local
+        // contient encore d'anciennes bobines (supprimées ailleurs) les
+        // ré-activait à chaque sync (boucle de résurrection). L'app n'a pas de
+        // fonction « restaurer » → ne jamais dé-supprimer via push est sûr.
+        $incomingDeletedAt = $spool['deleted_at'] ?? null;
+        $effectiveDeletedAt = $incomingDeletedAt;
+        if ($existing && $existing['deleted_at'] !== null && $incomingDeletedAt === null) {
+            $effectiveDeletedAt = $existing['deleted_at'];
+        }
 
         $conflict = false;
 
@@ -264,7 +275,7 @@ class SyncController {
             'material_id' => $spool['material_id'] ?? null,
             'purchase_date' => $spool['purchase_date'] ?? null,
             'notes' => $spool['notes'] ?? null,
-            'deleted_at' => $spool['deleted_at'] ?? null,
+            'deleted_at' => $effectiveDeletedAt,
             'sync_version' => ($spool['sync_version'] ?? 1) + 1
         ]);
 
