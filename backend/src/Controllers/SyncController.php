@@ -77,19 +77,25 @@ class SyncController {
 
         $db = Database::getInstance()->getConnection();
 
-        // Récupérer les bobines modifiées depuis last_sync
+        // Récupérer les bobines modifiées depuis last_sync.
+        // IMPORTANT : ne JAMAIS renvoyer les bobines supprimées (deleted_at).
+        // Le client fait un remplacement complet du stock local avec ce que
+        // renvoie le pull ; s'il recevait les tombstones, il les afficherait
+        // comme actives (bug « 147 bobines » : 50 actives + 97 supprimées).
         if ($lastSync) {
             $stmt = $db->prepare(
                 "SELECT * FROM spools
                  WHERE user_id = :user_id AND updated_at > :last_sync
+                   AND deleted_at IS NULL
                  ORDER BY updated_at ASC"
             );
             $stmt->execute(['user_id' => $userId, 'last_sync' => $lastSync]);
         } else {
-            // Première sync : tout récupérer
+            // Première sync : tout récupérer (actif uniquement)
             $stmt = $db->prepare(
                 "SELECT * FROM spools
                  WHERE user_id = :user_id
+                   AND deleted_at IS NULL
                  ORDER BY updated_at ASC"
             );
             $stmt->execute(['user_id' => $userId]);
