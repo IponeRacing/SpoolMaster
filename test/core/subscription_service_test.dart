@@ -256,4 +256,23 @@ void main() {
       await service.syncSubscriptionStatusWithServer();
     });
   });
+
+  test('Android sans RTDN : abonnement Google actif, échu côté serveur → revérifié une fois, premium', () async {
+    service.debugQueryPastPurchases =
+        () async => [purchase('gplay1', PurchaseStatus.purchased)..pendingCompletePurchase = false];
+    serverPremium = false;
+    verifyMode = 'premium';
+    verifiedIds.clear();
+    await withServer(service.syncSubscriptionStatusWithServer);
+    expect(verifiedIds, ['jws-gplay1']);
+    expect(service.isPremium, isTrue);
+
+    // Une seule revérification par lancement (pas de renvoi à chaque synchro)
+    serverPremium = false;
+    verifyMode = 'expired';
+    await withServer(service.syncSubscriptionStatusWithServer);
+    expect(verifiedIds, ['jws-gplay1']);
+    expect(service.isPremium, isFalse);
+    service.debugQueryPastPurchases = null;
+  });
 }

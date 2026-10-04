@@ -129,6 +129,14 @@ class SubscriptionService {
   /// réessayés (synchro périodique, connexion, Restaurer).
   final Map<String, PurchaseDetails> _awaitingVerification = {};
 
+  /// Abonnements Google Play déjà revérifiés depuis le lancement (un seul
+  /// renvoi au serveur par achat et par lancement).
+  final Set<String> _reverifiedThisSession = {};
+
+  /// Remplace la lecture des achats Google Play (tests).
+  @visibleForTesting
+  Future<List<PurchaseDetails>> Function()? debugQueryPastPurchases;
+
   /// Initialise le service. Rapide : le réseau (produits, synchro, reprise des
   /// achats Android non acquittés) part en arrière-plan.
   Future<void> initialize() async {
@@ -190,6 +198,7 @@ class SubscriptionService {
     premiumStatusNotifier.value = _isPremium;
     AdMobService().setUserPremiumStatus(isPremium: _isPremium);
     detailsNotifier.value = null;
+    _reverifiedThisSession.clear();
     unawaited(() async {
       await _retryAwaitingVerification();
       await _recoverUnacknowledgedAndroidPurchases();
@@ -402,10 +411,9 @@ class SubscriptionService {
     if (defaultTargetPlatform != TargetPlatform.android) return;
     if (await AuthService().getAccessToken() == null) return;
     try {
-      final addition = _iap.getPlatformAddition<InAppPurchaseAndroidPlatformAddition>();
-      final response = await addition.queryPastPurchases();
-      final unacknowledged = response.pastPurchases
-          .where((p) => p.status == PurchaseStatus.purchased && !p.billingClientPurchase.isAcknowledged)
+      // Google Play : pendingCompletePurchase = achat non acquitté
+      final unacknowledged = (await _androidPastPurchases())
+          .where((p) => p.status == PurchaseStatus.purchased && p.pendingCompletePurchase)
           .toList();
       if (unacknowledged.isEmpty) return;
       debugPrint('🔁 ${unacknowledged.length} unacknowledged purchase(s) recovered');
@@ -415,11 +423,54 @@ class SubscriptionService {
     }
   }
 
+  Future<List<PurchaseDetails>> _androidPastPurchases() async {
+    final override = debugQueryPastPurchases;
+    if (override != null) return override();
+    final addition = _iap.getPlatformAddition<InAppPurchaseAndroidPlatformAddition>();
+    final response = await addition.queryPastPurchases();
+    return response.pastPurchases;
+  }
+
+  /// Android : sans notifications Google (RTDN), le serveur ne voit pas les
+  /// renouvellements et l'abonnement y expire après la première période. Si
+  /// le serveur ne voit rien d'actif alors que Google Play a un abonnement
+  /// actif sur l'appareil, on le lui fait revérifier : il relit l'échéance
+  /// chez Google. true si le premium est retrouvé.
+  Future<bool> _reverifyActiveAndroidSubscriptions() async {
+    if (defaultTargetPlatform != TargetPlatform.android) return false;
+    try {
+      final toVerify = <PurchaseDetails>[];
+      for (final purchase in await _androidPastPurchases()) {
+        if (purchase.status == PurchaseStatus.purchased && _reverifiedThisSession.add(_key(purchase))) {
+          toVerify.add(purchase);
+        }
+      }
+      var premium = false;
+      for (final purchase in toVerify) {
+        final result = await _verifyPurchaseWithServer(purchase);
+        switch (result) {
+          case _Verification.premium:
+          case _Verification.recorded:
+            await _complete(purchase);
+          case _Verification.retryLater:
+            _reverifiedThisSession.remove(_key(purchase));
+          case _Verification.rejected:
+            break;
+        }
+        premium = premium || result == _Verification.premium;
+      }
+      return premium;
+    } catch (e) {
+      debugPrint('⚠️ Google Play re-verification skipped: $e');
+      return false;
+    }
+  }
+
   /// Synchronise le statut d'abonnement avec le serveur
   /// Appelé au démarrage et périodiquement
   Future<void> syncSubscriptionStatusWithServer() => _serialized(_syncStatus);
 
-  Future<void> _syncStatus() async {
+  Future<void> _syncStatus({bool allowReverify = true}) async {
     // Invité (pas de token) : rien à synchroniser.
     if (await AuthService().getAccessToken() == null) return;
     try {
@@ -437,6 +488,10 @@ class SubscriptionService {
         return;
       }
       final data = jsonDecode(response.body) as Map<String, dynamic>;
+      if (data['is_premium'] != true && allowReverify && await _reverifyActiveAndroidSubscriptions()) {
+        // Abonnement Google retrouvé : relire le statut, sans repasser ici
+        return _syncStatus(allowReverify: false);
+      }
       final subscription = data['subscription'];
       detailsNotifier.value =
           subscription is Map<String, dynamic> ? SubscriptionDetails.fromJson(subscription) : null;
