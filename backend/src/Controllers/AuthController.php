@@ -10,6 +10,8 @@ namespace NfcAnycubic\Controllers;
 use NfcAnycubic\Database;
 use NfcAnycubic\JWTHandler;
 use NfcAnycubic\Middleware\RateLimiter;
+use NfcAnycubic\Logger;
+use NfcAnycubic\Services\AppleSignInService;
 
 class AuthController {
 
@@ -51,6 +53,22 @@ class AuthController {
                 'name' => $name,
                 'email_verified' => $appleData['email_verified'] ?? true,
             ]);
+
+            // Jeton Apple nécessaire pour la révocation à la suppression du
+            // compte (Guideline 5.1.1(v)). Ne bloque jamais le login.
+            if (!empty($input['authorizationCode'])) {
+                try {
+                    $appleRefresh = (new AppleSignInService())->exchangeCode((string)$input['authorizationCode']);
+                    if ($appleRefresh !== null) {
+                        $stmt = Database::getInstance()->getConnection()->prepare(
+                            "UPDATE users SET apple_refresh_token = :token WHERE user_id = :user_id"
+                        );
+                        $stmt->execute(['token' => $appleRefresh, 'user_id' => $user['user_id']]);
+                    }
+                } catch (\Throwable $e) {
+                    Logger::exception('apple.siwa', $e, ['step' => 'code_exchange']);
+                }
+            }
 
             // Générer les tokens JWT
             $jwt = new JWTHandler();
@@ -383,7 +401,6 @@ class AuthController {
             $response = curl_exec($ch);
             $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
             $curlError = curl_error($ch);
-            curl_close($ch);
 
             if ($curlError) {
                 error_log("Google token: cURL error - $curlError");

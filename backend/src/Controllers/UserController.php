@@ -8,6 +8,8 @@ namespace NfcAnycubic\Controllers;
 
 use NfcAnycubic\Database;
 use NfcAnycubic\Middleware\AuthMiddleware;
+use NfcAnycubic\Logger;
+use NfcAnycubic\Services\AccountPurgeService;
 use NfcAnycubic\JWTHandler;
 
 class UserController {
@@ -118,10 +120,23 @@ class UserController {
         );
         $stmt->execute(['user_id' => $userId]);
 
+        // Suppression définitive immédiate (révocation Sign in with Apple +
+        // cascade sur toutes les données). Si elle échoue, le drapeau posé
+        // ci-dessus garantit la reprise par la purge quotidienne.
+        $deleted = false;
+        try {
+            $deleted = AccountPurgeService::purge($db, $userId, 'user_request');
+        } catch (\Throwable $e) {
+            Logger::exception('account.delete', $e);
+        }
+
         return [
             'success' => true,
             'data' => [
-                'message' => 'Account deletion requested. Your data will be deleted within 30 days.'
+                'deleted' => $deleted,
+                'message' => $deleted
+                    ? 'Account and data deleted.'
+                    : 'Account deletion requested. Your data will be deleted within 30 days.'
             ]
         ];
     }

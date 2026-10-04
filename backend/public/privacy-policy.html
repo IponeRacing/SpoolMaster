@@ -45,7 +45,7 @@
 </head>
 <body>
     <h1>Politique de confidentialité</h1>
-    <p class="update-date">Dernière mise à jour : 12 janvier 2026</p>
+    <p class="update-date">Dernière mise à jour : 4 octobre 2026</p>
 
     <p>
         Bienvenue sur <strong>Spool Master</strong>. Nous prenons la protection de vos données personnelles très au sérieux.
@@ -68,6 +68,15 @@
         <li><strong>Stock</strong> : Gestion de votre inventaire de filaments</li>
         <li><strong>Préférences</strong> : Langue, devise, unités de mesure, seuil de stock bas</li>
         <li><strong>Données NFC</strong> : Lectures/écritures de puces NFC (stockées localement sur les puces)</li>
+        <li><strong>Emplacement et notes</strong> : Texte libre que vous choisissez de saisir pour chaque bobine</li>
+        <li><strong>Historique de consommation</strong> : Baisses du poids restant de vos bobines (date, grammes, coût matière), utilisées pour vos statistiques de consommation</li>
+        <li><strong>Liste de courses</strong> : Filaments que vous prévoyez d'acheter</li>
+    </ul>
+
+    <h3>1.5 Données de diagnostic</h3>
+    <ul>
+        <li><strong>Rapports de plantage</strong> : Collectés via Google Firebase Crashlytics (modèle d'appareil, version du système, trace technique de l'erreur)</li>
+        <li><strong>Diagnostics de scan et de synchronisation</strong> : Détails techniques des lectures NFC ou synchronisations en échec (technologie du tag, code d'erreur, version de l'app, modèle d'appareil) et identifiant d'installation anonyme, utilisés uniquement pour détecter et corriger les bugs</li>
     </ul>
 
     <h3>1.3 Informations d'abonnement</h3>
@@ -114,7 +123,9 @@
         <li><strong>Google AdMob</strong> : Publicité pour utilisateurs non-premium</li>
         <li><strong>Google Sign-In</strong> : Authentification</li>
         <li><strong>Apple Sign-In</strong> : Authentification</li>
-        <li><strong>Apple StoreKit</strong> : Gestion des abonnements</li>
+        <li><strong>Apple StoreKit / Google Play Billing</strong> : Gestion des abonnements</li>
+        <li><strong>Google Firebase Crashlytics</strong> : Rapports de plantage</li>
+        <li><strong>Infomaniak</strong> : Hébergement de nos serveurs en Suisse</li>
     </ul>
 
     <h3>3.2 Nous ne vendons JAMAIS vos données</h3>
@@ -131,13 +142,13 @@
         <li><strong>Droit de rectification</strong> : Vous pouvez corriger vos données</li>
         <li><strong>Droit à l'effacement</strong> : Vous pouvez supprimer votre compte et toutes vos données</li>
         <li><strong>Droit d'opposition</strong> : Vous pouvez refuser le tracking publicitaire</li>
-        <li><strong>Droit à la portabilité</strong> : Vous pouvez exporter vos données</li>
+        <li><strong>Droit à la portabilité</strong> : Vous pouvez exporter votre stock, votre liste de courses et votre historique de consommation dans un fichier Excel directement depuis l'application (Stock → menu → Exporter en Excel)</li>
     </ul>
 
     <h3>4.2 Gestion des consentements</h3>
     <ul>
         <li><strong>Tracking publicitaire (ATT)</strong> : Vous pouvez refuser dans Réglages iOS → Confidentialité → Suivi</li>
-        <li><strong>RGPD</strong> : Formulaire de consentement au premier lancement (utilisateurs UE)</li>
+        <li><strong>RGPD</strong> : Formulaire de consentement au premier lancement pour les utilisateurs de l'Espace économique européen, du Royaume-Uni et de la Suisse, sur iPhone et Android. Sur iPhone, si vous refusez le suivi (ATT), aucune publicité personnalisée n'est affichée et le formulaire n'apparaît pas.</li>
         <li><strong>Abonnement premium</strong> : Supprime toutes les publicités et le tracking</li>
     </ul>
 
@@ -151,8 +162,13 @@
         <li>Sélectionnez <strong>Supprimer mon compte</strong></li>
     </ol>
     <p>
-        <strong>Important</strong> : La suppression de votre compte est définitive et entraîne la suppression de toutes vos données
-        (bobines, stock, préférences, abonnements). Cette action est irréversible.
+        <strong>Important</strong> : La suppression de votre compte est définitive et immédiate : votre compte et toutes les données associées
+        (bobines, stock, historique de consommation, liste de courses, préférences, statut d'abonnement) sont supprimés de nos serveurs
+        dès votre confirmation, et votre autorisation Sign in with Apple est révoquée. Cette action est irréversible.
+    </p>
+    <p>
+        La suppression du compte <strong>n'annule pas</strong> un abonnement souscrit via l'App Store ou Google Play :
+        résiliez-le dans les réglages de votre compte du store pour arrêter les prochains paiements.
     </p>
 
     <h2>6. Sécurité des données</h2>
@@ -166,9 +182,9 @@
     <h2>7. Conservation des données</h2>
     <ul>
         <li><strong>Compte actif</strong> : Tant que vous utilisez l'application</li>
-        <li><strong>Compte supprimé</strong> : 30 jours avant suppression définitive</li>
+        <li><strong>Compte supprimé</strong> : Supprimé immédiatement de nos serveurs ; les copies résiduelles dans les sauvegardes serveur sont écrasées sous 30 jours</li>
         <li><strong>Logs système</strong> : 90 jours maximum</li>
-        <li><strong>Données d'abonnement</strong> : Conservées selon obligations légales (7 ans)</li>
+        <li><strong>Transactions d'abonnement</strong> : Conservées sans lien avec votre compte lorsque la comptabilité l'exige</li>
     </ul>
 
     <h2>8. Cookies et technologies similaires</h2>

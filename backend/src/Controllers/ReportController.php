@@ -32,6 +32,15 @@ class ReportController {
 
         try {
             $db = Database::getInstance()->getConnection();
+
+            // Purge des comptes dont la suppression a été demandée (RGPD) :
+            // profite du cron quotidien déjà planifié chez Infomaniak.
+            try {
+                \NfcAnycubic\Services\AccountPurgeService::purgePending($db);
+            } catch (\Throwable $e) {
+                \error_log("⚠️ [DAILY-REPORT] Account purge failed: " . $e->getMessage());
+            }
+
             $report = $this->generateReport($db);
             $html = $this->renderHtml($report);
 

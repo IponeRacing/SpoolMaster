@@ -45,7 +45,7 @@
 </head>
 <body>
     <h1>Privacy Policy</h1>
-    <p class="update-date">Last updated: January 12, 2026</p>
+    <p class="update-date">Last updated: October 4, 2026</p>
 
     <p>
         Welcome to <strong>Spool Master</strong>. We take the protection of your personal data very seriously.
@@ -68,6 +68,15 @@
         <li><strong>Inventory</strong>: Management of your filament stock</li>
         <li><strong>Preferences</strong>: Language, currency, units, low stock threshold</li>
         <li><strong>NFC Data</strong>: NFC chip reads/writes (stored locally on chips)</li>
+        <li><strong>Storage location and notes</strong>: Free text you choose to enter for each spool</li>
+        <li><strong>Consumption history</strong>: Decreases in the remaining weight of your spools (date, grams, material cost), used for your consumption statistics</li>
+        <li><strong>Shopping list</strong>: Filaments you plan to buy</li>
+    </ul>
+
+    <h3>1.5 Diagnostic Data</h3>
+    <ul>
+        <li><strong>Crash reports</strong>: Collected via Google Firebase Crashlytics (device model, OS version, technical error trace)</li>
+        <li><strong>Scan and sync diagnostics</strong>: Technical details of failed NFC reads or synchronizations (tag technology, error code, app version, device model) and an anonymous installation identifier, used only to detect and fix bugs</li>
     </ul>
 
     <h3>1.3 Subscription Information</h3>
@@ -114,7 +123,9 @@
         <li><strong>Google AdMob</strong>: Advertising for non-premium users</li>
         <li><strong>Google Sign-In</strong>: Authentication</li>
         <li><strong>Apple Sign-In</strong>: Authentication</li>
-        <li><strong>Apple StoreKit</strong>: Subscription management</li>
+        <li><strong>Apple StoreKit / Google Play Billing</strong>: Subscription management</li>
+        <li><strong>Google Firebase Crashlytics</strong>: Crash reports</li>
+        <li><strong>Infomaniak</strong>: Hosting of our servers in Switzerland</li>
     </ul>
 
     <h3>3.2 We NEVER Sell Your Data</h3>
@@ -131,13 +142,13 @@
         <li><strong>Right of Rectification</strong>: You can correct your data</li>
         <li><strong>Right to Erasure</strong>: You can delete your account and all your data</li>
         <li><strong>Right to Object</strong>: You can refuse ad tracking</li>
-        <li><strong>Right to Portability</strong>: You can export your data</li>
+        <li><strong>Right to Portability</strong>: You can export your inventory, shopping list and consumption history to an Excel file directly from the app (Stock → menu → Export to Excel)</li>
     </ul>
 
     <h3>4.2 Consent Management</h3>
     <ul>
         <li><strong>Ad Tracking (ATT)</strong>: You can refuse in iOS Settings → Privacy → Tracking</li>
-        <li><strong>GDPR</strong>: Consent form at first launch (EU users)</li>
+        <li><strong>GDPR</strong>: Consent form at first launch for users in the European Economic Area, the United Kingdom and Switzerland, on iPhone and Android. On iPhone, if you refuse tracking (ATT), no personalized ads are shown and the form is not displayed.</li>
         <li><strong>Premium Subscription</strong>: Removes all ads and tracking</li>
     </ul>
 
@@ -151,8 +162,13 @@
         <li>Select <strong>Delete My Account</strong></li>
     </ol>
     <p>
-        <strong>Important</strong>: Account deletion is permanent and results in the deletion of all your data
-        (spools, inventory, preferences, subscriptions). This action is irreversible.
+        <strong>Important</strong>: Account deletion is permanent and immediate: your account and all associated data
+        (spools, inventory, consumption history, shopping list, preferences, subscription status) are deleted from our servers
+        as soon as you confirm, and your Sign in with Apple authorization is revoked. This action is irreversible.
+    </p>
+    <p>
+        Deleting your account does <strong>not</strong> cancel a subscription purchased through the App Store or Google Play:
+        cancel it in your store account settings to stop future payments.
     </p>
 
     <h2>6. Data Security</h2>
@@ -166,9 +182,9 @@
     <h2>7. Data Retention</h2>
     <ul>
         <li><strong>Active Account</strong>: As long as you use the app</li>
-        <li><strong>Deleted Account</strong>: 30 days before permanent deletion</li>
+        <li><strong>Deleted Account</strong>: Deleted immediately from our servers; residual copies in server backups are overwritten within 30 days</li>
         <li><strong>System Logs</strong>: Maximum 90 days</li>
-        <li><strong>Subscription Data</strong>: Retained per legal obligations (7 years)</li>
+        <li><strong>Subscription transaction records</strong>: Kept without any link to your account where required for accounting purposes</li>
     </ul>
 
     <h2>8. Cookies and Similar Technologies</h2>
