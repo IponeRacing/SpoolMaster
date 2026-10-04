@@ -536,6 +536,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get signOut => 'Esci';
 
   @override
+  String get signedOutMessage => 'Disconnessione effettuata';
+
+  @override
   String get extruderTempMinHint => 'Es: 200';
 
   @override

@@ -170,6 +170,7 @@
   "back": "Înapoi",
   "retry": "Reîncearcă",
   "signOut": "Deconectează-te",
+  "signedOutMessage": "V-ați deconectat",
   "connection": "Conectare",
   "signInToSync": "Conectați-vă pentru a sincroniza datele",
   "continueWithoutAccount": "Continuați fără cont (mod local)",

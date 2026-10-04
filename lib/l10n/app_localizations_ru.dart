@@ -536,6 +536,9 @@ class AppLocalizationsRu extends AppLocalizations {
   String get signOut => 'Выйти';
 
   @override
+  String get signedOutMessage => 'Вы вышли из аккаунта';
+
+  @override
   String get extruderTempMinHint => 'напр.: 200';
 
   @override

@@ -171,6 +171,7 @@
   "back": "Назад",
   "retry": "Покушај поново",
   "signOut": "Одјави се",
+  "signedOutMessage": "Одјављени сте",
   "extruderTempMinHint": "Нпр.: 200",
   "extruderTempMaxHint": "Нпр.: 220",
   "bedTempMinHint": "Нпр.: 50",

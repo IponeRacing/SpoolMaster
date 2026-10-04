@@ -170,6 +170,7 @@
   "back": "뒤로",
   "retry": "다시 시도",
   "signOut": "로그아웃",
+  "signedOutMessage": "로그아웃되었습니다",
   "connection": "로그인",
   "signInToSync": "데이터를 동기화하려면 로그인하세요",
   "continueWithoutAccount": "계정 없이 계속 (로컬 모드)",

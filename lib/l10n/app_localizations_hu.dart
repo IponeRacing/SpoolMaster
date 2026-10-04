@@ -535,6 +535,9 @@ class AppLocalizationsHu extends AppLocalizations {
   String get signOut => 'Kijelentkezés';
 
   @override
+  String get signedOutMessage => 'Kijelentkezett';
+
+  @override
   String get extruderTempMinHint => 'pl.: 200';
 
   @override

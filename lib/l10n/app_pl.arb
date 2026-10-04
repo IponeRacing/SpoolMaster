@@ -170,6 +170,7 @@
   "back": "Wstecz",
   "retry": "Ponów",
   "signOut": "Wyloguj",
+  "signedOutMessage": "Wylogowano",
   "connection": "Logowanie",
   "signInToSync": "Zaloguj się, aby zsynchronizować swoje dane",
   "continueWithoutAccount": "Kontynuuj bez konta (tryb lokalny)",

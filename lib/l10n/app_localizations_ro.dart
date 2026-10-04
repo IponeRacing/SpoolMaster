@@ -535,6 +535,9 @@ class AppLocalizationsRo extends AppLocalizations {
   String get signOut => 'Deconectează-te';
 
   @override
+  String get signedOutMessage => 'V-ați deconectat';
+
+  @override
   String get extruderTempMinHint => 'ex.: 200';
 
   @override

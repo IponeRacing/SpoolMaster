@@ -170,6 +170,7 @@
   "back": "Назад",
   "retry": "Повторить",
   "signOut": "Выйти",
+  "signedOutMessage": "Вы вышли из аккаунта",
   "connection": "Вход",
   "signInToSync": "Войдите, чтобы синхронизировать данные",
   "continueWithoutAccount": "Продолжить без учетной записи (локальный режим)",

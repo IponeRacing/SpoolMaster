@@ -171,6 +171,7 @@
   "back": "Takaisin",
   "retry": "Yritä uudelleen",
   "signOut": "Kirjaudu ulos",
+  "signedOutMessage": "Olet kirjautunut ulos",
   "extruderTempMinHint": "Esim.: 200",
   "extruderTempMaxHint": "Esim.: 220",
   "bedTempMinHint": "Esim.: 50",

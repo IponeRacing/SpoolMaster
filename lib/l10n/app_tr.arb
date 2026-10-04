@@ -170,6 +170,7 @@
   "back": "Geri",
   "retry": "Yeniden Dene",
   "signOut": "Oturumu Kapat",
+  "signedOutMessage": "Oturumunuz kapatıldı",
   "connection": "Giriş",
   "signInToSync": "Verilerinizi senkronize etmek için giriş yapın",
   "continueWithoutAccount": "Hesapsız devam et (yerel mod)",

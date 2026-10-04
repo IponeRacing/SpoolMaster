@@ -528,6 +528,9 @@ class AppLocalizationsZh extends AppLocalizations {
   String get signOut => '退出登录';
 
   @override
+  String get signedOutMessage => '已退出登录';
+
+  @override
   String get extruderTempMinHint => '例如：200';
 
   @override
@@ -1990,6 +1993,9 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String get signOut => '登出';
+
+  @override
+  String get signedOutMessage => '已登出';
 
   @override
   String get extruderTempMinHint => '例如：200';

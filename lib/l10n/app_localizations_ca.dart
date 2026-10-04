@@ -537,6 +537,9 @@ class AppLocalizationsCa extends AppLocalizations {
   String get signOut => 'Tancar sessió';
 
   @override
+  String get signedOutMessage => 'Heu tancat la sessió';
+
+  @override
   String get extruderTempMinHint => 'Ex: 200';
 
   @override

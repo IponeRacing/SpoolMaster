@@ -171,6 +171,7 @@
   "back": "חזרה",
   "retry": "נסה שוב",
   "signOut": "התנתק",
+  "signedOutMessage": "התנתקת מהחשבון",
   "extruderTempMinHint": "דוגמה: 200",
   "extruderTempMaxHint": "דוגמה: 220",
   "bedTempMinHint": "דוגמה: 50",

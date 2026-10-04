@@ -535,6 +535,9 @@ class AppLocalizationsFi extends AppLocalizations {
   String get signOut => 'Kirjaudu ulos';
 
   @override
+  String get signedOutMessage => 'Olet kirjautunut ulos';
+
+  @override
   String get extruderTempMinHint => 'Esim.: 200';
 
   @override

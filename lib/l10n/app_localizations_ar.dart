@@ -532,6 +532,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get signOut => 'تسجيل الخروج';
 
   @override
+  String get signedOutMessage => 'تم تسجيل خروجك';
+
+  @override
   String get extruderTempMinHint => 'مثال: 200';
 
   @override

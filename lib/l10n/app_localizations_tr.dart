@@ -535,6 +535,9 @@ class AppLocalizationsTr extends AppLocalizations {
   String get signOut => 'Oturumu Kapat';
 
   @override
+  String get signedOutMessage => 'Oturumunuz kapatıldı';
+
+  @override
   String get extruderTempMinHint => 'örn.: 200';
 
   @override

@@ -171,6 +171,7 @@
   "back": "رجوع",
   "retry": "إعادة المحاولة",
   "signOut": "تسجيل الخروج",
+  "signedOutMessage": "تم تسجيل خروجك",
   "extruderTempMinHint": "مثال: 200",
   "extruderTempMaxHint": "مثال: 220",
   "bedTempMinHint": "مثال: 50",

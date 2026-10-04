@@ -170,6 +170,7 @@
   "back": "Atrás",
   "retry": "Reintentar",
   "signOut": "Cerrar Sesión",
+  "signedOutMessage": "Has cerrado sesión",
   "connection": "Conexión",
   "signInToSync": "Inicie sesión para sincronizar sus datos",
   "continueWithoutAccount": "Continuar sin cuenta (modo local)",

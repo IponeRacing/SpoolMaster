@@ -171,6 +171,7 @@
   "back": "Zurück",
   "retry": "Wiederholen",
   "signOut": "Abmelden",
+  "signedOutMessage": "Sie sind abgemeldet",
   "extruderTempMinHint": "z.B.: 200",
   "extruderTempMaxHint": "z.B.: 220",
   "bedTempMinHint": "z.B.: 50",

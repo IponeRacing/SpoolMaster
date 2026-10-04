@@ -171,6 +171,7 @@
   "back": "Quay lại",
   "retry": "Thử lại",
   "signOut": "Đăng xuất",
+  "signedOutMessage": "Bạn đã đăng xuất",
   "extruderTempMinHint": "VD: 200",
   "extruderTempMaxHint": "VD: 220",
   "bedTempMinHint": "VD: 50",

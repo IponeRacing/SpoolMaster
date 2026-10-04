@@ -535,6 +535,9 @@ class AppLocalizationsSr extends AppLocalizations {
   String get signOut => 'Одјави се';
 
   @override
+  String get signedOutMessage => 'Одјављени сте';
+
+  @override
   String get extruderTempMinHint => 'Нпр.: 200';
 
   @override

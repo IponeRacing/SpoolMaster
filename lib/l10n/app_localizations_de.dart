@@ -538,6 +538,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get signOut => 'Abmelden';
 
   @override
+  String get signedOutMessage => 'Sie sind abgemeldet';
+
+  @override
   String get extruderTempMinHint => 'z.B.: 200';
 
   @override

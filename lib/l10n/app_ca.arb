@@ -171,6 +171,7 @@
   "back": "Enrere",
   "retry": "Reintentar",
   "signOut": "Tancar sessió",
+  "signedOutMessage": "Heu tancat la sessió",
   "extruderTempMinHint": "Ex: 200",
   "extruderTempMaxHint": "Ex: 220",
   "bedTempMinHint": "Ex: 50",

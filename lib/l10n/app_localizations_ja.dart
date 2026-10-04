@@ -529,6 +529,9 @@ class AppLocalizationsJa extends AppLocalizations {
   String get signOut => 'サインアウト';
 
   @override
+  String get signedOutMessage => 'サインアウトしました';
+
+  @override
   String get extruderTempMinHint => '例: 200';
 
   @override

@@ -171,6 +171,7 @@
   "back": "ย้อนกลับ",
   "retry": "ลองใหม่",
   "signOut": "ออกจากระบบ",
+  "signedOutMessage": "ออกจากระบบแล้ว",
   "extruderTempMinHint": "เช่น: 200",
   "extruderTempMaxHint": "เช่น: 220",
   "bedTempMinHint": "เช่น: 50",

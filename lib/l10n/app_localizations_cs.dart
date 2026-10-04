@@ -533,6 +533,9 @@ class AppLocalizationsCs extends AppLocalizations {
   String get signOut => 'Odhlásit se';
 
   @override
+  String get signedOutMessage => 'Byli jste odhlášeni';
+
+  @override
   String get extruderTempMinHint => 'např.: 200';
 
   @override

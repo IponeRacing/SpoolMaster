@@ -537,6 +537,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get signOut => 'Se déconnecter';
 
   @override
+  String get signedOutMessage => 'Vous êtes déconnecté';
+
+  @override
   String get extruderTempMinHint => 'Ex: 200';
 
   @override
@@ -2044,6 +2047,9 @@ class AppLocalizationsFrCa extends AppLocalizationsFr {
 
   @override
   String get signOut => 'Se déconnecter';
+
+  @override
+  String get signedOutMessage => 'Vous êtes déconnecté';
 
   @override
   String get extruderTempMinHint => 'Ex: 200';

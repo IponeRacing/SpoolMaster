@@ -529,6 +529,9 @@ class AppLocalizationsKo extends AppLocalizations {
   String get signOut => '로그아웃';
 
   @override
+  String get signedOutMessage => '로그아웃되었습니다';
+
+  @override
   String get extruderTempMinHint => '예: 200';
 
   @override

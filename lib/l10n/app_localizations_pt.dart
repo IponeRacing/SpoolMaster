@@ -536,6 +536,9 @@ class AppLocalizationsPt extends AppLocalizations {
   String get signOut => 'Sair';
 
   @override
+  String get signedOutMessage => 'Você saiu da conta';
+
+  @override
   String get extruderTempMinHint => 'ex.: 200';
 
   @override

@@ -171,6 +171,7 @@
   "back": "Späť",
   "retry": "Skúsiť znova",
   "signOut": "Odhlásiť sa",
+  "signedOutMessage": "Boli ste odhlásení",
   "extruderTempMinHint": "Napr.: 200",
   "extruderTempMaxHint": "Napr.: 220",
   "bedTempMinHint": "Napr.: 50",

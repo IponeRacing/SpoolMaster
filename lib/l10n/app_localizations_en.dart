@@ -534,6 +534,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get signOut => 'Sign Out';
 
   @override
+  String get signedOutMessage => 'You\'re signed out';
+
+  @override
   String get extruderTempMinHint => 'Ex: 200';
 
   @override
@@ -2036,6 +2039,9 @@ class AppLocalizationsEnAu extends AppLocalizationsEn {
 
   @override
   String get signOut => 'Sign Out';
+
+  @override
+  String get signedOutMessage => 'You\'re signed out';
 
   @override
   String get extruderTempMinHint => 'Ex: 200';
@@ -3542,6 +3548,9 @@ class AppLocalizationsEnCa extends AppLocalizationsEn {
   String get signOut => 'Sign Out';
 
   @override
+  String get signedOutMessage => 'You\'re signed out';
+
+  @override
   String get extruderTempMinHint => 'Ex: 200';
 
   @override
@@ -5044,6 +5053,9 @@ class AppLocalizationsEnGb extends AppLocalizationsEn {
 
   @override
   String get signOut => 'Sign Out';
+
+  @override
+  String get signedOutMessage => 'You\'re signed out';
 
   @override
   String get extruderTempMinHint => 'Ex: 200';

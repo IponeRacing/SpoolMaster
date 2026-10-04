@@ -534,6 +534,9 @@ class AppLocalizationsTh extends AppLocalizations {
   String get signOut => 'ออกจากระบบ';
 
   @override
+  String get signedOutMessage => 'ออกจากระบบแล้ว';
+
+  @override
   String get extruderTempMinHint => 'เช่น: 200';
 
   @override

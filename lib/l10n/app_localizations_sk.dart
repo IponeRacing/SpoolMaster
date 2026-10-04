@@ -534,6 +534,9 @@ class AppLocalizationsSk extends AppLocalizations {
   String get signOut => 'Odhlásiť sa';
 
   @override
+  String get signedOutMessage => 'Boli ste odhlásení';
+
+  @override
   String get extruderTempMinHint => 'Napr.: 200';
 
   @override

@@ -535,6 +535,9 @@ class AppLocalizationsVi extends AppLocalizations {
   String get signOut => 'Đăng xuất';
 
   @override
+  String get signedOutMessage => 'Bạn đã đăng xuất';
+
+  @override
   String get extruderTempMinHint => 'VD: 200';
 
   @override

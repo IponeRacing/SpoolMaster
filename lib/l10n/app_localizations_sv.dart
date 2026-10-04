@@ -535,6 +535,9 @@ class AppLocalizationsSv extends AppLocalizations {
   String get signOut => 'Logga ut';
 
   @override
+  String get signedOutMessage => 'Du är utloggad';
+
+  @override
   String get extruderTempMinHint => 't.ex.: 200';
 
   @override

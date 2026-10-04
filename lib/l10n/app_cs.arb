@@ -170,6 +170,7 @@
   "back": "Zpět",
   "retry": "Zkusit znovu",
   "signOut": "Odhlásit se",
+  "signedOutMessage": "Byli jste odhlášeni",
   "connection": "Přihlášení",
   "signInToSync": "Přihlaste se pro synchronizaci dat",
   "continueWithoutAccount": "Pokračovat bez účtu (místní režim)",

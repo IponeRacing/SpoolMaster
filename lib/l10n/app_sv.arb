@@ -170,6 +170,7 @@
   "back": "Tillbaka",
   "retry": "Försök igen",
   "signOut": "Logga ut",
+  "signedOutMessage": "Du är utloggad",
   "connection": "Inloggning",
   "signInToSync": "Logga in för att synkronisera dina data",
   "continueWithoutAccount": "Fortsätt utan konto (lokalt läge)",

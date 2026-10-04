@@ -1195,6 +1195,12 @@ abstract class AppLocalizations {
   /// **'Se déconnecter'**
   String get signOut;
 
+  /// Confirmation affichée après la déconnexion (état, pas le libellé du bouton signOut)
+  ///
+  /// In fr, this message translates to:
+  /// **'Vous êtes déconnecté'**
+  String get signedOutMessage;
+
   /// No description provided for @extruderTempMinHint.
   ///
   /// In fr, this message translates to:

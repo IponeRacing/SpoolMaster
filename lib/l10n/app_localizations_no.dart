@@ -534,6 +534,9 @@ class AppLocalizationsNo extends AppLocalizations {
   String get signOut => 'Logg ut';
 
   @override
+  String get signedOutMessage => 'Du er logget ut';
+
+  @override
   String get extruderTempMinHint => 'F.eks.: 200';
 
   @override

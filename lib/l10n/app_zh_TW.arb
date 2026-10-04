@@ -170,6 +170,7 @@
   "back": "返回",
   "retry": "重試",
   "signOut": "登出",
+  "signedOutMessage": "已登出",
   "connection": "登入",
   "signInToSync": "登入以同步您的資料",
   "continueWithoutAccount": "不使用賬戶繼續（本地模式）",

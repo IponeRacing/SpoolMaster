@@ -171,6 +171,7 @@
   "back": "Kembali",
   "retry": "Coba lagi",
   "signOut": "Keluar",
+  "signedOutMessage": "Anda telah keluar",
   "extruderTempMinHint": "Mis.: 200",
   "extruderTempMaxHint": "Mis.: 220",
   "bedTempMinHint": "Mis.: 50",

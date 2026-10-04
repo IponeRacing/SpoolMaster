@@ -457,7 +457,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             content: Text(
-                              AppLocalizations.of(context)!.signOut,
+                              AppLocalizations.of(context)!.signedOutMessage,
                             ),
                           ),
                         );

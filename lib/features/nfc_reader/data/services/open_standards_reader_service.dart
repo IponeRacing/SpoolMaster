@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer' as developer;
 
 import 'package:nfc_filament/core/errors/failures.dart';
+import 'package:nfc_filament/core/services/nfc_scan_diagnostics.dart';
 import 'package:nfc_filament/core/utils/color_naming.dart';
 import 'package:nfc_filament/features/nfc_reader/data/services/tigertag_registry.dart';
 import 'package:nfc_filament/features/nfc_reader/domain/entities/bobbin_data.dart';
@@ -355,6 +356,22 @@ class OpenStandardsReaderService {
     // Measure Available (+76, u24) → poids restant
     final available = u24(76);
     final remainingGrams = available * gramsPerUnit;
+
+    // Ni matériau ni marque connus du registre ET buse implausible : tag non
+    // programmé (Init vide ou contenu libre). Avant, décodé comme une bobine
+    // « TigerTag Unknown » avec une buse à 21071 (texte ASCII « ROSA » lu
+    // comme température). Un vrai tag aux IDs trop récents pour le registre
+    // a des températures valides : il reste lu.
+    bool plausibleNozzle(int t) => t >= 150 && t <= 450;
+    if (!kTigerTagMaterials.containsKey(materialId) &&
+        !kTigerTagBrands.containsKey(brandId) &&
+        !(plausibleNozzle(u16(24)) && plausibleNozzle(u16(26)))) {
+      NfcScanDiagnostics.errorDetail = 'BLANK_TAG';
+      throw NfcTagReadFailure(
+        message: 'TigerTag sans données de bobine (matériau $materialId et marque $brandId inconnus)',
+        rawBytesCount: p.length,
+      );
+    }
 
     final material = kTigerTagMaterials[materialId] ?? 'Unknown';
     final brand = kTigerTagBrands[brandId] ?? 'TigerTag';

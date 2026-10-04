@@ -535,6 +535,9 @@ class AppLocalizationsHi extends AppLocalizations {
   String get signOut => 'साइन आउट करें';
 
   @override
+  String get signedOutMessage => 'आप साइन आउट हो गए हैं';
+
+  @override
   String get extruderTempMinHint => 'उदा.: 200';
 
   @override

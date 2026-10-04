@@ -534,6 +534,9 @@ class AppLocalizationsPl extends AppLocalizations {
   String get signOut => 'Wyloguj';
 
   @override
+  String get signedOutMessage => 'Wylogowano';
+
+  @override
   String get extruderTempMinHint => 'np.: 200';
 
   @override

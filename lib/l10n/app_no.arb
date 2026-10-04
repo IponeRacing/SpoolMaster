@@ -171,6 +171,7 @@
   "back": "Tilbake",
   "retry": "Prøv igjen",
   "signOut": "Logg ut",
+  "signedOutMessage": "Du er logget ut",
   "extruderTempMinHint": "F.eks.: 200",
   "extruderTempMaxHint": "F.eks.: 220",
   "bedTempMinHint": "F.eks.: 50",

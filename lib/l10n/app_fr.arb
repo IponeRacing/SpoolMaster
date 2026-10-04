@@ -178,6 +178,10 @@
   "back": "Retour",
   "retry": "Réessayer",
   "signOut": "Se déconnecter",
+  "signedOutMessage": "Vous êtes déconnecté",
+  "@signedOutMessage": {
+    "description": "Confirmation affichée après la déconnexion (état, pas le libellé du bouton signOut)"
+  },
   "extruderTempMinHint": "Ex: 200",
   "extruderTempMaxHint": "Ex: 220",
   "bedTempMinHint": "Ex: 50",

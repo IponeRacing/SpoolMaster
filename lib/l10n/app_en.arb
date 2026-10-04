@@ -178,6 +178,7 @@
   "back": "Back",
   "retry": "Retry",
   "signOut": "Sign Out",
+  "signedOutMessage": "You're signed out",
   "extruderTempMinHint": "Ex: 200",
   "extruderTempMaxHint": "Ex: 220",
   "bedTempMinHint": "Ex: 50",

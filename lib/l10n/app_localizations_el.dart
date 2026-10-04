@@ -536,6 +536,9 @@ class AppLocalizationsEl extends AppLocalizations {
   String get signOut => 'Αποσύνδεση';
 
   @override
+  String get signedOutMessage => 'Αποσυνδεθήκατε';
+
+  @override
   String get extruderTempMinHint => 'π.χ.: 200';
 
   @override

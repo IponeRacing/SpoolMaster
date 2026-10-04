@@ -170,6 +170,7 @@
   "back": "Vissza",
   "retry": "Újra",
   "signOut": "Kijelentkezés",
+  "signedOutMessage": "Kijelentkezett",
   "connection": "Bejelentkezés",
   "signInToSync": "Jelentkezzen be az adatok szinkronizálásához",
   "continueWithoutAccount": "Folytatás fiók nélkül (helyi mód)",

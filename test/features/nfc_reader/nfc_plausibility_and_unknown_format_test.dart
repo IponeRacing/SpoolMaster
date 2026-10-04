@@ -65,6 +65,35 @@ List<int> _truncatedLongOpenSpool() {
   return full.sublist(0, 160);
 }
 
+/// Tag Anycubic dont TOUS les champs sont un octet plus tôt que la normale
+/// (cas de prod : matériau « LA », buse 58880 = 230 << 8, plateau 16640).
+/// [sku] null = tag ACE sans SKU (magic 0x7B), sinon SKU ASCII en page 8.
+List<int> _shiftedAnycubicDump({String? sku = 'AHPLBW-107'}) {
+  const s = -1;
+  final d = List<int>.filled(160, 0)
+    ..setRange(12, 16, [0xE1, 0x10, 0x12, 0x00])
+    ..setRange(16, 20, [0x7B, 0x00, 0x65, 0x00]);
+  if (sku != null) d.setRange(32, 32 + sku.length, sku.codeUnits);
+  void put(int at, List<int> bytes) => d.setRange(at + s, at + s + bytes.length, bytes);
+  put(40, 'AC'.codeUnits);
+  put(60, 'PLA Matte'.codeUnits);
+  put(80, [0xFF, 0xFF, 0xFF, 0xFF]); // blanc (ABGR)
+  put(96, [190, 0, 230, 0]); // buse 190-230
+  put(116, [55, 0, 65, 0]); // plateau 55-65
+  put(120, [0xAF, 0x00, 0x4A, 0x01]); // 1,75 mm, 330 m
+  put(124, [0xE8, 0x03]); // 1000 g
+  return d;
+}
+
+/// TigerTag (magic reconnu) sans matériau ni marque du registre : non programmé.
+List<int> _tigerTagInitDump() {
+  final d = List<int>.filled(160, 0)
+    ..setRange(12, 16, [0xE1, 0x10, 0x12, 0x00])
+    ..setRange(16, 20, [0x5B, 0xF5, 0x92, 0x64]) // 1542820452
+    ..setRange(40, 44, 'ROSA'.codeUnits); // texte, lu avant comme une buse à 21071
+  return d;
+}
+
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   setUp(NfcScanDiagnostics.reset);
@@ -180,6 +209,44 @@ void main() {
       for (final ok in ['PLA High Speed', 'PLA+', 'PETG-CF', 'PLA Matte', 'Silk PLA (Dual)']) {
         expect(isGarbledTagText(ok), isFalse, reason: ok);
       }
+    });
+  });
+
+  group('décodage corrigé (Anycubic décalé, TigerTag Init)', () {
+    test('tag Anycubic SKU décalé d’un octet : températures, diamètre et poids justes', () async {
+      _mockNative({'rawBytes': _shiftedAnycubicDump()});
+      final m = await NfcDataSourceImpl().readBobbinData(nfcMode: 'anycubic');
+      expect(m.extruderTempMin, 190);
+      expect(m.extruderTempMax, 230);
+      expect(m.bedTempMin, 55);
+      expect(m.bedTempMax, 65);
+      expect(m.diameter, 1.75);
+      expect(m.spoolLength, 330);
+      expect(m.weightGrams, 1000);
+    });
+
+    test('tag ACE (sans SKU) décalé : matériau « PLA Matte » et non « LA Matte »', () async {
+      _mockNative({'rawBytes': _shiftedAnycubicDump(sku: null)});
+      final m = await NfcDataSourceImpl().readBobbinData(nfcMode: 'anycubic');
+      expect(m.filamentType, startsWith('PLA'));
+      expect(m.extruderTempMax, 230);
+      expect(m.diameter, 1.75);
+    });
+
+    test('tag ACE normal : aucun décalage appliqué', () async {
+      _mockNative({'rawBytes': _aceDump()});
+      final m = await NfcDataSourceImpl().readBobbinData(nfcMode: 'anycubic');
+      expect(m.extruderTempMin, 205);
+      expect(m.diameter, 1.75);
+    });
+
+    test('TigerTag sans matériau ni marque connus : tag vierge, pas une bobine', () async {
+      _mockNative({'rawBytes': _tigerTagInitDump()});
+      await expectLater(
+        NfcDataSourceImpl().readBobbinData(nfcMode: 'anycubic'),
+        throwsA(isA<NfcTagReadFailure>()),
+      );
+      expect(NfcScanDiagnostics.errorDetail, 'BLANK_TAG');
     });
   });
 }

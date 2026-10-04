@@ -170,6 +170,7 @@
   "back": "戻る",
   "retry": "再試行",
   "signOut": "サインアウト",
+  "signedOutMessage": "サインアウトしました",
   "connection": "ログイン",
   "signInToSync": "データを同期するにはサインインしてください",
   "continueWithoutAccount": "アカウントなしで続行（ローカルモード）",

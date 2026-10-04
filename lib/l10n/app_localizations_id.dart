@@ -535,6 +535,9 @@ class AppLocalizationsId extends AppLocalizations {
   String get signOut => 'Keluar';
 
   @override
+  String get signedOutMessage => 'Anda telah keluar';
+
+  @override
   String get extruderTempMinHint => 'Mis.: 200';
 
   @override

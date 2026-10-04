@@ -171,6 +171,7 @@
   "back": "Indietro",
   "retry": "Riprova",
   "signOut": "Esci",
+  "signedOutMessage": "Disconnessione effettuata",
   "extruderTempMinHint": "Es: 200",
   "extruderTempMaxHint": "Es: 220",
   "bedTempMinHint": "Es: 50",

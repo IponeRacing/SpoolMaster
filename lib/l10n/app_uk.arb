@@ -171,6 +171,7 @@
   "back": "Назад",
   "retry": "Спробувати знову",
   "signOut": "Вийти",
+  "signedOutMessage": "Ви вийшли з облікового запису",
   "extruderTempMinHint": "Напр.: 200",
   "extruderTempMaxHint": "Напр.: 220",
   "bedTempMinHint": "Напр.: 50",

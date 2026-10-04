@@ -171,6 +171,7 @@
   "back": "Kembali",
   "retry": "Cuba lagi",
   "signOut": "Log keluar",
+  "signedOutMessage": "Anda telah log keluar",
   "extruderTempMinHint": "Cth.: 200",
   "extruderTempMaxHint": "Cth.: 220",
   "bedTempMinHint": "Cth.: 50",

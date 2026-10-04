@@ -48,6 +48,32 @@ class NfcDataSourceImpl implements NfcDataSource {
     return _materialFamily(clean) == null ? null : clean;
   }
 
+  /// Décalage des champs ACE (octets 40-127) sur ce tag, normalement 0 : le
+  /// diamètre (175 = 1,75 mm, 285, 300) est à l'octet 120. Certains tags
+  /// Anycubic ont tous leurs champs un octet plus tôt (prod, 09-10.2026 :
+  /// matériau « LA » au lieu de « PLA », buse 58880 = 230 << 8, plateau
+  /// 16640 = 65 << 8, diamètre lu à l'octet 119). On cherche le diamètre à
+  /// ±2 octets ; le décalage n'est retenu que si la buse max y est plausible.
+  int _aceFieldShift(List<int> b) {
+    bool matches(int s) {
+      if (b.length < 128 + s) return false;
+      int u16(int i) => b[i + s] | (b[i + s + 1] << 8);
+      final diameter = u16(120);
+      final nozzleMax = u16(98);
+      return (diameter == 175 || diameter == 285 || diameter == 300) &&
+          nozzleMax >= 150 &&
+          nozzleMax <= 450;
+    }
+
+    for (final s in const [0, -1, 1, -2, 2]) {
+      if (matches(s)) {
+        if (s != 0) developer.log('🔧 Champs ACE décalés de $s octet(s)');
+        return s;
+      }
+    }
+    return 0;
+  }
+
   BobbinDataModel _parseAnycubicData(String data, List<int> rawBytes) {
     // Chercher le SKU (format AHPLBW-107)
     final skuMatch = RegExp(r'A[A-Z]{3,5}[A-Z]{2}-\d{3}').firstMatch(data);
@@ -69,6 +95,7 @@ class NfcDataSourceImpl implements NfcDataSource {
       );
     }
 
+    final s = _aceFieldShift(rawBytes);
     var filamentType = 'PLA';
     var color = 'Unknown';
     int? colorRgb;
@@ -168,7 +195,7 @@ class NfcDataSourceImpl implements NfcDataSource {
     if (rawBytes.length >= 64) {
       final end = rawBytes.length >= 76 ? 76 : rawBytes.length;
       final fieldMat = String.fromCharCodes(
-        rawBytes.sublist(60, end).where((b) => b >= 32 && b < 127),
+        rawBytes.sublist(60 + s, end + s).where((b) => b >= 32 && b < 127),
       ).trim();
       final fieldName = _recognizedMaterial(fieldMat);
       if (fieldName != null &&
@@ -183,10 +210,10 @@ class NfcDataSourceImpl implements NfcDataSource {
 
     // Parse RGB color from pages 20-23 (bytes 80-83)
     if (rawBytes.length >= 84) {
-      final a = rawBytes[80];
-      final b = rawBytes[81];
-      final g = rawBytes[82];
-      final r = rawBytes[83];
+      final a = rawBytes[80 + s];
+      final b = rawBytes[81 + s];
+      final g = rawBytes[82 + s];
+      final r = rawBytes[83 + s];
       colorRgb = (r << 16) | (g << 8) | b;
       developer.log('🎨 RGB détecté: ($r, $g, $b) [Alpha: $a]');
     }
@@ -235,18 +262,18 @@ class NfcDataSourceImpl implements NfcDataSource {
 
     if (rawBytes.length >= 128) {
       // Pages 24-27 (bytes 96-99): Températures extrudeur
-      extruderMin = rawBytes[96] | (rawBytes[97] << 8);
-      extruderMax = rawBytes[98] | (rawBytes[99] << 8);
+      extruderMin = rawBytes[96 + s] | (rawBytes[97 + s] << 8);
+      extruderMax = rawBytes[98 + s] | (rawBytes[99 + s] << 8);
 
       // Pages 28-31 (bytes 116-127): Bed + paramètres
-      bedMin = rawBytes[116] | (rawBytes[117] << 8);
-      bedMax = rawBytes[118] | (rawBytes[119] << 8);
-      final diameterRaw = rawBytes[120] | (rawBytes[121] << 8);
+      bedMin = rawBytes[116 + s] | (rawBytes[117 + s] << 8);
+      bedMax = rawBytes[118 + s] | (rawBytes[119 + s] << 8);
+      final diameterRaw = rawBytes[120 + s] | (rawBytes[121 + s] << 8);
       diameter = diameterRaw / 100.0;
-      spoolLength = rawBytes[122] | (rawBytes[123] << 8);
+      spoolLength = rawBytes[122 + s] | (rawBytes[123 + s] << 8);
       // 0 = page non lue (lecture partielle) → garder le défaut 1000 g.
       // Avant : bobines créées à 0 g (cas réel, ACE PLA HS, 09.2026).
-      final parsedWeight = rawBytes[124] | (rawBytes[125] << 8);
+      final parsedWeight = rawBytes[124 + s] | (rawBytes[125 + s] << 8);
       if (parsedWeight > 0) weight = parsedWeight.toDouble();
 
       developer.log('🌡️ Extrudeur: $extruderMin-$extruderMax°C');
@@ -407,13 +434,14 @@ class NfcDataSourceImpl implements NfcDataSource {
       final hasAceMagic = rawBytes.length > 16 && rawBytes[16] == 0x7B;
 
       if (!hasSku && rawBytes.length >= 64) {
+        final s = _aceFieldShift(rawBytes);
         // Format ACE/Tag Writer: Brand pages 10-13, Material pages 15-18
         developer.log('🔍 Format détecté: ACE/Spool NFC Tag Writer (magic: $hasAceMagic)');
 
         // Pages 8-11 = bytes 40-55 (16 bytes pour brand, commence au milieu de page 8)
         // Pages 12-15 = bytes 60-75 (16 bytes pour material, commence au milieu de page 12)
-        final brandBytes = rawBytes.length > 55 ? rawBytes.sublist(40, 56) : rawBytes.sublist(40);
-        final materialBytes = rawBytes.length > 75 ? rawBytes.sublist(60, 76) : rawBytes.sublist(60, rawBytes.length.clamp(60, 160));
+        final brandBytes = rawBytes.length > 55 ? rawBytes.sublist(40 + s, 56 + s) : rawBytes.sublist(40 + s);
+        final materialBytes = rawBytes.length > 75 ? rawBytes.sublist(60 + s, 76 + s) : rawBytes.sublist(60 + s, rawBytes.length.clamp(60 + s, 160));
 
         final brand = String.fromCharCodes(brandBytes.where((b) => b >= 32 && b < 127)).trim();
         final material = String.fromCharCodes(materialBytes.where((b) => b >= 32 && b < 127)).trim();
@@ -433,10 +461,10 @@ class NfcDataSourceImpl implements NfcDataSource {
         int? colorRgb;
         if (rawBytes.length >= 84) {
           // Format ABGR: Alpha, Blue, Green, Red
-          final a = rawBytes[80];
-          final b = rawBytes[81];
-          final g = rawBytes[82];
-          final r = rawBytes[83];
+          final a = rawBytes[80 + s];
+          final b = rawBytes[81 + s];
+          final g = rawBytes[82 + s];
+          final r = rawBytes[83 + s];
           developer.log('🎨 RGB détecté: ($r, $g, $b) [Alpha: $a]');
           developer.log('🎨 Hex sRGB: ${r.toRadixString(16).padLeft(2, '0')}${g.toRadixString(16).padLeft(2, '0')}${b.toRadixString(16).padLeft(2, '0')}');
 
@@ -459,19 +487,19 @@ class NfcDataSourceImpl implements NfcDataSource {
 
         if (rawBytes.length >= 128) {
           // Pages 24-27 (bytes 96-99): Températures extrudeur
-          extruderMin = rawBytes[96] | (rawBytes[97] << 8);
-          extruderMax = rawBytes[98] | (rawBytes[99] << 8);
+          extruderMin = rawBytes[96 + s] | (rawBytes[97 + s] << 8);
+          extruderMax = rawBytes[98 + s] | (rawBytes[99 + s] << 8);
           developer.log('🌡️ Extrudeur: $extruderMin-$extruderMax°C');
 
           // Pages 28-31 (bytes 116-127): Bed + paramètres
-          bedMin = rawBytes[116] | (rawBytes[117] << 8);
-          bedMax = rawBytes[118] | (rawBytes[119] << 8);
-          final diameterRaw = rawBytes[120] | (rawBytes[121] << 8);
+          bedMin = rawBytes[116 + s] | (rawBytes[117 + s] << 8);
+          bedMax = rawBytes[118 + s] | (rawBytes[119 + s] << 8);
+          final diameterRaw = rawBytes[120 + s] | (rawBytes[121 + s] << 8);
           diameter = diameterRaw / 100.0; // Converti de 0.01mm en mm
-          spoolLength = rawBytes[122] | (rawBytes[123] << 8);
+          spoolLength = rawBytes[122 + s] | (rawBytes[123 + s] << 8);
           // 0 = page non lue (lecture partielle) → garder le défaut 1000 g.
           // Avant : bobines créées à 0 g (cas réel, ACE PLA HS, 09.2026).
-          final parsedWeight = rawBytes[124] | (rawBytes[125] << 8);
+          final parsedWeight = rawBytes[124 + s] | (rawBytes[125 + s] << 8);
           if (parsedWeight > 0) weight = parsedWeight.toDouble();
 
           developer.log('🌡️ Plateau: $bedMin-$bedMax°C');
@@ -815,8 +843,9 @@ class NfcDataSourceImpl implements NfcDataSource {
 
   /// Parse Spool NFC Tag Writer format data from raw bytes
   BobbinDataModel _parseSpoolNfcTagWriterData(List<int> rawBytes) {
-    final brandBytes = rawBytes.length > 55 ? rawBytes.sublist(40, 56) : rawBytes.sublist(40);
-    final materialBytes = rawBytes.length > 75 ? rawBytes.sublist(60, 76) : rawBytes.sublist(60, rawBytes.length.clamp(60, 160));
+    final s = _aceFieldShift(rawBytes);
+    final brandBytes = rawBytes.length > 55 ? rawBytes.sublist(40 + s, 56 + s) : rawBytes.sublist(40 + s);
+    final materialBytes = rawBytes.length > 75 ? rawBytes.sublist(60 + s, 76 + s) : rawBytes.sublist(60 + s, rawBytes.length.clamp(60 + s, 160));
 
     final brand = String.fromCharCodes(brandBytes.where((b) => b >= 32 && b < 127)).trim();
     final material = String.fromCharCodes(materialBytes.where((b) => b >= 32 && b < 127)).trim();
@@ -837,9 +866,9 @@ class NfcDataSourceImpl implements NfcDataSource {
     var colorName = 'Unknown';
     int? colorRgb;
     if (rawBytes.length >= 84) {
-      final b = rawBytes[81];
-      final g = rawBytes[82];
-      final r = rawBytes[83];
+      final b = rawBytes[81 + s];
+      final g = rawBytes[82 + s];
+      final r = rawBytes[83 + s];
       colorRgb = (r << 16) | (g << 8) | b;
       colorName = colorNameFromRgb(r, g, b);
     }
@@ -853,16 +882,16 @@ class NfcDataSourceImpl implements NfcDataSource {
     double? diameter;
 
     if (rawBytes.length >= 128) {
-      extruderMin = rawBytes[96] | (rawBytes[97] << 8);
-      extruderMax = rawBytes[98] | (rawBytes[99] << 8);
-      bedMin = rawBytes[116] | (rawBytes[117] << 8);
-      bedMax = rawBytes[118] | (rawBytes[119] << 8);
-      final diameterRaw = rawBytes[120] | (rawBytes[121] << 8);
+      extruderMin = rawBytes[96 + s] | (rawBytes[97 + s] << 8);
+      extruderMax = rawBytes[98 + s] | (rawBytes[99 + s] << 8);
+      bedMin = rawBytes[116 + s] | (rawBytes[117 + s] << 8);
+      bedMax = rawBytes[118 + s] | (rawBytes[119 + s] << 8);
+      final diameterRaw = rawBytes[120 + s] | (rawBytes[121 + s] << 8);
       diameter = diameterRaw / 100.0;
-      spoolLength = rawBytes[122] | (rawBytes[123] << 8);
+      spoolLength = rawBytes[122 + s] | (rawBytes[123 + s] << 8);
       // 0 = page non lue (lecture partielle) → garder le défaut 1000 g.
       // Avant : bobines créées à 0 g (cas réel, ACE PLA HS, 09.2026).
-      final parsedWeight = rawBytes[124] | (rawBytes[125] << 8);
+      final parsedWeight = rawBytes[124 + s] | (rawBytes[125 + s] << 8);
       if (parsedWeight > 0) weight = parsedWeight.toDouble();
     }
 

@@ -171,6 +171,7 @@
   "back": "पीछे",
   "retry": "पुन: प्रयास करें",
   "signOut": "साइन आउट करें",
+  "signedOutMessage": "आप साइन आउट हो गए हैं",
   "extruderTempMinHint": "उदा.: 200",
   "extruderTempMaxHint": "उदा.: 220",
   "bedTempMinHint": "उदा.: 50",

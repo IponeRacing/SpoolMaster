@@ -532,6 +532,9 @@ class AppLocalizationsHe extends AppLocalizations {
   String get signOut => 'התנתק';
 
   @override
+  String get signedOutMessage => 'התנתקת מהחשבון';
+
+  @override
   String get extruderTempMinHint => 'דוגמה: 200';
 
   @override

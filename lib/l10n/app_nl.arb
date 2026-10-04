@@ -170,6 +170,7 @@
   "back": "Terug",
   "retry": "Opnieuw proberen",
   "signOut": "Uitloggen",
+  "signedOutMessage": "Je bent uitgelogd",
   "connection": "Aanmelden",
   "signInToSync": "Meld u aan om uw gegevens te synchroniseren",
   "continueWithoutAccount": "Doorgaan zonder account (lokale modus)",

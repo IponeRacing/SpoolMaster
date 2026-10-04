@@ -536,6 +536,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get signOut => 'Cerrar Sesión';
 
   @override
+  String get signedOutMessage => 'Has cerrado sesión';
+
+  @override
   String get extruderTempMinHint => 'ej.: 200';
 
   @override

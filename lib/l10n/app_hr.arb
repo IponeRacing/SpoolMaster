@@ -171,6 +171,7 @@
   "back": "Natrag",
   "retry": "Pokušaj ponovno",
   "signOut": "Odjavi se",
+  "signedOutMessage": "Odjavljeni ste",
   "extruderTempMinHint": "Npr.: 200",
   "extruderTempMaxHint": "Npr.: 220",
   "bedTempMinHint": "Npr.: 50",
