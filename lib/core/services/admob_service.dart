@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:nfc_filament/core/api/api_config.dart';
 import 'package:nfc_filament/core/services/consent_manager.dart';
 
 /// Service de gestion des publicités AdMob
@@ -44,7 +45,10 @@ class AdMobService {
   }
 
   /// Vérifie si les pubs doivent être affichées
-  bool get shouldShowAds => !_isPremiumUser;
+  /// Pas de pub pour les premium ni dans les builds de test E2E (les
+  /// bannières sont des platform views non capturables et ne chargent pas
+  /// sur simulateur → tests non déterministes).
+  bool get shouldShowAds => !_isPremiumUser && !ApiConfig.e2eMode;
 
   // ==================== AD UNIT IDs ====================
 
