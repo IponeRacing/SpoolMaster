@@ -37,6 +37,11 @@ class Router {
         $method = $_SERVER['REQUEST_METHOD'];
         $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
+        // HEAD = GET sans corps (curl -I, sondes de surveillance). Avant :
+        // aucune route HEAD → 404 partout, l'API paraissait en panne.
+        $isHead = $method === 'HEAD';
+        $routeMethod = $isHead ? 'GET' : $method;
+
         // Remove /api prefix if present
         $uri = preg_replace('#^/api#', '', $uri);
 
@@ -44,7 +49,7 @@ class Router {
             $pattern = preg_replace('#:(\w+)#', '(?P<$1>[^/]+)', $route['path']);
             $pattern = "#^{$pattern}$#";
 
-            if ($route['method'] === $method && preg_match($pattern, $uri, $matches)) {
+            if ($route['method'] === $routeMethod && preg_match($pattern, $uri, $matches)) {
                 // Extract route parameters
                 $params = array_filter($matches, 'is_string', ARRAY_FILTER_USE_KEY);
 
@@ -55,7 +60,7 @@ class Router {
                 // (404, 400, 500…). Avant, toutes les erreurs métier sortaient
                 // en 200 + success:false → l'app prenait un PUT refusé pour un
                 // succès, et les webhooks Apple ne réessayaient jamais.
-                if ($result !== null) {
+                if ($result !== null && !$isHead) {
                     echo json_encode($result);
                 }
                 return;
@@ -64,6 +69,9 @@ class Router {
 
         // 404 Not Found
         http_response_code(404);
+        if ($isHead) {
+            return;
+        }
         echo json_encode([
             'success' => false,
             'error' => 'Route not found',
