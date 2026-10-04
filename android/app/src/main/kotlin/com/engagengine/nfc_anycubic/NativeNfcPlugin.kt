@@ -1946,7 +1946,11 @@ class NativeNfcPlugin private constructor(
         val productionTimestamp = try {
             if (date.length >= 5) {
                 val year = 2000 + date.substring(0, 2).toInt()
-                val month = date.substring(2, 3).toInt()
+                // Mois sur 1 caractère hexadécimal (1-9, A-C = octobre-décembre,
+                // comme OpenRFID). Avant : toInt() décimal → exception sur A-C,
+                // date perdue pour toute bobine produite en fin d'année.
+                val month = date.substring(2, 3).toInt(16)
+                require(month in 1..12) { "mois invalide : ${date.substring(2, 3)}" }
                 val day = date.substring(3, 5).toInt()
                 java.util.Calendar.getInstance().apply {
                     set(year, month - 1, day)
