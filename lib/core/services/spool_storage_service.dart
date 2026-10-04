@@ -2,9 +2,12 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:nfc_filament/core/models/spool_inventory_item.dart';
+import 'package:nfc_filament/core/models/spool_usage_event.dart';
 import 'package:nfc_filament/core/services/analytics_service.dart';
 import 'package:nfc_filament/core/services/auth_service.dart';
 import 'package:nfc_filament/core/services/sync_service.dart';
+import 'package:nfc_filament/core/services/usage_history_service.dart';
+import 'package:nfc_filament/core/services/usage_sync_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SpoolStorageService {
@@ -57,11 +60,15 @@ class SpoolStorageService {
         .toList();
   }
 
-  /// Charger les spools depuis toutes les clés possibles (pour la migration)
+  /// Bobines à pousser vers le compte connecté : celles du compte courant +
+  /// celles ajoutées en invité (clé non scopée, avant connexion).
+  /// Les clés des AUTRES comptes déjà connectés sur cet appareil sont exclues :
+  /// avant, leurs bobines étaient rattachées au compte courant (ou faisaient
+  /// échouer le push sur un spool_id déjà pris). Le compte courant est lu en
+  /// premier → sa version gagne en cas de doublon d'id.
   static Future<List<SpoolInventoryItem>> loadAllSpools() async {
     final prefs = await SharedPreferences.getInstance();
-    final allKeys = prefs.getKeys();
-    final spoolKeys = allKeys.where((k) => k.startsWith(_keyPrefix));
+    final spoolKeys = {await _getStorageKey(), _keyPrefix};
 
     final allSpools = <SpoolInventoryItem>[];
     final seenIds = <String>{};
@@ -152,14 +159,28 @@ class SpoolStorageService {
     ));
   }
 
-  static Future<void> updateSpool(String id, SpoolInventoryItem spool) async {
+  /// Met à jour une bobine. Si le poids restant baisse, la consommation est
+  /// journalisée (historique + statistiques), avec [usageSource] pour
+  /// distinguer une mise à jour de stock d'un calcul de coût d'impression.
+  static Future<void> updateSpool(
+    String id,
+    SpoolInventoryItem spool, {
+    String usageSource = SpoolUsageEvent.sourceUpdate,
+  }) async {
     final spools = await loadSpools();
     final index = spools.indexWhere((s) => s.id == id);
     if (index != -1) {
+      final before = spools[index];
       spools[index] = spool;
       await saveSpools(spools);
       // Sync to backend
       unawaited(SyncService.syncSpool(spool));
+      final event = await UsageHistoryService.recordChange(
+        before,
+        spool.remainingWeight,
+        source: usageSource,
+      );
+      if (event != null) unawaited(UsageSyncService.sync());
     }
   }
 

@@ -1361,4 +1361,138 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get genericBrand => 'Genérico';
+
+  @override
+  String get stockSearchHint => 'Pesquisar (marca, cor, local…)';
+
+  @override
+  String get stockMoreActions => 'Mais ações';
+
+  @override
+  String get exportExcel => 'Exportar para Excel';
+
+  @override
+  String get exportFailed => 'Falha na exportação';
+
+  @override
+  String get exportShareSubject => 'Meu estoque de filamentos (Spool Master)';
+
+  @override
+  String get exportColorHex => 'Código da cor';
+
+  @override
+  String get exportRemainingPercent => 'Restante (%)';
+
+  @override
+  String get exportPricePerKg => 'Preço / kg';
+
+  @override
+  String get exportAddedDate => 'Data de adição';
+
+  @override
+  String get exportOrdered => 'Encomendado';
+
+  @override
+  String get exportDate => 'Data';
+
+  @override
+  String get exportGrams => 'Gramas';
+
+  @override
+  String get exportCost => 'Custo';
+
+  @override
+  String get importSpools => 'Importar (CSV / Excel)';
+
+  @override
+  String get importConfirmTitle => 'Importar bobinas';
+
+  @override
+  String importConfirmMessage(int count, int duplicates, int skipped) {
+    return 'Bobinas a adicionar: $count\nJá em estoque (ignoradas): $duplicates\nLinhas ilegíveis (ignoradas): $skipped';
+  }
+
+  @override
+  String get importAction => 'Importar';
+
+  @override
+  String get importNothingFound =>
+      'Nenhuma bobina reconhecida. O arquivo deve conter pelo menos as colunas Material e Peso (como a exportação Excel do app).';
+
+  @override
+  String importDone(int count) {
+    return 'Bobinas importadas: $count';
+  }
+
+  @override
+  String get importFailed => 'Arquivo ilegível';
+
+  @override
+  String get location => 'Local';
+
+  @override
+  String get locationHint => 'Ex.: Prateleira A, caixa seca 2';
+
+  @override
+  String get notes => 'Notas';
+
+  @override
+  String get notesHint => 'Ex.: secar antes de usar';
+
+  @override
+  String get printCostTitle => 'Custo de uma impressão';
+
+  @override
+  String get printCostGrams => 'Filamento usado (g)';
+
+  @override
+  String printCostResult(String cost) {
+    return 'Custo do material: $cost';
+  }
+
+  @override
+  String printCostPerKg(String price) {
+    return 'Preço por kg: $price';
+  }
+
+  @override
+  String get printCostNoPrice =>
+      'Adicione o preço da bobina para calcular o custo.';
+
+  @override
+  String get printCostDeduct => 'Descontar do estoque';
+
+  @override
+  String printCostDeducted(String grams) {
+    return '$grams g descontados do estoque';
+  }
+
+  @override
+  String get consumptionTitle => 'Consumo';
+
+  @override
+  String get consumptionLast30Days => 'Últimos 30 dias';
+
+  @override
+  String get consumptionThisMonth => 'Este mês';
+
+  @override
+  String get consumptionByMaterial => 'Por material (30 dias)';
+
+  @override
+  String get consumptionMonthly => 'Últimos 6 meses';
+
+  @override
+  String get consumptionEmpty =>
+      'Nenhum consumo registrado ainda. Ele aparece assim que você atualiza o peso restante de uma bobina ou usa a calculadora de custo de impressão.';
+
+  @override
+  String get shareShoppingList => 'Compartilhar lista';
+
+  @override
+  String get nfcBlankTagTitle => 'Etiqueta vazia';
+
+  @override
+  String get nfcBlankTagDesc =>
+      'Esta etiqueta não contém dados de bobina. Adicione a bobina manualmente ou grave esta etiqueta pelo app.';
 }

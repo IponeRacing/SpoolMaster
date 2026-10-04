@@ -1356,4 +1356,138 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get genericBrand => 'Generik';
+
+  @override
+  String get stockSearchHint => 'Cari (merek, warna, lokasi…)';
+
+  @override
+  String get stockMoreActions => 'Tindakan lainnya';
+
+  @override
+  String get exportExcel => 'Ekspor ke Excel';
+
+  @override
+  String get exportFailed => 'Ekspor gagal';
+
+  @override
+  String get exportShareSubject => 'Stok filamen saya (Spool Master)';
+
+  @override
+  String get exportColorHex => 'Kode warna';
+
+  @override
+  String get exportRemainingPercent => 'Tersisa (%)';
+
+  @override
+  String get exportPricePerKg => 'Harga / kg';
+
+  @override
+  String get exportAddedDate => 'Tanggal ditambahkan';
+
+  @override
+  String get exportOrdered => 'Dipesan';
+
+  @override
+  String get exportDate => 'Tanggal';
+
+  @override
+  String get exportGrams => 'Gram';
+
+  @override
+  String get exportCost => 'Biaya';
+
+  @override
+  String get importSpools => 'Impor (CSV / Excel)';
+
+  @override
+  String get importConfirmTitle => 'Impor gulungan';
+
+  @override
+  String importConfirmMessage(int count, int duplicates, int skipped) {
+    return 'Gulungan yang akan ditambahkan: $count\nSudah ada di stok (dilewati): $duplicates\nBaris tidak terbaca (dilewati): $skipped';
+  }
+
+  @override
+  String get importAction => 'Impor';
+
+  @override
+  String get importNothingFound =>
+      'Tidak ada gulungan yang dikenali. File harus memuat setidaknya kolom Material dan Berat (seperti ekspor Excel aplikasi).';
+
+  @override
+  String importDone(int count) {
+    return 'Gulungan diimpor: $count';
+  }
+
+  @override
+  String get importFailed => 'File tidak terbaca';
+
+  @override
+  String get location => 'Lokasi';
+
+  @override
+  String get locationHint => 'Mis. Rak A, kotak kering 2';
+
+  @override
+  String get notes => 'Catatan';
+
+  @override
+  String get notesHint => 'Mis. keringkan sebelum digunakan';
+
+  @override
+  String get printCostTitle => 'Biaya cetak';
+
+  @override
+  String get printCostGrams => 'Filamen terpakai (g)';
+
+  @override
+  String printCostResult(String cost) {
+    return 'Biaya material: $cost';
+  }
+
+  @override
+  String printCostPerKg(String price) {
+    return 'Harga per kg: $price';
+  }
+
+  @override
+  String get printCostNoPrice =>
+      'Tambahkan harga gulungan untuk menghitung biaya.';
+
+  @override
+  String get printCostDeduct => 'Kurangi dari stok';
+
+  @override
+  String printCostDeducted(String grams) {
+    return '$grams g dikurangi dari stok';
+  }
+
+  @override
+  String get consumptionTitle => 'Konsumsi';
+
+  @override
+  String get consumptionLast30Days => '30 hari terakhir';
+
+  @override
+  String get consumptionThisMonth => 'Bulan ini';
+
+  @override
+  String get consumptionByMaterial => 'Per material (30 hari)';
+
+  @override
+  String get consumptionMonthly => '6 bulan terakhir';
+
+  @override
+  String get consumptionEmpty =>
+      'Belum ada konsumsi yang tercatat. Akan muncul begitu Anda memperbarui berat tersisa gulungan atau memakai kalkulator biaya cetak.';
+
+  @override
+  String get shareShoppingList => 'Bagikan daftar';
+
+  @override
+  String get nfcBlankTagTitle => 'Tag kosong';
+
+  @override
+  String get nfcBlankTagDesc =>
+      'Tag ini tidak berisi data spool. Tambahkan spool secara manual atau tulis tag ini dari aplikasi.';
 }

@@ -1371,4 +1371,138 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get genericBrand => 'Generisch';
+
+  @override
+  String get stockSearchHint => 'Suchen (Marke, Farbe, Standort…)';
+
+  @override
+  String get stockMoreActions => 'Weitere Aktionen';
+
+  @override
+  String get exportExcel => 'Als Excel exportieren';
+
+  @override
+  String get exportFailed => 'Export fehlgeschlagen';
+
+  @override
+  String get exportShareSubject => 'Mein Filamentbestand (Spool Master)';
+
+  @override
+  String get exportColorHex => 'Farbcode';
+
+  @override
+  String get exportRemainingPercent => 'Rest (%)';
+
+  @override
+  String get exportPricePerKg => 'Preis / kg';
+
+  @override
+  String get exportAddedDate => 'Hinzugefügt am';
+
+  @override
+  String get exportOrdered => 'Bestellt';
+
+  @override
+  String get exportDate => 'Datum';
+
+  @override
+  String get exportGrams => 'Gramm';
+
+  @override
+  String get exportCost => 'Kosten';
+
+  @override
+  String get importSpools => 'Importieren (CSV / Excel)';
+
+  @override
+  String get importConfirmTitle => 'Spulen importieren';
+
+  @override
+  String importConfirmMessage(int count, int duplicates, int skipped) {
+    return 'Spulen zum Hinzufügen: $count\nBereits im Lager (übersprungen): $duplicates\nUnlesbare Zeilen (übersprungen): $skipped';
+  }
+
+  @override
+  String get importAction => 'Importieren';
+
+  @override
+  String get importNothingFound =>
+      'Keine Spulen erkannt. Die Datei muss mindestens die Spalten Material und Gewicht enthalten (wie der Excel-Export der App).';
+
+  @override
+  String importDone(int count) {
+    return 'Importierte Spulen: $count';
+  }
+
+  @override
+  String get importFailed => 'Datei nicht lesbar';
+
+  @override
+  String get location => 'Standort';
+
+  @override
+  String get locationHint => 'z. B. Regal A, Trockenbox 2';
+
+  @override
+  String get notes => 'Notizen';
+
+  @override
+  String get notesHint => 'z. B. vor Gebrauch trocknen';
+
+  @override
+  String get printCostTitle => 'Druckkosten';
+
+  @override
+  String get printCostGrams => 'Verbrauchtes Filament (g)';
+
+  @override
+  String printCostResult(String cost) {
+    return 'Materialkosten: $cost';
+  }
+
+  @override
+  String printCostPerKg(String price) {
+    return 'Preis pro kg: $price';
+  }
+
+  @override
+  String get printCostNoPrice =>
+      'Preis der Spule eintragen, um die Kosten zu berechnen.';
+
+  @override
+  String get printCostDeduct => 'Vom Lager abziehen';
+
+  @override
+  String printCostDeducted(String grams) {
+    return '$grams g vom Lager abgezogen';
+  }
+
+  @override
+  String get consumptionTitle => 'Verbrauch';
+
+  @override
+  String get consumptionLast30Days => 'Letzte 30 Tage';
+
+  @override
+  String get consumptionThisMonth => 'Diesen Monat';
+
+  @override
+  String get consumptionByMaterial => 'Nach Material (30 Tage)';
+
+  @override
+  String get consumptionMonthly => 'Letzte 6 Monate';
+
+  @override
+  String get consumptionEmpty =>
+      'Noch kein Verbrauch erfasst. Er erscheint, sobald Sie das Restgewicht einer Spule aktualisieren oder den Druckkostenrechner nutzen.';
+
+  @override
+  String get shareShoppingList => 'Liste teilen';
+
+  @override
+  String get nfcBlankTagTitle => 'Leeres Tag';
+
+  @override
+  String get nfcBlankTagDesc =>
+      'Dieses Tag enthält keine Spulendaten. Fügen Sie die Spule manuell hinzu oder beschreiben Sie das Tag in der App.';
 }

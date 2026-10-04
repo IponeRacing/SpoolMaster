@@ -2724,6 +2724,246 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Générique'**
   String get genericBrand;
+
+  /// No description provided for @stockSearchHint.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rechercher (marque, couleur, emplacement…)'**
+  String get stockSearchHint;
+
+  /// No description provided for @stockMoreActions.
+  ///
+  /// In fr, this message translates to:
+  /// **'Plus d\'actions'**
+  String get stockMoreActions;
+
+  /// No description provided for @exportExcel.
+  ///
+  /// In fr, this message translates to:
+  /// **'Exporter en Excel'**
+  String get exportExcel;
+
+  /// No description provided for @exportFailed.
+  ///
+  /// In fr, this message translates to:
+  /// **'Export impossible'**
+  String get exportFailed;
+
+  /// No description provided for @exportShareSubject.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mon stock de filaments (Spool Master)'**
+  String get exportShareSubject;
+
+  /// No description provided for @exportColorHex.
+  ///
+  /// In fr, this message translates to:
+  /// **'Code couleur'**
+  String get exportColorHex;
+
+  /// No description provided for @exportRemainingPercent.
+  ///
+  /// In fr, this message translates to:
+  /// **'Restant (%)'**
+  String get exportRemainingPercent;
+
+  /// No description provided for @exportPricePerKg.
+  ///
+  /// In fr, this message translates to:
+  /// **'Prix / kg'**
+  String get exportPricePerKg;
+
+  /// No description provided for @exportAddedDate.
+  ///
+  /// In fr, this message translates to:
+  /// **'Date d\'ajout'**
+  String get exportAddedDate;
+
+  /// No description provided for @exportOrdered.
+  ///
+  /// In fr, this message translates to:
+  /// **'Commandé'**
+  String get exportOrdered;
+
+  /// No description provided for @exportDate.
+  ///
+  /// In fr, this message translates to:
+  /// **'Date'**
+  String get exportDate;
+
+  /// No description provided for @exportGrams.
+  ///
+  /// In fr, this message translates to:
+  /// **'Grammes'**
+  String get exportGrams;
+
+  /// No description provided for @exportCost.
+  ///
+  /// In fr, this message translates to:
+  /// **'Coût'**
+  String get exportCost;
+
+  /// No description provided for @importSpools.
+  ///
+  /// In fr, this message translates to:
+  /// **'Importer (CSV / Excel)'**
+  String get importSpools;
+
+  /// No description provided for @importConfirmTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Importer des bobines'**
+  String get importConfirmTitle;
+
+  /// No description provided for @importConfirmMessage.
+  ///
+  /// In fr, this message translates to:
+  /// **'Bobines à ajouter : {count}\nDéjà en stock (ignorées) : {duplicates}\nLignes illisibles (ignorées) : {skipped}'**
+  String importConfirmMessage(int count, int duplicates, int skipped);
+
+  /// No description provided for @importAction.
+  ///
+  /// In fr, this message translates to:
+  /// **'Importer'**
+  String get importAction;
+
+  /// No description provided for @importNothingFound.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune bobine reconnue. Le fichier doit contenir au moins les colonnes Matériau et Poids (comme l\'export Excel de l\'app).'**
+  String get importNothingFound;
+
+  /// No description provided for @importDone.
+  ///
+  /// In fr, this message translates to:
+  /// **'Bobines importées : {count}'**
+  String importDone(int count);
+
+  /// No description provided for @importFailed.
+  ///
+  /// In fr, this message translates to:
+  /// **'Fichier illisible'**
+  String get importFailed;
+
+  /// No description provided for @location.
+  ///
+  /// In fr, this message translates to:
+  /// **'Emplacement'**
+  String get location;
+
+  /// No description provided for @locationHint.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ex : Étagère A, boîte sèche 2'**
+  String get locationHint;
+
+  /// No description provided for @notes.
+  ///
+  /// In fr, this message translates to:
+  /// **'Notes'**
+  String get notes;
+
+  /// No description provided for @notesHint.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ex : à sécher avant utilisation'**
+  String get notesHint;
+
+  /// No description provided for @printCostTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Coût d\'une impression'**
+  String get printCostTitle;
+
+  /// No description provided for @printCostGrams.
+  ///
+  /// In fr, this message translates to:
+  /// **'Filament utilisé (g)'**
+  String get printCostGrams;
+
+  /// No description provided for @printCostResult.
+  ///
+  /// In fr, this message translates to:
+  /// **'Coût matière : {cost}'**
+  String printCostResult(String cost);
+
+  /// No description provided for @printCostPerKg.
+  ///
+  /// In fr, this message translates to:
+  /// **'Prix au kg : {price}'**
+  String printCostPerKg(String price);
+
+  /// No description provided for @printCostNoPrice.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ajoutez le prix de la bobine pour calculer le coût.'**
+  String get printCostNoPrice;
+
+  /// No description provided for @printCostDeduct.
+  ///
+  /// In fr, this message translates to:
+  /// **'Déduire du stock'**
+  String get printCostDeduct;
+
+  /// No description provided for @printCostDeducted.
+  ///
+  /// In fr, this message translates to:
+  /// **'{grams} g déduits du stock'**
+  String printCostDeducted(String grams);
+
+  /// No description provided for @consumptionTitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Consommation'**
+  String get consumptionTitle;
+
+  /// No description provided for @consumptionLast30Days.
+  ///
+  /// In fr, this message translates to:
+  /// **'30 derniers jours'**
+  String get consumptionLast30Days;
+
+  /// No description provided for @consumptionThisMonth.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ce mois-ci'**
+  String get consumptionThisMonth;
+
+  /// No description provided for @consumptionByMaterial.
+  ///
+  /// In fr, this message translates to:
+  /// **'Par matériau (30 jours)'**
+  String get consumptionByMaterial;
+
+  /// No description provided for @consumptionMonthly.
+  ///
+  /// In fr, this message translates to:
+  /// **'6 derniers mois'**
+  String get consumptionMonthly;
+
+  /// No description provided for @consumptionEmpty.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune consommation enregistrée pour l\'instant. Elle s\'affiche dès que vous mettez à jour le poids restant d\'une bobine ou utilisez le calculateur de coût.'**
+  String get consumptionEmpty;
+
+  /// No description provided for @shareShoppingList.
+  ///
+  /// In fr, this message translates to:
+  /// **'Partager la liste'**
+  String get shareShoppingList;
+
+  /// Titre affiché quand le tag scanné est un NTAG vierge (aucune donnée de bobine)
+  ///
+  /// In fr, this message translates to:
+  /// **'Tag vierge'**
+  String get nfcBlankTagTitle;
+
+  /// Explication + action quand le tag scanné est vierge
+  ///
+  /// In fr, this message translates to:
+  /// **'Ce tag ne contient aucune donnée de bobine. Ajoutez la bobine manuellement ou écrivez ce tag depuis l\'app.'**
+  String get nfcBlankTagDesc;
 }
 
 class _AppLocalizationsDelegate

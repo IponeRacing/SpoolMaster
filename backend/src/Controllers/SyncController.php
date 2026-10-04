@@ -7,6 +7,7 @@
 namespace NfcAnycubic\Controllers;
 
 use NfcAnycubic\Database;
+use NfcAnycubic\Logger;
 use NfcAnycubic\Middleware\AuthMiddleware;
 
 class SyncController {
@@ -20,39 +21,71 @@ class SyncController {
         $userId = AuthMiddleware::getUserId();
         if (!$userId) return;
 
-        $input = json_decode(file_get_contents('php://input'), true);
-        $db = Database::getInstance()->getConnection();
+        $rawBody = file_get_contents('php://input');
+        $input = json_decode($rawBody, true);
+        if (!is_array($input)) {
+            // Corps tronqué/illisible : avant, on répondait « success, 0 bobine »
+            // et le client croyait son stock sauvegardé.
+            Logger::error('sync.push', 'Corps JSON invalide: ' . json_last_error_msg(), ['bytes' => strlen((string)$rawBody)]);
+            $this->logSync($userId, 'push', 0, 0, 0, 'failed', 'Invalid JSON body');
+            http_response_code(400);
+            return ['success' => false, 'error' => 'Invalid JSON body', 'request_id' => Logger::requestId()];
+        }
 
         $syncStart = microtime(true);
         $itemsSynced = 0;
-        $conflicts = 0;
+        $skipped = 0;
+        $failedIds = [];
 
-        // Sync des bobines
+        // Sync des bobines — une bobine en erreur ne doit pas faire échouer le lot
+        // (avant : 500 global non journalisé, et les bobines suivantes ignorées).
         if (isset($input['spools']) && is_array($input['spools'])) {
             foreach ($input['spools'] as $spool) {
-                // Normaliser les noms de champs
-                $spool = $this->normalizeFieldNames($spool);
-                $result = $this->syncSpool($userId, $spool);
+                $spoolId = is_array($spool) ? ($spool['spool_id'] ?? $spool['id'] ?? null) : null;
+                try {
+                    $spool = $this->normalizeFieldNames(is_array($spool) ? $spool : null);
+                    $result = $this->syncSpool($userId, $spool);
+                } catch (\Throwable $e) {
+                    $failedIds[] = $spoolId ?? '?';
+                    Logger::exception('sync.push', $e, ['spool_id' => $spoolId]);
+                    continue;
+                }
                 if ($result['synced']) $itemsSynced++;
-                if ($result['conflict']) $conflicts++;
+                if ($result['skipped']) $skipped++;
             }
         }
 
         // Sync des préférences
-        if (isset($input['preferences'])) {
-            $this->syncPreferences($userId, $input['preferences']);
+        if (isset($input['preferences']) && is_array($input['preferences'])) {
+            try {
+                $this->syncPreferences($userId, $input['preferences']);
+            } catch (\Throwable $e) {
+                Logger::exception('sync.push.preferences', $e);
+            }
         }
 
         $duration = round((microtime(true) - $syncStart) * 1000);
 
-        // Logger la sync
-        $this->logSync($userId, 'push', $itemsSynced, $conflicts, $duration, 'success');
+        $status = 'success';
+        $errorMessage = null;
+        if (!empty($failedIds)) {
+            $status = ($itemsSynced > 0 || $skipped > 0) ? 'partial' : 'failed';
+            $errorMessage = count($failedIds) . ' bobine(s) en échec: ' . implode(', ', array_slice($failedIds, 0, 20));
+        }
+
+        // items_conflicts reste à 0 : il n'y a plus de résolution de conflit.
+        $this->logSync($userId, 'push', $itemsSynced, 0, (int)$duration, $status, $errorMessage);
 
         return [
             'success' => true,
             'data' => [
                 'items_synced' => $itemsSynced,
-                'conflicts' => $conflicts,
+                // Déjà présentes côté serveur → non modifiées (voir syncSpool).
+                'skipped_existing' => $skipped,
+                'failed' => count($failedIds),
+                // Le client garde ces bobines en local lors du pull qui suit
+                // (elles ne sont pas sur le serveur → ne pas les effacer).
+                'failed_spool_ids' => $failedIds,
                 'duration_ms' => $duration
             ]
         ];
@@ -127,6 +160,13 @@ class SyncController {
                 'drying_time' => $spool['drying_time'] ? (int)$spool['drying_time'] : null,
                 'material_variant_id' => $spool['material_variant_id'] ?? null,
                 'material_id' => $spool['material_id'] ?? null,
+                'notes' => ($spool['notes'] ?? null) !== '' ? ($spool['notes'] ?? null) : null,
+                'location' => ($spool['location'] ?? null) !== '' ? ($spool['location'] ?? null) : null,
+                'nozzle_size' => isset($spool['nozzle_size']) ? (float)$spool['nozzle_size'] : null,
+                'vendor_code' => $spool['vendor_code'] ?? null,
+                'product_code' => $spool['product_code'] ?? null,
+                // Date d'ajout réelle (colonne 1.4.10) ; à défaut, date de création
+                'added_date' => date('Y-m-d\TH:i:s', strtotime($spool['added_date'] ?? $spool['created_at'])),
                 'created_at' => $spool['created_at'],
                 'updated_at' => $spool['updated_at'],
             ];
@@ -178,14 +218,23 @@ class SyncController {
     }
 
     /**
-     * Synchronise une bobine (résolution de conflits)
+     * Synchronise une bobine : CRÉATION SEULEMENT.
+     *
+     * Une bobine déjà connue du serveur (active ou supprimée) n'est jamais
+     * modifiée par le push. Le client n'envoie ni version ni horodatage de
+     * modification : le serveur ne peut pas savoir quelle copie est la plus
+     * récente. Les modifications passent par PUT /spools/:id (avec la file de
+     * retry côté app). Avant : comparaison sur un sync_version jamais envoyé →
+     * 2 475 « conflits » pour 192 écritures en 30 jours, et une ligne créée par
+     * PUT était écrasée au premier push suivant (appareil potentiellement
+     * périmé). Ne jamais toucher une ligne existante garantit aussi qu'un push
+     * ne ressuscite pas une bobine supprimée (boucle de résurrection, 09.2026).
      */
     private function syncSpool(string $userId, array $spool): array {
         $db = Database::getInstance()->getConnection();
 
-        // Vérifier si la bobine existe
         $stmt = $db->prepare(
-            "SELECT sync_version, updated_at, deleted_at FROM spools
+            "SELECT 1 FROM spools
              WHERE spool_id = :spool_id AND user_id = :user_id
              LIMIT 1"
         );
@@ -193,68 +242,29 @@ class SyncController {
             'spool_id' => $spool['spool_id'],
             'user_id' => $userId
         ]);
-        $existing = $stmt->fetch();
-
-        // GARDE-FOU TOMBSTONE : un push en masse ne doit JAMAIS ressusciter une
-        // bobine déjà supprimée côté serveur. Sans ça, une app dont le local
-        // contient encore d'anciennes bobines (supprimées ailleurs) les
-        // ré-activait à chaque sync (boucle de résurrection). L'app n'a pas de
-        // fonction « restaurer » → ne jamais dé-supprimer via push est sûr.
-        $incomingDeletedAt = $spool['deleted_at'] ?? null;
-        $effectiveDeletedAt = $incomingDeletedAt;
-        if ($existing && $existing['deleted_at'] !== null && $incomingDeletedAt === null) {
-            $effectiveDeletedAt = $existing['deleted_at'];
+        if ($stmt->fetch()) {
+            return ['synced' => false, 'skipped' => true];
         }
 
-        $conflict = false;
-
-        if ($existing) {
-            // Résolution de conflit : last-write-wins avec version
-            $localVersion = $spool['sync_version'] ?? 1;
-            $serverVersion = $existing['sync_version'];
-
-            if ($localVersion < $serverVersion) {
-                // Conflit : le serveur est plus récent
-                $conflict = true;
-                return ['synced' => false, 'conflict' => true];
-            }
-
-            // Mettre à jour
-            $stmt = $db->prepare(
-                "UPDATE spools SET
-                    brand = :brand, material = :material, color_name = :color_name,
-                    color_rgb = :color_rgb, initial_weight = :initial_weight,
-                    remaining_weight = :remaining_weight, price = :price,
-                    diameter = :diameter, spool_length = :spool_length,
-                    extruder_temp_min = :extruder_temp_min, extruder_temp_max = :extruder_temp_max,
-                    bed_temp_min = :bed_temp_min, bed_temp_max = :bed_temp_max,
-                    manufacture_date = :manufacture_date, batch_number = :batch_number,
-                    detailed_type = :detailed_type, drying_temp = :drying_temp, drying_time = :drying_time,
-                    material_variant_id = :material_variant_id, material_id = :material_id,
-                    purchase_date = :purchase_date, notes = :notes,
-                    deleted_at = :deleted_at, sync_version = :sync_version, last_synced_at = NOW()
-                 WHERE spool_id = :spool_id AND user_id = :user_id"
-            );
-        } else {
-            // Créer
-            $stmt = $db->prepare(
-                "INSERT INTO spools (
-                    user_id, spool_id, brand, material, color_name, color_rgb,
-                    initial_weight, remaining_weight, price, diameter, spool_length,
-                    extruder_temp_min, extruder_temp_max, bed_temp_min, bed_temp_max,
-                    manufacture_date, batch_number, detailed_type, drying_temp, drying_time,
-                    material_variant_id, material_id, purchase_date, notes,
-                    deleted_at, sync_version, last_synced_at
-                ) VALUES (
-                    :user_id, :spool_id, :brand, :material, :color_name, :color_rgb,
-                    :initial_weight, :remaining_weight, :price, :diameter, :spool_length,
-                    :extruder_temp_min, :extruder_temp_max, :bed_temp_min, :bed_temp_max,
-                    :manufacture_date, :batch_number, :detailed_type, :drying_temp, :drying_time,
-                    :material_variant_id, :material_id, :purchase_date, :notes,
-                    :deleted_at, :sync_version, NOW()
-                )"
-            );
-        }
+        $stmt = $db->prepare(
+            "INSERT INTO spools (
+                user_id, spool_id, brand, material, color_name, color_rgb,
+                initial_weight, remaining_weight, price, diameter, spool_length,
+                extruder_temp_min, extruder_temp_max, bed_temp_min, bed_temp_max,
+                manufacture_date, batch_number, detailed_type, drying_temp, drying_time,
+                material_variant_id, material_id, purchase_date, notes, location,
+                nozzle_size, vendor_code, product_code, added_date,
+                deleted_at, sync_version, last_synced_at
+            ) VALUES (
+                :user_id, :spool_id, :brand, :material, :color_name, :color_rgb,
+                :initial_weight, :remaining_weight, :price, :diameter, :spool_length,
+                :extruder_temp_min, :extruder_temp_max, :bed_temp_min, :bed_temp_max,
+                :manufacture_date, :batch_number, :detailed_type, :drying_temp, :drying_time,
+                :material_variant_id, :material_id, :purchase_date, :notes, :location,
+                :nozzle_size, :vendor_code, :product_code, :added_date,
+                :deleted_at, 1, NOW()
+            )"
+        );
 
         $stmt->execute([
             'user_id' => $userId,
@@ -280,12 +290,27 @@ class SyncController {
             'material_variant_id' => $spool['material_variant_id'] ?? null,
             'material_id' => $spool['material_id'] ?? null,
             'purchase_date' => $spool['purchase_date'] ?? null,
-            'notes' => $spool['notes'] ?? null,
-            'deleted_at' => $effectiveDeletedAt,
-            'sync_version' => ($spool['sync_version'] ?? 1) + 1
+            // Chaîne vide = champ vidé par l'utilisateur → NULL
+            'notes' => ($spool['notes'] ?? '') !== '' ? $spool['notes'] : null,
+            'location' => ($spool['location'] ?? '') !== '' ? $spool['location'] : null,
+            'nozzle_size' => $spool['nozzle_size'] ?? null,
+            'vendor_code' => $spool['vendor_code'] ?? null,
+            'product_code' => $spool['product_code'] ?? null,
+            'added_date' => $this->toDateTime($spool['added_date'] ?? null),
+            'deleted_at' => $spool['deleted_at'] ?? null,
         ]);
 
-        return ['synced' => true, 'conflict' => $conflict];
+        return ['synced' => true, 'skipped' => false];
+    }
+
+    /**
+     * Date ISO de l'app (« 2026-09-01T10:20:30.123 ») → DATETIME MariaDB.
+     * null si absente ou illisible.
+     */
+    private function toDateTime($value): ?string {
+        if ($value === null || $value === '') return null;
+        $ts = strtotime((string)$value);
+        return $ts === false ? null : date('Y-m-d H:i:s', $ts);
     }
 
     /**
@@ -311,8 +336,12 @@ class SyncController {
         }
 
         if (!empty($fields)) {
-            $sql = "INSERT INTO user_preferences (user_id, " . implode(', ', array_keys($prefs)) . ")
-                    VALUES (:user_id, " . implode(', ', array_map(fn($k) => ":$k", array_keys($prefs))) . ")
+            // Colonnes = champs autorisés uniquement. Avant : les clés brutes du
+            // JSON étaient concaténées dans le SQL (injection possible) et toute
+            // clé inconnue faisait planter la requête (paramètres manquants).
+            $columns = array_values(array_diff(array_keys($values), ['user_id']));
+            $sql = "INSERT INTO user_preferences (user_id, " . implode(', ', $columns) . ")
+                    VALUES (:user_id, " . implode(', ', array_map(fn($k) => ":$k", $columns)) . ")
                     ON DUPLICATE KEY UPDATE " . implode(', ', $fields);
 
             $stmt = $db->prepare($sql);
@@ -323,22 +352,29 @@ class SyncController {
     /**
      * Logger une sync
      */
-    private function logSync(string $userId, string $type, int $items, int $conflicts, int $duration, string $status) {
-        $db = Database::getInstance()->getConnection();
+    private function logSync(string $userId, string $type, int $items, int $conflicts, int $duration, string $status, ?string $errorMessage = null) {
+        // L'historique est de l'observabilité : son échec ne doit pas transformer
+        // une sync réussie en 500 (le client effacerait alors son local au pull).
+        try {
+            $db = Database::getInstance()->getConnection();
 
-        $stmt = $db->prepare(
-            "INSERT INTO sync_history (user_id, sync_type, items_synced, items_conflicts, duration_ms, status)
-             VALUES (:user_id, :sync_type, :items_synced, :items_conflicts, :duration_ms, :status)"
-        );
+            $stmt = $db->prepare(
+                "INSERT INTO sync_history (user_id, sync_type, items_synced, items_conflicts, duration_ms, status, error_message)
+                 VALUES (:user_id, :sync_type, :items_synced, :items_conflicts, :duration_ms, :status, :error_message)"
+            );
 
-        $stmt->execute([
-            'user_id' => $userId,
-            'sync_type' => $type,
-            'items_synced' => $items,
-            'items_conflicts' => $conflicts,
-            'duration_ms' => $duration,
-            'status' => $status
-        ]);
+            $stmt->execute([
+                'user_id' => $userId,
+                'sync_type' => $type,
+                'items_synced' => $items,
+                'items_conflicts' => $conflicts,
+                'duration_ms' => $duration,
+                'status' => $status,
+                'error_message' => $errorMessage
+            ]);
+        } catch (\Throwable $e) {
+            Logger::exception('sync.history', $e, ['sync_type' => $type, 'status' => $status]);
+        }
     }
 
     /**

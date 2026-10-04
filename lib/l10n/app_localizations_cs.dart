@@ -1353,4 +1353,137 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get genericBrand => 'Obecná';
+
+  @override
+  String get stockSearchHint => 'Hledat (značka, barva, umístění…)';
+
+  @override
+  String get stockMoreActions => 'Další akce';
+
+  @override
+  String get exportExcel => 'Exportovat do Excelu';
+
+  @override
+  String get exportFailed => 'Export se nezdařil';
+
+  @override
+  String get exportShareSubject => 'Moje zásoby filamentu (Spool Master)';
+
+  @override
+  String get exportColorHex => 'Kód barvy';
+
+  @override
+  String get exportRemainingPercent => 'Zbývá (%)';
+
+  @override
+  String get exportPricePerKg => 'Cena / kg';
+
+  @override
+  String get exportAddedDate => 'Datum přidání';
+
+  @override
+  String get exportOrdered => 'Objednáno';
+
+  @override
+  String get exportDate => 'Datum';
+
+  @override
+  String get exportGrams => 'Gramy';
+
+  @override
+  String get exportCost => 'Náklady';
+
+  @override
+  String get importSpools => 'Importovat (CSV / Excel)';
+
+  @override
+  String get importConfirmTitle => 'Importovat cívky';
+
+  @override
+  String importConfirmMessage(int count, int duplicates, int skipped) {
+    return 'Cívky k přidání: $count\nJiž na skladě (přeskočeno): $duplicates\nNečitelné řádky (přeskočeno): $skipped';
+  }
+
+  @override
+  String get importAction => 'Importovat';
+
+  @override
+  String get importNothingFound =>
+      'Nebyly rozpoznány žádné cívky. Soubor musí obsahovat alespoň sloupce Materiál a Hmotnost (jako export do Excelu z aplikace).';
+
+  @override
+  String importDone(int count) {
+    return 'Importované cívky: $count';
+  }
+
+  @override
+  String get importFailed => 'Nečitelný soubor';
+
+  @override
+  String get location => 'Umístění';
+
+  @override
+  String get locationHint => 'Např. police A, sušicí box 2';
+
+  @override
+  String get notes => 'Poznámky';
+
+  @override
+  String get notesHint => 'Např. před použitím vysušit';
+
+  @override
+  String get printCostTitle => 'Cena tisku';
+
+  @override
+  String get printCostGrams => 'Použitý filament (g)';
+
+  @override
+  String printCostResult(String cost) {
+    return 'Cena materiálu: $cost';
+  }
+
+  @override
+  String printCostPerKg(String price) {
+    return 'Cena za kg: $price';
+  }
+
+  @override
+  String get printCostNoPrice => 'Pro výpočet nákladů přidejte cenu cívky.';
+
+  @override
+  String get printCostDeduct => 'Odečíst ze skladu';
+
+  @override
+  String printCostDeducted(String grams) {
+    return '$grams g odečteno ze skladu';
+  }
+
+  @override
+  String get consumptionTitle => 'Spotřeba';
+
+  @override
+  String get consumptionLast30Days => 'Posledních 30 dní';
+
+  @override
+  String get consumptionThisMonth => 'Tento měsíc';
+
+  @override
+  String get consumptionByMaterial => 'Podle materiálu (30 dní)';
+
+  @override
+  String get consumptionMonthly => 'Posledních 6 měsíců';
+
+  @override
+  String get consumptionEmpty =>
+      'Zatím nebyla zaznamenána žádná spotřeba. Zobrazí se, jakmile aktualizujete zbývající hmotnost cívky nebo použijete kalkulačku ceny tisku.';
+
+  @override
+  String get shareShoppingList => 'Sdílet seznam';
+
+  @override
+  String get nfcBlankTagTitle => 'Prázdná značka';
+
+  @override
+  String get nfcBlankTagDesc =>
+      'Tato značka neobsahuje žádná data cívky. Přidejte cívku ručně nebo značku zapište v aplikaci.';
 }

@@ -1334,4 +1334,137 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get genericBrand => '汎用';
+
+  @override
+  String get stockSearchHint => '検索(ブランド、色、保管場所…)';
+
+  @override
+  String get stockMoreActions => 'その他の操作';
+
+  @override
+  String get exportExcel => 'Excelにエクスポート';
+
+  @override
+  String get exportFailed => 'エクスポートに失敗しました';
+
+  @override
+  String get exportShareSubject => '私のフィラメント在庫(Spool Master)';
+
+  @override
+  String get exportColorHex => 'カラーコード';
+
+  @override
+  String get exportRemainingPercent => '残り(%)';
+
+  @override
+  String get exportPricePerKg => '価格 / kg';
+
+  @override
+  String get exportAddedDate => '追加日';
+
+  @override
+  String get exportOrdered => '注文済み';
+
+  @override
+  String get exportDate => '日付';
+
+  @override
+  String get exportGrams => 'グラム';
+
+  @override
+  String get exportCost => 'コスト';
+
+  @override
+  String get importSpools => 'インポート(CSV / Excel)';
+
+  @override
+  String get importConfirmTitle => 'スプールをインポート';
+
+  @override
+  String importConfirmMessage(int count, int duplicates, int skipped) {
+    return '追加するスプール:$count\n既に在庫あり(スキップ):$duplicates\n読み取れない行(スキップ):$skipped';
+  }
+
+  @override
+  String get importAction => 'インポート';
+
+  @override
+  String get importNothingFound =>
+      'スプールが認識されませんでした。ファイルには少なくとも素材と重量の列が必要です(アプリのExcelエクスポートと同様)。';
+
+  @override
+  String importDone(int count) {
+    return 'インポートしたスプール:$count';
+  }
+
+  @override
+  String get importFailed => 'ファイルを読み取れません';
+
+  @override
+  String get location => '保管場所';
+
+  @override
+  String get locationHint => '例:棚A、ドライボックス2';
+
+  @override
+  String get notes => 'メモ';
+
+  @override
+  String get notesHint => '例:使用前に乾燥させる';
+
+  @override
+  String get printCostTitle => '印刷コスト';
+
+  @override
+  String get printCostGrams => '使用フィラメント(g)';
+
+  @override
+  String printCostResult(String cost) {
+    return '材料費:$cost';
+  }
+
+  @override
+  String printCostPerKg(String price) {
+    return 'kgあたりの価格:$price';
+  }
+
+  @override
+  String get printCostNoPrice => 'コストを計算するには、スプールの価格を追加してください。';
+
+  @override
+  String get printCostDeduct => '在庫から差し引く';
+
+  @override
+  String printCostDeducted(String grams) {
+    return '在庫から$grams g差し引きました';
+  }
+
+  @override
+  String get consumptionTitle => '消費量';
+
+  @override
+  String get consumptionLast30Days => '過去30日間';
+
+  @override
+  String get consumptionThisMonth => '今月';
+
+  @override
+  String get consumptionByMaterial => '素材別(30日間)';
+
+  @override
+  String get consumptionMonthly => '過去6か月';
+
+  @override
+  String get consumptionEmpty =>
+      'まだ消費量が記録されていません。スプールの残り重量を更新するか、印刷コスト計算機を使うと表示されます。';
+
+  @override
+  String get shareShoppingList => 'リストを共有';
+
+  @override
+  String get nfcBlankTagTitle => '空のタグ';
+
+  @override
+  String get nfcBlankTagDesc =>
+      'このタグにはスプールのデータがありません。スプールを手動で追加するか、アプリからタグに書き込んでください。';
 }

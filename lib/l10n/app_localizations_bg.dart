@@ -1360,4 +1360,138 @@ class AppLocalizationsBg extends AppLocalizations {
 
   @override
   String get genericBrand => 'Генерична';
+
+  @override
+  String get stockSearchHint => 'Търсене (марка, цвят, място…)';
+
+  @override
+  String get stockMoreActions => 'Още действия';
+
+  @override
+  String get exportExcel => 'Експорт към Excel';
+
+  @override
+  String get exportFailed => 'Експортът е неуспешен';
+
+  @override
+  String get exportShareSubject => 'Моята наличност от филамент (Spool Master)';
+
+  @override
+  String get exportColorHex => 'Код на цвета';
+
+  @override
+  String get exportRemainingPercent => 'Оставащо (%)';
+
+  @override
+  String get exportPricePerKg => 'Цена / кг';
+
+  @override
+  String get exportAddedDate => 'Дата на добавяне';
+
+  @override
+  String get exportOrdered => 'Поръчано';
+
+  @override
+  String get exportDate => 'Дата';
+
+  @override
+  String get exportGrams => 'Грамове';
+
+  @override
+  String get exportCost => 'Разход';
+
+  @override
+  String get importSpools => 'Импорт (CSV / Excel)';
+
+  @override
+  String get importConfirmTitle => 'Импорт на макари';
+
+  @override
+  String importConfirmMessage(int count, int duplicates, int skipped) {
+    return 'Макари за добавяне: $count\nВече в наличност (пропуснати): $duplicates\nНечетими редове (пропуснати): $skipped';
+  }
+
+  @override
+  String get importAction => 'Импорт';
+
+  @override
+  String get importNothingFound =>
+      'Не са разпознати макари. Файлът трябва да съдържа поне колони Материал и Тегло (като Excel експорта на приложението).';
+
+  @override
+  String importDone(int count) {
+    return 'Импортирани макари: $count';
+  }
+
+  @override
+  String get importFailed => 'Нечетим файл';
+
+  @override
+  String get location => 'Място';
+
+  @override
+  String get locationHint => 'напр. Рафт A, сухо чекмедже 2';
+
+  @override
+  String get notes => 'Бележки';
+
+  @override
+  String get notesHint => 'напр. да се изсуши преди употреба';
+
+  @override
+  String get printCostTitle => 'Цена на печат';
+
+  @override
+  String get printCostGrams => 'Използван филамент (г)';
+
+  @override
+  String printCostResult(String cost) {
+    return 'Цена на материала: $cost';
+  }
+
+  @override
+  String printCostPerKg(String price) {
+    return 'Цена за кг: $price';
+  }
+
+  @override
+  String get printCostNoPrice =>
+      'Добавете цената на макарата, за да изчислите разходите.';
+
+  @override
+  String get printCostDeduct => 'Приспадане от наличността';
+
+  @override
+  String printCostDeducted(String grams) {
+    return '$grams г приспаднати от наличността';
+  }
+
+  @override
+  String get consumptionTitle => 'Разход';
+
+  @override
+  String get consumptionLast30Days => 'Последните 30 дни';
+
+  @override
+  String get consumptionThisMonth => 'Този месец';
+
+  @override
+  String get consumptionByMaterial => 'По материал (30 дни)';
+
+  @override
+  String get consumptionMonthly => 'Последните 6 месеца';
+
+  @override
+  String get consumptionEmpty =>
+      'Все още няма записан разход. Показва се щом актуализирате оставащото тегло на макара или използвате калкулатора за цена на печат.';
+
+  @override
+  String get shareShoppingList => 'Споделяне на списъка';
+
+  @override
+  String get nfcBlankTagTitle => 'Празен таг';
+
+  @override
+  String get nfcBlankTagDesc =>
+      'Този таг не съдържа данни за макара. Добавете макарата ръчно или запишете тага от приложението.';
 }

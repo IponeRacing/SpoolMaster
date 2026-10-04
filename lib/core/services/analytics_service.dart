@@ -104,6 +104,9 @@ class AnalyticsService {
     String eventType, {
     Map<String, dynamic>? eventData,
   }) async {
+    // Tests E2E (--dart-define=E2E_MODE=true) : ne pas polluer les
+    // statistiques de production (rapport journalier).
+    if (ApiConfig.e2eMode) return;
     try {
       final devicePlatform = Platform.isIOS ? 'ios' : 'android';
       final appVersion = _cachedAppVersion ?? 'unknown';
@@ -121,6 +124,7 @@ class AnalyticsService {
       final response = await http.post(
         Uri.parse('${ApiConfig.baseUrl}${ApiConfig.logEvent}'),
         headers: {
+          ...ApiConfig.commonHeaders,
           'Content-Type': 'application/json',
           if (token != null) 'Authorization': 'Bearer $token',
         },
@@ -177,28 +181,30 @@ class AnalyticsService {
         'nfc_mode': nfcMode ?? '',
         // Écran d'où le scan a été lancé (home / add_spool / stock_update /
         // wishlist) — clé pour attribuer un échec à un parcours UI précis.
-        if (entryPoint != null) 'entry_point': entryPoint,
+        'entry_point': ?entryPoint,
         'error_message': errorMessage ?? '',
         // Code d'erreur normalisé (taxonomie) → agrégation propre, sans parser
         // le message libre. Ex: TAG_NOT_DETECTED, NFC_DISABLED, TAG_MOVED…
-        if (errorCode != null) 'error_code': errorCode,
+        'error_code': ?errorCode,
         // Télémétrie de lecture (renseignée par le natif via NfcScanDiagnostics) :
         // read_attempts>1 = un retry a sauvé le scan ; tag_tech = techno du chip.
         if (NfcScanDiagnostics.readAttempts != null) 'read_attempts': NfcScanDiagnostics.readAttempts,
         if (NfcScanDiagnostics.tagTech != null) 'tag_tech': NfcScanDiagnostics.tagTech,
         if (NfcScanDiagnostics.sessionRetries != null) 'session_retries': NfcScanDiagnostics.sessionRetries,
         if (NfcScanDiagnostics.detectDelayMs != null) 'detect_delay_ms': NfcScanDiagnostics.detectDelayMs,
-        if (rawTagData != null) 'raw_tag_data': rawTagData,
-        if (rawBytesCount != null) 'raw_bytes_count': rawBytesCount,
-        if (sessionDurationMs != null) 'session_duration_ms': sessionDurationMs,
-        if (tagWasDetected != null) 'tag_was_detected': tagWasDetected,
-        if (weight != null) 'weight': weight,
+        'native_error_code': ?NfcScanDiagnostics.nativeErrorCode,
+        'error_detail': ?NfcScanDiagnostics.errorDetail,
+        'raw_tag_data': ?rawTagData,
+        'raw_bytes_count': ?rawBytesCount,
+        'session_duration_ms': ?sessionDurationMs,
+        'tag_was_detected': ?tagWasDetected,
+        'weight': ?weight,
         if (batchNumber != null && batchNumber.isNotEmpty) 'batch_number': batchNumber,
-        if (tagFormat != null) 'tag_format': tagFormat,
-        if (extruderTempMin != null) 'extruder_temp_min': extruderTempMin,
-        if (extruderTempMax != null) 'extruder_temp_max': extruderTempMax,
-        if (bedTempMin != null) 'bed_temp_min': bedTempMin,
-        if (bedTempMax != null) 'bed_temp_max': bedTempMax,
+        'tag_format': ?tagFormat,
+        'extruder_temp_min': ?extruderTempMin,
+        'extruder_temp_max': ?extruderTempMax,
+        'bed_temp_min': ?bedTempMin,
+        'bed_temp_max': ?bedTempMax,
         'device_model': _cachedDeviceModel ?? '',
         'os_version': _cachedOsVersion ?? '',
       },

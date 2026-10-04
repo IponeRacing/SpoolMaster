@@ -503,5 +503,92 @@
         "type": "String"
       }
     }
+  },
+  "stockSearchHint": "Rechercher (marque, couleur, emplacement…)",
+  "stockMoreActions": "Plus d'actions",
+  "exportExcel": "Exporter en Excel",
+  "exportFailed": "Export impossible",
+  "exportShareSubject": "Mon stock de filaments (Spool Master)",
+  "exportColorHex": "Code couleur",
+  "exportRemainingPercent": "Restant (%)",
+  "exportPricePerKg": "Prix / kg",
+  "exportAddedDate": "Date d'ajout",
+  "exportOrdered": "Commandé",
+  "exportDate": "Date",
+  "exportGrams": "Grammes",
+  "exportCost": "Coût",
+  "importSpools": "Importer (CSV / Excel)",
+  "importConfirmTitle": "Importer des bobines",
+  "importConfirmMessage": "Bobines à ajouter : {count}\nDéjà en stock (ignorées) : {duplicates}\nLignes illisibles (ignorées) : {skipped}",
+  "@importConfirmMessage": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "duplicates": {
+        "type": "int"
+      },
+      "skipped": {
+        "type": "int"
+      }
+    }
+  },
+  "importAction": "Importer",
+  "importNothingFound": "Aucune bobine reconnue. Le fichier doit contenir au moins les colonnes Matériau et Poids (comme l'export Excel de l'app).",
+  "importDone": "Bobines importées : {count}",
+  "@importDone": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "importFailed": "Fichier illisible",
+  "location": "Emplacement",
+  "locationHint": "Ex : Étagère A, boîte sèche 2",
+  "notes": "Notes",
+  "notesHint": "Ex : à sécher avant utilisation",
+  "printCostTitle": "Coût d'une impression",
+  "printCostGrams": "Filament utilisé (g)",
+  "printCostResult": "Coût matière : {cost}",
+  "@printCostResult": {
+    "placeholders": {
+      "cost": {
+        "type": "String"
+      }
+    }
+  },
+  "printCostPerKg": "Prix au kg : {price}",
+  "@printCostPerKg": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "printCostNoPrice": "Ajoutez le prix de la bobine pour calculer le coût.",
+  "printCostDeduct": "Déduire du stock",
+  "printCostDeducted": "{grams} g déduits du stock",
+  "@printCostDeducted": {
+    "placeholders": {
+      "grams": {
+        "type": "String"
+      }
+    }
+  },
+  "consumptionTitle": "Consommation",
+  "consumptionLast30Days": "30 derniers jours",
+  "consumptionThisMonth": "Ce mois-ci",
+  "consumptionByMaterial": "Par matériau (30 jours)",
+  "consumptionMonthly": "6 derniers mois",
+  "consumptionEmpty": "Aucune consommation enregistrée pour l'instant. Elle s'affiche dès que vous mettez à jour le poids restant d'une bobine ou utilisez le calculateur de coût.",
+  "shareShoppingList": "Partager la liste",
+  "nfcBlankTagTitle": "Tag vierge",
+  "nfcBlankTagDesc": "Ce tag ne contient aucune donnée de bobine. Ajoutez la bobine manuellement ou écrivez ce tag depuis l'app.",
+  "@nfcBlankTagTitle": {
+    "description": "Titre affiché quand le tag scanné est un NTAG vierge (aucune donnée de bobine)"
+  },
+  "@nfcBlankTagDesc": {
+    "description": "Explication + action quand le tag scanné est vierge"
   }
 }

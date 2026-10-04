@@ -1358,4 +1358,137 @@ class AppLocalizationsHr extends AppLocalizations {
 
   @override
   String get genericBrand => 'Generička';
+
+  @override
+  String get stockSearchHint => 'Traži (marka, boja, lokacija…)';
+
+  @override
+  String get stockMoreActions => 'Više radnji';
+
+  @override
+  String get exportExcel => 'Izvezi u Excel';
+
+  @override
+  String get exportFailed => 'Izvoz nije uspio';
+
+  @override
+  String get exportShareSubject => 'Moja zaliha filamenta (Spool Master)';
+
+  @override
+  String get exportColorHex => 'Kod boje';
+
+  @override
+  String get exportRemainingPercent => 'Preostalo (%)';
+
+  @override
+  String get exportPricePerKg => 'Cijena / kg';
+
+  @override
+  String get exportAddedDate => 'Datum dodavanja';
+
+  @override
+  String get exportOrdered => 'Naručeno';
+
+  @override
+  String get exportDate => 'Datum';
+
+  @override
+  String get exportGrams => 'Grami';
+
+  @override
+  String get exportCost => 'Trošak';
+
+  @override
+  String get importSpools => 'Uvezi (CSV / Excel)';
+
+  @override
+  String get importConfirmTitle => 'Uvoz špula';
+
+  @override
+  String importConfirmMessage(int count, int duplicates, int skipped) {
+    return 'Špule za dodavanje: $count\nVeć na zalihi (preskočene): $duplicates\nNečitljivi retci (preskočeni): $skipped';
+  }
+
+  @override
+  String get importAction => 'Uvezi';
+
+  @override
+  String get importNothingFound =>
+      'Nijedna špula nije prepoznata. Datoteka mora sadržavati barem stupce Materijal i Težina (kao Excel izvoz aplikacije).';
+
+  @override
+  String importDone(int count) {
+    return 'Uvezeno špula: $count';
+  }
+
+  @override
+  String get importFailed => 'Nečitljiva datoteka';
+
+  @override
+  String get location => 'Lokacija';
+
+  @override
+  String get locationHint => 'Npr. Polica A, suha kutija 2';
+
+  @override
+  String get notes => 'Bilješke';
+
+  @override
+  String get notesHint => 'Npr. osušiti prije uporabe';
+
+  @override
+  String get printCostTitle => 'Trošak ispisa';
+
+  @override
+  String get printCostGrams => 'Utrošeni filament (g)';
+
+  @override
+  String printCostResult(String cost) {
+    return 'Trošak materijala: $cost';
+  }
+
+  @override
+  String printCostPerKg(String price) {
+    return 'Cijena po kg: $price';
+  }
+
+  @override
+  String get printCostNoPrice => 'Dodajte cijenu špule za izračun troška.';
+
+  @override
+  String get printCostDeduct => 'Odbij sa zalihe';
+
+  @override
+  String printCostDeducted(String grams) {
+    return '$grams g odbijeno sa zalihe';
+  }
+
+  @override
+  String get consumptionTitle => 'Potrošnja';
+
+  @override
+  String get consumptionLast30Days => 'Zadnjih 30 dana';
+
+  @override
+  String get consumptionThisMonth => 'Ovaj mjesec';
+
+  @override
+  String get consumptionByMaterial => 'Po materijalu (30 dana)';
+
+  @override
+  String get consumptionMonthly => 'Zadnjih 6 mjeseci';
+
+  @override
+  String get consumptionEmpty =>
+      'Potrošnja još nije zabilježena. Prikazat će se čim ažurirate preostalu težinu špule ili upotrijebite kalkulator troška ispisa.';
+
+  @override
+  String get shareShoppingList => 'Podijeli popis';
+
+  @override
+  String get nfcBlankTagTitle => 'Prazna oznaka';
+
+  @override
+  String get nfcBlankTagDesc =>
+      'Ova oznaka ne sadrži podatke o kolutu. Dodajte kolut ručno ili zapišite oznaku u aplikaciji.';
 }

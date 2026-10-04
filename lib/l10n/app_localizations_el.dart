@@ -1366,4 +1366,138 @@ class AppLocalizationsEl extends AppLocalizations {
 
   @override
   String get genericBrand => 'Γενικό';
+
+  @override
+  String get stockSearchHint => 'Αναζήτηση (μάρκα, χρώμα, θέση…)';
+
+  @override
+  String get stockMoreActions => 'Περισσότερες ενέργειες';
+
+  @override
+  String get exportExcel => 'Εξαγωγή σε Excel';
+
+  @override
+  String get exportFailed => 'Η εξαγωγή απέτυχε';
+
+  @override
+  String get exportShareSubject => 'Το απόθεμα νήματός μου (Spool Master)';
+
+  @override
+  String get exportColorHex => 'Κωδικός χρώματος';
+
+  @override
+  String get exportRemainingPercent => 'Υπόλοιπο (%)';
+
+  @override
+  String get exportPricePerKg => 'Τιμή / kg';
+
+  @override
+  String get exportAddedDate => 'Ημερομηνία προσθήκης';
+
+  @override
+  String get exportOrdered => 'Παραγγέλθηκε';
+
+  @override
+  String get exportDate => 'Ημερομηνία';
+
+  @override
+  String get exportGrams => 'Γραμμάρια';
+
+  @override
+  String get exportCost => 'Κόστος';
+
+  @override
+  String get importSpools => 'Εισαγωγή (CSV / Excel)';
+
+  @override
+  String get importConfirmTitle => 'Εισαγωγή καρουλιών';
+
+  @override
+  String importConfirmMessage(int count, int duplicates, int skipped) {
+    return 'Καρούλια προς προσθήκη: $count\nΉδη σε απόθεμα (παραλείφθηκαν): $duplicates\nΜη αναγνώσιμες γραμμές (παραλείφθηκαν): $skipped';
+  }
+
+  @override
+  String get importAction => 'Εισαγωγή';
+
+  @override
+  String get importNothingFound =>
+      'Δεν αναγνωρίστηκε κανένα καρούλι. Το αρχείο πρέπει να περιέχει τουλάχιστον τις στήλες Υλικό και Βάρος (όπως η εξαγωγή Excel της εφαρμογής).';
+
+  @override
+  String importDone(int count) {
+    return 'Καρούλια που εισήχθησαν: $count';
+  }
+
+  @override
+  String get importFailed => 'Μη αναγνώσιμο αρχείο';
+
+  @override
+  String get location => 'Θέση';
+
+  @override
+  String get locationHint => 'Π.χ. Ράφι Α, στεγνό κουτί 2';
+
+  @override
+  String get notes => 'Σημειώσεις';
+
+  @override
+  String get notesHint => 'Π.χ. να στεγνώσει πριν τη χρήση';
+
+  @override
+  String get printCostTitle => 'Κόστος εκτύπωσης';
+
+  @override
+  String get printCostGrams => 'Νήμα που χρησιμοποιήθηκε (g)';
+
+  @override
+  String printCostResult(String cost) {
+    return 'Κόστος υλικού: $cost';
+  }
+
+  @override
+  String printCostPerKg(String price) {
+    return 'Τιμή ανά kg: $price';
+  }
+
+  @override
+  String get printCostNoPrice =>
+      'Προσθέστε την τιμή του καρουλιού για να υπολογιστεί το κόστος.';
+
+  @override
+  String get printCostDeduct => 'Αφαίρεση από το απόθεμα';
+
+  @override
+  String printCostDeducted(String grams) {
+    return '$grams g αφαιρέθηκαν από το απόθεμα';
+  }
+
+  @override
+  String get consumptionTitle => 'Κατανάλωση';
+
+  @override
+  String get consumptionLast30Days => 'Τελευταίες 30 ημέρες';
+
+  @override
+  String get consumptionThisMonth => 'Αυτόν τον μήνα';
+
+  @override
+  String get consumptionByMaterial => 'Ανά υλικό (30 ημέρες)';
+
+  @override
+  String get consumptionMonthly => 'Τελευταίοι 6 μήνες';
+
+  @override
+  String get consumptionEmpty =>
+      'Δεν έχει καταγραφεί ακόμη κατανάλωση. Εμφανίζεται μόλις ενημερώσετε το υπολειπόμενο βάρος ενός καρουλιού ή χρησιμοποιήσετε τον υπολογιστή κόστους.';
+
+  @override
+  String get shareShoppingList => 'Κοινοποίηση λίστας';
+
+  @override
+  String get nfcBlankTagTitle => 'Κενή ετικέτα';
+
+  @override
+  String get nfcBlankTagDesc =>
+      'Αυτή η ετικέτα δεν περιέχει δεδομένα καρουλιού. Προσθέστε το καρούλι χειροκίνητα ή γράψτε την ετικέτα από την εφαρμογή.';
 }

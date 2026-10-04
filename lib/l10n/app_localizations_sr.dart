@@ -1358,4 +1358,138 @@ class AppLocalizationsSr extends AppLocalizations {
 
   @override
   String get genericBrand => 'Генерички';
+
+  @override
+  String get stockSearchHint => 'Претрага (бренд, боја, локација…)';
+
+  @override
+  String get stockMoreActions => 'Више радњи';
+
+  @override
+  String get exportExcel => 'Извези у Excel';
+
+  @override
+  String get exportFailed => 'Извоз није успео';
+
+  @override
+  String get exportShareSubject => 'Моје залихе филамента (Spool Master)';
+
+  @override
+  String get exportColorHex => 'Код боје';
+
+  @override
+  String get exportRemainingPercent => 'Преостало (%)';
+
+  @override
+  String get exportPricePerKg => 'Цена / kg';
+
+  @override
+  String get exportAddedDate => 'Датум додавања';
+
+  @override
+  String get exportOrdered => 'Наручено';
+
+  @override
+  String get exportDate => 'Датум';
+
+  @override
+  String get exportGrams => 'Грами';
+
+  @override
+  String get exportCost => 'Трошак';
+
+  @override
+  String get importSpools => 'Увези (CSV / Excel)';
+
+  @override
+  String get importConfirmTitle => 'Увоз калемова';
+
+  @override
+  String importConfirmMessage(int count, int duplicates, int skipped) {
+    return 'Калемова за додавање: $count\nВећ на залихи (прескочено): $duplicates\nНечитљиви редови (прескочено): $skipped';
+  }
+
+  @override
+  String get importAction => 'Увези';
+
+  @override
+  String get importNothingFound =>
+      'Ниједан калем није препознат. Датотека мора садржати бар колоне Материјал и Тежина (као Excel извоз из апликације).';
+
+  @override
+  String importDone(int count) {
+    return 'Увезено калемова: $count';
+  }
+
+  @override
+  String get importFailed => 'Нечитљива датотека';
+
+  @override
+  String get location => 'Локација';
+
+  @override
+  String get locationHint => 'Нпр.: полица A, суха кутија 2';
+
+  @override
+  String get notes => 'Напомене';
+
+  @override
+  String get notesHint => 'Нпр.: осушити пре употребе';
+
+  @override
+  String get printCostTitle => 'Трошак штампе';
+
+  @override
+  String get printCostGrams => 'Утрошен филамент (g)';
+
+  @override
+  String printCostResult(String cost) {
+    return 'Трошак материјала: $cost';
+  }
+
+  @override
+  String printCostPerKg(String price) {
+    return 'Цена по kg: $price';
+  }
+
+  @override
+  String get printCostNoPrice =>
+      'Додајте цену калема да бисте израчунали трошак.';
+
+  @override
+  String get printCostDeduct => 'Одузми са залиха';
+
+  @override
+  String printCostDeducted(String grams) {
+    return '$grams g одузето са залиха';
+  }
+
+  @override
+  String get consumptionTitle => 'Потрошња';
+
+  @override
+  String get consumptionLast30Days => 'Последњих 30 дана';
+
+  @override
+  String get consumptionThisMonth => 'Овог месеца';
+
+  @override
+  String get consumptionByMaterial => 'По материјалу (30 дана)';
+
+  @override
+  String get consumptionMonthly => 'Последњих 6 месеци';
+
+  @override
+  String get consumptionEmpty =>
+      'Потрошња још није забележена. Приказује се чим ажурирате преосталу тежину калема или употребите калкулатор трошкова.';
+
+  @override
+  String get shareShoppingList => 'Подели листу';
+
+  @override
+  String get nfcBlankTagTitle => 'Празна ознака';
+
+  @override
+  String get nfcBlankTagDesc =>
+      'Ова ознака не садржи податке о калему. Додајте калем ручно или упишите ознаку у апликацији.';
 }

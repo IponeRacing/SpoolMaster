@@ -1354,4 +1354,137 @@ class AppLocalizationsTh extends AppLocalizations {
 
   @override
   String get genericBrand => 'ทั่วไป';
+
+  @override
+  String get stockSearchHint => 'ค้นหา (ยี่ห้อ, สี, ตำแหน่ง…)';
+
+  @override
+  String get stockMoreActions => 'การดำเนินการเพิ่มเติม';
+
+  @override
+  String get exportExcel => 'ส่งออกเป็น Excel';
+
+  @override
+  String get exportFailed => 'ส่งออกไม่สำเร็จ';
+
+  @override
+  String get exportShareSubject => 'สต็อกเส้นพลาสติกของฉัน (Spool Master)';
+
+  @override
+  String get exportColorHex => 'รหัสสี';
+
+  @override
+  String get exportRemainingPercent => 'คงเหลือ (%)';
+
+  @override
+  String get exportPricePerKg => 'ราคา / กก.';
+
+  @override
+  String get exportAddedDate => 'วันที่เพิ่ม';
+
+  @override
+  String get exportOrdered => 'สั่งซื้อแล้ว';
+
+  @override
+  String get exportDate => 'วันที่';
+
+  @override
+  String get exportGrams => 'กรัม';
+
+  @override
+  String get exportCost => 'ต้นทุน';
+
+  @override
+  String get importSpools => 'นำเข้า (CSV / Excel)';
+
+  @override
+  String get importConfirmTitle => 'นำเข้าม้วนใย';
+
+  @override
+  String importConfirmMessage(int count, int duplicates, int skipped) {
+    return 'ม้วนที่จะเพิ่ม: $count\nมีในสต็อกแล้ว (ข้าม): $duplicates\nแถวที่อ่านไม่ได้ (ข้าม): $skipped';
+  }
+
+  @override
+  String get importAction => 'นำเข้า';
+
+  @override
+  String get importNothingFound =>
+      'ไม่พบม้วนที่รู้จัก ไฟล์ต้องมีอย่างน้อยคอลัมน์วัสดุและน้ำหนัก (เหมือนการส่งออก Excel ของแอป)';
+
+  @override
+  String importDone(int count) {
+    return 'นำเข้าม้วนแล้ว: $count';
+  }
+
+  @override
+  String get importFailed => 'อ่านไฟล์ไม่ได้';
+
+  @override
+  String get location => 'ตำแหน่ง';
+
+  @override
+  String get locationHint => 'เช่น ชั้น A, กล่องกันชื้น 2';
+
+  @override
+  String get notes => 'บันทึก';
+
+  @override
+  String get notesHint => 'เช่น ต้องอบก่อนใช้งาน';
+
+  @override
+  String get printCostTitle => 'ต้นทุนการพิมพ์';
+
+  @override
+  String get printCostGrams => 'เส้นพลาสติกที่ใช้ (g)';
+
+  @override
+  String printCostResult(String cost) {
+    return 'ต้นทุนวัสดุ: $cost';
+  }
+
+  @override
+  String printCostPerKg(String price) {
+    return 'ราคาต่อกก.: $price';
+  }
+
+  @override
+  String get printCostNoPrice => 'เพิ่มราคาม้วนเพื่อคำนวณต้นทุน';
+
+  @override
+  String get printCostDeduct => 'หักออกจากสต็อก';
+
+  @override
+  String printCostDeducted(String grams) {
+    return 'หักออกจากสต็อก $grams g แล้ว';
+  }
+
+  @override
+  String get consumptionTitle => 'การใช้งาน';
+
+  @override
+  String get consumptionLast30Days => '30 วันที่ผ่านมา';
+
+  @override
+  String get consumptionThisMonth => 'เดือนนี้';
+
+  @override
+  String get consumptionByMaterial => 'ตามวัสดุ (30 วัน)';
+
+  @override
+  String get consumptionMonthly => '6 เดือนที่ผ่านมา';
+
+  @override
+  String get consumptionEmpty =>
+      'ยังไม่มีการบันทึกการใช้งาน จะแสดงเมื่อคุณอัปเดตน้ำหนักที่เหลือของม้วน หรือใช้เครื่องคำนวณต้นทุน';
+
+  @override
+  String get shareShoppingList => 'แชร์รายการ';
+
+  @override
+  String get nfcBlankTagTitle => 'แท็กว่าง';
+
+  @override
+  String get nfcBlankTagDesc =>
+      'แท็กนี้ไม่มีข้อมูลม้วนเส้น เพิ่มม้วนด้วยตนเองหรือเขียนแท็กนี้จากแอป';
 }

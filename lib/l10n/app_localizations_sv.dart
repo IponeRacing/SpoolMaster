@@ -1357,4 +1357,138 @@ class AppLocalizationsSv extends AppLocalizations {
 
   @override
   String get genericBrand => 'Generisk';
+
+  @override
+  String get stockSearchHint => 'Sök (märke, färg, plats…)';
+
+  @override
+  String get stockMoreActions => 'Fler åtgärder';
+
+  @override
+  String get exportExcel => 'Exportera till Excel';
+
+  @override
+  String get exportFailed => 'Exporten misslyckades';
+
+  @override
+  String get exportShareSubject => 'Mitt filamentlager (Spool Master)';
+
+  @override
+  String get exportColorHex => 'Färgkod';
+
+  @override
+  String get exportRemainingPercent => 'Kvar (%)';
+
+  @override
+  String get exportPricePerKg => 'Pris / kg';
+
+  @override
+  String get exportAddedDate => 'Tillagd den';
+
+  @override
+  String get exportOrdered => 'Beställd';
+
+  @override
+  String get exportDate => 'Datum';
+
+  @override
+  String get exportGrams => 'Gram';
+
+  @override
+  String get exportCost => 'Kostnad';
+
+  @override
+  String get importSpools => 'Importera (CSV / Excel)';
+
+  @override
+  String get importConfirmTitle => 'Importera spolar';
+
+  @override
+  String importConfirmMessage(int count, int duplicates, int skipped) {
+    return 'Spolar att lägga till: $count\nRedan i lager (hoppas över): $duplicates\nOläsliga rader (hoppas över): $skipped';
+  }
+
+  @override
+  String get importAction => 'Importera';
+
+  @override
+  String get importNothingFound =>
+      'Inga spolar hittades. Filen måste innehålla minst kolumnerna Material och Vikt (som appens Excel-export).';
+
+  @override
+  String importDone(int count) {
+    return 'Importerade spolar: $count';
+  }
+
+  @override
+  String get importFailed => 'Filen kan inte läsas';
+
+  @override
+  String get location => 'Plats';
+
+  @override
+  String get locationHint => 'T.ex. Hylla A, torrbox 2';
+
+  @override
+  String get notes => 'Anteckningar';
+
+  @override
+  String get notesHint => 'T.ex. torka före användning';
+
+  @override
+  String get printCostTitle => 'Utskriftskostnad';
+
+  @override
+  String get printCostGrams => 'Använt filament (g)';
+
+  @override
+  String printCostResult(String cost) {
+    return 'Materialkostnad: $cost';
+  }
+
+  @override
+  String printCostPerKg(String price) {
+    return 'Pris per kg: $price';
+  }
+
+  @override
+  String get printCostNoPrice =>
+      'Lägg till spolens pris för att beräkna kostnaden.';
+
+  @override
+  String get printCostDeduct => 'Dra av från lagret';
+
+  @override
+  String printCostDeducted(String grams) {
+    return '$grams g avdraget från lagret';
+  }
+
+  @override
+  String get consumptionTitle => 'Förbrukning';
+
+  @override
+  String get consumptionLast30Days => 'Senaste 30 dagarna';
+
+  @override
+  String get consumptionThisMonth => 'Den här månaden';
+
+  @override
+  String get consumptionByMaterial => 'Per material (30 dagar)';
+
+  @override
+  String get consumptionMonthly => 'Senaste 6 månaderna';
+
+  @override
+  String get consumptionEmpty =>
+      'Ingen förbrukning registrerad ännu. Den visas så fort du uppdaterar en spoles återstående vikt eller använder kostnadskalkylatorn.';
+
+  @override
+  String get shareShoppingList => 'Dela listan';
+
+  @override
+  String get nfcBlankTagTitle => 'Tom tagg';
+
+  @override
+  String get nfcBlankTagDesc =>
+      'Den här taggen innehåller inga spoldata. Lägg till spolen manuellt eller skriv taggen i appen.';
 }

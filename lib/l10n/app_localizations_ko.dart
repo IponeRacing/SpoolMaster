@@ -1335,4 +1335,137 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get genericBrand => '일반';
+
+  @override
+  String get stockSearchHint => '검색 (브랜드, 색상, 위치…)';
+
+  @override
+  String get stockMoreActions => '더 보기';
+
+  @override
+  String get exportExcel => 'Excel로 내보내기';
+
+  @override
+  String get exportFailed => '내보내기 실패';
+
+  @override
+  String get exportShareSubject => '내 필라멘트 재고 (Spool Master)';
+
+  @override
+  String get exportColorHex => '색상 코드';
+
+  @override
+  String get exportRemainingPercent => '남은 양 (%)';
+
+  @override
+  String get exportPricePerKg => '가격 / kg';
+
+  @override
+  String get exportAddedDate => '추가 날짜';
+
+  @override
+  String get exportOrdered => '주문함';
+
+  @override
+  String get exportDate => '날짜';
+
+  @override
+  String get exportGrams => '그램';
+
+  @override
+  String get exportCost => '비용';
+
+  @override
+  String get importSpools => '가져오기 (CSV / Excel)';
+
+  @override
+  String get importConfirmTitle => '스풀 가져오기';
+
+  @override
+  String importConfirmMessage(int count, int duplicates, int skipped) {
+    return '추가할 스풀: $count\n이미 재고에 있음 (건너뜀): $duplicates\n읽을 수 없는 행 (건너뜀): $skipped';
+  }
+
+  @override
+  String get importAction => '가져오기';
+
+  @override
+  String get importNothingFound =>
+      '인식된 스풀이 없습니다. 파일에는 최소한 소재와 무게 열이 있어야 합니다 (앱의 Excel 내보내기와 동일).';
+
+  @override
+  String importDone(int count) {
+    return '가져온 스풀: $count';
+  }
+
+  @override
+  String get importFailed => '읽을 수 없는 파일';
+
+  @override
+  String get location => '위치';
+
+  @override
+  String get locationHint => '예: 선반 A, 건조 박스 2';
+
+  @override
+  String get notes => '메모';
+
+  @override
+  String get notesHint => '예: 사용 전 건조';
+
+  @override
+  String get printCostTitle => '출력 비용';
+
+  @override
+  String get printCostGrams => '사용한 필라멘트 (g)';
+
+  @override
+  String printCostResult(String cost) {
+    return '재료 비용: $cost';
+  }
+
+  @override
+  String printCostPerKg(String price) {
+    return 'kg당 가격: $price';
+  }
+
+  @override
+  String get printCostNoPrice => '비용을 계산하려면 스풀 가격을 추가하세요.';
+
+  @override
+  String get printCostDeduct => '재고에서 차감';
+
+  @override
+  String printCostDeducted(String grams) {
+    return '재고에서 $grams g 차감됨';
+  }
+
+  @override
+  String get consumptionTitle => '소비량';
+
+  @override
+  String get consumptionLast30Days => '최근 30일';
+
+  @override
+  String get consumptionThisMonth => '이번 달';
+
+  @override
+  String get consumptionByMaterial => '소재별 (30일)';
+
+  @override
+  String get consumptionMonthly => '최근 6개월';
+
+  @override
+  String get consumptionEmpty =>
+      '아직 기록된 소비량이 없습니다. 스풀의 남은 무게를 업데이트하거나 출력 비용 계산기를 사용하면 표시됩니다.';
+
+  @override
+  String get shareShoppingList => '목록 공유';
+
+  @override
+  String get nfcBlankTagTitle => '빈 태그';
+
+  @override
+  String get nfcBlankTagDesc =>
+      '이 태그에는 스풀 데이터가 없습니다. 스풀을 직접 추가하거나 앱에서 태그를 기록하세요.';
 }

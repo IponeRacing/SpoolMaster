@@ -1359,4 +1359,138 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String get genericBrand => 'Általános';
+
+  @override
+  String get stockSearchHint => 'Keresés (márka, szín, hely…)';
+
+  @override
+  String get stockMoreActions => 'További műveletek';
+
+  @override
+  String get exportExcel => 'Exportálás Excelbe';
+
+  @override
+  String get exportFailed => 'Az exportálás sikertelen';
+
+  @override
+  String get exportShareSubject => 'Filamentkészletem (Spool Master)';
+
+  @override
+  String get exportColorHex => 'Színkód';
+
+  @override
+  String get exportRemainingPercent => 'Maradék (%)';
+
+  @override
+  String get exportPricePerKg => 'Ár / kg';
+
+  @override
+  String get exportAddedDate => 'Hozzáadás dátuma';
+
+  @override
+  String get exportOrdered => 'Megrendelve';
+
+  @override
+  String get exportDate => 'Dátum';
+
+  @override
+  String get exportGrams => 'Gramm';
+
+  @override
+  String get exportCost => 'Költség';
+
+  @override
+  String get importSpools => 'Importálás (CSV / Excel)';
+
+  @override
+  String get importConfirmTitle => 'Tekercsek importálása';
+
+  @override
+  String importConfirmMessage(int count, int duplicates, int skipped) {
+    return 'Hozzáadandó tekercsek: $count\nMár raktáron (kihagyva): $duplicates\nOlvashatatlan sorok (kihagyva): $skipped';
+  }
+
+  @override
+  String get importAction => 'Importálás';
+
+  @override
+  String get importNothingFound =>
+      'Nem található tekercs. A fájlnak legalább az Anyag és Súly oszlopot tartalmaznia kell (mint az alkalmazás Excel-exportja).';
+
+  @override
+  String importDone(int count) {
+    return 'Importált tekercsek: $count';
+  }
+
+  @override
+  String get importFailed => 'Olvashatatlan fájl';
+
+  @override
+  String get location => 'Hely';
+
+  @override
+  String get locationHint => 'Pl. A polc, szárítódoboz 2';
+
+  @override
+  String get notes => 'Megjegyzések';
+
+  @override
+  String get notesHint => 'Pl. használat előtt szárítandó';
+
+  @override
+  String get printCostTitle => 'Nyomtatás költsége';
+
+  @override
+  String get printCostGrams => 'Felhasznált filament (g)';
+
+  @override
+  String printCostResult(String cost) {
+    return 'Anyagköltség: $cost';
+  }
+
+  @override
+  String printCostPerKg(String price) {
+    return 'Kilogrammonkénti ár: $price';
+  }
+
+  @override
+  String get printCostNoPrice =>
+      'Adja meg a tekercs árát a költség kiszámításához.';
+
+  @override
+  String get printCostDeduct => 'Levonás a raktárból';
+
+  @override
+  String printCostDeducted(String grams) {
+    return '$grams g levonva a raktárból';
+  }
+
+  @override
+  String get consumptionTitle => 'Fogyasztás';
+
+  @override
+  String get consumptionLast30Days => 'Utolsó 30 nap';
+
+  @override
+  String get consumptionThisMonth => 'Ebben a hónapban';
+
+  @override
+  String get consumptionByMaterial => 'Anyag szerint (30 nap)';
+
+  @override
+  String get consumptionMonthly => 'Utolsó 6 hónap';
+
+  @override
+  String get consumptionEmpty =>
+      'Még nincs rögzített fogyasztás. Akkor jelenik meg, amint frissíti egy tekercs fennmaradó súlyát, vagy használja a nyomtatási költség kalkulátort.';
+
+  @override
+  String get shareShoppingList => 'Lista megosztása';
+
+  @override
+  String get nfcBlankTagTitle => 'Üres címke';
+
+  @override
+  String get nfcBlankTagDesc =>
+      'Ez a címke nem tartalmaz orsóadatokat. Adja hozzá az orsót kézzel, vagy írja meg a címkét az alkalmazásban.';
 }

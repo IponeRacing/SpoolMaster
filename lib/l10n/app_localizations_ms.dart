@@ -1356,4 +1356,137 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get genericBrand => 'Generik';
+
+  @override
+  String get stockSearchHint => 'Cari (jenama, warna, lokasi…)';
+
+  @override
+  String get stockMoreActions => 'Tindakan lain';
+
+  @override
+  String get exportExcel => 'Eksport ke Excel';
+
+  @override
+  String get exportFailed => 'Eksport gagal';
+
+  @override
+  String get exportShareSubject => 'Stok filamen saya (Spool Master)';
+
+  @override
+  String get exportColorHex => 'Kod warna';
+
+  @override
+  String get exportRemainingPercent => 'Baki (%)';
+
+  @override
+  String get exportPricePerKg => 'Harga / kg';
+
+  @override
+  String get exportAddedDate => 'Tarikh ditambah';
+
+  @override
+  String get exportOrdered => 'Dipesan';
+
+  @override
+  String get exportDate => 'Tarikh';
+
+  @override
+  String get exportGrams => 'Gram';
+
+  @override
+  String get exportCost => 'Kos';
+
+  @override
+  String get importSpools => 'Import (CSV / Excel)';
+
+  @override
+  String get importConfirmTitle => 'Import gegelung';
+
+  @override
+  String importConfirmMessage(int count, int duplicates, int skipped) {
+    return 'Gegelung untuk ditambah: $count\nSudah dalam stok (dilangkau): $duplicates\nBaris tidak boleh dibaca (dilangkau): $skipped';
+  }
+
+  @override
+  String get importAction => 'Import';
+
+  @override
+  String get importNothingFound =>
+      'Tiada gegelung dikenali. Fail mesti mengandungi sekurang-kurangnya lajur Bahan dan Berat (seperti eksport Excel aplikasi).';
+
+  @override
+  String importDone(int count) {
+    return 'Gegelung diimport: $count';
+  }
+
+  @override
+  String get importFailed => 'Fail tidak boleh dibaca';
+
+  @override
+  String get location => 'Lokasi';
+
+  @override
+  String get locationHint => 'Cth. Rak A, kotak kering 2';
+
+  @override
+  String get notes => 'Nota';
+
+  @override
+  String get notesHint => 'Cth. keringkan sebelum digunakan';
+
+  @override
+  String get printCostTitle => 'Kos cetakan';
+
+  @override
+  String get printCostGrams => 'Filamen digunakan (g)';
+
+  @override
+  String printCostResult(String cost) {
+    return 'Kos bahan: $cost';
+  }
+
+  @override
+  String printCostPerKg(String price) {
+    return 'Harga sekilogram: $price';
+  }
+
+  @override
+  String get printCostNoPrice => 'Tambah harga gegelung untuk mengira kos.';
+
+  @override
+  String get printCostDeduct => 'Tolak daripada stok';
+
+  @override
+  String printCostDeducted(String grams) {
+    return '$grams g ditolak daripada stok';
+  }
+
+  @override
+  String get consumptionTitle => 'Penggunaan';
+
+  @override
+  String get consumptionLast30Days => '30 hari lepas';
+
+  @override
+  String get consumptionThisMonth => 'Bulan ini';
+
+  @override
+  String get consumptionByMaterial => 'Mengikut bahan (30 hari)';
+
+  @override
+  String get consumptionMonthly => '6 bulan lepas';
+
+  @override
+  String get consumptionEmpty =>
+      'Belum ada penggunaan direkodkan. Ia akan dipaparkan sebaik sahaja anda mengemas kini berat baki gegelung atau menggunakan kalkulator kos cetakan.';
+
+  @override
+  String get shareShoppingList => 'Kongsi senarai';
+
+  @override
+  String get nfcBlankTagTitle => 'Tag kosong';
+
+  @override
+  String get nfcBlankTagDesc =>
+      'Tag ini tidak mengandungi data spool. Tambah spool secara manual atau tulis tag ini daripada aplikasi.';
 }

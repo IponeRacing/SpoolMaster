@@ -1349,4 +1349,137 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get genericBrand => 'عام';
+
+  @override
+  String get stockSearchHint => 'البحث (العلامة التجارية، اللون، الموقع…)';
+
+  @override
+  String get stockMoreActions => 'المزيد من الإجراءات';
+
+  @override
+  String get exportExcel => 'تصدير إلى Excel';
+
+  @override
+  String get exportFailed => 'فشل التصدير';
+
+  @override
+  String get exportShareSubject => 'مخزون الفيلامنت لديّ (Spool Master)';
+
+  @override
+  String get exportColorHex => 'رمز اللون';
+
+  @override
+  String get exportRemainingPercent => 'المتبقي (%)';
+
+  @override
+  String get exportPricePerKg => 'السعر / كغ';
+
+  @override
+  String get exportAddedDate => 'تاريخ الإضافة';
+
+  @override
+  String get exportOrdered => 'تم الطلب';
+
+  @override
+  String get exportDate => 'التاريخ';
+
+  @override
+  String get exportGrams => 'غرام';
+
+  @override
+  String get exportCost => 'التكلفة';
+
+  @override
+  String get importSpools => 'استيراد (CSV / Excel)';
+
+  @override
+  String get importConfirmTitle => 'استيراد البكرات';
+
+  @override
+  String importConfirmMessage(int count, int duplicates, int skipped) {
+    return 'البكرات المراد إضافتها: $count\nموجودة في المخزون (تم تخطيها): $duplicates\nصفوف غير مقروءة (تم تخطيها): $skipped';
+  }
+
+  @override
+  String get importAction => 'استيراد';
+
+  @override
+  String get importNothingFound =>
+      'لم يتم التعرف على أي بكرة. يجب أن يحتوي الملف على عمودي المادة والوزن على الأقل (مثل تصدير Excel من التطبيق).';
+
+  @override
+  String importDone(int count) {
+    return 'البكرات المستوردة: $count';
+  }
+
+  @override
+  String get importFailed => 'ملف غير مقروء';
+
+  @override
+  String get location => 'الموقع';
+
+  @override
+  String get locationHint => 'مثال: الرف A، صندوق التجفيف 2';
+
+  @override
+  String get notes => 'ملاحظات';
+
+  @override
+  String get notesHint => 'مثال: يجب تجفيفها قبل الاستخدام';
+
+  @override
+  String get printCostTitle => 'تكلفة الطباعة';
+
+  @override
+  String get printCostGrams => 'الفيلامنت المستخدم (غ)';
+
+  @override
+  String printCostResult(String cost) {
+    return 'تكلفة المادة: $cost';
+  }
+
+  @override
+  String printCostPerKg(String price) {
+    return 'السعر لكل كغ: $price';
+  }
+
+  @override
+  String get printCostNoPrice => 'أضف سعر البكرة لحساب التكلفة.';
+
+  @override
+  String get printCostDeduct => 'الخصم من المخزون';
+
+  @override
+  String printCostDeducted(String grams) {
+    return 'تم خصم $grams غ من المخزون';
+  }
+
+  @override
+  String get consumptionTitle => 'الاستهلاك';
+
+  @override
+  String get consumptionLast30Days => 'آخر 30 يومًا';
+
+  @override
+  String get consumptionThisMonth => 'هذا الشهر';
+
+  @override
+  String get consumptionByMaterial => 'حسب المادة (30 يومًا)';
+
+  @override
+  String get consumptionMonthly => 'آخر 6 أشهر';
+
+  @override
+  String get consumptionEmpty =>
+      'لم يتم تسجيل أي استهلاك بعد. يظهر فور تحديث الوزن المتبقي لبكرة أو استخدام حاسبة التكلفة.';
+
+  @override
+  String get shareShoppingList => 'مشاركة القائمة';
+
+  @override
+  String get nfcBlankTagTitle => 'علامة فارغة';
+
+  @override
+  String get nfcBlankTagDesc =>
+      'لا تحتوي هذه العلامة على بيانات البكرة. أضف البكرة يدويًا أو اكتب العلامة من التطبيق.';
 }

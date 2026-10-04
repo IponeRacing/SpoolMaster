@@ -1355,4 +1355,138 @@ class AppLocalizationsSk extends AppLocalizations {
 
   @override
   String get genericBrand => 'Všeobecná';
+
+  @override
+  String get stockSearchHint => 'Hľadať (značka, farba, miesto…)';
+
+  @override
+  String get stockMoreActions => 'Ďalšie akcie';
+
+  @override
+  String get exportExcel => 'Exportovať do Excelu';
+
+  @override
+  String get exportFailed => 'Export zlyhal';
+
+  @override
+  String get exportShareSubject => 'Moja zásoba filamentu (Spool Master)';
+
+  @override
+  String get exportColorHex => 'Kód farby';
+
+  @override
+  String get exportRemainingPercent => 'Zostáva (%)';
+
+  @override
+  String get exportPricePerKg => 'Cena / kg';
+
+  @override
+  String get exportAddedDate => 'Dátum pridania';
+
+  @override
+  String get exportOrdered => 'Objednané';
+
+  @override
+  String get exportDate => 'Dátum';
+
+  @override
+  String get exportGrams => 'Gramy';
+
+  @override
+  String get exportCost => 'Náklady';
+
+  @override
+  String get importSpools => 'Importovať (CSV / Excel)';
+
+  @override
+  String get importConfirmTitle => 'Importovať cievky';
+
+  @override
+  String importConfirmMessage(int count, int duplicates, int skipped) {
+    return 'Cievky na pridanie: $count\nUž na sklade (preskočené): $duplicates\nNečitateľné riadky (preskočené): $skipped';
+  }
+
+  @override
+  String get importAction => 'Importovať';
+
+  @override
+  String get importNothingFound =>
+      'Nerozpoznané žiadne cievky. Súbor musí obsahovať aspoň stĺpce Materiál a Hmotnosť (ako Excel export aplikácie).';
+
+  @override
+  String importDone(int count) {
+    return 'Importované cievky: $count';
+  }
+
+  @override
+  String get importFailed => 'Nečitateľný súbor';
+
+  @override
+  String get location => 'Miesto';
+
+  @override
+  String get locationHint => 'Napr.: polica A, suchý box 2';
+
+  @override
+  String get notes => 'Poznámky';
+
+  @override
+  String get notesHint => 'Napr.: pred použitím vysušiť';
+
+  @override
+  String get printCostTitle => 'Cena tlače';
+
+  @override
+  String get printCostGrams => 'Použitý filament (g)';
+
+  @override
+  String printCostResult(String cost) {
+    return 'Náklady na materiál: $cost';
+  }
+
+  @override
+  String printCostPerKg(String price) {
+    return 'Cena za kg: $price';
+  }
+
+  @override
+  String get printCostNoPrice =>
+      'Pridajte cenu cievky, aby sa vypočítali náklady.';
+
+  @override
+  String get printCostDeduct => 'Odpočítať zo skladu';
+
+  @override
+  String printCostDeducted(String grams) {
+    return '$grams g odpočítaných zo skladu';
+  }
+
+  @override
+  String get consumptionTitle => 'Spotreba';
+
+  @override
+  String get consumptionLast30Days => 'Posledných 30 dní';
+
+  @override
+  String get consumptionThisMonth => 'Tento mesiac';
+
+  @override
+  String get consumptionByMaterial => 'Podľa materiálu (30 dní)';
+
+  @override
+  String get consumptionMonthly => 'Posledných 6 mesiacov';
+
+  @override
+  String get consumptionEmpty =>
+      'Zatiaľ nie je zaznamenaná žiadna spotreba. Zobrazí sa, len čo aktualizujete zostávajúcu hmotnosť cievky alebo použijete kalkulačku nákladov.';
+
+  @override
+  String get shareShoppingList => 'Zdieľať zoznam';
+
+  @override
+  String get nfcBlankTagTitle => 'Prázdny tag';
+
+  @override
+  String get nfcBlankTagDesc =>
+      'Tento tag neobsahuje žiadne údaje o cievke. Pridajte cievku ručne alebo tag zapíšte v aplikácii.';
 }

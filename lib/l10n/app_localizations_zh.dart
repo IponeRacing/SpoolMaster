@@ -1320,6 +1320,137 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get genericBrand => '通用';
+
+  @override
+  String get stockSearchHint => '搜索（品牌、颜色、位置…）';
+
+  @override
+  String get stockMoreActions => '更多操作';
+
+  @override
+  String get exportExcel => '导出为 Excel';
+
+  @override
+  String get exportFailed => '导出失败';
+
+  @override
+  String get exportShareSubject => '我的耗材库存（Spool Master）';
+
+  @override
+  String get exportColorHex => '颜色代码';
+
+  @override
+  String get exportRemainingPercent => '剩余（%）';
+
+  @override
+  String get exportPricePerKg => '价格 / kg';
+
+  @override
+  String get exportAddedDate => '添加日期';
+
+  @override
+  String get exportOrdered => '已订购';
+
+  @override
+  String get exportDate => '日期';
+
+  @override
+  String get exportGrams => '克数';
+
+  @override
+  String get exportCost => '成本';
+
+  @override
+  String get importSpools => '导入（CSV / Excel）';
+
+  @override
+  String get importConfirmTitle => '导入线轴';
+
+  @override
+  String importConfirmMessage(int count, int duplicates, int skipped) {
+    return '待添加线轴：$count\n库存中已有（已跳过）：$duplicates\n无法读取的行（已跳过）：$skipped';
+  }
+
+  @override
+  String get importAction => '导入';
+
+  @override
+  String get importNothingFound =>
+      '未识别到任何线轴。文件至少须包含“材料”和“重量”列（与应用的 Excel 导出一致）。';
+
+  @override
+  String importDone(int count) {
+    return '已导入线轴：$count';
+  }
+
+  @override
+  String get importFailed => '文件无法读取';
+
+  @override
+  String get location => '位置';
+
+  @override
+  String get locationHint => '例如：A 层架，干燥盒 2';
+
+  @override
+  String get notes => '备注';
+
+  @override
+  String get notesHint => '例如：使用前需烘干';
+
+  @override
+  String get printCostTitle => '打印成本';
+
+  @override
+  String get printCostGrams => '已用耗材（g）';
+
+  @override
+  String printCostResult(String cost) {
+    return '材料成本：$cost';
+  }
+
+  @override
+  String printCostPerKg(String price) {
+    return '每 kg 价格：$price';
+  }
+
+  @override
+  String get printCostNoPrice => '请添加线轴价格以计算成本。';
+
+  @override
+  String get printCostDeduct => '从库存中扣除';
+
+  @override
+  String printCostDeducted(String grams) {
+    return '已从库存中扣除 $grams g';
+  }
+
+  @override
+  String get consumptionTitle => '消耗';
+
+  @override
+  String get consumptionLast30Days => '最近 30 天';
+
+  @override
+  String get consumptionThisMonth => '本月';
+
+  @override
+  String get consumptionByMaterial => '按材料（30 天）';
+
+  @override
+  String get consumptionMonthly => '最近 6 个月';
+
+  @override
+  String get consumptionEmpty => '暂无消耗记录。更新线轴剩余重量或使用成本计算器后即会显示。';
+
+  @override
+  String get shareShoppingList => '分享清单';
+
+  @override
+  String get nfcBlankTagTitle => '空白标签';
+
+  @override
+  String get nfcBlankTagDesc => '此标签不包含耗材盘数据。请手动添加耗材盘，或在应用中写入此标签。';
 }
 
 /// The translations for Chinese, as used in Taiwan (`zh_TW`).
@@ -2638,4 +2769,135 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String get genericBrand => '通用';
+
+  @override
+  String get stockSearchHint => '搜尋（品牌、顏色、位置…）';
+
+  @override
+  String get stockMoreActions => '更多操作';
+
+  @override
+  String get exportExcel => '匯出為 Excel';
+
+  @override
+  String get exportFailed => '匯出失敗';
+
+  @override
+  String get exportShareSubject => '我的耗材庫存（Spool Master）';
+
+  @override
+  String get exportColorHex => '顏色代碼';
+
+  @override
+  String get exportRemainingPercent => '剩餘（%）';
+
+  @override
+  String get exportPricePerKg => '價格 / kg';
+
+  @override
+  String get exportAddedDate => '新增日期';
+
+  @override
+  String get exportOrdered => '已訂購';
+
+  @override
+  String get exportDate => '日期';
+
+  @override
+  String get exportGrams => '公克';
+
+  @override
+  String get exportCost => '成本';
+
+  @override
+  String get importSpools => '匯入（CSV / Excel）';
+
+  @override
+  String get importConfirmTitle => '匯入線軸';
+
+  @override
+  String importConfirmMessage(int count, int duplicates, int skipped) {
+    return '待新增線軸：$count\n庫存中已有（已略過）：$duplicates\n無法讀取的列（已略過）：$skipped';
+  }
+
+  @override
+  String get importAction => '匯入';
+
+  @override
+  String get importNothingFound =>
+      '未辨識到任何線軸。檔案至少須包含「材料」和「重量」欄（與應用程式的 Excel 匯出一致）。';
+
+  @override
+  String importDone(int count) {
+    return '已匯入線軸：$count';
+  }
+
+  @override
+  String get importFailed => '檔案無法讀取';
+
+  @override
+  String get location => '位置';
+
+  @override
+  String get locationHint => '例如：A 層架，防潮盒 2';
+
+  @override
+  String get notes => '備註';
+
+  @override
+  String get notesHint => '例如：使用前需烘乾';
+
+  @override
+  String get printCostTitle => '列印成本';
+
+  @override
+  String get printCostGrams => '已用耗材（g）';
+
+  @override
+  String printCostResult(String cost) {
+    return '材料成本：$cost';
+  }
+
+  @override
+  String printCostPerKg(String price) {
+    return '每 kg 價格：$price';
+  }
+
+  @override
+  String get printCostNoPrice => '請新增線軸價格以計算成本。';
+
+  @override
+  String get printCostDeduct => '從庫存中扣除';
+
+  @override
+  String printCostDeducted(String grams) {
+    return '已從庫存中扣除 $grams g';
+  }
+
+  @override
+  String get consumptionTitle => '消耗量';
+
+  @override
+  String get consumptionLast30Days => '最近 30 天';
+
+  @override
+  String get consumptionThisMonth => '本月';
+
+  @override
+  String get consumptionByMaterial => '依材料（30 天）';
+
+  @override
+  String get consumptionMonthly => '最近 6 個月';
+
+  @override
+  String get consumptionEmpty => '尚無消耗記錄。更新線軸剩餘重量或使用成本計算機後即會顯示。';
+
+  @override
+  String get shareShoppingList => '分享清單';
+
+  @override
+  String get nfcBlankTagTitle => '空白標籤';
+
+  @override
+  String get nfcBlankTagDesc => '此標籤不含耗材捲資料。請手動新增耗材捲，或在 App 中寫入此標籤。';
 }

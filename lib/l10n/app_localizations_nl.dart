@@ -1357,4 +1357,138 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get genericBrand => 'Generiek';
+
+  @override
+  String get stockSearchHint => 'Zoeken (merk, kleur, locatie…)';
+
+  @override
+  String get stockMoreActions => 'Meer acties';
+
+  @override
+  String get exportExcel => 'Exporteren naar Excel';
+
+  @override
+  String get exportFailed => 'Exporteren mislukt';
+
+  @override
+  String get exportShareSubject => 'Mijn filamentvoorraad (Spool Master)';
+
+  @override
+  String get exportColorHex => 'Kleurcode';
+
+  @override
+  String get exportRemainingPercent => 'Resterend (%)';
+
+  @override
+  String get exportPricePerKg => 'Prijs / kg';
+
+  @override
+  String get exportAddedDate => 'Toegevoegd op';
+
+  @override
+  String get exportOrdered => 'Besteld';
+
+  @override
+  String get exportDate => 'Datum';
+
+  @override
+  String get exportGrams => 'Gram';
+
+  @override
+  String get exportCost => 'Kosten';
+
+  @override
+  String get importSpools => 'Importeren (CSV / Excel)';
+
+  @override
+  String get importConfirmTitle => 'Spoelen importeren';
+
+  @override
+  String importConfirmMessage(int count, int duplicates, int skipped) {
+    return 'Toe te voegen spoelen: $count\nAl op voorraad (overgeslagen): $duplicates\nOnleesbare rijen (overgeslagen): $skipped';
+  }
+
+  @override
+  String get importAction => 'Importeren';
+
+  @override
+  String get importNothingFound =>
+      'Geen spoelen herkend. Het bestand moet minstens de kolommen Materiaal en Gewicht bevatten (zoals de Excel-export van de app).';
+
+  @override
+  String importDone(int count) {
+    return 'Geïmporteerde spoelen: $count';
+  }
+
+  @override
+  String get importFailed => 'Onleesbaar bestand';
+
+  @override
+  String get location => 'Locatie';
+
+  @override
+  String get locationHint => 'Bijv. Plank A, droogbox 2';
+
+  @override
+  String get notes => 'Notities';
+
+  @override
+  String get notesHint => 'Bijv. drogen voor gebruik';
+
+  @override
+  String get printCostTitle => 'Printkosten';
+
+  @override
+  String get printCostGrams => 'Gebruikt filament (g)';
+
+  @override
+  String printCostResult(String cost) {
+    return 'Materiaalkosten: $cost';
+  }
+
+  @override
+  String printCostPerKg(String price) {
+    return 'Prijs per kg: $price';
+  }
+
+  @override
+  String get printCostNoPrice =>
+      'Voeg de spoelprijs toe om de kosten te berekenen.';
+
+  @override
+  String get printCostDeduct => 'Aftrekken van voorraad';
+
+  @override
+  String printCostDeducted(String grams) {
+    return '$grams g afgetrokken van voorraad';
+  }
+
+  @override
+  String get consumptionTitle => 'Verbruik';
+
+  @override
+  String get consumptionLast30Days => 'Laatste 30 dagen';
+
+  @override
+  String get consumptionThisMonth => 'Deze maand';
+
+  @override
+  String get consumptionByMaterial => 'Per materiaal (30 dagen)';
+
+  @override
+  String get consumptionMonthly => 'Laatste 6 maanden';
+
+  @override
+  String get consumptionEmpty =>
+      'Nog geen verbruik geregistreerd. Het verschijnt zodra je het resterende gewicht van een spoel bijwerkt of de printkostencalculator gebruikt.';
+
+  @override
+  String get shareShoppingList => 'Lijst delen';
+
+  @override
+  String get nfcBlankTagTitle => 'Lege tag';
+
+  @override
+  String get nfcBlankTagDesc =>
+      'Deze tag bevat geen spoelgegevens. Voeg de spoel handmatig toe of beschrijf deze tag via de app.';
 }

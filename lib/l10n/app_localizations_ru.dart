@@ -1357,4 +1357,138 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get genericBrand => 'Универсальный';
+
+  @override
+  String get stockSearchHint => 'Поиск (бренд, цвет, место…)';
+
+  @override
+  String get stockMoreActions => 'Ещё действия';
+
+  @override
+  String get exportExcel => 'Экспорт в Excel';
+
+  @override
+  String get exportFailed => 'Не удалось экспортировать';
+
+  @override
+  String get exportShareSubject => 'Мои запасы филамента (Spool Master)';
+
+  @override
+  String get exportColorHex => 'Код цвета';
+
+  @override
+  String get exportRemainingPercent => 'Осталось (%)';
+
+  @override
+  String get exportPricePerKg => 'Цена / кг';
+
+  @override
+  String get exportAddedDate => 'Дата добавления';
+
+  @override
+  String get exportOrdered => 'Заказано';
+
+  @override
+  String get exportDate => 'Дата';
+
+  @override
+  String get exportGrams => 'Граммы';
+
+  @override
+  String get exportCost => 'Стоимость';
+
+  @override
+  String get importSpools => 'Импорт (CSV / Excel)';
+
+  @override
+  String get importConfirmTitle => 'Импорт катушек';
+
+  @override
+  String importConfirmMessage(int count, int duplicates, int skipped) {
+    return 'Катушек к добавлению: $count\nУже на складе (пропущены): $duplicates\nНечитаемые строки (пропущены): $skipped';
+  }
+
+  @override
+  String get importAction => 'Импортировать';
+
+  @override
+  String get importNothingFound =>
+      'Катушки не распознаны. Файл должен содержать как минимум столбцы «Материал» и «Вес» (как в Excel-экспорте приложения).';
+
+  @override
+  String importDone(int count) {
+    return 'Импортировано катушек: $count';
+  }
+
+  @override
+  String get importFailed => 'Файл нечитаем';
+
+  @override
+  String get location => 'Место хранения';
+
+  @override
+  String get locationHint => 'Напр.: полка A, сухой бокс 2';
+
+  @override
+  String get notes => 'Заметки';
+
+  @override
+  String get notesHint => 'Напр.: просушить перед использованием';
+
+  @override
+  String get printCostTitle => 'Стоимость печати';
+
+  @override
+  String get printCostGrams => 'Использовано филамента (г)';
+
+  @override
+  String printCostResult(String cost) {
+    return 'Стоимость материала: $cost';
+  }
+
+  @override
+  String printCostPerKg(String price) {
+    return 'Цена за кг: $price';
+  }
+
+  @override
+  String get printCostNoPrice =>
+      'Добавьте цену катушки, чтобы рассчитать стоимость.';
+
+  @override
+  String get printCostDeduct => 'Списать со склада';
+
+  @override
+  String printCostDeducted(String grams) {
+    return 'Списано со склада: $grams г';
+  }
+
+  @override
+  String get consumptionTitle => 'Расход';
+
+  @override
+  String get consumptionLast30Days => 'Последние 30 дней';
+
+  @override
+  String get consumptionThisMonth => 'В этом месяце';
+
+  @override
+  String get consumptionByMaterial => 'По материалам (30 дней)';
+
+  @override
+  String get consumptionMonthly => 'Последние 6 месяцев';
+
+  @override
+  String get consumptionEmpty =>
+      'Расход пока не записан. Он появится, как только вы обновите оставшийся вес катушки или воспользуетесь калькулятором стоимости.';
+
+  @override
+  String get shareShoppingList => 'Поделиться списком';
+
+  @override
+  String get nfcBlankTagTitle => 'Пустой тег';
+
+  @override
+  String get nfcBlankTagDesc =>
+      'Этот тег не содержит данных о катушке. Добавьте катушку вручную или запишите тег в приложении.';
 }

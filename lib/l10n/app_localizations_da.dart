@@ -1356,4 +1356,138 @@ class AppLocalizationsDa extends AppLocalizations {
 
   @override
   String get genericBrand => 'Generisk';
+
+  @override
+  String get stockSearchHint => 'Søg (mærke, farve, placering…)';
+
+  @override
+  String get stockMoreActions => 'Flere handlinger';
+
+  @override
+  String get exportExcel => 'Eksportér til Excel';
+
+  @override
+  String get exportFailed => 'Eksport mislykkedes';
+
+  @override
+  String get exportShareSubject => 'Mit filamentlager (Spool Master)';
+
+  @override
+  String get exportColorHex => 'Farvekode';
+
+  @override
+  String get exportRemainingPercent => 'Tilbage (%)';
+
+  @override
+  String get exportPricePerKg => 'Pris / kg';
+
+  @override
+  String get exportAddedDate => 'Tilføjet den';
+
+  @override
+  String get exportOrdered => 'Bestilt';
+
+  @override
+  String get exportDate => 'Dato';
+
+  @override
+  String get exportGrams => 'Gram';
+
+  @override
+  String get exportCost => 'Omkostning';
+
+  @override
+  String get importSpools => 'Importér (CSV / Excel)';
+
+  @override
+  String get importConfirmTitle => 'Importér spoler';
+
+  @override
+  String importConfirmMessage(int count, int duplicates, int skipped) {
+    return 'Spoler der tilføjes: $count\nAllerede på lager (springes over): $duplicates\nU-læselige rækker (springes over): $skipped';
+  }
+
+  @override
+  String get importAction => 'Importér';
+
+  @override
+  String get importNothingFound =>
+      'Ingen spoler genkendt. Filen skal mindst indeholde kolonnerne Materiale og Vægt (som appens Excel-eksport).';
+
+  @override
+  String importDone(int count) {
+    return 'Importerede spoler: $count';
+  }
+
+  @override
+  String get importFailed => 'Filen kan ikke læses';
+
+  @override
+  String get location => 'Placering';
+
+  @override
+  String get locationHint => 'F.eks. Hylde A, tørreboks 2';
+
+  @override
+  String get notes => 'Noter';
+
+  @override
+  String get notesHint => 'F.eks. tørres før brug';
+
+  @override
+  String get printCostTitle => 'Printomkostning';
+
+  @override
+  String get printCostGrams => 'Brugt filament (g)';
+
+  @override
+  String printCostResult(String cost) {
+    return 'Materialeomkostning: $cost';
+  }
+
+  @override
+  String printCostPerKg(String price) {
+    return 'Pris pr. kg: $price';
+  }
+
+  @override
+  String get printCostNoPrice =>
+      'Tilføj spolens pris for at beregne omkostningen.';
+
+  @override
+  String get printCostDeduct => 'Træk fra lager';
+
+  @override
+  String printCostDeducted(String grams) {
+    return '$grams g trukket fra lager';
+  }
+
+  @override
+  String get consumptionTitle => 'Forbrug';
+
+  @override
+  String get consumptionLast30Days => 'Seneste 30 dage';
+
+  @override
+  String get consumptionThisMonth => 'Denne måned';
+
+  @override
+  String get consumptionByMaterial => 'Efter materiale (30 dage)';
+
+  @override
+  String get consumptionMonthly => 'Seneste 6 måneder';
+
+  @override
+  String get consumptionEmpty =>
+      'Intet forbrug registreret endnu. Det vises, så snart du opdaterer en spoles resterende vægt eller bruger omkostningsberegneren.';
+
+  @override
+  String get shareShoppingList => 'Del listen';
+
+  @override
+  String get nfcBlankTagTitle => 'Tomt tag';
+
+  @override
+  String get nfcBlankTagDesc =>
+      'Dette tag indeholder ingen spoledata. Tilføj spolen manuelt, eller skriv tagget i appen.';
 }

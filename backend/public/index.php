@@ -10,10 +10,84 @@
 require_once __DIR__ . '/../vendor/autoload.php';
 
 use NfcAnycubic\EnvLoader;
+use NfcAnycubic\Logger;
 use NfcAnycubic\Middleware\RateLimiter;
 
 // Load environment variables first
 EnvLoader::load();
+
+// ===========================================
+// Error handling & logging (avant tout le reste : CORS, rate limit, config)
+// ===========================================
+error_reporting(E_ALL);
+ini_set('display_errors', 0);
+ini_set('log_errors', 1);
+
+// Journal dans api/logs/php_errors.log : emplacement connu et lisible en SSH
+// (sinon error_log() part dans le log par défaut de l'hébergement).
+$logDir = __DIR__ . '/../logs';
+if (is_dir($logDir) && is_writable($logDir)) {
+    $logFile = $logDir . '/php_errors.log';
+    // Rotation simple : au-delà de 10 Mo, on archive (une génération).
+    if (is_file($logFile) && filesize($logFile) > 10 * 1024 * 1024) {
+        rename($logFile, $logFile . '.1');
+    }
+    ini_set('error_log', $logFile);
+}
+
+Logger::init();
+
+set_error_handler(function($errno, $errstr, $errfile, $errline) {
+    // Respecter @ et error_reporting (avant : un @mail() levait quand même).
+    if (!(error_reporting() & $errno)) {
+        return false;
+    }
+    // Dépréciations : journalisées mais non bloquantes (une montée de version
+    // PHP ou d'une dépendance ne doit pas mettre l'API en 500).
+    if ($errno === E_DEPRECATED || $errno === E_USER_DEPRECATED) {
+        Logger::warningOnce('deprecated', $errstr . ' @ ' . basename($errfile) . ':' . $errline);
+        return true;
+    }
+    throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
+});
+
+set_exception_handler(function(\Throwable $exception) {
+    // Avant : aucune trace côté serveur → les 500 étaient invisibles.
+    Logger::exception('uncaught', $exception);
+    if (!headers_sent()) {
+        http_response_code(500);
+        header('Content-Type: application/json; charset=utf-8');
+    }
+    $debug = EnvLoader::isDebug();
+    echo json_encode([
+        'success' => false,
+        'error' => 'Internal server error',
+        'request_id' => Logger::requestId(),
+        // Détails seulement en debug : un message PDO expose le schéma SQL.
+        'message' => $debug ? $exception->getMessage() : null,
+        'trace' => $debug ? $exception->getTraceAsString() : null
+    ]);
+});
+
+// Erreurs fatales (mémoire, timeout, parse) : non attrapables par le handler
+// d'exceptions → on les journalise avec le contexte de la requête.
+register_shutdown_function(function() {
+    $error = error_get_last();
+    $fatal = [E_ERROR, E_PARSE, E_CORE_ERROR, E_COMPILE_ERROR, E_USER_ERROR];
+    if ($error === null || !in_array($error['type'], $fatal, true)) {
+        return;
+    }
+    Logger::error('fatal', $error['message'] . ' @ ' . basename($error['file']) . ':' . $error['line']);
+    if (!headers_sent()) {
+        http_response_code(500);
+        header('Content-Type: application/json; charset=utf-8');
+        echo json_encode([
+            'success' => false,
+            'error' => 'Internal server error',
+            'request_id' => Logger::requestId()
+        ]);
+    }
+});
 
 // Load configuration
 $config = require __DIR__ . '/../config/app.php';
@@ -96,23 +170,7 @@ use NfcAnycubic\Controllers\GooglePlayWebhookController;
 use NfcAnycubic\Controllers\ShoppingListController;
 use NfcAnycubic\Controllers\ReportController;
 use NfcAnycubic\Controllers\AppController;
-
-// Error handling
-error_reporting(E_ALL);
-ini_set('display_errors', 0);
-set_error_handler(function($errno, $errstr, $errfile, $errline) {
-    throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
-});
-
-set_exception_handler(function($exception) {
-    http_response_code(500);
-    echo json_encode([
-        'success' => false,
-        'error' => 'Internal server error',
-        'message' => $exception->getMessage(),
-        'trace' => $_ENV['APP_DEBUG'] ?? false ? $exception->getTraceAsString() : null
-    ]);
-});
+use NfcAnycubic\Controllers\UsageController;
 
 // Router simple
 $router = new Router();
@@ -174,6 +232,10 @@ $router->get('/sync/pull', [SyncController::class, 'pull']);  // GET pour récup
 $router->post('/sync/pull', [SyncController::class, 'pull']); // POST aussi supporté
 $router->get('/sync/history', [SyncController::class, 'getHistory']);
 
+// Historique de consommation (app 1.4.10+)
+$router->get('/usage', [UsageController::class, 'pull']);
+$router->post('/usage', [UsageController::class, 'push']);
+
 // Shopping list endpoints
 $router->get('/shopping-list', [ShoppingListController::class, 'getAll']);
 $router->post('/shopping-list', [ShoppingListController::class, 'create']);
@@ -189,7 +251,6 @@ $router->get('/analytics/stats', [AnalyticsController::class, 'getStats']);
 
 // Subscription endpoints (auth required)
 $router->post('/subscriptions/verify', [SubscriptionController::class, 'verifyPurchase']);
-$router->post('/subscriptions/debug', [SubscriptionController::class, 'debugVerify']); // TEMP DEBUG - REMOVE
 $router->get('/subscriptions/status', [SubscriptionController::class, 'getSubscriptionStatus']);
 $router->post('/subscriptions/check-expired', [SubscriptionController::class, 'checkExpiredSubscriptions']);
 

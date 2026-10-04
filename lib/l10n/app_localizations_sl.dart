@@ -1356,4 +1356,137 @@ class AppLocalizationsSl extends AppLocalizations {
 
   @override
   String get genericBrand => 'Generično';
+
+  @override
+  String get stockSearchHint => 'Iskanje (znamka, barva, lokacija…)';
+
+  @override
+  String get stockMoreActions => 'Več dejanj';
+
+  @override
+  String get exportExcel => 'Izvozi v Excel';
+
+  @override
+  String get exportFailed => 'Izvoz ni uspel';
+
+  @override
+  String get exportShareSubject => 'Moja zaloga filamenta (Spool Master)';
+
+  @override
+  String get exportColorHex => 'Koda barve';
+
+  @override
+  String get exportRemainingPercent => 'Preostalo (%)';
+
+  @override
+  String get exportPricePerKg => 'Cena / kg';
+
+  @override
+  String get exportAddedDate => 'Datum dodajanja';
+
+  @override
+  String get exportOrdered => 'Naročeno';
+
+  @override
+  String get exportDate => 'Datum';
+
+  @override
+  String get exportGrams => 'Grami';
+
+  @override
+  String get exportCost => 'Strošek';
+
+  @override
+  String get importSpools => 'Uvozi (CSV / Excel)';
+
+  @override
+  String get importConfirmTitle => 'Uvoz tuljav';
+
+  @override
+  String importConfirmMessage(int count, int duplicates, int skipped) {
+    return 'Tuljave za dodajanje: $count\nŽe na zalogi (preskočene): $duplicates\nNeberljive vrstice (preskočene): $skipped';
+  }
+
+  @override
+  String get importAction => 'Uvozi';
+
+  @override
+  String get importNothingFound =>
+      'Nobena tuljava ni bila prepoznana. Datoteka mora vsebovati vsaj stolpca Material in Teža (kot izvoz v Excel iz aplikacije).';
+
+  @override
+  String importDone(int count) {
+    return 'Uvožene tuljave: $count';
+  }
+
+  @override
+  String get importFailed => 'Neberljiva datoteka';
+
+  @override
+  String get location => 'Lokacija';
+
+  @override
+  String get locationHint => 'Npr.: polica A, suha škatla 2';
+
+  @override
+  String get notes => 'Opombe';
+
+  @override
+  String get notesHint => 'Npr.: posušiti pred uporabo';
+
+  @override
+  String get printCostTitle => 'Strošek tiskanja';
+
+  @override
+  String get printCostGrams => 'Porabljen filament (g)';
+
+  @override
+  String printCostResult(String cost) {
+    return 'Strošek materiala: $cost';
+  }
+
+  @override
+  String printCostPerKg(String price) {
+    return 'Cena na kg: $price';
+  }
+
+  @override
+  String get printCostNoPrice => 'Dodajte ceno tuljave za izračun stroška.';
+
+  @override
+  String get printCostDeduct => 'Odštej iz zaloge';
+
+  @override
+  String printCostDeducted(String grams) {
+    return '$grams g odšteto iz zaloge';
+  }
+
+  @override
+  String get consumptionTitle => 'Poraba';
+
+  @override
+  String get consumptionLast30Days => 'Zadnjih 30 dni';
+
+  @override
+  String get consumptionThisMonth => 'Ta mesec';
+
+  @override
+  String get consumptionByMaterial => 'Po materialu (30 dni)';
+
+  @override
+  String get consumptionMonthly => 'Zadnjih 6 mesecev';
+
+  @override
+  String get consumptionEmpty =>
+      'Poraba še ni zabeležena. Prikaže se, takoj ko posodobite preostalo težo tuljave ali uporabite kalkulator stroškov.';
+
+  @override
+  String get shareShoppingList => 'Deli seznam';
+
+  @override
+  String get nfcBlankTagTitle => 'Prazna oznaka';
+
+  @override
+  String get nfcBlankTagDesc =>
+      'Ta oznaka ne vsebuje podatkov o tuljavi. Tuljavo dodajte ročno ali oznako zapišite v aplikaciji.';
 }

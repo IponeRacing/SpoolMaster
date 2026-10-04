@@ -1356,4 +1356,137 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get genericBrand => 'सामान्य';
+
+  @override
+  String get stockSearchHint => 'खोजें (ब्रांड, रंग, स्थान…)';
+
+  @override
+  String get stockMoreActions => 'और कार्रवाइयाँ';
+
+  @override
+  String get exportExcel => 'Excel में एक्सपोर्ट करें';
+
+  @override
+  String get exportFailed => 'एक्सपोर्ट विफल रहा';
+
+  @override
+  String get exportShareSubject => 'मेरा फिलामेंट स्टॉक (Spool Master)';
+
+  @override
+  String get exportColorHex => 'रंग कोड';
+
+  @override
+  String get exportRemainingPercent => 'शेष (%)';
+
+  @override
+  String get exportPricePerKg => 'कीमत / kg';
+
+  @override
+  String get exportAddedDate => 'जोड़ने की तारीख';
+
+  @override
+  String get exportOrdered => 'ऑर्डर किया गया';
+
+  @override
+  String get exportDate => 'तारीख';
+
+  @override
+  String get exportGrams => 'ग्राम';
+
+  @override
+  String get exportCost => 'लागत';
+
+  @override
+  String get importSpools => 'इम्पोर्ट (CSV / Excel)';
+
+  @override
+  String get importConfirmTitle => 'स्पूल इम्पोर्ट करें';
+
+  @override
+  String importConfirmMessage(int count, int duplicates, int skipped) {
+    return 'जोड़े जाने वाले स्पूल: $count\nपहले से स्टॉक में (छोड़े गए): $duplicates\nपढ़ी न जा सकने वाली पंक्तियाँ (छोड़ी गईं): $skipped';
+  }
+
+  @override
+  String get importAction => 'इम्पोर्ट करें';
+
+  @override
+  String get importNothingFound =>
+      'कोई स्पूल नहीं मिला। फ़ाइल में कम से कम सामग्री और वजन के कॉलम होने चाहिए (ऐप के Excel एक्सपोर्ट की तरह)।';
+
+  @override
+  String importDone(int count) {
+    return 'इम्पोर्ट किए गए स्पूल: $count';
+  }
+
+  @override
+  String get importFailed => 'फ़ाइल पढ़ी नहीं जा सकी';
+
+  @override
+  String get location => 'स्थान';
+
+  @override
+  String get locationHint => 'उदा. शेल्फ A, ड्राई बॉक्स 2';
+
+  @override
+  String get notes => 'नोट्स';
+
+  @override
+  String get notesHint => 'उदा. उपयोग से पहले सुखाएँ';
+
+  @override
+  String get printCostTitle => 'प्रिंट की लागत';
+
+  @override
+  String get printCostGrams => 'उपयोग किया गया फिलामेंट (g)';
+
+  @override
+  String printCostResult(String cost) {
+    return 'सामग्री की लागत: $cost';
+  }
+
+  @override
+  String printCostPerKg(String price) {
+    return 'कीमत प्रति kg: $price';
+  }
+
+  @override
+  String get printCostNoPrice => 'लागत की गणना के लिए स्पूल की कीमत जोड़ें।';
+
+  @override
+  String get printCostDeduct => 'स्टॉक से घटाएँ';
+
+  @override
+  String printCostDeducted(String grams) {
+    return 'स्टॉक से $grams g घटाए गए';
+  }
+
+  @override
+  String get consumptionTitle => 'खपत';
+
+  @override
+  String get consumptionLast30Days => 'पिछले 30 दिन';
+
+  @override
+  String get consumptionThisMonth => 'इस महीने';
+
+  @override
+  String get consumptionByMaterial => 'सामग्री के अनुसार (30 दिन)';
+
+  @override
+  String get consumptionMonthly => 'पिछले 6 महीने';
+
+  @override
+  String get consumptionEmpty =>
+      'अभी तक कोई खपत दर्ज नहीं हुई। जैसे ही आप किसी स्पूल का शेष वजन अपडेट करेंगे या प्रिंट लागत कैलकुलेटर का उपयोग करेंगे, यह दिखाई देगी।';
+
+  @override
+  String get shareShoppingList => 'सूची साझा करें';
+
+  @override
+  String get nfcBlankTagTitle => 'खाली टैग';
+
+  @override
+  String get nfcBlankTagDesc =>
+      'इस टैग में स्पूल का कोई डेटा नहीं है। स्पूल को मैन्युअल रूप से जोड़ें या ऐप से यह टैग लिखें।';
 }

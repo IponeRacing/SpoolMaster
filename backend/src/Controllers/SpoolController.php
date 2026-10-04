@@ -7,6 +7,7 @@
 namespace NfcAnycubic\Controllers;
 
 use NfcAnycubic\Database;
+use NfcAnycubic\Logger;
 use NfcAnycubic\Middleware\AuthMiddleware;
 
 class SpoolController {
@@ -100,13 +101,15 @@ class SpoolController {
                 initial_weight, remaining_weight, price, diameter, spool_length,
                 extruder_temp_min, extruder_temp_max, bed_temp_min, bed_temp_max,
                 manufacture_date, batch_number, detailed_type, drying_temp, drying_time,
-                material_variant_id, material_id, purchase_date, notes, last_synced_at
+                material_variant_id, material_id, purchase_date, notes, location,
+                nozzle_size, vendor_code, product_code, added_date, last_synced_at
             ) VALUES (
                 :user_id, :spool_id, :brand, :material, :color_name, :color_rgb,
                 :initial_weight, :remaining_weight, :price, :diameter, :spool_length,
                 :extruder_temp_min, :extruder_temp_max, :bed_temp_min, :bed_temp_max,
                 :manufacture_date, :batch_number, :detailed_type, :drying_temp, :drying_time,
-                :material_variant_id, :material_id, :purchase_date, :notes, NOW()
+                :material_variant_id, :material_id, :purchase_date, :notes, :location,
+                :nozzle_size, :vendor_code, :product_code, :added_date, NOW()
             )"
         );
 
@@ -134,7 +137,12 @@ class SpoolController {
             'material_variant_id' => $input['material_variant_id'] ?? null,
             'material_id' => $input['material_id'] ?? null,
             'purchase_date' => $input['purchase_date'] ?? null,
-            'notes' => $input['notes'] ?? null
+            'notes' => ($input['notes'] ?? '') !== '' ? $input['notes'] : null,
+            'location' => ($input['location'] ?? '') !== '' ? $input['location'] : null,
+            'nozzle_size' => $input['nozzle_size'] ?? null,
+            'vendor_code' => $input['vendor_code'] ?? null,
+            'product_code' => $input['product_code'] ?? null,
+            'added_date' => $this->toDateTime($input['added_date'] ?? null)
         ]);
 
         return [
@@ -179,6 +187,11 @@ class SpoolController {
             // toute bobine ajoutée hors login n'était jamais sauvegardée).
             // Nécessite au minimum les champs obligatoires de la table.
             if (!isset($input['material'], $input['color_name'], $input['initial_weight'])) {
+                // Bobine absente du serveur et non créable : elle reste local-only.
+                Logger::warning('spools.upsert', 'Champs obligatoires manquants, bobine non créée', [
+                    'spool_id' => $spoolId,
+                    'keys' => array_keys($input),
+                ]);
                 return $this->error('Spool not found', 404);
             }
 
@@ -188,13 +201,15 @@ class SpoolController {
                     initial_weight, remaining_weight, price, diameter, spool_length,
                     extruder_temp_min, extruder_temp_max, bed_temp_min, bed_temp_max,
                     manufacture_date, batch_number, detailed_type, drying_temp, drying_time,
-                    material_variant_id, material_id, purchase_date, notes, last_synced_at
+                    material_variant_id, material_id, purchase_date, notes, location,
+                nozzle_size, vendor_code, product_code, added_date, last_synced_at
                 ) VALUES (
                     :user_id, :spool_id, :brand, :material, :color_name, :color_rgb,
                     :initial_weight, :remaining_weight, :price, :diameter, :spool_length,
                     :extruder_temp_min, :extruder_temp_max, :bed_temp_min, :bed_temp_max,
                     :manufacture_date, :batch_number, :detailed_type, :drying_temp, :drying_time,
-                    :material_variant_id, :material_id, :purchase_date, :notes, NOW()
+                    :material_variant_id, :material_id, :purchase_date, :notes, :location,
+                :nozzle_size, :vendor_code, :product_code, :added_date, NOW()
                 )"
             );
             $insert->execute([
@@ -221,7 +236,12 @@ class SpoolController {
                 'material_variant_id' => $input['material_variant_id'] ?? null,
                 'material_id' => $input['material_id'] ?? null,
                 'purchase_date' => $input['purchase_date'] ?? null,
-                'notes' => $input['notes'] ?? null,
+                'notes' => ($input['notes'] ?? '') !== '' ? $input['notes'] : null,
+                'location' => ($input['location'] ?? '') !== '' ? $input['location'] : null,
+                'nozzle_size' => $input['nozzle_size'] ?? null,
+                'vendor_code' => $input['vendor_code'] ?? null,
+                'product_code' => $input['product_code'] ?? null,
+                'added_date' => $this->toDateTime($input['added_date'] ?? null),
             ]);
 
             return [
@@ -242,13 +262,30 @@ class SpoolController {
             'remaining_weight', 'price', 'diameter', 'spool_length',
             'extruder_temp_min', 'extruder_temp_max', 'bed_temp_min', 'bed_temp_max',
             'manufacture_date', 'batch_number', 'detailed_type', 'drying_temp', 'drying_time',
-            'material_variant_id', 'material_id', 'purchase_date', 'notes'
+            'material_variant_id', 'material_id', 'purchase_date',
+            'nozzle_size', 'vendor_code', 'product_code'
         ];
 
         foreach ($allowedFields as $field) {
             if (isset($input[$field])) {
                 $fields[] = "$field = :$field";
                 $values[$field] = $input[$field];
+            }
+        }
+
+        // Date d'ajout (envoyée par l'app depuis toujours, stockée depuis 1.4.10)
+        if (isset($input['added_date']) && ($addedDate = $this->toDateTime($input['added_date'])) !== null) {
+            $fields[] = "added_date = :added_date";
+            $values['added_date'] = $addedDate;
+        }
+
+        // Champs texte libres (app 1.4.10+) : null ou "" = vidé par l'user.
+        // array_key_exists (pas isset) pour pouvoir les effacer ; absents du
+        // payload (apps <= 1.4.9) → non modifiés.
+        foreach (['notes', 'location'] as $field) {
+            if (array_key_exists($field, $input)) {
+                $fields[] = "$field = :$field";
+                $values[$field] = ($input[$field] ?? '') !== '' ? $input[$field] : null;
             }
         }
 
@@ -317,6 +354,16 @@ class SpoolController {
             mt_rand(0, 0x3fff) | 0x8000,
             mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff)
         );
+    }
+
+    /**
+     * Date ISO de l'app (« 2026-09-01T10:20:30.123 ») → DATETIME MariaDB.
+     * null si absente ou illisible.
+     */
+    private function toDateTime($value): ?string {
+        if ($value === null || $value === '') return null;
+        $ts = strtotime((string)$value);
+        return $ts === false ? null : date('Y-m-d H:i:s', $ts);
     }
 
     private function error(string $message, int $code = 400): array {

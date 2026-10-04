@@ -1357,4 +1357,138 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get genericBrand => 'Genel';
+
+  @override
+  String get stockSearchHint => 'Ara (marka, renk, konum…)';
+
+  @override
+  String get stockMoreActions => 'Daha fazla işlem';
+
+  @override
+  String get exportExcel => 'Excel\'e aktar';
+
+  @override
+  String get exportFailed => 'Dışa aktarma başarısız';
+
+  @override
+  String get exportShareSubject => 'Filament stokum (Spool Master)';
+
+  @override
+  String get exportColorHex => 'Renk kodu';
+
+  @override
+  String get exportRemainingPercent => 'Kalan (%)';
+
+  @override
+  String get exportPricePerKg => 'Fiyat / kg';
+
+  @override
+  String get exportAddedDate => 'Eklenme tarihi';
+
+  @override
+  String get exportOrdered => 'Sipariş edildi';
+
+  @override
+  String get exportDate => 'Tarih';
+
+  @override
+  String get exportGrams => 'Gram';
+
+  @override
+  String get exportCost => 'Maliyet';
+
+  @override
+  String get importSpools => 'İçe aktar (CSV / Excel)';
+
+  @override
+  String get importConfirmTitle => 'Makaraları içe aktar';
+
+  @override
+  String importConfirmMessage(int count, int duplicates, int skipped) {
+    return 'Eklenecek makara: $count\nZaten stokta (atlandı): $duplicates\nOkunamayan satır (atlandı): $skipped';
+  }
+
+  @override
+  String get importAction => 'İçe aktar';
+
+  @override
+  String get importNothingFound =>
+      'Hiç makara tanınmadı. Dosya en az Malzeme ve Ağırlık sütunlarını içermelidir (uygulamanın Excel dışa aktarımı gibi).';
+
+  @override
+  String importDone(int count) {
+    return 'İçe aktarılan makara: $count';
+  }
+
+  @override
+  String get importFailed => 'Dosya okunamıyor';
+
+  @override
+  String get location => 'Konum';
+
+  @override
+  String get locationHint => 'Ör.: A rafı, kuru kutu 2';
+
+  @override
+  String get notes => 'Notlar';
+
+  @override
+  String get notesHint => 'Ör.: kullanmadan önce kurutulmalı';
+
+  @override
+  String get printCostTitle => 'Baskı maliyeti';
+
+  @override
+  String get printCostGrams => 'Kullanılan filament (g)';
+
+  @override
+  String printCostResult(String cost) {
+    return 'Malzeme maliyeti: $cost';
+  }
+
+  @override
+  String printCostPerKg(String price) {
+    return 'Kg fiyatı: $price';
+  }
+
+  @override
+  String get printCostNoPrice =>
+      'Maliyeti hesaplamak için makara fiyatını ekleyin.';
+
+  @override
+  String get printCostDeduct => 'Stoktan düş';
+
+  @override
+  String printCostDeducted(String grams) {
+    return '$grams g stoktan düşüldü';
+  }
+
+  @override
+  String get consumptionTitle => 'Tüketim';
+
+  @override
+  String get consumptionLast30Days => 'Son 30 gün';
+
+  @override
+  String get consumptionThisMonth => 'Bu ay';
+
+  @override
+  String get consumptionByMaterial => 'Malzemeye göre (30 gün)';
+
+  @override
+  String get consumptionMonthly => 'Son 6 ay';
+
+  @override
+  String get consumptionEmpty =>
+      'Henüz kayıtlı tüketim yok. Bir makaranın kalan ağırlığını güncellediğinizde veya maliyet hesaplayıcısını kullandığınızda görünür.';
+
+  @override
+  String get shareShoppingList => 'Listeyi paylaş';
+
+  @override
+  String get nfcBlankTagTitle => 'Boş etiket';
+
+  @override
+  String get nfcBlankTagDesc =>
+      'Bu etiket makara verisi içermiyor. Makarayı manuel olarak ekleyin veya etiketi uygulamadan yazın.';
 }

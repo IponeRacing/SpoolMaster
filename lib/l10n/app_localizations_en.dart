@@ -1357,6 +1357,139 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get genericBrand => 'Generic';
+
+  @override
+  String get stockSearchHint => 'Search (brand, color, location…)';
+
+  @override
+  String get stockMoreActions => 'More actions';
+
+  @override
+  String get exportExcel => 'Export to Excel';
+
+  @override
+  String get exportFailed => 'Export failed';
+
+  @override
+  String get exportShareSubject => 'My filament inventory (Spool Master)';
+
+  @override
+  String get exportColorHex => 'Color code';
+
+  @override
+  String get exportRemainingPercent => 'Remaining (%)';
+
+  @override
+  String get exportPricePerKg => 'Price / kg';
+
+  @override
+  String get exportAddedDate => 'Date added';
+
+  @override
+  String get exportOrdered => 'Ordered';
+
+  @override
+  String get exportDate => 'Date';
+
+  @override
+  String get exportGrams => 'Grams';
+
+  @override
+  String get exportCost => 'Cost';
+
+  @override
+  String get importSpools => 'Import (CSV / Excel)';
+
+  @override
+  String get importConfirmTitle => 'Import spools';
+
+  @override
+  String importConfirmMessage(int count, int duplicates, int skipped) {
+    return 'Spools to add: $count\nAlready in stock (skipped): $duplicates\nUnreadable rows (skipped): $skipped';
+  }
+
+  @override
+  String get importAction => 'Import';
+
+  @override
+  String get importNothingFound =>
+      'No spools recognized. The file must contain at least Material and Weight columns (like the app\'s Excel export).';
+
+  @override
+  String importDone(int count) {
+    return 'Spools imported: $count';
+  }
+
+  @override
+  String get importFailed => 'Unreadable file';
+
+  @override
+  String get location => 'Location';
+
+  @override
+  String get locationHint => 'E.g. Shelf A, dry box 2';
+
+  @override
+  String get notes => 'Notes';
+
+  @override
+  String get notesHint => 'E.g. dry before use';
+
+  @override
+  String get printCostTitle => 'Print cost';
+
+  @override
+  String get printCostGrams => 'Filament used (g)';
+
+  @override
+  String printCostResult(String cost) {
+    return 'Material cost: $cost';
+  }
+
+  @override
+  String printCostPerKg(String price) {
+    return 'Price per kg: $price';
+  }
+
+  @override
+  String get printCostNoPrice => 'Add the spool price to calculate the cost.';
+
+  @override
+  String get printCostDeduct => 'Deduct from stock';
+
+  @override
+  String printCostDeducted(String grams) {
+    return '$grams g deducted from stock';
+  }
+
+  @override
+  String get consumptionTitle => 'Consumption';
+
+  @override
+  String get consumptionLast30Days => 'Last 30 days';
+
+  @override
+  String get consumptionThisMonth => 'This month';
+
+  @override
+  String get consumptionByMaterial => 'By material (30 days)';
+
+  @override
+  String get consumptionMonthly => 'Last 6 months';
+
+  @override
+  String get consumptionEmpty =>
+      'No consumption recorded yet. It appears as soon as you update a spool\'s remaining weight or use the print cost calculator.';
+
+  @override
+  String get shareShoppingList => 'Share list';
+
+  @override
+  String get nfcBlankTagTitle => 'Blank tag';
+
+  @override
+  String get nfcBlankTagDesc =>
+      'This tag contains no spool data. Add the spool manually or write this tag from the app.';
 }
 
 /// The translations for English, as used in Australia (`en_AU`).
@@ -2712,6 +2845,139 @@ class AppLocalizationsEnAu extends AppLocalizationsEn {
 
   @override
   String get genericBrand => 'Generic';
+
+  @override
+  String get stockSearchHint => 'Search (brand, color, location…)';
+
+  @override
+  String get stockMoreActions => 'More actions';
+
+  @override
+  String get exportExcel => 'Export to Excel';
+
+  @override
+  String get exportFailed => 'Export failed';
+
+  @override
+  String get exportShareSubject => 'My filament inventory (Spool Master)';
+
+  @override
+  String get exportColorHex => 'Color code';
+
+  @override
+  String get exportRemainingPercent => 'Remaining (%)';
+
+  @override
+  String get exportPricePerKg => 'Price / kg';
+
+  @override
+  String get exportAddedDate => 'Date added';
+
+  @override
+  String get exportOrdered => 'Ordered';
+
+  @override
+  String get exportDate => 'Date';
+
+  @override
+  String get exportGrams => 'Grams';
+
+  @override
+  String get exportCost => 'Cost';
+
+  @override
+  String get importSpools => 'Import (CSV / Excel)';
+
+  @override
+  String get importConfirmTitle => 'Import spools';
+
+  @override
+  String importConfirmMessage(int count, int duplicates, int skipped) {
+    return 'Spools to add: $count\nAlready in stock (skipped): $duplicates\nUnreadable rows (skipped): $skipped';
+  }
+
+  @override
+  String get importAction => 'Import';
+
+  @override
+  String get importNothingFound =>
+      'No spools recognized. The file must contain at least Material and Weight columns (like the app\'s Excel export).';
+
+  @override
+  String importDone(int count) {
+    return 'Spools imported: $count';
+  }
+
+  @override
+  String get importFailed => 'Unreadable file';
+
+  @override
+  String get location => 'Location';
+
+  @override
+  String get locationHint => 'E.g. Shelf A, dry box 2';
+
+  @override
+  String get notes => 'Notes';
+
+  @override
+  String get notesHint => 'E.g. dry before use';
+
+  @override
+  String get printCostTitle => 'Print cost';
+
+  @override
+  String get printCostGrams => 'Filament used (g)';
+
+  @override
+  String printCostResult(String cost) {
+    return 'Material cost: $cost';
+  }
+
+  @override
+  String printCostPerKg(String price) {
+    return 'Price per kg: $price';
+  }
+
+  @override
+  String get printCostNoPrice => 'Add the spool price to calculate the cost.';
+
+  @override
+  String get printCostDeduct => 'Deduct from stock';
+
+  @override
+  String printCostDeducted(String grams) {
+    return '$grams g deducted from stock';
+  }
+
+  @override
+  String get consumptionTitle => 'Consumption';
+
+  @override
+  String get consumptionLast30Days => 'Last 30 days';
+
+  @override
+  String get consumptionThisMonth => 'This month';
+
+  @override
+  String get consumptionByMaterial => 'By material (30 days)';
+
+  @override
+  String get consumptionMonthly => 'Last 6 months';
+
+  @override
+  String get consumptionEmpty =>
+      'No consumption recorded yet. It appears as soon as you update a spool\'s remaining weight or use the print cost calculator.';
+
+  @override
+  String get shareShoppingList => 'Share list';
+
+  @override
+  String get nfcBlankTagTitle => 'Blank tag';
+
+  @override
+  String get nfcBlankTagDesc =>
+      'This tag contains no spool data. Add the spool manually or write this tag from the app.';
 }
 
 /// The translations for English, as used in Canada (`en_CA`).
@@ -4067,6 +4333,139 @@ class AppLocalizationsEnCa extends AppLocalizationsEn {
 
   @override
   String get genericBrand => 'Generic';
+
+  @override
+  String get stockSearchHint => 'Search (brand, color, location…)';
+
+  @override
+  String get stockMoreActions => 'More actions';
+
+  @override
+  String get exportExcel => 'Export to Excel';
+
+  @override
+  String get exportFailed => 'Export failed';
+
+  @override
+  String get exportShareSubject => 'My filament inventory (Spool Master)';
+
+  @override
+  String get exportColorHex => 'Color code';
+
+  @override
+  String get exportRemainingPercent => 'Remaining (%)';
+
+  @override
+  String get exportPricePerKg => 'Price / kg';
+
+  @override
+  String get exportAddedDate => 'Date added';
+
+  @override
+  String get exportOrdered => 'Ordered';
+
+  @override
+  String get exportDate => 'Date';
+
+  @override
+  String get exportGrams => 'Grams';
+
+  @override
+  String get exportCost => 'Cost';
+
+  @override
+  String get importSpools => 'Import (CSV / Excel)';
+
+  @override
+  String get importConfirmTitle => 'Import spools';
+
+  @override
+  String importConfirmMessage(int count, int duplicates, int skipped) {
+    return 'Spools to add: $count\nAlready in stock (skipped): $duplicates\nUnreadable rows (skipped): $skipped';
+  }
+
+  @override
+  String get importAction => 'Import';
+
+  @override
+  String get importNothingFound =>
+      'No spools recognized. The file must contain at least Material and Weight columns (like the app\'s Excel export).';
+
+  @override
+  String importDone(int count) {
+    return 'Spools imported: $count';
+  }
+
+  @override
+  String get importFailed => 'Unreadable file';
+
+  @override
+  String get location => 'Location';
+
+  @override
+  String get locationHint => 'E.g. Shelf A, dry box 2';
+
+  @override
+  String get notes => 'Notes';
+
+  @override
+  String get notesHint => 'E.g. dry before use';
+
+  @override
+  String get printCostTitle => 'Print cost';
+
+  @override
+  String get printCostGrams => 'Filament used (g)';
+
+  @override
+  String printCostResult(String cost) {
+    return 'Material cost: $cost';
+  }
+
+  @override
+  String printCostPerKg(String price) {
+    return 'Price per kg: $price';
+  }
+
+  @override
+  String get printCostNoPrice => 'Add the spool price to calculate the cost.';
+
+  @override
+  String get printCostDeduct => 'Deduct from stock';
+
+  @override
+  String printCostDeducted(String grams) {
+    return '$grams g deducted from stock';
+  }
+
+  @override
+  String get consumptionTitle => 'Consumption';
+
+  @override
+  String get consumptionLast30Days => 'Last 30 days';
+
+  @override
+  String get consumptionThisMonth => 'This month';
+
+  @override
+  String get consumptionByMaterial => 'By material (30 days)';
+
+  @override
+  String get consumptionMonthly => 'Last 6 months';
+
+  @override
+  String get consumptionEmpty =>
+      'No consumption recorded yet. It appears as soon as you update a spool\'s remaining weight or use the print cost calculator.';
+
+  @override
+  String get shareShoppingList => 'Share list';
+
+  @override
+  String get nfcBlankTagTitle => 'Blank tag';
+
+  @override
+  String get nfcBlankTagDesc =>
+      'This tag contains no spool data. Add the spool manually or write this tag from the app.';
 }
 
 /// The translations for English, as used in the United Kingdom (`en_GB`).
@@ -5422,4 +5821,137 @@ class AppLocalizationsEnGb extends AppLocalizationsEn {
 
   @override
   String get genericBrand => 'Generic';
+
+  @override
+  String get stockSearchHint => 'Search (brand, color, location…)';
+
+  @override
+  String get stockMoreActions => 'More actions';
+
+  @override
+  String get exportExcel => 'Export to Excel';
+
+  @override
+  String get exportFailed => 'Export failed';
+
+  @override
+  String get exportShareSubject => 'My filament inventory (Spool Master)';
+
+  @override
+  String get exportColorHex => 'Color code';
+
+  @override
+  String get exportRemainingPercent => 'Remaining (%)';
+
+  @override
+  String get exportPricePerKg => 'Price / kg';
+
+  @override
+  String get exportAddedDate => 'Date added';
+
+  @override
+  String get exportOrdered => 'Ordered';
+
+  @override
+  String get exportDate => 'Date';
+
+  @override
+  String get exportGrams => 'Grams';
+
+  @override
+  String get exportCost => 'Cost';
+
+  @override
+  String get importSpools => 'Import (CSV / Excel)';
+
+  @override
+  String get importConfirmTitle => 'Import spools';
+
+  @override
+  String importConfirmMessage(int count, int duplicates, int skipped) {
+    return 'Spools to add: $count\nAlready in stock (skipped): $duplicates\nUnreadable rows (skipped): $skipped';
+  }
+
+  @override
+  String get importAction => 'Import';
+
+  @override
+  String get importNothingFound =>
+      'No spools recognized. The file must contain at least Material and Weight columns (like the app\'s Excel export).';
+
+  @override
+  String importDone(int count) {
+    return 'Spools imported: $count';
+  }
+
+  @override
+  String get importFailed => 'Unreadable file';
+
+  @override
+  String get location => 'Location';
+
+  @override
+  String get locationHint => 'E.g. Shelf A, dry box 2';
+
+  @override
+  String get notes => 'Notes';
+
+  @override
+  String get notesHint => 'E.g. dry before use';
+
+  @override
+  String get printCostTitle => 'Print cost';
+
+  @override
+  String get printCostGrams => 'Filament used (g)';
+
+  @override
+  String printCostResult(String cost) {
+    return 'Material cost: $cost';
+  }
+
+  @override
+  String printCostPerKg(String price) {
+    return 'Price per kg: $price';
+  }
+
+  @override
+  String get printCostNoPrice => 'Add the spool price to calculate the cost.';
+
+  @override
+  String get printCostDeduct => 'Deduct from stock';
+
+  @override
+  String printCostDeducted(String grams) {
+    return '$grams g deducted from stock';
+  }
+
+  @override
+  String get consumptionTitle => 'Consumption';
+
+  @override
+  String get consumptionLast30Days => 'Last 30 days';
+
+  @override
+  String get consumptionThisMonth => 'This month';
+
+  @override
+  String get consumptionByMaterial => 'By material (30 days)';
+
+  @override
+  String get consumptionMonthly => 'Last 6 months';
+
+  @override
+  String get consumptionEmpty =>
+      'No consumption recorded yet. It appears as soon as you update a spool\'s remaining weight or use the print cost calculator.';
+
+  @override
+  String get shareShoppingList => 'Share list';
+
+  @override
+  String get nfcBlankTagTitle => 'Blank tag';
+
+  @override
+  String get nfcBlankTagDesc =>
+      'This tag contains no spool data. Add the spool manually or write this tag from the app.';
 }

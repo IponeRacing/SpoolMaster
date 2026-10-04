@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:nfc_filament/core/models/spool_inventory_item.dart';
-import 'package:nfc_filament/core/widgets/filament_autocomplete_field.dart';
-import 'package:nfc_filament/features/nfc_reader/data/services/filament_library.dart';
 import 'package:nfc_filament/core/services/brands_materials_service.dart';
 import 'package:nfc_filament/core/services/user_preferences_service.dart';
+import 'package:nfc_filament/core/widgets/filament_autocomplete_field.dart';
 import 'package:nfc_filament/core/widgets/formatted_value_widgets.dart';
+import 'package:nfc_filament/features/nfc_reader/data/services/filament_library.dart';
 import 'package:nfc_filament/features/nfc_reader/presentation/widgets/color_picker_widget.dart';
 import 'package:nfc_filament/l10n/app_localizations.dart';
 
@@ -49,6 +49,8 @@ class _ManualAddSpoolPageState extends State<ManualAddSpoolPage> {
   late TextEditingController _spoolLengthController;
   late TextEditingController _dryingTempController;
   late TextEditingController _dryingTimeController;
+  late TextEditingController _locationController;
+  late TextEditingController _notesController;
   final _quantityController = TextEditingController(text: '1');
 
   Color _selectedColor = Colors.blue;
@@ -102,6 +104,8 @@ class _ManualAddSpoolPageState extends State<ManualAddSpoolPage> {
     _dryingTimeController = TextEditingController(
       text: spool?.dryingTime?.toString() ?? '',
     );
+    _locationController = TextEditingController(text: spool?.location ?? '');
+    _notesController = TextEditingController(text: spool?.notes ?? '');
     if (spool != null) {
       _selectedColor = Color(spool.colorRgb);
     }
@@ -153,6 +157,8 @@ class _ManualAddSpoolPageState extends State<ManualAddSpoolPage> {
     _spoolLengthController.dispose();
     _dryingTempController.dispose();
     _dryingTimeController.dispose();
+    _locationController.dispose();
+    _notesController.dispose();
     _quantityController.dispose();
     super.dispose();
   }
@@ -204,13 +210,19 @@ class _ManualAddSpoolPageState extends State<ManualAddSpoolPage> {
             if (!_isCustomBrand)
               DropdownButtonFormField<String>(
                 initialValue: _selectedBrand,
+                // Pleine largeur + ellipsis : un nom de marque long ne doit
+                // pas déborder (écran étroit, Split View sur pliable).
+                isExpanded: true,
                 decoration: InputDecoration(
                   labelText: AppLocalizations.of(context)!.brand,
                   border: const OutlineInputBorder(),
                   prefixIcon: const Icon(Icons.label),
                 ),
                 items: _knownBrands.map((brand) {
-                  return DropdownMenuItem(value: brand, child: Text(brand));
+                  return DropdownMenuItem(
+                    value: brand,
+                    child: Text(brand, overflow: TextOverflow.ellipsis),
+                  );
                 }).toList(),
                 onChanged: (value) {
                   if (value == AppLocalizations.of(context)!.addBrand) {
@@ -269,6 +281,7 @@ class _ManualAddSpoolPageState extends State<ManualAddSpoolPage> {
             if (!_isCustomMaterial)
               DropdownButtonFormField<String>(
                 initialValue: _selectedMaterial,
+                isExpanded: true,
                 decoration: InputDecoration(
                   labelText: AppLocalizations.of(context)!.materialType,
                   border: const OutlineInputBorder(),
@@ -277,7 +290,7 @@ class _ManualAddSpoolPageState extends State<ManualAddSpoolPage> {
                 items: _knownMaterials.map((material) {
                   return DropdownMenuItem(
                     value: material,
-                    child: Text(material),
+                    child: Text(material, overflow: TextOverflow.ellipsis),
                   );
                 }).toList(),
                 onChanged: (value) {
@@ -426,7 +439,9 @@ class _ManualAddSpoolPageState extends State<ManualAddSpoolPage> {
                     if (value == null || value.isEmpty) {
                       return AppLocalizations.of(context)!.enterWeight;
                     }
-                    if (double.tryParse(value) == null) {
+                    // 0 refusé : une bobine à 0 g s'affiche vide dès l'ajout.
+                    final weight = double.tryParse(value);
+                    if (weight == null || weight <= 0) {
                       return AppLocalizations.of(context)!.enterValidWeight;
                     }
                     return null;
@@ -485,7 +500,7 @@ class _ManualAddSpoolPageState extends State<ManualAddSpoolPage> {
                   controller: _extruderTempMinController,
                   decoration: InputDecoration(
                     labelText:
-                        '${AppLocalizations.of(context)!.extruderTempMin} ($tempUnit)',
+                        _withUnit(AppLocalizations.of(context)!.extruderTempMin, tempUnit),
                     hintText: AppLocalizations.of(context)!.extruderTempMinHint,
                     border: const OutlineInputBorder(),
                     prefixIcon: const Icon(Icons.thermostat),
@@ -509,7 +524,7 @@ class _ManualAddSpoolPageState extends State<ManualAddSpoolPage> {
                   controller: _extruderTempMaxController,
                   decoration: InputDecoration(
                     labelText:
-                        '${AppLocalizations.of(context)!.extruderTempMax} ($tempUnit)',
+                        _withUnit(AppLocalizations.of(context)!.extruderTempMax, tempUnit),
                     hintText: AppLocalizations.of(context)!.extruderTempMaxHint,
                     border: const OutlineInputBorder(),
                     prefixIcon: const Icon(Icons.thermostat),
@@ -533,7 +548,7 @@ class _ManualAddSpoolPageState extends State<ManualAddSpoolPage> {
                   controller: _bedTempMinController,
                   decoration: InputDecoration(
                     labelText:
-                        '${AppLocalizations.of(context)!.bedTempMin} ($tempUnit)',
+                        _withUnit(AppLocalizations.of(context)!.bedTempMin, tempUnit),
                     hintText: AppLocalizations.of(context)!.bedTempMinHint,
                     border: const OutlineInputBorder(),
                     prefixIcon: const Icon(Icons.bed),
@@ -557,7 +572,7 @@ class _ManualAddSpoolPageState extends State<ManualAddSpoolPage> {
                   controller: _bedTempMaxController,
                   decoration: InputDecoration(
                     labelText:
-                        '${AppLocalizations.of(context)!.bedTempMax} ($tempUnit)',
+                        _withUnit(AppLocalizations.of(context)!.bedTempMax, tempUnit),
                     hintText: AppLocalizations.of(context)!.bedTempMaxHint,
                     border: const OutlineInputBorder(),
                     prefixIcon: const Icon(Icons.bed),
@@ -657,6 +672,38 @@ class _ManualAddSpoolPageState extends State<ManualAddSpoolPage> {
               keyboardType: TextInputType.number,
               inputFormatters: [FilteringTextInputFormatter.digitsOnly],
             ),
+            const SizedBox(height: 16),
+            // Emplacement (où est rangée la bobine)
+            TextFormField(
+              key: const Key('spoolLocationField'),
+              controller: _locationController,
+              textCapitalization: TextCapitalization.sentences,
+              maxLength: 100,
+              decoration: InputDecoration(
+                labelText: AppLocalizations.of(context)!.location,
+                hintText: AppLocalizations.of(context)!.locationHint,
+                border: const OutlineInputBorder(),
+                prefixIcon: const Icon(Icons.place_outlined),
+                counterText: '',
+              ),
+            ),
+            const SizedBox(height: 16),
+            // Notes libres
+            TextFormField(
+              key: const Key('spoolNotesField'),
+              controller: _notesController,
+              textCapitalization: TextCapitalization.sentences,
+              minLines: 2,
+              maxLines: 5,
+              maxLength: 1000,
+              decoration: InputDecoration(
+                labelText: AppLocalizations.of(context)!.notes,
+                hintText: AppLocalizations.of(context)!.notesHint,
+                border: const OutlineInputBorder(),
+                prefixIcon: const Icon(Icons.notes),
+                alignLabelWithHint: true,
+              ),
+            ),
             const SizedBox(height: 24),
             ElevatedButton(
               onPressed: _saveSpool,
@@ -677,6 +724,12 @@ class _ManualAddSpoolPageState extends State<ManualAddSpoolPage> {
       ),
     );
   }
+
+  /// Libellé + unité de l'utilisateur. Certaines traductions contiennent
+  /// déjà « (°C) » : on le retire pour éviter « (°C) (°C) » ou, en unités
+  /// impériales, un faux « (°C) (°F) ».
+  static String _withUnit(String label, String unit) =>
+      '${label.replaceAll(RegExp(r'\s*\(°[CF]\)'), '')} ($unit)';
 
   void _showColorPicker() {
     Navigator.push<void>(
@@ -724,6 +777,13 @@ class _ManualAddSpoolPageState extends State<ManualAddSpoolPage> {
 
       final baseTs = DateTime.now().millisecondsSinceEpoch;
 
+      final location = _locationController.text.trim();
+      final notes = _notesController.text.trim();
+      // En édition, les champs non présents dans le formulaire (données lues
+      // sur le tag NFC : lot, type détaillé, ids matériau…) sont conservés.
+      // Avant, l'édition reconstruisait la bobine et les perdait.
+      final original = widget.editSpool;
+
       SpoolInventoryItem buildSpool(String id) => SpoolInventoryItem(
             id: id,
             brand: brand,
@@ -743,6 +803,16 @@ class _ManualAddSpoolPageState extends State<ManualAddSpoolPage> {
             spoolLength: int.tryParse(_spoolLengthController.text),
             dryingTemp: int.tryParse(_dryingTempController.text),
             dryingTime: int.tryParse(_dryingTimeController.text),
+            manufactureDate: original?.manufactureDate,
+            batchNumber: original?.batchNumber,
+            detailedType: original?.detailedType,
+            materialVariantId: original?.materialVariantId,
+            materialId: original?.materialId,
+            nozzleSize: original?.nozzleSize,
+            vendorCode: original?.vendorCode,
+            productCode: original?.productCode,
+            location: location.isEmpty ? null : location,
+            notes: notes.isEmpty ? null : notes,
           );
 
       if (isEditing || quantity == 1) {

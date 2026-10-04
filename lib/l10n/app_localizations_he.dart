@@ -1348,4 +1348,137 @@ class AppLocalizationsHe extends AppLocalizations {
 
   @override
   String get genericBrand => 'כללי';
+
+  @override
+  String get stockSearchHint => 'חיפוש (מותג, צבע, מיקום…)';
+
+  @override
+  String get stockMoreActions => 'פעולות נוספות';
+
+  @override
+  String get exportExcel => 'ייצוא ל-Excel';
+
+  @override
+  String get exportFailed => 'הייצוא נכשל';
+
+  @override
+  String get exportShareSubject => 'מלאי הפילמנט שלי (Spool Master)';
+
+  @override
+  String get exportColorHex => 'קוד צבע';
+
+  @override
+  String get exportRemainingPercent => 'נותר (%)';
+
+  @override
+  String get exportPricePerKg => 'מחיר / ק״ג';
+
+  @override
+  String get exportAddedDate => 'תאריך הוספה';
+
+  @override
+  String get exportOrdered => 'הוזמן';
+
+  @override
+  String get exportDate => 'תאריך';
+
+  @override
+  String get exportGrams => 'גרם';
+
+  @override
+  String get exportCost => 'עלות';
+
+  @override
+  String get importSpools => 'ייבוא (CSV / Excel)';
+
+  @override
+  String get importConfirmTitle => 'ייבוא סלילים';
+
+  @override
+  String importConfirmMessage(int count, int duplicates, int skipped) {
+    return 'סלילים להוספה: $count\nכבר במלאי (דולגו): $duplicates\nשורות לא קריאות (דולגו): $skipped';
+  }
+
+  @override
+  String get importAction => 'ייבוא';
+
+  @override
+  String get importNothingFound =>
+      'לא זוהו סלילים. הקובץ חייב לכלול לפחות את העמודות חומר ומשקל (כמו ייצוא ה-Excel של האפליקציה).';
+
+  @override
+  String importDone(int count) {
+    return 'סלילים שיובאו: $count';
+  }
+
+  @override
+  String get importFailed => 'הקובץ אינו קריא';
+
+  @override
+  String get location => 'מיקום';
+
+  @override
+  String get locationHint => 'לדוגמה: מדף A, קופסה יבשה 2';
+
+  @override
+  String get notes => 'הערות';
+
+  @override
+  String get notesHint => 'לדוגמה: לייבש לפני שימוש';
+
+  @override
+  String get printCostTitle => 'עלות הדפסה';
+
+  @override
+  String get printCostGrams => 'פילמנט בשימוש (g)';
+
+  @override
+  String printCostResult(String cost) {
+    return 'עלות חומר: $cost';
+  }
+
+  @override
+  String printCostPerKg(String price) {
+    return 'מחיר לק״ג: $price';
+  }
+
+  @override
+  String get printCostNoPrice => 'הוסיפו את מחיר הסליל כדי לחשב את העלות.';
+
+  @override
+  String get printCostDeduct => 'הפחת מהמלאי';
+
+  @override
+  String printCostDeducted(String grams) {
+    return '$grams g הופחתו מהמלאי';
+  }
+
+  @override
+  String get consumptionTitle => 'צריכה';
+
+  @override
+  String get consumptionLast30Days => '30 הימים האחרונים';
+
+  @override
+  String get consumptionThisMonth => 'החודש';
+
+  @override
+  String get consumptionByMaterial => 'לפי חומר (30 יום)';
+
+  @override
+  String get consumptionMonthly => '6 החודשים האחרונים';
+
+  @override
+  String get consumptionEmpty =>
+      'עדיין לא נרשמה צריכה. היא תופיע ברגע שתעדכנו את המשקל הנותר של סליל או תשתמשו במחשבון עלות ההדפסה.';
+
+  @override
+  String get shareShoppingList => 'שתף רשימה';
+
+  @override
+  String get nfcBlankTagTitle => 'תג ריק';
+
+  @override
+  String get nfcBlankTagDesc =>
+      'התג הזה לא מכיל נתוני סליל. הוסיפו את הסליל ידנית או כתבו את התג מהאפליקציה.';
 }

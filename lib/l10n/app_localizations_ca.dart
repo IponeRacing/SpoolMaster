@@ -1367,4 +1367,138 @@ class AppLocalizationsCa extends AppLocalizations {
 
   @override
   String get genericBrand => 'Genèric';
+
+  @override
+  String get stockSearchHint => 'Cerca (marca, color, ubicació…)';
+
+  @override
+  String get stockMoreActions => 'Més accions';
+
+  @override
+  String get exportExcel => 'Exporta a Excel';
+
+  @override
+  String get exportFailed => 'No s\'ha pogut exportar';
+
+  @override
+  String get exportShareSubject => 'El meu estoc de filament (Spool Master)';
+
+  @override
+  String get exportColorHex => 'Codi de color';
+
+  @override
+  String get exportRemainingPercent => 'Restant (%)';
+
+  @override
+  String get exportPricePerKg => 'Preu / kg';
+
+  @override
+  String get exportAddedDate => 'Data d\'addició';
+
+  @override
+  String get exportOrdered => 'Comanda feta';
+
+  @override
+  String get exportDate => 'Data';
+
+  @override
+  String get exportGrams => 'Grams';
+
+  @override
+  String get exportCost => 'Cost';
+
+  @override
+  String get importSpools => 'Importa (CSV / Excel)';
+
+  @override
+  String get importConfirmTitle => 'Importa bobines';
+
+  @override
+  String importConfirmMessage(int count, int duplicates, int skipped) {
+    return 'Bobines per afegir: $count\nJa en estoc (ignorades): $duplicates\nFiles il·legibles (ignorades): $skipped';
+  }
+
+  @override
+  String get importAction => 'Importa';
+
+  @override
+  String get importNothingFound =>
+      'No s\'ha reconegut cap bobina. El fitxer ha de contenir almenys les columnes Material i Pes (com l\'exportació Excel de l\'aplicació).';
+
+  @override
+  String importDone(int count) {
+    return 'Bobines importades: $count';
+  }
+
+  @override
+  String get importFailed => 'Fitxer il·legible';
+
+  @override
+  String get location => 'Ubicació';
+
+  @override
+  String get locationHint => 'Ex.: Prestatge A, caixa seca 2';
+
+  @override
+  String get notes => 'Notes';
+
+  @override
+  String get notesHint => 'Ex.: assecar abans d\'usar';
+
+  @override
+  String get printCostTitle => 'Cost d\'una impressió';
+
+  @override
+  String get printCostGrams => 'Filament utilitzat (g)';
+
+  @override
+  String printCostResult(String cost) {
+    return 'Cost del material: $cost';
+  }
+
+  @override
+  String printCostPerKg(String price) {
+    return 'Preu per kg: $price';
+  }
+
+  @override
+  String get printCostNoPrice =>
+      'Afegeix el preu de la bobina per calcular el cost.';
+
+  @override
+  String get printCostDeduct => 'Descomptar de l\'estoc';
+
+  @override
+  String printCostDeducted(String grams) {
+    return '$grams g descomptats de l\'estoc';
+  }
+
+  @override
+  String get consumptionTitle => 'Consum';
+
+  @override
+  String get consumptionLast30Days => 'Últims 30 dies';
+
+  @override
+  String get consumptionThisMonth => 'Aquest mes';
+
+  @override
+  String get consumptionByMaterial => 'Per material (30 dies)';
+
+  @override
+  String get consumptionMonthly => 'Últims 6 mesos';
+
+  @override
+  String get consumptionEmpty =>
+      'Encara no hi ha cap consum registrat. Apareix tan bon punt actualitzes el pes restant d\'una bobina o uses la calculadora de cost.';
+
+  @override
+  String get shareShoppingList => 'Comparteix la llista';
+
+  @override
+  String get nfcBlankTagTitle => 'Etiqueta buida';
+
+  @override
+  String get nfcBlankTagDesc =>
+      'Aquesta etiqueta no conté dades de bobina. Afegiu la bobina manualment o escriviu aquesta etiqueta des de l\'app.';
 }

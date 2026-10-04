@@ -8,20 +8,28 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:nfc_filament/core/api/api_config.dart';
 import 'package:nfc_filament/core/models/spool_inventory_item.dart';
+import 'package:nfc_filament/core/models/spool_usage_event.dart';
+import 'package:nfc_filament/core/platform/orientation_policy.dart';
 import 'package:nfc_filament/core/services/admob_service.dart';
 import 'package:nfc_filament/core/services/analytics_service.dart';
 import 'package:nfc_filament/core/services/shopping_list_service.dart';
-import 'package:nfc_filament/core/services/update_service.dart';
 import 'package:nfc_filament/core/services/spool_storage_service.dart';
 import 'package:nfc_filament/core/services/subscription_service.dart';
 import 'package:nfc_filament/core/services/sync_service.dart';
+import 'package:nfc_filament/core/services/update_service.dart';
+import 'package:nfc_filament/core/services/usage_history_service.dart';
 import 'package:nfc_filament/core/services/user_preferences_service.dart';
 import 'package:nfc_filament/core/theme/app_theme.dart';
 import 'package:nfc_filament/core/utils/color_translator.dart';
 import 'package:nfc_filament/core/widgets/ad_banner_widget.dart';
 import 'package:nfc_filament/core/widgets/formatted_value_widgets.dart';
+import 'package:nfc_filament/core/widgets/responsive.dart';
 import 'package:nfc_filament/dependency_injection.dart';
 import 'package:nfc_filament/features/auth/presentation/pages/splash_page.dart';
+import 'package:nfc_filament/features/inventory/presentation/consumption_section.dart';
+import 'package:nfc_filament/features/inventory/presentation/print_cost_dialog.dart';
+import 'package:nfc_filament/features/inventory/presentation/stock_search.dart';
+import 'package:nfc_filament/features/inventory/presentation/stock_transfer_actions.dart';
 import 'package:nfc_filament/features/nfc_reader/domain/entities/bobbin_data.dart';
 import 'package:nfc_filament/features/nfc_reader/presentation/pages/direct_scan_page.dart';
 import 'package:nfc_filament/features/nfc_reader/presentation/pages/manual_add_spool_page.dart';
@@ -56,11 +64,10 @@ void main() async {
     ),
   );
 
-  // Lock orientation to portrait mode on phones (tablets can rotate)
-  await SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp,
-    DeviceOrientation.portraitDown,
-  ]);
+  // Portrait sur téléphone, libre sur grand écran (pliable ouvert,
+  // tablette) : l'iPhone Duo et Android 16 ignorent le verrouillage sur
+  // grand écran, l'UI s'adapte. Réévalué au pliage / dépliage.
+  await OrientationPolicy.instance.start();
 
   // Firebase + Crashlytics
   await Firebase.initializeApp(
@@ -68,7 +75,7 @@ void main() async {
   );
   FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
   WidgetsBinding.instance.platformDispatcher.onError =
-      (Object error, StackTrace stack) {
+      (error, stack) {
     FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
     return true;
   };
@@ -249,8 +256,10 @@ class MainNavigationPageState extends State<MainNavigationPage>
     try {
       if (!await UserPreferencesService.isSignedIn()) return;
       await SyncService.flushPendingQueue();
-    } catch (_) {
-      // fail-open : ne jamais bloquer sur une erreur de sync
+    } catch (e, stack) {
+      // fail-open : ne jamais bloquer sur une erreur de sync, mais la tracer
+      unawaited(FirebaseCrashlytics.instance
+          .recordError(e, stack, reason: 'sync:flush_on_resume'));
     }
   }
 
@@ -264,8 +273,10 @@ class MainNavigationPageState extends State<MainNavigationPage>
       if (!await UserPreferencesService.isSignedIn()) return;
       await SyncService.fullSync();
       if (mounted) await _stockKey.currentState?._loadData();
-    } catch (_) {
-      // ne jamais bloquer l'app sur une erreur de sync
+    } catch (e, stack) {
+      // ne jamais bloquer l'app sur une erreur de sync, mais la tracer
+      unawaited(FirebaseCrashlytics.instance
+          .recordError(e, stack, reason: 'sync:launch'));
     }
   }
 
@@ -274,8 +285,49 @@ class MainNavigationPageState extends State<MainNavigationPage>
     setState(() {});
   }
 
+  void _selectTab(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+    // Reload statistics when switching to it
+    if (index == 2) {
+      _statisticsKey.currentState?._loadData();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
+    final tabs = [
+      (icon: Icons.nfc, label: l.nfc),
+      (icon: Icons.inventory_2, label: l.stock),
+      (icon: Icons.analytics, label: l.statistics),
+    ];
+    // Grand écran (pliable ouvert, tablette, paysage) : rail latéral au lieu
+    // de la barre du bas, qui gaspille la hauteur en paysage.
+    final wide = context.isWideLayout;
+
+    final pages = IndexedStack(
+      index: _selectedIndex,
+      children: [
+        Stack(
+          children: [
+            const NfcReaderPage(),
+            // Pré-charger la page d'écriture invisible
+            Offstage(
+              child: Navigator(
+                onGenerateRoute: (settings) => MaterialPageRoute<void>(
+                  builder: (context) => const NfcWriterPage(),
+                ),
+              ),
+            ),
+          ],
+        ),
+        StockListPage(key: _stockKey),
+        StatisticsPage(key: _statisticsKey),
+      ],
+    );
+
     return PopScope(
       canPop: false,
       onPopInvokedWithResult: (didPop, result) {
@@ -286,114 +338,41 @@ class MainNavigationPageState extends State<MainNavigationPage>
         }
       },
       child: Scaffold(
-      body: IndexedStack(
-        index: _selectedIndex,
-        children: [
-          Stack(
-            children: [
-              const NfcReaderPage(),
-              // Pré-charger la page d'écriture invisible
-              Offstage(
-                child: Navigator(
-                  onGenerateRoute: (settings) => MaterialPageRoute<void>(
-                    builder: (context) => const NfcWriterPage(),
+      body: wide
+          ? Row(
+              children: [
+                SafeArea(
+                  right: false,
+                  child: NavigationRail(
+                    key: const Key('mainNavigationRail'),
+                    selectedIndex: _selectedIndex,
+                    onDestinationSelected: _selectTab,
+                    labelType: NavigationRailLabelType.all,
+                    destinations: [
+                      for (final t in tabs)
+                        NavigationRailDestination(
+                          icon: Icon(t.icon),
+                          label: Text(t.label),
+                        ),
+                    ],
                   ),
                 ),
-              ),
-            ],
-          ),
-          StockListPage(key: _stockKey),
-          StatisticsPage(key: _statisticsKey),
-        ],
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _selectedIndex,
-        onTap: (index) {
-          setState(() {
-            _selectedIndex = index;
-          });
-          // Reload statistics when switching to it
-          if (index == 2) {
-            _statisticsKey.currentState?._loadData();
-          }
-        },
-        items: [
-          BottomNavigationBarItem(
-            icon: const Icon(Icons.nfc),
-            label: AppLocalizations.of(context)!.nfc,
-          ),
-          BottomNavigationBarItem(
-            icon: const Icon(Icons.inventory_2),
-            label: AppLocalizations.of(context)!.stock,
-          ),
-          BottomNavigationBarItem(
-            icon: const Icon(Icons.analytics),
-            label: AppLocalizations.of(context)!.statistics,
-          ),
-        ],
-      ),
+                const VerticalDivider(width: 1),
+                Expanded(child: pages),
+              ],
+            )
+          : pages,
+      bottomNavigationBar: wide
+          ? null
+          : BottomNavigationBar(
+              currentIndex: _selectedIndex,
+              onTap: _selectTab,
+              items: [
+                for (final t in tabs)
+                  BottomNavigationBarItem(icon: Icon(t.icon), label: t.label),
+              ],
+            ),
     ),
-    );
-  }
-}
-
-// Model for shopping list items
-class ShoppingListItem {
-
-  ShoppingListItem({
-    required this.id,
-    required this.brand,
-    required this.material,
-    required this.colorName,
-    required this.colorRgb,
-    required this.addedDate, this.isOrdered = false,
-  });
-
-  factory ShoppingListItem.fromJson(Map<String, dynamic> json) =>
-      ShoppingListItem(
-        id: json['id'] as String,
-        brand: json['brand'] as String,
-        material: json['material'] as String,
-        colorName: json['colorName'] as String,
-        colorRgb: json['colorRgb'] as int,
-        isOrdered: json['isOrdered'] as bool? ?? false,
-        addedDate: DateTime.parse(json['addedDate'] as String),
-      );
-  final String id;
-  final String brand;
-  final String material;
-  final String colorName;
-  final int colorRgb;
-  final bool isOrdered;
-  final DateTime addedDate;
-
-  Map<String, dynamic> toJson() => {
-    'id': id,
-    'brand': brand,
-    'material': material,
-    'colorName': colorName,
-    'colorRgb': colorRgb,
-    'isOrdered': isOrdered,
-    'addedDate': addedDate.toIso8601String(),
-  };
-
-  ShoppingListItem copyWith({
-    String? id,
-    String? brand,
-    String? material,
-    String? colorName,
-    int? colorRgb,
-    bool? isOrdered,
-    DateTime? addedDate,
-  }) {
-    return ShoppingListItem(
-      id: id ?? this.id,
-      brand: brand ?? this.brand,
-      material: material ?? this.material,
-      colorName: colorName ?? this.colorName,
-      colorRgb: colorRgb ?? this.colorRgb,
-      isOrdered: isOrdered ?? this.isOrdered,
-      addedDate: addedDate ?? this.addedDate,
     );
   }
 }
@@ -418,10 +397,20 @@ class _StockListPageState extends State<StockListPage> {
   String? _filterBrand;
   String? _filterMaterial;
 
+  // Recherche texte (marque, couleur, emplacement, notes…)
+  final _searchController = TextEditingController();
+  String _searchQuery = '';
+
   @override
   void initState() {
     super.initState();
     _loadData();
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
   }
 
   @override
@@ -477,6 +466,14 @@ class _StockListPageState extends State<StockListPage> {
     final list = _spools.where((s) {
       if (_filterBrand != null && s.brand != _filterBrand) return false;
       if (_filterMaterial != null && s.material != _filterMaterial) return false;
+      if (_searchQuery.isNotEmpty &&
+          !matchesStockSearch(
+            s,
+            _searchQuery,
+            translatedColor: translateColorName(context, s.colorName),
+          )) {
+        return false;
+      }
       return true;
     }).toList();
 
@@ -512,11 +509,55 @@ class _StockListPageState extends State<StockListPage> {
     };
   }
 
+  Future<void> _onMenuAction(String action, Rect origin) async {
+    switch (action) {
+      case 'export':
+        await exportStockToExcel(context, origin: origin);
+      case 'import':
+        final imported = await importSpoolsFromFile(context);
+        if (imported > 0) await _loadSpools();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    // Clavier ouvert (recherche) : en paysage (tablette, pliable ouvert) la
+    // hauteur restante est faible → on masque l'alerte et les boutons du bas
+    // pour laisser la place à la liste.
+    final keyboardOpen = MediaQuery.viewInsetsOf(context).bottom > 0;
     return Scaffold(
       appBar: AppBar(
         actions: [
+          // Export Excel / import CSV
+          Builder(
+            builder: (buttonContext) => PopupMenuButton<String>(
+              key: const Key('stockMoreMenu'),
+              icon: const Icon(Icons.more_vert),
+              tooltip: AppLocalizations.of(context)!.stockMoreActions,
+              onSelected: (action) =>
+                  _onMenuAction(action, shareOriginOf(buttonContext)),
+              itemBuilder: (_) => [
+                PopupMenuItem(
+                  value: 'export',
+                  key: const Key('stockMenuExport'),
+                  child: ListTile(
+                    contentPadding: EdgeInsets.zero,
+                    leading: const Icon(Icons.table_view_outlined),
+                    title: Text(AppLocalizations.of(context)!.exportExcel),
+                  ),
+                ),
+                PopupMenuItem(
+                  value: 'import',
+                  key: const Key('stockMenuImport'),
+                  child: ListTile(
+                    contentPadding: EdgeInsets.zero,
+                    leading: const Icon(Icons.upload_file_outlined),
+                    title: Text(AppLocalizations.of(context)!.importSpools),
+                  ),
+                ),
+              ],
+            ),
+          ),
           IconButton(
             icon: const Icon(Icons.person),
             tooltip: AppLocalizations.of(context)!.profile,
@@ -561,7 +602,7 @@ class _StockListPageState extends State<StockListPage> {
           : Column(
               children: [
                 // Section alertes stock bas
-                if (_lowStockSpools.isNotEmpty)
+                if (_lowStockSpools.isNotEmpty && !keyboardOpen)
                   Container(
                     width: double.infinity,
                     margin: const EdgeInsets.all(16),
@@ -601,6 +642,8 @@ class _StockListPageState extends State<StockListPage> {
                     vertical: 8,
                   ),
                 ),
+                // Recherche
+                _buildSearchField(context),
                 // Barre tri + filtre
                 _buildSortFilterBar(context),
                 // Liste des bobines, regroupées par type
@@ -620,30 +663,22 @@ class _StockListPageState extends State<StockListPage> {
                           ),
                         );
                       }
+                      final rows = _buildStockRows(
+                        groups,
+                        columns: context.screenWidth >= Breakpoints.expanded ? 2 : 1,
+                      );
                       return ListView.builder(
+                        key: const Key('stockList'),
                         padding: const EdgeInsets.symmetric(horizontal: 16),
-                        itemCount: groups.length + (groups.length ~/ 5),
-                        itemBuilder: (context, index) {
-                          // Une pub tous les 6 éléments
-                          if (index > 0 && (index + 1) % 6 == 0) {
-                            return AdBannerWidget(
-                              adUnitId: AdMobService().stockListBannerId,
-                              margin: const EdgeInsets.symmetric(vertical: 12),
-                            );
-                          }
-                          final groupIndex = index - (index ~/ 6);
-                          if (groupIndex >= groups.length) {
-                            return const SizedBox.shrink();
-                          }
-                          return _buildGroupTile(groups[groupIndex]);
-                        },
+                        itemCount: rows.length,
+                        itemBuilder: (context, index) => rows[index],
                       );
                     },
                   ),
                 ),
               ],
             ),
-      bottomNavigationBar: Padding(
+      bottomNavigationBar: keyboardOpen ? null : Padding(
         padding: const EdgeInsets.all(16),
         child: Row(
           children: [
@@ -687,6 +722,81 @@ class _StockListPageState extends State<StockListPage> {
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  /// Lignes de la liste Stock : une pub après chaque bloc de 5 groupes ;
+  /// sur grand écran (pliable ouvert, tablette) les groupes sont posés deux
+  /// par ligne, les pubs restent pleine largeur.
+  List<Widget> _buildStockRows(
+    List<List<SpoolInventoryItem>> groups, {
+    required int columns,
+  }) {
+    final rows = <Widget>[];
+    final pending = <Widget>[];
+    void flush() {
+      if (pending.isEmpty) return;
+      rows.add(
+        columns == 1
+            ? pending.first
+            : Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(child: pending.first),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: pending.length > 1
+                        ? pending[1]
+                        : const SizedBox.shrink(),
+                  ),
+                ],
+              ),
+      );
+      pending.clear();
+    }
+
+    for (var i = 0; i < groups.length; i++) {
+      if (i > 0 && i % 5 == 0) {
+        flush();
+        rows.add(AdBannerWidget(
+          adUnitId: AdMobService().stockListBannerId,
+          margin: const EdgeInsets.symmetric(vertical: 12),
+        ));
+      }
+      pending.add(_buildGroupTile(groups[i]));
+      if (pending.length == columns) flush();
+    }
+    flush();
+    return rows;
+  }
+
+  Widget _buildSearchField(BuildContext context) {
+    final l = AppLocalizations.of(context)!;
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
+      child: TextField(
+        key: const Key('stockSearchField'),
+        controller: _searchController,
+        textInputAction: TextInputAction.search,
+        onChanged: (v) => setState(() => _searchQuery = v.trim()),
+        decoration: InputDecoration(
+          isDense: true,
+          hintText: l.stockSearchHint,
+          prefixIcon: const Icon(Icons.search, size: 20),
+          suffixIcon: _searchQuery.isEmpty
+              ? null
+              : IconButton(
+                  icon: const Icon(Icons.clear, size: 18),
+                  tooltip: MaterialLocalizations.of(context).deleteButtonTooltip,
+                  onPressed: () {
+                    _searchController.clear();
+                    setState(() => _searchQuery = '');
+                  },
+                ),
+          contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
         ),
       ),
     );
@@ -1045,6 +1155,36 @@ class _StockListPageState extends State<StockListPage> {
                         ),
                       ],
                     ),
+                    if (spool.location != null) ...[
+                      const SizedBox(height: 4),
+                      Row(
+                        children: [
+                          Icon(Icons.place_outlined, size: 14, color: Colors.grey.shade600),
+                          const SizedBox(width: 4),
+                          Flexible(
+                            child: Text(
+                              spool.location!,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(fontSize: 12, color: Colors.grey.shade600),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                    if (spool.notes != null) ...[
+                      const SizedBox(height: 2),
+                      Text(
+                        spool.notes!,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontStyle: FontStyle.italic,
+                          color: Colors.grey.shade600,
+                        ),
+                      ),
+                    ],
                   ],
                 ),
               ),
@@ -1059,6 +1199,17 @@ class _StockListPageState extends State<StockListPage> {
                       fontWeight: FontWeight.bold,
                       color: Colors.green,
                     ),
+                  ),
+                  IconButton(
+                    key: Key('printCost_${spool.id}'),
+                    icon: const Icon(Icons.calculate_outlined),
+                    tooltip: AppLocalizations.of(context)!.printCostTitle,
+                    visualDensity: VisualDensity.compact,
+                    onPressed: () async {
+                      if (await showPrintCostDialog(context, spool)) {
+                        await _loadSpools();
+                      }
+                    },
                   ),
                 ],
               ),
@@ -1315,19 +1466,23 @@ class _StatisticsPageState extends State<StatisticsPage> {
   List<SpoolInventoryItem> _shoppingList = [];
   bool _isLoading = true;
   Set<String> _orderedSpoolIds = {};
+  List<SpoolUsageEvent> _usage = [];
+  String _currency = 'CHF';
 
   @override
   void initState() {
     super.initState();
     _loadData();
-    // Écouter les changements de stock
+    // Écouter les changements de stock et de consommation
     SpoolStorageService.stockChangedNotifier.addListener(_onStockChanged);
+    UsageHistoryService.usageChangedNotifier.addListener(_onStockChanged);
   }
 
   @override
   void dispose() {
-    // Retirer le listener
+    // Retirer les listeners
     SpoolStorageService.stockChangedNotifier.removeListener(_onStockChanged);
+    UsageHistoryService.usageChangedNotifier.removeListener(_onStockChanged);
     super.dispose();
   }
 
@@ -1360,11 +1515,16 @@ class _StatisticsPageState extends State<StatisticsPage> {
 
     // Recharger la liste après ajout automatique
     final updatedShoppingList = await ShoppingListService.loadShoppingList();
+    final usage = await UsageHistoryService.loadEvents();
+    final currency = await UserPreferencesService.getCurrency();
 
+    if (!mounted) return;
     setState(() {
       _spools = spools;
       _shoppingList = updatedShoppingList;
       _orderedSpoolIds = orderedIds;
+      _usage = usage;
+      _currency = currency;
       _isLoading = false;
     });
   }
@@ -1424,7 +1584,9 @@ class _StatisticsPageState extends State<StatisticsPage> {
           ? const Center(child: CircularProgressIndicator())
           : SingleChildScrollView(
               padding: const EdgeInsets.all(16),
-              child: Column(
+              child: ResponsiveCenter(
+                maxWidth: 1000,
+                child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // Section VUE D'ENSEMBLE
@@ -1505,7 +1667,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
                   GridView.count(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
-                    crossAxisCount: 2,
+                    crossAxisCount: context.isWideLayout ? 4 : 2,
                     mainAxisSpacing: 12,
                     crossAxisSpacing: 12,
                     childAspectRatio: 1.5,
@@ -1564,6 +1726,25 @@ class _StatisticsPageState extends State<StatisticsPage> {
                   ),
                   const SizedBox(height: 32),
 
+                  // Section CONSOMMATION (historique des baisses de poids)
+                  Text(
+                    AppLocalizations.of(context)!.consumptionTitle.toUpperCase(),
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                      color: isDark
+                          ? Colors.grey.shade400
+                          : Colors.grey.shade700,
+                      letterSpacing: 1.2,
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  ConsumptionSection(
+                    summary: UsageSummary.from(_usage),
+                    currency: _currency,
+                  ),
+                  const SizedBox(height: 32),
+
                   // Section LISTE DE COURSES
                   Text(
                     AppLocalizations.of(
@@ -1583,6 +1764,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
                   // Liste de courses
                   _buildShoppingList(context, isDark),
                 ],
+              ),
               ),
             ),
     );
@@ -1759,6 +1941,20 @@ class _StatisticsPageState extends State<StatisticsPage> {
                     ),
                   ),
                 ),
+                if (_shoppingList.isNotEmpty)
+                  Builder(
+                    builder: (buttonContext) => IconButton(
+                      key: const Key('shareShoppingListButton'),
+                      icon: Icon(Icons.ios_share, color: Colors.blue.shade700),
+                      tooltip: AppLocalizations.of(context)!.shareShoppingList,
+                      onPressed: () => shareShoppingListText(
+                        context,
+                        shoppingList: _shoppingList,
+                        orderedIds: _orderedSpoolIds,
+                        origin: shareOriginOf(buttonContext),
+                      ),
+                    ),
+                  ),
                 if (_shoppingList.isNotEmpty)
                   IconButton(
                     icon: Icon(Icons.delete_sweep, color: Colors.red.shade400),

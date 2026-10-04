@@ -1359,4 +1359,138 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get genericBrand => 'Універсальний';
+
+  @override
+  String get stockSearchHint => 'Пошук (бренд, колір, місце…)';
+
+  @override
+  String get stockMoreActions => 'Більше дій';
+
+  @override
+  String get exportExcel => 'Експортувати в Excel';
+
+  @override
+  String get exportFailed => 'Не вдалося експортувати';
+
+  @override
+  String get exportShareSubject => 'Мої запаси філаменту (Spool Master)';
+
+  @override
+  String get exportColorHex => 'Код кольору';
+
+  @override
+  String get exportRemainingPercent => 'Залишилось (%)';
+
+  @override
+  String get exportPricePerKg => 'Ціна / кг';
+
+  @override
+  String get exportAddedDate => 'Дата додавання';
+
+  @override
+  String get exportOrdered => 'Замовлено';
+
+  @override
+  String get exportDate => 'Дата';
+
+  @override
+  String get exportGrams => 'Грами';
+
+  @override
+  String get exportCost => 'Вартість';
+
+  @override
+  String get importSpools => 'Імпорт (CSV / Excel)';
+
+  @override
+  String get importConfirmTitle => 'Імпорт котушок';
+
+  @override
+  String importConfirmMessage(int count, int duplicates, int skipped) {
+    return 'Котушок для додавання: $count\nВже на складі (пропущено): $duplicates\nНечитабельні рядки (пропущено): $skipped';
+  }
+
+  @override
+  String get importAction => 'Імпортувати';
+
+  @override
+  String get importNothingFound =>
+      'Котушки не розпізнано. Файл має містити принаймні стовпці «Матеріал» і «Вага» (як в Excel-експорті застосунку).';
+
+  @override
+  String importDone(int count) {
+    return 'Імпортовано котушок: $count';
+  }
+
+  @override
+  String get importFailed => 'Файл не читається';
+
+  @override
+  String get location => 'Місце';
+
+  @override
+  String get locationHint => 'Напр.: полиця A, сухий бокс 2';
+
+  @override
+  String get notes => 'Нотатки';
+
+  @override
+  String get notesHint => 'Напр.: просушити перед використанням';
+
+  @override
+  String get printCostTitle => 'Вартість друку';
+
+  @override
+  String get printCostGrams => 'Використано філаменту (г)';
+
+  @override
+  String printCostResult(String cost) {
+    return 'Вартість матеріалу: $cost';
+  }
+
+  @override
+  String printCostPerKg(String price) {
+    return 'Ціна за кг: $price';
+  }
+
+  @override
+  String get printCostNoPrice =>
+      'Додайте ціну котушки, щоб розрахувати вартість.';
+
+  @override
+  String get printCostDeduct => 'Списати зі складу';
+
+  @override
+  String printCostDeducted(String grams) {
+    return 'Списано зі складу: $grams г';
+  }
+
+  @override
+  String get consumptionTitle => 'Витрата';
+
+  @override
+  String get consumptionLast30Days => 'Останні 30 днів';
+
+  @override
+  String get consumptionThisMonth => 'Цього місяця';
+
+  @override
+  String get consumptionByMaterial => 'За матеріалом (30 днів)';
+
+  @override
+  String get consumptionMonthly => 'Останні 6 місяців';
+
+  @override
+  String get consumptionEmpty =>
+      'Витрату ще не записано. Вона з’явиться, щойно ви оновите залишкову вагу котушки або скористаєтесь калькулятором вартості.';
+
+  @override
+  String get shareShoppingList => 'Поділитися списком';
+
+  @override
+  String get nfcBlankTagTitle => 'Порожня мітка';
+
+  @override
+  String get nfcBlankTagDesc =>
+      'Ця мітка не містить даних про котушку. Додайте котушку вручну або запишіть мітку в застосунку.';
 }

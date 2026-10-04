@@ -1357,4 +1357,137 @@ class AppLocalizationsFi extends AppLocalizations {
 
   @override
   String get genericBrand => 'Yleinen';
+
+  @override
+  String get stockSearchHint => 'Hae (merkki, väri, sijainti…)';
+
+  @override
+  String get stockMoreActions => 'Lisää toimintoja';
+
+  @override
+  String get exportExcel => 'Vie Exceliin';
+
+  @override
+  String get exportFailed => 'Vienti epäonnistui';
+
+  @override
+  String get exportShareSubject => 'Filamenttivarastoni (Spool Master)';
+
+  @override
+  String get exportColorHex => 'Värikoodi';
+
+  @override
+  String get exportRemainingPercent => 'Jäljellä (%)';
+
+  @override
+  String get exportPricePerKg => 'Hinta / kg';
+
+  @override
+  String get exportAddedDate => 'Lisäyspäivä';
+
+  @override
+  String get exportOrdered => 'Tilattu';
+
+  @override
+  String get exportDate => 'Päivämäärä';
+
+  @override
+  String get exportGrams => 'Grammat';
+
+  @override
+  String get exportCost => 'Kustannus';
+
+  @override
+  String get importSpools => 'Tuo (CSV / Excel)';
+
+  @override
+  String get importConfirmTitle => 'Tuo keloja';
+
+  @override
+  String importConfirmMessage(int count, int duplicates, int skipped) {
+    return 'Lisättävät kelat: $count\nJo varastossa (ohitetaan): $duplicates\nLuettamattomat rivit (ohitetaan): $skipped';
+  }
+
+  @override
+  String get importAction => 'Tuo';
+
+  @override
+  String get importNothingFound =>
+      'Keloja ei tunnistettu. Tiedostossa on oltava vähintään sarakkeet Materiaali ja Paino (kuten sovelluksen Excel-vienti).';
+
+  @override
+  String importDone(int count) {
+    return 'Tuodut kelat: $count';
+  }
+
+  @override
+  String get importFailed => 'Tiedostoa ei voi lukea';
+
+  @override
+  String get location => 'Sijainti';
+
+  @override
+  String get locationHint => 'Esim. hylly A, kuivalaatikko 2';
+
+  @override
+  String get notes => 'Muistiinpanot';
+
+  @override
+  String get notesHint => 'Esim. kuivaa ennen käyttöä';
+
+  @override
+  String get printCostTitle => 'Tulostuksen kustannus';
+
+  @override
+  String get printCostGrams => 'Käytetty filamentti (g)';
+
+  @override
+  String printCostResult(String cost) {
+    return 'Materiaalikustannus: $cost';
+  }
+
+  @override
+  String printCostPerKg(String price) {
+    return 'Hinta per kg: $price';
+  }
+
+  @override
+  String get printCostNoPrice => 'Lisää kelan hinta kustannuksen laskemiseksi.';
+
+  @override
+  String get printCostDeduct => 'Vähennä varastosta';
+
+  @override
+  String printCostDeducted(String grams) {
+    return '$grams g vähennetty varastosta';
+  }
+
+  @override
+  String get consumptionTitle => 'Kulutus';
+
+  @override
+  String get consumptionLast30Days => 'Viimeiset 30 päivää';
+
+  @override
+  String get consumptionThisMonth => 'Tässä kuussa';
+
+  @override
+  String get consumptionByMaterial => 'Materiaalin mukaan (30 päivää)';
+
+  @override
+  String get consumptionMonthly => 'Viimeiset 6 kuukautta';
+
+  @override
+  String get consumptionEmpty =>
+      'Kulutusta ei ole vielä kirjattu. Se näkyy, kun päivität kelan jäljellä olevan painon tai käytät kustannuslaskuria.';
+
+  @override
+  String get shareShoppingList => 'Jaa lista';
+
+  @override
+  String get nfcBlankTagTitle => 'Tyhjä tagi';
+
+  @override
+  String get nfcBlankTagDesc =>
+      'Tämä tagi ei sisällä kelan tietoja. Lisää kela käsin tai kirjoita tagi sovelluksessa.';
 }

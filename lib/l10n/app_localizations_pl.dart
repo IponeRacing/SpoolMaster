@@ -1358,4 +1358,137 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get genericBrand => 'Ogólny';
+
+  @override
+  String get stockSearchHint => 'Szukaj (marka, kolor, lokalizacja…)';
+
+  @override
+  String get stockMoreActions => 'Więcej akcji';
+
+  @override
+  String get exportExcel => 'Eksportuj do Excel';
+
+  @override
+  String get exportFailed => 'Eksport nie powiódł się';
+
+  @override
+  String get exportShareSubject => 'Mój magazyn filamentów (Spool Master)';
+
+  @override
+  String get exportColorHex => 'Kod koloru';
+
+  @override
+  String get exportRemainingPercent => 'Pozostało (%)';
+
+  @override
+  String get exportPricePerKg => 'Cena / kg';
+
+  @override
+  String get exportAddedDate => 'Data dodania';
+
+  @override
+  String get exportOrdered => 'Zamówiono';
+
+  @override
+  String get exportDate => 'Data';
+
+  @override
+  String get exportGrams => 'Gramy';
+
+  @override
+  String get exportCost => 'Koszt';
+
+  @override
+  String get importSpools => 'Importuj (CSV / Excel)';
+
+  @override
+  String get importConfirmTitle => 'Importuj szpule';
+
+  @override
+  String importConfirmMessage(int count, int duplicates, int skipped) {
+    return 'Szpule do dodania: $count\nJuż w magazynie (pominięte): $duplicates\nNieczytelne wiersze (pominięte): $skipped';
+  }
+
+  @override
+  String get importAction => 'Importuj';
+
+  @override
+  String get importNothingFound =>
+      'Nie rozpoznano żadnych szpul. Plik musi zawierać co najmniej kolumny Materiał i Waga (jak eksport Excel z aplikacji).';
+
+  @override
+  String importDone(int count) {
+    return 'Zaimportowane szpule: $count';
+  }
+
+  @override
+  String get importFailed => 'Nieczytelny plik';
+
+  @override
+  String get location => 'Lokalizacja';
+
+  @override
+  String get locationHint => 'Np. Półka A, suche pudełko 2';
+
+  @override
+  String get notes => 'Notatki';
+
+  @override
+  String get notesHint => 'Np. wysuszyć przed użyciem';
+
+  @override
+  String get printCostTitle => 'Koszt wydruku';
+
+  @override
+  String get printCostGrams => 'Zużyty filament (g)';
+
+  @override
+  String printCostResult(String cost) {
+    return 'Koszt materiału: $cost';
+  }
+
+  @override
+  String printCostPerKg(String price) {
+    return 'Cena za kg: $price';
+  }
+
+  @override
+  String get printCostNoPrice => 'Dodaj cenę szpuli, aby obliczyć koszt.';
+
+  @override
+  String get printCostDeduct => 'Odejmij z magazynu';
+
+  @override
+  String printCostDeducted(String grams) {
+    return 'Odjęto z magazynu: $grams g';
+  }
+
+  @override
+  String get consumptionTitle => 'Zużycie';
+
+  @override
+  String get consumptionLast30Days => 'Ostatnie 30 dni';
+
+  @override
+  String get consumptionThisMonth => 'Ten miesiąc';
+
+  @override
+  String get consumptionByMaterial => 'Według materiału (30 dni)';
+
+  @override
+  String get consumptionMonthly => 'Ostatnie 6 miesięcy';
+
+  @override
+  String get consumptionEmpty =>
+      'Nie zarejestrowano jeszcze zużycia. Pojawi się, gdy zaktualizujesz pozostałą wagę szpuli lub użyjesz kalkulatora kosztów wydruku.';
+
+  @override
+  String get shareShoppingList => 'Udostępnij listę';
+
+  @override
+  String get nfcBlankTagTitle => 'Pusty tag';
+
+  @override
+  String get nfcBlankTagDesc =>
+      'Ten tag nie zawiera danych szpuli. Dodaj szpulę ręcznie lub zapisz ten tag w aplikacji.';
 }

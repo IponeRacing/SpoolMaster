@@ -1358,4 +1358,138 @@ class AppLocalizationsRo extends AppLocalizations {
 
   @override
   String get genericBrand => 'Generic';
+
+  @override
+  String get stockSearchHint => 'Caută (marcă, culoare, locație…)';
+
+  @override
+  String get stockMoreActions => 'Mai multe acțiuni';
+
+  @override
+  String get exportExcel => 'Exportă în Excel';
+
+  @override
+  String get exportFailed => 'Exportul a eșuat';
+
+  @override
+  String get exportShareSubject => 'Stocul meu de filament (Spool Master)';
+
+  @override
+  String get exportColorHex => 'Cod culoare';
+
+  @override
+  String get exportRemainingPercent => 'Rămas (%)';
+
+  @override
+  String get exportPricePerKg => 'Preț / kg';
+
+  @override
+  String get exportAddedDate => 'Data adăugării';
+
+  @override
+  String get exportOrdered => 'Comandat';
+
+  @override
+  String get exportDate => 'Data';
+
+  @override
+  String get exportGrams => 'Grame';
+
+  @override
+  String get exportCost => 'Cost';
+
+  @override
+  String get importSpools => 'Importă (CSV / Excel)';
+
+  @override
+  String get importConfirmTitle => 'Importă bobine';
+
+  @override
+  String importConfirmMessage(int count, int duplicates, int skipped) {
+    return 'Bobine de adăugat: $count\nDeja în stoc (ignorate): $duplicates\nRânduri ilizibile (ignorate): $skipped';
+  }
+
+  @override
+  String get importAction => 'Importă';
+
+  @override
+  String get importNothingFound =>
+      'Nicio bobină recunoscută. Fișierul trebuie să conțină cel puțin coloanele Material și Greutate (ca exportul Excel al aplicației).';
+
+  @override
+  String importDone(int count) {
+    return 'Bobine importate: $count';
+  }
+
+  @override
+  String get importFailed => 'Fișier ilizibil';
+
+  @override
+  String get location => 'Locație';
+
+  @override
+  String get locationHint => 'Ex.: Raftul A, cutie uscată 2';
+
+  @override
+  String get notes => 'Note';
+
+  @override
+  String get notesHint => 'Ex.: de uscat înainte de utilizare';
+
+  @override
+  String get printCostTitle => 'Costul unei printări';
+
+  @override
+  String get printCostGrams => 'Filament folosit (g)';
+
+  @override
+  String printCostResult(String cost) {
+    return 'Cost material: $cost';
+  }
+
+  @override
+  String printCostPerKg(String price) {
+    return 'Preț pe kg: $price';
+  }
+
+  @override
+  String get printCostNoPrice =>
+      'Adaugă prețul bobinei pentru a calcula costul.';
+
+  @override
+  String get printCostDeduct => 'Scade din stoc';
+
+  @override
+  String printCostDeducted(String grams) {
+    return '$grams g scăzute din stoc';
+  }
+
+  @override
+  String get consumptionTitle => 'Consum';
+
+  @override
+  String get consumptionLast30Days => 'Ultimele 30 de zile';
+
+  @override
+  String get consumptionThisMonth => 'Luna aceasta';
+
+  @override
+  String get consumptionByMaterial => 'După material (30 de zile)';
+
+  @override
+  String get consumptionMonthly => 'Ultimele 6 luni';
+
+  @override
+  String get consumptionEmpty =>
+      'Niciun consum înregistrat deocamdată. Apare imediat ce actualizezi greutatea rămasă a unei bobine sau folosești calculatorul de cost.';
+
+  @override
+  String get shareShoppingList => 'Distribuie lista';
+
+  @override
+  String get nfcBlankTagTitle => 'Tag gol';
+
+  @override
+  String get nfcBlankTagDesc =>
+      'Acest tag nu conține date despre bobină. Adăugați bobina manual sau scrieți tagul din aplicație.';
 }

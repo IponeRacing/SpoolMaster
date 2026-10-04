@@ -1357,4 +1357,137 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get genericBrand => 'Chung';
+
+  @override
+  String get stockSearchHint => 'Tìm kiếm (thương hiệu, màu sắc, vị trí…)';
+
+  @override
+  String get stockMoreActions => 'Thêm thao tác';
+
+  @override
+  String get exportExcel => 'Xuất ra Excel';
+
+  @override
+  String get exportFailed => 'Xuất thất bại';
+
+  @override
+  String get exportShareSubject => 'Kho sợi nhựa của tôi (Spool Master)';
+
+  @override
+  String get exportColorHex => 'Mã màu';
+
+  @override
+  String get exportRemainingPercent => 'Còn lại (%)';
+
+  @override
+  String get exportPricePerKg => 'Giá / kg';
+
+  @override
+  String get exportAddedDate => 'Ngày thêm';
+
+  @override
+  String get exportOrdered => 'Đã đặt hàng';
+
+  @override
+  String get exportDate => 'Ngày';
+
+  @override
+  String get exportGrams => 'Gram';
+
+  @override
+  String get exportCost => 'Chi phí';
+
+  @override
+  String get importSpools => 'Nhập (CSV / Excel)';
+
+  @override
+  String get importConfirmTitle => 'Nhập cuộn';
+
+  @override
+  String importConfirmMessage(int count, int duplicates, int skipped) {
+    return 'Cuộn sẽ thêm: $count\nĐã có trong kho (bỏ qua): $duplicates\nDòng không đọc được (bỏ qua): $skipped';
+  }
+
+  @override
+  String get importAction => 'Nhập';
+
+  @override
+  String get importNothingFound =>
+      'Không nhận dạng được cuộn nào. Tệp phải có ít nhất các cột Vật liệu và Trọng lượng (như tệp xuất Excel của ứng dụng).';
+
+  @override
+  String importDone(int count) {
+    return 'Đã nhập cuộn: $count';
+  }
+
+  @override
+  String get importFailed => 'Không đọc được tệp';
+
+  @override
+  String get location => 'Vị trí';
+
+  @override
+  String get locationHint => 'VD: Kệ A, hộp hút ẩm 2';
+
+  @override
+  String get notes => 'Ghi chú';
+
+  @override
+  String get notesHint => 'VD: cần sấy trước khi dùng';
+
+  @override
+  String get printCostTitle => 'Chi phí in';
+
+  @override
+  String get printCostGrams => 'Sợi nhựa đã dùng (g)';
+
+  @override
+  String printCostResult(String cost) {
+    return 'Chi phí vật liệu: $cost';
+  }
+
+  @override
+  String printCostPerKg(String price) {
+    return 'Giá mỗi kg: $price';
+  }
+
+  @override
+  String get printCostNoPrice => 'Thêm giá cuộn để tính chi phí.';
+
+  @override
+  String get printCostDeduct => 'Trừ khỏi kho';
+
+  @override
+  String printCostDeducted(String grams) {
+    return 'Đã trừ $grams g khỏi kho';
+  }
+
+  @override
+  String get consumptionTitle => 'Mức tiêu thụ';
+
+  @override
+  String get consumptionLast30Days => '30 ngày qua';
+
+  @override
+  String get consumptionThisMonth => 'Tháng này';
+
+  @override
+  String get consumptionByMaterial => 'Theo vật liệu (30 ngày)';
+
+  @override
+  String get consumptionMonthly => '6 tháng qua';
+
+  @override
+  String get consumptionEmpty =>
+      'Chưa ghi nhận mức tiêu thụ nào. Dữ liệu sẽ hiện ngay khi bạn cập nhật trọng lượng còn lại của cuộn hoặc dùng công cụ tính chi phí.';
+
+  @override
+  String get shareShoppingList => 'Chia sẻ danh sách';
+
+  @override
+  String get nfcBlankTagTitle => 'Thẻ trống';
+
+  @override
+  String get nfcBlankTagDesc =>
+      'Thẻ này không chứa dữ liệu cuộn nhựa. Hãy thêm cuộn thủ công hoặc ghi thẻ này từ ứng dụng.';
 }
