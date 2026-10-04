@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:nfc_filament/core/services/admob_service.dart';
@@ -32,12 +31,14 @@ class _SplashPageState extends State<SplashPage> {
 
       if (!mounted) return;
 
-      // Demander ATT + UMP maintenant que l'UI est visible
-      if (Platform.isIOS) {
-        debugPrint('🔐 [SplashPage] Requesting ATT consent (UI is visible)...');
-        await AdMobService().requestConsents();
-        debugPrint('🔐 [SplashPage] ATT consent flow completed');
-      }
+      // Consentements maintenant que l'UI est visible : ATT puis UMP sur
+      // iOS (UMP sauté si ATT refusé, Guideline 5.1.1(iv)), UMP (RGPD) sur
+      // Android. Avant, Android ne demandait jamais le consentement UMP alors
+      // que la politique Google l'exige pour l'EEE, le Royaume-Uni et la
+      // Suisse (le formulaire n'apparaît que là où il est requis).
+      debugPrint('🔐 [SplashPage] Requesting consents (UI is visible)...');
+      await AdMobService().requestConsents();
+      debugPrint('🔐 [SplashPage] Consent flow completed');
 
       if (!mounted) return;
 

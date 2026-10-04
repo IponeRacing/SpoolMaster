@@ -146,9 +146,15 @@ platform :android do
         File.write(File.join(android_dir, 'short_description.txt'), subtitle)
       end
 
-      # full_description.txt ← description.txt (sans les markers "(Android)")
+      # full_description.txt ← description.txt, UNIQUEMENT si le fichier Android
+      # n'existe pas encore. Les descriptions divergent volontairement : sur
+      # iOS, Bambu Lab / Creality (MiFare Classic) ne sont pas lisibles
+      # (CoreNFC) → la description iOS ne promet que la saisie manuelle,
+      # alors que l'Android lit et écrit ces tags. Écraser l'Android avec
+      # l'iOS lui ferait perdre ces fonctionnalités réelles.
       src = File.join(ios_dir, 'description.txt')
-      if File.exist?(src)
+      android_desc = File.join(android_dir, 'full_description.txt')
+      if File.exist?(src) && !File.exist?(android_desc)
         desc = File.read(src)
         desc.gsub!(/\s*[\(（]Android[\)）]/, '')  # Supprimer markers (Android) et （Android）
         desc.gsub!(/https:\/\/www\.apple\.com\/.*$/, '')  # Supprimer lien EULA Apple
