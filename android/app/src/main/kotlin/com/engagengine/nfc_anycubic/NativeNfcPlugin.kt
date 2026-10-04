@@ -1950,14 +1950,12 @@ class NativeNfcPlugin private constructor(
             } else 0L
         } catch (e: Exception) { 0L }
 
-        // Material name lookup
-        val materialName = crealityMaterials[materialId] ?: "Unknown ($materialId)"
-
         return mapOf(
             "tagType" to "creality",
             "vendor" to vendor,
+            // Nom, type et températures : table officielle Creality côté Dart
+            // (l'ancienne table d'ici était fausse pour la plupart des codes).
             "materialId" to materialId,
-            "materialName" to materialName,
             "colorRgb" to colorRgb,
             "weightGrams" to weightGrams.toInt(),
             "batch" to batch,
@@ -2156,17 +2154,6 @@ class NativeNfcPlugin private constructor(
         return null
     }
 
-    // Creality material database (instance-level to avoid companion object conflict)
-    private val crealityMaterials = mapOf(
-        "00001" to "Generic PLA", "01001" to "Hyper PLA", "02001" to "PLA Matte",
-        "03001" to "PLA Silk", "04001" to "CR-PLA", "05001" to "PLA HS",
-        "06001" to "CR-PETG", "07001" to "Hyper PETG", "08001" to "Generic PETG",
-        "09001" to "PETG-CF", "10001" to "CR-ABS", "11001" to "Hyper ABS",
-        "12001" to "Generic ABS", "13001" to "ABS-GF", "14001" to "TPU",
-        "15001" to "PA", "16001" to "CR-TPU", "17001" to "ASA",
-        "18001" to "PVA", "19001" to "HIPS", "20001" to "PC",
-        "21001" to "BVOH", "22001" to "PET"
-    )
 
     private val crealityWeightCodes = mapOf(
         "0330" to 1000.0, "0165" to 500.0, "0082" to 250.0,

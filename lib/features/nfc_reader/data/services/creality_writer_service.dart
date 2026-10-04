@@ -17,8 +17,11 @@ class CrealityWriterService {
 
   /// Construire la map de données pour le plugin natif
   static Map<String, dynamic> buildPayloadMap(BobbinData data) {
-    // Chercher le material ID correspondant
-    final materialId = CrealityDatabase.getMaterialId(data.filamentType) ?? '04001';
+    // Code matériau : nom détaillé (« Hyper PLA ») d'abord, puis type (« PETG »
+    // → matériau générique Creality), sinon CR-PLA.
+    final materialId = CrealityDatabase.getMaterialId(data.detailedType ?? '') ??
+        CrealityDatabase.getMaterialId(data.filamentType) ??
+        '04001';
 
     // Color RGB
     final colorRgb = data.colorRgb ?? 0xFFFFFF;

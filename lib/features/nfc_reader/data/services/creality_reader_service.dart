@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:nfc_filament/core/constants/creality_database.dart';
 import 'package:nfc_filament/core/errors/failures.dart';
+import 'package:nfc_filament/core/utils/color_naming.dart';
 import 'package:nfc_filament/features/nfc_reader/domain/entities/bobbin_data.dart';
 import 'package:nfc_filament/native_nfc/native_nfc.dart';
 
@@ -38,20 +39,17 @@ class CrealityReaderService {
     return _parseNativeData(data);
   }
 
-  /// Parser les données brutes reçues du plugin natif
+  /// Parser les données brutes reçues du plugin natif. Matériau, type et
+  /// températures viennent de la table officielle Creality (code du tag) ;
+  /// avant : table fausse pour la plupart des codes, « Hyper » perdu, aucune
+  /// température, et une palette à part (rouge C12E1F → « Brown »).
   static BobbinData _parseNativeData(Map<String, dynamic> data) {
-    // Material name from native (already looked up) or from materialId
     final materialId = data['materialId'] as String? ?? '';
-    final materialName = data['materialName'] as String? ??
-        CrealityDatabase.materials[materialId] ??
-        'Unknown';
-
-    // Extraire le type de filament simplifié (PLA, PETG, ABS, etc.)
-    final filamentType = _simplifyMaterialName(materialName);
+    final material = CrealityDatabase.material(materialId);
 
     // Color RGB
     final colorRgb = data['colorRgb'] as int? ?? 0xFFFFFF;
-    final colorName = _findClosestColorName(colorRgb);
+    final colorName = colorNameFromRgb((colorRgb >> 16) & 0xFF, (colorRgb >> 8) & 0xFF, colorRgb & 0xFF);
 
     // Weight
     final weightGrams = (data['weightGrams'] as int?)?.toDouble() ?? 1000.0;
@@ -66,11 +64,14 @@ class CrealityReaderService {
     }
 
     final batch = data['batch'] as String? ?? '';
+    int? temp(int v) => v > 0 ? v : null;
 
-    debugPrint('Creality parsed: $filamentType / $colorName / ${weightGrams}g / batch=$batch');
+    debugPrint('Creality parsed: ${material?.name ?? 'code $materialId inconnu'} / $colorName / ${weightGrams}g / batch=$batch');
 
     return BobbinData(
-      filamentType: filamentType,
+      filamentType: material?.type ?? 'Unknown',
+      detailedType: material?.name,
+      materialId: materialId.isEmpty ? null : materialId,
       color: colorName,
       colorRgb: colorRgb,
       weightGrams: weightGrams,
@@ -78,61 +79,10 @@ class CrealityReaderService {
       batchNumber: batch.isNotEmpty ? batch : null,
       brand: 'Creality',
       remainingWeight: weightGrams,
+      extruderTempMin: material == null ? null : temp(material.nozzleMin),
+      extruderTempMax: material == null ? null : temp(material.nozzleMax),
+      bedTempMin: material == null ? null : temp(material.bedTemp),
+      bedTempMax: material == null ? null : temp(material.bedTemp),
     );
-  }
-
-  /// Simplifier le nom du matériau en type de base
-  static String _simplifyMaterialName(String name) {
-    final upper = name.toUpperCase();
-    if (upper.contains('PLA')) return 'PLA';
-    if (upper.contains('PETG')) return 'PETG';
-    if (upper.contains('ABS')) return 'ABS';
-    if (upper.contains('TPU')) return 'TPU';
-    if (upper.contains('ASA')) return 'ASA';
-    if (upper.contains('PA') || upper.contains('NYLON')) return 'PA';
-    if (upper.contains('PVA')) return 'PVA';
-    if (upper.contains('HIPS')) return 'HIPS';
-    if (upper.contains('PC')) return 'PC';
-    if (upper.contains('PET')) return 'PET';
-    if (upper.contains('BVOH')) return 'BVOH';
-    return name;
-  }
-
-  /// Trouver le nom de couleur le plus proche d'un RGB
-  static String _findClosestColorName(int rgb) {
-    final r = (rgb >> 16) & 0xFF;
-    final g = (rgb >> 8) & 0xFF;
-    final b = rgb & 0xFF;
-
-    const colors = {
-      'White': 0xFFFFFF,
-      'Black': 0x000000,
-      'Red': 0xFF0000,
-      'Blue': 0x0000FF,
-      'Green': 0x00FF00,
-      'Yellow': 0xFFFF00,
-      'Orange': 0xFF8000,
-      'Pink': 0xFF69B4,
-      'Gray': 0x808080,
-      'Purple': 0x800080,
-      'Brown': 0x8B4513,
-      'Cyan': 0x00FFFF,
-    };
-
-    var closest = 'White';
-    var minDist = 999999;
-
-    for (final entry in colors.entries) {
-      final cr = (entry.value >> 16) & 0xFF;
-      final cg = (entry.value >> 8) & 0xFF;
-      final cb = entry.value & 0xFF;
-      final dist = (r - cr) * (r - cr) + (g - cg) * (g - cg) + (b - cb) * (b - cb);
-      if (dist < minDist) {
-        minDist = dist;
-        closest = entry.key;
-      }
-    }
-
-    return closest;
   }
 }

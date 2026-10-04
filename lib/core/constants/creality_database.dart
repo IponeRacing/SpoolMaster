@@ -1,32 +1,23 @@
+import 'package:nfc_filament/core/constants/creality_materials.g.dart';
+
 /// Base de données des matériaux et codes Creality CFS
 class CrealityDatabase {
   CrealityDatabase._();
 
-  /// Material ID → nom du matériau
-  static const Map<String, String> materials = {
-    '00001': 'Generic PLA',
-    '01001': 'Hyper PLA',
-    '02001': 'PLA Matte',
-    '03001': 'PLA Silk',
-    '04001': 'CR-PLA',
-    '05001': 'PLA HS',
-    '06001': 'CR-PETG',
-    '07001': 'Hyper PETG',
-    '08001': 'Generic PETG',
-    '09001': 'PETG-CF',
-    '10001': 'CR-ABS',
-    '11001': 'Hyper ABS',
-    '12001': 'Generic ABS',
-    '13001': 'ABS-GF',
-    '14001': 'TPU',
-    '15001': 'PA',
-    '16001': 'CR-TPU',
-    '17001': 'ASA',
-    '18001': 'PVA',
-    '19001': 'HIPS',
-    '20001': 'PC',
-    '21001': 'BVOH',
-    '22001': 'PET',
+  /// Matériau officiel Creality d'un code de tag (table générée par
+  /// tool/build_creality_materials.py), ou null si inconnu.
+  static CrealityMaterial? material(String code) {
+    for (final m in crealityMaterials) {
+      if (m.code == code) return m;
+    }
+    return null;
+  }
+
+  /// Material ID → nom du matériau. Avant (jusqu'à la 1.4.10+92) : table
+  /// écrite à la main, fausse pour la plupart des codes (03001 « PLA Silk »
+  /// au lieu de « Hyper ABS »…).
+  static final Map<String, String> materials = {
+    for (final m in crealityMaterials) m.code: m.name,
   };
 
   /// Weight code → poids en grammes
@@ -38,10 +29,16 @@ class CrealityDatabase {
     '0247': 750.0,
   };
 
-  /// Nom du matériau → material ID (reverse lookup pour l'écriture)
-  static String? getMaterialId(String materialName) {
-    for (final entry in materials.entries) {
-      if (entry.value == materialName) return entry.key;
+  /// Code à écrire sur le tag pour un nom (« Hyper PLA ») ou un type
+  /// (« PETG ») : nom exact d'abord, puis matériau générique du même type.
+  static String? getMaterialId(String nameOrType) {
+    final q = nameOrType.trim().toLowerCase();
+    if (q.isEmpty) return null;
+    for (final m in crealityMaterials) {
+      if (m.name.toLowerCase() == q) return m.code;
+    }
+    for (final m in crealityMaterials) {
+      if (m.brand == 'Generic' && m.type.toLowerCase() == q) return m.code;
     }
     return null;
   }
