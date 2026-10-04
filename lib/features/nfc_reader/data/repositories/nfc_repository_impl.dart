@@ -7,6 +7,7 @@ import 'package:nfc_filament/core/errors/failures.dart';
 import 'package:nfc_filament/core/services/nfc_scan_diagnostics.dart';
 import 'package:nfc_filament/features/nfc_reader/data/datasources/nfc_datasource.dart';
 import 'package:nfc_filament/features/nfc_reader/data/models/bobbin_data_model.dart';
+import 'package:nfc_filament/features/nfc_reader/domain/bobbin_data_sanity.dart';
 import 'package:nfc_filament/features/nfc_reader/domain/entities/bobbin_data.dart';
 import 'package:nfc_filament/features/nfc_reader/domain/entities/nfc_tag.dart';
 import 'package:nfc_filament/features/nfc_reader/domain/repositories/nfc_repository.dart';
@@ -47,7 +48,7 @@ class NfcRepositoryImpl implements NfcRepository {
   Future<Either<Failure, BobbinData>> readBobbinData({String? nfcMode}) async {
     try {
       final bobbinModel = await dataSource.readBobbinData(nfcMode: nfcMode);
-      return Right(bobbinModel.toEntity());
+      return _checked(bobbinModel.toEntity());
     } on Failure catch (failure) {
       return Left(failure);
     } on PlatformException catch (e) {
@@ -119,7 +120,7 @@ class NfcRepositoryImpl implements NfcRepository {
   Future<Either<Failure, BobbinData>> readBobbinDataAutoDetect() async {
     try {
       final bobbinModel = await dataSource.readBobbinDataAutoDetect();
-      return Right(bobbinModel.toEntity());
+      return _checked(bobbinModel.toEntity());
     } on Failure catch (failure) {
       return Left(failure);
     } on PlatformException catch (e) {
@@ -253,6 +254,23 @@ class NfcRepositoryImpl implements NfcRepository {
       return _NfcDiagnostics(tagType: details);
     }
     return const _NfcDiagnostics();
+  }
+
+  /// Contrôle de plausibilité commun à toutes les lectures (tous décodeurs) :
+  /// valeurs hors bornes écartées, texte illisible → format non reconnu.
+  Either<Failure, BobbinData> _checked(BobbinData data) {
+    final result = checkBobbinData(data);
+    if (result.garbled) {
+      NfcScanDiagnostics.errorDetail = NfcScanDiagnostics.unrecognizedFormat;
+      return const Left(NfcTagIncompatibleFailure(
+        message: 'Format de tag non reconnu (données illisibles)',
+        tagType: 'unrecognized',
+        tagWasDetected: true,
+      ));
+    }
+    NfcScanDiagnostics.outOfRange =
+        result.droppedFields.isEmpty ? null : result.droppedFields.join(',');
+    return Right(result.data);
   }
 }
 

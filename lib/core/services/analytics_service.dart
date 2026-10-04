@@ -194,7 +194,11 @@ class AnalyticsService {
         if (NfcScanDiagnostics.detectDelayMs != null) 'detect_delay_ms': NfcScanDiagnostics.detectDelayMs,
         'native_error_code': ?NfcScanDiagnostics.nativeErrorCode,
         'error_detail': ?NfcScanDiagnostics.errorDetail,
-        'raw_tag_data': ?rawTagData,
+        // Lecture suspecte (valeur hors bornes, format non reconnu) : octets
+        // bruts du tag pour corriger le décodeur concerné.
+        'raw_tag_data': ?(rawTagData ??
+            (NfcScanDiagnostics.wantsRawDump ? NfcScanDiagnostics.lastRawHex : null)),
+        'out_of_range': ?NfcScanDiagnostics.outOfRange,
         'raw_bytes_count': ?rawBytesCount,
         'session_duration_ms': ?sessionDurationMs,
         'tag_was_detected': ?tagWasDetected,

@@ -855,6 +855,36 @@ extension NativeNfcPlugin: NFCTagReaderSessionDelegate {
         complete(with: FlutterError(code: "PARTIAL_READ", message: message, details: details))
     }
 
+    /// Pages à lire sur un tag Type 2 : 40 (format Anycubic), ou jusqu'à la fin
+    /// du message NDEF quand la page 4 en contient un plus long (OpenSpool…).
+    /// Avant : arrêt à 160 octets → JSON tronqué, décodé comme un tag Anycubic.
+    /// Plafond : capacité du Capability Container (page 3) et NTAG216 (231 pages).
+    /// Seuls les TLV NULL / Lock / Memory Control (0x00-0x02) peuvent précéder.
+    private func type2TargetPages(_ data: Data) -> Int {
+        let base = 40
+        let bytes = [UInt8](data)
+        guard bytes.count >= base * 4, bytes[12] == 0xE1 else { return base }
+        let capacityPages = 4 + Int(bytes[14]) * 2 // MLEN × 8 octets = × 2 pages
+        var offset = 16
+        while offset + 1 < bytes.count {
+            let type = bytes[offset]
+            if type == 0x00 { offset += 1; continue }
+            guard (0x01...0x03).contains(type) else { return base }
+            var length = Int(bytes[offset + 1])
+            var valueStart = offset + 2
+            if length == 0xFF {
+                guard offset + 3 < bytes.count else { return base }
+                length = (Int(bytes[offset + 2]) << 8) | Int(bytes[offset + 3])
+                valueStart = offset + 4
+            }
+            if type == 0x03 {
+                return max(base, min((valueStart + length + 3) / 4, capacityPages, 231))
+            }
+            offset = valueStart + length
+        }
+        return base
+    }
+
     private func readAllPages(mifareTag: NFCMiFareTag, session: NFCTagReaderSession) {
         // Lire toutes les pages séquentiellement
         readPageSequentially(mifareTag: mifareTag, startPage: 0, allData: Data(), session: session)
@@ -866,8 +896,8 @@ extension NativeNfcPlugin: NFCTagReaderSessionDelegate {
     }
 
     private func readPageSequentiallyWithTagType(mifareTag: NFCMiFareTag, startPage: Int, allData: Data, session: NFCTagReaderSession, tagType: String) {
-        // Si on a fini de lire toutes les pages
-        if startPage >= 40 {
+        // Fin : 40 pages (Anycubic), ou fin du message NDEF s'il est plus long
+        if startPage >= type2TargetPages(allData) {
             let dataString = String(data: allData, encoding: .utf8) ?? ""
             print("📄 Données complètes: \(dataString)")
 
@@ -909,8 +939,8 @@ extension NativeNfcPlugin: NFCTagReaderSessionDelegate {
     }
 
     private func readPageSequentially(mifareTag: NFCMiFareTag, startPage: Int, allData: Data, session: NFCTagReaderSession) {
-        // Si on a fini de lire toutes les pages (lire jusqu'à page 40 pour capturer couleur/advanced settings)
-        if startPage >= 40 {
+        // Fin : 40 pages (couleur / réglages Anycubic), ou fin du message NDEF s'il est plus long
+        if startPage >= type2TargetPages(allData) {
             let dataString = String(data: allData, encoding: .utf8) ?? ""
             print("📄 Données complètes: \(dataString)")
 

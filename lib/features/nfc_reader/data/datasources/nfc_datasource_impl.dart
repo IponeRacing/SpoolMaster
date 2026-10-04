@@ -397,6 +397,7 @@ class NfcDataSourceImpl implements NfcDataSource {
           developer.log('✅ Tag standard ouvert détecté (OpenSpool/OpenTag3D/Elegoo)');
           return _bobbinDataToModel(openStandard);
         }
+        _throwIfUnrecognizedNdef(rawBytes);
       }
 
       // Tags ACE Pro officiels (NTAG213) et "Spool NFC Tag Writer" partagent
@@ -503,7 +504,7 @@ class NfcDataSourceImpl implements NfcDataSource {
       rethrow;
     } catch (e) {
       developer.log('❌ Erreur lecture NFC native: $e');
-      if (e is NfcTagReadFailure) {
+      if (e is Failure) {
         return Future.error(e);
       }
       final hexDump = rawBytes.isNotEmpty
@@ -697,22 +698,7 @@ class NfcDataSourceImpl implements NfcDataSource {
       final bobbinData = await BambuLabReaderService.readBambuLabTag();
 
       // Convertir en modèle
-      final model = BobbinDataModel(
-        filamentType: bobbinData.filamentType,
-        color: bobbinData.color,
-        weightGrams: bobbinData.weightGrams,
-        manufactureDate: bobbinData.manufactureDate,
-        batchNumber: bobbinData.batchNumber,
-        colorRgb: bobbinData.colorRgb,
-        extruderTempMin: bobbinData.extruderTempMin,
-        extruderTempMax: bobbinData.extruderTempMax,
-        bedTempMin: bobbinData.bedTempMin,
-        bedTempMax: bobbinData.bedTempMax,
-        diameter: bobbinData.diameter,
-        spoolLength: bobbinData.spoolLength,
-        remainingWeight: bobbinData.remainingWeight,
-        brand: bobbinData.brand,
-      );
+      final model = _bobbinDataToModel(bobbinData);
 
       developer.log('✅ Tag Bambu Lab lu avec succès');
       return model;
@@ -735,16 +721,7 @@ class NfcDataSourceImpl implements NfcDataSource {
     try {
       final bobbinData = await CrealityReaderService.readCrealityTag();
 
-      final model = BobbinDataModel(
-        filamentType: bobbinData.filamentType,
-        color: bobbinData.color,
-        weightGrams: bobbinData.weightGrams,
-        manufactureDate: bobbinData.manufactureDate,
-        batchNumber: bobbinData.batchNumber,
-        colorRgb: bobbinData.colorRgb,
-        remainingWeight: bobbinData.remainingWeight,
-        brand: bobbinData.brand,
-      );
+      final model = _bobbinDataToModel(bobbinData);
 
       developer.log('✅ Tag Creality CFS lu avec succès');
       return model;
@@ -800,6 +777,7 @@ class NfcDataSourceImpl implements NfcDataSource {
             developer.log('✅ Auto-detect: tag standard ouvert (OpenSpool/OpenTag3D/Elegoo)');
             return _bobbinDataToModel(openStandard);
           }
+          _throwIfUnrecognizedNdef(rawBytes);
         }
 
         if (!hasSku && rawBytes.length >= 64) {
@@ -815,24 +793,25 @@ class NfcDataSourceImpl implements NfcDataSource {
     }
   }
 
-  BobbinDataModel _bobbinDataToModel(BobbinData bobbinData) {
-    return BobbinDataModel(
-      filamentType: bobbinData.filamentType,
-      color: bobbinData.color,
-      weightGrams: bobbinData.weightGrams,
-      manufactureDate: bobbinData.manufactureDate,
-      batchNumber: bobbinData.batchNumber,
-      colorRgb: bobbinData.colorRgb,
-      extruderTempMin: bobbinData.extruderTempMin,
-      extruderTempMax: bobbinData.extruderTempMax,
-      bedTempMin: bobbinData.bedTempMin,
-      bedTempMax: bobbinData.bedTempMax,
-      diameter: bobbinData.diameter,
-      spoolLength: bobbinData.spoolLength,
-      remainingWeight: bobbinData.remainingWeight,
-      brand: bobbinData.brand,
-    );
+  /// Tag NDEF (TLV 0x03 non vide en page 4) qu'aucun lecteur de standard ouvert
+  /// n'a reconnu : on refuse. Avant, il tombait dans le décodeur ACE / Spool
+  /// NFC Tag Writer (octets 40-125) → matériau « ,"max_temp":230, » et buse à
+  /// 25 449 °C en prod. Les tags ACE commencent par 0x7B, jamais par 0x03.
+  void _throwIfUnrecognizedNdef(List<int> rawBytes) {
+    if (rawBytes.length > 17 && rawBytes[16] == 0x03 && rawBytes[17] > 0) {
+      NfcScanDiagnostics.errorDetail = NfcScanDiagnostics.unrecognizedFormat;
+      throw const NfcTagIncompatibleFailure(
+        message: 'Format de tag non reconnu (message NDEF sans données de bobine connues)',
+        tagType: 'ndef',
+        tagWasDetected: true,
+      );
+    }
   }
+
+  /// Tous les champs, dont type détaillé, séchage et identifiants Bambu
+  /// (avant : copie manuelle partielle, ces champs étaient perdus).
+  BobbinDataModel _bobbinDataToModel(BobbinData bobbinData) =>
+      BobbinDataModel.fromEntity(bobbinData);
 
   /// Parse Spool NFC Tag Writer format data from raw bytes
   BobbinDataModel _parseSpoolNfcTagWriterData(List<int> rawBytes) {

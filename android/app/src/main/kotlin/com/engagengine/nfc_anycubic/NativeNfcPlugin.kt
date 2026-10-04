@@ -58,6 +58,10 @@ class NativeNfcPlugin private constructor(
         private const val ANYCUBIC_PAGES: Int = 40
         private const val ANYCUBIC_READ_BYTES: Int = ANYCUBIC_PAGES * 4
 
+        // Tag NDEF (OpenSpool, OpenTag3D…) dont le message dépasse la page 39 :
+        // lecture prolongée jusqu'à la fin du message, au plus NTAG216 (231 pages).
+        private const val TYPE2_MAX_PAGES: Int = 231
+
         // Connexion : 3 tentatives espacées de 100 ms. connect() peut lever une
         // IOException sans message juste après la détection (d'où « Read failed »).
         private const val CONNECT_ATTEMPTS: Int = 3
@@ -729,12 +733,13 @@ class NativeNfcPlugin private constructor(
         sendError("INVALID_TAG", "Tag not supported")
     }
 
-    /** Résultat brut d'une lecture des pages 0-39 d'un tag Type 2 (Ultralight/NTAG). */
+    /** Résultat brut d'une lecture d'un tag Type 2 (Ultralight/NTAG), pages 0-39 au moins. */
     private class Type2ReadResult(
         val data: ByteArray,          // octets lus, dans l'ordre, depuis la page 0
         val attempts: Int,            // passes de lecture utilisées
         val lastError: Exception?,    // dernière exception rencontrée
-        val connectFailed: Boolean    // les 3 tentatives de connexion initiale ont échoué
+        val connectFailed: Boolean,   // les 3 tentatives de connexion initiale ont échoué
+        val requiredBytes: Int = ANYCUBIC_READ_BYTES // octets attendus (plus si message NDEF long)
     )
 
     /** Échec des [CONNECT_ATTEMPTS] tentatives de connexion (le tag a bougé ou est parti). */
@@ -776,11 +781,12 @@ class NativeNfcPlugin private constructor(
                 sendTagMoved("Le tag a été perdu avant la lecture de la première page.", diag)
             bytesRead == 0 ->
                 sendError("EMPTY_READ", "Impossible de lire le tag (0 octet). Maintenez le tag immobile contre le téléphone et réessayez.", diag)
-            bytesRead < ANYCUBIC_READ_BYTES -> {
+            bytesRead < read.requiredBytes -> {
                 // Préfixe « Tag was lost » si c'est une perte : le Dart affiche alors
                 // « reposez le tag sans bouger » au lieu d'une erreur générique.
                 val cause = if (isTagLost(read.lastError)) "$TAG_LOST_HINT — le tag a bougé. " else ""
-                sendError("PARTIAL_READ", "${cause}Lecture incomplète ($bytesRead/$ANYCUBIC_READ_BYTES octets) après ${read.attempts} passe(s). Maintenez le tag immobile contre le téléphone et réessayez.", diag)
+                diag["required_bytes"] = read.requiredBytes
+                sendError("PARTIAL_READ", "${cause}Lecture incomplète ($bytesRead/${read.requiredBytes} octets) après ${read.attempts} passe(s). Maintenez le tag immobile contre le téléphone et réessayez.", diag)
             }
             else -> {
                 val resultData = mutableMapOf<String, Any>(
@@ -810,7 +816,10 @@ class NativeNfcPlugin private constructor(
      */
     private suspend fun readType2Pages(tag: Tag, useUltralight: Boolean): Type2ReadResult {
         val pagesPerRead = if (useUltralight) 4 else 1
-        val buffer = ByteArray(ANYCUBIC_READ_BYTES)
+        // +4 pages : une commande MifareUltralight lit toujours 4 pages.
+        val buffer = ByteArray((TYPE2_MAX_PAGES + 4) * 4)
+        var targetPages = ANYCUBIC_PAGES
+        var extensionChecked = false
         var nextPage = 0
         var lastError: Exception? = null
 
@@ -823,10 +832,10 @@ class NativeNfcPlugin private constructor(
 
         var attempt = 0
         try {
-            while (nextPage < ANYCUBIC_PAGES && attempt < READ_ATTEMPTS) {
+            while (nextPage < targetPages && attempt < READ_ATTEMPTS) {
                 attempt++
                 if (attempt > 1) {
-                    Log.w(TAG, "Full-read attempt ${attempt - 1} stopped at ${nextPage * 4}/$ANYCUBIC_READ_BYTES bytes — reconnecting (latest tag), resuming at page $nextPage")
+                    Log.w(TAG, "Full-read attempt ${attempt - 1} stopped at ${nextPage * 4}/${targetPages * 4} bytes — reconnecting (latest tag), resuming at page $nextPage")
                     conn = try {
                         reconnectType2(conn, tag, useUltralight)
                     } catch (e: ConnectFailedException) {
@@ -834,7 +843,7 @@ class NativeNfcPlugin private constructor(
                         break
                     }
                 }
-                pass@ while (nextPage < ANYCUBIC_PAGES) {
+                pass@ while (nextPage < targetPages) {
                     val chunk = try {
                         readType2Chunk(conn, nextPage, pagesPerRead)
                     } catch (e: Exception) {
@@ -859,12 +868,53 @@ class NativeNfcPlugin private constructor(
                     System.arraycopy(chunk, 0, buffer, nextPage * 4, pagesPerRead * 4)
                     Log.d(TAG, "Read pages $nextPage-${nextPage + pagesPerRead - 1}: ${chunk.copyOf(pagesPerRead * 4).toHexString()}")
                     nextPage += pagesPerRead
+                    if (!extensionChecked && nextPage >= ANYCUBIC_PAGES) {
+                        extensionChecked = true
+                        type2NdefEndPage(buffer, nextPage * 4)?.let { end ->
+                            if (end > targetPages) {
+                                Log.d(TAG, "NDEF message ends at page $end — extending read")
+                                targetPages = end
+                            }
+                        }
+                    }
                 }
             }
         } finally {
             try { conn.close() } catch (_: Exception) {}
         }
-        return Type2ReadResult(buffer.copyOf(nextPage * 4), attempt, lastError, connectFailed = false)
+        return Type2ReadResult(
+            buffer.copyOf(nextPage * 4), attempt, lastError,
+            connectFailed = false, requiredBytes = targetPages * 4
+        )
+    }
+
+    /**
+     * Fin (page exclue) du message NDEF d'un tag Type 2 : TLV 0x03 dès la page 4,
+     * plafonnée par la capacité du Capability Container (page 3) et NTAG216.
+     * Null si la page 4 n'est pas du NDEF (tag Anycubic : 0x7B) : seuls les TLV
+     * NULL / Lock / Memory Control (0x00-0x02) peuvent précéder le NDEF.
+     */
+    private fun type2NdefEndPage(buf: ByteArray, have: Int): Int? {
+        if (have < 20 || (buf[12].toInt() and 0xFF) != 0xE1) return null
+        val capacityPages = 4 + (buf[14].toInt() and 0xFF) * 2 // MLEN × 8 octets = × 2 pages
+        var offset = 16
+        while (offset + 1 < have) {
+            val type = buf[offset].toInt() and 0xFF
+            if (type == 0x00) { offset++; continue }
+            if (type !in 0x01..0x03) return null
+            var length = buf[offset + 1].toInt() and 0xFF
+            var valueStart = offset + 2
+            if (length == 0xFF) {
+                if (offset + 3 >= have) return null
+                length = ((buf[offset + 2].toInt() and 0xFF) shl 8) or (buf[offset + 3].toInt() and 0xFF)
+                valueStart = offset + 4
+            }
+            if (type == 0x03) {
+                return minOf((valueStart + length + 3) / 4, capacityPages, TYPE2_MAX_PAGES)
+            }
+            offset = valueStart + length
+        }
+        return null
     }
 
     /** Lit [pagesPerRead] page(s) à partir de [page] (commande READ 0x30) ; lève une IOException si la réponse est trop courte. */

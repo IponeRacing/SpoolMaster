@@ -27,6 +27,21 @@ class NfcScanDiagnostics {
   /// donnée de bobine) → distingue « tag vide » d'un vrai bug de lecture.
   static String? errorDetail;
 
+  /// Octets bruts du dernier tag lu (hex), envoyés seulement quand la lecture
+  /// est suspecte ([wantsRawDump]) : sert à corriger le décodage d'un format.
+  static String? lastRawHex;
+
+  /// Champs écartés par le contrôle de plausibilité (ex. « extruder_temp_min »).
+  static String? outOfRange;
+
+  /// Lecture suspecte : valeur hors bornes ou format non reconnu → l'événement
+  /// de scan embarque les octets bruts du tag (données de filament seulement).
+  static bool get wantsRawDump =>
+      outOfRange != null || errorDetail == unrecognizedFormat;
+
+  /// [errorDetail] d'un tag NDEF ou d'un texte que l'app ne sait pas décoder.
+  static const String unrecognizedFormat = 'UNRECOGNIZED_FORMAT';
+
   /// À appeler au démarrage d'un scan.
   static void reset() {
     readAttempts = null;
@@ -35,6 +50,8 @@ class NfcScanDiagnostics {
     detectDelayMs = null;
     nativeErrorCode = null;
     errorDetail = null;
+    lastRawHex = null;
+    outOfRange = null;
   }
 
   /// Vrai si la zone utilisateur (à partir de la page 4) est vierge : tout à
@@ -74,6 +91,13 @@ class NfcScanDiagnostics {
     if (sr is int) sessionRetries = sr;
     final dd = result['detect_delay_ms'] ?? result['tag_detect_delay_ms'];
     if (dd is int && dd >= 0) detectDelayMs = dd;
+    final raw = result['rawBytes'];
+    if (raw is List && raw.isNotEmpty) {
+      lastRawHex = raw
+          .take(1024)
+          .map((b) => ((b as num).toInt() & 0xFF).toRadixString(16).padLeft(2, '0'))
+          .join();
+    }
   }
 
   /// Renseigne depuis une erreur native (PlatformException) : code brut +

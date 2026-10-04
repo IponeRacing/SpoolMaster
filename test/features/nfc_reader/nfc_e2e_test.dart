@@ -234,11 +234,13 @@ void main() {
       }
       mockNativeChannel({'data': '', 'rawBytes': d});
 
-      // Doit échouer proprement (tag sans données), pas de RangeError
+      // Doit échouer proprement, pas de RangeError : depuis la 1.4.10+91, un
+      // NDEF non reconnu est refusé comme tag incompatible (avant : décodé
+      // comme un tag ACE, d'où des bobines aux champs absurdes en prod).
       await expectLater(
         datasource.readBobbinData(nfcMode: 'anycubic'),
         throwsA(
-          isA<NfcTagReadFailure>().having(
+          isA<NfcTagIncompatibleFailure>().having(
             (f) => f.message,
             'message',
             isNot(contains('RangeError')),
@@ -260,10 +262,11 @@ void main() {
       }
       mockNativeChannel({'data': '', 'rawBytes': d});
 
+      // NDEF non reconnu → tag incompatible (voir le test précédent).
       await expectLater(
         datasource.readBobbinData(nfcMode: 'anycubic'),
         throwsA(
-          isA<NfcTagReadFailure>().having(
+          isA<NfcTagIncompatibleFailure>().having(
             (f) => f.message,
             'message',
             isNot(contains('RangeError')),
