@@ -106,7 +106,10 @@ class SpoolImportService {
     for (final e in accents.entries) {
       s = s.replaceAll(e.key, e.value);
     }
-    s = s.replaceAll(RegExp('[^a-z0-9]+'), ' ').trim();
+    // Lettres de TOUTES les écritures (avant : [^a-z0-9] vidait les en-têtes
+    // cyrilliques, grecs, arabes, hébreux, hindis, thaïs et CJK → un export
+    // de l'app ne se ré-importait pas dans 13 des 40 langues).
+    s = s.replaceAll(RegExp(r'[^\p{L}\p{M}\p{N}]+', unicode: true), ' ').trim();
     return s.replaceAll(RegExp(r'\s+'), ' ');
   }
 

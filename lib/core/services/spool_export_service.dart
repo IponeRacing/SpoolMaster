@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math' as math;
 
 import 'package:excel/excel.dart' as xl;
 import 'package:intl/intl.dart';
@@ -76,10 +77,10 @@ class SpoolExportService {
     _header(stockSheet, [
       for (final c in StockColumn.values) _columnTitle(labels, c, currency),
     ]);
-    for (final s in stock) {
-      stockSheet.appendRow(_stockRow(s));
-    }
-    _widths(stockSheet, [16, 12, 16, 10, 12, 12, 10, 10, 10, 18, 28, 12, 10, 10, 10, 10, 10, 16]);
+    final stockRows = [for (final s in stock) _stockRow(s)]
+      ..forEach(stockSheet.appendRow);
+    _formatDates(stockSheet, StockColumn.addedDate.index, stockRows.length);
+    _fitWidths(stockSheet, stockRows);
 
     // --- Liste de courses ---
     final shopName = _sheetName(labels.shoppingSheet, 'Shopping');
@@ -92,17 +93,20 @@ class SpoolExportService {
       labels.columns[StockColumn.remainingPercent]!,
       labels.ordered,
     ]);
-    for (final s in shoppingList) {
-      shopSheet.appendRow([
-        xl.TextCellValue(s.brand),
-        xl.TextCellValue(s.material),
-        xl.TextCellValue(s.colorName),
-        xl.TextCellValue(colorHex(s.colorRgb)),
-        xl.IntCellValue(remainingPercent(s)),
-        xl.TextCellValue(orderedIds.contains(s.id) ? '✓' : ''),
-      ]);
-    }
-    _widths(shopSheet, [16, 12, 16, 10, 10, 10]);
+    final shopRows = [
+      for (final s in shoppingList)
+        <xl.CellValue?>[
+          xl.TextCellValue(s.brand),
+          xl.TextCellValue(s.material),
+          xl.TextCellValue(s.colorName),
+          xl.TextCellValue(colorHex(s.colorRgb)),
+          xl.IntCellValue(remainingPercent(s)),
+          // Cellule vide (null), pas une chaîne vide : certains outils la
+          // ré-écrivent en <c t="inlineStr"></c>, illisible par le package excel.
+          if (orderedIds.contains(s.id)) xl.TextCellValue('✓') else null,
+        ],
+    ]..forEach(shopSheet.appendRow);
+    _fitWidths(shopSheet, shopRows);
 
     // --- Consommation ---
     if (usage.isNotEmpty) {
@@ -117,17 +121,19 @@ class SpoolExportService {
         '${labels.cost} ($currency)',
       ]);
       final sorted = [...usage]..sort((a, b) => b.date.compareTo(a.date));
-      for (final e in sorted) {
-        usageSheet.appendRow([
-          xl.DateCellValue(year: e.date.year, month: e.date.month, day: e.date.day),
-          xl.TextCellValue(e.brand),
-          xl.TextCellValue(e.material),
-          xl.TextCellValue(e.colorName),
-          xl.DoubleCellValue(_round(e.grams, 1)),
-          xl.DoubleCellValue(_round(e.cost, 2)),
-        ]);
-      }
-      _widths(usageSheet, [12, 16, 12, 16, 10, 10]);
+      final usageRows = [
+        for (final e in sorted)
+          <xl.CellValue?>[
+            xl.DateCellValue(year: e.date.year, month: e.date.month, day: e.date.day),
+            xl.TextCellValue(e.brand),
+            xl.TextCellValue(e.material),
+            xl.TextCellValue(e.colorName),
+            xl.DoubleCellValue(_round(e.grams, 1)),
+            xl.DoubleCellValue(_round(e.cost, 2)),
+          ],
+      ]..forEach(usageSheet.appendRow);
+      _formatDates(usageSheet, 0, usageRows.length);
+      _fitWidths(usageSheet, usageRows);
     }
 
     excel.setDefaultSheet(stockName);
@@ -193,10 +199,61 @@ class SpoolExportService {
     }
   }
 
-  static void _widths(xl.Sheet sheet, List<double> widths) {
-    for (var i = 0; i < widths.length; i++) {
-      sheet.setColumnWidth(i, widths[i]);
+  /// Dates au format ISO explicite. Le format date « système » par défaut
+  /// (numFmtId 14) s'affiche en m/d/yy dans Numbers quelle que soit la région
+  /// (« 9/15/26 » pour le 15 septembre sur un Mac fr_CH) ; yyyy-mm-dd est
+  /// lisible sans ambiguïté dans les 40 langues et se ré-importe tel quel.
+  static final _dateStyle = xl.CellStyle(
+    numberFormat: xl.NumFormat.custom(formatCode: 'yyyy-mm-dd'),
+  );
+
+  static void _formatDates(xl.Sheet sheet, int column, int dataRows) {
+    for (var row = 1; row <= dataRows; row++) {
+      sheet
+          .cell(xl.CellIndex.indexByColumnRow(columnIndex: column, rowIndex: row))
+          .cellStyle = _dateStyle;
     }
+  }
+
+  /// Largeur de chaque colonne d'après le texte le plus long (en-tête traduit
+  /// compris), bornée à 8..50. Avant : largeurs fixes calibrées sur le
+  /// français → en-têtes coupés (« Poids initial (g », « Code couleu »),
+  /// pire dans les langues aux libellés longs.
+  static void _fitWidths(xl.Sheet sheet, List<List<xl.CellValue?>> rows) {
+    final header = sheet.row(0);
+    for (var c = 0; c < header.length; c++) {
+      // +1 : l'en-tête est en gras, donc plus large à nombre égal de caractères.
+      var longest = displayWidth(header[c]?.value?.toString() ?? '') + 1;
+      for (final row in rows) {
+        if (c < row.length && row[c] != null) {
+          longest = math.max(longest, displayWidth(_displayText(row[c]!)));
+        }
+      }
+      sheet.setColumnWidth(c, (longest + 2).clamp(8, 50).toDouble());
+    }
+  }
+
+  static String _displayText(xl.CellValue v) => switch (v) {
+        xl.DateCellValue() => 'yyyy-mm-dd',
+        xl.DoubleCellValue(:final value) => value.toStringAsFixed(2),
+        _ => v.toString(),
+      };
+
+  /// Largeur visuelle d'un texte, en caractères latins : les idéogrammes
+  /// CJK, les kana et le hangul occupent environ deux colonnes.
+  static int displayWidth(String text) {
+    var width = 0;
+    for (final r in text.runes) {
+      final wide = (r >= 0x1100 && r <= 0x115F) ||
+          (r >= 0x2E80 && r <= 0xA4CF) ||
+          (r >= 0xAC00 && r <= 0xD7A3) ||
+          (r >= 0xF900 && r <= 0xFAFF) ||
+          (r >= 0xFE30 && r <= 0xFE4F) ||
+          (r >= 0xFF00 && r <= 0xFF60) ||
+          (r >= 0xFFE0 && r <= 0xFFE6);
+      width += wide ? 2 : 1;
+    }
+    return width;
   }
 
   /// Nom de feuille valide Excel (31 car. max, sans []:*?/\).
