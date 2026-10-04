@@ -2,10 +2,10 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
-import 'package:nfc_filament/core/constants/bambu_lab_database.dart';
 import 'package:nfc_filament/core/errors/failures.dart';
 import 'package:nfc_filament/core/services/cloned_tags_storage_service.dart';
 import 'package:nfc_filament/features/nfc_reader/data/models/cloned_tag_model.dart';
+import 'package:nfc_filament/features/nfc_reader/data/services/bambu_tag_parser.dart';
 import 'package:nfc_filament/features/nfc_reader/domain/entities/bobbin_data.dart';
 import 'package:nfc_filament/native_nfc/native_nfc.dart';
 
@@ -209,78 +209,17 @@ class BambuLabReaderService {
     return _parseNativeData(data);
   }
 
-  /// Parser les données brutes reçues du plugin natif
+  /// Décode les blocs bruts du tag (format officiel : voir [BambuTagParser]).
   static BobbinData _parseNativeData(Map<String, dynamic> data) {
-    // Extract material index and get material name from database
-    final materialIndex = data['materialIndex'] as int? ?? 0;
-    var filamentType = 'PLA';
-    if (materialIndex >= 0 && materialIndex < BambuLabDatabase.materials.length) {
-      filamentType = BambuLabDatabase.materials[materialIndex];
-    }
-
-    // Extract temperatures
-    final extruderTempMin = data['extruderTempMin'] as int?;
-    final extruderTempMax = data['extruderTempMax'] as int?;
-    final bedTempMin = data['bedTempMin'] as int?;
-    final bedTempMax = data['bedTempMax'] as int?;
-
-    // Extract color
-    final colorRgb = data['colorRgb'] as int? ?? 0xFFFFFFFF;
-
-    // Find closest color name from database
-    var colorName = 'White';
-    var closestColorDiff = 999999999;
-
-    final colors = BambuLabDatabase.getColorsForMaterial(filamentType);
-    for (final entry in colors.entries) {
-      final dbColorRgb = entry.value;
-      // Simple RGB distance calculation
-      final rDiff = ((colorRgb >> 16) & 0xFF) - ((dbColorRgb >> 16) & 0xFF);
-      final gDiff = ((colorRgb >> 8) & 0xFF) - ((dbColorRgb >> 8) & 0xFF);
-      final bDiff = (colorRgb & 0xFF) - (dbColorRgb & 0xFF);
-      final diff = (rDiff * rDiff) + (gDiff * gDiff) + (bDiff * bDiff);
-
-      if (diff < closestColorDiff) {
-        closestColorDiff = diff;
-        colorName = entry.key;
-      }
-    }
-
-    // Extract weight and length
-    final weightGrams = (data['weightGrams'] as int?)?.toDouble() ?? 1000.0;
-    final spoolLength = data['spoolLength'] as int?;
-    final diameter = data['diameter'] as double? ?? 1.75;
-
-    // Extract production date
-    DateTime? manufactureDate;
-    final timestamp = data['productionTimestamp'] as int?;
-    if (timestamp != null && timestamp > 0) {
-      try {
-        // Depending on Bambu Lab's format, this might be Unix timestamp or custom format
-        // If it's a reasonable Unix timestamp (> year 2000 in seconds)
-        if (timestamp > 946684800) {
-          manufactureDate = DateTime.fromMillisecondsSinceEpoch(timestamp * 1000);
-        }
-      } catch (e) {
-        // Invalid date, leave as null
-      }
-    }
-
-    return BobbinData(
-      filamentType: filamentType,
-      color: colorName,
-      colorRgb: colorRgb,
-      weightGrams: weightGrams,
-      diameter: diameter,
-      extruderTempMin: extruderTempMin,
-      extruderTempMax: extruderTempMax,
-      bedTempMin: bedTempMin,
-      bedTempMax: bedTempMax,
-      spoolLength: spoolLength,
-      manufactureDate: manufactureDate,
-      brand: 'Bambu Lab',
-      remainingWeight: weightGrams, // Poids initial = poids restant pour nouveau tag
+    final parsed = BambuTagParser.parse(
+      BambuTagParser.blocksFromNative(data['rawBlocks']),
     );
+    if (parsed == null) {
+      throw const NfcTagReadFailure(
+        message: 'Données Bambu Lab incomplètes (bloc 5 illisible). Gardez le tag immobile et réessayez.',
+      );
+    }
+    return parsed;
   }
 
 }

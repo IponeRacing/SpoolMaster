@@ -8,6 +8,7 @@ import 'package:injectable/injectable.dart';
 import 'package:nfc_filament/core/errors/failures.dart';
 import 'package:nfc_filament/core/services/nfc_scan_diagnostics.dart';
 import 'package:nfc_filament/core/services/user_preferences_service.dart';
+import 'package:nfc_filament/core/utils/color_naming.dart';
 import 'package:nfc_filament/features/nfc_reader/data/datasources/nfc_datasource.dart';
 import 'package:nfc_filament/features/nfc_reader/data/models/bobbin_data_model.dart';
 import 'package:nfc_filament/features/nfc_reader/data/models/nfc_tag_model.dart';
@@ -219,7 +220,7 @@ class NfcDataSourceImpl implements NfcDataSource {
       final r = (colorRgb >> 16) & 0xFF;
       final g = (colorRgb >> 8) & 0xFF;
       final b = colorRgb & 0xFF;
-      color = _rgbToColorName(r, g, b);
+      color = colorNameFromRgb(r, g, b);
       developer.log('🎨 Couleur dérivée du RGB: $color');
     }
 
@@ -442,7 +443,7 @@ class NfcDataSourceImpl implements NfcDataSource {
           colorRgb = (r << 16) | (g << 8) | b;
 
           // Convert RGB to color name
-          colorName = _rgbToColorName(r, g, b);
+          colorName = colorNameFromRgb(r, g, b);
           developer.log('🎨 Couleur: $colorName');
         }
 
@@ -687,48 +688,6 @@ class NfcDataSourceImpl implements NfcDataSource {
     return [...bytes, ...List.filled(length - bytes.length, 0)];
   }
 
-  /// Convert RGB values to human-readable color name
-  String _rgbToColorName(int r, int g, int b) {
-    // Classification HSV. IMPORTANT : traiter d'abord les couleurs ACHROMATIQUES
-    // (blanc/gris/noir) via la SATURATION, AVANT la teinte. Sinon un blanc froid
-    // (ex. 250,250,255, canal bleu à peine dominant) tombait dans la branche
-    // bleu/violet et était classé « Purple » (bug rapporté : PETG White → Lila).
-    final maxC = r > g ? (r > b ? r : b) : (g > b ? g : b);
-    final minC = r < g ? (r < b ? r : b) : (g < b ? g : b);
-    final delta = maxC - minC;
-    final value = maxC; // luminosité 0-255
-    final sat = maxC == 0 ? 0.0 : delta / maxC; // saturation 0-1
-
-    // Achromatique : peu saturé OU canaux très proches → blanc/gris/noir
-    if (sat < 0.22 || delta < 32) {
-      if (value >= 200) return 'White';
-      if (value <= 60) return 'Black';
-      return 'Gray';
-    }
-
-    // Teinte en degrés (0-360)
-    double hue;
-    if (maxC == r) {
-      // Dart : le % sur un double renvoie un résultat non négatif → gère g<b.
-      hue = 60 * (((g - b) / delta) % 6);
-    } else if (maxC == g) {
-      hue = 60 * (((b - r) / delta) + 2);
-    } else {
-      hue = 60 * (((r - g) / delta) + 4);
-    }
-    if (hue < 0) hue += 360;
-
-    // Segmentation par teinte (cyan replié sur Blue, magenta sur Pink/Purple)
-    if (hue < 15 || hue >= 345) return 'Red';
-    if (hue < 45) return value < 150 ? 'Brown' : 'Orange';
-    if (hue < 68) return 'Yellow';
-    if (hue < 168) return 'Green';
-    if (hue < 258) return 'Blue';
-    if (hue < 292) return 'Purple';
-    // 292-345 : magenta/rose → Pink si clair, sinon Purple
-    return value >= 160 ? 'Pink' : 'Purple';
-  }
-
   /// Lire un tag Bambu Lab en utilisant le plugin natif iOS
   Future<BobbinDataModel> _readBambuLabTag() async {
     developer.log('🏷️ Démarrage lecture tag Bambu Lab...');
@@ -903,7 +862,7 @@ class NfcDataSourceImpl implements NfcDataSource {
       final g = rawBytes[82];
       final r = rawBytes[83];
       colorRgb = (r << 16) | (g << 8) | b;
-      colorName = _rgbToColorName(r, g, b);
+      colorName = colorNameFromRgb(r, g, b);
     }
 
     int? extruderMin;

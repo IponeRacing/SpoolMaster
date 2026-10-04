@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer' as developer;
 
 import 'package:nfc_filament/core/errors/failures.dart';
+import 'package:nfc_filament/core/utils/color_naming.dart';
 import 'package:nfc_filament/features/nfc_reader/data/services/tigertag_registry.dart';
 import 'package:nfc_filament/features/nfc_reader/domain/entities/bobbin_data.dart';
 
@@ -184,7 +185,7 @@ class OpenStandardsReaderService {
       if (colorHex != null && colorHex.length >= 6) {
         colorRgb = int.tryParse(colorHex.substring(0, 6), radix: 16);
         if (colorRgb != null) {
-          colorName = _rgbToColorName(
+          colorName = colorNameFromRgb(
             (colorRgb >> 16) & 0xFF,
             (colorRgb >> 8) & 0xFF,
             colorRgb & 0xFF,
@@ -285,7 +286,7 @@ class OpenStandardsReaderService {
       filamentType: materialType.isEmpty ? 'Unknown' : materialType,
       color: colorName.isNotEmpty
           ? colorName
-          : _rgbToColorName(r, g, b),
+          : colorNameFromRgb(r, g, b),
       weightGrams: (weight > 0 ? weight : 1000).toDouble(),
       manufactureDate: DateTime.now(),
       batchNumber:
@@ -366,7 +367,7 @@ class OpenStandardsReaderService {
 
     return BobbinData(
       filamentType: material,
-      color: _rgbToColorName(r, g, b),
+      color: colorNameFromRgb(r, g, b),
       weightGrams: weightGrams > 0 ? weightGrams : 1000,
       manufactureDate: DateTime.now(),
       batchNumber: '$brand - $material',
@@ -439,7 +440,7 @@ class OpenStandardsReaderService {
 
     return BobbinData(
       filamentType: material.isEmpty ? 'Unknown' : material,
-      color: _rgbToColorName(r, g, b),
+      color: colorNameFromRgb(r, g, b),
       weightGrams: (weight > 0 ? weight : 1000).toDouble(),
       manufactureDate: DateTime.now(),
       batchNumber: 'Elegoo - $material',
@@ -465,21 +466,6 @@ class OpenStandardsReaderService {
     if (v is double) return v;
     if (v is int) return v.toDouble();
     return double.tryParse(v.toString());
-  }
-
-  static String _rgbToColorName(int r, int g, int b) {
-    if (r > 200 && g > 200 && b > 200) return 'White';
-    if (r < 50 && g < 50 && b < 50) return 'Black';
-    if (r > 180 && g < 100 && b < 100) return 'Red';
-    if (r < 100 && g < 100 && b > 180) return 'Blue';
-    if (r < 100 && g > 150 && b < 100) return 'Green';
-    if (r > 200 && g > 180 && b < 100) return 'Yellow';
-    if (r > 200 && g > 100 && g < 180 && b < 80) return 'Orange';
-    if (r > 150 && g < 100 && b > 150) return 'Purple';
-    if (r > 200 && g < 150 && b > 150) return 'Pink';
-    if (r > 100 && r < 180 && g > 60 && g < 120 && b < 80) return 'Brown';
-    if ((r - g).abs() < 30 && (g - b).abs() < 30) return 'Gray';
-    return 'Unknown';
   }
 }
 

@@ -1265,62 +1265,18 @@ class NativeNfcPlugin private constructor(
         }
     }
 
+    /**
+     * Blocs bruts seulement : le décodage (format officiel RFID-Tag-Guide) est
+     * fait côté Dart par BambuTagParser, testé sur des dumps réels. L'ancien
+     * décodage ici lisait le bloc 5 comme matériau/températures et le bloc 6
+     * comme couleur : tout était faux.
+     */
     private fun parseBambuLabData(blockData: Map<Int, ByteArray>): Map<String, Any> {
-        val result = mutableMapOf<String, Any>()
-
-        // Extract raw blocks for cloning
         val rawBlocks = mutableMapOf<String, List<Int>>()
         for ((blockNum, data) in blockData) {
             rawBlocks["block_$blockNum"] = data.map { it.toInt() and 0xFF }
         }
-        result["rawBlocks"] = rawBlocks
-
-        // Parse block 5: Filament type and temperatures
-        blockData[5]?.let { block5 ->
-            if (block5.size >= 16) {
-                result["materialIndex"] = block5[0].toInt() and 0xFF
-
-                // Little-endian temperatures
-                result["extruderTempMin"] = (block5[4].toInt() and 0xFF) or ((block5[5].toInt() and 0xFF) shl 8)
-                result["extruderTempMax"] = (block5[6].toInt() and 0xFF) or ((block5[7].toInt() and 0xFF) shl 8)
-                result["bedTempMin"] = (block5[8].toInt() and 0xFF) or ((block5[9].toInt() and 0xFF) shl 8)
-                result["bedTempMax"] = (block5[10].toInt() and 0xFF) or ((block5[11].toInt() and 0xFF) shl 8)
-            }
-        }
-
-        // Parse block 6: Color
-        blockData[6]?.let { block6 ->
-            if (block6.size >= 4) {
-                val r = block6[0].toInt() and 0xFF
-                val g = block6[1].toInt() and 0xFF
-                val b = block6[2].toInt() and 0xFF
-                val a = block6[3].toInt() and 0xFF
-                result["colorRgb"] = (a shl 24) or (r shl 16) or (g shl 8) or b
-            }
-        }
-
-        // Parse block 12: Production timestamp
-        blockData[12]?.let { block12 ->
-            if (block12.size >= 4) {
-                val timestamp = (block12[0].toInt() and 0xFF) or
-                        ((block12[1].toInt() and 0xFF) shl 8) or
-                        ((block12[2].toInt() and 0xFF) shl 16) or
-                        ((block12[3].toInt() and 0xFF) shl 24)
-                result["productionTimestamp"] = timestamp
-            }
-        }
-
-        // Parse block 14: Weight, length, diameter
-        blockData[14]?.let { block14 ->
-            if (block14.size >= 6) {
-                result["weightGrams"] = (block14[0].toInt() and 0xFF) or ((block14[1].toInt() and 0xFF) shl 8)
-                result["spoolLength"] = (block14[2].toInt() and 0xFF) or ((block14[3].toInt() and 0xFF) shl 8)
-                val diameterRaw = (block14[4].toInt() and 0xFF) or ((block14[5].toInt() and 0xFF) shl 8)
-                result["diameter"] = diameterRaw / 100.0
-            }
-        }
-
-        return result
+        return mapOf("rawBlocks" to rawBlocks)
     }
 
     // ==================== OPEN PRINT TAG READ (ISO 15693 / NFC-V) ====================

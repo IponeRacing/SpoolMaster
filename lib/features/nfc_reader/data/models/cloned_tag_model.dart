@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:nfc_filament/features/nfc_reader/data/models/bobbin_data_model.dart';
+import 'package:nfc_filament/features/nfc_reader/data/services/bambu_tag_parser.dart';
 import 'package:nfc_filament/features/nfc_reader/domain/entities/bobbin_data.dart';
 
 /// Modèle pour sauvegarder un tag NFC Bambu Lab cloné
@@ -57,7 +58,9 @@ class ClonedTagModel {
     return ClonedTagModel(
       id: json['id'] as String,
       clonedAt: DateTime.parse(json['clonedAt'] as String),
-      bobbinData: bobbinModel.toEntity(),
+      // Relu depuis les blocs bruts : les clones enregistrés avant la 1.4.10+89
+      // portent un matériau, une couleur et des températures mal décodés.
+      bobbinData: BambuTagParser.parse(blocksMap) ?? bobbinModel.toEntity(),
       rawBlocks: blocksMap,
       customName: json['customName'] as String?,
     );

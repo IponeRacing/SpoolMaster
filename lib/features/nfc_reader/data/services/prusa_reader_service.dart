@@ -2,6 +2,7 @@ import 'dart:developer' as developer;
 
 import 'package:flutter/services.dart';
 import 'package:nfc_filament/core/errors/failures.dart';
+import 'package:nfc_filament/core/utils/color_naming.dart';
 import 'package:nfc_filament/features/nfc_reader/data/services/cbor_lite.dart';
 import 'package:nfc_filament/features/nfc_reader/domain/entities/bobbin_data.dart';
 import 'package:nfc_filament/native_nfc/native_nfc.dart';
@@ -295,7 +296,7 @@ class PrusaReaderService {
       final g = (primaryColor[1] as num).toInt();
       final b = (primaryColor[2] as num).toInt();
       colorRgb = (r << 16) | (g << 8) | b;
-      colorName = _rgbToColorName(r, g, b);
+      colorName = colorNameFromRgb(r, g, b);
     }
 
     // Matériau : nom explicite > abréviation > enum
@@ -532,7 +533,7 @@ class PrusaReaderService {
             final g = fieldData[1];
             final b = fieldData[2];
             colorRgb = (r << 16) | (g << 8) | b;
-            color = _rgbToColorName(r, g, b);
+            color = colorNameFromRgb(r, g, b);
             developer.log('🎨 Color: $color (RGB: $r, $g, $b)');
           }
 
@@ -658,26 +659,5 @@ class PrusaReaderService {
       vendorCode: vendorCode,
       productCode: productCode,
     );
-  }
-
-  /// Convert RGB values to human-readable color name
-  static String _rgbToColorName(int r, int g, int b) {
-    if (r > 100 && r > g * 3 && r > b * 3) return 'Red';
-    if (b > 100 && b > r && b > g) {
-      if (r > 80) return 'Purple';
-      return 'Blue';
-    }
-    if (r > 200 && g > 100 && g < r && b < 100) return 'Orange';
-    if (g > 100 && g > r && g > b) return 'Green';
-    if (r > 200 && g > 200 && b < 100) return 'Yellow';
-    if (r > 200 && g > 150 && b > 150) return 'Pink';
-
-    final brightness = (r + g + b) / 3;
-    if (brightness < 50) return 'Black';
-    if (brightness > 200) return 'White';
-    if ((r - g).abs() < 30 && (g - b).abs() < 30) return 'Gray';
-    if (r > 80 && g > 20 && g < r && b < 50 && brightness < 120) return 'Brown';
-
-    return 'Unknown';
   }
 }
