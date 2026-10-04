@@ -22,6 +22,9 @@ class NativeNfcPlugin: NSObject, FlutterPlugin {
     private var sessionStartTime: Date?
     private var tagDetectedTime: Date?
     private var tagDetected = false
+    // Techno du tag détecté (télémétrie jointe aux erreurs → diagnostic des
+    // « Tag connection lost » qui arrivaient sans aucune info).
+    private var lastTagTech = ""
 
     // Retry sur code 202 (iOS 26 « session terminée inopinément »). Best practice :
     // restartPolling ne marche pas sur une session invalidée → recréer une NOUVELLE
@@ -194,19 +197,40 @@ class NativeNfcPlugin: NSObject, FlutterPlugin {
         if let tagType = tagType {
             details["tag_type"] = tagType
         }
+        if !lastTagTech.isEmpty {
+            details["tag_tech"] = lastTagTech
+        }
         return details
+    }
+
+    private func describeTag(_ tag: NFCTag) -> String {
+        switch tag {
+        case let .miFare(mifareTag):
+            switch mifareTag.mifareFamily {
+            case .ultralight: return "MiFareUltralight"
+            case .plus: return "MiFarePlus"
+            case .desfire: return "MiFareDESFire"
+            default: return "MiFareUnknown"
+            }
+        case .iso15693: return "ISO15693"
+        case .iso7816: return "ISO7816"
+        case .feliCa: return "FeliCa"
+        @unknown default: return "Unknown"
+        }
     }
 
     private func resetSessionTracking() {
         self.sessionStartTime = nil
         self.tagDetectedTime = nil
         self.tagDetected = false
+        self.lastTagTech = ""
     }
 
     private func startSessionTracking() {
         self.sessionStartTime = Date()
         self.tagDetectedTime = nil
         self.tagDetected = false
+        self.lastTagTech = ""
     }
 }
 
@@ -308,6 +332,7 @@ extension NativeNfcPlugin: NFCTagReaderSessionDelegate {
             result?(FlutterError(code: "NO_TAG", message: "Aucun tag détecté", details: buildSessionDiagnostics()))
             return
         }
+        self.lastTagTech = describeTag(tag)
 
         // Détecter les tags ISO 15693 (NFC-V) - ex: Prusa OpenPrintTag
         if case let .iso15693(iso15693Tag) = tag {
@@ -319,7 +344,7 @@ extension NativeNfcPlugin: NFCTagReaderSessionDelegate {
                     if let error = error {
                         print("❌ Erreur connexion ISO 15693: \(error.localizedDescription)")
                         session.invalidate(errorMessage: "Erreur de connexion au tag")
-                        self.result?(FlutterError(code: "CONNECTION_ERROR", message: error.localizedDescription, details: nil))
+                        self.result?(FlutterError(code: "CONNECTION_ERROR", message: error.localizedDescription, details: self.buildSessionDiagnostics()))
                         self.result = nil
                         self.isOpenPrintTagWriteMode = false
                         self.openPrintTagDataToWrite = nil
@@ -336,7 +361,7 @@ extension NativeNfcPlugin: NFCTagReaderSessionDelegate {
                     if let error = error {
                         print("❌ Erreur connexion ISO 15693: \(error.localizedDescription)")
                         session.invalidate(errorMessage: "Erreur de connexion au tag")
-                        self.result?(FlutterError(code: "CONNECTION_ERROR", message: error.localizedDescription, details: nil))
+                        self.result?(FlutterError(code: "CONNECTION_ERROR", message: error.localizedDescription, details: self.buildSessionDiagnostics()))
                         self.result = nil
                         self.isOpenPrintTagMode = false
                         return
@@ -368,7 +393,7 @@ extension NativeNfcPlugin: NFCTagReaderSessionDelegate {
             if let error = error {
                 print("❌ Erreur connexion: \(error.localizedDescription)")
                 session.invalidate(errorMessage: "Erreur de connexion au tag")
-                self.result?(FlutterError(code: "CONNECTION_ERROR", message: error.localizedDescription, details: nil))
+                self.result?(FlutterError(code: "CONNECTION_ERROR", message: error.localizedDescription, details: self.buildSessionDiagnostics()))
                 return
             }
 
@@ -496,7 +521,7 @@ extension NativeNfcPlugin: NFCTagReaderSessionDelegate {
             if let error = error {
                 print("❌ Erreur écriture bloc \(currentBlock): \(error.localizedDescription)")
                 session.invalidate(errorMessage: "Erreur écriture bloc \(currentBlock)")
-                self.result?(FlutterError(code: "WRITE_ERROR", message: "Erreur écriture bloc \(currentBlock): \(error.localizedDescription)", details: nil))
+                self.result?(FlutterError(code: "WRITE_ERROR", message: "Erreur écriture bloc \(currentBlock): \(error.localizedDescription)", details: self.buildSessionDiagnostics()))
                 self.result = nil
                 self.isOpenPrintTagWriteMode = false
                 self.openPrintTagDataToWrite = nil
@@ -582,7 +607,7 @@ extension NativeNfcPlugin: NFCTagReaderSessionDelegate {
                 // Error on first block
                 print("❌ Erreur lecture ISO 15693 bloc \(currentBlock): \(error.localizedDescription)")
                 session.invalidate(errorMessage: "Erreur de lecture ISO 15693")
-                self.result?(FlutterError(code: "READ_ERROR", message: error.localizedDescription, details: nil))
+                self.result?(FlutterError(code: "READ_ERROR", message: error.localizedDescription, details: self.buildSessionDiagnostics()))
                 self.result = nil
                 self.isOpenPrintTagMode = false
                 self.isAutoDetectMode = false
@@ -662,7 +687,7 @@ extension NativeNfcPlugin: NFCTagReaderSessionDelegate {
             if let error = error {
                 print("⚠️ Erreur lecture page \(startPage): \(error.localizedDescription)")
                 session.invalidate(errorMessage: "Erreur de lecture")
-                self.result?(FlutterError(code: "READ_ERROR", message: error.localizedDescription, details: nil))
+                self.result?(FlutterError(code: "READ_ERROR", message: error.localizedDescription, details: self.buildSessionDiagnostics()))
                 self.result = nil
                 self.isAutoDetectMode = false
                 self.isBambuLabMode = false
@@ -705,7 +730,7 @@ extension NativeNfcPlugin: NFCTagReaderSessionDelegate {
             if let error = error {
                 print("⚠️ Erreur lecture page \(startPage): \(error.localizedDescription)")
                 session.invalidate(errorMessage: "Erreur de lecture")
-                self.result?(FlutterError(code: "READ_ERROR", message: error.localizedDescription, details: nil))
+                self.result?(FlutterError(code: "READ_ERROR", message: error.localizedDescription, details: self.buildSessionDiagnostics()))
                 self.result = nil
                 return
             }
@@ -756,7 +781,7 @@ extension NativeNfcPlugin: NFCTagReaderSessionDelegate {
             if let error = error {
                 print("❌ Erreur écriture page \(pageNumber): \(error.localizedDescription)")
                 session.invalidate(errorMessage: "Erreur lors de l'écriture")
-                self.result?(FlutterError(code: "WRITE_ERROR", message: "Échec de l'écriture", details: nil))
+                self.result?(FlutterError(code: "WRITE_ERROR", message: "Échec de l'écriture", details: self.buildSessionDiagnostics()))
                 self.result = nil
                 self.pagesToWrite = nil  // Réinitialiser aussi en cas d'erreur
                 return

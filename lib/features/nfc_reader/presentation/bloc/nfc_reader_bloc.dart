@@ -128,6 +128,8 @@ class NfcReaderBloc extends Bloc<NfcReaderEvent, NfcReaderState> {
         return 'TAG_MOVED';
       case NfcFailureType.readError:
         return 'READ_ERROR';
+      case NfcFailureType.blankTag:
+        return 'BLANK_TAG';
     }
   }
 
@@ -264,6 +266,14 @@ class NfcReaderBloc extends Bloc<NfcReaderEvent, NfcReaderState> {
         } else if (failure is NfcTagReadFailure) {
           sessionDurationMs = failure.sessionDurationMs;
           tagWasDetected = failure.tagWasDetected;
+          if (NfcScanDiagnostics.errorDetail == 'BLANK_TAG') {
+            failureType = NfcFailureType.blankTag;
+          }
+        }
+
+        // Des octets lus = le tag a forcément été détecté (échec de parsing).
+        if (failure is NfcTagReadFailure && failure.rawBytesCount > 0) {
+          tagWasDetected ??= true;
         }
 
         // Log failed scan to backend with error details + session diagnostics
@@ -406,6 +416,14 @@ class NfcReaderBloc extends Bloc<NfcReaderEvent, NfcReaderState> {
         } else if (failure is NfcTagReadFailure) {
           sessionDurationMs = failure.sessionDurationMs;
           tagWasDetected = failure.tagWasDetected;
+          if (NfcScanDiagnostics.errorDetail == 'BLANK_TAG') {
+            failureType = NfcFailureType.blankTag;
+          }
+        }
+
+        // Des octets lus = le tag a forcément été détecté (échec de parsing).
+        if (failure is NfcTagReadFailure && failure.rawBytesCount > 0) {
+          tagWasDetected ??= true;
         }
 
         unawaited(AnalyticsService.logNfcScan(
@@ -415,6 +433,9 @@ class NfcReaderBloc extends Bloc<NfcReaderEvent, NfcReaderState> {
           errorCode: _errorCode(failureType),
           nfcMode: 'auto',
           entryPoint: event.entryPoint,
+          // Avant : jamais envoyées en auto-détection → échecs indiagnosticables.
+          rawTagData: failure is NfcTagReadFailure ? failure.rawTagData : null,
+          rawBytesCount: failure is NfcTagReadFailure ? failure.rawBytesCount : null,
           sessionDurationMs: sessionDurationMs,
           tagWasDetected: tagWasDetected,
         ));

@@ -84,4 +84,7 @@ enum NfcFailureType {
   authError,
   nfcDisabled,
   tagMoved,
+  /// NTAG vierge : aucune donnée de bobine (≈ 1/4 des échecs de lecture en
+  /// prod, 09.2026). Message dédié au lieu d'un « Erreur de lecture » générique.
+  blankTag,
 }

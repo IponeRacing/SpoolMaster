@@ -5,8 +5,8 @@ import 'dart:developer' as developer;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:injectable/injectable.dart';
-import 'package:nfc_filament/core/services/nfc_scan_diagnostics.dart';
 import 'package:nfc_filament/core/errors/failures.dart';
+import 'package:nfc_filament/core/services/nfc_scan_diagnostics.dart';
 import 'package:nfc_filament/core/services/user_preferences_service.dart';
 import 'package:nfc_filament/features/nfc_reader/data/datasources/nfc_datasource.dart';
 import 'package:nfc_filament/features/nfc_reader/data/models/bobbin_data_model.dart';
@@ -57,6 +57,9 @@ class NfcDataSourceImpl implements NfcDataSource {
     // Si pas de SKU trouvé, la puce est vide ou non-Anycubic
     if (sku.isEmpty) {
       developer.log('❌ Puce vide ou format non reconnu');
+      if (NfcScanDiagnostics.looksBlank(rawBytes)) {
+        NfcScanDiagnostics.errorDetail = 'BLANK_TAG';
+      }
       final hexDump = rawBytes.take(64).map((b) => b.toRadixString(16).padLeft(2, '0')).join(' ');
       throw NfcTagReadFailure(
         message: 'Tag NFC vide ou non compatible avec le mode sélectionné',
@@ -240,7 +243,10 @@ class NfcDataSourceImpl implements NfcDataSource {
       final diameterRaw = rawBytes[120] | (rawBytes[121] << 8);
       diameter = diameterRaw / 100.0;
       spoolLength = rawBytes[122] | (rawBytes[123] << 8);
-      weight = (rawBytes[124] | (rawBytes[125] << 8)).toDouble();
+      // 0 = page non lue (lecture partielle) → garder le défaut 1000 g.
+      // Avant : bobines créées à 0 g (cas réel, ACE PLA HS, 09.2026).
+      final parsedWeight = rawBytes[124] | (rawBytes[125] << 8);
+      if (parsedWeight > 0) weight = parsedWeight.toDouble();
 
       developer.log('🌡️ Extrudeur: $extruderMin-$extruderMax°C');
       developer.log('🌡️ Plateau: $bedMin-$bedMax°C');
@@ -461,7 +467,10 @@ class NfcDataSourceImpl implements NfcDataSource {
           final diameterRaw = rawBytes[120] | (rawBytes[121] << 8);
           diameter = diameterRaw / 100.0; // Converti de 0.01mm en mm
           spoolLength = rawBytes[122] | (rawBytes[123] << 8);
-          weight = (rawBytes[124] | (rawBytes[125] << 8)).toDouble();
+          // 0 = page non lue (lecture partielle) → garder le défaut 1000 g.
+          // Avant : bobines créées à 0 g (cas réel, ACE PLA HS, 09.2026).
+          final parsedWeight = rawBytes[124] | (rawBytes[125] << 8);
+          if (parsedWeight > 0) weight = parsedWeight.toDouble();
 
           developer.log('🌡️ Plateau: $bedMin-$bedMax°C');
           developer.log('📏 Diamètre: ${diameter}mm');
@@ -866,9 +875,13 @@ class NfcDataSourceImpl implements NfcDataSource {
 
     // Garde-fou : tag vierge (ni brand ni material) → erreur explicite
     if (brand.isEmpty && material.isEmpty) {
+      if (NfcScanDiagnostics.looksBlank(rawBytes)) {
+        NfcScanDiagnostics.errorDetail = 'BLANK_TAG';
+      }
+      final hexDump = rawBytes.take(64).map((b) => b.toRadixString(16).padLeft(2, '0')).join(' ');
       throw NfcTagReadFailure(
         message: 'Tag NFC vide ou non compatible avec le mode sélectionné',
-        rawTagData: 'bytes:${rawBytes.length}',
+        rawTagData: 'hex:$hexDump',
         rawBytesCount: rawBytes.length,
       );
     }
@@ -899,7 +912,10 @@ class NfcDataSourceImpl implements NfcDataSource {
       final diameterRaw = rawBytes[120] | (rawBytes[121] << 8);
       diameter = diameterRaw / 100.0;
       spoolLength = rawBytes[122] | (rawBytes[123] << 8);
-      weight = (rawBytes[124] | (rawBytes[125] << 8)).toDouble();
+      // 0 = page non lue (lecture partielle) → garder le défaut 1000 g.
+      // Avant : bobines créées à 0 g (cas réel, ACE PLA HS, 09.2026).
+      final parsedWeight = rawBytes[124] | (rawBytes[125] << 8);
+      if (parsedWeight > 0) weight = parsedWeight.toDouble();
     }
 
     return BobbinDataModel(

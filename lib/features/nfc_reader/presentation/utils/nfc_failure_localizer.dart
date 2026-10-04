@@ -24,5 +24,7 @@ String localizedNfcFailureMessage(
       return l10n.tagMovedMessage;
     case NfcFailureType.readError:
       return isWrite ? l10n.writeError : l10n.errorReadingNfc;
+    case NfcFailureType.blankTag:
+      return l10n.nfcBlankTagDesc;
   }
 }

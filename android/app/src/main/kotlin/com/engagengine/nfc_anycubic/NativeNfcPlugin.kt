@@ -2251,6 +2251,13 @@ class NativeNfcPlugin private constructor(
 
     private fun sendError(code: String, message: String, extraDiagnostics: Map<String, Any>? = null) {
         val diagnostics = buildSessionDiagnostics().toMutableMap()
+        // Télémétrie du tag aussi en cas d'échec (avant : succès seulement →
+        // les « 0 octet » / « Read failed » arrivaient sans tag_tech ni essais).
+        if (tagWasDetected) {
+            diagnostics["read_attempts"] = lastReadAttempts
+            if (lastTagTech.isNotEmpty()) diagnostics["tag_tech"] = lastTagTech
+            if (lastDetectDelayMs >= 0) diagnostics["detect_delay_ms"] = lastDetectDelayMs
+        }
         extraDiagnostics?.let { diagnostics.putAll(it) }
         Log.w(TAG, "📤 sendError: code=$code, msg=$message, diag=$diagnostics")
         activity.runOnUiThread {

@@ -589,6 +589,11 @@ class _NfcReaderViewState extends State<_NfcReaderView> {
                 failureColor = Colors.orange;
                 failureTitle = AppLocalizations.of(context)!.tagMovedTitle;
                 failureDetail = AppLocalizations.of(context)!.tagMovedMessage;
+              case NfcFailureType.blankTag:
+                failureIcon = Icons.label_off_outlined;
+                failureColor = Colors.amber;
+                failureTitle = AppLocalizations.of(context)!.nfcBlankTagTitle;
+                failureDetail = AppLocalizations.of(context)!.nfcBlankTagDesc;
             }
 
             return Center(

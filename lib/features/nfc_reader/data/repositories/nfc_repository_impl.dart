@@ -4,6 +4,7 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter/services.dart';
 import 'package:injectable/injectable.dart';
 import 'package:nfc_filament/core/errors/failures.dart';
+import 'package:nfc_filament/core/services/nfc_scan_diagnostics.dart';
 import 'package:nfc_filament/features/nfc_reader/data/datasources/nfc_datasource.dart';
 import 'package:nfc_filament/features/nfc_reader/data/models/bobbin_data_model.dart';
 import 'package:nfc_filament/features/nfc_reader/domain/entities/bobbin_data.dart';
@@ -50,6 +51,9 @@ class NfcRepositoryImpl implements NfcRepository {
     } on Failure catch (failure) {
       return Left(failure);
     } on PlatformException catch (e) {
+      // Avant : seuls les succès alimentaient la télémétrie → les échecs
+      // (0 octet, connexion perdue…) partaient sans tag_tech ni read_attempts.
+      NfcScanDiagnostics.updateFromNativeError(e.code, e.details);
       final diag = _extractDiagnostics(e.details);
       // Gérer l'annulation par l'utilisateur
       if (e.code == 'USER_CANCELLED') {
@@ -121,6 +125,9 @@ class NfcRepositoryImpl implements NfcRepository {
     } on Failure catch (failure) {
       return Left(failure);
     } on PlatformException catch (e) {
+      // Avant : seuls les succès alimentaient la télémétrie → les échecs
+      // (0 octet, connexion perdue…) partaient sans tag_tech ni read_attempts.
+      NfcScanDiagnostics.updateFromNativeError(e.code, e.details);
       final diag = _extractDiagnostics(e.details);
       if (e.code == 'USER_CANCELLED') {
         return const Left(NfcSessionCancelledFailure());
