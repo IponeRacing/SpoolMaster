@@ -31,6 +31,12 @@ class AuthMiddleware {
             return null;
         }
 
+        // Un refresh token (90 jours) ne doit jamais servir de jeton d'accès.
+        if (($decoded->type ?? null) === 'refresh') {
+            self::unauthorizedResponse('Refresh token cannot be used as access token');
+            return null;
+        }
+
         // Vérifier si le token est révoqué
         if (isset($decoded->jti) && $jwt->isTokenRevoked($decoded->jti)) {
             self::unauthorizedResponse('Token has been revoked');
@@ -82,6 +88,7 @@ class AuthMiddleware {
         if (!$token) return null;
         $decoded = $jwt->verifyToken($token);
         if (!$decoded) return null;
+        if (($decoded->type ?? null) === 'refresh') return null;
         if (isset($decoded->jti) && $jwt->isTokenRevoked($decoded->jti)) return null;
         // Compte supprimé → traité comme anonyme
         if (!self::userExists($decoded->data->user_id ?? null)) return null;

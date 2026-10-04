@@ -24,9 +24,15 @@ class UserController {
 
         $db = Database::getInstance()->getConnection();
 
-        // Récupérer l'utilisateur
+        // Colonnes explicites. Avant, « u.*, p.* » : le user_id NULL de p (pas de
+        // ligne de préférences) écrasait celui de u, et des colonnes sensibles
+        // (apple_refresh_token…) partaient au client.
         $stmt = $db->prepare(
-            "SELECT u.*, p.* FROM users u
+            "SELECT u.user_id, u.email, u.name, u.avatar_url, u.provider, u.created_at, u.last_login,
+                    p.language, p.currency, p.units, p.low_stock_threshold,
+                    p.analytics_enabled, p.crash_reports_enabled, p.auto_sync_enabled, p.sync_on_wifi_only,
+                    p.is_vip, p.vip_expires_at, p.subscription_type, p.prefs_explicit
+             FROM users u
              LEFT JOIN user_preferences p ON u.user_id = p.user_id
              WHERE u.user_id = :user_id LIMIT 1"
         );
@@ -37,8 +43,15 @@ class UserController {
             return $this->error('User not found', 404);
         }
 
-        // Retirer les données sensibles
-        unset($user['access_token'], $user['refresh_token']);
+        // Préférences renvoyées seulement si l'app les a déjà envoyées. Les
+        // valeurs par défaut de la table (fr / CHF / seuil 100) écrasaient les
+        // réglages du téléphone à la connexion : 188 comptes en fr/CHF.
+        if (empty($user['prefs_explicit'])) {
+            foreach (['language', 'currency', 'units', 'low_stock_threshold'] as $k) {
+                $user[$k] = null;
+            }
+        }
+        unset($user['prefs_explicit']);
 
         return [
             'success' => true,
@@ -75,7 +88,8 @@ class UserController {
         }
 
         if (!empty($fields)) {
-            $sql = "UPDATE user_preferences SET " . implode(', ', $fields) . "
+            // Valeurs choisies par l'utilisateur : désormais renvoyées par GET /user/profile.
+            $sql = "UPDATE user_preferences SET " . implode(', ', $fields) . ", prefs_explicit = 1
                     WHERE user_id = :user_id";
 
             $stmt = $db->prepare($sql);
@@ -156,6 +170,17 @@ class UserController {
             $decoded = $jwt->verifyToken($token);
             if ($decoded && isset($decoded->jti)) {
                 $jwt->revokeToken($decoded->jti, $userId, 'user_logout');
+            }
+        }
+
+        // Révoquer aussi le refresh token (sinon il restait valable 90 jours
+        // après la déconnexion). Seulement s'il appartient bien à ce compte.
+        $input = json_decode(file_get_contents('php://input'), true);
+        if (is_array($input) && !empty($input['refresh_token'])) {
+            $refresh = $jwt->verifyToken((string)$input['refresh_token']);
+            if ($refresh && ($refresh->type ?? null) === 'refresh'
+                && ($refresh->data->user_id ?? null) === $userId && isset($refresh->jti)) {
+                $jwt->revokeToken($refresh->jti, $userId, 'user_logout');
             }
         }
 

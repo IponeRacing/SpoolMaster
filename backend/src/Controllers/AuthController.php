@@ -42,7 +42,10 @@ class AuthController {
 
             // Extraire les données utilisateur
             $providerId = $appleData['sub']; // Apple User ID
-            $email = $appleData['email'] ?? $input['user']['email'] ?? null;
+            // L'e-mail envoyé par l'app n'est PAS vérifié : il ne sert qu'à
+            // renseigner un nouveau compte, jamais à rattacher un compte existant.
+            $tokenEmail = $appleData['email'] ?? null;
+            $email = $tokenEmail ?? $input['user']['email'] ?? null;
             $name = $input['user']['name'] ?? null;
 
             // Créer ou mettre à jour l'utilisateur
@@ -51,7 +54,8 @@ class AuthController {
                 'provider_id' => $providerId,
                 'email' => $email,
                 'name' => $name,
-                'email_verified' => $appleData['email_verified'] ?? true,
+                'email_verified' => self::isTrue($appleData['email_verified'] ?? false),
+                'email_trusted' => $tokenEmail !== null && self::isTrue($appleData['email_verified'] ?? false),
             ]);
 
             // Jeton Apple nécessaire pour la révocation à la suppression du
@@ -89,8 +93,9 @@ class AuthController {
             ];
 
         } catch (\Exception $e) {
-            error_log("Apple login error: " . $e->getMessage());
-            return $this->error('Authentication failed: ' . $e->getMessage(), 500);
+            // Détail dans le log uniquement (un message PDO exposerait le schéma).
+            Logger::exception('auth.apple', $e);
+            return $this->error('Authentication failed', 500);
         }
     }
 
@@ -126,7 +131,8 @@ class AuthController {
                 'email' => $googleData['email'],
                 'name' => $googleData['name'] ?? null,
                 'avatar_url' => $googleData['picture'] ?? null,
-                'email_verified' => $googleData['email_verified'] ?? false,
+                'email_verified' => self::isTrue($googleData['email_verified'] ?? false),
+                'email_trusted' => !empty($googleData['email']) && self::isTrue($googleData['email_verified'] ?? false),
             ]);
 
             // Générer les tokens JWT
@@ -148,8 +154,8 @@ class AuthController {
             ];
 
         } catch (\Exception $e) {
-            error_log("Google login error: " . $e->getMessage());
-            return $this->error('Authentication failed: ' . $e->getMessage(), 500);
+            Logger::exception('auth.google', $e);
+            return $this->error('Authentication failed', 500);
         }
     }
 
@@ -169,8 +175,12 @@ class AuthController {
             $jwt = new JWTHandler();
             $decoded = $jwt->verifyToken($input['refresh_token']);
 
-            if (!$decoded || $decoded->type !== 'refresh') {
+            if (!$decoded || ($decoded->type ?? null) !== 'refresh') {
                 return $this->error('Invalid refresh token', 401);
+            }
+            // Refresh révoqué (déconnexion) : avant, il restait utilisable 90 jours.
+            if (isset($decoded->jti) && $jwt->isTokenRevoked($decoded->jti)) {
+                return $this->error('Refresh token revoked', 401);
             }
 
             // Récupérer l'utilisateur
@@ -180,7 +190,8 @@ class AuthController {
             $user = $stmt->fetch();
 
             if (!$user) {
-                return $this->error('User not found', 404);
+                // Compte supprimé : 401 pour que l'app ferme la session.
+                return $this->error('User not found', 401);
             }
 
             // Générer de nouveaux tokens
@@ -197,7 +208,10 @@ class AuthController {
             ];
 
         } catch (\Exception $e) {
-            return $this->error('Token refresh failed', 401);
+            // Erreur serveur (base…) : 500, PAS 401. Un 401 fait fermer la
+            // session côté app alors que le refresh token est valide.
+            Logger::exception('auth.refresh', $e);
+            return $this->error('Token refresh failed', 500);
         }
     }
 
@@ -467,6 +481,11 @@ class AuthController {
     /**
      * Crée ou met à jour un utilisateur
      */
+    /** true, "true", 1, "1" → true ; "false" (chaîne non vide !) → false. */
+    private static function isTrue($value): bool {
+        return filter_var($value, FILTER_VALIDATE_BOOLEAN);
+    }
+
     private function createOrUpdateUser(array $data): array {
         $db = Database::getInstance()->getConnection();
 
@@ -487,7 +506,7 @@ class AuthController {
                  WHERE user_id = :user_id"
             );
             $stmt->execute([
-                'email_verified' => $data['email_verified'] ? 1 : 0,
+                'email_verified' => !empty($data['email_verified']) ? 1 : 0,
                 'user_id' => $existing['user_id']
             ]);
 
@@ -500,6 +519,18 @@ class AuthController {
             $stmt = $db->prepare("SELECT * FROM users WHERE email = :email LIMIT 1");
             $stmt->execute(['email' => $data['email']]);
             $sameEmail = $stmt->fetch();
+
+            // E-mail non vérifié (fourni par l'app, ou email_verified faux) :
+            // pas de rattachement (prise de contrôle d'un compte possible),
+            // nouveau compte avec un e-mail de substitution (UNIQUE).
+            if ($sameEmail && empty($data['email_trusted'])) {
+                Logger::warning('auth.link', 'Rattachement refusé : e-mail non vérifié', [
+                    'provider' => $data['provider'],
+                    'existing_user' => $sameEmail['user_id'],
+                ]);
+                $data['email'] = $data['provider_id'] . '@' . $data['provider'] . '.local';
+                $sameEmail = false;
+            }
 
             if ($sameEmail) {
                 error_log("Account link: {$data['provider']} login for existing email (user {$sameEmail['user_id']}, provider {$sameEmail['provider']})");
@@ -530,7 +561,7 @@ class AuthController {
             'email' => $data['email'],
             'name' => $data['name'],
             'avatar_url' => $data['avatar_url'] ?? null,
-            'email_verified' => $data['email_verified'] ? 1 : 0
+            'email_verified' => !empty($data['email_verified']) ? 1 : 0
         ]);
 
         // Créer les préférences par défaut

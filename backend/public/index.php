@@ -206,8 +206,9 @@ $router->post('/webhooks/google-play', [GooglePlayWebhookController::class, 'han
 // CRON endpoint (public but with secret key)
 $router->get('/cron/check-expired/:secret', [SubscriptionController::class, 'cronCheckExpired']);
 $router->get('/cron/daily-report/:secret', [ReportController::class, 'dailyReport']);
-$router->get('/cron/scan-analysis/:secret', [ReportController::class, 'scanAnalysis']);
-$router->get('/cron/user-search/:secret', [ReportController::class, 'userSearch']);
+// Outils de support : secret dans l'en-tête X-Admin-Secret, pas dans l'URL.
+$router->get('/admin/scan-analysis', [ReportController::class, 'scanAnalysis']);
+$router->get('/admin/user-search', [ReportController::class, 'userSearch']);
 
 // ============================================
 // Routes protégées (auth requise)
@@ -252,7 +253,6 @@ $router->get('/analytics/stats', [AnalyticsController::class, 'getStats']);
 // Subscription endpoints (auth required)
 $router->post('/subscriptions/verify', [SubscriptionController::class, 'verifyPurchase']);
 $router->get('/subscriptions/status', [SubscriptionController::class, 'getSubscriptionStatus']);
-$router->post('/subscriptions/check-expired', [SubscriptionController::class, 'checkExpiredSubscriptions']);
 
 // Execute router
 $router->execute();

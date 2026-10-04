@@ -7,6 +7,7 @@
 namespace NfcAnycubic\Controllers;
 
 use NfcAnycubic\Database;
+use NfcAnycubic\Logger;
 use NfcAnycubic\Middleware\AuthMiddleware;
 
 class ShoppingListController {
@@ -50,25 +51,52 @@ class ShoppingListController {
         if (!$userId) return;
 
         $input = json_decode(file_get_contents('php://input'), true);
+        if (!is_array($input)) {
+            http_response_code(400);
+            return ['success' => false, 'error' => 'Invalid JSON body', 'request_id' => Logger::requestId()];
+        }
         $db = Database::getInstance()->getConnection();
 
-        $itemsSynced = 0;
+        // 1. Suppressions faites hors ligne (avant : jamais envoyées, l'article
+        //    supprimé revenait à chaque synchro).
+        $deleted = 0;
+        if (isset($input['deleted_ids']) && is_array($input['deleted_ids'])) {
+            $stmt = $db->prepare(
+                "UPDATE shopping_list SET deleted_at = NOW()
+                 WHERE item_id = :item_id AND user_id = :user_id AND deleted_at IS NULL"
+            );
+            foreach ($input['deleted_ids'] as $itemId) {
+                if (!is_string($itemId) || $itemId === '') continue;
+                $stmt->execute(['item_id' => $itemId, 'user_id' => $userId]);
+                $deleted += $stmt->rowCount();
+            }
+        }
 
+        // 2. Articles : un article en erreur ne fait plus échouer le lot
+        //    (avant : 500 global, puis le pull écrasait la liste locale).
+        $itemsSynced = 0;
+        $failedIds = [];
         if (isset($input['items']) && is_array($input['items'])) {
             foreach ($input['items'] as $item) {
-                $item = $this->normalizeFieldNames($item);
-                $this->syncItem($userId, $item, $db);
-                $itemsSynced++;
+                $itemId = is_array($item) ? ($item['item_id'] ?? $item['id'] ?? null) : null;
+                try {
+                    if ($this->syncItem($userId, $this->normalizeFieldNames(is_array($item) ? $item : null), $db)) {
+                        $itemsSynced++;
+                    }
+                } catch (\Throwable $e) {
+                    $failedIds[] = $itemId ?? '?';
+                    Logger::exception('shopping.push', $e, ['item_id' => $itemId]);
+                }
             }
         }
 
         // Sync ordered IDs
         if (isset($input['ordered_ids']) && is_array($input['ordered_ids'])) {
+            $stmt = $db->prepare(
+                "UPDATE shopping_list SET is_ordered = TRUE, ordered_at = NOW()
+                 WHERE item_id = :item_id AND user_id = :user_id"
+            );
             foreach ($input['ordered_ids'] as $itemId) {
-                $stmt = $db->prepare(
-                    "UPDATE shopping_list SET is_ordered = TRUE, ordered_at = NOW()
-                     WHERE item_id = :item_id AND user_id = :user_id"
-                );
                 $stmt->execute(['item_id' => $itemId, 'user_id' => $userId]);
             }
         }
@@ -76,7 +104,10 @@ class ShoppingListController {
         return [
             'success' => true,
             'data' => [
-                'items_synced' => $itemsSynced
+                'items_synced' => $itemsSynced,
+                'failed' => count($failedIds),
+                'failed_item_ids' => $failedIds,
+                'deleted' => $deleted
             ]
         ];
     }
@@ -261,16 +292,23 @@ class ShoppingListController {
     /**
      * Sync un item individuel
      */
-    private function syncItem(string $userId, array $item, $db) {
+    private function syncItem(string $userId, array $item, $db): bool {
         $itemId = $item['item_id'] ?? $item['id'] ?? null;
-        if (!$itemId) return;
+        if (!$itemId) {
+            throw new \InvalidArgumentException('item_id manquant');
+        }
 
         // Vérifier si l'item existe
         $stmt = $db->prepare(
-            "SELECT id FROM shopping_list WHERE item_id = :item_id AND user_id = :user_id LIMIT 1"
+            "SELECT id, deleted_at FROM shopping_list WHERE item_id = :item_id AND user_id = :user_id LIMIT 1"
         );
         $stmt->execute(['item_id' => $itemId, 'user_id' => $userId]);
         $existing = $stmt->fetch();
+
+        // Supprimé côté serveur : un push ne le ressuscite jamais.
+        if ($existing && $existing['deleted_at'] !== null) {
+            return false;
+        }
 
         if ($existing) {
             // Update
@@ -315,8 +353,9 @@ class ShoppingListController {
             'extruder_temp_max' => $item['extruder_temp_max'] ?? null,
             'bed_temp_min' => $item['bed_temp_min'] ?? null,
             'bed_temp_max' => $item['bed_temp_max'] ?? null,
-            'is_ordered' => $item['is_ordered'] ?? false
+            'is_ordered' => !empty($item['is_ordered']) ? 1 : 0
         ]);
+        return true;
     }
 
     /**

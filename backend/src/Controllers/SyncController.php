@@ -340,9 +340,9 @@ class SyncController {
             // JSON étaient concaténées dans le SQL (injection possible) et toute
             // clé inconnue faisait planter la requête (paramètres manquants).
             $columns = array_values(array_diff(array_keys($values), ['user_id']));
-            $sql = "INSERT INTO user_preferences (user_id, " . implode(', ', $columns) . ")
-                    VALUES (:user_id, " . implode(', ', array_map(fn($k) => ":$k", $columns)) . ")
-                    ON DUPLICATE KEY UPDATE " . implode(', ', $fields);
+            $sql = "INSERT INTO user_preferences (user_id, prefs_explicit, " . implode(', ', $columns) . ")
+                    VALUES (:user_id, 1, " . implode(', ', array_map(fn($k) => ":$k", $columns)) . ")
+                    ON DUPLICATE KEY UPDATE " . implode(', ', $fields) . ", prefs_explicit = 1";
 
             $stmt = $db->prepare($sql);
             $stmt->execute($values);

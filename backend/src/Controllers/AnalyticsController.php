@@ -9,6 +9,7 @@ namespace NfcAnycubic\Controllers;
 use NfcAnycubic\Database;
 use NfcAnycubic\Logger;
 use NfcAnycubic\Middleware\AuthMiddleware;
+use NfcAnycubic\Middleware\RateLimiter;
 
 class AnalyticsController {
 
@@ -24,10 +25,30 @@ class AnalyticsController {
 
         $input = json_decode(file_get_contents('php://input'), true);
 
-        if (!isset($input['event_type'])) {
+        if (!is_array($input) || !isset($input['event_type'])) {
             http_response_code(400);
             return ['success' => false, 'error' => 'event_type is required'];
         }
+
+        // Endpoint anonyme : garde-fous de forme et de taille. Avant, une
+        // plateforme inconnue donnait un 500 (colonne ENUM), et event_data
+        // n'avait aucune limite.
+        $eventType = (string)$input['event_type'];
+        if (!preg_match('/^[a-z0-9_]{1,100}$/', $eventType)) {
+            http_response_code(400);
+            return ['success' => false, 'error' => 'invalid event_type'];
+        }
+        $platform = $input['device_platform'] ?? 'ios';
+        if (!in_array($platform, ['ios', 'android'], true)) {
+            http_response_code(400);
+            return ['success' => false, 'error' => 'invalid device_platform'];
+        }
+        $eventDataJson = isset($input['event_data']) ? json_encode($input['event_data']) : null;
+        if ($eventDataJson !== null && strlen($eventDataJson) > 16384) {
+            http_response_code(413);
+            return ['success' => false, 'error' => 'event_data too large'];
+        }
+        $appVersion = isset($input['app_version']) ? mb_substr((string)$input['app_version'], 0, 50) : null;
 
         $db = Database::getInstance()->getConnection();
 
@@ -36,14 +57,12 @@ class AnalyticsController {
              VALUES (:user_id, :event_type, :event_data, :device_platform, :app_version)"
         );
 
-        $eventDataJson = isset($input['event_data']) ? json_encode($input['event_data']) : null;
-
         $stmt->execute([
             'user_id' => $userId,
-            'event_type' => $input['event_type'],
+            'event_type' => $eventType,
             'event_data' => $eventDataJson,
-            'device_platform' => $input['device_platform'] ?? 'ios',
-            'app_version' => $input['app_version'] ?? null
+            'device_platform' => $platform,
+            'app_version' => $appVersion
         ]);
 
         $eventId = $db->lastInsertId();
@@ -51,7 +70,10 @@ class AnalyticsController {
         // E-mail uniquement pour un feedback utilisateur (rare, saisi à la main).
         // Les scans ratés sont agrégés dans le rapport journalier : un e-mail
         // par échec (timeouts compris, ~5/jour) serait du bruit.
-        if ($input['event_type'] === 'scan_feedback') {
+        // Au plus 5 e-mails de feedback par heure et par IP (l'événement est
+        // enregistré dans tous les cas) : pas d'inondation de la boîte info@.
+        if ($eventType === 'scan_feedback'
+            && RateLimiter::check('feedback_mail:' . ($_SERVER['REMOTE_ADDR'] ?? 'unknown'), 5, 3600)) {
             $eventData = is_array($input['event_data'] ?? null) ? $input['event_data'] : [];
             $platform = $input['device_platform'] ?? 'ios';
             $appVersion = $input['app_version'] ?? '?';

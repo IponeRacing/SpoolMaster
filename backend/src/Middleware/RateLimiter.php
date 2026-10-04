@@ -85,6 +85,10 @@ class RateLimiter
      */
     public static function checkByIp(int $maxRequests = 100, int $windowSeconds = 60): bool
     {
+        // Nettoyage des fichiers périmés (cleanup() n'était jamais appelé).
+        if (mt_rand(1, 500) === 1) {
+            self::cleanup();
+        }
         $ip = self::getClientIp();
         return self::check('ip:' . $ip, $maxRequests, $windowSeconds);
     }
@@ -142,28 +146,12 @@ class RateLimiter
      */
     private static function getClientIp(): string
     {
-        // Check for proxy headers (in order of trust)
-        $headers = [
-            'HTTP_CF_CONNECTING_IP',     // Cloudflare
-            'HTTP_X_REAL_IP',            // Nginx proxy
-            'HTTP_X_FORWARDED_FOR',      // Standard proxy header
-            'REMOTE_ADDR'                // Direct connection
-        ];
-
-        foreach ($headers as $header) {
-            if (!empty($_SERVER[$header])) {
-                // X-Forwarded-For can contain multiple IPs, take the first
-                $ip = explode(',', $_SERVER[$header])[0];
-                $ip = trim($ip);
-
-                // Validate IP format
-                if (filter_var($ip, FILTER_VALIDATE_IP)) {
-                    return $ip;
-                }
-            }
-        }
-
-        return 'unknown';
+        // REMOTE_ADDR uniquement : CF-Connecting-IP / X-Real-IP / X-Forwarded-For
+        // sont envoyés par le client et changeaient à volonté (limite contournée,
+        // un fichier de cache créé par fausse IP). Chez Infomaniak, REMOTE_ADDR
+        // est la vraie IP du client (pas de proxy devant l'API).
+        $ip = $_SERVER['REMOTE_ADDR'] ?? '';
+        return filter_var($ip, FILTER_VALIDATE_IP) ? $ip : 'unknown';
     }
 
     /**

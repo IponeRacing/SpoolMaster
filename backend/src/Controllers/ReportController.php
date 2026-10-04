@@ -7,6 +7,7 @@
 namespace NfcAnycubic\Controllers;
 
 use NfcAnycubic\Database;
+use NfcAnycubic\Logger;
 
 class ReportController {
 
@@ -54,9 +55,10 @@ class ReportController {
             $report['email_sent'] = $emailSent;
             return ['success' => true, 'data' => $report];
         } catch (\Exception $e) {
-            \error_log("❌ [DAILY-REPORT] Error: " . $e->getMessage());
+            // Détail dans le log seulement (pas de message SQL renvoyé).
+            Logger::exception('report', $e);
             \http_response_code(500);
-            return ['success' => false, 'error' => $e->getMessage()];
+            return ['success' => false, 'error' => 'Internal error', 'request_id' => Logger::requestId()];
         }
     }
 
@@ -290,7 +292,29 @@ class ReportController {
         return $report;
     }
 
+    /** Échappe récursivement toutes les chaînes (données issues des events). */
+    private function escapeAll($value) {
+        if (\is_array($value)) {
+            return \array_map(fn($v) => $this->escapeAll($v), $value);
+        }
+        return \is_string($value) ? \htmlspecialchars($value, ENT_QUOTES, 'UTF-8') : $value;
+    }
+
+    /**
+     * Outils de support : secret dans l'en-tête X-Admin-Secret (même valeur que
+     * CRON_SECRET), jamais dans l'URL (sinon il finit dans les logs d'accès).
+     */
+    private function adminAuthorized(): bool {
+        $config = require __DIR__ . '/../../config/app.php';
+        $validSecret = (string)($config['cron_secret'] ?? '');
+        $given = (string)($_SERVER['HTTP_X_ADMIN_SECRET'] ?? '');
+        return $validSecret !== '' && \hash_equals($validSecret, $given);
+    }
+
     private function renderHtml(array $r): string {
+        // Toutes les valeurs (marques, erreurs, appareils… venant d'événements
+        // envoyés sans compte) sont échappées : pas d'injection HTML dans l'e-mail.
+        $r = $this->escapeAll($r);
         $today = $r['scans_24h'];
         $yesterday = $r['scans_previous'];
         $trend = $today['total'] - $yesterday['total'];
@@ -400,7 +424,7 @@ class ReportController {
         // Santé de la sync (erreurs app + push serveur en échec)
         if (!empty($r['sync_errors'])) {
             $html .= $this->tableSection('Erreurs de sync (app)', ['Événement / op', 'HTTP', 'Type', 'Nb', 'Users', 'Version'], array_map(function($row) {
-                $e = fn($v) => \htmlspecialchars((string)($v ?? '-'), ENT_QUOTES, 'UTF-8');
+                $e = fn($v) => (string)($v ?? '-'); // déjà échappé par escapeAll()
                 return [
                     $e($row['event_type']) . ' / ' . $e($row['op']),
                     $e($row['http_status']),
@@ -413,7 +437,7 @@ class ReportController {
         }
         if (!empty($r['sync_failures'])) {
             $html .= $this->tableSection('Syncs serveur en échec', ['Heure', 'User', 'Statut', 'OK', 'Erreur'], array_map(function($row) {
-                $e = fn($v) => \htmlspecialchars((string)($v ?? '-'), ENT_QUOTES, 'UTF-8');
+                $e = fn($v) => (string)($v ?? '-'); // déjà échappé par escapeAll()
                 return [
                     \substr($row['created_at'] ?? '', 11, 5),
                     $e(\substr($row['user_id'] ?? '', 0, 8)),
@@ -520,11 +544,7 @@ class ReportController {
      * Analyse approfondie des scans echoues et feedback utilisateur
      */
     public function scanAnalysis($params) {
-        $secret = $params['secret'] ?? null;
-        $config = require __DIR__ . '/../../config/app.php';
-        $validSecret = $config['cron_secret'] ?? '';
-
-        if (!hash_equals($validSecret, $secret ?? '')) {
+        if (!$this->adminAuthorized()) {
             http_response_code(403);
             return ['success' => false, 'error' => 'Invalid secret'];
         }
@@ -714,20 +734,18 @@ class ReportController {
 
             return ['success' => true, 'data' => $report];
         } catch (\Exception $e) {
-            http_response_code(500);
-            return ['success' => false, 'error' => $e->getMessage()];
+            // Détail dans le log seulement (pas de message SQL renvoyé).
+            Logger::exception('report', $e);
+            \http_response_code(500);
+            return ['success' => false, 'error' => 'Internal error', 'request_id' => Logger::requestId()];
         }
     }
 
     /**
-     * GET /cron/user-search/:secret?email=xxx
+     * GET /admin/user-search?email=xxx  (en-tête X-Admin-Secret)
      */
     public function userSearch($params) {
-        $secret = $params['secret'] ?? null;
-        $config = require __DIR__ . '/../../config/app.php';
-        $validSecret = $config['cron_secret'] ?? '';
-
-        if (!hash_equals($validSecret, $secret ?? '')) {
+        if (!$this->adminAuthorized()) {
             http_response_code(403);
             return ['success' => false, 'error' => 'Invalid secret'];
         }
@@ -740,8 +758,23 @@ class ReportController {
         try {
             $db = \NfcAnycubic\Database::getInstance()->getConnection();
 
-            $stmt = $db->prepare("SELECT * FROM users WHERE email LIKE :email");
-            $stmt->execute(['email' => '%' . $email . '%']);
+            // Recherche exacte par défaut. Partielle seulement avec partial=1 et
+            // 4 caractères minimum, jokers échappés (avant : « % » renvoyait
+            // toute la table users, apple_refresh_token compris).
+            $columns = "user_id, email, name, provider, email_verified, created_at, last_login,
+                        data_deletion_requested, data_deletion_requested_at";
+            if (($_GET['partial'] ?? '') === '1') {
+                if (\mb_strlen($email) < 4) {
+                    http_response_code(400);
+                    return ['success' => false, 'error' => 'partial search needs at least 4 characters'];
+                }
+                $like = '%' . \addcslashes($email, '%_\\') . '%';
+                $stmt = $db->prepare("SELECT $columns FROM users WHERE email LIKE :email LIMIT 20");
+                $stmt->execute(['email' => $like]);
+            } else {
+                $stmt = $db->prepare("SELECT $columns FROM users WHERE email = :email LIMIT 1");
+                $stmt->execute(['email' => $email]);
+            }
             $users = $stmt->fetchAll();
 
             $subscriptions = [];
@@ -774,8 +807,10 @@ class ReportController {
                 'recent_activity' => $scans,
             ]];
         } catch (\Exception $e) {
-            http_response_code(500);
-            return ['success' => false, 'error' => $e->getMessage()];
+            // Détail dans le log seulement (pas de message SQL renvoyé).
+            Logger::exception('report', $e);
+            \http_response_code(500);
+            return ['success' => false, 'error' => 'Internal error', 'request_id' => Logger::requestId()];
         }
     }
 
@@ -807,14 +842,20 @@ class ReportController {
         $this->smtpCmd($smtp, "RCPT TO:<$to>");
         $this->smtpCmd($smtp, "DATA");
 
+        // Corps en base64 : aucune ligne du contenu (issu en partie de données
+        // anonymes, ex. /analytics/event) ne peut plus être lue comme une
+        // commande SMTP (« \r\n.\r\n » + MAIL FROM… = envoi arbitraire depuis
+        // info@). Sujet nettoyé de tout retour ligne et encodé en MIME.
+        $cleanSubject = \str_replace(["\r", "\n"], ' ', $subject);
         $message = "From: $from\r\n";
         $message .= "To: $to\r\n";
-        $message .= "Subject: $subject\r\n";
+        $message .= "Subject: =?UTF-8?B?" . \base64_encode($cleanSubject) . "?=\r\n";
         $message .= "MIME-Version: 1.0\r\n";
         $message .= "Content-Type: text/html; charset=UTF-8\r\n";
+        $message .= "Content-Transfer-Encoding: base64\r\n";
         $message .= "Date: " . \date('r') . "\r\n";
         $message .= "\r\n";
-        $message .= $htmlBody;
+        $message .= \rtrim(\chunk_split(\base64_encode($htmlBody), 76, "\r\n"));
         $message .= "\r\n.\r\n";
 
         \fwrite($smtp, $message);
