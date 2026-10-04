@@ -561,9 +561,15 @@ class NfcDataSourceImpl implements NfcDataSource {
       developer.log('📏 Longueur: ${spoolLength}m');
       developer.log('⚖️ Poids: ${weight}g');
 
-      // Préparer les pages à écrire
+      // Préparer les pages à écrire.
+      // La page 3 (Capability Container) n'est PLUS écrite : sur NTAG21x ses
+      // bits sont OTP (une écriture fait un OU avec l'existant, irréversible).
+      // Les tags sortent d'usine avec un CC valide (E1 10 12/3E/6D 00) et
+      // l'ancien E1 10 06 00 le corrompait (NTAG213 : 0x12|0x06 = 0x16, taille
+      // NDEF fausse) ou faisait échouer l'écriture si le CC est verrouillé.
+      // La session d'écriture native ne permet pas de lire la page avant de
+      // l'écrire, et la lecture Anycubic n'utilise pas le CC.
       final pages = <Map<String, dynamic>>[
-        {'page': 3, 'data': [0xE1, 0x10, 0x06, 0x00]}, // NDEF CC
         {'page': 4, 'data': [0x7b, 0x00, 0x65, 0x00]}, // Anycubic header
         // SKU (pages 5-8)
         {'page': 5, 'data': skuBytes.sublist(0, 4)},
@@ -671,9 +677,13 @@ class NfcDataSourceImpl implements NfcDataSource {
     }
   }
 
-  /// Pad bytes to desired length with zeros
+  /// Pad bytes to desired length with zeros.
+  /// Renvoie toujours une `List<int>` ordinaire, jamais un `Uint8List` :
+  /// utf8.encode renvoie un Uint8List, que le canal transmet en byte[] /
+  /// FlutterStandardTypedData. Le natif attend une liste de nombres et
+  /// sautait la page (SKU de 16 caractères ou plus → pages 5-8 non écrites).
   List<int> _padBytes(List<int> bytes, int length) {
-    if (bytes.length >= length) return bytes.sublist(0, length);
+    if (bytes.length >= length) return bytes.sublist(0, length).toList();
     return [...bytes, ...List.filled(length - bytes.length, 0)];
   }
 

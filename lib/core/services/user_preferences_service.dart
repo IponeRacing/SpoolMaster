@@ -125,9 +125,42 @@ class UserPreferencesService {
     return email;
   }
 
+  /// Bornes du seuil de stock bas (en %), identiques au curseur du profil.
+  static const int minLowStockThreshold = 5;
+  static const int maxLowStockThreshold = 50;
+  static const int defaultLowStockThreshold = 20;
+
+  /// Seuil de stock bas en %, toujours borné entre 5 et 50 : l'ancien défaut
+  /// serveur (100) recopié en local faisait passer tout le stock en « bas ».
   static Future<int> getLowStockThreshold() async {
     final prefs = await SharedPreferences.getInstance();
-    return prefs.getInt(_keyLowStockThreshold) ?? 20; // 20% par défaut
+    return clampLowStockThreshold(
+      prefs.getInt(_keyLowStockThreshold) ?? defaultLowStockThreshold,
+    );
+  }
+
+  /// Borne un seuil entre [minLowStockThreshold] et [maxLowStockThreshold].
+  static int clampLowStockThreshold(int value) =>
+      value.clamp(minLowStockThreshold, maxLowStockThreshold);
+
+  /// Seuil reçu du serveur, ou null s'il faut garder la valeur locale :
+  /// absent/null (jamais envoyé par l'utilisateur), illisible, ou hors de
+  /// 5..50 (valeur par défaut du serveur, 100, que l'app ne peut pas
+  /// produire). Pur (testable).
+  @visibleForTesting
+  static int? lowStockThresholdFromServer(Object? raw) {
+    final value = switch (raw) {
+      final int v => v,
+      final num v => v.round(),
+      final String v => int.tryParse(v.trim()),
+      _ => null,
+    };
+    if (value == null ||
+        value < minLowStockThreshold ||
+        value > maxLowStockThreshold) {
+      return null;
+    }
+    return value;
   }
 
   static Future<String> getNfcMode() async {
@@ -164,7 +197,7 @@ class UserPreferencesService {
 
   static Future<void> setLowStockThreshold(int threshold) async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setInt(_keyLowStockThreshold, threshold);
+    await prefs.setInt(_keyLowStockThreshold, clampLowStockThreshold(threshold));
     // Sync to backend if user is signed in
     await _syncPreferencesToBackend();
   }
@@ -250,18 +283,24 @@ class UserPreferencesService {
         if (responseBody['success'] == true && responseBody['data'] != null) {
           final data = responseBody['data'] as Map<String, dynamic>;
 
-          // Preferences are directly in the data object, not in a nested 'preferences' object
-          if (data['language'] != null) {
-            await prefs.setString(_keyLanguage, data['language'] as String);
+          // Preferences are directly in the data object, not in a nested 'preferences' object.
+          // null = jamais envoyée par l'utilisateur → on garde la valeur
+          // locale (le serveur ne doit pas écraser un choix fait hors ligne).
+          final language = _nonEmptyString(data['language']);
+          if (language != null) {
+            await prefs.setString(_keyLanguage, language);
           }
-          if (data['currency'] != null) {
-            await prefs.setString(_keyCurrency, data['currency'] as String);
+          final currency = _nonEmptyString(data['currency']);
+          if (currency != null) {
+            await prefs.setString(_keyCurrency, currency);
           }
-          if (data['units'] != null) {
-            await prefs.setString(_keyUnits, data['units'] as String);
+          final units = _nonEmptyString(data['units']);
+          if (units != null) {
+            await prefs.setString(_keyUnits, units);
           }
-          if (data['low_stock_threshold'] != null) {
-            await prefs.setInt(_keyLowStockThreshold, data['low_stock_threshold'] as int);
+          final threshold = lowStockThresholdFromServer(data['low_stock_threshold']);
+          if (threshold != null) {
+            await prefs.setInt(_keyLowStockThreshold, threshold);
           }
           debugPrint('✅ Preferences loaded from backend');
         } else {
@@ -274,6 +313,12 @@ class UserPreferencesService {
       debugPrint('⚠️ Could not load preferences from backend: $e');
       debugPrint('Stack trace: $stackTrace');
     }
+  }
+
+  static String? _nonEmptyString(Object? raw) {
+    if (raw is! String) return null;
+    final value = raw.trim();
+    return value.isEmpty ? null : value;
   }
 
   static Future<void> setUserInfo({

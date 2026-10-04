@@ -19,7 +19,6 @@ class BambuCloneLibraryPage extends StatefulWidget {
 class _BambuCloneLibraryPageState extends State<BambuCloneLibraryPage> {
   List<ClonedTagModel> _clones = [];
   bool _isLoading = true;
-  bool _isSyncing = false;
 
   @override
   void initState() {
@@ -30,26 +29,11 @@ class _BambuCloneLibraryPageState extends State<BambuCloneLibraryPage> {
   Future<void> _loadClones() async {
     setState(() => _isLoading = true);
     final clones = await ClonedTagsStorageService.getClonedTags();
+    if (!mounted) return;
     setState(() {
       _clones = clones;
       _isLoading = false;
     });
-  }
-
-  Future<void> _syncWithCloud() async {
-    setState(() => _isSyncing = true);
-    await ClonedTagsStorageService.syncWithCloud();
-    await _loadClones();
-    setState(() => _isSyncing = false);
-
-    if (mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(AppLocalizations.of(context)!.syncCompleted),
-          backgroundColor: Colors.green,
-        ),
-      );
-    }
   }
 
   Future<void> _deleteClone(ClonedTagModel clone) async {
@@ -89,24 +73,10 @@ class _BambuCloneLibraryPageState extends State<BambuCloneLibraryPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // Pas de bouton « Synchroniser avec le cloud » : le backend n'a aucune
+      // route de clones, la bibliothèque est locale (par compte).
       appBar: AppBar(
         title: Text(AppLocalizations.of(context)!.bambuCloneLibrary),
-        actions: [
-          IconButton(
-            icon: _isSyncing
-                ? const SizedBox(
-                    width: 20,
-                    height: 20,
-                    child: CircularProgressIndicator(
-                      strokeWidth: 2,
-                      valueColor: AlwaysStoppedAnimation(Colors.white),
-                    ),
-                  )
-                : const Icon(Icons.cloud_sync),
-            tooltip: AppLocalizations.of(context)!.syncWithCloud,
-            onPressed: _isSyncing ? null : _syncWithCloud,
-          ),
-        ],
       ),
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())

@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:nfc_filament/core/constants/creality_database.dart';
 import 'package:nfc_filament/core/errors/failures.dart';
 import 'package:nfc_filament/features/nfc_reader/domain/entities/bobbin_data.dart';
+import 'package:nfc_filament/native_nfc/native_nfc.dart';
 
 /// Service pour lire les tags NFC Creality CFS
 /// Basé sur le reverse-engineering communautaire (K2-RFID, cfs-programmer)
@@ -13,6 +14,7 @@ class CrealityReaderService {
   /// Lire les données d'une bobine Creality CFS depuis un tag NFC
   static Future<BobbinData> readCrealityTag() async {
     try {
+      await NativeNfc.endStaleSession();
       final result = await _channel.invokeMethod('readCrealityTag');
 
       if (result == null) {

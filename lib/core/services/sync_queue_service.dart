@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
+import 'package:nfc_filament/core/services/auth_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// File d'attente persistante des opérations de synchronisation qui ont échoué
@@ -24,6 +25,7 @@ class SyncQueueService {
       'spoolId': spoolId,
       'payload': payload,
       'attempts': 0,
+      'userId': await _currentUserId(),
     });
   }
 
@@ -33,7 +35,27 @@ class SyncQueueService {
       'type': 'delete',
       'spoolId': spoolId,
       'attempts': 0,
+      'userId': await _currentUserId(),
     });
+  }
+
+  static Future<String?> _currentUserId() async {
+    try {
+      return await AuthService().getCurrentUserId();
+    } on Object {
+      return null;
+    }
+  }
+
+  /// Opérations du compte connecté. La file est commune à l'appareil : sans
+  /// ce filtre, après un changement de compte, les opérations du précédent
+  /// partaient vers le nouveau. Les anciennes ops (sans userId) comptent pour
+  /// le compte courant ; celles des autres comptes attendent leur retour.
+  static Future<List<Map<String, dynamic>>> loadForCurrentUser() async {
+    final userId = await _currentUserId();
+    return (await loadAll())
+        .where((op) => op['userId'] == null || op['userId'] == userId)
+        .toList();
   }
 
   /// Retire l'opération en attente pour cette bobine (appelé quand un push

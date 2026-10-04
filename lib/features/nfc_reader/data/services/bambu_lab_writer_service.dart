@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:nfc_filament/features/nfc_reader/data/models/cloned_tag_model.dart';
+import 'package:nfc_filament/native_nfc/native_nfc.dart';
 
 /// Service pour écrire des clones Bambu Lab sur cartes CUID
 class BambuLabWriterService {
@@ -17,6 +18,7 @@ class BambuLabWriterService {
       }
 
       // Appeler le plugin natif pour écrire
+      await NativeNfc.endStaleSession();
       await _channel.invokeMethod('writeBambuLabClone', {
         'blocks': blocks,
       });

@@ -244,7 +244,7 @@ class SyncService {
     List<SpoolInventoryItem> serverSpools,
     Set<String> keepLocalIds,
   ) async {
-    final ops = await SyncQueueService.loadAll();
+    final ops = await SyncQueueService.loadForCurrentUser();
     if (ops.isEmpty && keepLocalIds.isEmpty) return serverSpools;
     final merged = mergeUnconfirmed(
       serverSpools: serverSpools,
@@ -359,7 +359,7 @@ class SyncService {
     if (_flushing) return;
     if (!await UserPreferencesService.isSignedIn()) return;
 
-    final ops = await SyncQueueService.loadAll();
+    final ops = await SyncQueueService.loadForCurrentUser();
     if (ops.isEmpty) return;
 
     _flushing = true;

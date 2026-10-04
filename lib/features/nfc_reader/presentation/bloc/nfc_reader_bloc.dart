@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:developer' as developer;
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:nfc_filament/core/errors/failures.dart';
@@ -18,6 +19,7 @@ import 'package:nfc_filament/features/nfc_reader/domain/usecases/save_scan_to_hi
 import 'package:nfc_filament/features/nfc_reader/domain/usecases/write_bobbin_data.dart';
 import 'package:nfc_filament/features/nfc_reader/presentation/bloc/nfc_reader_event.dart';
 import 'package:nfc_filament/features/nfc_reader/presentation/bloc/nfc_reader_state.dart';
+import 'package:nfc_filament/native_nfc/native_nfc.dart';
 
 @injectable
 class NfcReaderBloc extends Bloc<NfcReaderEvent, NfcReaderState> {
@@ -31,11 +33,38 @@ class NfcReaderBloc extends Bloc<NfcReaderEvent, NfcReaderState> {
     required this.readBobbinDataAutoDetect,
   }) : super(const NfcReaderInitial()) {
     on<CheckNfcAvailabilityEvent>(_onCheckNfcAvailability);
-    on<ReadNfcTagEvent>(_onReadNfcTag);
-    on<ReadBobbinDataEvent>(_onReadBobbinData);
-    on<ReadBobbinDataAutoDetectEvent>(_onReadBobbinDataAutoDetect);
-    on<WriteBobbinDataEvent>(_onWriteBobbinData);
+    on<ReadNfcTagEvent>(_exclusive(_onReadNfcTag));
+    on<ReadBobbinDataEvent>(_exclusive(_onReadBobbinData));
+    on<ReadBobbinDataAutoDetectEvent>(_exclusive(_onReadBobbinDataAutoDetect));
+    on<WriteBobbinDataEvent>(_exclusive(_onWriteBobbinData));
     on<StopNfcScanEvent>(_onStopNfcScan);
+  }
+
+  /// Une session NFC (lecture ou écriture) est en cours. Les handlers d'un
+  /// Bloc tournent en parallèle : un double tap lançait deux sessions
+  /// natives concurrentes (la 2e écrasait le résultat en attente de la 1re).
+  bool _sessionActive = false;
+
+  @visibleForTesting
+  bool get isSessionActive => _sessionActive;
+
+  /// Enveloppe un handler de scan : un 2e scan demandé pendant qu'une
+  /// session est en cours est ignoré.
+  EventHandler<E, NfcReaderState> _exclusive<E extends NfcReaderEvent>(
+    EventHandler<E, NfcReaderState> handler,
+  ) {
+    return (event, emit) async {
+      if (_sessionActive) {
+        developer.log('⏭️ [BLOC] ${event.runtimeType} ignoré : session NFC déjà en cours');
+        return;
+      }
+      _sessionActive = true;
+      try {
+        await handler(event, emit);
+      } finally {
+        _sessionActive = false;
+      }
+    };
   }
   final CheckNfcAvailability checkNfcAvailability;
   final ReadNfcTag readNfcTag;
@@ -471,7 +500,19 @@ class NfcReaderBloc extends Bloc<NfcReaderEvent, NfcReaderState> {
     );
   }
 
-  void _onStopNfcScan(StopNfcScanEvent event, Emitter<NfcReaderState> emit) {
+  /// Annulation : arrête AUSSI la session native (avant, seule l'UI
+  /// revenait à l'état initial, la session iOS/Android continuait d'attendre
+  /// un tag). La lecture en attente se termine alors en « annulé » et libère
+  /// le verrou de session.
+  Future<void> _onStopNfcScan(
+    StopNfcScanEvent event,
+    Emitter<NfcReaderState> emit,
+  ) async {
     emit(const NfcReaderInitial());
+    try {
+      await NativeNfc.stopSession();
+    } catch (e) {
+      developer.log('⚠️ [BLOC] stopSession natif impossible (ignoré): $e');
+    }
   }
 }

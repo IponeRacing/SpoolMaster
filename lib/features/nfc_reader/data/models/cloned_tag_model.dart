@@ -28,9 +28,12 @@ class ClonedTagModel {
       blocksMap[blockNum] = blockData;
     }
 
+    final now = DateTime.now();
     return ClonedTagModel(
-      id: DateTime.now().millisecondsSinceEpoch.toString(),
-      clonedAt: DateTime.now(),
+      // Identifiant unique de l'entrée ; les relectures du même tag sont
+      // fusionnées par [dedupKey] (UID / contenu), pas par cet id.
+      id: now.microsecondsSinceEpoch.toString(),
+      clonedAt: now,
       bobbinData: bobbinData,
       rawBlocks: blocksMap,
       customName: customName,
@@ -85,6 +88,21 @@ class ClonedTagModel {
   }
 
   String toJsonString() => json.encode(toJson());
+
+  /// Identité du tag physique, pour ne pas créer un nouveau clone à chaque
+  /// relecture : l'UID (4 premiers octets du bloc 0 MIFARE Classic) s'il a
+  /// été lu, sinon le contenu complet des blocs.
+  String get dedupKey {
+    String hex(Iterable<int> bytes) =>
+        bytes.map((b) => (b & 0xFF).toRadixString(16).padLeft(2, '0')).join();
+
+    final block0 = rawBlocks[0];
+    if (block0 != null && block0.length >= 4 && block0.take(4).any((b) => b != 0)) {
+      return 'uid:${hex(block0.take(4))}';
+    }
+    final blocks = rawBlocks.keys.toList()..sort();
+    return 'content:${blocks.map((b) => '$b=${hex(rawBlocks[b]!)}').join(';')}';
+  }
 
   /// Obtenir une description lisible du clone
   String get displayName {

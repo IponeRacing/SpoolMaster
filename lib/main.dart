@@ -12,6 +12,7 @@ import 'package:nfc_filament/core/models/spool_usage_event.dart';
 import 'package:nfc_filament/core/platform/orientation_policy.dart';
 import 'package:nfc_filament/core/services/admob_service.dart';
 import 'package:nfc_filament/core/services/analytics_service.dart';
+import 'package:nfc_filament/core/services/auth_service.dart';
 import 'package:nfc_filament/core/services/shopping_list_service.dart';
 import 'package:nfc_filament/core/services/spool_storage_service.dart';
 import 'package:nfc_filament/core/services/subscription_service.dart';
@@ -97,12 +98,32 @@ void main() async {
 
   AdMobService().preloadInterstitial();
 
-  // Subscription + premium status (depend de DI)
-  await SubscriptionService().initialize();
+  // Session : SharedPreferences (isSignedIn) et jetons du stockage sécurisé
+  // peuvent diverger (sauvegarde Android, trousseau iOS conservé après
+  // réinstallation). Local uniquement, avant le SplashPage qui lit isSignedIn.
+  await AuthService().reconcileSessionAtStartup();
+
+  // Statut premium local (pubs masquées dès le 1er affichage si premium)
   final isPremium = await UserPreferencesService.isPremium();
   AdMobService().setUserPremiumStatus(isPremium: isPremium);
 
   runApp(MyApp(key: myAppKey));
+
+  // Abonnements APRÈS runApp, sans attendre : l'initialisation interroge le
+  // store et le serveur, et bloquait l'affichage sans réseau.
+  unawaited(_initSubscriptions());
+}
+
+Future<void> _initSubscriptions() async {
+  try {
+    await SubscriptionService().initialize();
+  } catch (e, stack) {
+    debugPrint('⚠️ Initialisation des abonnements impossible: $e');
+    try {
+      unawaited(FirebaseCrashlytics.instance
+          .recordError(e, stack, reason: 'subscription:init'));
+    } catch (_) {}
+  }
 }
 
 // Global key pour accéder au MyAppState
@@ -287,6 +308,11 @@ class MainNavigationPageState extends State<MainNavigationPage>
       if (!await UserPreferencesService.isSignedIn()) return;
       await SyncService.fullSync();
       if (mounted) await _stockKey.currentState?._loadData();
+      // Liste de courses : envoie les suppressions en attente (hors ligne)
+      // et récupère les changements faits sur un autre appareil. Avant, elle
+      // ne se synchronisait qu'à la connexion.
+      await ShoppingListService.fullSync();
+      if (mounted) await _statisticsKey.currentState?._loadData();
     } catch (e, stack) {
       // ne jamais bloquer l'app sur une erreur de sync, mais la tracer
       unawaited(FirebaseCrashlytics.instance

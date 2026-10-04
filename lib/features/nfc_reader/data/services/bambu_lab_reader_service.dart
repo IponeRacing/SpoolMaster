@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:nfc_filament/core/constants/bambu_lab_database.dart';
@@ -5,6 +7,7 @@ import 'package:nfc_filament/core/errors/failures.dart';
 import 'package:nfc_filament/core/services/cloned_tags_storage_service.dart';
 import 'package:nfc_filament/features/nfc_reader/data/models/cloned_tag_model.dart';
 import 'package:nfc_filament/features/nfc_reader/domain/entities/bobbin_data.dart';
+import 'package:nfc_filament/native_nfc/native_nfc.dart';
 
 /// Service pour lire les tags NFC Bambu Lab
 /// Basé sur les spécifications de https://github.com/Bambu-Research-Group/RFID-Tag-Guide
@@ -20,6 +23,7 @@ class BambuLabReaderService {
     var rawBytesCount = 0;
     try {
       // Appeler le plugin natif pour lire le tag Bambu Lab
+      await NativeNfc.endStaleSession();
       final result = await _channel.invokeMethod('readBambuLabTag');
 
       if (result == null) {
@@ -46,19 +50,7 @@ class BambuLabReaderService {
       final bobbinData = _parseNativeData(data);
 
       // Sauvegarder le clone automatiquement si demandé (seulement pour Bambu Lab)
-      if (saveClone) {
-        final rawBlocks = data['rawBlocks'] != null
-            ? Map<String, dynamic>.from(data['rawBlocks'] is Map ? data['rawBlocks'] as Map : {})
-            : null;
-        if (rawBlocks != null) {
-          final clone = ClonedTagModel.fromNativeData(
-            bobbinData: bobbinData,
-            rawBlocks: rawBlocks,
-          );
-          await ClonedTagsStorageService.saveClonedTag(clone);
-          debugPrint('✅ Clone Bambu Lab sauvegardé: ${clone.displayName}');
-        }
-      }
+      if (saveClone) _saveCloneInBackground(data, bobbinData);
 
       return bobbinData;
     } on PlatformException {
@@ -73,6 +65,31 @@ class BambuLabReaderService {
         rawTagData: rawHexDump,
         rawBytesCount: rawBytesCount,
       );
+    }
+  }
+
+  /// Sauvegarde du clone isolée de la lecture : sans attente bloquante et
+  /// dans son propre try. Avant, une erreur de stockage (ou de conversion des
+  /// blocs) faisait échouer une lecture Bambu pourtant réussie.
+  static void _saveCloneInBackground(
+    Map<String, dynamic> data,
+    BobbinData bobbinData,
+  ) {
+    try {
+      final raw = data['rawBlocks'];
+      if (raw is! Map) return;
+      final clone = ClonedTagModel.fromNativeData(
+        bobbinData: bobbinData,
+        rawBlocks: Map<String, dynamic>.from(raw),
+      );
+      unawaited(
+        ClonedTagsStorageService.saveClonedTag(clone).then(
+          (_) => debugPrint('✅ Clone Bambu Lab sauvegardé: ${clone.displayName}'),
+          onError: (Object e) => debugPrint('⚠️ Sauvegarde du clone impossible (ignorée): $e'),
+        ),
+      );
+    } catch (e) {
+      debugPrint('⚠️ Clone Bambu Lab non créé (ignoré): $e');
     }
   }
 

@@ -216,6 +216,25 @@ class NfcRepositoryImpl implements NfcRepository {
           sessionDurationMs: diag.sessionDurationMs,
           tagWasDetected: true,
         );
+      // Lecture incomplète (tag décroché en cours de route) : même écran
+      // « tag bougé, reposez-le sans bouger » ; le message natif commence déjà
+      // par « Tag was lost » quand le tag a été perdu.
+      case 'PARTIAL_READ':
+        return NfcTagReadFailure(
+          message: (e.message ?? '').toLowerCase().contains('tag was lost')
+              ? e.message!
+              : 'Tag was lost (PARTIAL_READ): ${e.message ?? ''}',
+          sessionDurationMs: diag.sessionDurationMs,
+          tagWasDetected: true,
+        );
+      // Traitement trop long après détection (Android, 15 s) : erreur de
+      // lecture classique, tag bien détecté.
+      case 'PROCESSING_TIMEOUT':
+        return NfcTagReadFailure(
+          message: e.message ?? 'Lecture trop longue, réessayez',
+          sessionDurationMs: diag.sessionDurationMs,
+          tagWasDetected: true,
+        );
     }
     return null;
   }

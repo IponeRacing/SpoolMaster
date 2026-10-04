@@ -23,4 +23,17 @@ class MainActivity : FlutterActivity() {
         // Forward NFC intents to the plugin (for foreground dispatch fallback)
         NativeNfcPlugin.getInstance()?.handleIntent(intent)
     }
+
+    override fun onResume() {
+        super.onResume()
+        // Samsung : le foreground dispatch est perdu à chaque onPause → on le
+        // réarme si une session NFC est active (mode différent de IDLE).
+        NativeNfcPlugin.getInstance()?.onActivityResumed()
+    }
+
+    override fun onPause() {
+        // Désactivation propre du foreground dispatch avant la mise en pause.
+        NativeNfcPlugin.getInstance()?.onActivityPaused()
+        super.onPause()
+    }
 }

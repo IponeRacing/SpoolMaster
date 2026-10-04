@@ -27,9 +27,7 @@ class UsageHistoryService {
     return userId == null ? prefix : '${prefix}_$userId';
   }
 
-  static Future<List<SpoolUsageEvent>> loadEvents() async {
-    final prefs = await SharedPreferences.getInstance();
-    final data = prefs.getString(await _scopedKey(_keyPrefix));
+  static List<SpoolUsageEvent> _decode(String? data) {
     if (data == null || data.isEmpty) return [];
     try {
       final list = jsonDecode(data) as List<dynamic>;
@@ -40,6 +38,72 @@ class UsageHistoryService {
       debugPrint('⚠️ Historique de consommation illisible: $e');
       return [];
     }
+  }
+
+  /// Avec un compte : reprend une seule fois l'historique saisi en invité
+  /// (clé non scopée). Les événements invité sont fusionnés par id dans la
+  /// clé du compte (jamais dupliqués), marqués « à synchroniser » (ils n'ont
+  /// jamais été envoyés), puis retirés de la clé invité pour ne pas être
+  /// repris une seconde fois (ni par un autre compte). Avant, ils restaient
+  /// invisibles une fois connecté et n'étaient jamais synchronisés.
+  static Future<void> _adoptGuestHistory(
+    SharedPreferences prefs,
+    String eventsKey,
+  ) async {
+    if (eventsKey == _keyPrefix) return; // invité : rien à reprendre
+    final guestData = prefs.getString(_keyPrefix);
+    if (guestData == null || guestData.isEmpty) return;
+
+    final guest = _decode(guestData);
+    if (guest.isNotEmpty) {
+      final account = _decode(prefs.getString(eventsKey));
+      final merged = mergeGuestEvents(account: account, guest: guest);
+      if (merged.added.isNotEmpty) {
+        final events = merged.events..sort((a, b) => a.date.compareTo(b.date));
+        final trimmed = events.length > maxEvents
+            ? events.sublist(events.length - maxEvents)
+            : events;
+        await prefs.setString(
+          eventsKey,
+          jsonEncode(trimmed.map((e) => e.toJson()).toList()),
+        );
+        final unsyncedKey =
+            '$_keyUnsyncedPrefix${eventsKey.substring(_keyPrefix.length)}';
+        final unsynced = (prefs.getStringList(unsyncedKey) ?? []).toSet()
+          ..addAll(merged.added);
+        await prefs.setStringList(unsyncedKey, unsynced.toList());
+        debugPrint('📦 ${merged.added.length} événement(s) de consommation '
+            'invité repris dans le compte');
+      }
+    }
+    await prefs.remove(_keyPrefix);
+    await prefs.remove(_keyUnsyncedPrefix);
+  }
+
+  /// Union par id de l'historique du compte et de celui de l'invité.
+  /// `added` = ids invité absents du compte (à synchroniser). Pur.
+  @visibleForTesting
+  static ({List<SpoolUsageEvent> events, Set<String> added}) mergeGuestEvents({
+    required List<SpoolUsageEvent> account,
+    required List<SpoolUsageEvent> guest,
+  }) {
+    final known = account.map((e) => e.id).toSet();
+    final added = <String>{};
+    final events = [...account];
+    for (final e in guest) {
+      if (known.add(e.id)) {
+        added.add(e.id);
+        events.add(e);
+      }
+    }
+    return (events: events, added: added);
+  }
+
+  static Future<List<SpoolUsageEvent>> loadEvents() async {
+    final prefs = await SharedPreferences.getInstance();
+    final key = await _scopedKey(_keyPrefix);
+    await _adoptGuestHistory(prefs, key);
+    return _decode(prefs.getString(key));
   }
 
   static Future<void> _saveEvents(List<SpoolUsageEvent> events) async {
@@ -57,6 +121,7 @@ class UsageHistoryService {
 
   static Future<Set<String>> loadUnsyncedIds() async {
     final prefs = await SharedPreferences.getInstance();
+    await _adoptGuestHistory(prefs, await _scopedKey(_keyPrefix));
     return (prefs.getStringList(await _scopedKey(_keyUnsyncedPrefix)) ?? [])
         .toSet();
   }

@@ -1,6 +1,7 @@
 import 'package:flutter/services.dart';
 import 'package:nfc_filament/core/constants/creality_database.dart';
 import 'package:nfc_filament/features/nfc_reader/domain/entities/bobbin_data.dart';
+import 'package:nfc_filament/native_nfc/native_nfc.dart';
 
 /// Service pour écrire les tags NFC Creality CFS
 /// Encode les données BobbinData → payload 48 chars → envoi au natif pour chiffrement AES + écriture
@@ -10,6 +11,7 @@ class CrealityWriterService {
   /// Écrire des données sur un tag Creality CFS
   static Future<void> writeCrealityTag(BobbinData data) async {
     final payload = buildPayloadMap(data);
+    await NativeNfc.endStaleSession();
     await _channel.invokeMethod('writeCrealityTag', payload);
   }
 

@@ -25,12 +25,14 @@ class NativeNfc {
 
   /// Démarre une session de lecture NFC
   static Future<Map<String, dynamic>> startReadSession() async {
+    await endStaleSession();
     final result = await _channel.invokeMethod<Map<Object?, Object?>>('startReadSession');
     return Map<String, dynamic>.from(result ?? {});
   }
 
   /// Démarre une session d'écriture NFC
   static Future<void> startWriteSession(List<Map<String, dynamic>> pages) async {
+    await endStaleSession();
     await _channel.invokeMethod('startWriteSession', {'pages': pages});
   }
 
@@ -43,6 +45,7 @@ class NativeNfc {
   static Future<Map<String, dynamic>> startAutoDetectReadSession({
     bool iso14443Only = false,
   }) async {
+    await endStaleSession();
     final result = await _channel.invokeMethod<Map<Object?, Object?>>(
       'startAutoDetectReadSession',
       {'iso14443Only': iso14443Only},
@@ -52,23 +55,27 @@ class NativeNfc {
 
   /// Lit un tag OpenPrintTag ISO 15693 (Prusa)
   static Future<Map<String, dynamic>> readOpenPrintTag() async {
+    await endStaleSession();
     final result = await _channel.invokeMethod<Map<Object?, Object?>>('readOpenPrintTag');
     return Map<String, dynamic>.from(result ?? {});
   }
 
   /// Écrit un tag OpenPrintTag ISO 15693 (Prusa)
   static Future<void> writeOpenPrintTag(List<int> data) async {
+    await endStaleSession();
     await _channel.invokeMethod('writeOpenPrintTag', {'data': data});
   }
 
   /// Lit un tag Creality CFS (MiFare Classic 1K, Sector 1, AES-128-ECB)
   static Future<Map<String, dynamic>> readCrealityTag() async {
+    await endStaleSession();
     final result = await _channel.invokeMethod<Map<Object?, Object?>>('readCrealityTag');
     return Map<String, dynamic>.from(result ?? {});
   }
 
   /// Écrit un tag Creality CFS
   static Future<void> writeCrealityTag(Map<String, dynamic> data) async {
+    await endStaleSession();
     await _channel.invokeMethod('writeCrealityTag', data);
   }
 
@@ -76,6 +83,17 @@ class NativeNfc {
   static Future<bool> checkNfcAvailability() async {
     final result = await _channel.invokeMethod<bool>('checkNfcAvailability');
     return result ?? false;
+  }
+
+  /// Termine une éventuelle session restée ouverte (écran de scan quitté par
+  /// la touche retour…) avant d'en démarrer une nouvelle : sans ça, Android
+  /// répond SESSION_BUSY jusqu'au timeout (30 s). Sans effet sinon.
+  static Future<void> endStaleSession() async {
+    try {
+      await _channel.invokeMethod<void>('stopSession');
+    } on Object {
+      // fail-open : ne jamais empêcher un scan
+    }
   }
 
   /// Arrête la session NFC en cours
