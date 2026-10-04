@@ -1496,6 +1496,13 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get nfcBlankTagDesc =>
       'Ce tag ne contient aucune donnée de bobine. Ajoutez la bobine manuellement ou écrivez ce tag depuis l\'app.';
+
+  @override
+  String get subscriptionAutoRenewDisclosure =>
+      'Le paiement est débité sur votre compte du store à la confirmation de l\'achat. L\'abonnement se renouvelle automatiquement, sauf résiliation au moins 24 heures avant la fin de la période en cours ; le renouvellement est facturé dans les 24 heures précédant la fin de la période. Vous pouvez gérer ou résilier l\'abonnement dans les réglages de votre compte du store.';
+
+  @override
+  String get manageSubscription => 'Gérer l\'abonnement';
 }
 
 /// The translations for French, as used in Canada (`fr_CA`).
@@ -2990,4 +2997,11 @@ class AppLocalizationsFrCa extends AppLocalizationsFr {
   @override
   String get nfcBlankTagDesc =>
       'Ce tag ne contient aucune donnée de bobine. Ajoutez la bobine manuellement ou écrivez ce tag depuis l\'app.';
+
+  @override
+  String get subscriptionAutoRenewDisclosure =>
+      'Le paiement est débité sur votre compte du store à la confirmation de l\'achat. L\'abonnement se renouvelle automatiquement, sauf résiliation au moins 24 heures avant la fin de la période en cours ; le renouvellement est facturé dans les 24 heures précédant la fin de la période. Vous pouvez gérer ou résilier l\'abonnement dans les réglages de votre compte du store.';
+
+  @override
+  String get manageSubscription => 'Gérer l\'abonnement';
 }

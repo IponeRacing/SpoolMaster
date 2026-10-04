@@ -528,5 +528,7 @@
   "consumptionEmpty": "Belum ada konsumsi yang tercatat. Akan muncul begitu Anda memperbarui berat tersisa gulungan atau memakai kalkulator biaya cetak.",
   "shareShoppingList": "Bagikan daftar",
   "nfcBlankTagTitle": "Tag kosong",
-  "nfcBlankTagDesc": "Tag ini tidak berisi data spool. Tambahkan spool secara manual atau tulis tag ini dari aplikasi."
+  "nfcBlankTagDesc": "Tag ini tidak berisi data spool. Tambahkan spool secara manual atau tulis tag ini dari aplikasi.",
+  "subscriptionAutoRenewDisclosure": "Pembayaran dibebankan ke akun toko Anda saat pembelian dikonfirmasi. Langganan diperpanjang secara otomatis kecuali dibatalkan setidaknya 24 jam sebelum akhir periode berjalan; biaya perpanjangan dibebankan dalam 24 jam sebelum akhir periode. Anda dapat mengelola atau membatalkan langganan di pengaturan akun toko Anda.",
+  "manageSubscription": "Kelola langganan"
 }

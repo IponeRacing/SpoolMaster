@@ -528,5 +528,7 @@
   "consumptionEmpty": "Poraba še ni zabeležena. Prikaže se, takoj ko posodobite preostalo težo tuljave ali uporabite kalkulator stroškov.",
   "shareShoppingList": "Deli seznam",
   "nfcBlankTagTitle": "Prazna oznaka",
-  "nfcBlankTagDesc": "Ta oznaka ne vsebuje podatkov o tuljavi. Tuljavo dodajte ročno ali oznako zapišite v aplikaciji."
+  "nfcBlankTagDesc": "Ta oznaka ne vsebuje podatkov o tuljavi. Tuljavo dodajte ročno ali oznako zapišite v aplikaciji.",
+  "subscriptionAutoRenewDisclosure": "Plačilo se obremeni na vaš račun v trgovini ob potrditvi nakupa. Naročnina se samodejno obnovi, razen če jo prekličete vsaj 24 ur pred koncem trenutnega obdobja; obnova se zaračuna v 24 urah pred koncem obdobja. Naročnino lahko upravljate ali prekličete v nastavitvah svojega računa v trgovini.",
+  "manageSubscription": "Upravljaj naročnino"
 }

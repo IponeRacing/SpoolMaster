@@ -1492,4 +1492,11 @@ class AppLocalizationsRo extends AppLocalizations {
   @override
   String get nfcBlankTagDesc =>
       'Acest tag nu conține date despre bobină. Adăugați bobina manual sau scrieți tagul din aplicație.';
+
+  @override
+  String get subscriptionAutoRenewDisclosure =>
+      'Plata este debitată din contul tău din magazin la confirmarea achiziției. Abonamentul se reînnoiește automat, cu excepția cazului în care este anulat cu cel puțin 24 de ore înainte de sfârșitul perioadei curente; reînnoirea este facturată în ultimele 24 de ore dinaintea sfârșitului perioadei. Poți gestiona sau anula abonamentul din setările contului tău din magazin.';
+
+  @override
+  String get manageSubscription => 'Gestionează abonamentul';
 }

@@ -1491,4 +1491,11 @@ class AppLocalizationsTr extends AppLocalizations {
   @override
   String get nfcBlankTagDesc =>
       'Bu etiket makara verisi içermiyor. Makarayı manuel olarak ekleyin veya etiketi uygulamadan yazın.';
+
+  @override
+  String get subscriptionAutoRenewDisclosure =>
+      'Ödeme, satın alma onaylandığında mağaza hesabınızdan tahsil edilir. Abonelik, mevcut dönemin bitiminden en az 24 saat önce iptal edilmediği sürece otomatik olarak yenilenir; yenileme ücreti dönemin bitiminden önceki 24 saat içinde tahsil edilir. Aboneliğinizi mağaza hesabınızın ayarlarından yönetebilir veya iptal edebilirsiniz.';
+
+  @override
+  String get manageSubscription => 'Aboneliği yönet';
 }

@@ -528,5 +528,7 @@
   "consumptionEmpty": "Ingen förbrukning registrerad ännu. Den visas så fort du uppdaterar en spoles återstående vikt eller använder kostnadskalkylatorn.",
   "shareShoppingList": "Dela listan",
   "nfcBlankTagTitle": "Tom tagg",
-  "nfcBlankTagDesc": "Den här taggen innehåller inga spoldata. Lägg till spolen manuellt eller skriv taggen i appen."
+  "nfcBlankTagDesc": "Den här taggen innehåller inga spoldata. Lägg till spolen manuellt eller skriv taggen i appen.",
+  "subscriptionAutoRenewDisclosure": "Betalningen debiteras ditt butikskonto när köpet bekräftas. Prenumerationen förnyas automatiskt om den inte sägs upp minst 24 timmar före slutet av den aktuella perioden; förnyelsen debiteras inom 24 timmar före periodens slut. Du kan hantera eller säga upp din prenumeration i inställningarna för ditt butikskonto.",
+  "manageSubscription": "Hantera prenumeration"
 }

@@ -1490,4 +1490,11 @@ class AppLocalizationsFi extends AppLocalizations {
   @override
   String get nfcBlankTagDesc =>
       'Tämä tagi ei sisällä kelan tietoja. Lisää kela käsin tai kirjoita tagi sovelluksessa.';
+
+  @override
+  String get subscriptionAutoRenewDisclosure =>
+      'Maksu veloitetaan kauppatililtäsi oston vahvistuksen yhteydessä. Tilaus uusiutuu automaattisesti, ellei sitä peruuteta vähintään 24 tuntia ennen kuluvan jakson päättymistä; uusiminen veloitetaan 24 tunnin sisällä ennen jakson päättymistä. Voit hallita tai peruuttaa tilauksesi kauppatilisi asetuksista.';
+
+  @override
+  String get manageSubscription => 'Hallitse tilausta';
 }

@@ -1468,4 +1468,11 @@ class AppLocalizationsKo extends AppLocalizations {
   @override
   String get nfcBlankTagDesc =>
       '이 태그에는 스풀 데이터가 없습니다. 스풀을 직접 추가하거나 앱에서 태그를 기록하세요.';
+
+  @override
+  String get subscriptionAutoRenewDisclosure =>
+      '결제 금액은 구매 확인 시 스토어 계정으로 청구됩니다. 현재 구독 기간이 끝나기 최소 24시간 전에 취소하지 않으면 구독이 자동으로 갱신되며, 갱신 요금은 기간 종료 전 24시간 이내에 청구됩니다. 스토어 계정 설정에서 구독을 관리하거나 취소할 수 있습니다.';
+
+  @override
+  String get manageSubscription => '구독 관리';
 }

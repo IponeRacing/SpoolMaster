@@ -1490,6 +1490,13 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get nfcBlankTagDesc =>
       'This tag contains no spool data. Add the spool manually or write this tag from the app.';
+
+  @override
+  String get subscriptionAutoRenewDisclosure =>
+      'Payment is charged to your store account at confirmation of purchase. The subscription renews automatically unless cancelled at least 24 hours before the end of the current period; renewal is charged within 24 hours before the end of the period. You can manage or cancel your subscription in your store account settings.';
+
+  @override
+  String get manageSubscription => 'Manage subscription';
 }
 
 /// The translations for English, as used in Australia (`en_AU`).
@@ -2978,6 +2985,13 @@ class AppLocalizationsEnAu extends AppLocalizationsEn {
   @override
   String get nfcBlankTagDesc =>
       'This tag contains no spool data. Add the spool manually or write this tag from the app.';
+
+  @override
+  String get subscriptionAutoRenewDisclosure =>
+      'Payment is charged to your store account at confirmation of purchase. The subscription renews automatically unless cancelled at least 24 hours before the end of the current period; renewal is charged within 24 hours before the end of the period. You can manage or cancel your subscription in your store account settings.';
+
+  @override
+  String get manageSubscription => 'Manage subscription';
 }
 
 /// The translations for English, as used in Canada (`en_CA`).
@@ -4466,6 +4480,13 @@ class AppLocalizationsEnCa extends AppLocalizationsEn {
   @override
   String get nfcBlankTagDesc =>
       'This tag contains no spool data. Add the spool manually or write this tag from the app.';
+
+  @override
+  String get subscriptionAutoRenewDisclosure =>
+      'Payment is charged to your store account at confirmation of purchase. The subscription renews automatically unless cancelled at least 24 hours before the end of the current period; renewal is charged within 24 hours before the end of the period. You can manage or cancel your subscription in your store account settings.';
+
+  @override
+  String get manageSubscription => 'Manage subscription';
 }
 
 /// The translations for English, as used in the United Kingdom (`en_GB`).
@@ -5954,4 +5975,11 @@ class AppLocalizationsEnGb extends AppLocalizationsEn {
   @override
   String get nfcBlankTagDesc =>
       'This tag contains no spool data. Add the spool manually or write this tag from the app.';
+
+  @override
+  String get subscriptionAutoRenewDisclosure =>
+      'Payment is charged to your store account at confirmation of purchase. The subscription renews automatically unless cancelled at least 24 hours before the end of the current period; renewal is charged within 24 hours before the end of the period. You can manage or cancel your subscription in your store account settings.';
+
+  @override
+  String get manageSubscription => 'Manage subscription';
 }

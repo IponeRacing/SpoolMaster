@@ -1490,4 +1490,11 @@ class AppLocalizationsNo extends AppLocalizations {
   @override
   String get nfcBlankTagDesc =>
       'Denne brikken inneholder ingen spoledata. Legg til spolen manuelt, eller skriv brikken i appen.';
+
+  @override
+  String get subscriptionAutoRenewDisclosure =>
+      'Betalingen belastes butikkontoen din når kjøpet bekreftes. Abonnementet fornyes automatisk med mindre det sies opp minst 24 timer før utløpet av den gjeldende perioden; fornyelsen belastes innen 24 timer før perioden utløper. Du kan administrere eller si opp abonnementet i innstillingene for butikkontoen din.';
+
+  @override
+  String get manageSubscription => 'Administrer abonnement';
 }

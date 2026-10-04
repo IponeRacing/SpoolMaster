@@ -528,5 +528,7 @@
   "consumptionEmpty": "Kulutusta ei ole vielä kirjattu. Se näkyy, kun päivität kelan jäljellä olevan painon tai käytät kustannuslaskuria.",
   "shareShoppingList": "Jaa lista",
   "nfcBlankTagTitle": "Tyhjä tagi",
-  "nfcBlankTagDesc": "Tämä tagi ei sisällä kelan tietoja. Lisää kela käsin tai kirjoita tagi sovelluksessa."
+  "nfcBlankTagDesc": "Tämä tagi ei sisällä kelan tietoja. Lisää kela käsin tai kirjoita tagi sovelluksessa.",
+  "subscriptionAutoRenewDisclosure": "Maksu veloitetaan kauppatililtäsi oston vahvistuksen yhteydessä. Tilaus uusiutuu automaattisesti, ellei sitä peruuteta vähintään 24 tuntia ennen kuluvan jakson päättymistä; uusiminen veloitetaan 24 tunnin sisällä ennen jakson päättymistä. Voit hallita tai peruuttaa tilauksesi kauppatilisi asetuksista.",
+  "manageSubscription": "Hallitse tilausta"
 }

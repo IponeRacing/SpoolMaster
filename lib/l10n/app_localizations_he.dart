@@ -1481,4 +1481,11 @@ class AppLocalizationsHe extends AppLocalizations {
   @override
   String get nfcBlankTagDesc =>
       'התג הזה לא מכיל נתוני סליל. הוסיפו את הסליל ידנית או כתבו את התג מהאפליקציה.';
+
+  @override
+  String get subscriptionAutoRenewDisclosure =>
+      'החיוב מתבצע בחשבון שלך בחנות בעת אישור הרכישה. המנוי מתחדש אוטומטית אלא אם בוטל לפחות 24 שעות לפני תום התקופה הנוכחית; החיוב על החידוש מתבצע בתוך 24 שעות לפני תום התקופה. ניתן לנהל או לבטל את המנוי בהגדרות החשבון שלך בחנות.';
+
+  @override
+  String get manageSubscription => 'ניהול מנוי';
 }

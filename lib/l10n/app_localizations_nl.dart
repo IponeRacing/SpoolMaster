@@ -1491,4 +1491,11 @@ class AppLocalizationsNl extends AppLocalizations {
   @override
   String get nfcBlankTagDesc =>
       'Deze tag bevat geen spoelgegevens. Voeg de spoel handmatig toe of beschrijf deze tag via de app.';
+
+  @override
+  String get subscriptionAutoRenewDisclosure =>
+      'De betaling wordt bij bevestiging van de aankoop in rekening gebracht via je winkelaccount. Het abonnement wordt automatisch verlengd, tenzij het ten minste 24 uur voor het einde van de huidige periode wordt opgezegd; de verlenging wordt binnen 24 uur voor het einde van de periode in rekening gebracht. Je kunt je abonnement beheren of opzeggen in de instellingen van je winkelaccount.';
+
+  @override
+  String get manageSubscription => 'Abonnement beheren';
 }

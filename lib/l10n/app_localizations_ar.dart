@@ -1482,4 +1482,11 @@ class AppLocalizationsAr extends AppLocalizations {
   @override
   String get nfcBlankTagDesc =>
       'لا تحتوي هذه العلامة على بيانات البكرة. أضف البكرة يدويًا أو اكتب العلامة من التطبيق.';
+
+  @override
+  String get subscriptionAutoRenewDisclosure =>
+      'يتم تحصيل الدفع من حسابك في المتجر عند تأكيد الشراء. يتجدد الاشتراك تلقائيًا ما لم يتم إلغاؤه قبل 24 ساعة على الأقل من نهاية الفترة الحالية، ويتم تحصيل رسوم التجديد خلال 24 ساعة قبل نهاية الفترة. يمكنك إدارة اشتراكك أو إلغاؤه من إعدادات حسابك في المتجر.';
+
+  @override
+  String get manageSubscription => 'إدارة الاشتراك';
 }

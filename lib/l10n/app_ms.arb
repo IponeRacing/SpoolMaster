@@ -528,5 +528,7 @@
   "consumptionEmpty": "Belum ada penggunaan direkodkan. Ia akan dipaparkan sebaik sahaja anda mengemas kini berat baki gegelung atau menggunakan kalkulator kos cetakan.",
   "shareShoppingList": "Kongsi senarai",
   "nfcBlankTagTitle": "Tag kosong",
-  "nfcBlankTagDesc": "Tag ini tidak mengandungi data spool. Tambah spool secara manual atau tulis tag ini daripada aplikasi."
+  "nfcBlankTagDesc": "Tag ini tidak mengandungi data spool. Tambah spool secara manual atau tulis tag ini daripada aplikasi.",
+  "subscriptionAutoRenewDisclosure": "Bayaran dikenakan pada akaun kedai anda semasa pembelian disahkan. Langganan diperbaharui secara automatik melainkan dibatalkan sekurang-kurangnya 24 jam sebelum tamat tempoh semasa; pembaharuan dikenakan bayaran dalam tempoh 24 jam sebelum tamat tempoh. Anda boleh mengurus atau membatalkan langganan anda dalam tetapan akaun kedai anda.",
+  "manageSubscription": "Urus langganan"
 }

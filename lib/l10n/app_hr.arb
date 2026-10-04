@@ -528,5 +528,7 @@
   "consumptionEmpty": "Potrošnja još nije zabilježena. Prikazat će se čim ažurirate preostalu težinu špule ili upotrijebite kalkulator troška ispisa.",
   "shareShoppingList": "Podijeli popis",
   "nfcBlankTagTitle": "Prazna oznaka",
-  "nfcBlankTagDesc": "Ova oznaka ne sadrži podatke o kolutu. Dodajte kolut ručno ili zapišite oznaku u aplikaciji."
+  "nfcBlankTagDesc": "Ova oznaka ne sadrži podatke o kolutu. Dodajte kolut ručno ili zapišite oznaku u aplikaciji.",
+  "subscriptionAutoRenewDisclosure": "Plaćanje se naplaćuje s vašeg računa u trgovini nakon potvrde kupnje. Pretplata se automatski obnavlja osim ako se otkaže najmanje 24 sata prije kraja trenutačnog razdoblja; obnova se naplaćuje unutar 24 sata prije kraja razdoblja. Pretplatom možete upravljati ili je otkazati u postavkama svojeg računa u trgovini.",
+  "manageSubscription": "Upravljaj pretplatom"
 }

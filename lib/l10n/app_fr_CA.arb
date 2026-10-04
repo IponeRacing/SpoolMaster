@@ -528,5 +528,7 @@
   "consumptionEmpty": "Aucune consommation enregistrée pour l'instant. Elle s'affiche dès que vous mettez à jour le poids restant d'une bobine ou utilisez le calculateur de coût.",
   "shareShoppingList": "Partager la liste",
   "nfcBlankTagTitle": "Tag vierge",
-  "nfcBlankTagDesc": "Ce tag ne contient aucune donnée de bobine. Ajoutez la bobine manuellement ou écrivez ce tag depuis l'app."
+  "nfcBlankTagDesc": "Ce tag ne contient aucune donnée de bobine. Ajoutez la bobine manuellement ou écrivez ce tag depuis l'app.",
+  "subscriptionAutoRenewDisclosure": "Le paiement est débité sur votre compte du store à la confirmation de l'achat. L'abonnement se renouvelle automatiquement, sauf résiliation au moins 24 heures avant la fin de la période en cours ; le renouvellement est facturé dans les 24 heures précédant la fin de la période. Vous pouvez gérer ou résilier l'abonnement dans les réglages de votre compte du store.",
+  "manageSubscription": "Gérer l'abonnement"
 }

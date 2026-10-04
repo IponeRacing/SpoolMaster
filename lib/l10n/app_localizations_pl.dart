@@ -1491,4 +1491,11 @@ class AppLocalizationsPl extends AppLocalizations {
   @override
   String get nfcBlankTagDesc =>
       'Ten tag nie zawiera danych szpuli. Dodaj szpulę ręcznie lub zapisz ten tag w aplikacji.';
+
+  @override
+  String get subscriptionAutoRenewDisclosure =>
+      'Płatność jest pobierana z Twojego konta w sklepie w momencie potwierdzenia zakupu. Subskrypcja odnawia się automatycznie, chyba że zostanie anulowana co najmniej 24 godziny przed końcem bieżącego okresu; opłata za odnowienie jest pobierana w ciągu 24 godzin przed końcem okresu. Subskrypcją możesz zarządzać lub ją anulować w ustawieniach konta w sklepie.';
+
+  @override
+  String get manageSubscription => 'Zarządzaj subskrypcją';
 }

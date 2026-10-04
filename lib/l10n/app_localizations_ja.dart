@@ -1467,4 +1467,11 @@ class AppLocalizationsJa extends AppLocalizations {
   @override
   String get nfcBlankTagDesc =>
       'このタグにはスプールのデータがありません。スプールを手動で追加するか、アプリからタグに書き込んでください。';
+
+  @override
+  String get subscriptionAutoRenewDisclosure =>
+      'お支払いは購入確定時にストアアカウントに請求されます。現在の期間が終了する24時間前までに解約しない限り、サブスクリプションは自動的に更新され、更新料金は期間終了前の24時間以内に請求されます。サブスクリプションの管理や解約は、ストアアカウントの設定から行えます。';
+
+  @override
+  String get manageSubscription => 'サブスクリプションを管理';
 }

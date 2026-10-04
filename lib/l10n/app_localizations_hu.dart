@@ -1493,4 +1493,11 @@ class AppLocalizationsHu extends AppLocalizations {
   @override
   String get nfcBlankTagDesc =>
       'Ez a címke nem tartalmaz orsóadatokat. Adja hozzá az orsót kézzel, vagy írja meg a címkét az alkalmazásban.';
+
+  @override
+  String get subscriptionAutoRenewDisclosure =>
+      'A fizetés a vásárlás megerősítésekor terheli az áruházi fiókját. Az előfizetés automatikusan megújul, hacsak nem mondja le legalább 24 órával az aktuális időszak vége előtt; a megújítás díját az időszak vége előtti 24 órában számlázzák. Az előfizetését az áruházi fiókja beállításaiban kezelheti vagy mondhatja le.';
+
+  @override
+  String get manageSubscription => 'Előfizetés kezelése';
 }

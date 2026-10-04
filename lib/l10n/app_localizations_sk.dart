@@ -1489,4 +1489,11 @@ class AppLocalizationsSk extends AppLocalizations {
   @override
   String get nfcBlankTagDesc =>
       'Tento tag neobsahuje žiadne údaje o cievke. Pridajte cievku ručne alebo tag zapíšte v aplikácii.';
+
+  @override
+  String get subscriptionAutoRenewDisclosure =>
+      'Platba sa pri potvrdení nákupu účtuje na váš účet v obchode. Predplatné sa automaticky obnovuje, pokiaľ ho nezrušíte aspoň 24 hodín pred koncom aktuálneho obdobia; obnovenie sa účtuje počas 24 hodín pred koncom obdobia. Predplatné môžete spravovať alebo zrušiť v nastaveniach svojho účtu v obchode.';
+
+  @override
+  String get manageSubscription => 'Spravovať predplatné';
 }

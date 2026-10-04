@@ -1501,4 +1501,11 @@ class AppLocalizationsCa extends AppLocalizations {
   @override
   String get nfcBlankTagDesc =>
       'Aquesta etiqueta no conté dades de bobina. Afegiu la bobina manualment o escriviu aquesta etiqueta des de l\'app.';
+
+  @override
+  String get subscriptionAutoRenewDisclosure =>
+      'El pagament es carrega al vostre compte de la botiga en confirmar la compra. La subscripció es renova automàticament tret que es cancel·li almenys 24 hores abans del final del període actual; la renovació es cobra dins de les 24 hores anteriors al final del període. Podeu gestionar o cancel·lar la subscripció a la configuració del vostre compte de la botiga.';
+
+  @override
+  String get manageSubscription => 'Gestiona la subscripció';
 }

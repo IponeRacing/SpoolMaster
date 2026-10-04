@@ -1489,4 +1489,11 @@ class AppLocalizationsMs extends AppLocalizations {
   @override
   String get nfcBlankTagDesc =>
       'Tag ini tidak mengandungi data spool. Tambah spool secara manual atau tulis tag ini daripada aplikasi.';
+
+  @override
+  String get subscriptionAutoRenewDisclosure =>
+      'Bayaran dikenakan pada akaun kedai anda semasa pembelian disahkan. Langganan diperbaharui secara automatik melainkan dibatalkan sekurang-kurangnya 24 jam sebelum tamat tempoh semasa; pembaharuan dikenakan bayaran dalam tempoh 24 jam sebelum tamat tempoh. Anda boleh mengurus atau membatalkan langganan anda dalam tetapan akaun kedai anda.';
+
+  @override
+  String get manageSubscription => 'Urus langganan';
 }

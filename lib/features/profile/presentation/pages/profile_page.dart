@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:in_app_purchase/in_app_purchase.dart';
@@ -31,6 +33,19 @@ class _ProfilePageState extends State<ProfilePage> {
   bool _isLoadingSubscription = false;
   List<ProductDetails> _products = [];
   String _appVersion = '';
+
+  /// Ouvre la gestion des abonnements du store de la plateforme (résiliation,
+  /// changement de formule).
+  Future<void> _openManageSubscription() async {
+    final uri = Platform.isIOS
+        ? Uri.parse('https://apps.apple.com/account/subscriptions')
+        : Uri.parse(
+            'https://play.google.com/store/account/subscriptions?package=com.engagengine.nfc_anycubic',
+          );
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri, mode: LaunchMode.externalApplication);
+    }
+  }
 
   /// Retourne le prix formaté depuis le store pour un produit donné
   String _getProductPrice(String productId) {
@@ -997,7 +1012,24 @@ class _ProfilePageState extends State<ProfilePage> {
                       ],
                     ),
                   ),
-                  const SizedBox(height: 16),
+                  const SizedBox(height: 12),
+
+                  // Conditions de l'abonnement à renouvellement automatique
+                  // (Guideline 3.1.2) + accès à la gestion / résiliation.
+                  Text(
+                    AppLocalizations.of(context)!.subscriptionAutoRenewDisclosure,
+                    key: const Key('subscriptionAutoRenewDisclosure'),
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 11, color: Colors.grey.shade600, height: 1.35),
+                  ),
+                  Center(
+                    child: TextButton.icon(
+                      key: const Key('manageSubscriptionButton'),
+                      onPressed: _openManageSubscription,
+                      icon: const Icon(Icons.manage_accounts_outlined, size: 18),
+                      label: Text(AppLocalizations.of(context)!.manageSubscription),
+                    ),
+                  ),
 
                   // Bouton Restaurer les achats
                   if (!_isPremium)

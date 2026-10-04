@@ -1490,4 +1490,11 @@ class AppLocalizationsId extends AppLocalizations {
   @override
   String get nfcBlankTagDesc =>
       'Tag ini tidak berisi data spool. Tambahkan spool secara manual atau tulis tag ini dari aplikasi.';
+
+  @override
+  String get subscriptionAutoRenewDisclosure =>
+      'Pembayaran dibebankan ke akun toko Anda saat pembelian dikonfirmasi. Langganan diperpanjang secara otomatis kecuali dibatalkan setidaknya 24 jam sebelum akhir periode berjalan; biaya perpanjangan dibebankan dalam 24 jam sebelum akhir periode. Anda dapat mengelola atau membatalkan langganan di pengaturan akun toko Anda.';
+
+  @override
+  String get manageSubscription => 'Kelola langganan';
 }

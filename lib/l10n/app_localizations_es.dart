@@ -1495,4 +1495,11 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get nfcBlankTagDesc =>
       'Esta etiqueta no contiene datos de bobina. Añade la bobina manualmente o escribe esta etiqueta desde la app.';
+
+  @override
+  String get subscriptionAutoRenewDisclosure =>
+      'El pago se carga a su cuenta de la tienda al confirmar la compra. La suscripción se renueva automáticamente a menos que se cancele al menos 24 horas antes del final del periodo actual; la renovación se cobra dentro de las 24 horas previas al final del periodo. Puede gestionar o cancelar su suscripción en los ajustes de su cuenta de la tienda.';
+
+  @override
+  String get manageSubscription => 'Gestionar suscripción';
 }

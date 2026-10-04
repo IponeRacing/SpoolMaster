@@ -2964,6 +2964,18 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Ce tag ne contient aucune donnée de bobine. Ajoutez la bobine manuellement ou écrivez ce tag depuis l\'app.'**
   String get nfcBlankTagDesc;
+
+  /// No description provided for @subscriptionAutoRenewDisclosure.
+  ///
+  /// In fr, this message translates to:
+  /// **'Le paiement est débité sur votre compte du store à la confirmation de l\'achat. L\'abonnement se renouvelle automatiquement, sauf résiliation au moins 24 heures avant la fin de la période en cours ; le renouvellement est facturé dans les 24 heures précédant la fin de la période. Vous pouvez gérer ou résilier l\'abonnement dans les réglages de votre compte du store.'**
+  String get subscriptionAutoRenewDisclosure;
+
+  /// No description provided for @manageSubscription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Gérer l\'abonnement'**
+  String get manageSubscription;
 }
 
 class _AppLocalizationsDelegate

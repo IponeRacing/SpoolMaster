@@ -1505,4 +1505,11 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get nfcBlankTagDesc =>
       'Dieses Tag enthält keine Spulendaten. Fügen Sie die Spule manuell hinzu oder beschreiben Sie das Tag in der App.';
+
+  @override
+  String get subscriptionAutoRenewDisclosure =>
+      'Die Zahlung wird bei Bestätigung des Kaufs Ihrem Store-Konto belastet. Das Abonnement verlängert sich automatisch, es sei denn, es wird mindestens 24 Stunden vor Ende des aktuellen Zeitraums gekündigt; die Verlängerung wird innerhalb von 24 Stunden vor Ende des Zeitraums berechnet. Sie können Ihr Abonnement in den Einstellungen Ihres Store-Kontos verwalten oder kündigen.';
+
+  @override
+  String get manageSubscription => 'Abonnement verwalten';
 }

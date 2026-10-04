@@ -1451,6 +1451,13 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get nfcBlankTagDesc => '此标签不包含耗材盘数据。请手动添加耗材盘，或在应用中写入此标签。';
+
+  @override
+  String get subscriptionAutoRenewDisclosure =>
+      '购买确认时，款项将从您的商店账户中扣除。除非在当前订阅周期结束前至少24小时取消，否则订阅将自动续订；续订费用将在周期结束前24小时内扣除。您可以在商店账户设置中管理或取消订阅。';
+
+  @override
+  String get manageSubscription => '管理订阅';
 }
 
 /// The translations for Chinese, as used in Taiwan (`zh_TW`).
@@ -2900,4 +2907,11 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String get nfcBlankTagDesc => '此標籤不含耗材捲資料。請手動新增耗材捲，或在 App 中寫入此標籤。';
+
+  @override
+  String get subscriptionAutoRenewDisclosure =>
+      '確認購買時，款項將從您的商店帳戶扣款。除非在目前訂閱期間結束前至少24小時取消，否則訂閱將自動續訂；續訂費用將於期間結束前24小時內扣款。您可以在商店帳戶設定中管理或取消訂閱。';
+
+  @override
+  String get manageSubscription => '管理訂閱';
 }

@@ -1486,4 +1486,11 @@ class AppLocalizationsCs extends AppLocalizations {
   @override
   String get nfcBlankTagDesc =>
       'Tato značka neobsahuje žádná data cívky. Přidejte cívku ručně nebo značku zapište v aplikaci.';
+
+  @override
+  String get subscriptionAutoRenewDisclosure =>
+      'Platba je při potvrzení nákupu stržena z vašeho účtu v obchodě. Předplatné se automaticky obnovuje, pokud jej nezrušíte alespoň 24 hodin před koncem aktuálního období; obnovení je účtováno během 24 hodin před koncem období. Předplatné můžete spravovat nebo zrušit v nastavení svého účtu v obchodě.';
+
+  @override
+  String get manageSubscription => 'Spravovat předplatné';
 }

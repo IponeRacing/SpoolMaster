@@ -1499,4 +1499,11 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get nfcBlankTagDesc =>
       'Questo tag non contiene dati della bobina. Aggiungi la bobina manualmente o scrivi questo tag dall\'app.';
+
+  @override
+  String get subscriptionAutoRenewDisclosure =>
+      'Il pagamento viene addebitato sul tuo account dello store alla conferma dell\'acquisto. L\'abbonamento si rinnova automaticamente, a meno che non venga annullato almeno 24 ore prima della fine del periodo in corso; il rinnovo viene addebitato nelle 24 ore precedenti la fine del periodo. Puoi gestire o annullare l\'abbonamento nelle impostazioni del tuo account dello store.';
+
+  @override
+  String get manageSubscription => 'Gestisci abbonamento';
 }

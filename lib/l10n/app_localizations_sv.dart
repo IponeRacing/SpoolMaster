@@ -1491,4 +1491,11 @@ class AppLocalizationsSv extends AppLocalizations {
   @override
   String get nfcBlankTagDesc =>
       'Den här taggen innehåller inga spoldata. Lägg till spolen manuellt eller skriv taggen i appen.';
+
+  @override
+  String get subscriptionAutoRenewDisclosure =>
+      'Betalningen debiteras ditt butikskonto när köpet bekräftas. Prenumerationen förnyas automatiskt om den inte sägs upp minst 24 timmar före slutet av den aktuella perioden; förnyelsen debiteras inom 24 timmar före periodens slut. Du kan hantera eller säga upp din prenumeration i inställningarna för ditt butikskonto.';
+
+  @override
+  String get manageSubscription => 'Hantera prenumeration';
 }

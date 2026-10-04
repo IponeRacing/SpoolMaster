@@ -1489,4 +1489,11 @@ class AppLocalizationsSl extends AppLocalizations {
   @override
   String get nfcBlankTagDesc =>
       'Ta oznaka ne vsebuje podatkov o tuljavi. Tuljavo dodajte ročno ali oznako zapišite v aplikaciji.';
+
+  @override
+  String get subscriptionAutoRenewDisclosure =>
+      'Plačilo se obremeni na vaš račun v trgovini ob potrditvi nakupa. Naročnina se samodejno obnovi, razen če jo prekličete vsaj 24 ur pred koncem trenutnega obdobja; obnova se zaračuna v 24 urah pred koncem obdobja. Naročnino lahko upravljate ali prekličete v nastavitvah svojega računa v trgovini.';
+
+  @override
+  String get manageSubscription => 'Upravljaj naročnino';
 }

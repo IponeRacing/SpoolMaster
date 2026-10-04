@@ -528,5 +528,7 @@
   "consumptionEmpty": "No consumption recorded yet. It appears as soon as you update a spool's remaining weight or use the print cost calculator.",
   "shareShoppingList": "Share list",
   "nfcBlankTagTitle": "Blank tag",
-  "nfcBlankTagDesc": "This tag contains no spool data. Add the spool manually or write this tag from the app."
+  "nfcBlankTagDesc": "This tag contains no spool data. Add the spool manually or write this tag from the app.",
+  "subscriptionAutoRenewDisclosure": "Payment is charged to your store account at confirmation of purchase. The subscription renews automatically unless cancelled at least 24 hours before the end of the current period; renewal is charged within 24 hours before the end of the period. You can manage or cancel your subscription in your store account settings.",
+  "manageSubscription": "Manage subscription"
 }

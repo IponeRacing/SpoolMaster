@@ -1490,4 +1490,11 @@ class AppLocalizationsVi extends AppLocalizations {
   @override
   String get nfcBlankTagDesc =>
       'Thẻ này không chứa dữ liệu cuộn nhựa. Hãy thêm cuộn thủ công hoặc ghi thẻ này từ ứng dụng.';
+
+  @override
+  String get subscriptionAutoRenewDisclosure =>
+      'Khoản thanh toán được tính vào tài khoản cửa hàng của bạn khi xác nhận mua. Gói đăng ký tự động gia hạn trừ khi bị hủy ít nhất 24 giờ trước khi kết thúc chu kỳ hiện tại; phí gia hạn được tính trong vòng 24 giờ trước khi kết thúc chu kỳ. Bạn có thể quản lý hoặc hủy gói đăng ký trong phần cài đặt tài khoản cửa hàng của mình.';
+
+  @override
+  String get manageSubscription => 'Quản lý gói đăng ký';
 }

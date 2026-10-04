@@ -1491,4 +1491,11 @@ class AppLocalizationsHr extends AppLocalizations {
   @override
   String get nfcBlankTagDesc =>
       'Ova oznaka ne sadrži podatke o kolutu. Dodajte kolut ručno ili zapišite oznaku u aplikaciji.';
+
+  @override
+  String get subscriptionAutoRenewDisclosure =>
+      'Plaćanje se naplaćuje s vašeg računa u trgovini nakon potvrde kupnje. Pretplata se automatski obnavlja osim ako se otkaže najmanje 24 sata prije kraja trenutačnog razdoblja; obnova se naplaćuje unutar 24 sata prije kraja razdoblja. Pretplatom možete upravljati ili je otkazati u postavkama svojeg računa u trgovini.';
+
+  @override
+  String get manageSubscription => 'Upravljaj pretplatom';
 }
