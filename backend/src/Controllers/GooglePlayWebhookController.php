@@ -3,15 +3,32 @@
 namespace NfcAnycubic\Controllers;
 
 use NfcAnycubic\Database;
+use NfcAnycubic\Logger;
+use NfcAnycubic\Services\GooglePlayApiClient;
+use NfcAnycubic\Services\PremiumService;
 
 /**
- * Google Play Real-time Developer Notifications (RTDN) Handler
- * Best practices 2025-2026: RTDN is recommended for subscription lifecycle management
+ * Google Play Real-time Developer Notifications (RTDN), via Cloud Pub/Sub.
+ *
+ * Une notification n'est qu'un signal « cet abonnement a changé » : l'état
+ * (échéance, renouvellement automatique) est relu dans l'API Google Play.
+ * Avant :
+ *  - le contenu de la notification était cru tel quel alors que l'URL n'est
+ *    pas authentifiée (n'importe qui pouvait activer ou couper un premium) ;
+ *  - un renouvellement ne prolongeait pas expires_date → premium perdu au
+ *    bout d'un mois malgré le paiement ;
+ *  - les statuts 'on_hold' / 'paused' n'existent pas dans l'ENUM de la table.
+ *
+ * Seuls les jetons déjà rattachés à un compte (POST /subscriptions/verify)
+ * sont traités : un jeton inconnu est ignoré, ce qui borne les appels à
+ * l'API Google même en cas de notifications forgées.
  *
  * @see https://developer.android.com/google/play/billing/rtdn-reference
  */
 class GooglePlayWebhookController
 {
+    private const TYPE_REVOKED = 12;
+
     private $db;
 
     public function __construct()
@@ -21,343 +38,138 @@ class GooglePlayWebhookController
 
     /**
      * POST /webhooks/google-play
-     * Receives RTDN notifications from Google Play via Cloud Pub/Sub
      */
     public function handleNotification()
     {
-        $input = file_get_contents('php://input');
-        error_log("📬 Google Play RTDN received: " . substr($input, 0, 500));
-
-        $data = json_decode($input, true);
-
-        if (!$data) {
-            error_log("❌ Invalid JSON in RTDN request");
-            return ['success' => false, 'error' => 'Invalid JSON'];
-        }
-
-        // Pub/Sub message format
-        if (!isset($data['message']['data'])) {
-            error_log("❌ No message.data in RTDN request");
+        $data = json_decode((string)file_get_contents('php://input'), true);
+        if (!is_array($data) || !isset($data['message']['data'])) {
             return ['success' => false, 'error' => 'Invalid format'];
         }
 
-        // Decode base64 message data
-        $messageData = json_decode(base64_decode($data['message']['data']), true);
-
-        if (!$messageData) {
-            error_log("❌ Failed to decode RTDN message data");
+        $message = json_decode((string)base64_decode($data['message']['data'], true), true);
+        if (!is_array($message)) {
             return ['success' => false, 'error' => 'Invalid message data'];
         }
 
-        error_log("📦 RTDN decoded: " . json_encode($messageData));
-
-        // Handle different notification types
-        if (isset($messageData['subscriptionNotification'])) {
-            return $this->handleSubscriptionNotification($messageData['subscriptionNotification'], $messageData['packageName'] ?? '');
+        if (isset($message['packageName']) && $message['packageName'] !== GooglePlayApiClient::PACKAGE_NAME) {
+            return ['success' => true, 'message' => 'Other package ignored'];
         }
 
-        if (isset($messageData['oneTimeProductNotification'])) {
-            error_log("ℹ️ One-time product notification (not handled): " . json_encode($messageData['oneTimeProductNotification']));
-            return ['success' => true, 'message' => 'One-time product notification acknowledged'];
+        if (isset($message['subscriptionNotification'])) {
+            $n = $message['subscriptionNotification'];
+            return $this->refreshFromGoogle(
+                (string)($n['purchaseToken'] ?? ''),
+                (string)($n['subscriptionId'] ?? ''),
+                (int)($n['notificationType'] ?? 0) === self::TYPE_REVOKED
+            );
         }
 
-        if (isset($messageData['voidedPurchaseNotification'])) {
-            return $this->handleVoidedPurchaseNotification($messageData['voidedPurchaseNotification']);
+        if (isset($message['voidedPurchaseNotification'])) {
+            $n = $message['voidedPurchaseNotification'];
+            // productType 1 = abonnement (remboursement / rétrofacturation)
+            if ((int)($n['productType'] ?? 0) === 1) {
+                return $this->refreshFromGoogle((string)($n['purchaseToken'] ?? ''), '', true);
+            }
+            return ['success' => true, 'message' => 'One-time product voided (ignored)'];
         }
 
-        if (isset($messageData['testNotification'])) {
-            error_log("🧪 Test notification received - version: " . ($messageData['testNotification']['version'] ?? 'unknown'));
+        if (isset($message['testNotification'])) {
+            error_log("🧪 Google Play test notification received");
             return ['success' => true, 'message' => 'Test notification received'];
         }
 
-        error_log("⚠️ Unknown RTDN type: " . json_encode(array_keys($messageData)));
-        return ['success' => true, 'message' => 'Unknown notification type'];
+        return ['success' => true, 'message' => 'Notification ignored'];
     }
 
     /**
-     * Handle subscription lifecycle notifications
-     *
-     * Notification types:
-     * 1 = SUBSCRIPTION_RECOVERED - Subscription was recovered from account hold
-     * 2 = SUBSCRIPTION_RENEWED - Active subscription was renewed
-     * 3 = SUBSCRIPTION_CANCELED - Subscription was canceled by user
-     * 4 = SUBSCRIPTION_PURCHASED - New subscription purchased
-     * 5 = SUBSCRIPTION_ON_HOLD - Subscription has entered account hold
-     * 6 = SUBSCRIPTION_IN_GRACE_PERIOD - Subscription entered grace period
-     * 7 = SUBSCRIPTION_RESTARTED - User restarted subscription
-     * 8 = SUBSCRIPTION_PRICE_CHANGE_CONFIRMED - User confirmed price change
-     * 9 = SUBSCRIPTION_DEFERRED - Subscription purchase deferred
-     * 10 = SUBSCRIPTION_PAUSED - Subscription was paused
-     * 11 = SUBSCRIPTION_PAUSE_SCHEDULE_CHANGED - Pause schedule changed
-     * 12 = SUBSCRIPTION_REVOKED - Subscription was revoked (refunded)
-     * 13 = SUBSCRIPTION_EXPIRED - Subscription has expired
-     * 20 = SUBSCRIPTION_PENDING_PURCHASE_CANCELED - Pending purchase canceled
+     * Relit l'abonnement dans l'API Google Play et met à jour la base.
+     * $revoked : remboursé / révoqué (le jeton ne redevient jamais actif).
      */
-    private function handleSubscriptionNotification($notification, $packageName)
+    private function refreshFromGoogle(string $purchaseToken, string $productId, bool $revoked): array
     {
-        $notificationType = $notification['notificationType'] ?? 0;
-        $purchaseToken = $notification['purchaseToken'] ?? '';
-        $subscriptionId = $notification['subscriptionId'] ?? '';
-
-        error_log("🔔 Subscription notification:");
-        error_log("   Type: $notificationType (" . $this->getNotificationTypeName($notificationType) . ")");
-        error_log("   Product: $subscriptionId");
-        error_log("   Package: $packageName");
-        error_log("   Token (first 20 chars): " . substr($purchaseToken, 0, 20) . "...");
-
-        switch ($notificationType) {
-            case 1: // SUBSCRIPTION_RECOVERED
-            case 2: // SUBSCRIPTION_RENEWED
-            case 4: // SUBSCRIPTION_PURCHASED
-            case 7: // SUBSCRIPTION_RESTARTED
-                $this->activateSubscription($purchaseToken, $subscriptionId);
-                break;
-
-            case 3: // SUBSCRIPTION_CANCELED
-                // User canceled but subscription is still active until expiry
-                $this->markSubscriptionCanceled($purchaseToken);
-                break;
-
-            case 5: // SUBSCRIPTION_ON_HOLD
-                $this->setSubscriptionOnHold($purchaseToken);
-                break;
-
-            case 6: // SUBSCRIPTION_IN_GRACE_PERIOD
-                $this->setSubscriptionGracePeriod($purchaseToken);
-                break;
-
-            case 10: // SUBSCRIPTION_PAUSED
-                $this->setSubscriptionPaused($purchaseToken);
-                break;
-
-            case 12: // SUBSCRIPTION_REVOKED
-            case 13: // SUBSCRIPTION_EXPIRED
-                $this->deactivateSubscription($purchaseToken);
-                break;
-
-            default:
-                error_log("ℹ️ Unhandled subscription notification type: $notificationType");
+        if ($purchaseToken === '') {
+            return ['success' => false, 'error' => 'Missing purchase token'];
         }
 
-        return [
-            'success' => true,
-            'notification_type' => $notificationType,
-            'product_id' => $subscriptionId
-        ];
-    }
-
-    /**
-     * Handle voided purchase notifications (refunds, chargebacks)
-     */
-    private function handleVoidedPurchaseNotification($notification)
-    {
-        $purchaseToken = $notification['purchaseToken'] ?? '';
-        $orderId = $notification['orderId'] ?? '';
-        $productType = $notification['productType'] ?? 0; // 1 = subscription
-
-        error_log("💔 Voided purchase notification:");
-        error_log("   Order ID: $orderId");
-        error_log("   Product type: " . ($productType == 1 ? 'subscription' : 'one-time'));
-
-        if ($productType == 1) {
-            $this->deactivateSubscription($purchaseToken);
+        $originalId = SubscriptionController::googleOriginalId($purchaseToken);
+        $stmt = $this->db->prepare("
+            SELECT id, user_id, product_id, status FROM subscriptions
+            WHERE original_transaction_id = ?
+        ");
+        $stmt->execute([$originalId]);
+        $row = $stmt->fetch(\PDO::FETCH_ASSOC);
+        if (!$row) {
+            // Pas encore rattaché à un compte : l'app le fera via /subscriptions/verify
+            return ['success' => true, 'message' => 'Unknown purchase token'];
         }
 
-        return ['success' => true, 'message' => 'Voided purchase processed'];
-    }
+        $productId = $productId !== '' ? $productId : (string)$row['product_id'];
+        $api = GooglePlayApiClient::create();
+        $res = $api->getSubscription($productId, $purchaseToken);
 
-    /**
-     * Activate or renew a subscription
-     */
-    private function activateSubscription($purchaseToken, $productId)
-    {
-        try {
-            // Find subscription by purchase token and activate
-            $stmt = $this->db->prepare("
-                UPDATE subscriptions s
-                LEFT JOIN user_preferences up ON s.user_id = up.user_id
-                SET s.status = 'active',
-                    s.auto_renew_enabled = 1,
-                    s.updated_at = CURRENT_TIMESTAMP
-                WHERE s.jws_transaction = ?
-            ");
-            $stmt->execute([$purchaseToken]);
-            $affected = $stmt->rowCount();
-
-            if ($affected > 0) {
-                // Also update user premium status
-                $stmt = $this->db->prepare("
-                    UPDATE user_preferences up
-                    INNER JOIN subscriptions s ON s.user_id = up.user_id
-                    SET up.is_vip = 1
-                    WHERE s.jws_transaction = ?
-                ");
-                $stmt->execute([$purchaseToken]);
-                error_log("✅ Subscription activated via RTDN (affected: $affected)");
-            } else {
-                error_log("⚠️ No subscription found with token: " . substr($purchaseToken, 0, 20) . "...");
-            }
-
-        } catch (\Exception $e) {
-            error_log("❌ Error activating subscription: " . $e->getMessage());
+        if ($res['status'] === 0 || $res['status'] >= 500) {
+            // Erreur passagère : code non-2xx → Pub/Sub renverra la notification
+            http_response_code(503);
+            return ['success' => false, 'error' => 'Google Play API unavailable'];
         }
-    }
-
-    /**
-     * Mark subscription as canceled (still active until expiry)
-     */
-    private function markSubscriptionCanceled($purchaseToken)
-    {
-        try {
-            $stmt = $this->db->prepare("
-                UPDATE subscriptions
-                SET auto_renew_enabled = 0,
-                    updated_at = CURRENT_TIMESTAMP
-                WHERE jws_transaction = ?
-            ");
-            $stmt->execute([$purchaseToken]);
-            error_log("📋 Subscription marked as canceled (will expire at end of period)");
-
-        } catch (\Exception $e) {
-            error_log("❌ Error marking subscription canceled: " . $e->getMessage());
+        if ($res['status'] === 410) {
+            // Achat trop ancien (expiré depuis longtemps) : plus rien à accorder
+            $this->db->prepare("UPDATE subscriptions SET status = 'expired', updated_at = CURRENT_TIMESTAMP WHERE id = ? AND status <> 'revoked'")
+                ->execute([$row['id']]);
+            $this->refreshPremium($row['user_id']);
+            return ['success' => true, 'message' => 'Purchase gone'];
         }
-    }
-
-    /**
-     * Set subscription on hold (payment failed)
-     */
-    private function setSubscriptionOnHold($purchaseToken)
-    {
-        try {
-            $stmt = $this->db->prepare("
-                UPDATE subscriptions s
-                LEFT JOIN user_preferences up ON s.user_id = up.user_id
-                SET s.status = 'on_hold',
-                    s.updated_at = CURRENT_TIMESTAMP
-                WHERE s.jws_transaction = ?
-            ");
-            $stmt->execute([$purchaseToken]);
-
-            // Deactivate premium for on_hold
-            $stmt = $this->db->prepare("
-                UPDATE user_preferences up
-                INNER JOIN subscriptions s ON s.user_id = up.user_id
-                SET up.is_vip = 0
-                WHERE s.jws_transaction = ?
-            ");
-            $stmt->execute([$purchaseToken]);
-
-            error_log("⏸️ Subscription on hold - premium deactivated");
-
-        } catch (\Exception $e) {
-            error_log("❌ Error setting subscription on hold: " . $e->getMessage());
+        if ($res['status'] !== 200 || empty($res['data']['expiryTimeMillis'])) {
+            Logger::warning('google.rtdn', 'Abonnement introuvable dans l\'API Google Play', ['http_status' => $res['status']]);
+            return ['success' => true, 'message' => 'Subscription not found'];
         }
-    }
 
-    /**
-     * Set subscription in grace period (payment retry)
-     */
-    private function setSubscriptionGracePeriod($purchaseToken)
-    {
-        try {
-            $stmt = $this->db->prepare("
-                UPDATE subscriptions
-                SET status = 'grace_period',
-                    updated_at = CURRENT_TIMESTAMP
-                WHERE jws_transaction = ?
-            ");
-            $stmt->execute([$purchaseToken]);
-            error_log("⏳ Subscription in grace period - keeping premium active");
+        $data = $res['data'];
+        $tx = SubscriptionController::googleTransaction($productId, $purchaseToken, $data);
+        $expiresTs = intdiv($tx->expiresDate, 1000);
 
-        } catch (\Exception $e) {
-            error_log("❌ Error setting grace period: " . $e->getMessage());
+        if ($revoked || $row['status'] === 'revoked') {
+            $status = 'revoked';
+        } else {
+            // Google prolonge l'échéance pendant la période de grâce ; en
+            // suspension (account hold) ou en pause, elle est passée.
+            $status = $expiresTs > time() ? 'active' : 'expired';
         }
-    }
 
-    /**
-     * Set subscription as paused
-     */
-    private function setSubscriptionPaused($purchaseToken)
-    {
-        try {
-            $stmt = $this->db->prepare("
-                UPDATE subscriptions s
-                LEFT JOIN user_preferences up ON s.user_id = up.user_id
-                SET s.status = 'paused',
-                    s.updated_at = CURRENT_TIMESTAMP
-                WHERE s.jws_transaction = ?
-            ");
-            $stmt->execute([$purchaseToken]);
+        $stmt = $this->db->prepare("
+            UPDATE subscriptions
+            SET status = ?,
+                expires_date = FROM_UNIXTIME(?),
+                transaction_id = COALESCE(?, transaction_id),
+                auto_renew_enabled = COALESCE(?, auto_renew_enabled),
+                environment = ?,
+                revocation_date = CASE WHEN ? = 'revoked' THEN COALESCE(revocation_date, CURRENT_TIMESTAMP) ELSE revocation_date END,
+                updated_at = CURRENT_TIMESTAMP
+            WHERE id = ?
+        ");
+        $stmt->execute([
+            $status,
+            $expiresTs,
+            $tx->transactionId,
+            $tx->autoRenew === null ? null : (int)$tx->autoRenew,
+            $tx->environment,
+            $status,
+            $row['id'],
+        ]);
 
-            // Deactivate premium for paused subscriptions
-            $stmt = $this->db->prepare("
-                UPDATE user_preferences up
-                INNER JOIN subscriptions s ON s.user_id = up.user_id
-                SET up.is_vip = 0
-                WHERE s.jws_transaction = ?
-            ");
-            $stmt->execute([$purchaseToken]);
-
-            error_log("⏸️ Subscription paused - premium deactivated");
-
-        } catch (\Exception $e) {
-            error_log("❌ Error pausing subscription: " . $e->getMessage());
+        // Acquittement serveur si l'app ne l'a pas fait (sinon remboursement auto à 3 jours)
+        if ($status === 'active' && (int)($data['acknowledgementState'] ?? 1) === 0) {
+            $api->acknowledge($productId, $purchaseToken);
         }
+
+        $premium = $this->refreshPremium($row['user_id']);
+        error_log("🔔 RTDN appliquée : $originalId -> $status");
+
+        return ['success' => true, 'status' => $status, 'is_premium' => $premium];
     }
 
-    /**
-     * Deactivate subscription (expired or revoked)
-     */
-    private function deactivateSubscription($purchaseToken)
+    private function refreshPremium(?string $userId): ?bool
     {
-        try {
-            $stmt = $this->db->prepare("
-                UPDATE subscriptions
-                SET status = 'expired',
-                    auto_renew_enabled = 0,
-                    updated_at = CURRENT_TIMESTAMP
-                WHERE jws_transaction = ?
-            ");
-            $stmt->execute([$purchaseToken]);
-
-            // Deactivate premium
-            $stmt = $this->db->prepare("
-                UPDATE user_preferences up
-                INNER JOIN subscriptions s ON s.user_id = up.user_id
-                SET up.is_vip = 0,
-                    up.vip_expires_at = NULL
-                WHERE s.jws_transaction = ?
-            ");
-            $stmt->execute([$purchaseToken]);
-
-            error_log("❌ Subscription deactivated via RTDN");
-
-        } catch (\Exception $e) {
-            error_log("❌ Error deactivating subscription: " . $e->getMessage());
-        }
-    }
-
-    /**
-     * Get human-readable notification type name
-     */
-    private function getNotificationTypeName($type)
-    {
-        $names = [
-            1 => 'SUBSCRIPTION_RECOVERED',
-            2 => 'SUBSCRIPTION_RENEWED',
-            3 => 'SUBSCRIPTION_CANCELED',
-            4 => 'SUBSCRIPTION_PURCHASED',
-            5 => 'SUBSCRIPTION_ON_HOLD',
-            6 => 'SUBSCRIPTION_IN_GRACE_PERIOD',
-            7 => 'SUBSCRIPTION_RESTARTED',
-            8 => 'SUBSCRIPTION_PRICE_CHANGE_CONFIRMED',
-            9 => 'SUBSCRIPTION_DEFERRED',
-            10 => 'SUBSCRIPTION_PAUSED',
-            11 => 'SUBSCRIPTION_PAUSE_SCHEDULE_CHANGED',
-            12 => 'SUBSCRIPTION_REVOKED',
-            13 => 'SUBSCRIPTION_EXPIRED',
-            20 => 'SUBSCRIPTION_PENDING_PURCHASE_CANCELED',
-        ];
-        return $names[$type] ?? 'UNKNOWN';
+        return $userId ? PremiumService::refresh($this->db, $userId) : null;
     }
 }

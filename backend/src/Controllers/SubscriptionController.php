@@ -3,11 +3,12 @@
 namespace NfcAnycubic\Controllers;
 
 use NfcAnycubic\Database;
-use NfcAnycubic\AppleJWKHelper;
+use NfcAnycubic\Logger;
 use NfcAnycubic\Middleware\AuthMiddleware;
 use NfcAnycubic\Middleware\RateLimiter;
-use Firebase\JWT\JWT;
-use Firebase\JWT\Key;
+use NfcAnycubic\Services\AppleJWSVerifier;
+use NfcAnycubic\Services\GooglePlayApiClient;
+use NfcAnycubic\Services\PremiumService;
 
 /**
  * In-App Purchase Subscription Controller
@@ -77,12 +78,14 @@ class SubscriptionController
 
             return $result;
 
-        } catch (\Exception $e) {
-            error_log("Subscription verification error: " . $e->getMessage());
+        } catch (\Throwable $e) {
+            Logger::exception('subscription.verify', $e, ['platform' => $platform]);
             $this->logValidationFailure($userId, null, $platform, 'unknown', $e->getMessage());
-            return $this->error('Verification failed: ' . $e->getMessage(), 500);
+            return $this->error('Verification failed', 500);
         }
     }
+
+    private const VALID_PRODUCTS = ['spool_master_monthly', 'spool_master_yearly'];
 
     /**
      * Verify Apple (iOS) purchase
@@ -92,171 +95,116 @@ class SubscriptionController
         $transaction = $this->verifyAppleJWS($signedTransaction);
 
         if (!$transaction) {
-            error_log("❌ Transaction verification returned null");
-            // DEBUG: Return more details about why verification failed
-            return $this->error('Invalid transaction or Apple verification failed. Check server logs for details.', 400);
+            $this->logValidationFailure($userId, null, 'ios', 'invalid_signature', AppleJWSVerifier::$lastError);
+            return $this->error('Invalid transaction', 400);
         }
 
-        if ($transaction->bundleId !== $this->bundleId) {
-            error_log("❌ Invalid bundle ID: " . $transaction->bundleId);
+        if (($transaction->bundleId ?? null) !== $this->bundleId) {
+            $this->logValidationFailure($userId, $transaction->transactionId ?? null, 'ios', 'invalid_bundle_id', (string)($transaction->bundleId ?? ''));
             return $this->error('Invalid bundle ID', 400);
         }
 
-        // For Sandbox old receipt format, use the productId from the request
-        if ($transaction->environment === 'Sandbox' && $requestedProductId) {
-            $transaction->productId = $requestedProductId;
-        }
-
-        $validProducts = ['spool_master_monthly', 'spool_master_yearly'];
-        if (!in_array($transaction->productId, $validProducts)) {
-            error_log("❌ Invalid product: " . $transaction->productId);
+        // Le produit vient de la transaction signée, jamais de la requête
+        // (avant : en Sandbox, le productId envoyé par l'app la remplaçait).
+        if (!in_array($transaction->productId ?? null, self::VALID_PRODUCTS, true)) {
+            $this->logValidationFailure($userId, $transaction->transactionId ?? null, 'ios', 'invalid_product', (string)($transaction->productId ?? ''));
             return $this->error('Invalid product', 400);
         }
 
-        // IMPORTANT: Check if we have expiration date BEFORE saving
-        // Without expires_date, we cannot determine subscription validity
-        if ($transaction->expiresDate === null) {
-            error_log("❌ No expiration date in Apple response - APPLE_SHARED_SECRET may be missing");
-            error_log("❌ Configure APPLE_SHARED_SECRET in .env to get subscription details");
+        if (empty($transaction->expiresDate) || empty($transaction->originalTransactionId)) {
+            Logger::warning('subscription.apple', 'Transaction sans échéance ni identifiant d\'origine', [
+                'product_id' => $transaction->productId,
+            ]);
             return $this->error('Subscription verification incomplete. Please contact support.', 503);
         }
 
-        // Check if subscription is currently active
-        $expiresTimestamp = $transaction->expiresDate / 1000;
-        $isActive = $expiresTimestamp > time();
-
-        error_log("📅 Subscription expires: " . date('Y-m-d H:i:s', $expiresTimestamp));
-        error_log("✅ Is active: " . ($isActive ? 'YES' : 'NO'));
-
-        // Only save valid subscriptions with complete data
-        $subscriptionId = $this->saveSubscription($userId, $transaction, $signedTransaction, 'ios');
-
-        // Update user premium status based on expiration
-        $this->updateUserPremiumStatus($userId, $isActive, $transaction->expiresDate);
-
-        error_log("✅ iOS Subscription verified - Product: " . $transaction->productId . " - Active: " . ($isActive ? 'yes' : 'no'));
+        $saved = $this->saveSubscription($userId, $transaction, $signedTransaction, 'ios');
+        $isPremium = PremiumService::refresh($this->db, $userId);
 
         return [
             'success' => true,
             'subscription' => [
                 'product_id' => $transaction->productId,
                 'expires_at' => $transaction->expiresDate,
-                'is_premium' => $isActive
+                'status' => $saved['status'],
+                'transaction_active' => $saved['status'] === 'active',
+                'is_premium' => $isPremium,
             ]
         ];
     }
 
     /**
      * Verify Google Play (Android) purchase using Google Play Developer API
-     * Best practices 2025-2026: Server-side verification is REQUIRED
      */
     private function verifyGooglePlayPurchase($userId, $purchaseToken, $productId)
     {
-        error_log("🤖 Verifying Google Play purchase with API...");
-        error_log("📦 Product ID: " . $productId);
-        error_log("🎫 Purchase Token length: " . strlen($purchaseToken));
-
-        $validProducts = ['spool_master_monthly', 'spool_master_yearly'];
-        if (!in_array($productId, $validProducts)) {
-            error_log("Invalid product: " . $productId);
+        if (!in_array($productId, self::VALID_PRODUCTS, true)) {
+            $this->logValidationFailure($userId, null, 'android', 'invalid_product', (string)$productId);
             return $this->error('Invalid product', 400);
         }
 
-        // Check if service account is configured
-        $serviceAccountPath = __DIR__ . '/../../config/google-play-service-account.json';
-
-        if (!file_exists($serviceAccountPath)) {
-            error_log("⚠️ Service account not configured - using fallback verification");
+        $api = GooglePlayApiClient::create();
+        if (!$api->isConfigured()) {
             return $this->verifyGooglePlayPurchaseFallback($userId, $purchaseToken, $productId);
         }
 
-        try {
-            $serviceAccount = json_decode(file_get_contents($serviceAccountPath), true);
-            if (!$serviceAccount || !isset($serviceAccount['client_email']) || !isset($serviceAccount['private_key'])) {
-                error_log("❌ Invalid service account file format");
-                return $this->verifyGooglePlayPurchaseFallback($userId, $purchaseToken, $productId);
-            }
-
-            // Get OAuth2 access token
-            $accessToken = $this->getGoogleAccessToken($serviceAccount);
-            if (!$accessToken) {
-                error_log("❌ Failed to get Google access token");
-                return $this->verifyGooglePlayPurchaseFallback($userId, $purchaseToken, $productId);
-            }
-
-            // Call Google Play Developer API to verify subscription
-            $url = "https://androidpublisher.googleapis.com/androidpublisher/v3/applications/{$this->androidPackageName}/purchases/subscriptions/{$productId}/tokens/{$purchaseToken}";
-
-            $ch = curl_init($url);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($ch, CURLOPT_HTTPHEADER, [
-                'Authorization: Bearer ' . $accessToken,
-                'Content-Type: application/json'
-            ]);
-            curl_setopt($ch, CURLOPT_TIMEOUT, 30);
-
-            $response = curl_exec($ch);
-            $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-            $curlError = curl_error($ch);
-
-            if ($curlError) {
-                error_log("❌ cURL error: " . $curlError);
-                return $this->verifyGooglePlayPurchaseFallback($userId, $purchaseToken, $productId);
-            }
-
-            error_log("📡 Google Play API response code: " . $httpCode);
-
-            if ($httpCode !== 200) {
-                error_log("❌ Google Play API error: $httpCode - $response");
-                // Don't accept invalid purchases
-                return $this->error('Purchase verification failed', 400);
-            }
-
-            $purchaseData = json_decode($response);
-            error_log("📦 Google Play response: " . json_encode($purchaseData));
-
-            // Verify the subscription data
-            if (!isset($purchaseData->expiryTimeMillis)) {
-                error_log("❌ No expiry time in Google Play response");
-                return $this->error('Invalid subscription data', 400);
-            }
-
-            $expiresDate = (int)$purchaseData->expiryTimeMillis;
-            $isActive = $expiresDate > (time() * 1000);
-
-            // Log subscription details
-            error_log("📅 Expiry: " . date('Y-m-d H:i:s', $expiresDate / 1000));
-            error_log("💳 Payment state: " . ($purchaseData->paymentState ?? 'N/A'));
-            error_log("✅ Is active: " . ($isActive ? 'YES' : 'NO'));
-
-            $transaction = (object)[
-                'productId' => $productId,
-                'originalTransactionId' => 'gp_' . substr(md5($purchaseToken), 0, 16),
-                'transactionId' => $purchaseData->orderId ?? ('gp_' . time()),
-                'purchaseDate' => $purchaseData->startTimeMillis ?? (time() * 1000),
-                'expiresDate' => $expiresDate,
-                'environment' => 'Production',
-                'bundleId' => $this->androidPackageName
-            ];
-
-            $this->saveSubscription($userId, $transaction, $purchaseToken, 'android');
-            $this->updateUserPremiumStatus($userId, $isActive, $expiresDate);
-
-            error_log("✅ Google Play subscription verified via API - Active: " . ($isActive ? 'yes' : 'no'));
-
-            return [
-                'success' => true,
-                'subscription' => [
-                    'product_id' => $productId,
-                    'expires_at' => $expiresDate,
-                    'is_premium' => $isActive
-                ]
-            ];
-
-        } catch (\Exception $e) {
-            error_log("❌ Google Play verification exception: " . $e->getMessage());
-            return $this->error('Verification failed: ' . $e->getMessage(), 500);
+        $res = $api->getSubscription($productId, $purchaseToken);
+        if ($res['status'] === 0 || $res['status'] >= 500) {
+            // Erreur passagère : l'app réessaiera (achat non finalisé côté app)
+            $this->logValidationFailure($userId, null, 'android', 'network_error', 'Google Play API HTTP ' . $res['status']);
+            return $this->error('Google Play verification temporarily unavailable', 503);
         }
+        if ($res['status'] !== 200 || empty($res['data']['expiryTimeMillis'])) {
+            $this->logValidationFailure($userId, null, 'android', 'invalid_signature', 'Google Play API HTTP ' . $res['status']);
+            return $this->error('Purchase verification failed', 400);
+        }
+
+        $data = $res['data'];
+        $transaction = self::googleTransaction($productId, $purchaseToken, $data);
+        $saved = $this->saveSubscription($userId, $transaction, $purchaseToken, 'android');
+
+        // Acquittement côté serveur : si l'app est tuée avant completePurchase(),
+        // Google rembourse automatiquement au bout de 3 jours.
+        if ((int)($data['acknowledgementState'] ?? 1) === 0 && $saved['status'] === 'active') {
+            if (!$api->acknowledge($productId, $purchaseToken)) {
+                Logger::warning('subscription.google', 'Acquittement Google Play échoué (l\'app réessaiera)');
+            }
+        }
+
+        $isPremium = PremiumService::refresh($this->db, $userId);
+
+        return [
+            'success' => true,
+            'subscription' => [
+                'product_id' => $productId,
+                'expires_at' => $transaction->expiresDate,
+                'status' => $saved['status'],
+                'transaction_active' => $saved['status'] === 'active',
+                'is_premium' => $isPremium,
+            ]
+        ];
+    }
+
+    /** Identifiant stable d'un abonnement Google Play (un par purchaseToken). */
+    public static function googleOriginalId(string $purchaseToken): string
+    {
+        return 'gp_' . substr(md5($purchaseToken), 0, 16);
+    }
+
+    /** Réponse purchases.subscriptions.get → transaction au format interne. */
+    public static function googleTransaction(string $productId, string $purchaseToken, array $data): object
+    {
+        return (object)[
+            'productId' => $productId,
+            'originalTransactionId' => self::googleOriginalId($purchaseToken),
+            'transactionId' => $data['orderId'] ?? null,
+            'purchaseDate' => (int)($data['startTimeMillis'] ?? (time() * 1000)),
+            'expiresDate' => (int)$data['expiryTimeMillis'],
+            // purchaseType 0 = achat de test (testeurs de licence)
+            'environment' => (isset($data['purchaseType']) && (int)$data['purchaseType'] === 0) ? 'Sandbox' : 'Production',
+            'autoRenew' => isset($data['autoRenewing']) ? (bool)$data['autoRenewing'] : null,
+            'bundleId' => GooglePlayApiClient::PACKAGE_NAME,
+        ];
     }
 
     /**
@@ -278,57 +226,6 @@ class SubscriptionController
     }
 
     /**
-     * Get OAuth2 access token for Google Play Developer API
-     */
-    private function getGoogleAccessToken($serviceAccount)
-    {
-        try {
-            $now = time();
-            $jwt = [
-                'iss' => $serviceAccount['client_email'],
-                'scope' => 'https://www.googleapis.com/auth/androidpublisher',
-                'aud' => 'https://oauth2.googleapis.com/token',
-                'iat' => $now,
-                'exp' => $now + 3600
-            ];
-
-            $privateKey = $serviceAccount['private_key'];
-            $token = JWT::encode($jwt, $privateKey, 'RS256');
-
-            $ch = curl_init('https://oauth2.googleapis.com/token');
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($ch, CURLOPT_POST, true);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query([
-                'grant_type' => 'urn:ietf:params:oauth:grant-type:jwt-bearer',
-                'assertion' => $token
-            ]));
-            curl_setopt($ch, CURLOPT_TIMEOUT, 30);
-
-            $response = curl_exec($ch);
-            $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-
-            if ($httpCode !== 200) {
-                error_log("❌ Google OAuth token request failed: $httpCode - $response");
-                return null;
-            }
-
-            $data = json_decode($response, true);
-
-            if (isset($data['access_token'])) {
-                error_log("✅ Got Google access token (expires in " . ($data['expires_in'] ?? '?') . "s)");
-                return $data['access_token'];
-            }
-
-            error_log("❌ No access_token in Google OAuth response");
-            return null;
-
-        } catch (\Exception $e) {
-            error_log("❌ Google OAuth exception: " . $e->getMessage());
-            return null;
-        }
-    }
-
-    /**
      * GET /subscriptions/status
      */
     public function getSubscriptionStatus()
@@ -342,65 +239,12 @@ class SubscriptionController
         \error_log("📱 [v$appVer] getSubscriptionStatus user $userId");
 
         try {
-            // First check user_preferences for VIP/lifetime status
-            $stmt = $this->db->prepare("
-                SELECT is_vip, vip_expires_at, subscription_type
-                FROM user_preferences
-                WHERE user_id = ?
-            ");
-            $stmt->execute([$userId]);
-            $prefs = $stmt->fetch(\PDO::FETCH_ASSOC);
-
-            // Check if user has active VIP (lifetime or not expired)
-            if ($prefs && $prefs['is_vip']) {
-                $isVipActive = true;
-                if ($prefs['vip_expires_at']) {
-                    $isVipActive = strtotime($prefs['vip_expires_at']) > time();
-                }
-
-                if ($isVipActive) {
-                    error_log("📊 getSubscriptionStatus for user $userId: VIP active (type: " . ($prefs['subscription_type'] ?? 'unknown') . ")");
-                    return [
-                        'success' => true,
-                        'is_premium' => true,
-                        'subscription' => [
-                            'product_id' => $prefs['subscription_type'] ?? 'lifetime',
-                            'status' => 'active',
-                            'expires_date' => $prefs['vip_expires_at'],
-                            'type' => 'vip'
-                        ]
-                    ];
-                }
-            }
-
-            // Check for active subscriptions with valid expiration date
-            // SECURITY: Do NOT accept expires_date IS NULL as valid premium
-            // (This would allow unverified PKCS#7 receipts to grant premium indefinitely)
-            $stmt = $this->db->prepare("
-                SELECT product_id, status, expires_date, auto_renew_enabled, environment
-                FROM subscriptions
-                WHERE user_id = ?
-                    AND status IN ('active', 'grace_period')
-                    AND expires_date > NOW()
-                ORDER BY expires_date DESC
-                LIMIT 1
-            ");
-            $stmt->execute([$userId]);
-            $subscription = $stmt->fetch(\PDO::FETCH_ASSOC);
-
-            $isPremium = $subscription !== false;
-
-            error_log("📊 getSubscriptionStatus for user $userId: isPremium=$isPremium");
-
-            return [
-                'success' => true,
-                'is_premium' => $isPremium,
-                'subscription' => $subscription ?: null
-            ];
-
-        } catch (\Exception $e) {
-            error_log("Error fetching subscription status: " . $e->getMessage());
-            return $this->error('Server error: ' . $e->getMessage(), 500);
+            // VIP manuel actif, sinon abonnement actif (période de grâce comprise)
+            $status = PremiumService::status($this->db, $userId);
+            return ['success' => true] + $status;
+        } catch (\Throwable $e) {
+            Logger::exception('subscription.status', $e);
+            return $this->error('Server error', 500);
         }
     }
 
@@ -448,34 +292,37 @@ class SubscriptionController
     public function checkExpiredSubscriptions()
     {
         try {
-            // 1. Mettre à jour les abonnements expirés
+            // 1. Abonnements échus (fin de période, ou fin de période de grâce)
             $stmt = $this->db->prepare("
                 UPDATE subscriptions
                 SET status = 'expired',
                     updated_at = CURRENT_TIMESTAMP
-                WHERE status = 'active'
-                  AND expires_date IS NOT NULL
-                  AND expires_date < NOW()
+                WHERE (status = 'active' AND expires_date IS NOT NULL AND expires_date < NOW())
+                   OR (status = 'grace_period' AND COALESCE(grace_period_expires_date, expires_date) < NOW())
             ");
-
             $stmt->execute();
             $expiredCount = $stmt->rowCount();
 
-            // 2. Désactiver le premium pour les utilisateurs
+            // 2. Un VIP manuel échu redevient un compte normal
+            $this->db->exec("
+                UPDATE user_preferences
+                SET vip_manual = 0
+                WHERE vip_manual = 1 AND vip_expires_at IS NOT NULL AND vip_expires_at < NOW()
+            ");
+
+            // 3. Cache premium sans abonnement actif. Les VIP manuels actifs ne
+            //    sont jamais touchés (avant : effacés à chaque passage du cron).
             $stmt = $this->db->prepare("
                 UPDATE user_preferences up
                 SET is_vip = 0,
                     vip_expires_at = NULL
                 WHERE up.is_vip = 1
+                  AND up.vip_manual = 0
                   AND NOT EXISTS (
-                      SELECT 1
-                      FROM subscriptions s
-                      WHERE s.user_id = up.user_id
-                        AND s.status = 'active'
-                        AND (s.expires_date IS NULL OR s.expires_date > NOW())
+                      SELECT 1 FROM subscriptions s
+                      WHERE s.user_id = up.user_id AND " . PremiumService::ACTIVE_SQL . "
                   )
             ");
-
             $stmt->execute();
             $deactivatedCount = $stmt->rowCount();
 
@@ -492,108 +339,31 @@ class SubscriptionController
                 'message' => "Checked subscriptions: $expiredCount expired, $deactivatedCount users deactivated"
             ];
 
-        } catch (\Exception $e) {
-            error_log("❌ [MANUAL] Error: " . $e->getMessage());
-            return $this->error('Failed to check expired subscriptions: ' . $e->getMessage(), 500);
+        } catch (\Throwable $e) {
+            Logger::exception('subscription.cron', $e);
+            return $this->error('Failed to check expired subscriptions', 500);
         }
     }
 
-    private function verifyAppleJWS($jws)
+    /**
+     * Vérifie une transaction App Store.
+     * - JWS StoreKit 2 : chaîne x5c vérifiée jusqu'à Apple Root CA - G3
+     *   (avant : clé prise dans x5c[0] sans aucune vérification → un JWS
+     *   auto-signé donnait le premium) ;
+     * - reçu PKCS#7 StoreKit 1 : validé par Apple (verifyReceipt).
+     */
+    private function verifyAppleJWS(string $jws): ?object
     {
-        try {
-            // Check if this is PKCS#7 format (StoreKit 1 receipt)
-            // PKCS#7 format starts with "MI" (base64 for ASN.1 SEQUENCE)
-            if (substr($jws, 0, 2) === 'MI' && strlen($jws) > 5000) {
-                error_log("📦 Detected PKCS#7 receipt format (StoreKit 1)");
-                error_log("⚠️ Note: StoreKit 2 (JWS) is recommended for 2026");
+        if (substr($jws, 0, 2) === 'MI' && strlen($jws) > 5000) {
+            return $this->verifyApplePKCS7Receipt($jws);
+        }
 
-                // Verify via Apple's receipt validation endpoint
-                return $this->verifyApplePKCS7Receipt($jws);
-            }
-
-            // Standard StoreKit 2 JWS verification
-            error_log("🔐 Validating StoreKit 2 JWS token...");
-
-            $parts = explode('.', $jws);
-            if (count($parts) !== 3) {
-                error_log("❌ Invalid JWS format - expected 3 parts, got " . count($parts));
-                return null;
-            }
-
-            // Decode header to get certificate chain (x5c)
-            $header = json_decode(base64_decode(strtr($parts[0], '-_', '+/')));
-            if (!$header) {
-                error_log("❌ Failed to decode JWS header");
-                return null;
-            }
-
-            error_log("📋 JWS Header algorithm: " . ($header->alg ?? 'unknown'));
-
-            // Extract public key from x5c certificates (like Motoro does)
-            if (!isset($header->x5c) || !is_array($header->x5c) || count($header->x5c) === 0) {
-                error_log("❌ No x5c certificates found in JWS header");
-                return null;
-            }
-
-            // The first certificate in x5c is the one used to sign the JWS
-            $cert = $header->x5c[0];
-            $certPem = "-----BEGIN CERTIFICATE-----\n" . $cert . "\n-----END CERTIFICATE-----";
-
-            // Extract public key from certificate
-            $publicKeyResource = openssl_pkey_get_public($certPem);
-            if (!$publicKeyResource) {
-                error_log("❌ Failed to extract public key from certificate");
-                return null;
-            }
-
-            $publicKeyDetails = openssl_pkey_get_details($publicKeyResource);
-            $publicKey = $publicKeyDetails['key'];
-
-            // Verify signature using the public key
-            $decoded = JWT::decode($jws, new Key($publicKey, 'ES256'));
-
-            if (!$decoded) {
-                error_log("❌ JWT decode failed");
-                return null;
-            }
-
-            error_log("✅ JWS signature valid");
-
-            // Log payload information for debugging
-            error_log("📦 Transaction ID: " . ($decoded->transactionId ?? 'N/A'));
-            error_log("📦 Product ID: " . ($decoded->productId ?? 'N/A'));
-            error_log("📦 Bundle ID: " . ($decoded->bundleId ?? 'N/A'));
-            error_log("📦 Environment: " . ($decoded->environment ?? 'N/A'));
-
-            if (isset($decoded->purchaseDate)) {
-                error_log("📅 Purchase Date: " . date('Y-m-d H:i:s', $decoded->purchaseDate / 1000));
-            }
-
-            if (isset($decoded->expiresDate)) {
-                error_log("📅 Expires Date: " . date('Y-m-d H:i:s', $decoded->expiresDate / 1000));
-            } else {
-                error_log("⚠️ No expiresDate in payload");
-            }
-
-            return $decoded;
-
-        } catch (\Exception $e) {
-            error_log("❌ JWS verification failed: " . $e->getMessage());
-            error_log("Stack trace: " . $e->getTraceAsString());
+        $decoded = AppleJWSVerifier::verify($jws);
+        if (!$decoded) {
+            Logger::warning('subscription.apple', 'Transaction App Store refusée', ['reason' => AppleJWSVerifier::$lastError]);
             return null;
         }
-    }
-
-    private function getApplePublicKey($kid)
-    {
-        $cacheFile = __DIR__ . '/../../cache/apple_jwks.json';
-        $cacheDir = dirname($cacheFile);
-
-        if (!is_dir($cacheDir)) {
-            mkdir($cacheDir, 0755, true);
-        }
-
-        return AppleJWKHelper::getApplePublicKeyPem($kid, $cacheFile);
+        return $decoded;
     }
 
     /**
@@ -709,6 +479,7 @@ class SubscriptionController
                     'bundleId' => $result->receipt->bundle_id ?? $this->bundleId,
                     'purchaseDate' => isset($latest->purchase_date_ms) ? (int)$latest->purchase_date_ms : null,
                     'expiresDate' => isset($latest->expires_date_ms) ? (int)$latest->expires_date_ms : null,
+                    'revocationDate' => isset($latest->cancellation_date_ms) ? (int)$latest->cancellation_date_ms : null,
                     'environment' => $result->environment ?? 'Production',
                 ];
 
@@ -745,6 +516,7 @@ class SubscriptionController
                     'bundleId' => $result->receipt->bundle_id ?? $this->bundleId,
                     'purchaseDate' => isset($latest->purchase_date_ms) ? (int)$latest->purchase_date_ms : null,
                     'expiresDate' => isset($latest->expires_date_ms) ? (int)$latest->expires_date_ms : null,
+                    'revocationDate' => isset($latest->cancellation_date_ms) ? (int)$latest->cancellation_date_ms : null,
                     'environment' => $result->environment ?? 'Production',
                 ];
 
@@ -759,168 +531,119 @@ class SubscriptionController
         return null;
     }
 
-    private function saveSubscription($userId, $transaction, $signedTransaction, $platform = 'ios')
+    /**
+     * Enregistre une transaction vérifiée (Apple ou Google).
+     *
+     * - Un abonnement appartient au dernier compte qui présente une transaction
+     *   valide : « Restaurer » depuis un autre compte le transfère (avant :
+     *   INSERT en double sur original_transaction_id UNIQUE → erreur 500).
+     * - Un abonnement remboursé/révoqué ne repasse pas actif avec une
+     *   transaction antérieure à la révocation (avant : rejouer l'ancien JWS
+     *   après remboursement réactivait le premium).
+     * - Une transaction plus ancienne que celle enregistrée ne fait pas
+     *   reculer l'échéance ni le statut.
+     *
+     * @return array{status:string, transferred_from:?string}
+     */
+    private function saveSubscription(string $userId, object $tx, string $signedData, string $platform): array
     {
-        // Check if subscription already exists
-        $checkStmt = $this->db->prepare("
-            SELECT id, expires_date, status
+        $stmt = $this->db->prepare("
+            SELECT id, user_id, status,
+                   UNIX_TIMESTAMP(expires_date) AS expires_ts,
+                   UNIX_TIMESTAMP(COALESCE(revocation_date, updated_at)) AS revoked_ts
             FROM subscriptions
-            WHERE user_id = ? AND original_transaction_id = ?
+            WHERE original_transaction_id = ?
         ");
-        $checkStmt->execute([$userId, $transaction->originalTransactionId]);
-        $existing = $checkStmt->fetch(\PDO::FETCH_ASSOC);
+        $stmt->execute([$tx->originalTransactionId]);
+        $existing = $stmt->fetch(\PDO::FETCH_ASSOC) ?: null;
 
-        $purchaseDate = $transaction->purchaseDate / 1000;
-        $expiresDate = $transaction->expiresDate ? ($transaction->expiresDate / 1000) : null;
-        $environment = $transaction->environment ?? 'Production';
+        $purchaseTs = intdiv((int)($tx->purchaseDate ?? (time() * 1000)), 1000);
+        $expiresTs = intdiv((int)$tx->expiresDate, 1000);
+        $revocationTs = !empty($tx->revocationDate) ? intdiv((int)$tx->revocationDate, 1000) : null;
+        $environment = $tx->environment ?? 'Production';
+        $autoRenew = isset($tx->autoRenew) ? (int)$tx->autoRenew : null;
 
-        // Determine status based on expiration date
-        $now = time();
-        if ($expiresDate === null) {
-            // PKCS#7 Sandbox - cannot determine expiration, assume active
-            $status = 'active';
-        } else {
-            $status = ($expiresDate > $now) ? 'active' : 'expired';
+        $status = $revocationTs !== null ? 'revoked' : ($expiresTs > time() ? 'active' : 'expired');
+
+        if (!$existing) {
+            $stmt = $this->db->prepare("
+                INSERT INTO subscriptions (
+                    user_id, original_transaction_id, transaction_id, product_id, platform,
+                    status, purchase_date, expires_date, revocation_date, environment,
+                    jws_transaction, auto_renew_enabled
+                ) VALUES (?, ?, ?, ?, ?, ?, FROM_UNIXTIME(?), FROM_UNIXTIME(?), FROM_UNIXTIME(?), ?, ?, COALESCE(?, 1))
+            ");
+            $stmt->execute([
+                $userId, $tx->originalTransactionId, $tx->transactionId ?? null, $tx->productId, $platform,
+                $status, $purchaseTs, $expiresTs, $revocationTs, $environment,
+                $signedData, $autoRenew,
+            ]);
+            $this->logSubscriptionEvent($userId, $tx->originalTransactionId, 'subscription_created', ['status' => $status]);
+            return ['status' => $status, 'transferred_from' => null];
         }
 
-        error_log("💾 Saving subscription - Platform: $platform, Status: $status, Expires: " . ($expiresDate ? date('Y-m-d H:i:s', $expiresDate) : 'N/A'));
-
-        if ($existing) {
-            // Update existing subscription with Apple's data
-            error_log("🔄 Updating existing subscription ID: " . $existing['id']);
-
-            if ($expiresDate !== null) {
-                $stmt = $this->db->prepare("
-                    UPDATE subscriptions
-                    SET transaction_id = ?,
-                        status = ?,
-                        purchase_date = FROM_UNIXTIME(?),
-                        expires_date = FROM_UNIXTIME(?),
-                        environment = ?,
-                        jws_transaction = ?,
-                        updated_at = CURRENT_TIMESTAMP
-                    WHERE id = ?
-                ");
-
-                $stmt->execute([
-                    $transaction->transactionId,
-                    $status,
-                    $purchaseDate,
-                    $expiresDate,
-                    $environment,
-                    $signedTransaction,
-                    $existing['id']
-                ]);
-            } else {
-                // No expires date (PKCS#7) - skip updating it
-                $stmt = $this->db->prepare("
-                    UPDATE subscriptions
-                    SET transaction_id = ?,
-                        status = ?,
-                        purchase_date = FROM_UNIXTIME(?),
-                        environment = ?,
-                        jws_transaction = ?,
-                        updated_at = CURRENT_TIMESTAMP
-                    WHERE id = ?
-                ");
-
-                $stmt->execute([
-                    $transaction->transactionId,
-                    $status,
-                    $purchaseDate,
-                    $environment,
-                    $signedTransaction,
-                    $existing['id']
-                ]);
-            }
-
-            return $existing['id'];
-        } else {
-            // Insert new subscription
-            error_log("➕ Creating new subscription");
-
-            if ($expiresDate !== null) {
-                $stmt = $this->db->prepare("
-                    INSERT INTO subscriptions (
-                        user_id, original_transaction_id, transaction_id, product_id,
-                        status, purchase_date, expires_date, environment, jws_transaction
-                    ) VALUES (?, ?, ?, ?, ?, FROM_UNIXTIME(?), FROM_UNIXTIME(?), ?, ?)
-                ");
-
-                $stmt->execute([
-                    $userId,
-                    $transaction->originalTransactionId,
-                    $transaction->transactionId,
-                    $transaction->productId,
-                    $status,
-                    $purchaseDate,
-                    $expiresDate,
-                    $environment,
-                    $signedTransaction
-                ]);
-            } else {
-                // No expires date (PKCS#7) - set to NULL
-                $stmt = $this->db->prepare("
-                    INSERT INTO subscriptions (
-                        user_id, original_transaction_id, transaction_id, product_id,
-                        status, purchase_date, expires_date, environment, jws_transaction
-                    ) VALUES (?, ?, ?, ?, ?, FROM_UNIXTIME(?), NULL, ?, ?)
-                ");
-
-                $stmt->execute([
-                    $userId,
-                    $transaction->originalTransactionId,
-                    $transaction->transactionId,
-                    $transaction->productId,
-                    $status,
-                    $purchaseDate,
-                    $environment,
-                    $signedTransaction
-                ]);
-            }
-
-            return $this->db->lastInsertId();
-        }
-    }
-
-    private function updateUserPremiumStatus($userId, $isPremium, $expiresDate = null)
-    {
-        // First check if user already has a VIP status that shouldn't be overwritten
-        $stmt = $this->db->prepare("
-            SELECT is_vip, vip_expires_at, subscription_type
-            FROM user_preferences
-            WHERE user_id = ?
-        ");
-        $stmt->execute([$userId]);
-        $existing = $stmt->fetch(\PDO::FETCH_ASSOC);
-
-        // If user has lifetime VIP, don't overwrite
-        if ($existing && $existing['is_vip'] && $existing['subscription_type'] === 'lifetime') {
-            error_log("⚠️ User $userId has lifetime VIP - not overwriting");
-            return;
-        }
-
-        // If user has VIP with later expiration, don't overwrite with earlier date
-        $newExpiresTimestamp = $expiresDate ? ($expiresDate / 1000) : null;
-        if ($existing && $existing['is_vip'] && $existing['vip_expires_at']) {
-            $existingExpires = strtotime($existing['vip_expires_at']);
-            if ($newExpiresTimestamp && $existingExpires > $newExpiresTimestamp) {
-                error_log("⚠️ User $userId has VIP expiring later (" . $existing['vip_expires_at'] . ") - not overwriting");
-                return;
+        // Transfert de propriété (Restaurer depuis un autre compte)
+        $previousUser = null;
+        if ($existing['user_id'] !== $userId) {
+            $previousUser = $existing['user_id'] ?: null;
+            $this->db->prepare("UPDATE subscriptions SET user_id = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?")
+                ->execute([$userId, $existing['id']]);
+            $this->logSubscriptionEvent($userId, $tx->originalTransactionId, 'subscription_transferred', [
+                'from_user_id' => $previousUser,
+                'platform' => $platform,
+            ]);
+            if ($previousUser !== null) {
+                PremiumService::refresh($this->db, $previousUser);
             }
         }
 
-        $expiresTimestampStr = $newExpiresTimestamp ? date('Y-m-d H:i:s', $newExpiresTimestamp) : null;
+        $storedExpiresTs = $existing['expires_ts'] !== null ? (int)$existing['expires_ts'] : null;
+
+        // Remboursé / révoqué : seule une transaction postérieure à la
+        // révocation (réabonnement) peut le réactiver.
+        if ($existing['status'] === 'revoked' && $status !== 'revoked'
+            && $purchaseTs <= (int)$existing['revoked_ts']) {
+            $this->logValidationFailure($userId, $tx->transactionId ?? null, $platform, 'replay_attack',
+                'Transaction antérieure à la révocation');
+            return ['status' => 'revoked', 'transferred_from' => $previousUser];
+        }
+
+        // Après un remboursement, le réabonnement a souvent une échéance
+        // antérieure à celle de la période remboursée : il prime quand même.
+        $resubscribed = $existing['status'] === 'revoked' && $status !== 'revoked';
+        $isNewer = $resubscribed || $storedExpiresTs === null || $expiresTs > $storedExpiresTs;
+        if (!$isNewer && $status !== 'revoked') {
+            // Même transaction ou plus ancienne : rien à mettre à jour (garde
+            // par ex. une période de grâce signalée par Apple).
+            if ($autoRenew !== null) {
+                $this->db->prepare("UPDATE subscriptions SET auto_renew_enabled = ? WHERE id = ?")
+                    ->execute([$autoRenew, $existing['id']]);
+            }
+            return ['status' => $existing['status'], 'transferred_from' => $previousUser];
+        }
 
         $stmt = $this->db->prepare("
-            INSERT INTO user_preferences (user_id, is_vip, vip_expires_at)
-            VALUES (?, ?, ?)
-            ON DUPLICATE KEY UPDATE
-                is_vip = VALUES(is_vip),
-                vip_expires_at = VALUES(vip_expires_at)
+            UPDATE subscriptions
+            SET transaction_id = ?,
+                product_id = ?,
+                platform = ?,
+                status = ?,
+                purchase_date = FROM_UNIXTIME(?),
+                expires_date = FROM_UNIXTIME(?),
+                revocation_date = FROM_UNIXTIME(?),
+                grace_period_expires_date = NULL,
+                environment = ?,
+                jws_transaction = ?,
+                auto_renew_enabled = COALESCE(?, auto_renew_enabled),
+                updated_at = CURRENT_TIMESTAMP
+            WHERE id = ?
         ");
-
-        $stmt->execute([$userId, $isPremium ? 1 : 0, $expiresTimestampStr]);
+        $stmt->execute([
+            $tx->transactionId ?? null, $tx->productId, $platform, $status,
+            $purchaseTs, $isNewer ? $expiresTs : $storedExpiresTs, $revocationTs,
+            $environment, $signedData, $autoRenew, $existing['id'],
+        ]);
+        return ['status' => $status, 'transferred_from' => $previousUser];
     }
 
     private function error($message, $code = 400)
@@ -985,33 +708,35 @@ class SubscriptionController
         ?string $jwsPayload = null
     ): void {
         try {
-            // Map reason to enum value
-            $validReasons = [
-                'invalid_signature', 'expired_transaction', 'invalid_bundle_id',
-                'replay_attack', 'invalid_product', 'certificate_error',
-                'network_error', 'rate_limited', 'unknown'
+            // Valeurs de l'ENUM failure_reason (avant : colonnes platform /
+            // error_message inexistantes → l'INSERT échouait toujours, en silence)
+            $map = [
+                'invalid_signature' => 'invalid_signature',
+                'certificate_error' => 'invalid_signature',
+                'expired_transaction' => 'expired_transaction',
+                'invalid_bundle_id' => 'invalid_bundle_id',
+                'invalid_product' => 'invalid_product_id',
+                'replay_attack' => 'replay_attack',
+                'network_error' => 'server_error',
             ];
-            $reason = in_array($reason, $validReasons) ? $reason : 'unknown';
+            $dbReason = $map[$reason] ?? 'other';
 
             $stmt = $this->db->prepare("
                 INSERT INTO subscription_validation_failures
-                (user_id, transaction_id, platform, failure_reason, error_message, jws_payload, ip_address, user_agent)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                (user_id, transaction_id, failure_reason, error_details, jws_payload, ip_address, user_agent)
+                VALUES (?, ?, ?, ?, ?, ?, ?)
             ");
 
             $stmt->execute([
                 $userId,
                 $transactionId,
-                $platform,
-                $reason,
-                $errorMessage,
+                $dbReason,
+                json_encode(['platform' => $platform, 'reason' => $reason, 'message' => $errorMessage]),
                 $jwsPayload ? substr($jwsPayload, 0, 10000) : null, // Limit size
                 $_SERVER['REMOTE_ADDR'] ?? null,
                 substr($_SERVER['HTTP_USER_AGENT'] ?? '', 0, 500)
             ]);
-
-            error_log("Validation failure logged: $reason for user $userId");
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             error_log("Failed to log validation failure: " . $e->getMessage());
         }
     }

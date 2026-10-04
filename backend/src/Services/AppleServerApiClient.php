@@ -352,29 +352,19 @@ class AppleServerApiClient
 
     /**
      * Verify and decode a signed transaction from App Store
-     * Useful for validating transactions received from client
+     * (chaîne de certificats vérifiée jusqu'à Apple Root CA - G3 ; avant :
+     * simple décodage sans vérification de signature).
      */
     public function verifyTransaction(string $signedTransaction): ?object
     {
-        $parts = explode('.', $signedTransaction);
-        if (count($parts) !== 3) {
+        $payload = AppleJWSVerifier::verify($signedTransaction);
+        if (!$payload) {
             return null;
         }
-
-        // Decode header and payload
-        $header = json_decode(base64_decode(strtr($parts[0], '-_', '+/')));
-        $payload = json_decode(base64_decode(strtr($parts[1], '-_', '+/')));
-
-        if (!$header || !$payload) {
-            return null;
-        }
-
-        // Verify bundle ID
         if (isset($payload->bundleId) && $payload->bundleId !== $this->bundleId) {
             error_log("Bundle ID mismatch in transaction");
             return null;
         }
-
         return $payload;
     }
 }
