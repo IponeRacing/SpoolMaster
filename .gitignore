@@ -65,3 +65,8 @@ graphify-out/
 
 # Claude Code (worktrees des sous-agents, dépôts git imbriqués)
 .claude/worktrees/
+
+# Outils locaux (rejeu de dumps NFC, générateurs…) : jamais sur git (décision du
+# user, 04.10.2026). Les fichiers de tool/ déjà suivis avant cette règle le restent
+# tant qu'on ne les retire pas avec `git rm --cached`.
+tool/
