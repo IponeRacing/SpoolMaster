@@ -27,6 +27,8 @@ class SpoolInventoryItem {
     this.nozzleSize,
     this.vendorCode,
     this.productCode,
+    this.location,
+    this.notes,
   });
 
   factory SpoolInventoryItem.fromJson(Map<String, dynamic> json) =>
@@ -62,6 +64,8 @@ class SpoolInventoryItem {
             : null,
         vendorCode: json['vendorCode'] as String?,
         productCode: json['productCode'] as String?,
+        location: json['location'] as String?,
+        notes: json['notes'] as String?,
       );
   final String id;
   final String brand;
@@ -89,6 +93,12 @@ class SpoolInventoryItem {
   final String? vendorCode;
   final String? productCode;
 
+  /// Emplacement physique libre (ex: « Étagère A », « Boîte sèche 2 »).
+  final String? location;
+
+  /// Notes libres de l'utilisateur.
+  final String? notes;
+
   Map<String, dynamic> toJson() => {
     'id': id,
     'brand': brand,
@@ -115,6 +125,8 @@ class SpoolInventoryItem {
     'nozzleSize': nozzleSize,
     'vendorCode': vendorCode,
     'productCode': productCode,
+    'location': location,
+    'notes': notes,
   };
 
   SpoolInventoryItem copyWith({
@@ -143,6 +155,8 @@ class SpoolInventoryItem {
     double? nozzleSize,
     String? vendorCode,
     String? productCode,
+    String? location,
+    String? notes,
   }) {
     return SpoolInventoryItem(
       id: id ?? this.id,
@@ -170,6 +184,8 @@ class SpoolInventoryItem {
       nozzleSize: nozzleSize ?? this.nozzleSize,
       vendorCode: vendorCode ?? this.vendorCode,
       productCode: productCode ?? this.productCode,
+      location: location ?? this.location,
+      notes: notes ?? this.notes,
     );
   }
 }

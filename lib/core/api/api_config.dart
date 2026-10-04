@@ -44,6 +44,12 @@ class ApiConfig {
   static const String syncPull = '/sync/pull';
   static const String syncHistory = '/sync/history';
 
+  /// Build de test E2E (--dart-define=E2E_MODE=true) : analytics coupées.
+  static const bool e2eMode = bool.fromEnvironment('E2E_MODE');
+
+  // Historique de consommation (1.4.10+)
+  static const String usage = '/usage';
+
   // Endpoints Shopping List
   static const String shoppingListPush = '/shopping-list/push';
   static const String shoppingListPull = '/shopping-list/pull';

@@ -287,6 +287,19 @@ class _FormattedTemperatureRangeState extends State<FormattedTemperatureRange> {
   }
 }
 
+/// Formate un montant comme [FormattedPrice] (pour les textes composés).
+String formatPriceWithCurrency(double price, String currency) {
+  final symbol = switch (currency) {
+    'CHF' => 'CHF ',
+    'EUR' => '€',
+    'USD' => r'$',
+    'GBP' => '£',
+    'CAD' => r'CAD $',
+    _ => currency,
+  };
+  return NumberFormat.currency(symbol: symbol, decimalDigits: 2).format(price);
+}
+
 /// Helper pour obtenir le symbole de devise
 Future<String> getCurrencySymbol() async {
   final currency = await UserPreferencesService.getCurrency();
