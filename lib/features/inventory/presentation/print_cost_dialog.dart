@@ -6,6 +6,7 @@ import 'package:nfc_filament/core/services/spool_storage_service.dart';
 import 'package:nfc_filament/core/services/usage_history_service.dart';
 import 'package:nfc_filament/core/services/user_preferences_service.dart';
 import 'package:nfc_filament/core/utils/color_translator.dart';
+import 'package:nfc_filament/core/utils/filament_swatch.dart';
 import 'package:nfc_filament/core/widgets/formatted_value_widgets.dart';
 import 'package:nfc_filament/l10n/app_localizations.dart';
 
@@ -97,7 +98,12 @@ class _PrintCostDialogState extends State<_PrintCostDialog> {
                   width: 28,
                   height: 28,
                   decoration: BoxDecoration(
-                    color: Color(0xFF000000 | spool.colorRgb),
+                    color: filamentSwatchColor(spool.colorRgb),
+                    gradient: filamentSwatchGradient(
+                      spool.colorRgb,
+                      materialId: spool.materialId,
+                      variantId: spool.materialVariantId,
+                    ),
                     borderRadius: BorderRadius.circular(6),
                     border: Border.all(color: Colors.grey.shade400),
                   ),

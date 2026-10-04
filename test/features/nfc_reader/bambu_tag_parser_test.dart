@@ -136,6 +136,81 @@ void main() {
     test('sans bloc 5 → null', () {
       expect(BambuTagParser.parse(bambuBlocks()..remove(5)), isNull);
     });
+
+    // Cas relevés sur les 5959 dumps de Bambu-Lab-RFID-Library (04.10.2026).
+    test('ABS-GF : « ABS-GF » au bloc 2, « ABS » au bloc 4 → ABS-GF', () {
+      final d = BambuTagParser.parse(bambuBlocks(
+        variant: 'B50-A0',
+        materialId: 'GFB50',
+        type: 'ABS-GF',
+        detailed: 'ABS',
+        rgba: 0xF48438FF,
+      ))!;
+      expect(d.filamentType, 'ABS-GF');
+      expect(d.detailedType, 'ABS-GF');
+      expect(d.color, 'Orange');
+    });
+
+    test('bloc 2 moins précis que le bloc 4 : bloc 4 gardé', () {
+      final d = BambuTagParser.parse(bambuBlocks(type: 'TPU-AMS', detailed: 'TPU for AMS'))!;
+      expect(d.filamentType, 'TPU for AMS');
+    });
+
+    test('transparent (alpha 0) au code inconnu : « Transparent », pastille claire', () {
+      // Avant : RGB 000000 → « Black » et pastille noire.
+      final d = BambuTagParser.parse(bambuBlocks(
+        variant: 'G00-C1',
+        materialId: 'GFG00',
+        type: 'PETG',
+        detailed: 'PETG Basic',
+        rgba: 0x00000000,
+      ))!;
+      expect(d.color, 'Transparent');
+      expect(d.colorRgb, kClearFilamentRgb);
+    });
+
+    test('transparent au code connu : nom officiel', () {
+      final d = BambuTagParser.parse(bambuBlocks(
+        variant: 'G01-C0',
+        materialId: 'GFG01',
+        detailed: 'PETG Translucent',
+        rgba: 0x00000000,
+      ))!;
+      expect(d.color, 'Clear');
+      expect(d.colorRgb, kClearFilamentRgb);
+    });
+
+    test('translucide (alpha 0x80) : RGB du tag conservé', () {
+      final d = BambuTagParser.parse(bambuBlocks(
+        variant: 'G01-B0',
+        materialId: 'GFG01',
+        detailed: 'PETG Translucent',
+        rgba: 0x61B0FF80,
+      ))!;
+      expect(d.color, 'Translucent Light Blue');
+      expect(d.colorRgb, 0x61B0FF);
+    });
+
+    test('code exact avant le code normalisé : « B0 » ≠ « B00 »', () {
+      String colorOf(String variant, int rgba) => BambuTagParser.parse(bambuBlocks(
+            variant: variant,
+            materialId: 'GFG00',
+            detailed: 'PETG Basic',
+            rgba: rgba,
+          ))!.color;
+      expect(colorOf('G00-B0', 0x0069B1FF), 'Blue');
+      expect(colorOf('G00-B00', 0x001489FF), 'Reflex Blue');
+    });
+
+    test('variante absente du catalogue BambuStudio : complément du générateur', () {
+      final d = BambuTagParser.parse(bambuBlocks(
+        variant: 'G00-G8',
+        materialId: 'GFG00',
+        detailed: 'PETG Basic',
+        rgba: 0x7CD82BFF,
+      ))!;
+      expect(d.color, 'Lime Green'); // avant : « Bright Green » (la plus proche)
+    });
   });
 
   group('BambuTagParser.colorName (sans code couleur)', () {

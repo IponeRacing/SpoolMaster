@@ -8,6 +8,7 @@ import 'package:nfc_filament/core/services/analytics_service.dart';
 import 'package:nfc_filament/core/services/spool_storage_service.dart';
 import 'package:nfc_filament/core/services/user_preferences_service.dart';
 import 'package:nfc_filament/core/theme/app_theme.dart';
+import 'package:nfc_filament/core/utils/filament_swatch.dart';
 import 'package:nfc_filament/core/widgets/ad_banner_widget.dart';
 import 'package:nfc_filament/core/widgets/formatted_value_widgets.dart';
 import 'package:nfc_filament/dependency_injection.dart';
@@ -788,8 +789,13 @@ class _NfcReaderViewState extends State<_NfcReaderView> {
                                     width: 40,
                                     height: 24,
                                     decoration: BoxDecoration(
-                                      color: Color(
-                                        0xFF000000 | bobbinData.colorRgb!,
+                                      color: filamentSwatchColor(
+                                        bobbinData.colorRgb!,
+                                      ),
+                                      gradient: filamentSwatchGradient(
+                                        bobbinData.colorRgb!,
+                                        materialId: bobbinData.materialId,
+                                        variantId: bobbinData.materialVariantId,
                                       ),
                                       border: Border.all(
                                         color: Colors.grey.shade300,

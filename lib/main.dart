@@ -22,6 +22,7 @@ import 'package:nfc_filament/core/services/usage_history_service.dart';
 import 'package:nfc_filament/core/services/user_preferences_service.dart';
 import 'package:nfc_filament/core/theme/app_theme.dart';
 import 'package:nfc_filament/core/utils/color_translator.dart';
+import 'package:nfc_filament/core/utils/filament_swatch.dart';
 import 'package:nfc_filament/core/widgets/ad_banner_widget.dart';
 import 'package:nfc_filament/core/widgets/formatted_value_widgets.dart';
 import 'package:nfc_filament/core/widgets/responsive.dart';
@@ -977,7 +978,12 @@ class _StockListPageState extends State<StockListPage> {
     }
 
     final master = group.first;
-    final color = Color(0xFF000000 | master.colorRgb);
+    final color = filamentSwatchColor(master.colorRgb);
+    final swatchGradient = filamentSwatchGradient(
+      master.colorRgb,
+      materialId: master.materialId,
+      variantId: master.materialVariantId,
+    );
     final totalRemaining = group.fold<double>(
       0,
       (sum, s) => sum + s.remainingWeight,
@@ -999,6 +1005,7 @@ class _StockListPageState extends State<StockListPage> {
             height: 48,
             decoration: BoxDecoration(
               color: color,
+              gradient: swatchGradient,
               borderRadius: BorderRadius.circular(8),
               border: Border.all(color: Colors.grey.shade300),
             ),
@@ -1109,7 +1116,12 @@ class _StockListPageState extends State<StockListPage> {
       0,
       100,
     );
-    final color = Color(0xFF000000 | spool.colorRgb);
+    final color = filamentSwatchColor(spool.colorRgb);
+    final swatchGradient = filamentSwatchGradient(
+      spool.colorRgb,
+      materialId: spool.materialId,
+      variantId: spool.materialVariantId,
+    );
 
     return Card(
       margin: const EdgeInsets.only(bottom: 12),
@@ -1127,6 +1139,7 @@ class _StockListPageState extends State<StockListPage> {
                 height: 60,
                 decoration: BoxDecoration(
                   color: color,
+                  gradient: swatchGradient,
                   borderRadius: BorderRadius.circular(8),
                   border: Border.all(color: Colors.grey.shade300),
                 ),
@@ -2084,7 +2097,12 @@ class _StatisticsPageState extends State<StatisticsPage> {
       0,
       100,
     );
-    final color = Color(0xFF000000 | spool.colorRgb);
+    final color = filamentSwatchColor(spool.colorRgb);
+    final swatchGradient = filamentSwatchGradient(
+      spool.colorRgb,
+      materialId: spool.materialId,
+      variantId: spool.materialVariantId,
+    );
     final isOrdered = _orderedSpoolIds.contains(spool.id);
 
     return ListTile(
@@ -2094,6 +2112,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
         height: 40,
         decoration: BoxDecoration(
           color: color,
+          gradient: swatchGradient,
           borderRadius: BorderRadius.circular(8),
           border: Border.all(color: Colors.grey.shade300),
         ),

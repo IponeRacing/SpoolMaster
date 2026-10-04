@@ -44,3 +44,9 @@ String colorNameFromRgb(int r, int g, int b) {
   // 292-345 : magenta/rose → Pink si clair, sinon Purple
   return value >= 160 ? 'Pink' : 'Purple';
 }
+
+/// RGB enregistré pour un filament transparent. Le tag Bambu code la couleur
+/// en RGBA : alpha 0 = transparent, avec un RGB noir sans signification
+/// (avant, la pastille d'un PETG Clear était noire). La pastille l'affiche
+/// hachurée (voir `filamentSwatchGradient`).
+const int kClearFilamentRgb = 0xE6EAEE;

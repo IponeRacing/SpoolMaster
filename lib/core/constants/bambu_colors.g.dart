@@ -1,6 +1,7 @@
 // GÉNÉRÉ par tool/build_bambu_colors.py : ne pas modifier à la main.
 // Source : bambulab/BambuStudio@804d93bb5de1 resources/profiles/BBL/filament/filaments_color_codes.json
-// 318 couleurs (identifiant de filament, code couleur, nom anglais, RGB).
+// 321 couleurs (identifiant de filament, code couleur, nom anglais, RGB),
+// dont 3 complément(s) vu(s) sur de vrais tags (EXTRA du générateur).
 
 /// Couleur officielle d'un filament Bambu Lab.
 class BambuColor {
@@ -241,6 +242,7 @@ const List<BambuColor> bambuColors = [
   BambuColor('GFC01', 'PC FR', 'K0', 'Black', [0x000000]),
   BambuColor('GFC01', 'PC FR', 'W0', 'White', [0xFFFFFF]),
   BambuColor('GFG00', 'PETG Basic', 'A00', 'Orange', [0xFF671F]),
+  BambuColor('GFG00', 'PETG Basic', 'B0', 'Blue', [0x0069B1]),
   BambuColor('GFG00', 'PETG Basic', 'B00', 'Reflex Blue', [0x001489]),
   BambuColor('GFG00', 'PETG Basic', 'B01', 'Navy Blue', [0x0086D6]),
   BambuColor('GFG00', 'PETG Basic', 'D00', 'Gray', [0x7F7E83]),
@@ -248,6 +250,7 @@ const List<BambuColor> bambuColors = [
   BambuColor('GFG00', 'PETG Basic', 'G00', 'Green', [0x009639]),
   BambuColor('GFG00', 'PETG Basic', 'G01', 'Pine Green', [0x034638]),
   BambuColor('GFG00', 'PETG Basic', 'G04', 'Bright Green', [0x97D700]),
+  BambuColor('GFG00', 'PETG Basic', 'G8', 'Lime Green', [0x7CD82B]),
   BambuColor('GFG00', 'PETG Basic', 'K00', 'Black', [0x000000]),
   BambuColor('GFG00', 'PETG Basic', 'N00', 'Dark Brown', [0x4F2C1D]),
   BambuColor('GFG00', 'PETG Basic', 'P01', 'Purple', [0x8A75D1]),
@@ -305,6 +308,7 @@ const List<BambuColor> bambuColors = [
   BambuColor('GFN08', 'PA6-GF', 'N0', 'Brown', [0x5B492F]),
   BambuColor('GFN08', 'PA6-GF', 'R0', 'Orange', [0xFF4800]),
   BambuColor('GFN08', 'PA6-GF', 'Y0', 'Yellow', [0xFFCE00]),
+  BambuColor('GFS01', 'Support for PA/PET', 'G1', 'Green', [0xC0DF16]),
   BambuColor('GFS02', 'Support for PLA', 'W1', 'White', [0xFFFFFF]),
   BambuColor('GFS03', 'Support for PA/PET', 'G1', 'Green', [0xC0DF16]),
   BambuColor('GFS04', 'PVA', 'Y0', 'Clear', [0xF0F1A8]),

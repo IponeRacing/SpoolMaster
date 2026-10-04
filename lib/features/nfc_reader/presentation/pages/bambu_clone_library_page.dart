@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:nfc_filament/core/services/cloned_tags_storage_service.dart';
 import 'package:nfc_filament/core/theme/app_theme.dart';
+import 'package:nfc_filament/core/utils/filament_swatch.dart';
 import 'package:nfc_filament/features/nfc_reader/data/models/cloned_tag_model.dart';
 import 'package:nfc_filament/features/nfc_reader/presentation/pages/bambu_clone_writer_page.dart';
 import 'package:nfc_filament/l10n/app_localizations.dart';
@@ -247,7 +248,12 @@ class _BambuCloneLibraryPageState extends State<BambuCloneLibraryPage> {
                     width: 40,
                     height: 40,
                     decoration: BoxDecoration(
-                      color: Color(0xFF000000 | (clone.bobbinData.colorRgb ?? 0xFF8000)),
+                      color: filamentSwatchColor(clone.bobbinData.colorRgb ?? 0xFF8000),
+                      gradient: filamentSwatchGradient(
+                        clone.bobbinData.colorRgb ?? 0xFF8000,
+                        materialId: clone.bobbinData.materialId,
+                        variantId: clone.bobbinData.materialVariantId,
+                      ),
                       shape: BoxShape.circle,
                       border: Border.all(color: Colors.grey.shade300, width: 2),
                     ),

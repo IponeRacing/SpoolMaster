@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nfc_filament/core/theme/app_theme.dart';
+import 'package:nfc_filament/core/utils/filament_swatch.dart';
 import 'package:nfc_filament/features/nfc_reader/data/models/cloned_tag_model.dart';
 import 'package:nfc_filament/features/nfc_reader/data/services/bambu_lab_writer_service.dart';
 import 'package:nfc_filament/l10n/app_localizations.dart';
@@ -120,7 +121,12 @@ class _BambuCloneWriterPageState extends State<BambuCloneWriterPage> {
                   width: 50,
                   height: 50,
                   decoration: BoxDecoration(
-                    color: Color(0xFF000000 | (widget.clone.bobbinData.colorRgb ?? 0xFF8000)),
+                    color: filamentSwatchColor(widget.clone.bobbinData.colorRgb ?? 0xFF8000),
+                    gradient: filamentSwatchGradient(
+                      widget.clone.bobbinData.colorRgb ?? 0xFF8000,
+                      materialId: widget.clone.bobbinData.materialId,
+                      variantId: widget.clone.bobbinData.materialVariantId,
+                    ),
                     shape: BoxShape.circle,
                     border: Border.all(color: Colors.grey.shade300, width: 2),
                   ),

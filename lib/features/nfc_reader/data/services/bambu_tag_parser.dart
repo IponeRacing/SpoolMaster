@@ -2,16 +2,19 @@ import 'dart:math' as math;
 import 'dart:typed_data';
 
 import 'package:nfc_filament/core/constants/bambu_colors.g.dart';
+import 'package:nfc_filament/core/utils/bambu_color_lookup.dart';
 import 'package:nfc_filament/core/utils/color_naming.dart';
 import 'package:nfc_filament/features/nfc_reader/domain/entities/bobbin_data.dart';
 
 /// Décodage d'un tag RFID Bambu Lab (MIFARE Classic 1K) depuis ses blocs bruts.
 ///
 /// Format : Bambu-Research-Group/RFID-Tag-Guide (BambuLabRfid.md), validé le
-/// 04.10.2026 sur 262 dumps réels (un par couleur).
+/// 04.10.2026 sur les 5959 dumps réels de Bambu-Lab-RFID-Library
+/// (`tool/bambu_corpus_check.py`).
 /// - bloc 1 : variante (0-7, ex. « A00-W1 ») + identifiant filament (8-15, « GFA00 »)
 /// - bloc 2 : type (« PLA ») ; bloc 4 : type détaillé (« PLA Basic »)
-/// - bloc 5 : couleur RGBA (0-3), poids en g (4-5), diamètre float (8-11)
+/// - bloc 5 : couleur RGBA (0-3, alpha 0 = transparent), poids en g (4-5),
+///   diamètre float (8-11)
 /// - bloc 6 : séchage °C (0-1) et h (2-3), plateau °C (6-7), buse max (8-9) / min (10-11)
 /// - bloc 8 : diamètre de buse float (12-15) ; bloc 12 : date « AAAA_MM_JJ_hh_mm »
 /// - bloc 14 : longueur en m (4-5). Entiers et flottants en little-endian.
@@ -49,11 +52,16 @@ class BambuTagParser {
     final materialId = b1 == null ? '' : _ascii(b1.sublist(8, 16));
     final type = _ascii(_block(blocks, 2) ?? const []);
     final detailedType = _ascii(_block(blocks, 4) ?? const []);
-    final filamentType = detailedType.isNotEmpty
-        ? detailedType
-        : (type.isNotEmpty ? type : 'PLA');
+    // Bloc 4 en principe plus précis (« PLA Basic » / « PLA »), mais certains
+    // tags ABS-GF portent « ABS-GF » au bloc 2 et « ABS » au bloc 4.
+    final filamentType = detailedType.isEmpty
+        ? (type.isNotEmpty ? type : 'PLA')
+        : (type.length > detailedType.length && type.startsWith(detailedType)
+            ? type
+            : detailedType);
 
     final colorRgb = (b5[0] << 16) | (b5[1] << 8) | b5[2];
+    final transparent = b5[3] == 0;
     final weight = _u16(b5, 4);
     final weightGrams = weight > 0 ? weight.toDouble() : 1000.0;
     final diameter = _f32(b5, 8);
@@ -67,8 +75,9 @@ class BambuTagParser {
         materialId: materialId,
         variantId: variantId,
         filamentType: filamentType,
+        transparent: transparent,
       ),
-      colorRgb: colorRgb,
+      colorRgb: transparent ? kClearFilamentRgb : colorRgb,
       weightGrams: weightGrams,
       remainingWeight: weightGrams,
       diameter: _inRange(diameter, 1, 3.5) ? _round2(diameter!) : 1.75,
@@ -81,7 +90,7 @@ class BambuTagParser {
       spoolLength: length > 0 ? length : null,
       manufactureDate: b12 == null ? null : _date(_ascii(b12)),
       brand: 'Bambu Lab',
-      detailedType: detailedType.isEmpty ? null : detailedType,
+      detailedType: detailedType.isEmpty ? null : filamentType,
       materialVariantId: variantId.isEmpty ? null : variantId,
       materialId: materialId.isEmpty ? null : materialId,
       nozzleSize: _inRange(nozzle, 0.1, 2) ? _round2(nozzle!) : null,
@@ -89,22 +98,20 @@ class BambuTagParser {
   }
 
   /// Nom de la couleur : nom officiel Bambu par code couleur (variante du
-  /// tag), sinon couleur officielle la plus proche (écart perceptuel ΔE ≤ 15)
-  /// du même filament, du même type, puis de tout le catalogue ; sinon nom
-  /// générique (« Green »…) plutôt qu'un nom officiel faux.
+  /// tag), sinon « Transparent » pour un tag transparent (RGB noir sans
+  /// signification), sinon couleur officielle la plus proche (écart
+  /// perceptuel ΔE ≤ 15) du même filament, du même type, puis de tout le
+  /// catalogue ; sinon nom générique (« Green »…) plutôt qu'un nom officiel faux.
   static String colorName({
     required int rgb,
     String materialId = '',
     String variantId = '',
     String filamentType = '',
+    bool transparent = false,
   }) {
-    final dash = variantId.indexOf('-');
-    final code = dash >= 0 ? variantId.substring(dash + 1) : '';
-    if (materialId.isNotEmpty && code.isNotEmpty) {
-      for (final c in bambuColors) {
-        if (c.filaId == materialId && _sameCode(c.code, code)) return c.name;
-      }
-    }
+    final official = bambuCatalogColor(materialId, variantId);
+    if (official != null) return official.name;
+    if (transparent) return 'Transparent';
 
     final type = filamentType.toLowerCase();
     final pools = [
@@ -130,14 +137,6 @@ class BambuTagParser {
       if (best != null && bestScore <= 15) return best.name;
     }
     return colorNameFromRgb((rgb >> 16) & 0xFF, (rgb >> 8) & 0xFF, rgb & 0xFF);
-  }
-
-  /// « B01 » (certains tags) = « B1 » (catalogue).
-  static bool _sameCode(String a, String b) {
-    if (a == b) return true;
-    String norm(String s) =>
-        s.replaceAllMapped(RegExp(r'0+(\d)'), (m) => m.group(1)!).toUpperCase();
-    return norm(a) == norm(b);
   }
 
   static List<int>? _block(Map<int, List<int>> blocks, int index) {
