@@ -1,14 +1,16 @@
 // Test E2E des fonctionnalités Stock 1.4.10 sur appareil réel / simulateur.
 //
 // Lancement (captures d'écran dans build/e2e_screenshots/) :
-//   fvm flutter drive --driver=test_driver/integration_test.dart \
-//     --target=integration_test/stock_features_e2e_test.dart \
-//     --dart-define=E2E_MODE=true --dart-define=E2E_DEVICE=<nom> -d <device>
+//   tool/run_e2e.sh <device> <nom>
+//   (appareil physique : E2E_ALLOW_PHYSICAL=1, sauvegarde automatique)
 //
-// Non destructif : les bobines de test portent la marque « E2ETest » et sont
-// supprimées à la fin. Si un compte est connecté sur l'appareil, le test
-// passe en mode lecture seule (aucune écriture → rien n'est synchronisé
-// vers le compte réel en production).
+// Les bobines de test portent la marque « E2ETest » et sont supprimées à la
+// fin. Si un compte est connecté sur l'appareil, le test passe en mode
+// lecture seule (aucune écriture → rien n'est synchronisé vers le compte
+// réel en production).
+// ⚠️ Toujours passer par tool/run_e2e.sh : `flutter drive` sans
+// --keep-app-running DÉSINSTALLE l'app en fin de run (données locales
+// effacées — incident du 04.10.2026 sur un téléphone personnel).
 //
 // L'app est montée sans le SplashPage (ATT / consentement UMP = alertes
 // système impossibles à piloter en test).
