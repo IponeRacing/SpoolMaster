@@ -1,0 +1,1 @@
+Nou: export Excel al stocului, listei de cumpărături și consumului, plus import din fișiere CSV sau Excel. Căutare după marcă, culoare, locație sau notă. Locație și note pentru fiecare bobină. Calculator de cost al printării, care poate scădea din stoc. Urmărirea consumului în statistici. Partajarea listei de cumpărături.

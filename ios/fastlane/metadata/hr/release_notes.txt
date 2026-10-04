@@ -1,0 +1,1 @@
+Novo: izvoz zaliha, popisa za kupnju i potrošnje u Excel te uvoz iz CSV ili Excel datoteka. Pretraga po marki, boji, lokaciji ili bilješci. Lokacija i bilješke za svaku rolu. Kalkulator troška ispisa koji može odbiti iz zaliha. Praćenje potrošnje u statistici. Dijeljenje popisa za kupnju.

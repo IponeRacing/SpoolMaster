@@ -1,0 +1,1 @@
+幾秒掃描 NFC 耗材線軸 — 支援 TigerTag、Anycubic、Prusa、Elegoo 及開放 NFC 標籤。追蹤品牌、材料、顏色和庫存。

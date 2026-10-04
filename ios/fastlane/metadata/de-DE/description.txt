@@ -1,0 +1,33 @@
+Spool Master - Die komplette App zur Verwaltung Ihres 3D-Druckfilament-Bestands
+
+HAUPTFUNKTIONEN
+
+NFC-Lesen und -Schreiben • Lesen Sie NFC-Chips von Anycubic- und Prusa-Spulen (OpenPrintTag) • Schreiben Sie Ihre eigenen benutzerdefinierten NFC-Tags • Automatische Tag-Erkennung
+
+Vollständige Bestandsverwaltung • Fügen Sie Spulen per NFC-Scan oder manuell hinzu • Verfolgen Sie das Restgewicht jeder Spule • Verwalten Sie Preise und berechnen Sie den Gesamtwert • Organisieren Sie nach Marke, Material und Farbe • Automatische Warnungen bei niedrigem Bestand
+
+Detaillierte Statistiken • Übersicht über Ihr Inventar • Gesamtwert Ihres Bestands • Anzahl der Materialien, Farben und Marken • Automatische Einkaufsliste
+
+Intelligente Einkaufsliste • Automatisches Hinzufügen von Spulen mit niedrigem Bestand • Markieren Sie bestellte Filamente • Manuell oder per NFC-Scan hinzufügen
+
+Erweiterter Farbwähler • Vollständige Palette mit RGB-Schiebereglern • Unterstützung für Deckkraft • Echtzeit-Vorschau
+
+Druckeinstellungen • Extrudertemperaturen (min/max) • Betttemperaturen (min/max) • Filamentdurchmesser • Spulenlänge
+
+KOMPATIBILITÄT • Anycubic: Vollständiges Lesen und Schreiben • Prusa: OpenPrintTag Lesen und Schreiben (NFC-V) • Generische NFC-Tags: Benutzerdefiniertes Schreiben • Alle anderen Marken, einschließlich Bambu Lab und Creality: manuelle Eingabe mit vollständiger Bestandsverwaltung • Unterstützung für 22 Filamentmarken • Unterstützung für 25 Materialarten (PLA, PETG, ABS, TPU usw.)
+
+MEHRSPRACHIG App verfügbar in 40 Sprachen
+
+SYNCHRONISIERUNG • Multi-Geräte-Synchronisierung • Offline-Modus verfügbar
+
+EINHEITEN UND WÄHRUNGEN • Unterstützung mehrerer Währungen • Metrische oder imperiale Einheiten • Automatische Umrechnung
+
+MODERNE OBERFLÄCHE • Dunkler und heller Modus • Elegantes Design • Intuitive Navigation • Visuelle Statistiken
+
+SICHERHEIT UND DATENSCHUTZ • Ihre Daten bleiben privat • Sichere lokale Speicherung
+
+PREMIUM-VERSION VERFÜGBAR • Cloud-Synchronisierung • Werbefrei • Prioritäts-Support
+
+Ob Sie ein Hobby-Maker oder ein professioneller 3D-Drucker sind, Spool Master hilft Ihnen, Ihre Filamentverwaltung zu optimieren, Verschwendung zu reduzieren und Ihre Ausgaben zu kontrollieren. Jetzt herunterladen und die Kontrolle über Ihr Filamentinventar übernehmen!
+
+https://www.apple.com/legal/internet-services/itunes/dev/stdeula/

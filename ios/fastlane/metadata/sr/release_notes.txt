@@ -1,0 +1,1 @@
+Novo: izvoz zaliha, liste za kupovinu i potrošnje u Excel, kao i uvoz iz CSV ili Excel datoteka. Pretraga po marki, boji, lokaciji ili belešci. Lokacija i beleške za svaki kalem. Kalkulator troška štampe koji može da oduzme iz zaliha. Praćenje potrošnje u statistici. Deljenje liste za kupovinu.

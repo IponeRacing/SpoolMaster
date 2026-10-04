@@ -1,0 +1,76 @@
+Spool Master - Aplikasi lengkap untuk mengurus stok filamen percetakan 3D anda
+
+CIRI-CIRI UTAMA
+
+Pembacaan dan Penulisan NFC
+• Baca cip NFC daripada spool Anycubic dan Prusa (OpenPrintTag)
+• Tulis tag NFC tersuai anda sendiri
+• Pengesanan tag automatik
+
+Pengurusan Inventori Lengkap
+• Tambah spool melalui imbasan NFC atau secara manual
+• Jejak berat baki setiap spool
+• Urus harga dan kira jumlah nilai
+• Susun mengikut jenama, bahan dan warna
+• Amaran stok rendah automatik
+
+Statistik Terperinci
+• Gambaran keseluruhan inventori anda
+• Jumlah nilai stok anda
+• Bilangan bahan, warna dan jenama
+• Senarai beli-belah automatik
+
+Senarai Beli-Belah Pintar
+• Penambahan automatik spool stok rendah
+• Tandakan filamen yang telah ditempah
+• Tambah secara manual atau melalui imbasan NFC
+
+Pemilih Warna Lanjutan
+• Palet penuh dengan peluncur RGB
+• Sokongan kelegapan
+• Pratonton masa nyata
+
+Tetapan Cetakan
+• Suhu penyemperit (min/maks)
+• Suhu katil (min/maks)
+• Diameter filamen
+• Panjang spool
+
+KESERASIAN
+• Anycubic: Pembacaan dan penulisan penuh
+• Prusa: Pembacaan dan penulisan OpenPrintTag (NFC-V)
+• Tag NFC generik: Penulisan tersuai
+• Semua jenama lain, termasuk Bambu Lab dan Creality: kemasukan manual dengan pengurusan inventori penuh
+• Sokongan untuk 22 jenama filamen
+• Sokongan untuk 25 jenis bahan (PLA, PETG, ABS, TPU, dll.)
+
+PELBAGAI BAHASA
+Aplikasi tersedia dalam 40 bahasa
+
+PENYEGERAKAN
+• Penyegerakan pelbagai peranti
+• Mod luar talian tersedia
+
+UNIT DAN MATA WANG
+• Sokongan pelbagai mata wang
+• Unit metrik atau imperial
+• Penukaran automatik
+
+ANTARA MUKA MODEN
+• Mod gelap dan cerah
+• Reka bentuk anggun
+• Navigasi intuitif
+• Statistik visual
+
+KESELAMATAN DAN PRIVASI
+• Data anda kekal peribadi
+• Storan tempatan selamat
+
+VERSI PREMIUM TERSEDIA
+• Penyegerakan awan
+• Tanpa iklan
+• Sokongan keutamaan
+
+Sama ada anda pembuat hobi atau pencetak 3D profesional, Spool Master membantu anda mengoptimumkan pengurusan filamen, mengurangkan pembaziran dan mengawal perbelanjaan anda. Muat turun sekarang dan kawal inventori filamen anda!
+
+https://www.apple.com/legal/internet-services/itunes/dev/stdeula/

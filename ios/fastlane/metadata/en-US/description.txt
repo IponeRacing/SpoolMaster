@@ -1,0 +1,33 @@
+Spool Master - The complete app to manage your 3D printing filament stock
+
+MAIN FEATURES
+
+NFC Reading and Writing • Read NFC chips from Anycubic and Prusa (OpenPrintTag) spools • Write your own custom NFC tags • Automatic tag detection
+
+Complete Inventory Management • Add spools by NFC scan or manually • Track remaining weight of each spool • Manage prices and calculate total value • Organize by brand, material and color • Automatic low stock alerts
+
+Detailed Statistics • Overview of your inventory • Total value of your stock • Number of materials, colors and brands • Automatic shopping list
+
+Smart Shopping List • Automatic addition of low stock spools • Mark ordered filaments • Add manually or by NFC scan
+
+Advanced Color Picker • Full palette with RGB sliders • Opacity support • Real-time preview
+
+Print Settings • Extruder temperatures (min/max) • Bed temperatures (min/max) • Filament diameter • Spool length
+
+COMPATIBILITY • Anycubic: Full reading and writing • Prusa: OpenPrintTag reading and writing (NFC-V) • Generic NFC tags: Custom writing • All other brands, including Bambu Lab and Creality: manual entry with full inventory management • Support for 22 filament brands • Support for 25 material types (PLA, PETG, ABS, TPU, etc.)
+
+MULTILINGUAL App available in 40 languages
+
+SYNCHRONIZATION • Multi-device synchronization • Offline mode available
+
+UNITS AND CURRENCIES • Multiple currency support • Metric or imperial units • Automatic conversion
+
+MODERN INTERFACE • Dark and light mode • Sleek design • Intuitive navigation • Visual statistics
+
+SECURITY AND PRIVACY • Your data remains private • Secure local storage
+
+PREMIUM VERSION AVAILABLE • Cloud synchronization • Ad-free • Priority support
+
+Whether you're a hobby maker or a professional 3D printer, Spool Master helps you optimize your filament management, reduce waste and control your expenses. Download now and take control of your filament inventory!
+
+https://www.apple.com/legal/internet-services/itunes/dev/stdeula/

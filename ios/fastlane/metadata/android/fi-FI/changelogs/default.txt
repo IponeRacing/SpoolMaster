@@ -1,0 +1,1 @@
+Uutta: varaston, ostoslistan ja kulutuksen vienti Exceliin sekä tuonti CSV- tai Excel-tiedostoista. Haku merkin, värin, sijainnin tai muistiinpanon mukaan. Sijainti ja muistiinpanot jokaiselle rullalle. Tulostuskustannuslaskuri, joka voi vähentää varastosta. Kulutuksen seuranta tilastoissa. Ostoslistan jakaminen. Asettelu optimoitu suurille näytöille ja taitettaville laitteille.

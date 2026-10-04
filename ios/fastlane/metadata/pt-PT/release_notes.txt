@@ -1,0 +1,1 @@
+Novo: exportação para Excel do stock, da lista de compras e do consumo, além de importação de ficheiros CSV ou Excel. Pesquisa por marca, cor, local ou nota. Local e notas para cada bobina. Calculadora de custo de impressão que pode abater ao stock. Acompanhamento do consumo nas estatísticas. Partilha da lista de compras.

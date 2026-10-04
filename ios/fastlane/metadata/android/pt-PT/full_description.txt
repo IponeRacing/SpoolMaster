@@ -1,0 +1,31 @@
+Spool Master - A aplicação completa para gerir o seu stock de filamentos de impressão 3D
+
+FUNCIONALIDADES PRINCIPAIS
+
+Leitura e escrita NFC • Leia chips NFC das bobinas Anycubic, Bambu Lab, Prusa e Creality • Escreva as suas próprias etiquetas NFC personalizadas • Clone etiquetas NFC para reutilização • Compatível com todos os formatos de etiquetas NFC
+
+Gestão de inventário completa • Adicione bobinas por digitalização NFC ou manualmente • Acompanhe o peso restante de cada bobina • Faça a gestão de preços e calcule o valor total • Organize por marca, material e cor • Alertas automáticos de stock baixo
+
+Estatísticas detalhadas • Visão geral do seu inventário • Valor total do seu stock • Número de materiais, cores e marcas • Lista de compras automática
+
+Lista de compras inteligente • Adição automática de bobinas com stock baixo • Marque filamentos encomendados • Adicione manualmente ou por digitalização NFC
+
+Seletor de cor avançado • Paleta completa com controlos deslizantes RGB • Suporte de opacidade • Pré-visualização em tempo real
+
+Definições de impressão • Temperaturas da extrusora (min/max) • Temperaturas da base (min/max) • Diâmetro do filamento • Comprimento da bobina
+
+COMPATIBILIDADE • Anycubic: Leitura e escrita completas • Bambu Lab: Leitura e escrita de etiquetas RFID • Prusa: Leitura e escrita de etiquetas OpenPrintTag (NFC-V) • Creality CFS: Leitura e escrita de tags • Etiquetas NFC genéricas: Escrita personalizada • Suporte para 22 marcas de filamento • Suporte para 25 tipos de materiais (PLA, PETG, ABS, TPU, etc.)
+
+MULTILINGUE Aplicação disponível em 40 idiomas
+
+SINCRONIZAÇÃO • Sincronização multi-dispositivos • Modo offline disponível
+
+UNIDADES E MOEDAS • Suporte para várias moedas • Unidades métricas ou imperiais • Conversão automática
+
+INTERFACE MODERNA • Modo escuro e claro • Design elegante • Navegação intuitiva • Estatísticas visuais
+
+SEGURANÇA E PRIVACIDADE • Os seus dados permanecem privados • Armazenamento local seguro
+
+VERSÃO PREMIUM DISPONÍVEL • Sincronização na nuvem • Sem publicidade • Suporte prioritário
+
+Quer seja um maker amador ou um profissional de impressão 3D, o Spool Master ajuda-o a optimizar a gestão dos seus filamentos, reduzir o desperdício e controlar as suas despesas. Descarregue agora e assuma o controlo do seu inventário de filamentos!

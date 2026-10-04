@@ -1,0 +1,31 @@
+Spool Master - Den kompletta appen för att hantera ditt lager av 3D-skrivarfilament
+
+HUVUDFUNKTIONER
+
+NFC-läsning och -skrivning • Läs NFC-chip från Anycubic-, Bambu Lab-, Prusa- och Creality-spolar • Skriv dina egna anpassade NFC-taggar • Klona NFC-taggar för återanvändning • Kompatibel med alla NFC-taggformat
+
+Komplett lagerhantering • Lägg till spolar via NFC-skanning eller manuellt • Spåra återstående vikt för varje spole • Hantera priser och beräkna totalt värde • Organisera efter märke, material och färg • Automatiska varningar vid lågt lager
+
+Detaljerad statistik • Översikt av ditt lager • Totalt värde av ditt lager • Antal material, färger och märken • Automatisk inköpslista
+
+Smart inköpslista • Automatiskt tillägg av spolar med lågt lager • Markera beställda filament • Lägg till manuellt eller via NFC-skanning
+
+Avancerad färgväljare • Komplett palett med RGB-reglage • Stöd för opacitet • Förhandsgranskning i realtid
+
+Skrivarinställningar • Extrudertemperaturer (min/max) • Bäddtemperaturer (min/max) • Filamentdiameter • Spollängd
+
+KOMPATIBILITET • Anycubic: Fullständig läsning och skrivning • Bambu Lab: Läsning och skrivning av RFID-taggar • Prusa: OpenPrintTag-läsning och -skrivning (NFC-V) • Creality CFS: Läsning och skrivning av taggar • Generiska NFC-taggar: Anpassad skrivning • Stöd för 22 filamentmärken • Stöd för 25 materialtyper (PLA, PETG, ABS, TPU, etc.)
+
+FLERSPRÅKIG App tillgänglig på 40 språk
+
+SYNKRONISERING • Synkronisering mellan flera enheter • Offlineläge tillgängligt
+
+ENHETER OCH VALUTOR • Stöd för flera valutor • Metriska eller imperiala enheter • Automatisk konvertering
+
+MODERNT GRÄNSSNITT • Mörkt och ljust läge • Elegant design • Intuitiv navigering • Visuell statistik
+
+SÄKERHET OCH INTEGRITET • Dina data förblir privata • Säker lokal lagring
+
+PREMIUMVERSION TILLGÄNGLIG • Molnsynkronisering • Reklamfri • Prioriterad support
+
+Oavsett om du är en hobbymaker eller en professionell 3D-skrivare, hjälper Spool Master dig att optimera din filamenthantering, minska avfallet och kontrollera dina utgifter. Ladda ner nu och ta kontroll över ditt filamentlager!

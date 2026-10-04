@@ -1,0 +1,76 @@
+Spool Master - De complete app om je 3D-printfilamentvoorraad te beheren
+
+BELANGRIJKSTE FUNCTIES
+
+NFC Lezen en Schrijven
+• Lees NFC-chips van Anycubic en Prusa (OpenPrintTag) spoelen
+• Schrijf je eigen aangepaste NFC-tags
+• Automatische tagdetectie
+
+Volledig Voorraadbeheer
+• Voeg spoelen toe via NFC-scan of handmatig
+• Volg het resterende gewicht van elke spoel
+• Beheer prijzen en bereken de totale waarde
+• Organiseer op merk, materiaal en kleur
+• Automatische waarschuwingen bij lage voorraad
+
+Gedetailleerde Statistieken
+• Overzicht van je inventaris
+• Totale waarde van je voorraad
+• Aantal materialen, kleuren en merken
+• Automatische boodschappenlijst
+
+Slimme Boodschappenlijst
+• Automatische toevoeging van spoelen met lage voorraad
+• Markeer bestelde filamenten
+• Handmatig of via NFC-scan toevoegen
+
+Geavanceerde Kleurkiezer
+• Volledig palet met RGB-schuifregelaars
+• Ondersteuning voor dekking
+• Realtime voorbeeld
+
+Printinstellingen
+• Extrudertemperaturen (min/max)
+• Bedtemperaturen (min/max)
+• Filamentdiameter
+• Spoellengte
+
+COMPATIBILITEIT
+• Anycubic: Volledig lezen en schrijven
+• Prusa: OpenPrintTag lezen en schrijven (NFC-V)
+• Generieke NFC-tags: Aangepast schrijven
+• Alle andere merken, waaronder Bambu Lab en Creality: handmatige invoer met volledig voorraadbeheer
+• Ondersteuning voor 22 filamentmerken
+• Ondersteuning voor 25 materiaalsoorten (PLA, PETG, ABS, TPU, enz.)
+
+MEERTALIG
+App beschikbaar in 40 talen
+
+SYNCHRONISATIE
+• Synchronisatie tussen meerdere apparaten
+• Offlinemodus beschikbaar
+
+EENHEDEN EN VALUTA
+• Ondersteuning voor meerdere valuta
+• Metrische of imperiale eenheden
+• Automatische conversie
+
+MODERNE INTERFACE
+• Donkere en lichte modus
+• Strak ontwerp
+• Intuïtieve navigatie
+• Visuele statistieken
+
+BEVEILIGING EN PRIVACY
+• Je gegevens blijven privé
+• Veilige lokale opslag
+
+PREMIUMVERSIE BESCHIKBAAR
+• Cloudsynchronisatie
+• Zonder advertenties
+• Prioritaire ondersteuning
+
+Of je nu een hobbymaker of een professionele 3D-printer bent, Spool Master helpt je om je filamentbeheer te optimaliseren, verspilling te verminderen en je uitgaven te beheersen. Download nu en neem controle over je filamentinventaris!
+
+https://www.apple.com/legal/internet-services/itunes/dev/stdeula/

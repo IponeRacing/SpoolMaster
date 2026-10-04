@@ -1,0 +1,1 @@
+Escanea bobinas de filamento NFC en segundos — TigerTag, Anycubic, Prusa, Elegoo y tags NFC abiertos. Controla marca, material, color y stock.

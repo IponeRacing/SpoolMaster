@@ -1,0 +1,1 @@
+Zeskanuj szpule filamentu z NFC w kilka sekund — TigerTag, Anycubic, Prusa, Elegoo i otwarte tagi NFC. Śledź markę, materiał, kolor i zapas.

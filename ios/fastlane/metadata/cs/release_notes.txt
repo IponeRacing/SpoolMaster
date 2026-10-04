@@ -1,0 +1,1 @@
+Novinka: export skladu, nákupního seznamu a spotřeby do Excelu a import ze souborů CSV nebo Excel. Vyhledávání podle značky, barvy, umístění nebo poznámky. Umístění a poznámky ke každé cívce. Kalkulačka ceny tisku s možností odečtu ze skladu. Sledování spotřeby ve statistikách. Sdílení nákupního seznamu.

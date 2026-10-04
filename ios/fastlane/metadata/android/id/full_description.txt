@@ -1,0 +1,31 @@
+Spool Master - Aplikasi lengkap untuk mengelola stok filamen pencetakan 3D Anda
+
+FITUR UTAMA
+
+Membaca dan menulis NFC • Membaca chip NFC dari spool Anycubic, Bambu Lab, Prusa, dan Creality • Menulis tag NFC kustom Anda sendiri • Mengkloning tag NFC untuk digunakan kembali • Kompatibel dengan semua format tag NFC
+
+Manajemen inventaris lengkap • Tambahkan spool dengan pemindaian NFC atau secara manual • Lacak berat sisa setiap spool • Kelola harga dan hitung nilai total • Atur berdasarkan merek, bahan, dan warna • Peringatan stok rendah otomatis
+
+Statistik terperinci • Tinjauan inventaris Anda • Nilai total stok Anda • Jumlah bahan, warna, dan merek • Daftar belanja otomatis
+
+Daftar belanja pintar • Penambahan otomatis spool stok rendah • Tandai filamen yang sudah dipesan • Tambahkan secara manual atau dengan pemindaian NFC
+
+Pemilih warna canggih • Palet lengkap dengan slider RGB • Dukungan opasitas • Pratinjau waktu nyata
+
+Pengaturan cetak • Suhu ekstruder (min/maks) • Suhu bed (min/maks) • Diameter filamen • Panjang spool
+
+KOMPATIBILITAS • Anycubic: Membaca dan menulis penuh • Bambu Lab: Membaca dan menulis tag RFID • Prusa: Membaca dan menulis OpenPrintTag (NFC-V) • Creality CFS: Baca dan tulis tag • Tag NFC generik: Penulisan kustom • Dukungan untuk 22 merek filamen • Dukungan untuk 25 jenis bahan (PLA, PETG, ABS, TPU, dll.)
+
+MULTIBAHASA Aplikasi tersedia dalam 40 bahasa
+
+SINKRONISASI • Sinkronisasi multi-perangkat • Mode offline tersedia
+
+UNIT DAN MATA UANG • Dukungan multi mata uang • Unit metrik atau imperial • Konversi otomatis
+
+ANTARMUKA MODERN • Mode gelap dan terang • Desain elegan • Navigasi intuitif • Statistik visual
+
+KEAMANAN DAN PRIVASI • Data Anda tetap pribadi • Penyimpanan lokal yang aman
+
+VERSI PREMIUM TERSEDIA • Sinkronisasi cloud • Bebas iklan • Dukungan prioritas
+
+Baik Anda pembuat hobi atau pencetak 3D profesional, Spool Master membantu Anda mengoptimalkan manajemen filamen, mengurangi limbah, dan mengontrol pengeluaran. Unduh sekarang dan kendalikan inventaris filamen Anda!

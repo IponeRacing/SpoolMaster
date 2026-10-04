@@ -1,0 +1,33 @@
+Spool Master - Celovita aplikacija za upravljanje zalog filamenta za 3D tiskanje
+
+GLAVNE FUNKCIJE
+
+Branje in pisanje NFC • Branje NFC čipov kolutov Anycubic in Prusa (OpenPrintTag) • Pisanje lastnih NFC oznak • Samodejno prepoznavanje oznak
+
+Celovito upravljanje inventarja • Dodajanje kolutov z NFC skeniranjem ali ročno • Spremljanje preostale teže vsakega koluta • Upravljanje cen in izračun skupne vrednosti • Razvrščanje po znamki, materialu in barvi • Samodejna opozorila o nizki zalogi
+
+Podrobna statistika • Pregled vašega inventarja • Skupna vrednost zaloge • Število materialov, barv in znamk • Samodejni nakupovalni seznam
+
+Pametni nakupovalni seznam • Samodejno dodajanje kolutov z nizko zalogo • Označevanje naročenih filamentov • Dodajanje ročno ali z NFC skeniranjem
+
+Napredni izbirnik barv • Celotna paleta z drsniki RGB • Podpora za prosojnost • Predogled v realnem času
+
+Nastavitve tiskanja • Temperature ekstruderja (min./maks.) • Temperature mize (min./maks.) • Premer filamenta • Dolžina koluta
+
+ZDRUŽLJIVOST • Anycubic: popolno branje in pisanje • Prusa: branje in pisanje OpenPrintTag (NFC-V) • Splošne NFC oznake: pisanje po meri • Vse druge znamke, vključno z Bambu Lab in Creality: ročni vnos s polnim upravljanjem inventarja • Podpora za 22 znamk filamenta • Podpora za 25 vrst materialov (PLA, PETG, ABS, TPU itd.)
+
+VEČJEZIČNOST Aplikacija je na voljo v 40 jezikih
+
+SINHRONIZACIJA • Sinhronizacija med več napravami • Način brez povezave
+
+ENOTE IN VALUTE • Podpora za več valut • Metrične ali imperialne enote • Samodejna pretvorba
+
+SODOBEN VMESNIK • Temni in svetli način • Elegantna zasnova • Intuitivna navigacija • Vizualna statistika
+
+VARNOST IN ZASEBNOST • Vaši podatki ostanejo zasebni • Varna lokalna shramba
+
+NA VOLJO JE PREMIUM RAZLIČICA • Sinhronizacija v oblaku • Brez oglasov • Prednostna podpora
+
+Ne glede na to, ali ste ljubiteljski ustvarjalec ali profesionalni 3D tiskar, vam Spool Master pomaga optimizirati upravljanje filamenta, zmanjšati odpadke in nadzirati stroške. Prenesite zdaj in prevzemite nadzor nad svojim inventarjem filamenta!
+
+https://www.apple.com/legal/internet-services/itunes/dev/stdeula/

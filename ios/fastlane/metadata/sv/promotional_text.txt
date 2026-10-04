@@ -1,0 +1,1 @@
+Skanna NFC-filamentrullar på sekunder — TigerTag, Anycubic, Prusa, Elegoo och öppna NFC-taggar. Spåra märke, material, färg och lager.

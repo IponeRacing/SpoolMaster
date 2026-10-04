@@ -1,0 +1,33 @@
+Spool Master - Kompletní aplikace pro správu vašich zásob 3D tiskového filamentu
+
+HLAVNÍ FUNKCE
+
+Čtení a zápis NFC • Čtěte NFC čipy z cívek Anycubic a Prusa (OpenPrintTag) • Zapisujte vlastní přizpůsobené NFC tagy • Automatické rozpoznání tagů
+
+Kompletní správa inventáře • Přidávejte cívky skenováním NFC nebo ručně • Sledujte zbývající hmotnost každé cívky • Spravujte ceny a vypočítejte celkovou hodnotu • Organizujte podle značky, materiálu a barvy • Automatická upozornění na nízké zásoby
+
+Podrobné statistiky • Přehled vašeho inventáře • Celková hodnota vašich zásob • Počet materiálů, barev a značek • Automatický nákupní seznam
+
+Chytrý nákupní seznam • Automatické přidání cívek s nízkými zásobami • Označte objednané filamenty • Přidejte ručně nebo skenováním NFC
+
+Pokročilý výběr barev • Kompletní paleta s RGB posuvníky • Podpora průhlednosti • Náhled v reálném čase
+
+Nastavení tisku • Teploty extruderu (min/max) • Teploty podložky (min/max) • Průměr filamentu • Délka cívky
+
+KOMPATIBILITA • Anycubic: Úplné čtení a zápis • Prusa: Čtení a zápis tagů OpenPrintTag (NFC-V) • Generické NFC tagy: Vlastní zápis • Všechny ostatní značky, včetně Bambu Lab a Creality: ruční zadání s úplnou správou zásob • Podpora 22 značek filamentů • Podpora 25 typů materiálů (PLA, PETG, ABS, TPU atd.)
+
+VÍCEJAZYČNÁ Aplikace dostupná ve 40 jazycích
+
+SYNCHRONIZACE • Synchronizace mezi více zařízeními • Offline režim dostupný
+
+JEDNOTKY A MĚNY • Podpora více měn • Metrické nebo imperiální jednotky • Automatický převod
+
+MODERNÍ ROZHRANÍ • Tmavý a světlý režim • Elegantní design • Intuitivní navigace • Vizuální statistiky
+
+BEZPEČNOST A SOUKROMÍ • Vaše data zůstávají soukromá • Bezpečné lokální úložiště
+
+PRÉMIOVÁ VERZE K DISPOZICI • Cloudová synchronizace • Bez reklam • Prioritní podpora
+
+Ať už jste amatérský tvůrce nebo profesionální 3D tiskař, Spool Master vám pomůže optimalizovat správu filamentů, snížit plýtvání a kontrolovat vaše výdaje. Stáhněte si nyní a převezměte kontrolu nad svým inventářem filamentů!
+
+https://www.apple.com/legal/internet-services/itunes/dev/stdeula/

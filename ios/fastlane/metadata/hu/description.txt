@@ -1,0 +1,33 @@
+Spool Master - A teljes alkalmazás a 3D nyomtatási filament készlet kezeléséhez
+
+FŐ FUNKCIÓK
+
+NFC olvasás és írás • NFC chipek olvasása Anycubic és Prusa (OpenPrintTag) orsókról • Saját egyéni NFC címkék írása • Automatikus címkefelismerés
+
+Teljes készletkezelés • Orsók hozzáadása NFC szkenneléssel vagy manuálisan • Minden orsó maradék súlyának nyomon követése • Árak kezelése és összérték kiszámítása • Rendezés márka, anyag és szín szerint • Automatikus alacsony készlet figyelmeztetések
+
+Részletes statisztikák • Készlet áttekintése • Készlet összértéke • Anyagok, színek és márkák száma • Automatikus bevásárlólista
+
+Intelligens bevásárlólista • Alacsony készletű orsók automatikus hozzáadása • Megrendelt filamentek jelölése • Hozzáadás manuálisan vagy NFC szkenneléssel
+
+Fejlett színválasztó • Teljes paletta RGB csúszkákkal • Átlátszóság támogatás • Valós idejű előnézet
+
+Nyomtatási beállítások • Extruder hőmérsékletek (min/max) • Ágy hőmérsékletek (min/max) • Filament átmérő • Orsó hossz
+
+KOMPATIBILITÁS • Anycubic: Teljes olvasás és írás • Prusa: OpenPrintTag olvasás és írás (NFC-V) • Általános NFC címkék: Egyéni írás • Minden más márka, beleértve a Bambu Lab és a Creality terméket is: kézi bevitel teljes készletkezeléssel • 22 filament márka támogatása • 25 anyagtípus támogatása (PLA, PETG, ABS, TPU stb.)
+
+TÖBBNYELVŰ Alkalmazás 40 nyelven elérhető
+
+SZINKRONIZÁLÁS • Több eszközös szinkronizálás • Offline mód elérhető
+
+MÉRTÉKEGYSÉGEK ÉS PÉNZNEMEK • Többféle pénznem támogatás • Metrikus vagy angolszász mértékegységek • Automatikus átváltás
+
+MODERN FELÜLET • Sötét és világos mód • Elegáns dizájn • Intuitív navigáció • Vizuális statisztikák
+
+BIZTONSÁG ÉS ADATVÉDELEM • Adatai magánjellegűek maradnak • Biztonságos helyi tárolás
+
+PRÉMIUM VERZIÓ ELÉRHETŐ • Felhő szinkronizálás • Reklámmentes • Kiemelt támogatás
+
+Akár hobbi alkotó, akár professzionális 3D nyomtató, a Spool Master segít optimalizálni a filament kezelést, csökkenteni a pazarlást és kontrollálni a kiadásokat. Töltse le most és vegye kézbe filament készletének kezelését!
+
+https://www.apple.com/legal/internet-services/itunes/dev/stdeula/

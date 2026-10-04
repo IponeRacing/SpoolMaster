@@ -1,0 +1,29 @@
+Spool Master v1.4.10 - Review Notes
+
+This release adds inventory management features. No new permissions or entitlements.
+
+1. NEW - EXCEL EXPORT: Stock tab > "more" menu (three dots, top right) > Export to Excel. The app generates an .xlsx file (stock, shopping list, consumption) and opens the standard share sheet.
+
+2. NEW - CSV / EXCEL IMPORT: Stock tab > "more" menu > Import (CSV / Excel). The file is chosen with the system document picker. No photo library or storage permission is requested. A summary is shown before anything is added.
+
+3. NEW - SEARCH: search field at the top of the Stock tab (brand, material, color, location, notes).
+
+4. NEW - LOCATION AND NOTES: tap a spool in the Stock tab to edit it; new Location and Notes fields at the bottom of the form.
+
+5. NEW - PRINT COST CALCULATOR: calculator icon on each spool card. Enter the grams used to see the material cost; "Deduct from stock" lowers the remaining weight.
+
+6. NEW - CONSUMPTION STATISTICS: Statistics tab > Consumption (last 30 days, this month, by material, last 6 months). It fills in when a spool's remaining weight decreases.
+
+7. NEW - SHOPPING LIST SHARING: share icon in the shopping list header (Statistics tab), shared as plain text.
+
+8. FIXES: editing a spool no longer loses data read from its NFC tag (batch number, detailed type). Clearer message when a scanned NFC tag is blank. More reliable spool sync and error reporting.
+
+STATE OF THE APP:
+- NO new permissions or entitlements in this version.
+- NFC access is read-only when scanning; nothing is written to the tag when scanning.
+- In-app subscriptions are unchanged from version 1.3.2.
+
+TESTING NOTES:
+- All new features can be tested without an NFC tag: Stock tab > Add spool > Add manually, then use search, edit (Location / Notes), the calculator icon, the "more" menu (export / import) and the Statistics tab.
+- NFC scanning requires a physical NFC tag from a supported 3D printer filament spool.
+- In-app subscriptions: spool_master_monthly and spool_master_yearly (auto-renewable), unchanged from 1.3.2. Tap Profile > Premium subscription. If not signed in, the app asks to sign in (Sign in with Apple) before purchase.

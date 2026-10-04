@@ -1,0 +1,1 @@
+New: Excel export of your stock, shopping list and consumption, plus import from CSV or Excel files. Search by brand, colour, location or note. Location and notes for each spool. Print cost calculator that can deduct from stock. Consumption tracking in statistics. Shopping list sharing. Layout optimised for large screens and foldables.

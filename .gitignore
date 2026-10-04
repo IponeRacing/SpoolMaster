@@ -54,7 +54,6 @@ Rinkhals-*/
 
 # Fastlane
 ios/vendor/
-ios/fastlane/metadata/
 ios/.bundle/
 ios/fastlane/report.xml
 

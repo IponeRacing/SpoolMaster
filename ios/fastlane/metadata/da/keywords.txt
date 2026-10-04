@@ -1,0 +1,1 @@
+NFC,filament,3D,print,spole,Anycubic,Bambu Lab,Prusa,lager,beholdning,Creality

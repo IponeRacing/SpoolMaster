@@ -1,0 +1,1 @@
+Novo: izvoz zalog, nakupovalnega seznama in porabe v Excel ter uvoz iz datotek CSV ali Excel. Iskanje po znamki, barvi, lokaciji ali opombi. Lokacija in opombe za vsako kolut. Kalkulator stroškov tiskanja, ki lahko odšteje iz zalog. Spremljanje porabe v statistiki. Deljenje nakupovalnega seznama. Postavitev, prilagojena velikim zaslonom in zložljivim telefonom.

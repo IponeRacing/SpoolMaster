@@ -1,0 +1,31 @@
+Spool Master - Ứng dụng hoàn chỉnh để quản lý kho filament in 3D của bạn
+
+TÍNH NĂNG CHÍNH
+
+Đọc và ghi NFC • Đọc chip NFC từ cuộn Anycubic, Bambu Lab, Prusa và Creality • Ghi thẻ NFC tùy chỉnh của riêng bạn • Sao chép thẻ NFC để tái sử dụng • Tương thích với mọi định dạng thẻ NFC
+
+Quản lý tồn kho đầy đủ • Thêm cuộn bằng quét NFC hoặc thủ công • Theo dõi trọng lượng còn lại của mỗi cuộn • Quản lý giá và tính tổng giá trị • Sắp xếp theo thương hiệu, vật liệu và màu sắc • Cảnh báo tự động khi tồn kho thấp
+
+Thống kê chi tiết • Tổng quan kho hàng của bạn • Tổng giá trị tồn kho • Số lượng vật liệu, màu sắc và thương hiệu • Danh sách mua sắm tự động
+
+Danh sách mua sắm thông minh • Tự động thêm cuộn tồn kho thấp • Đánh dấu filament đã đặt hàng • Thêm thủ công hoặc bằng quét NFC
+
+Bộ chọn màu nâng cao • Bảng màu đầy đủ với thanh trượt RGB • Hỗ trợ độ mờ • Xem trước theo thời gian thực
+
+Cài đặt in • Nhiệt độ đầu đùn (tối thiểu/tối đa) • Nhiệt độ bàn in (tối thiểu/tối đa) • Đường kính filament • Chiều dài cuộn
+
+TƯƠNG THÍCH • Anycubic: Đọc và ghi đầy đủ • Bambu Lab: Đọc và ghi thẻ RFID • Prusa: Đọc và ghi thẻ OpenPrintTag (NFC-V) • Creality CFS: Đọc và ghi thẻ • Thẻ NFC chung: Ghi tùy chỉnh • Hỗ trợ 22 thương hiệu filament • Hỗ trợ 25 loại vật liệu (PLA, PETG, ABS, TPU, v.v.)
+
+ĐA NGÔN NGỮ Ứng dụng có sẵn bằng 40 ngôn ngữ
+
+ĐỒNG BỘ HÓA • Đồng bộ nhiều thiết bị • Chế độ ngoại tuyến khả dụng
+
+ĐƠN VỊ VÀ TIỀN TỆ • Hỗ trợ nhiều loại tiền tệ • Đơn vị hệ mét hoặc hệ Anh • Chuyển đổi tự động
+
+GIAO DIỆN HIỆN ĐẠI • Chế độ tối và sáng • Thiết kế tinh tế • Điều hướng trực quan • Thống kê trực quan
+
+BẢO MẬT VÀ QUYỀN RIÊNG TƯ • Dữ liệu của bạn được giữ riêng tư • Lưu trữ cục bộ an toàn
+
+PHIÊN BẢN PREMIUM • Đồng bộ đám mây • Không quảng cáo • Hỗ trợ ưu tiên
+
+Dù bạn là người sáng tạo nghiệp dư hay thợ in 3D chuyên nghiệp, Spool Master giúp bạn tối ưu hóa quản lý filament, giảm lãng phí và kiểm soát chi tiêu. Tải xuống ngay và kiểm soát kho filament của bạn!

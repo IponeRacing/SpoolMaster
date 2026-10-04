@@ -1,0 +1,31 @@
+Spool Master - Täydellinen sovellus 3D-tulostusfilamenttivarastosi hallintaan
+
+PÄÄOMINAISUUDET
+
+NFC:n luku ja kirjoitus • Lue NFC-siruja Anycubic, Bambu Lab, Prusa ja Creality -keloista • Kirjoita omia mukautettuja NFC-tageja • Kloonaa NFC-tageja uudelleenkäyttöä varten • Yhteensopiva kaikkien NFC-tagimuotojen kanssa
+
+Täydellinen varastonhallinta • Lisää keloja NFC-skannauksella tai manuaalisesti • Seuraa jokaisen kelan jäljellä olevaa painoa • Hallitse hintoja ja laske kokonaisarvo • Järjestä merkin, materiaalin ja värin mukaan • Automaattiset vähäisen varaston hälytykset
+
+Yksityiskohtaiset tilastot • Yleiskatsaus varastoosi • Varastosi kokonaisarvo • Materiaalien, värien ja merkkien lukumäärä • Automaattinen ostoslista
+
+Älykäs ostoslista • Vähäisen varaston kelojen automaattinen lisäys • Merkitse tilatut filamentit • Lisää manuaalisesti tai NFC-skannauksella
+
+Edistynyt värinvalitsin • Täysi paletti RGB-liukusäätimillä • Läpinäkyvyyden tuki • Reaaliaikainen esikatselu
+
+Tulostusasetukset • Suuttimen lämpötilat (min/max) • Alustan lämpötilat (min/max) • Filamentin halkaisija • Kelan pituus
+
+YHTEENSOPIVUUS • Anycubic: Täysi luku ja kirjoitus • Bambu Lab: RFID-tagin luku ja kirjoitus • Prusa: OpenPrintTag-luku ja -kirjoitus (NFC-V) • Creality CFS: Tunnisteiden luku ja kirjoitus • Yleiset NFC-tagit: Mukautettu kirjoitus • Tuki 22 filamenttimerkille • Tuki 25 materiaalityypille (PLA, PETG, ABS, TPU jne.)
+
+MONIKIELINEN Sovellus saatavilla 40 kielellä
+
+SYNKRONOINTI • Monilaitesynkronointi • Offline-tila saatavilla
+
+YKSIKÖT JA VALUUTAT • Usean valuutan tuki • Metriset tai imperiaaliset yksiköt • Automaattinen muunnos
+
+MODERNI KÄYTTÖLIITTYMÄ • Tumma ja vaalea tila • Tyylikäs muotoilu • Intuitiivinen navigointi • Visuaaliset tilastot
+
+TURVALLISUUS JA YKSITYISYYS • Tietosi pysyvät yksityisinä • Turvallinen paikallinen tallennus
+
+PREMIUM-VERSIO SAATAVILLA • Pilvisynkronointi • Mainokseton • Prioriteettituki
+
+Oletpa harrastaja tai ammattimainen 3D-tulostaja, Spool Master auttaa sinua optimoimaan filamenttien hallinnan, vähentämään hukkaa ja hallitsemaan kulujasi. Lataa nyt ja ota filamenttivarastosi hallintaan!

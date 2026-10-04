@@ -1,0 +1,1 @@
+Nytt: Excel-export av lagret, inköpslistan och förbrukningen, samt import från CSV- eller Excel-filer. Sök på märke, färg, plats eller anteckning. Plats och anteckningar för varje spole. Kostnadskalkylator för utskrifter som kan dra av från lagret. Förbrukningsspårning i statistiken. Delning av inköpslistan. Layout optimerad för stora skärmar och vikbara telefoner.

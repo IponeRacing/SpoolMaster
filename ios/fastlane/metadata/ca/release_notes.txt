@@ -1,0 +1,1 @@
+Novetat: exportació a Excel de l'inventari, la llista de la compra i el consum, i importació des de fitxers CSV o Excel. Cerca per marca, color, ubicació o nota. Ubicació i notes a cada bobina. Calculadora del cost d'impressió que pot descomptar de l'inventari. Seguiment del consum a les estadístiques. Compartició de la llista de la compra.

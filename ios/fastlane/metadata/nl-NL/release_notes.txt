@@ -1,0 +1,1 @@
+Nieuw: Excel-export van je voorraad, boodschappenlijst en verbruik, plus import uit CSV- of Excel-bestanden. Zoeken op merk, kleur, locatie of notitie. Locatie en notities per spoel. Kostencalculator voor prints die van de voorraad kan aftrekken. Verbruik bijhouden in statistieken. Boodschappenlijst delen.

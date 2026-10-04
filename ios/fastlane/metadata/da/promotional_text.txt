@@ -1,0 +1,1 @@
+Scan NFC-filamentspoler på sekunder — TigerTag, Anycubic, Prusa, Elegoo og åbne NFC-tags. Følg mærke, materiale, farve og lager.

@@ -1,0 +1,1 @@
+Skannaa NFC-filamenttirullia sekunneissa — TigerTag, Anycubic, Prusa, Elegoo ja avoimet NFC-tagit. Merkki, materiaali, väri, varasto.

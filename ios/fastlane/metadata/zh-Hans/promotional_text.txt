@@ -1,0 +1,1 @@
+几秒扫描 NFC 耗材线卷 — 支持 TigerTag、Anycubic、Prusa、Elegoo 及开放 NFC 标签。追踪品牌、材料、颜色和库存。

@@ -1,0 +1,1 @@
+Mới: xuất Excel kho, danh sách mua sắm và mức tiêu thụ, cùng nhập từ tệp CSV hoặc Excel. Tìm kiếm theo hãng, màu, vị trí hoặc ghi chú. Vị trí và ghi chú cho từng cuộn. Công cụ tính chi phí in có thể trừ vào kho. Theo dõi tiêu thụ trong thống kê. Chia sẻ danh sách mua sắm. Bố cục tối ưu cho màn hình lớn và điện thoại gập.

@@ -1,0 +1,76 @@
+Spool Master - Kompletná aplikácia na správu zásob filamentu pre 3D tlač
+
+HLAVNÉ FUNKCIE
+
+Čítanie a Zápis NFC
+• Čítanie NFC čipov z cievok Anycubic, Bambu Lab, Prusa a Creality
+• Zápis vlastných prispôsobených NFC štítkov
+• Klonovanie NFC štítkov na opakované použitie
+• Kompatibilné so všetkými formátmi NFC štítkov
+
+Kompletná Správa Inventára
+• Pridávajte cievky cez NFC skenovanie alebo manuálne
+• Sledujte zostávajúcu hmotnosť každej cievky
+• Spravujte ceny a vypočítajte celkovú hodnotu
+• Organizujte podľa značky, materiálu a farby
+• Automatické upozornenia na nízky stav zásob
+
+Podrobné Štatistiky
+• Prehľad vášho inventára
+• Celková hodnota vašich zásob
+• Počet materiálov, farieb a značiek
+• Automatický nákupný zoznam
+
+Inteligentný Nákupný Zoznam
+• Automatické pridanie cievok s nízkym stavom
+• Označte objednané filamenty
+• Pridávajte manuálne alebo cez NFC skenovanie
+
+Pokročilý Výber Farieb
+• Kompletná paleta s RGB posuvníkmi
+• Podpora priehľadnosti
+• Náhľad v reálnom čase
+
+Nastavenia Tlače
+• Teploty extrudéra (min/max)
+• Teploty podložky (min/max)
+• Priemer filamentu
+• Dĺžka cievky
+
+KOMPATIBILITA
+• Anycubic: Plné čítanie a zápis
+• Bambu Lab: Čítanie a zápis RFID štítkov
+• Prusa: Čítanie a zápis OpenPrintTag (NFC-V)
+• Creality CFS: Čítanie a zápis tagov
+• Generické NFC štítky: Vlastný zápis
+• Podpora 22 značiek filamentu
+• Podpora 25 typov materiálov (PLA, PETG, ABS, TPU, atď.)
+
+VIACJAZYČNOSŤ
+Aplikácia dostupná v 40 jazykoch
+
+SYNCHRONIZÁCIA
+• Synchronizácia medzi viacerými zariadeniami
+• Offline režim dostupný
+
+JEDNOTKY A MENY
+• Podpora viacerých mien
+• Metrické alebo imperiálne jednotky
+• Automatický prepočet
+
+MODERNÉ ROZHRANIE
+• Tmavý a svetlý režim
+• Elegantný dizajn
+• Intuitívna navigácia
+• Vizuálne štatistiky
+
+BEZPEČNOSŤ A SÚKROMIE
+• Vaše údaje zostávajú súkromné
+• Bezpečné lokálne úložisko
+
+PRÉMIOVÁ VERZIA DOSTUPNÁ
+• Cloudová synchronizácia
+• Bez reklám
+• Prioritná podpora
+
+Či už ste hobby tvorca alebo profesionálny 3D tlačiar, Spool Master vám pomôže optimalizovať správu filamentu, znížiť odpad a kontrolovať vaše výdavky. Stiahnite si teraz a prevezmite kontrolu nad svojím inventárom filamentu!

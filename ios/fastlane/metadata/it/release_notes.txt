@@ -1,0 +1,1 @@
+Novità: esportazione in Excel di inventario, lista della spesa e consumi, più importazione da file CSV o Excel. Ricerca per marca, colore, posizione o nota. Posizione e note per ogni bobina. Calcolatore del costo di stampa che può detrarre dall'inventario. Monitoraggio dei consumi nelle statistiche. Condivisione della lista della spesa.

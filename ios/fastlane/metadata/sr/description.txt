@@ -1,0 +1,33 @@
+Spool Master - Kompletna aplikacija za upravljanje zalihama filamenta za 3D štampu
+
+GLAVNE FUNKCIJE
+
+NFC čitanje i pisanje • Čitanje NFC čipova kalemova Anycubic i Prusa (OpenPrintTag) • Pisanje sopstvenih NFC oznaka • Automatsko prepoznavanje oznaka
+
+Kompletno upravljanje inventarom • Dodavanje kalemova NFC skeniranjem ili ručno • Praćenje preostale težine svakog kalema • Upravljanje cenama i izračunavanje ukupne vrednosti • Organizacija po marki, materijalu i boji • Automatska upozorenja o niskim zalihama
+
+Detaljna statistika • Pregled vašeg inventara • Ukupna vrednost zaliha • Broj materijala, boja i marki • Automatska lista za kupovinu
+
+Pametna lista za kupovinu • Automatsko dodavanje kalemova sa niskim zalihama • Označavanje naručenih filamenata • Dodavanje ručno ili NFC skeniranjem
+
+Napredni birač boja • Kompletna paleta sa RGB klizačima • Podrška za providnost • Pregled u realnom vremenu
+
+Podešavanja štampe • Temperature ekstrudera (min./maks.) • Temperature podloge (min./maks.) • Prečnik filamenta • Dužina kalema
+
+KOMPATIBILNOST • Anycubic: potpuno čitanje i pisanje • Prusa: čitanje i pisanje OpenPrintTag (NFC-V) • Opšte NFC oznake: pisanje po meri • Sve ostale marke, uključujući Bambu Lab i Creality: ručni unos uz potpuno upravljanje inventarom • Podrška za 22 marke filamenta • Podrška za 25 vrsta materijala (PLA, PETG, ABS, TPU itd.)
+
+VIŠEJEZIČNOST Aplikacija je dostupna na 40 jezika
+
+SINHRONIZACIJA • Sinhronizacija između više uređaja • Rad bez internet veze
+
+JEDINICE I VALUTE • Podrška za više valuta • Metričke ili imperijalne jedinice • Automatska konverzija
+
+SAVREMEN INTERFEJS • Tamni i svetli režim • Elegantan dizajn • Intuitivna navigacija • Vizuelna statistika
+
+BEZBEDNOST I PRIVATNOST • Vaši podaci ostaju privatni • Bezbedno lokalno čuvanje
+
+DOSTUPNA PREMIUM VERZIJA • Sinhronizacija u oblaku • Bez reklama • Prioritetna podrška
+
+Bilo da ste hobista ili profesionalni 3D štampač, Spool Master vam pomaže da optimizujete upravljanje filamentom, smanjite otpad i kontrolišete troškove. Preuzmite odmah i preuzmite kontrolu nad svojim inventarom filamenta!
+
+https://www.apple.com/legal/internet-services/itunes/dev/stdeula/

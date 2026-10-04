@@ -1,0 +1,76 @@
+Spool Master - Den komplette appen for å administrere lageret av 3D-utskriftsfilament
+
+HOVEDFUNKSJONER
+
+NFC Lesing og Skriving
+• Les NFC-brikker fra Anycubic og Prusa (OpenPrintTag) spoler
+• Skriv dine egne tilpassede NFC-tagger
+• Automatisk tag-gjenkjenning
+
+Komplett Lagerstyring
+• Legg til spoler via NFC-skanning eller manuelt
+• Spor gjenværende vekt for hver spole
+• Administrer priser og beregn totalverdi
+• Organiser etter merke, materiale og farge
+• Automatiske varsler ved lavt lager
+
+Detaljert Statistikk
+• Oversikt over lageret ditt
+• Total verdi av lageret ditt
+• Antall materialer, farger og merker
+• Automatisk handleliste
+
+Smart Handleliste
+• Automatisk tillegg av spoler med lavt lager
+• Merk bestilte filamenter
+• Legg til manuelt eller via NFC-skanning
+
+Avansert Fargevelger
+• Fullt palett med RGB-glidebrytere
+• Støtte for gjennomsiktighet
+• Sanntidsforhåndsvisning
+
+Utskriftsinnstillinger
+• Ekstrudertemperaturer (min/maks)
+• Sengtemperaturer (min/maks)
+• Filamentdiameter
+• Spolelengde
+
+KOMPATIBILITET
+• Anycubic: Full lesing og skriving
+• Prusa: OpenPrintTag lesing og skriving (NFC-V)
+• Generiske NFC-tagger: Tilpasset skriving
+• Alle andre merker, inkludert Bambu Lab og Creality: manuell registrering med full lagerstyring
+• Støtte for 22 filamentmerker
+• Støtte for 25 materialtyper (PLA, PETG, ABS, TPU, osv.)
+
+FLERSPRÅKLIG
+App tilgjengelig på 40 språk
+
+SYNKRONISERING
+• Synkronisering mellom flere enheter
+• Frakoblet modus tilgjengelig
+
+ENHETER OG VALUTA
+• Støtte for flere valutaer
+• Metriske eller imperiale enheter
+• Automatisk konvertering
+
+MODERNE GRENSESNITT
+• Mørk og lys modus
+• Elegant design
+• Intuitiv navigasjon
+• Visuell statistikk
+
+SIKKERHET OG PERSONVERN
+• Dataene dine forblir private
+• Sikker lokal lagring
+
+PREMIUMVERSJON TILGJENGELIG
+• Skysynkronisering
+• Reklamefri
+• Prioritert støtte
+
+Enten du er en hobbymaker eller en profesjonell 3D-printer, hjelper Spool Master deg med å optimalisere filamentadministrasjonen, redusere avfall og kontrollere utgiftene dine. Last ned nå og ta kontroll over filamentlageret ditt!
+
+https://www.apple.com/legal/internet-services/itunes/dev/stdeula/

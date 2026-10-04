@@ -1,0 +1,1 @@
+Novo: exportação para Excel do estoque, da lista de compras e do consumo, além de importação de arquivos CSV ou Excel. Busca por marca, cor, local ou nota. Local e notas para cada carretel. Calculadora de custo de impressão que pode abater do estoque. Acompanhamento do consumo nas estatísticas. Compartilhamento da lista de compras. Layout otimizado para telas grandes e dobráveis.

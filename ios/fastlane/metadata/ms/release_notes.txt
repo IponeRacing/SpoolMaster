@@ -1,0 +1,1 @@
+Baharu: eksport Excel untuk inventori, senarai membeli-belah dan penggunaan, serta import daripada fail CSV atau Excel. Carian mengikut jenama, warna, lokasi atau nota. Lokasi dan nota untuk setiap gegelung. Kalkulator kos cetakan yang boleh menolak daripada inventori. Penjejakan penggunaan dalam statistik. Perkongsian senarai membeli-belah.

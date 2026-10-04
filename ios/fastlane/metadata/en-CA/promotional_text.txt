@@ -1,0 +1,1 @@
+Scan NFC filament spools in seconds — TigerTag, Anycubic, Prusa, Elegoo and open NFC tags. Track brand, material, colour and stock.

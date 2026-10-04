@@ -1,0 +1,1 @@
+Nyt: Excel-eksport af lager, indkøbsliste og forbrug samt import fra CSV- eller Excel-filer. Søg efter mærke, farve, placering eller note. Placering og noter til hver spole. Printomkostningsberegner, der kan trække fra lageret. Forbrugssporing i statistikken. Deling af indkøbslisten. Layout optimeret til store skærme og foldbare telefoner.

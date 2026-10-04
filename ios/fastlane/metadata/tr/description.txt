@@ -1,0 +1,33 @@
+Spool Master - 3D baskı filament stokunuzu yönetmek için eksiksiz uygulama
+
+ANA ÖZELLİKLER
+
+NFC Okuma ve Yazma • Anycubic ve Prusa (OpenPrintTag) makaralarındaki NFC çiplerini okuyun • Kendi özel NFC etiketlerinizi yazın • Otomatik etiket algılama
+
+Eksiksiz Envanter Yönetimi • NFC tarama veya manuel olarak makara ekleyin • Her makaranın kalan ağırlığını takip edin • Fiyatları yönetin ve toplam değeri hesaplayın • Marka, malzeme ve renge göre düzenleyin • Düşük stok için otomatik uyarılar
+
+Ayrıntılı İstatistikler • Envanterinize genel bakış • Stokunuzun toplam değeri • Malzeme, renk ve marka sayısı • Otomatik alışveriş listesi
+
+Akıllı Alışveriş Listesi • Düşük stoklu makaraların otomatik eklenmesi • Sipariş edilen filamentleri işaretleyin • Manuel veya NFC tarama ile ekleyin
+
+Gelişmiş Renk Seçici • RGB kaydırıcılarla tam palet • Opaklık desteği • Gerçek zamanlı önizleme
+
+Baskı Ayarları • Ekstruder sıcaklıkları (min/maks) • Tabla sıcaklıkları (min/maks) • Filament çapı • Makara uzunluğu
+
+UYUMLULUK • Anycubic: Tam okuma ve yazma • Prusa: OpenPrintTag okuma ve yazma (NFC-V) • Genel NFC etiketleri: Özel yazma • Bambu Lab ve Creality dahil diğer tüm markalar: tam envanter yönetimiyle manuel giriş • 22 filament markası desteği • 25 malzeme türü desteği (PLA, PETG, ABS, TPU vb.)
+
+ÇOK DİLLİ Uygulama 40 dilde mevcut
+
+SENKRONİZASYON • Çoklu cihaz senkronizasyonu • Çevrimdışı mod mevcut
+
+BİRİMLER VE PARA BİRİMLERİ • Çoklu para birimi desteği • Metrik veya İngiliz birimleri • Otomatik dönüşüm
+
+MODERN ARAYÜZ • Karanlık ve aydınlık mod • Şık tasarım • Sezgisel gezinme • Görsel istatistikler
+
+GÜVENLİK VE GİZLİLİK • Verileriniz gizli kalır • Güvenli yerel depolama
+
+PREMİUM SÜRÜM MEVCUT • Bulut senkronizasyonu • Reklamsız • Öncelikli destek
+
+İster hobi amaçlı bir maker ister profesyonel bir 3D baskıcı olun, Spool Master filament yönetiminizi optimize etmenize, israfı azaltmanıza ve harcamalarınızı kontrol etmenize yardımcı olur. Şimdi indirin ve filament envanterinizin kontrolünü elinize alın!
+
+https://www.apple.com/legal/internet-services/itunes/dev/stdeula/

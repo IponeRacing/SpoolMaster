@@ -1,0 +1,1 @@
+Nouveau : export Excel du stock, de la liste de courses et de la consommation, et import depuis un fichier CSV ou Excel. Recherche par marque, couleur, emplacement ou note. Emplacement et notes pour chaque bobine. Calcul du coût d'une impression, déductible du stock. Suivi de la consommation dans les statistiques. Partage de la liste de courses.

@@ -1,0 +1,76 @@
+Spool Master - Aplicația completă pentru gestionarea stocului de filament pentru imprimare 3D
+
+FUNCȚII PRINCIPALE
+
+Citire și Scriere NFC
+• Citiți cipuri NFC de pe bobinele Anycubic și Prusa (OpenPrintTag)
+• Scrieți propriile etichete NFC personalizate
+• Detectare automată a etichetelor
+
+Gestionare Completă a Inventarului
+• Adăugați bobine prin scanare NFC sau manual
+• Urmăriți greutatea rămasă a fiecărei bobine
+• Gestionați prețurile și calculați valoarea totală
+• Organizați după marcă, material și culoare
+• Alerte automate de stoc scăzut
+
+Statistici Detaliate
+• Prezentare generală a inventarului dvs.
+• Valoarea totală a stocului dvs.
+• Numărul de materiale, culori și mărci
+• Listă de cumpărături automată
+
+Listă de Cumpărături Inteligentă
+• Adăugare automată a bobinelor cu stoc scăzut
+• Marcați filamentele comandate
+• Adăugați manual sau prin scanare NFC
+
+Selector de Culori Avansat
+• Paletă completă cu glisoare RGB
+• Suport pentru opacitate
+• Previzualizare în timp real
+
+Setări de Imprimare
+• Temperaturi extruder (min/max)
+• Temperaturi pat (min/max)
+• Diametrul filamentului
+• Lungimea bobinei
+
+COMPATIBILITATE
+• Anycubic: Citire și scriere completă
+• Prusa: Citire și scriere OpenPrintTag (NFC-V)
+• Etichete NFC generice: Scriere personalizată
+• Toate celelalte mărci, inclusiv Bambu Lab și Creality: introducere manuală cu gestionare completă a inventarului
+• Suport pentru 22 de mărci de filament
+• Suport pentru 25 de tipuri de materiale (PLA, PETG, ABS, TPU, etc.)
+
+MULTILINGV
+Aplicație disponibilă în 40 de limbi
+
+SINCRONIZARE
+• Sincronizare pe mai multe dispozitive
+• Mod offline disponibil
+
+UNITĂȚI ȘI MONEDE
+• Suport pentru mai multe monede
+• Unități metrice sau imperiale
+• Conversie automată
+
+INTERFAȚĂ MODERNĂ
+• Mod întunecat și luminos
+• Design elegant
+• Navigare intuitivă
+• Statistici vizuale
+
+SECURITATE ȘI CONFIDENȚIALITATE
+• Datele dvs. rămân private
+• Stocare locală securizată
+
+VERSIUNE PREMIUM DISPONIBILĂ
+• Sincronizare în cloud
+• Fără reclame
+• Suport prioritar
+
+Fie că sunteți un creator hobbyist sau un profesionist în imprimarea 3D, Spool Master vă ajută să optimizați gestionarea filamentului, să reduceți risipa și să vă controlați cheltuielile. Descărcați acum și preluați controlul inventarului dvs. de filament!
+
+https://www.apple.com/legal/internet-services/itunes/dev/stdeula/

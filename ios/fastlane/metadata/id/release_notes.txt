@@ -1,0 +1,1 @@
+Baru: ekspor Excel untuk stok, daftar belanja, dan konsumsi, plus impor dari file CSV atau Excel. Cari berdasarkan merek, warna, lokasi, atau catatan. Lokasi dan catatan untuk setiap gulungan. Kalkulator biaya cetak yang dapat mengurangi stok. Pelacakan konsumsi di statistik. Berbagi daftar belanja.

@@ -1,0 +1,1 @@
+NFC,filament,3D,impression,bobine,Anycubic,Bambu Lab,Prusa,stock,inventaire,Creality

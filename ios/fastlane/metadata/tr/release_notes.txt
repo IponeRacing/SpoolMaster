@@ -1,0 +1,1 @@
+Yeni: stoğun, alışveriş listesinin ve tüketimin Excel'e aktarılması; CSV veya Excel dosyalarından içe aktarma. Marka, renk, konum veya nota göre arama. Her makara için konum ve notlar. Stoktan düşebilen baskı maliyeti hesaplayıcısı. İstatistiklerde tüketim takibi. Alışveriş listesi paylaşımı.

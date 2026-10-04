@@ -1,0 +1,31 @@
+Spool Master - 3D baskı filament stokunuzu yönetmek için eksiksiz uygulama
+
+ANA ÖZELLİKLER
+
+NFC Okuma ve Yazma • Anycubic, Bambu Lab, Prusa ve Creality makaralarındaki NFC çiplerini okuyun • Kendi özel NFC etiketlerinizi yazın • NFC etiketlerini yeniden kullanım için klonlayın • Tüm NFC etiket formatlarıyla uyumlu
+
+Eksiksiz Envanter Yönetimi • NFC tarama veya manuel olarak makara ekleyin • Her makaranın kalan ağırlığını takip edin • Fiyatları yönetin ve toplam değeri hesaplayın • Marka, malzeme ve renge göre düzenleyin • Düşük stok için otomatik uyarılar
+
+Ayrıntılı İstatistikler • Envanterinize genel bakış • Stokunuzun toplam değeri • Malzeme, renk ve marka sayısı • Otomatik alışveriş listesi
+
+Akıllı Alışveriş Listesi • Düşük stoklu makaraların otomatik eklenmesi • Sipariş edilen filamentleri işaretleyin • Manuel veya NFC tarama ile ekleyin
+
+Gelişmiş Renk Seçici • RGB kaydırıcılarla tam palet • Opaklık desteği • Gerçek zamanlı önizleme
+
+Baskı Ayarları • Ekstruder sıcaklıkları (min/maks) • Tabla sıcaklıkları (min/maks) • Filament çapı • Makara uzunluğu
+
+UYUMLULUK • Anycubic: Tam okuma ve yazma • Bambu Lab: RFID etiket okuma ve yazma • Prusa: OpenPrintTag okuma ve yazma (NFC-V) • Creality CFS: Etiket okuma ve yazma • Genel NFC etiketleri: Özel yazma • 22 filament markası desteği • 25 malzeme türü desteği (PLA, PETG, ABS, TPU vb.)
+
+ÇOK DİLLİ Uygulama 40 dilde mevcut
+
+SENKRONİZASYON • Çoklu cihaz senkronizasyonu • Çevrimdışı mod mevcut
+
+BİRİMLER VE PARA BİRİMLERİ • Çoklu para birimi desteği • Metrik veya İngiliz birimleri • Otomatik dönüşüm
+
+MODERN ARAYÜZ • Karanlık ve aydınlık mod • Şık tasarım • Sezgisel gezinme • Görsel istatistikler
+
+GÜVENLİK VE GİZLİLİK • Verileriniz gizli kalır • Güvenli yerel depolama
+
+PREMİUM SÜRÜM MEVCUT • Bulut senkronizasyonu • Reklamsız • Öncelikli destek
+
+İster hobi amaçlı bir maker ister profesyonel bir 3D baskıcı olun, Spool Master filament yönetiminizi optimize etmenize, israfı azaltmanıza ve harcamalarınızı kontrol etmenize yardımcı olur. Şimdi indirin ve filament envanterinizin kontrolünü elinize alın!
