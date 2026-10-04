@@ -90,14 +90,17 @@ void main() async {
     debugPrint("⚠️ Impossible de lire la version de l'app: $e");
   }
 
-  // DI + AdMob + Analytics en parallele (independants)
+  // DI + Analytics en parallèle (indépendants)
   await Future.wait([
     configureDependencies(),
-    AdMobService().initialize(),
     AnalyticsService.initialize(),
   ]);
 
-  AdMobService().preloadInterstitial();
+  // AdMob en arrière-plan : son initialisation a pris 11 s sur un A55
+  // (« Unable to obtain a JavascriptEngine ») et bloquait le premier
+  // affichage, écran figé au démarrage. Les bannières se chargent sans
+  // l'attendre ; l'interstitiel est préchargé une fois AdMob prêt.
+  unawaited(_initAds());
 
   // Session : SharedPreferences (isSignedIn) et jetons du stockage sécurisé
   // peuvent diverger (sauvegarde Android, trousseau iOS conservé après
@@ -113,6 +116,18 @@ void main() async {
   // Abonnements APRÈS runApp, sans attendre : l'initialisation interroge le
   // store et le serveur, et bloquait l'affichage sans réseau.
   unawaited(_initSubscriptions());
+}
+
+Future<void> _initAds() async {
+  try {
+    await AdMobService().initialize();
+    AdMobService().preloadInterstitial();
+  } catch (e, stack) {
+    debugPrint('⚠️ Initialisation AdMob impossible: $e');
+    try {
+      unawaited(FirebaseCrashlytics.instance.recordError(e, stack, reason: 'admob:init'));
+    } catch (_) {}
+  }
 }
 
 Future<void> _initSubscriptions() async {
