@@ -1,2 +1,2 @@
 "NSUserTrackingUsageDescription" = "このアプリは広告識別子を使用して、パーソナライズされた広告を提供し、エクスペリエンスを向上させます。";
-"NFCReaderUsageDescription" = "このアプリはNFCを使用してフィラメントスプールタグの読み書きを行います（Anycubic、Bambu Lab、Prusa）。";
+"NFCReaderUsageDescription" = "このアプリはNFCを使用してフィラメントスプールタグの読み書きを行います（Anycubic、Prusa）。";

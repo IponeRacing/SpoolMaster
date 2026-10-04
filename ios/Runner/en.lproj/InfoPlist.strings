@@ -1,2 +1,2 @@
 "NSUserTrackingUsageDescription" = "This app uses your advertising identifier to provide personalized ads and improve your experience.";
-"NFCReaderUsageDescription" = "This app uses NFC to read and write filament spool tags (Anycubic, Bambu Lab, Prusa).";
+"NFCReaderUsageDescription" = "This app uses NFC to read and write filament spool tags (Anycubic, Prusa).";

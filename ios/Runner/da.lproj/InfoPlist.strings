@@ -1,2 +1,2 @@
 "NSUserTrackingUsageDescription" = "Denne app bruger dit annonce-ID til at vise personlige annoncer og forbedre din oplevelse.";
-"NFCReaderUsageDescription" = "Denne app bruger NFC til at læse og skrive filamentspole-tags (Anycubic, Bambu Lab, Prusa).";
+"NFCReaderUsageDescription" = "Denne app bruger NFC til at læse og skrive filamentspole-tags (Anycubic, Prusa).";

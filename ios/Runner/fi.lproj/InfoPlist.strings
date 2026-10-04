@@ -1,2 +1,2 @@
 "NSUserTrackingUsageDescription" = "Tämä sovellus käyttää mainostunnistettasi tarjotakseen sinulle personoituja mainoksia ja parantaakseen kokemustasi.";
-"NFCReaderUsageDescription" = "Tämä sovellus käyttää NFC:tä filamenttikelan tagien lukemiseen ja kirjoittamiseen (Anycubic, Bambu Lab, Prusa).";
+"NFCReaderUsageDescription" = "Tämä sovellus käyttää NFC:tä filamenttikelan tagien lukemiseen ja kirjoittamiseen (Anycubic, Prusa).";

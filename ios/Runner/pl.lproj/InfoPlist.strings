@@ -1,2 +1,2 @@
 "NSUserTrackingUsageDescription" = "Ta aplikacja wykorzystuje Twój identyfikator reklamowy do wyświetlania spersonalizowanych reklam i poprawy Twojego doświadczenia.";
-"NFCReaderUsageDescription" = "Ta aplikacja używa NFC do odczytu i zapisu tagów szpul filamentu (Anycubic, Bambu Lab, Prusa).";
+"NFCReaderUsageDescription" = "Ta aplikacja używa NFC do odczytu i zapisu tagów szpul filamentu (Anycubic, Prusa).";

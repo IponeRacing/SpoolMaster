@@ -33,7 +33,7 @@
 		<string>arm64</string>
 	</array>
 	<key>NFCReaderUsageDescription</key>
-	<string>This app uses NFC to read and write filament spool tags (Anycubic, Bambu Lab, Prusa).</string>
+	<string>This app uses NFC to read and write filament spool tags (Anycubic, Prusa).</string>
 	<key>NSUserTrackingUsageDescription</key>
 	<string>Cette app utilise votre identifiant publicitaire pour vous offrir des publicités personnalisées et améliorer votre expérience.</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
