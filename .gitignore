@@ -56,6 +56,10 @@ Rinkhals-*/
 ios/vendor/
 ios/fastlane/metadata/
 ios/.bundle/
+ios/fastlane/report.xml
 
 # FVM Version Cache
 .fvm/
+
+# Graphify (graphe de code local, regénéré par `graphify update .`)
+graphify-out/
