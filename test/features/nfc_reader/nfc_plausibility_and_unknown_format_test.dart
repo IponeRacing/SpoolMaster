@@ -94,6 +94,31 @@ List<int> _tigerTagInitDump() {
   return d;
 }
 
+/// Tag Anycubic avec SKU (page 8) et champ matériau dédié (octets 60-76).
+List<int> _skuDumpWithField(String sku, String field) {
+  final d = List<int>.filled(160, 0)
+    ..setRange(12, 16, [0xE1, 0x10, 0x12, 0x00])
+    ..setRange(16, 20, [0x7B, 0x00, 0x65, 0x00])
+    ..setRange(32, 32 + sku.length, sku.codeUnits)
+    ..setRange(60, 60 + field.length, field.codeUnits)
+    ..setRange(96, 100, [190, 0, 230, 0])
+    ..setRange(120, 124, [0xAF, 0x00, 0x4A, 0x01]);
+  return d;
+}
+
+/// Ancien tag ACE (page 4 = 7B 00 64 00, SKU « HPL17-102 » sans « AH »,
+/// page 0x0A vide) : aucune marque écrite.
+List<int> _oldAceDumpWithoutBrand() {
+  final d = List<int>.filled(160, 0)
+    ..setRange(12, 16, [0xE1, 0x10, 0x12, 0x00])
+    ..setRange(16, 20, [0x7B, 0x00, 0x64, 0x00])
+    ..setRange(20, 29, 'HPL17-102'.codeUnits)
+    ..setRange(60, 63, 'PLA'.codeUnits)
+    ..setRange(96, 100, [190, 0, 230, 0])
+    ..setRange(120, 124, [0xAF, 0x00, 0x4A, 0x01]);
+  return d;
+}
+
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   setUp(NfcScanDiagnostics.reset);
@@ -247,6 +272,28 @@ void main() {
         throwsA(isA<NfcTagReadFailure>()),
       );
       expect(NfcScanDiagnostics.errorDetail, 'BLANK_TAG');
+    });
+  });
+
+  group('Anycubic : marque et matériau (corpus de tags réels, 04.10.2026)', () {
+    test('ancien tag ACE sans marque écrite → marque « Anycubic »', () async {
+      _mockNative({'rawBytes': _oldAceDumpWithoutBrand()});
+      final m = await NfcDataSourceImpl().readBobbinData(nfcMode: 'anycubic');
+      expect(m.brand, 'Anycubic');
+      expect(m.batchNumber, 'Anycubic - PLA');
+      expect(m.filamentType, 'PLA');
+    });
+
+    test('SKU AHPL… avec champ « PLA+ » → « PLA+ » (plus précis que le SKU)', () async {
+      _mockNative({'rawBytes': _skuDumpWithField('AHPLBW-107', 'PLA+')});
+      final m = await NfcDataSourceImpl().readBobbinData(nfcMode: 'anycubic');
+      expect(m.filamentType, 'PLA+');
+    });
+
+    test('SKU AHPL… avec champ « PLA » seul → nom du SKU conservé', () async {
+      _mockNative({'rawBytes': _skuDumpWithField('AHPLBW-107', 'PLA')});
+      final m = await NfcDataSourceImpl().readBobbinData(nfcMode: 'anycubic');
+      expect(m.filamentType, 'PLA High Speed');
     });
   });
 }

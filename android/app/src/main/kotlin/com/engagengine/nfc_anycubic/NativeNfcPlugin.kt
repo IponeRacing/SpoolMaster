@@ -1768,88 +1768,94 @@ class NativeNfcPlugin private constructor(
         sendError("INVALID_TAG", "Tag non compatible Creality CFS (MiFare Classic 1K requis)")
     }
 
+    /** Clé ayant ouvert le secteur 1 d'un tag Creality. */
+    private enum class CrealityKey { DERIVED_A, DERIVED_B, DEFAULT_A, DEFAULT_B }
+
     /**
-     * Authenticate MiFare Classic sector 1 for Creality CFS.
-     * Tries derived Key B first, then reconnects and tries default keys.
-     * Returns the authenticated MifareClassic handle, or null on failure.
+     * Ouvre le secteur 1 d'un tag Creality CFS. Sur les vraies bobines, la clé
+     * dérivée de l'UID est la clé A (clé B = FFFFFFFFFFFF), comme dans K2-RFID
+     * et OpenRFID ; avant, elle n'était essayée qu'en clé B. Ordre : dérivée A,
+     * dérivée B, défaut A (tag vierge), défaut B — chaque essai sur une
+     * connexion neuve (un échec d'authentification fige l'état MIFARE).
      */
-    private suspend fun authenticateCrealitySector(tag: Tag, crealityKeyB: ByteArray): MifareClassic? {
+    private suspend fun authenticateCrealitySector(tag: Tag, derivedKey: ByteArray): Pair<MifareClassic, CrealityKey>? {
         val uid = tag.id
-        val techs = tag.techList.joinToString(", ")
-        Log.i(TAG, "🔐 Creality auth start: UID=${uid.toHexString()}, techs=[$techs], derivedKeyB=${crealityKeyB.toHexString()}")
-
-        // Try 1: derived Key B
-        val mfc1 = MifareClassic.get(tag)
-        if (mfc1 == null) {
-            Log.e(TAG, "🔐 Creality auth: MifareClassic.get() returned null! SAK might be wrong. techs=[$techs]")
-            return null
-        }
-        try {
-            mfc1.connect()
-            mfc1.timeout = 5000
-            val mfcType = when (mfc1.type) { MifareClassic.TYPE_CLASSIC -> "CLASSIC"; MifareClassic.TYPE_PLUS -> "PLUS"; MifareClassic.TYPE_PRO -> "PRO"; else -> "UNKNOWN(${mfc1.type})" }
-            Log.d(TAG, "🔐 Creality: connected, type=$mfcType, sectorCount=${mfc1.sectorCount}, size=${mfc1.size}")
-            delay(100) // RF field stabilization for weak NFC controllers
-            val result1 = mfc1.authenticateSectorWithKeyB(1, crealityKeyB)
-            Log.d(TAG, "🔐 Creality derived Key B auth: $result1")
-            if (result1) {
-                return mfc1
+        Log.i(TAG, "🔐 Creality auth start: UID=${uid.toHexString()}, techs=[${tag.techList.joinToString(", ")}]")
+        val attempts = listOf(
+            CrealityKey.DERIVED_A to { m: MifareClassic -> m.authenticateSectorWithKeyA(1, derivedKey) },
+            CrealityKey.DERIVED_B to { m: MifareClassic -> m.authenticateSectorWithKeyB(1, derivedKey) },
+            CrealityKey.DEFAULT_A to { m: MifareClassic -> m.authenticateSectorWithKeyA(1, DEFAULT_KEY) },
+            CrealityKey.DEFAULT_B to { m: MifareClassic -> m.authenticateSectorWithKeyB(1, DEFAULT_KEY) },
+        )
+        for ((key, authenticate) in attempts) {
+            val mfc = MifareClassic.get(tag)
+            if (mfc == null) {
+                Log.e(TAG, "🔐 Creality auth: MifareClassic.get() returned null")
+                return null
             }
-        } catch (e: Exception) {
-            Log.w(TAG, "🔐 Creality Key B auth exception: ${e::class.simpleName}: ${e.message}")
-        }
-        try { mfc1.close() } catch (_: Exception) {}
-
-        // Try 2: default Key A (fresh connection — auth failure taints MiFare state)
-        val mfc2 = MifareClassic.get(tag) ?: return null
-        try {
-            mfc2.connect()
-            mfc2.timeout = 5000
-            delay(100)
-            val result2 = mfc2.authenticateSectorWithKeyA(1, DEFAULT_KEY)
-            Log.d(TAG, "🔐 Creality default Key A auth: $result2")
-            if (result2) {
-                return mfc2
+            try {
+                mfc.connect()
+                mfc.timeout = 5000
+                delay(100) // stabilisation du champ RF (contrôleurs NFC faibles)
+                if (authenticate(mfc)) {
+                    Log.d(TAG, "🔐 Creality sector 1 opened with $key")
+                    return mfc to key
+                }
+                Log.d(TAG, "🔐 Creality $key refused")
+            } catch (e: Exception) {
+                Log.w(TAG, "🔐 Creality $key exception: ${e::class.simpleName}: ${e.message}")
             }
-        } catch (e: Exception) {
-            Log.w(TAG, "🔐 Creality default Key A auth exception: ${e::class.simpleName}: ${e.message}")
+            try { mfc.close() } catch (_: Exception) {}
         }
-        try { mfc2.close() } catch (_: Exception) {}
-
-        // Try 3: default Key B (fresh connection)
-        val mfc3 = MifareClassic.get(tag) ?: return null
-        try {
-            mfc3.connect()
-            mfc3.timeout = 5000
-            delay(100)
-            val result3 = mfc3.authenticateSectorWithKeyB(1, DEFAULT_KEY)
-            Log.d(TAG, "🔐 Creality default Key B auth: $result3")
-            if (result3) {
-                return mfc3
-            }
-        } catch (e: Exception) {
-            Log.w(TAG, "🔐 Creality default Key B auth exception: ${e::class.simpleName}: ${e.message}")
-        }
-        try { mfc3.close() } catch (_: Exception) {}
-
-        Log.e(TAG, "🔐 Creality: ALL 3 auth methods FAILED for UID=${uid.toHexString()}, device=${Build.MANUFACTURER} ${Build.MODEL}")
+        Log.e(TAG, "🔐 Creality: all keys failed for UID=${uid.toHexString()}, device=${Build.MANUFACTURER} ${Build.MODEL}")
         return null
+    }
+
+    /**
+     * Disposition du texte clair (48 caractères) d'un tag Creality :
+     * - REAL : vraies bobines et K2-RFID — Date(5) | Vendor(4) | Lot(2) |
+     *   ID filament(6, « 1 » + matériau) | Couleur(7) | Longueur(4) | Série(6) | Réservé(14) ;
+     * - LEGACY : tags écrits par l'app jusqu'à la 1.4.10+92 — Lot(3) | Date(5) |
+     *   Vendor(4) | Matériau(5) | puis mêmes champs.
+     * Null si le vendor « 0276 » n'est à aucune des deux places.
+     * Avant (1.4.10+87 à +92) : vendor attendu à 8-11 seulement → toute vraie
+     * bobine refusée (« ce n'est pas une bobine Creality »).
+     */
+    private enum class CrealityLayout { REAL, LEGACY }
+
+    private fun crealityLayout(decrypted: String): CrealityLayout? = when {
+        decrypted.length >= 9 && decrypted.substring(5, 9) == CREALITY_VENDOR -> CrealityLayout.REAL
+        decrypted.length >= 12 && decrypted.substring(8, 12) == CREALITY_VENDOR -> CrealityLayout.LEGACY
+        else -> null
+    }
+
+    /** Lit et déchiffre les blocs 4-6 (secteur 1 déjà ouvert). Lève une IOException si un bloc manque. */
+    private fun readCrealityPlaintext(mfc: MifareClassic): String {
+        val encryptedData = ByteArray(48)
+        for (i in 0 until 3) {
+            val blockIndex = 4 + i
+            val data = mfc.readBlock(blockIndex)
+            // Bloc manquant = échec (nouvel essai), pas des zéros déchiffrés en données.
+            if (data == null || data.size < 16) throw IOException("Creality block $blockIndex unreadable (${data?.size ?: 0} bytes)")
+            System.arraycopy(data, 0, encryptedData, i * 16, 16)
+        }
+        return String(aesEcbDecrypt(encryptedData), Charsets.US_ASCII)
     }
 
     private suspend fun readCrealityClassic(classic: MifareClassic) {
         val maxRetries = 3
         val tag = classic.tag
         val uid = tag.id
-        val crealityKeyB = deriveCrealityKey(uid)
-        Log.d(TAG, "Creality: UID=${uid.toHexString()}, derived Key B=${crealityKeyB.toHexString()}")
+        val derivedKey = deriveCrealityKey(uid)
+        Log.d(TAG, "Creality: UID=${uid.toHexString()}, derived key=${derivedKey.toHexString()}")
 
         for (attempt in 1..maxRetries) {
             try {
                 Log.d(TAG, "Creality read attempt $attempt/$maxRetries")
                 // Tag le plus récent (même UID) : après une perte, l'ancien objet est périmé.
-                val mfc = authenticateCrealitySector(freshTag(tag), crealityKeyB)
+                val opened = authenticateCrealitySector(freshTag(tag), derivedKey)
 
-                if (mfc == null) {
+                if (opened == null) {
                     if (attempt < maxRetries) {
                         Log.d(TAG, "Creality auth failed attempt $attempt/$maxRetries, retrying in 300ms...")
                         delay(300)
@@ -1857,46 +1863,29 @@ class NativeNfcPlugin private constructor(
                     }
                     val diag = buildSessionDiagnostics().toMutableMap()
                     diag["uid"] = uid.toHexString()
-                    diag["derived_key_b"] = crealityKeyB.toHexString()
                     diag["retries_exhausted"] = maxRetries
                     sendError("AUTH_ERROR", "Impossible d'authentifier le tag Creality CFS (secteur 1). Gardez le tag bien appuyé et réessayez.", diag)
                     return
                 }
+                val (mfc, key) = opened
 
                 try {
-                    // Read blocks 4, 5, 6 (Sector 1 data blocks)
-                    val encryptedData = ByteArray(48)
-                    for (i in 0 until 3) {
-                        val blockIndex = 4 + i
-                        val data = mfc.readBlock(blockIndex)
-                        // Bloc manquant = échec (nouvel essai), pas des zéros déchiffrés en données.
-                        if (data == null || data.size < 16) throw IOException("Creality block $blockIndex unreadable (${data?.size ?: 0} bytes)")
-                        System.arraycopy(data, 0, encryptedData, i * 16, 16)
-                        Log.d(TAG, "Creality block $blockIndex: ${data.take(16).toByteArray().toHexString()}")
-                    }
-
+                    val decryptedStr = readCrealityPlaintext(mfc)
                     mfc.close()
-
-                    // Decrypt AES-128-ECB
-                    val decrypted = aesEcbDecrypt(encryptedData)
-                    val decryptedStr = String(decrypted, Charsets.US_ASCII)
-                    Log.d(TAG, "Creality decrypted: $decryptedStr")
+                    Log.d(TAG, "Creality decrypted ($key): $decryptedStr")
 
                     // Vendor « 0276 » obligatoire : un MIFARE Classic vierge ou d'une autre
                     // marque (clés par défaut) donnait une bobine fantôme « 1000 g ».
-                    val vendor = if (decryptedStr.length >= 12) decryptedStr.substring(8, 12) else ""
-                    if (vendor != CREALITY_VENDOR) {
-                        val printableVendor = vendor.filter { it in ' '..'~' }
-                        Log.w(TAG, "Creality: vendor='$printableVendor' (expected $CREALITY_VENDOR) — INCOMPATIBLE_TAG")
+                    if (crealityLayout(decryptedStr) == null) {
+                        val printable = decryptedStr.take(12).filter { it in ' '..'~' }
+                        Log.w(TAG, "Creality: vendor $CREALITY_VENDOR absent ('$printable') — INCOMPATIBLE_TAG")
                         sendError("INCOMPATIBLE_TAG",
-                            "Tag MIFARE Classic lu, mais ce n'est pas une bobine Creality CFS (vendor « $printableVendor » au lieu de « $CREALITY_VENDOR »).",
-                            mapOf("tag_type" to "MifareClassic", "vendor" to printableVendor, "uid" to uid.toHexString()))
+                            "Tag MIFARE Classic lu, mais ce n'est pas une bobine Creality CFS (vendor « $CREALITY_VENDOR » absent).",
+                            mapOf("tag_type" to "MifareClassic", "header" to printable, "uid" to uid.toHexString(), "key" to key.name))
                         return
                     }
 
-                    // Parse and return
-                    val parsedData = parseCrealityData(decryptedStr, uid)
-                    sendSuccess(parsedData)
+                    sendSuccess(parseCrealityData(decryptedStr, uid))
                     return // Success
                 } catch (e: Exception) {
                     try { mfc.close() } catch (_: Exception) {}
@@ -1920,15 +1909,18 @@ class NativeNfcPlugin private constructor(
 
     private fun parseCrealityData(decrypted: String, uid: ByteArray): Map<String, Any> {
         Log.d(TAG, "Parsing Creality data: '$decrypted' (${decrypted.length} chars)")
+        fun part(from: Int, to: Int) = if (decrypted.length >= to) decrypted.substring(from, to) else ""
 
-        // Structure: Batch(3) | Date(5) | Vendor(4) | MaterialID(5) | Color(7) | Length(4) | Serial(6) | Reserved(14)
-        val batch = if (decrypted.length >= 3) decrypted.substring(0, 3) else ""
-        val date = if (decrypted.length >= 8) decrypted.substring(3, 8) else ""
-        val vendor = if (decrypted.length >= 12) decrypted.substring(8, 12) else ""
-        val materialId = if (decrypted.length >= 17) decrypted.substring(12, 17) else ""
-        val colorField = if (decrypted.length >= 24) decrypted.substring(17, 24) else ""
-        val lengthCode = if (decrypted.length >= 28) decrypted.substring(24, 28) else ""
-        val serial = if (decrypted.length >= 34) decrypted.substring(28, 34) else ""
+        val legacy = crealityLayout(decrypted) == CrealityLayout.LEGACY
+        val batch = if (legacy) part(0, 3) else part(9, 11)
+        val date = if (legacy) part(3, 8) else part(0, 5)
+        val vendor = if (legacy) part(8, 12) else part(5, 9)
+        // Matériau : 5 derniers chiffres de l'ID filament (« 1 » + matériau) dans
+        // la disposition réelle, champ à 12-17 dans l'ancienne : même position.
+        val materialId = part(12, 17)
+        val colorField = part(17, 24)
+        val lengthCode = part(24, 28)
+        val serial = part(28, 34)
 
         // Parse color RGB (format: "0RRGGBB")
         val colorRgb = try {
@@ -1942,27 +1934,24 @@ class NativeNfcPlugin private constructor(
         // Parse weight from length code
         val weightGrams = crealityWeightCodes[lengthCode] ?: 1000.0
 
-        // Parse date (YYMDD format)
+        // Date. Mois sur 1 caractère hexadécimal (1-9, A-C = octobre-décembre).
+        // Réelle (K2-RFID) : M | JJ | AA ; ancienne (écrite par l'app) : AA | M | JJ.
+        // Champ non conforme (ex. « 9C625 » d'usine) → pas de date plutôt qu'une fausse.
         val productionTimestamp = try {
             if (date.length >= 5) {
-                val year = 2000 + date.substring(0, 2).toInt()
-                // Mois sur 1 caractère hexadécimal (1-9, A-C = octobre-décembre,
-                // comme OpenRFID). Avant : toInt() décimal → exception sur A-C,
-                // date perdue pour toute bobine produite en fin d'année.
-                val month = date.substring(2, 3).toInt(16)
-                require(month in 1..12) { "mois invalide : ${date.substring(2, 3)}" }
-                val day = date.substring(3, 5).toInt()
+                val (yy, m, dd) = if (legacy) Triple(date.substring(0, 2), date.substring(2, 3), date.substring(3, 5))
+                                  else Triple(date.substring(3, 5), date.substring(0, 1), date.substring(1, 3))
+                val month = m.toInt(16)
+                val day = dd.toInt()
+                require(month in 1..12 && day in 1..31) { "date invalide : $date" }
                 java.util.Calendar.getInstance().apply {
-                    set(year, month - 1, day)
+                    set(2000 + yy.toInt(), month - 1, day)
                 }.timeInMillis / 1000
             } else 0L
         } catch (e: Exception) { 0L }
 
         // Material name lookup
         val materialName = crealityMaterials[materialId] ?: "Unknown ($materialId)"
-
-        // Raw blocks for clone capability
-        val rawBlocksMap = mutableMapOf<String, List<Int>>()
 
         return mapOf(
             "tagType" to "creality",
@@ -2007,26 +1996,33 @@ class NativeNfcPlugin private constructor(
         sendError("INVALID_TAG", "Tag non compatible pour l'ecriture Creality CFS (MiFare Classic 1K requis)")
     }
 
+    /**
+     * Écrit un tag Creality CFS comme K2-RFID (référence de la communauté) :
+     * texte clair dans la disposition réelle, chiffré AES, blocs 4-6. Sur un
+     * tag vierge (ouvert avec la clé A par défaut), les clés A et B du secteur 1
+     * deviennent la clé dérivée de l'UID, bits d'accès inchangés : c'est cette
+     * clé que l'imprimante utilise. Avant : ancienne disposition et clés par
+     * défaut laissées en place → tag illisible pour une imprimante CFS.
+     */
     private suspend fun writeCrealityClassic(classic: MifareClassic, data: Map<String, Any>) {
         val maxRetries = 3
         val tag = classic.tag
         val uid = tag.id
-        val crealityKeyB = deriveCrealityKey(uid)
+        val derivedKey = deriveCrealityKey(uid)
         Log.d(TAG, "Creality write: UID=${uid.toHexString()}")
 
         // Build 48-char payload (only once, doesn't change between retries)
         val payload = buildCrealityPayload(data)
         Log.d(TAG, "Creality payload: $payload")
-        val payloadBytes = payload.toByteArray(Charsets.US_ASCII)
-        val encrypted = aesEcbEncrypt(payloadBytes)
+        val encrypted = aesEcbEncrypt(payload.toByteArray(Charsets.US_ASCII))
 
         for (attempt in 1..maxRetries) {
             try {
                 Log.d(TAG, "Creality write attempt $attempt/$maxRetries")
                 // Tag le plus récent (même UID) : après une perte, l'ancien objet est périmé.
-                val mfc = authenticateCrealitySector(freshTag(tag), crealityKeyB)
+                val opened = authenticateCrealitySector(freshTag(tag), derivedKey)
 
-                if (mfc == null) {
+                if (opened == null) {
                     if (attempt < maxRetries) {
                         Log.d(TAG, "Creality write auth failed attempt $attempt/$maxRetries, retrying in 300ms...")
                         delay(300)
@@ -2035,6 +2031,7 @@ class NativeNfcPlugin private constructor(
                     sendError("AUTH_ERROR", "Impossible d'authentifier le tag pour écriture Creality CFS. Gardez le tag bien appuyé et réessayez.")
                     return
                 }
+                val (mfc, key) = opened
 
                 try {
                     // Write blocks 4, 5, 6
@@ -2043,6 +2040,18 @@ class NativeNfcPlugin private constructor(
                         val blockData = encrypted.copyOfRange(i * 16, (i + 1) * 16)
                         mfc.writeBlock(blockIndex, blockData)
                         Log.d(TAG, "Creality written block $blockIndex: ${blockData.toHexString()}")
+                    }
+
+                    // Tag vierge : clés du secteur 1 → clé dérivée (A octets 0-5, B
+                    // octets 10-15), bits d'accès (6-9) relus et conservés, comme K2-RFID.
+                    if (key == CrealityKey.DEFAULT_A) {
+                        val trailer = mfc.readBlock(7)
+                        if (trailer != null && trailer.size >= 16) {
+                            System.arraycopy(derivedKey, 0, trailer, 0, 6)
+                            System.arraycopy(derivedKey, 0, trailer, 10, 6)
+                            mfc.writeBlock(7, trailer)
+                            Log.d(TAG, "Creality sector 1 keys set to derived key (access bits kept)")
+                        }
                     }
 
                     mfc.close()
@@ -2066,17 +2075,20 @@ class NativeNfcPlugin private constructor(
         }
     }
 
+    /**
+     * Texte clair de 48 caractères, disposition réelle (K2-RFID) : Date(5,
+     * M hexadécimal | JJ | AA) | Vendor(4) | Lot(2) | « 1 » + matériau(5) |
+     * « 0 » + RGB(6) | Longueur(4) | Série(6) | Réservé(14).
+     */
     private fun buildCrealityPayload(data: Map<String, Any>): String {
-        val batch = (data["batch"] as? String ?: "000").padEnd(3, '0').take(3)
-
-        // Date: YYMDD
         val now = java.util.Calendar.getInstance()
-        val year = (now.get(java.util.Calendar.YEAR) % 100).toString().padStart(2, '0')
-        val month = (now.get(java.util.Calendar.MONTH) + 1).toString()
+        val month = (now.get(java.util.Calendar.MONTH) + 1).toString(16).uppercase()
         val day = now.get(java.util.Calendar.DAY_OF_MONTH).toString().padStart(2, '0')
-        val date = (data["date"] as? String ?: "$year$month$day").padEnd(5, '0').take(5)
+        val year = (now.get(java.util.Calendar.YEAR) % 100).toString().padStart(2, '0')
+        val date = "$month$day$year"
 
-        val vendor = (data["vendor"] as? String ?: "0276").padEnd(4, '0').take(4)
+        val vendor = (data["vendor"] as? String ?: CREALITY_VENDOR).padEnd(4, '0').take(4)
+        val batch = (data["batch"] as? String)?.filter { it.isLetterOrDigit() }?.take(2)?.padEnd(2, '0') ?: "A2"
         val materialId = (data["materialId"] as? String ?: "04001").padEnd(5, '0').take(5)
 
         // Color: "0" + 6-char RGB hex
@@ -2087,7 +2099,7 @@ class NativeNfcPlugin private constructor(
         val serial = (data["serial"] as? String ?: "000001").padEnd(6, '0').take(6)
         val reserved = "00000000000000" // 14 chars
 
-        val payload = "$batch$date$vendor$materialId$colorField$lengthCode$serial$reserved"
+        val payload = "$date$vendor${batch}1$materialId$colorField$lengthCode$serial$reserved"
         Log.d(TAG, "Built Creality payload: $payload (${payload.length} chars)")
         return payload.take(48).padEnd(48, '0')
     }
@@ -2095,71 +2107,51 @@ class NativeNfcPlugin private constructor(
     // ==================== CREALITY CFS AUTO-DETECT ====================
 
     /**
-     * Try to identify a MiFare Classic tag as Creality CFS with retry logic.
-     * Retries help on budget NFC controllers (e.g. Samsung SM-A217F) where
-     * auth can fail intermittently due to weak RF field or timing issues.
-     * Returns parsed data if Creality, null otherwise.
+     * Identifie un MIFARE Classic comme bobine Creality CFS (2 essais : utile
+     * sur les contrôleurs NFC faibles, ex. Samsung SM-A217F). Clé dérivée en A
+     * puis en B (avant : B seulement, alors que c'est la clé A des vraies
+     * bobines → jamais reconnues, lues ensuite comme des tags Bambu Lab).
+     * Retourne les données décodées, ou null si ce n'est pas un Creality.
      */
     private suspend fun tryCrealityDetectionWithRetry(tag: Tag): Map<String, Any>? {
         val uid = tag.id
-        val crealityKeyB = deriveCrealityKey(uid)
+        val derivedKey = deriveCrealityKey(uid)
 
         for (attempt in 1..2) {
-            // Tag le plus récent (même UID) : après une perte, l'ancien objet est périmé.
-            val mfc = MifareClassic.get(freshTag(tag)) ?: return null
-            try {
-                mfc.connect()
-                mfc.timeout = 5000
-                delay(100) // RF field stabilization
-
-                // Try Creality Key B on Sector 1
-                val authSuccess = try {
-                    mfc.authenticateSectorWithKeyB(1, crealityKeyB)
-                } catch (e: Exception) {
-                    Log.d(TAG, "Auto-detect: Creality Key B failed (attempt $attempt): ${e.message}")
-                    false
-                }
-
-                if (!authSuccess) {
-                    mfc.close()
-                    if (attempt < 2) {
-                        delay(200)
+            for (useKeyA in listOf(true, false)) {
+                // Tag le plus récent (même UID) : après une perte, l'ancien objet est périmé.
+                val mfc = MifareClassic.get(freshTag(tag)) ?: return null
+                try {
+                    mfc.connect()
+                    mfc.timeout = 5000
+                    delay(100) // RF field stabilization
+                    val authSuccess = try {
+                        if (useKeyA) mfc.authenticateSectorWithKeyA(1, derivedKey)
+                        else mfc.authenticateSectorWithKeyB(1, derivedKey)
+                    } catch (e: Exception) {
+                        Log.d(TAG, "Auto-detect: Creality derived key ${if (useKeyA) "A" else "B"} failed (attempt $attempt): ${e.message}")
+                        false
+                    }
+                    if (!authSuccess) {
+                        mfc.close()
                         continue
                     }
-                    return null
-                }
 
-                // Read blocks 4, 5, 6
-                val encryptedData = ByteArray(48)
-                for (i in 0 until 3) {
-                    val blockIndex = 4 + i
-                    val data = mfc.readBlock(blockIndex)
-                    if (data != null && data.size >= 16) {
-                        System.arraycopy(data, 0, encryptedData, i * 16, 16)
+                    val decryptedStr = readCrealityPlaintext(mfc)
+                    mfc.close()
+                    return if (crealityLayout(decryptedStr) != null) {
+                        Log.d(TAG, "Auto-detect: Creality CFS confirmed (attempt $attempt)")
+                        parseCrealityData(decryptedStr, uid)
+                    } else {
+                        Log.d(TAG, "Auto-detect: Creality key OK but vendor absent, not Creality")
+                        null
                     }
-                }
-
-                mfc.close()
-
-                // Decrypt and validate vendor
-                val decrypted = aesEcbDecrypt(encryptedData)
-                val decryptedStr = String(decrypted, Charsets.US_ASCII)
-                val vendor = if (decryptedStr.length >= 12) decryptedStr.substring(8, 12) else ""
-                if (vendor == CREALITY_VENDOR) {
-                    Log.d(TAG, "Auto-detect: Creality CFS confirmed (vendor=$vendor, attempt $attempt)")
-                    return parseCrealityData(decryptedStr, uid)
-                } else {
-                    Log.d(TAG, "Auto-detect: Creality auth OK but vendor=$vendor, not Creality")
-                    return null
-                }
-
-            } catch (e: Exception) {
-                Log.d(TAG, "Auto-detect: Creality detection failed (attempt $attempt): ${e.message}")
-                try { mfc.close() } catch (_: Exception) {}
-                if (attempt < 2) {
-                    delay(200)
+                } catch (e: Exception) {
+                    Log.d(TAG, "Auto-detect: Creality detection failed (attempt $attempt): ${e.message}")
+                    try { mfc.close() } catch (_: Exception) {}
                 }
             }
+            if (attempt < 2) delay(200)
         }
         return null
     }

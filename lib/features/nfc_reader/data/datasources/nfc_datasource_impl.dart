@@ -189,17 +189,23 @@ class NfcDataSourceImpl implements NfcDataSource {
     // FIX PETG→PLA (rapporté ACE Pro 2) : le SKU est peu fiable/absent sur les
     // spools récents et retombe sur le défaut 'PLA'. Le champ matériau DÉDIÉ
     // (bytes 60-76 / pages 15-18, ce que le writer écrit) est la source
-    // autoritative. On le préfère UNIQUEMENT si sa FAMILLE diffère de celle du
-    // SKU (ex: champ=PETG mais SKU→PLA) → corrige PETG sans casser les noms de
-    // variantes PLA (PLA High Speed, etc.), et ignore le garbage (famille null).
+    // autoritative. Préféré si sa FAMILLE diffère de celle du SKU (champ=PETG
+    // mais SKU→PLA), ou s'il est plus précis (voir plus bas) ; ignore le
+    // garbage (famille null).
     if (rawBytes.length >= 64) {
       final end = rawBytes.length >= 76 ? 76 : rawBytes.length;
       final fieldMat = String.fromCharCodes(
         rawBytes.sublist(60 + s, end + s).where((b) => b >= 32 && b < 127),
       ).trim();
       final fieldName = _recognizedMaterial(fieldMat);
+      // Préféré aussi dans la même famille s'il est plus précis que le simple
+      // nom de famille : « PLA+ » sur des tags AHPL… affichés « PLA High
+      // Speed » (OpenRFID, 5 couleurs). Un champ « PLA » seul garde le SKU.
+      final fieldFamily = fieldName == null ? null : _materialFamily(fieldName);
+      final fieldIsSpecific = fieldName != null &&
+          fieldName.toUpperCase().replaceAll(RegExp('[^A-Z0-9+]'), '') != fieldFamily;
       if (fieldName != null &&
-          _materialFamily(fieldName) != _materialFamily(filamentType)) {
+          (fieldFamily != _materialFamily(filamentType) || fieldIsSpecific)) {
         developer.log(
           '🏷️ Matériau corrigé via champ dédié: "$fieldMat" → $fieldName '
           '(SKU donnait: $filamentType)',
@@ -445,6 +451,11 @@ class NfcDataSourceImpl implements NfcDataSource {
 
         final brand = String.fromCharCodes(brandBytes.where((b) => b >= 32 && b < 127)).trim();
         final material = String.fromCharCodes(materialBytes.where((b) => b >= 32 && b < 127)).trim();
+        // Tags ACE anciens (page 4 = 7B 00 64 00, SKU « HPL17-102 ») : aucune
+        // marque écrite → « Anycubic » plutôt qu'une marque vide dans le stock.
+        final brandName = brand.isNotEmpty
+            ? brand
+            : (rawBytes.length > 16 && rawBytes[16] == 0x7B ? 'Anycubic' : '');
 
         developer.log('🏷️ Brand: "$brand", Material: "$material"');
 
@@ -513,7 +524,8 @@ class NfcDataSourceImpl implements NfcDataSource {
           color: colorName,
           weightGrams: weight,
           manufactureDate: DateTime.now(),
-          batchNumber: '$brand - $material',
+          batchNumber: brandName.isEmpty ? material : '$brandName - $material',
+          brand: brandName.isEmpty ? null : brandName,
           colorRgb: colorRgb,
           extruderTempMin: extruderMin,
           extruderTempMax: extruderMax,
@@ -849,6 +861,11 @@ class NfcDataSourceImpl implements NfcDataSource {
 
     final brand = String.fromCharCodes(brandBytes.where((b) => b >= 32 && b < 127)).trim();
     final material = String.fromCharCodes(materialBytes.where((b) => b >= 32 && b < 127)).trim();
+    // Tags ACE anciens (page 4 = 7B 00 64 00, SKU « HPL17-102 ») : aucune
+    // marque écrite → « Anycubic » plutôt qu'une marque vide dans le stock.
+    final brandName = brand.isNotEmpty
+        ? brand
+        : (rawBytes.length > 16 && rawBytes[16] == 0x7B ? 'Anycubic' : '');
 
     // Garde-fou : tag vierge (ni brand ni material) → erreur explicite
     if (brand.isEmpty && material.isEmpty) {
@@ -900,7 +917,8 @@ class NfcDataSourceImpl implements NfcDataSource {
       color: colorName,
       weightGrams: weight,
       manufactureDate: DateTime.now(),
-      batchNumber: '$brand - $material',
+      batchNumber: brandName.isEmpty ? material : '$brandName - $material',
+      brand: brandName.isEmpty ? null : brandName,
       colorRgb: colorRgb,
       extruderTempMin: extruderMin,
       extruderTempMax: extruderMax,
