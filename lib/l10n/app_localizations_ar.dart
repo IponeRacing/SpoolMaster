@@ -1206,14 +1206,14 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get crealityReadWriteDesc =>
-      'تستخدم علامات Creality CFS تقنية MiFare Classic 1K مع تشفير AES-128-ECB. القراءة والكتابة مدعومة على Android فقط.';
+      'تستخدم علامات Creality CFS تقنية MiFare Classic 1K مع تشفير AES-128-ECB.';
 
   @override
   String get platformLimitationTitle => 'قيود المنصة';
 
   @override
   String get mifareClassicNotSupportedIos =>
-      'علامات MiFare Classic (Bambu Lab، Creality) غير مدعومة على iOS بسبب قيود Apple CoreNFC. هذه الميزة متاحة على Android فقط.';
+      'علامات MiFare Classic (Bambu Lab، Creality) غير مدعومة على iOS بسبب قيود Apple CoreNFC.';
 
   @override
   String get nfcTagInfoCreality =>

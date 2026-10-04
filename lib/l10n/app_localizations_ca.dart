@@ -1221,14 +1221,14 @@ class AppLocalizationsCa extends AppLocalizations {
 
   @override
   String get crealityReadWriteDesc =>
-      'Les etiquetes Creality CFS utilitzen MiFare Classic 1K amb xifratge AES-128-ECB. Lectura i escriptura compatibles només a Android.';
+      'Les etiquetes Creality CFS utilitzen MiFare Classic 1K amb xifratge AES-128-ECB.';
 
   @override
   String get platformLimitationTitle => 'Limitació de plataforma';
 
   @override
   String get mifareClassicNotSupportedIos =>
-      'Les etiquetes MiFare Classic (Bambu Lab, Creality) no són compatibles amb iOS a causa d\'una limitació d\'Apple CoreNFC. Aquesta funcionalitat només està disponible a Android.';
+      'Les etiquetes MiFare Classic (Bambu Lab, Creality) no són compatibles amb iOS a causa d\'una limitació d\'Apple CoreNFC.';
 
   @override
   String get nfcTagInfoCreality =>

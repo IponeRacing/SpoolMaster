@@ -1214,14 +1214,14 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String get crealityReadWriteDesc =>
-      'A Creality CFS címkék MiFare Classic 1K-t használnak AES-128-ECB titkosítással. Olvasás és írás csak Androidon támogatott.';
+      'A Creality CFS címkék MiFare Classic 1K-t használnak AES-128-ECB titkosítással.';
 
   @override
   String get platformLimitationTitle => 'Platformkorlátozás';
 
   @override
   String get mifareClassicNotSupportedIos =>
-      'A MiFare Classic címkék (Bambu Lab, Creality) nem támogatottak iOS-en az Apple CoreNFC korlátozása miatt. Ez a funkció csak Androidon érhető el.';
+      'A MiFare Classic címkék (Bambu Lab, Creality) nem támogatottak iOS-en az Apple CoreNFC korlátozása miatt.';
 
   @override
   String get nfcTagInfoCreality =>

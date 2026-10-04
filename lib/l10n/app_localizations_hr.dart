@@ -1212,14 +1212,14 @@ class AppLocalizationsHr extends AppLocalizations {
 
   @override
   String get crealityReadWriteDesc =>
-      'Creality CFS oznake koriste MiFare Classic 1K s AES-128-ECB enkripcijom. Čitanje i pisanje podržano samo na Androidu.';
+      'Creality CFS oznake koriste MiFare Classic 1K s AES-128-ECB enkripcijom.';
 
   @override
   String get platformLimitationTitle => 'Ograničenje platforme';
 
   @override
   String get mifareClassicNotSupportedIos =>
-      'MiFare Classic oznake (Bambu Lab, Creality) nisu podržane na iOS-u zbog ograničenja Apple CoreNFC-a. Ova značajka dostupna je samo na Androidu.';
+      'MiFare Classic oznake (Bambu Lab, Creality) nisu podržane na iOS-u zbog ograničenja Apple CoreNFC-a.';
 
   @override
   String get nfcTagInfoCreality =>

@@ -1225,14 +1225,14 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get crealityReadWriteDesc =>
-      'Creality CFS-Tags verwenden MiFare Classic 1K mit AES-128-ECB-Verschlüsselung. Lesen und Schreiben nur auf Android unterstützt.';
+      'Creality CFS-Tags verwenden MiFare Classic 1K mit AES-128-ECB-Verschlüsselung.';
 
   @override
   String get platformLimitationTitle => 'Plattformbeschränkung';
 
   @override
   String get mifareClassicNotSupportedIos =>
-      'MiFare Classic-Tags (Bambu Lab, Creality) werden auf iOS aufgrund einer Apple CoreNFC-Einschränkung nicht unterstützt. Diese Funktion ist nur auf Android verfügbar.';
+      'MiFare Classic-Tags (Bambu Lab, Creality) werden auf iOS aufgrund einer Apple CoreNFC-Einschränkung nicht unterstützt.';
 
   @override
   String get nfcTagInfoCreality =>

@@ -1205,14 +1205,14 @@ class AppLocalizationsHe extends AppLocalizations {
 
   @override
   String get crealityReadWriteDesc =>
-      'תגי Creality CFS משתמשים ב-MiFare Classic 1K עם הצפנת AES-128-ECB. קריאה וכתיבה נתמכות באנדרואיד בלבד.';
+      'תגי Creality CFS משתמשים ב-MiFare Classic 1K עם הצפנת AES-128-ECB.';
 
   @override
   String get platformLimitationTitle => 'מגבלת פלטפורמה';
 
   @override
   String get mifareClassicNotSupportedIos =>
-      'תגי MiFare Classic (Bambu Lab, Creality) אינם נתמכים ב-iOS בשל מגבלת Apple CoreNFC. תכונה זו זמינה באנדרואיד בלבד.';
+      'תגי MiFare Classic (Bambu Lab, Creality) אינם נתמכים ב-iOS בשל מגבלת Apple CoreNFC.';
 
   @override
   String get nfcTagInfoCreality =>

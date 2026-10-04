@@ -1211,14 +1211,14 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get crealityReadWriteDesc =>
-      'Tag Creality CFS menggunakan MiFare Classic 1K dengan enkripsi AES-128-ECB. Baca dan tulis hanya didukung di Android.';
+      'Tag Creality CFS menggunakan MiFare Classic 1K dengan enkripsi AES-128-ECB.';
 
   @override
   String get platformLimitationTitle => 'Batasan platform';
 
   @override
   String get mifareClassicNotSupportedIos =>
-      'Tag MiFare Classic (Bambu Lab, Creality) tidak didukung di iOS karena batasan Apple CoreNFC. Fitur ini hanya tersedia di Android.';
+      'Tag MiFare Classic (Bambu Lab, Creality) tidak didukung di iOS karena batasan Apple CoreNFC.';
 
   @override
   String get nfcTagInfoCreality =>

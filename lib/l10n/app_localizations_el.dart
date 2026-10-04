@@ -1220,14 +1220,14 @@ class AppLocalizationsEl extends AppLocalizations {
 
   @override
   String get crealityReadWriteDesc =>
-      'Οι ετικέτες Creality CFS χρησιμοποιούν MiFare Classic 1K με κρυπτογράφηση AES-128-ECB. Ανάγνωση και εγγραφή υποστηρίζονται μόνο σε Android.';
+      'Οι ετικέτες Creality CFS χρησιμοποιούν MiFare Classic 1K με κρυπτογράφηση AES-128-ECB.';
 
   @override
   String get platformLimitationTitle => 'Περιορισμός πλατφόρμας';
 
   @override
   String get mifareClassicNotSupportedIos =>
-      'Οι ετικέτες MiFare Classic (Bambu Lab, Creality) δεν υποστηρίζονται σε iOS λόγω περιορισμού του Apple CoreNFC. Αυτή η λειτουργία είναι διαθέσιμη μόνο σε Android.';
+      'Οι ετικέτες MiFare Classic (Bambu Lab, Creality) δεν υποστηρίζονται σε iOS λόγω περιορισμού του Apple CoreNFC.';
 
   @override
   String get nfcTagInfoCreality =>

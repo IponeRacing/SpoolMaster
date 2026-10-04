@@ -1211,14 +1211,14 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get crealityReadWriteDesc =>
-      'Creality CFS tags use MiFare Classic 1K with AES-128-ECB encryption. Read and write supported on Android only.';
+      'Creality CFS tags use MiFare Classic 1K with AES-128-ECB encryption.';
 
   @override
   String get platformLimitationTitle => 'Platform Limitation';
 
   @override
   String get mifareClassicNotSupportedIos =>
-      'MiFare Classic tags (Bambu Lab, Creality) are not supported on iOS due to an Apple CoreNFC limitation. This feature is available on Android only.';
+      'MiFare Classic tags (Bambu Lab, Creality) are not supported on iOS due to an Apple CoreNFC limitation.';
 
   @override
   String get nfcTagInfoCreality =>
@@ -2699,14 +2699,14 @@ class AppLocalizationsEnAu extends AppLocalizationsEn {
 
   @override
   String get crealityReadWriteDesc =>
-      'Creality CFS tags use MiFare Classic 1K with AES-128-ECB encryption. Read and write supported on Android only.';
+      'Creality CFS tags use MiFare Classic 1K with AES-128-ECB encryption.';
 
   @override
   String get platformLimitationTitle => 'Platform Limitation';
 
   @override
   String get mifareClassicNotSupportedIos =>
-      'MiFare Classic tags (Bambu Lab, Creality) are not supported on iOS due to an Apple CoreNFC limitation. This feature is available on Android only.';
+      'MiFare Classic tags (Bambu Lab, Creality) are not supported on iOS due to an Apple CoreNFC limitation.';
 
   @override
   String get nfcTagInfoCreality =>
@@ -4187,14 +4187,14 @@ class AppLocalizationsEnCa extends AppLocalizationsEn {
 
   @override
   String get crealityReadWriteDesc =>
-      'Creality CFS tags use MiFare Classic 1K with AES-128-ECB encryption. Read and write supported on Android only.';
+      'Creality CFS tags use MiFare Classic 1K with AES-128-ECB encryption.';
 
   @override
   String get platformLimitationTitle => 'Platform Limitation';
 
   @override
   String get mifareClassicNotSupportedIos =>
-      'MiFare Classic tags (Bambu Lab, Creality) are not supported on iOS due to an Apple CoreNFC limitation. This feature is available on Android only.';
+      'MiFare Classic tags (Bambu Lab, Creality) are not supported on iOS due to an Apple CoreNFC limitation.';
 
   @override
   String get nfcTagInfoCreality =>
@@ -5675,14 +5675,14 @@ class AppLocalizationsEnGb extends AppLocalizationsEn {
 
   @override
   String get crealityReadWriteDesc =>
-      'Creality CFS tags use MiFare Classic 1K with AES-128-ECB encryption. Read and write supported on Android only.';
+      'Creality CFS tags use MiFare Classic 1K with AES-128-ECB encryption.';
 
   @override
   String get platformLimitationTitle => 'Platform Limitation';
 
   @override
   String get mifareClassicNotSupportedIos =>
-      'MiFare Classic tags (Bambu Lab, Creality) are not supported on iOS due to an Apple CoreNFC limitation. This feature is available on Android only.';
+      'MiFare Classic tags (Bambu Lab, Creality) are not supported on iOS due to an Apple CoreNFC limitation.';
 
   @override
   String get nfcTagInfoCreality =>

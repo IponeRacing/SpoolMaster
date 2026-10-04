@@ -1184,14 +1184,14 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get crealityReadWriteDesc =>
-      'Creality CFS标签使用AES-128-ECB加密的MiFare Classic 1K。仅Android支持读写。';
+      'Creality CFS标签使用AES-128-ECB加密的MiFare Classic 1K。';
 
   @override
   String get platformLimitationTitle => '平台限制';
 
   @override
   String get mifareClassicNotSupportedIos =>
-      '由于Apple CoreNFC限制，iOS不支持MiFare Classic标签（Bambu Lab、Creality）。此功能仅在Android上可用。';
+      '由于Apple CoreNFC限制，iOS不支持MiFare Classic标签（Bambu Lab、Creality）。';
 
   @override
   String get nfcTagInfoCreality =>
@@ -2633,14 +2633,14 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String get crealityReadWriteDesc =>
-      'Creality CFS標籤使用AES-128-ECB加密的MiFare Classic 1K。僅Android支援讀寫。';
+      'Creality CFS標籤使用AES-128-ECB加密的MiFare Classic 1K。';
 
   @override
   String get platformLimitationTitle => '平台限制';
 
   @override
   String get mifareClassicNotSupportedIos =>
-      '由於Apple CoreNFC限制，iOS不支援MiFare Classic標籤（Bambu Lab、Creality）。此功能僅在Android上可用。';
+      '由於Apple CoreNFC限制，iOS不支援MiFare Classic標籤（Bambu Lab、Creality）。';
 
   @override
   String get nfcTagInfoCreality =>

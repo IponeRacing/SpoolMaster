@@ -1213,14 +1213,14 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get crealityReadWriteDesc =>
-      'Thẻ Creality CFS sử dụng MiFare Classic 1K với mã hóa AES-128-ECB. Đọc và ghi chỉ được hỗ trợ trên Android.';
+      'Thẻ Creality CFS sử dụng MiFare Classic 1K với mã hóa AES-128-ECB.';
 
   @override
   String get platformLimitationTitle => 'Giới hạn nền tảng';
 
   @override
   String get mifareClassicNotSupportedIos =>
-      'Thẻ MiFare Classic (Bambu Lab, Creality) không được hỗ trợ trên iOS do giới hạn của Apple CoreNFC. Tính năng này chỉ có trên Android.';
+      'Thẻ MiFare Classic (Bambu Lab, Creality) không được hỗ trợ trên iOS do giới hạn của Apple CoreNFC.';
 
   @override
   String get nfcTagInfoCreality =>

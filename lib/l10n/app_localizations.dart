@@ -2464,7 +2464,7 @@ abstract class AppLocalizations {
   /// No description provided for @crealityReadWriteDesc.
   ///
   /// In fr, this message translates to:
-  /// **'Les tags Creality CFS utilisent MiFare Classic 1K avec chiffrement AES-128-ECB. Lecture et écriture supportées sur Android uniquement.'**
+  /// **'Les tags Creality CFS utilisent MiFare Classic 1K avec chiffrement AES-128-ECB.'**
   String get crealityReadWriteDesc;
 
   /// No description provided for @platformLimitationTitle.
@@ -2476,7 +2476,7 @@ abstract class AppLocalizations {
   /// No description provided for @mifareClassicNotSupportedIos.
   ///
   /// In fr, this message translates to:
-  /// **'Les tags MiFare Classic (Bambu Lab, Creality) ne sont pas supportés sur iOS en raison d\'une limitation Apple CoreNFC. Cette fonctionnalité est disponible sur Android uniquement.'**
+  /// **'Les tags MiFare Classic (Bambu Lab, Creality) ne sont pas supportés sur iOS en raison d\'une limitation Apple CoreNFC.'**
   String get mifareClassicNotSupportedIos;
 
   /// No description provided for @nfcTagInfoCreality.

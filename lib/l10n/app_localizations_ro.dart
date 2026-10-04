@@ -1212,14 +1212,14 @@ class AppLocalizationsRo extends AppLocalizations {
 
   @override
   String get crealityReadWriteDesc =>
-      'Etichetele Creality CFS folosesc MiFare Classic 1K cu criptare AES-128-ECB. Citirea și scrierea sunt acceptate doar pe Android.';
+      'Etichetele Creality CFS folosesc MiFare Classic 1K cu criptare AES-128-ECB.';
 
   @override
   String get platformLimitationTitle => 'Limitare platformă';
 
   @override
   String get mifareClassicNotSupportedIos =>
-      'Etichetele MiFare Classic (Bambu Lab, Creality) nu sunt acceptate pe iOS din cauza unei limitări Apple CoreNFC. Această funcționalitate este disponibilă doar pe Android.';
+      'Etichetele MiFare Classic (Bambu Lab, Creality) nu sunt acceptate pe iOS din cauza unei limitări Apple CoreNFC.';
 
   @override
   String get nfcTagInfoCreality =>

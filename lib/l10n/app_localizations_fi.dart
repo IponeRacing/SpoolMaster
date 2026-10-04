@@ -1211,14 +1211,14 @@ class AppLocalizationsFi extends AppLocalizations {
 
   @override
   String get crealityReadWriteDesc =>
-      'Creality CFS -tagit käyttävät MiFare Classic 1K:ta AES-128-ECB-salauksella. Luku ja kirjoitus tuettu vain Androidilla.';
+      'Creality CFS -tagit käyttävät MiFare Classic 1K:ta AES-128-ECB-salauksella.';
 
   @override
   String get platformLimitationTitle => 'Alustarajoitus';
 
   @override
   String get mifareClassicNotSupportedIos =>
-      'MiFare Classic -tageja (Bambu Lab, Creality) ei tueta iOS:llä Apple CoreNFC -rajoituksen vuoksi. Tämä toiminto on käytettävissä vain Androidilla.';
+      'MiFare Classic -tageja (Bambu Lab, Creality) ei tueta iOS:llä Apple CoreNFC -rajoituksen vuoksi.';
 
   @override
   String get nfcTagInfoCreality =>
