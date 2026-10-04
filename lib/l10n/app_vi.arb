@@ -530,5 +530,7 @@
   "nfcBlankTagTitle": "Thẻ trống",
   "nfcBlankTagDesc": "Thẻ này không chứa dữ liệu cuộn nhựa. Hãy thêm cuộn thủ công hoặc ghi thẻ này từ ứng dụng.",
   "subscriptionAutoRenewDisclosure": "Khoản thanh toán được tính vào tài khoản cửa hàng của bạn khi xác nhận mua. Gói đăng ký tự động gia hạn trừ khi bị hủy ít nhất 24 giờ trước khi kết thúc chu kỳ hiện tại; phí gia hạn được tính trong vòng 24 giờ trước khi kết thúc chu kỳ. Bạn có thể quản lý hoặc hủy gói đăng ký trong phần cài đặt tài khoản cửa hàng của mình.",
-  "manageSubscription": "Quản lý gói đăng ký"
+  "manageSubscription": "Quản lý gói đăng ký",
+  "subscriptionPendingMessage": "Thanh toán đang chờ xác nhận: gói đăng ký sẽ được kích hoạt ngay khi được xác nhận.",
+  "subscriptionEndsOn": "Đã tắt tự động gia hạn: truy cập đến {date}"
 }

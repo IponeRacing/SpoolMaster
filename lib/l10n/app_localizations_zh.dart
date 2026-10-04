@@ -1458,6 +1458,14 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get manageSubscription => '管理订阅';
+
+  @override
+  String get subscriptionPendingMessage => '付款等待确认：确认后订阅将立即激活。';
+
+  @override
+  String subscriptionEndsOn(String date) {
+    return '已关闭自动续订：可使用至 $date';
+  }
 }
 
 /// The translations for Chinese, as used in Taiwan (`zh_TW`).
@@ -2914,4 +2922,12 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String get manageSubscription => '管理訂閱';
+
+  @override
+  String get subscriptionPendingMessage => '付款等待確認：確認後訂閱將立即啟用。';
+
+  @override
+  String subscriptionEndsOn(String date) {
+    return '已關閉自動續訂：可使用至 $date';
+  }
 }

@@ -1474,4 +1474,13 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get manageSubscription => 'サブスクリプションを管理';
+
+  @override
+  String get subscriptionPendingMessage =>
+      'お支払いの確認待ちです。確認され次第、サブスクリプションが有効になります。';
+
+  @override
+  String subscriptionEndsOn(String date) {
+    return '自動更新はオフです：$dateまでご利用いただけます';
+  }
 }

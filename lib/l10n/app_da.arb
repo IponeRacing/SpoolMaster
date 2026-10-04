@@ -530,5 +530,7 @@
   "nfcBlankTagTitle": "Tomt tag",
   "nfcBlankTagDesc": "Dette tag indeholder ingen spoledata. Tilføj spolen manuelt, eller skriv tagget i appen.",
   "subscriptionAutoRenewDisclosure": "Betalingen trækkes fra din butikskonto ved bekræftelse af købet. Abonnementet fornyes automatisk, medmindre det opsiges mindst 24 timer før udgangen af den aktuelle periode; fornyelsen opkræves inden for 24 timer før periodens udløb. Du kan administrere eller opsige dit abonnement i indstillingerne for din butikskonto.",
-  "manageSubscription": "Administrer abonnement"
+  "manageSubscription": "Administrer abonnement",
+  "subscriptionPendingMessage": "Betalingen afventer bekræftelse: abonnementet aktiveres, så snart den er bekræftet.",
+  "subscriptionEndsOn": "Automatisk fornyelse er slået fra: adgang indtil {date}"
 }

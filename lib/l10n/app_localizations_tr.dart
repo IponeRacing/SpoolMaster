@@ -1498,4 +1498,13 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get manageSubscription => 'Aboneliği yönet';
+
+  @override
+  String get subscriptionPendingMessage =>
+      'Ödeme onay bekliyor: aboneliğiniz onaylandığı anda etkinleştirilecek.';
+
+  @override
+  String subscriptionEndsOn(String date) {
+    return 'Otomatik yenileme kapalı: $date tarihine kadar erişim';
+  }
 }

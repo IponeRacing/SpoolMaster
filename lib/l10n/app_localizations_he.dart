@@ -1488,4 +1488,13 @@ class AppLocalizationsHe extends AppLocalizations {
 
   @override
   String get manageSubscription => 'ניהול מנוי';
+
+  @override
+  String get subscriptionPendingMessage =>
+      'התשלום ממתין לאישור: המינוי יופעל מיד לאחר האישור.';
+
+  @override
+  String subscriptionEndsOn(String date) {
+    return 'החידוש האוטומטי כבוי: גישה עד $date';
+  }
 }

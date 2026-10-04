@@ -1496,4 +1496,13 @@ class AppLocalizationsSl extends AppLocalizations {
 
   @override
   String get manageSubscription => 'Upravljaj naročnino';
+
+  @override
+  String get subscriptionPendingMessage =>
+      'Plačilo čaka na potrditev: naročnina bo aktivirana takoj, ko bo potrjena.';
+
+  @override
+  String subscriptionEndsOn(String date) {
+    return 'Samodejno podaljšanje je izklopljeno: dostop do $date';
+  }
 }

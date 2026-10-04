@@ -1503,6 +1503,15 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get manageSubscription => 'Gérer l\'abonnement';
+
+  @override
+  String get subscriptionPendingMessage =>
+      'Paiement en attente de confirmation : votre abonnement sera activé dès sa validation.';
+
+  @override
+  String subscriptionEndsOn(String date) {
+    return 'Renouvellement automatique désactivé : accès jusqu\'au $date';
+  }
 }
 
 /// The translations for French, as used in Canada (`fr_CA`).
@@ -3004,4 +3013,13 @@ class AppLocalizationsFrCa extends AppLocalizationsFr {
 
   @override
   String get manageSubscription => 'Gérer l\'abonnement';
+
+  @override
+  String get subscriptionPendingMessage =>
+      'Paiement en attente de confirmation : votre abonnement sera activé dès sa validation.';
+
+  @override
+  String subscriptionEndsOn(String date) {
+    return 'Renouvellement automatique désactivé : accès jusqu\'au $date';
+  }
 }

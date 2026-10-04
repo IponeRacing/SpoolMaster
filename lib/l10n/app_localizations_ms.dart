@@ -1496,4 +1496,13 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get manageSubscription => 'Urus langganan';
+
+  @override
+  String get subscriptionPendingMessage =>
+      'Pembayaran menunggu pengesahan: langganan akan diaktifkan sebaik sahaja disahkan.';
+
+  @override
+  String subscriptionEndsOn(String date) {
+    return 'Pembaharuan automatik dimatikan: akses sehingga $date';
+  }
 }

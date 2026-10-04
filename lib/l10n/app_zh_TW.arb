@@ -530,5 +530,7 @@
   "nfcBlankTagTitle": "空白標籤",
   "nfcBlankTagDesc": "此標籤不含耗材捲資料。請手動新增耗材捲，或在 App 中寫入此標籤。",
   "subscriptionAutoRenewDisclosure": "確認購買時，款項將從您的商店帳戶扣款。除非在目前訂閱期間結束前至少24小時取消，否則訂閱將自動續訂；續訂費用將於期間結束前24小時內扣款。您可以在商店帳戶設定中管理或取消訂閱。",
-  "manageSubscription": "管理訂閱"
+  "manageSubscription": "管理訂閱",
+  "subscriptionPendingMessage": "付款等待確認：確認後訂閱將立即啟用。",
+  "subscriptionEndsOn": "已關閉自動續訂：可使用至 {date}"
 }

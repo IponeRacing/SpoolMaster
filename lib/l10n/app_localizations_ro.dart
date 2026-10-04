@@ -1499,4 +1499,13 @@ class AppLocalizationsRo extends AppLocalizations {
 
   @override
   String get manageSubscription => 'Gestionează abonamentul';
+
+  @override
+  String get subscriptionPendingMessage =>
+      'Plata așteaptă confirmarea: abonamentul va fi activat imediat ce aceasta este confirmată.';
+
+  @override
+  String subscriptionEndsOn(String date) {
+    return 'Reînnoirea automată este dezactivată: acces până la $date';
+  }
 }

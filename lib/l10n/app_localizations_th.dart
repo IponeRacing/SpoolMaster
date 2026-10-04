@@ -1494,4 +1494,13 @@ class AppLocalizationsTh extends AppLocalizations {
 
   @override
   String get manageSubscription => 'จัดการการสมัครสมาชิก';
+
+  @override
+  String get subscriptionPendingMessage =>
+      'การชำระเงินกำลังรอการยืนยัน: การสมัครสมาชิกจะเปิดใช้งานทันทีที่ได้รับการยืนยัน';
+
+  @override
+  String subscriptionEndsOn(String date) {
+    return 'ปิดการต่ออายุอัตโนมัติแล้ว: ใช้งานได้ถึง $date';
+  }
 }

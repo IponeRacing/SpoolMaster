@@ -530,5 +530,7 @@
   "nfcBlankTagTitle": "Prazna oznaka",
   "nfcBlankTagDesc": "Ova oznaka ne sadrži podatke o kolutu. Dodajte kolut ručno ili zapišite oznaku u aplikaciji.",
   "subscriptionAutoRenewDisclosure": "Plaćanje se naplaćuje s vašeg računa u trgovini nakon potvrde kupnje. Pretplata se automatski obnavlja osim ako se otkaže najmanje 24 sata prije kraja trenutačnog razdoblja; obnova se naplaćuje unutar 24 sata prije kraja razdoblja. Pretplatom možete upravljati ili je otkazati u postavkama svojeg računa u trgovini.",
-  "manageSubscription": "Upravljaj pretplatom"
+  "manageSubscription": "Upravljaj pretplatom",
+  "subscriptionPendingMessage": "Plaćanje čeka potvrdu: pretplata će se aktivirati čim bude potvrđena.",
+  "subscriptionEndsOn": "Automatska obnova je isključena: pristup do {date}"
 }

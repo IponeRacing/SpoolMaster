@@ -1498,4 +1498,13 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get manageSubscription => 'Zarządzaj subskrypcją';
+
+  @override
+  String get subscriptionPendingMessage =>
+      'Płatność oczekuje na potwierdzenie: subskrypcja zostanie aktywowana zaraz po jej potwierdzeniu.';
+
+  @override
+  String subscriptionEndsOn(String date) {
+    return 'Automatyczne odnawianie wyłączone: dostęp do $date';
+  }
 }

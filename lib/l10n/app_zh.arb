@@ -530,5 +530,7 @@
   "nfcBlankTagTitle": "空白标签",
   "nfcBlankTagDesc": "此标签不包含耗材盘数据。请手动添加耗材盘，或在应用中写入此标签。",
   "subscriptionAutoRenewDisclosure": "购买确认时，款项将从您的商店账户中扣除。除非在当前订阅周期结束前至少24小时取消，否则订阅将自动续订；续订费用将在周期结束前24小时内扣除。您可以在商店账户设置中管理或取消订阅。",
-  "manageSubscription": "管理订阅"
+  "manageSubscription": "管理订阅",
+  "subscriptionPendingMessage": "付款等待确认：确认后订阅将立即激活。",
+  "subscriptionEndsOn": "已关闭自动续订：可使用至 {date}"
 }

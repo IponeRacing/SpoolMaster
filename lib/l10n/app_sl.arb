@@ -530,5 +530,7 @@
   "nfcBlankTagTitle": "Prazna oznaka",
   "nfcBlankTagDesc": "Ta oznaka ne vsebuje podatkov o tuljavi. Tuljavo dodajte ročno ali oznako zapišite v aplikaciji.",
   "subscriptionAutoRenewDisclosure": "Plačilo se obremeni na vaš račun v trgovini ob potrditvi nakupa. Naročnina se samodejno obnovi, razen če jo prekličete vsaj 24 ur pred koncem trenutnega obdobja; obnova se zaračuna v 24 urah pred koncem obdobja. Naročnino lahko upravljate ali prekličete v nastavitvah svojega računa v trgovini.",
-  "manageSubscription": "Upravljaj naročnino"
+  "manageSubscription": "Upravljaj naročnino",
+  "subscriptionPendingMessage": "Plačilo čaka na potrditev: naročnina bo aktivirana takoj, ko bo potrjena.",
+  "subscriptionEndsOn": "Samodejno podaljšanje je izklopljeno: dostop do {date}"
 }

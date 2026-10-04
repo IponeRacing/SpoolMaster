@@ -1496,4 +1496,13 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get manageSubscription => 'सदस्यता प्रबंधित करें';
+
+  @override
+  String get subscriptionPendingMessage =>
+      'भुगतान पुष्टि की प्रतीक्षा में है: पुष्टि होते ही आपकी सदस्यता सक्रिय हो जाएगी।';
+
+  @override
+  String subscriptionEndsOn(String date) {
+    return 'स्वतः नवीनीकरण बंद है: $date तक पहुँच';
+  }
 }

@@ -1498,4 +1498,13 @@ class AppLocalizationsHr extends AppLocalizations {
 
   @override
   String get manageSubscription => 'Upravljaj pretplatom';
+
+  @override
+  String get subscriptionPendingMessage =>
+      'Plaćanje čeka potvrdu: pretplata će se aktivirati čim bude potvrđena.';
+
+  @override
+  String subscriptionEndsOn(String date) {
+    return 'Automatska obnova je isključena: pristup do $date';
+  }
 }

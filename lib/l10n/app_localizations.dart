@@ -2976,6 +2976,18 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Gérer l\'abonnement'**
   String get manageSubscription;
+
+  /// No description provided for @subscriptionPendingMessage.
+  ///
+  /// In fr, this message translates to:
+  /// **'Paiement en attente de confirmation : votre abonnement sera activé dès sa validation.'**
+  String get subscriptionPendingMessage;
+
+  /// Profil : abonnement dont le renouvellement automatique est coupé
+  ///
+  /// In fr, this message translates to:
+  /// **'Renouvellement automatique désactivé : accès jusqu\'au {date}'**
+  String subscriptionEndsOn(String date);
 }
 
 class _AppLocalizationsDelegate

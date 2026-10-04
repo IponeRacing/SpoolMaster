@@ -530,5 +530,7 @@
   "nfcBlankTagTitle": "Tom tagg",
   "nfcBlankTagDesc": "Den här taggen innehåller inga spoldata. Lägg till spolen manuellt eller skriv taggen i appen.",
   "subscriptionAutoRenewDisclosure": "Betalningen debiteras ditt butikskonto när köpet bekräftas. Prenumerationen förnyas automatiskt om den inte sägs upp minst 24 timmar före slutet av den aktuella perioden; förnyelsen debiteras inom 24 timmar före periodens slut. Du kan hantera eller säga upp din prenumeration i inställningarna för ditt butikskonto.",
-  "manageSubscription": "Hantera prenumeration"
+  "manageSubscription": "Hantera prenumeration",
+  "subscriptionPendingMessage": "Betalningen väntar på bekräftelse: prenumerationen aktiveras så snart den har bekräftats.",
+  "subscriptionEndsOn": "Automatisk förnyelse avstängd: åtkomst till {date}"
 }

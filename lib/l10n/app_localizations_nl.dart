@@ -1498,4 +1498,13 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get manageSubscription => 'Abonnement beheren';
+
+  @override
+  String get subscriptionPendingMessage =>
+      'Betaling wacht op bevestiging: uw abonnement wordt geactiveerd zodra deze is bevestigd.';
+
+  @override
+  String subscriptionEndsOn(String date) {
+    return 'Automatische verlenging uitgeschakeld: toegang tot $date';
+  }
 }

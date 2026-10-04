@@ -1497,4 +1497,13 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get manageSubscription => 'Kelola langganan';
+
+  @override
+  String get subscriptionPendingMessage =>
+      'Pembayaran menunggu konfirmasi: langganan akan diaktifkan segera setelah dikonfirmasi.';
+
+  @override
+  String subscriptionEndsOn(String date) {
+    return 'Perpanjangan otomatis nonaktif: akses hingga $date';
+  }
 }

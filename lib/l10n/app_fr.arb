@@ -592,5 +592,15 @@
     "description": "Explication + action quand le tag scanné est vierge"
   },
   "subscriptionAutoRenewDisclosure": "Le paiement est débité sur votre compte du store à la confirmation de l'achat. L'abonnement se renouvelle automatiquement, sauf résiliation au moins 24 heures avant la fin de la période en cours ; le renouvellement est facturé dans les 24 heures précédant la fin de la période. Vous pouvez gérer ou résilier l'abonnement dans les réglages de votre compte du store.",
-  "manageSubscription": "Gérer l'abonnement"
+  "manageSubscription": "Gérer l'abonnement",
+  "subscriptionPendingMessage": "Paiement en attente de confirmation : votre abonnement sera activé dès sa validation.",
+  "subscriptionEndsOn": "Renouvellement automatique désactivé : accès jusqu'au {date}",
+  "@subscriptionEndsOn": {
+    "description": "Profil : abonnement dont le renouvellement automatique est coupé",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  }
 }

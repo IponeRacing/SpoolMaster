@@ -1507,4 +1507,13 @@ class AppLocalizationsEl extends AppLocalizations {
 
   @override
   String get manageSubscription => 'Διαχείριση συνδρομής';
+
+  @override
+  String get subscriptionPendingMessage =>
+      'Η πληρωμή αναμένει επιβεβαίωση: η συνδρομή θα ενεργοποιηθεί μόλις επιβεβαιωθεί.';
+
+  @override
+  String subscriptionEndsOn(String date) {
+    return 'Η αυτόματη ανανέωση είναι απενεργοποιημένη: πρόσβαση έως $date';
+  }
 }

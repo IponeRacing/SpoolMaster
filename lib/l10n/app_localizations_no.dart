@@ -1497,4 +1497,13 @@ class AppLocalizationsNo extends AppLocalizations {
 
   @override
   String get manageSubscription => 'Administrer abonnement';
+
+  @override
+  String get subscriptionPendingMessage =>
+      'Betalingen venter på bekreftelse: abonnementet aktiveres så snart den er bekreftet.';
+
+  @override
+  String subscriptionEndsOn(String date) {
+    return 'Automatisk fornyelse er slått av: tilgang til $date';
+  }
 }

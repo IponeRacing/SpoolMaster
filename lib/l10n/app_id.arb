@@ -530,5 +530,7 @@
   "nfcBlankTagTitle": "Tag kosong",
   "nfcBlankTagDesc": "Tag ini tidak berisi data spool. Tambahkan spool secara manual atau tulis tag ini dari aplikasi.",
   "subscriptionAutoRenewDisclosure": "Pembayaran dibebankan ke akun toko Anda saat pembelian dikonfirmasi. Langganan diperpanjang secara otomatis kecuali dibatalkan setidaknya 24 jam sebelum akhir periode berjalan; biaya perpanjangan dibebankan dalam 24 jam sebelum akhir periode. Anda dapat mengelola atau membatalkan langganan di pengaturan akun toko Anda.",
-  "manageSubscription": "Kelola langganan"
+  "manageSubscription": "Kelola langganan",
+  "subscriptionPendingMessage": "Pembayaran menunggu konfirmasi: langganan akan diaktifkan segera setelah dikonfirmasi.",
+  "subscriptionEndsOn": "Perpanjangan otomatis nonaktif: akses hingga {date}"
 }

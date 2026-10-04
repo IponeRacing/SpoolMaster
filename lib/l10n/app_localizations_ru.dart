@@ -1498,4 +1498,13 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get manageSubscription => 'Управление подпиской';
+
+  @override
+  String get subscriptionPendingMessage =>
+      'Платёж ожидает подтверждения: подписка будет активирована сразу после подтверждения.';
+
+  @override
+  String subscriptionEndsOn(String date) {
+    return 'Автопродление отключено: доступ до $date';
+  }
 }

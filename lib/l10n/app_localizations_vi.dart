@@ -1497,4 +1497,13 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get manageSubscription => 'Quản lý gói đăng ký';
+
+  @override
+  String get subscriptionPendingMessage =>
+      'Thanh toán đang chờ xác nhận: gói đăng ký sẽ được kích hoạt ngay khi được xác nhận.';
+
+  @override
+  String subscriptionEndsOn(String date) {
+    return 'Đã tắt tự động gia hạn: truy cập đến $date';
+  }
 }

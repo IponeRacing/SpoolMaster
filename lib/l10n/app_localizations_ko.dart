@@ -1475,4 +1475,12 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get manageSubscription => '구독 관리';
+
+  @override
+  String get subscriptionPendingMessage => '결제 확인 대기 중입니다. 확인되는 즉시 구독이 활성화됩니다.';
+
+  @override
+  String subscriptionEndsOn(String date) {
+    return '자동 갱신 꺼짐: $date까지 이용 가능';
+  }
 }

@@ -8,6 +8,7 @@ import 'package:http/http.dart' as http;
 import 'package:nfc_filament/core/api/api_config.dart';
 import 'package:nfc_filament/core/models/user_model.dart';
 import 'package:nfc_filament/core/services/shopping_list_service.dart';
+import 'package:nfc_filament/core/services/subscription_service.dart';
 import 'package:nfc_filament/core/services/sync_service.dart';
 import 'package:nfc_filament/core/services/user_preferences_service.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
@@ -515,6 +516,9 @@ class AuthService {
       userName: authResponse.user.name,
       userEmail: authResponse.user.email,
     );
+
+    // Le premium suit le compte connecté
+    await SubscriptionService().onAccountChanged();
   }
 
   /// Efface jetons + profil du stockage sécurisé (sans toucher aux
@@ -533,6 +537,9 @@ class AuthService {
       // Toujours repasser en « non connecté », même si le stockage sécurisé
       // a échoué (la réconciliation au démarrage effacera les restes).
       await UserPreferencesService.signOut();
+      // Fin de session (déconnexion, refresh refusé, compte supprimé) : le
+      // premium du compte ne reste pas actif pour l'invité.
+      await SubscriptionService().onAccountChanged();
     }
   }
 }

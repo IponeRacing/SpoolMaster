@@ -1502,4 +1502,13 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get manageSubscription => 'Gerenciar assinatura';
+
+  @override
+  String get subscriptionPendingMessage =>
+      'Pagamento aguardando confirmação: a assinatura será ativada assim que for confirmada.';
+
+  @override
+  String subscriptionEndsOn(String date) {
+    return 'Renovação automática desativada: acesso até $date';
+  }
 }

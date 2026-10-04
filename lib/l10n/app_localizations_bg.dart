@@ -1501,4 +1501,13 @@ class AppLocalizationsBg extends AppLocalizations {
 
   @override
   String get manageSubscription => 'Управление на абонамента';
+
+  @override
+  String get subscriptionPendingMessage =>
+      'Плащането очаква потвърждение: абонаментът ще бъде активиран веднага след потвърждението.';
+
+  @override
+  String subscriptionEndsOn(String date) {
+    return 'Автоматичното подновяване е изключено: достъп до $date';
+  }
 }

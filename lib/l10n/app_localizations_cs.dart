@@ -1493,4 +1493,13 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get manageSubscription => 'Spravovat předplatné';
+
+  @override
+  String get subscriptionPendingMessage =>
+      'Platba čeká na potvrzení: předplatné bude aktivováno, jakmile bude potvrzena.';
+
+  @override
+  String subscriptionEndsOn(String date) {
+    return 'Automatické obnovení je vypnuto: přístup do $date';
+  }
 }

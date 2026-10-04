@@ -1497,6 +1497,15 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get manageSubscription => 'Manage subscription';
+
+  @override
+  String get subscriptionPendingMessage =>
+      'Payment awaiting confirmation: your subscription will be activated as soon as it is confirmed.';
+
+  @override
+  String subscriptionEndsOn(String date) {
+    return 'Auto-renewal is off: access until $date';
+  }
 }
 
 /// The translations for English, as used in Australia (`en_AU`).
@@ -2992,6 +3001,15 @@ class AppLocalizationsEnAu extends AppLocalizationsEn {
 
   @override
   String get manageSubscription => 'Manage subscription';
+
+  @override
+  String get subscriptionPendingMessage =>
+      'Payment awaiting confirmation: your subscription will be activated as soon as it is confirmed.';
+
+  @override
+  String subscriptionEndsOn(String date) {
+    return 'Auto-renewal is off: access until $date';
+  }
 }
 
 /// The translations for English, as used in Canada (`en_CA`).
@@ -4487,6 +4505,15 @@ class AppLocalizationsEnCa extends AppLocalizationsEn {
 
   @override
   String get manageSubscription => 'Manage subscription';
+
+  @override
+  String get subscriptionPendingMessage =>
+      'Payment awaiting confirmation: your subscription will be activated as soon as it is confirmed.';
+
+  @override
+  String subscriptionEndsOn(String date) {
+    return 'Auto-renewal is off: access until $date';
+  }
 }
 
 /// The translations for English, as used in the United Kingdom (`en_GB`).
@@ -5982,4 +6009,13 @@ class AppLocalizationsEnGb extends AppLocalizationsEn {
 
   @override
   String get manageSubscription => 'Manage subscription';
+
+  @override
+  String get subscriptionPendingMessage =>
+      'Payment awaiting confirmation: your subscription will be activated as soon as it is confirmed.';
+
+  @override
+  String subscriptionEndsOn(String date) {
+    return 'Auto-renewal is off: access until $date';
+  }
 }

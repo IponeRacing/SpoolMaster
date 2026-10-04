@@ -530,5 +530,7 @@
   "nfcBlankTagTitle": "Boş etiket",
   "nfcBlankTagDesc": "Bu etiket makara verisi içermiyor. Makarayı manuel olarak ekleyin veya etiketi uygulamadan yazın.",
   "subscriptionAutoRenewDisclosure": "Ödeme, satın alma onaylandığında mağaza hesabınızdan tahsil edilir. Abonelik, mevcut dönemin bitiminden en az 24 saat önce iptal edilmediği sürece otomatik olarak yenilenir; yenileme ücreti dönemin bitiminden önceki 24 saat içinde tahsil edilir. Aboneliğinizi mağaza hesabınızın ayarlarından yönetebilir veya iptal edebilirsiniz.",
-  "manageSubscription": "Aboneliği yönet"
+  "manageSubscription": "Aboneliği yönet",
+  "subscriptionPendingMessage": "Ödeme onay bekliyor: aboneliğiniz onaylandığı anda etkinleştirilecek.",
+  "subscriptionEndsOn": "Otomatik yenileme kapalı: {date} tarihine kadar erişim"
 }

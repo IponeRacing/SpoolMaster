@@ -530,5 +530,7 @@
   "nfcBlankTagTitle": "Üres címke",
   "nfcBlankTagDesc": "Ez a címke nem tartalmaz orsóadatokat. Adja hozzá az orsót kézzel, vagy írja meg a címkét az alkalmazásban.",
   "subscriptionAutoRenewDisclosure": "A fizetés a vásárlás megerősítésekor terheli az áruházi fiókját. Az előfizetés automatikusan megújul, hacsak nem mondja le legalább 24 órával az aktuális időszak vége előtt; a megújítás díját az időszak vége előtti 24 órában számlázzák. Az előfizetését az áruházi fiókja beállításaiban kezelheti vagy mondhatja le.",
-  "manageSubscription": "Előfizetés kezelése"
+  "manageSubscription": "Előfizetés kezelése",
+  "subscriptionPendingMessage": "A fizetés megerősítésre vár: az előfizetés a megerősítés után azonnal aktiválódik.",
+  "subscriptionEndsOn": "Automatikus megújítás kikapcsolva, hozzáférés eddig: {date}"
 }

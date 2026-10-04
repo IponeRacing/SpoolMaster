@@ -530,5 +530,7 @@
   "nfcBlankTagTitle": "Prázdná značka",
   "nfcBlankTagDesc": "Tato značka neobsahuje žádná data cívky. Přidejte cívku ručně nebo značku zapište v aplikaci.",
   "subscriptionAutoRenewDisclosure": "Platba je při potvrzení nákupu stržena z vašeho účtu v obchodě. Předplatné se automaticky obnovuje, pokud jej nezrušíte alespoň 24 hodin před koncem aktuálního období; obnovení je účtováno během 24 hodin před koncem období. Předplatné můžete spravovat nebo zrušit v nastavení svého účtu v obchodě.",
-  "manageSubscription": "Spravovat předplatné"
+  "manageSubscription": "Spravovat předplatné",
+  "subscriptionPendingMessage": "Platba čeká na potvrzení: předplatné bude aktivováno, jakmile bude potvrzena.",
+  "subscriptionEndsOn": "Automatické obnovení je vypnuto: přístup do {date}"
 }

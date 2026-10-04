@@ -1500,4 +1500,13 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String get manageSubscription => 'Előfizetés kezelése';
+
+  @override
+  String get subscriptionPendingMessage =>
+      'A fizetés megerősítésre vár: az előfizetés a megerősítés után azonnal aktiválódik.';
+
+  @override
+  String subscriptionEndsOn(String date) {
+    return 'Automatikus megújítás kikapcsolva, hozzáférés eddig: $date';
+  }
 }

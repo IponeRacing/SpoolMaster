@@ -168,9 +168,25 @@ class UserPreferencesService {
     return prefs.getString(_keyNfcMode) ?? 'anycubic'; // 'anycubic' par défaut
   }
 
+  /// Clé du cache premium : propre à chaque compte (avant : une seule clé,
+  /// le premium d'un compte restait actif pour le compte suivant). Invité :
+  /// ancienne clé globale (achats antérieurs à la connexion obligatoire).
+  static Future<String> _premiumKey() async {
+    String? userId;
+    try {
+      userId = await AuthService().getCurrentUserId();
+    } catch (e) {
+      debugPrint('Premium cache: compte courant illisible ($e)');
+    }
+    return (userId == null || userId.isEmpty) ? _keyIsPremium : '${_keyIsPremium}_$userId';
+  }
+
   static Future<bool> isPremium() async {
     final prefs = await SharedPreferences.getInstance();
-    return prefs.getBool(_keyIsPremium) ?? false;
+    final key = await _premiumKey();
+    // Compte sans cache (1er lancement après mise à jour) : ancienne valeur
+    // en attendant la synchro serveur, qui fait foi.
+    return prefs.getBool(key) ?? (prefs.getBool(_keyIsPremium) ?? false);
   }
 
   // Setters
@@ -210,7 +226,11 @@ class UserPreferencesService {
 
   static Future<void> setPremium({required bool isPremium}) async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool(_keyIsPremium, isPremium);
+    final key = await _premiumKey();
+    await prefs.setBool(key, isPremium);
+    // Dès qu'un compte a son propre cache, l'ancienne clé globale ne doit plus
+    // donner le premium à l'invité après déconnexion.
+    if (key != _keyIsPremium) await prefs.remove(_keyIsPremium);
     debugPrint('💎 Premium status saved: $isPremium');
   }
 

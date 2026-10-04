@@ -1497,4 +1497,13 @@ class AppLocalizationsFi extends AppLocalizations {
 
   @override
   String get manageSubscription => 'Hallitse tilausta';
+
+  @override
+  String get subscriptionPendingMessage =>
+      'Maksu odottaa vahvistusta: tilaus aktivoituu heti, kun maksu on vahvistettu.';
+
+  @override
+  String subscriptionEndsOn(String date) {
+    return 'Automaattinen uusiminen on pois päältä: käyttöoikeus $date asti';
+  }
 }

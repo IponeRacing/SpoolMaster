@@ -1489,4 +1489,13 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get manageSubscription => 'إدارة الاشتراك';
+
+  @override
+  String get subscriptionPendingMessage =>
+      'الدفع في انتظار التأكيد: سيتم تفعيل اشتراكك فور تأكيده.';
+
+  @override
+  String subscriptionEndsOn(String date) {
+    return 'التجديد التلقائي متوقف: الوصول حتى $date';
+  }
 }

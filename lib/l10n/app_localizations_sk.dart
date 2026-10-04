@@ -1496,4 +1496,13 @@ class AppLocalizationsSk extends AppLocalizations {
 
   @override
   String get manageSubscription => 'Spravovať predplatné';
+
+  @override
+  String get subscriptionPendingMessage =>
+      'Platba čaká na potvrdenie: predplatné sa aktivuje hneď po jej potvrdení.';
+
+  @override
+  String subscriptionEndsOn(String date) {
+    return 'Automatické obnovenie je vypnuté: prístup do $date';
+  }
 }

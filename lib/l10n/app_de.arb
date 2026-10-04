@@ -530,5 +530,7 @@
   "nfcBlankTagTitle": "Leeres Tag",
   "nfcBlankTagDesc": "Dieses Tag enthält keine Spulendaten. Fügen Sie die Spule manuell hinzu oder beschreiben Sie das Tag in der App.",
   "subscriptionAutoRenewDisclosure": "Die Zahlung wird bei Bestätigung des Kaufs Ihrem Store-Konto belastet. Das Abonnement verlängert sich automatisch, es sei denn, es wird mindestens 24 Stunden vor Ende des aktuellen Zeitraums gekündigt; die Verlängerung wird innerhalb von 24 Stunden vor Ende des Zeitraums berechnet. Sie können Ihr Abonnement in den Einstellungen Ihres Store-Kontos verwalten oder kündigen.",
-  "manageSubscription": "Abonnement verwalten"
+  "manageSubscription": "Abonnement verwalten",
+  "subscriptionPendingMessage": "Zahlung ausstehend: Ihr Abonnement wird aktiviert, sobald die Zahlung bestätigt ist.",
+  "subscriptionEndsOn": "Automatische Verlängerung deaktiviert: Zugang bis {date}"
 }

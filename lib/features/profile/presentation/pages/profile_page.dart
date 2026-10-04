@@ -31,6 +31,7 @@ class _ProfilePageState extends State<ProfilePage> {
   bool _isLoading = true;
   bool _isPremium = false;
   bool _isLoadingSubscription = false;
+  SubscriptionDetails? _subscriptionDetails;
   List<ProductDetails> _products = [];
   String _appVersion = '';
 
@@ -60,6 +61,32 @@ class _ProfilePageState extends State<ProfilePage> {
   void initState() {
     super.initState();
     _loadPreferences();
+    final subscriptions = SubscriptionService();
+    subscriptions.premiumStatusNotifier.addListener(_onSubscriptionChanged);
+    subscriptions.detailsNotifier.addListener(_onSubscriptionChanged);
+    subscriptions.productsNotifier.addListener(_onSubscriptionChanged);
+    // Détail à jour (renouvellement coupé, échéance) à l'ouverture du profil
+    SubscriptionService().syncSubscriptionStatusWithServer();
+  }
+
+  @override
+  void dispose() {
+    final subscriptions = SubscriptionService();
+    subscriptions.premiumStatusNotifier.removeListener(_onSubscriptionChanged);
+    subscriptions.detailsNotifier.removeListener(_onSubscriptionChanged);
+    subscriptions.productsNotifier.removeListener(_onSubscriptionChanged);
+    super.dispose();
+  }
+
+  /// Statut, détail et prix suivent le service (achat vérifié en arrière-plan,
+  /// synchro serveur, produits chargés après l'ouverture de la page).
+  void _onSubscriptionChanged() {
+    if (!mounted) return;
+    setState(() {
+      _isPremium = SubscriptionService().isPremium;
+      _subscriptionDetails = SubscriptionService().detailsNotifier.value;
+      _products = SubscriptionService().products;
+    });
   }
 
   Future<void> _loadPreferences() async {
@@ -83,7 +110,8 @@ class _ProfilePageState extends State<ProfilePage> {
     _selectedCurrency = await UserPreferencesService.getCurrency();
     _selectedUnits = await UserPreferencesService.getUnits();
     _lowStockThreshold = await UserPreferencesService.getLowStockThreshold();
-    _isPremium = await UserPreferencesService.isPremium();
+    _isPremium = SubscriptionService().isPremium;
+    _subscriptionDetails = SubscriptionService().detailsNotifier.value;
     // Charger les produits depuis le store pour afficher les prix dynamiques
     _products = SubscriptionService().products;
     final packageInfo = await PackageInfo.fromPlatform();
@@ -91,68 +119,67 @@ class _ProfilePageState extends State<ProfilePage> {
     setState(() => _isLoading = false);
   }
 
-  Future<void> _purchaseSubscription(String productId) async {
-    // Block purchase if not logged in
-    final token = await AuthService().getAccessToken();
-    if (token == null) {
-      if (!mounted) return;
-      final shouldLogin = await showDialog<bool>(
-        context: context,
-        builder: (ctx) => AlertDialog(
-          title: Text(AppLocalizations.of(ctx)!.authentication),
-          content: Text(AppLocalizations.of(ctx)!.signInToSync),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(ctx).pop(false),
-              child: Text(AppLocalizations.of(ctx)!.cancel),
-            ),
-            ElevatedButton(
-              onPressed: () => Navigator.of(ctx).pop(true),
-              child: Text(AppLocalizations.of(ctx)!.signIn),
-            ),
-          ],
-        ),
+  /// Achat et restauration exigent un compte : l'abonnement y est rattaché.
+  Future<bool> _ensureSignedIn() async {
+    if (await AuthService().getAccessToken() != null) return true;
+    if (!mounted) return false;
+    final shouldLogin = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(AppLocalizations.of(ctx)!.authentication),
+        content: Text(AppLocalizations.of(ctx)!.signInToSync),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(ctx).pop(false),
+            child: Text(AppLocalizations.of(ctx)!.cancel),
+          ),
+          ElevatedButton(
+            onPressed: () => Navigator.of(ctx).pop(true),
+            child: Text(AppLocalizations.of(ctx)!.signIn),
+          ),
+        ],
+      ),
+    );
+    if (shouldLogin == true && mounted) {
+      await Navigator.of(context).push(
+        MaterialPageRoute<void>(builder: (_) => const LoginPage()),
       );
-      if (shouldLogin == true && mounted) {
-        await Navigator.of(context).push(
-          MaterialPageRoute<void>(builder: (_) => const LoginPage()),
-        );
-        await _loadPreferences();
-      }
-      return;
+      await _loadPreferences();
     }
+    return false;
+  }
+
+  void _showSubscriptionSnack(String message, Color color) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(message), backgroundColor: color),
+    );
+  }
+
+  Future<void> _purchaseSubscription(String productId) async {
+    if (!await _ensureSignedIn()) return;
 
     setState(() => _isLoadingSubscription = true);
-
     try {
-      final success = await SubscriptionService().purchaseSubscription(productId);
-
-      if (success && mounted) {
-        setState(() => _isPremium = true);
-
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(AppLocalizations.of(context)!.subscriptionActivatedMessage),
-            backgroundColor: Colors.green,
-          ),
-        );
-      } else if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(AppLocalizations.of(context)!.subscriptionFailedMessage),
-            backgroundColor: Colors.red,
-          ),
-        );
+      // Issue réelle de l'achat (avant : fermer la feuille de paiement
+      // affichait « Abonnement activé »)
+      final outcome = await SubscriptionService().purchaseSubscription(productId);
+      if (!mounted) return;
+      final l10n = AppLocalizations.of(context)!;
+      switch (outcome) {
+        case PurchaseOutcome.success:
+          setState(() => _isPremium = true);
+          _showSubscriptionSnack(l10n.subscriptionActivatedMessage, Colors.green);
+        case PurchaseOutcome.cancelled:
+          break;
+        case PurchaseOutcome.pending:
+          _showSubscriptionSnack(l10n.subscriptionPendingMessage, Colors.orange);
+        case PurchaseOutcome.failed:
+          _showSubscriptionSnack(l10n.subscriptionFailedMessage, Colors.red);
       }
     } catch (e) {
       debugPrint('Subscription purchase error: $e');
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(AppLocalizations.of(context)!.subscriptionFailedMessage),
-            backgroundColor: Colors.red,
-          ),
-        );
+        _showSubscriptionSnack(AppLocalizations.of(context)!.subscriptionFailedMessage, Colors.red);
       }
     } finally {
       if (mounted) {
@@ -162,34 +189,23 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Future<void> _restorePurchases() async {
+    if (!await _ensureSignedIn()) return;
+
     setState(() => _isLoadingSubscription = true);
-
     try {
-      await SubscriptionService().restorePurchases();
-      final isPremium = await UserPreferencesService.isPremium();
-
+      // Statut final après vérification serveur de chaque achat restauré
+      final isPremium = await SubscriptionService().restorePurchases();
       if (mounted) {
         setState(() => _isPremium = isPremium);
-
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              isPremium
-                ? AppLocalizations.of(context)!.subscriptionRestoredMessage
-                : AppLocalizations.of(context)!.noSubscriptionFoundMessage
-            ),
-            backgroundColor: isPremium ? Colors.green : Colors.orange,
-          ),
+        final l10n = AppLocalizations.of(context)!;
+        _showSubscriptionSnack(
+          isPremium ? l10n.subscriptionRestoredMessage : l10n.noSubscriptionFoundMessage,
+          isPremium ? Colors.green : Colors.orange,
         );
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(AppLocalizations.of(context)!.errorMessage(e.toString())),
-            backgroundColor: Colors.red,
-          ),
-        );
+        _showSubscriptionSnack(AppLocalizations.of(context)!.errorMessage(e.toString()), Colors.red);
       }
     } finally {
       if (mounted) {
@@ -778,13 +794,34 @@ class _ProfilePageState extends State<ProfilePage> {
                           Icon(Icons.check_circle, color: Colors.green.shade700, size: 20),
                           const SizedBox(width: 8),
                           Expanded(
-                            child: Text(
-                              AppLocalizations.of(context)!.noAdsExperienceMessage,
-                              style: TextStyle(
-                                fontSize: 13,
-                                color: Colors.green.shade900,
-                                height: 1.4,
-                              ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  AppLocalizations.of(context)!.noAdsExperienceMessage,
+                                  style: TextStyle(
+                                    fontSize: 13,
+                                    color: Colors.green.shade900,
+                                    height: 1.4,
+                                  ),
+                                ),
+                                // Renouvellement coupé : l'accès s'arrête à l'échéance
+                                if (_subscriptionDetails?.endsAtExpiry ?? false) ...[
+                                  const SizedBox(height: 6),
+                                  Text(
+                                    AppLocalizations.of(context)!.subscriptionEndsOn(
+                                      MaterialLocalizations.of(context)
+                                          .formatMediumDate(_subscriptionDetails!.expiresAt!.toLocal()),
+                                    ),
+                                    key: const Key('subscriptionEndsOn'),
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      color: Colors.orange.shade900,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                ],
+                              ],
                             ),
                           ),
                         ],
@@ -1048,6 +1085,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   Center(
                     child: Wrap(
                       alignment: WrapAlignment.center,
+                      spacing: 8,
                       children: [
                         TextButton(
                           onPressed: () async {
@@ -1061,7 +1099,6 @@ class _ProfilePageState extends State<ProfilePage> {
                             style: TextStyle(fontSize: 12, color: Colors.grey.shade600),
                           ),
                         ),
-                        Text(' • ', style: TextStyle(color: Colors.grey.shade400)),
                         TextButton(
                           onPressed: () async {
                             final uri = Uri.parse('https://api.engageengine.ch/privacy-policy.php');

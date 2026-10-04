@@ -102,6 +102,9 @@ void main() {
 
     final signedIn = await UserPreferencesService.isSignedIn();
     if (!signedIn) {
+      // Nettoyage garanti même si une étape échoue : jamais de données de
+      // test laissées sur un appareil.
+      addTearDown(cleanup);
       await cleanup();
       await SpoolStorageService.addSpools([
         e2eSpool('pla1', material: 'PLA', color: 'White', rgb: 0xFFFFFFFF),
@@ -283,6 +286,23 @@ void main() {
     );
     expect(find.byKey(const Key('shareShoppingListButton')), findsOneWidget);
     await shot(tester, '09_shopping_list');
+
+    // --- Profil : conditions d'abonnement + « Gérer l'abonnement » (3.1.2) ---
+    await tester.tap(find.byIcon(Icons.person).first);
+    await pumpFor(tester, 2500);
+    await tester.scrollUntilVisible(
+      find.byKey(const Key('subscriptionAutoRenewDisclosure')),
+      300,
+      scrollable: find.byType(Scrollable).first,
+    );
+    expect(find.byKey(const Key('subscriptionAutoRenewDisclosure')), findsOneWidget);
+    expect(find.byKey(const Key('manageSubscriptionButton')), findsOneWidget);
+    await tester.ensureVisible(find.byKey(const Key('manageSubscriptionButton')));
+    await pumpFor(tester, 600);
+    await shot(tester, '10_subscription');
+    // La page Profil a son propre bouton retour (pas un BackButton) : pop direct.
+    Navigator.of(tester.element(find.byKey(const Key('manageSubscriptionButton')))).pop();
+    await pumpFor(tester, 800);
 
     // --- Nettoyage ---
     await cleanup();

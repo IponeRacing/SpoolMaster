@@ -1502,4 +1502,13 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get manageSubscription => 'Gestionar suscripción';
+
+  @override
+  String get subscriptionPendingMessage =>
+      'Pago pendiente de confirmación: la suscripción se activará en cuanto se confirme.';
+
+  @override
+  String subscriptionEndsOn(String date) {
+    return 'Renovación automática desactivada: acceso hasta el $date';
+  }
 }

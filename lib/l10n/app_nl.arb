@@ -530,5 +530,7 @@
   "nfcBlankTagTitle": "Lege tag",
   "nfcBlankTagDesc": "Deze tag bevat geen spoelgegevens. Voeg de spoel handmatig toe of beschrijf deze tag via de app.",
   "subscriptionAutoRenewDisclosure": "De betaling wordt bij bevestiging van de aankoop in rekening gebracht via je winkelaccount. Het abonnement wordt automatisch verlengd, tenzij het ten minste 24 uur voor het einde van de huidige periode wordt opgezegd; de verlenging wordt binnen 24 uur voor het einde van de periode in rekening gebracht. Je kunt je abonnement beheren of opzeggen in de instellingen van je winkelaccount.",
-  "manageSubscription": "Abonnement beheren"
+  "manageSubscription": "Abonnement beheren",
+  "subscriptionPendingMessage": "Betaling wacht op bevestiging: uw abonnement wordt geactiveerd zodra deze is bevestigd.",
+  "subscriptionEndsOn": "Automatische verlenging uitgeschakeld: toegang tot {date}"
 }

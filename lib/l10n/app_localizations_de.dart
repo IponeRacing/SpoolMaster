@@ -1512,4 +1512,13 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get manageSubscription => 'Abonnement verwalten';
+
+  @override
+  String get subscriptionPendingMessage =>
+      'Zahlung ausstehend: Ihr Abonnement wird aktiviert, sobald die Zahlung bestätigt ist.';
+
+  @override
+  String subscriptionEndsOn(String date) {
+    return 'Automatische Verlängerung deaktiviert: Zugang bis $date';
+  }
 }

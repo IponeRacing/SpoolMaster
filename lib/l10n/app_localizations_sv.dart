@@ -1498,4 +1498,13 @@ class AppLocalizationsSv extends AppLocalizations {
 
   @override
   String get manageSubscription => 'Hantera prenumeration';
+
+  @override
+  String get subscriptionPendingMessage =>
+      'Betalningen väntar på bekräftelse: prenumerationen aktiveras så snart den har bekräftats.';
+
+  @override
+  String subscriptionEndsOn(String date) {
+    return 'Automatisk förnyelse avstängd: åtkomst till $date';
+  }
 }

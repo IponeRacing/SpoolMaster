@@ -1500,4 +1500,13 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get manageSubscription => 'Керувати підпискою';
+
+  @override
+  String get subscriptionPendingMessage =>
+      'Платіж очікує підтвердження: підписку буде активовано одразу після підтвердження.';
+
+  @override
+  String subscriptionEndsOn(String date) {
+    return 'Автопродовження вимкнено: доступ до $date';
+  }
 }
