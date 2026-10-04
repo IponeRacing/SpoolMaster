@@ -289,8 +289,11 @@ class _ProfilePageState extends State<ProfilePage> {
       );
 
       if (response.statusCode == 200) {
-        // Déconnecter l'utilisateur localement
-        await UserPreferencesService.signOut();
+        // Déconnecter l'utilisateur localement : jetons compris (avant, seul
+        // isSignedIn était remis à false et le stock du compte restait
+        // affiché).
+        await AuthService().clearLocalSession();
+        _refreshAppAfterSessionChange();
         await _loadPreferences();
 
         if (mounted) {
@@ -315,6 +318,50 @@ class _ProfilePageState extends State<ProfilePage> {
         );
       }
     }
+  }
+
+  /// Déconnexion complète : jetons du stockage sécurisé effacés + révocation
+  /// serveur (AuthService.logout), puis rafraîchissement de l'UI. Avant, seul
+  /// isSignedIn passait à false : getCurrentUserId() renvoyait toujours le
+  /// compte et le stock du compte restait affiché.
+  Future<void> _signOut() async {
+    try {
+      await AuthService().logout();
+    } catch (e) {
+      debugPrint('Sign out error: $e');
+      // Au minimum, repasser en « non connecté » (les jetons restants seront
+      // effacés par la réconciliation au prochain démarrage).
+      await UserPreferencesService.signOut();
+    }
+    _refreshAppAfterSessionChange();
+    await _loadPreferences();
+  }
+
+  /// Après un changement de session, la clé de stockage change (compte ↔
+  /// invité) : recharger Stock et Statistiques.
+  void _refreshAppAfterSessionChange() {
+    SpoolStorageService.stockChangedNotifier.value++;
+    mainNavigationKey.currentState?.refreshPages();
+  }
+
+  /// Carte du compte connecté. Le nom peut être vide (Apple ne le donne qu'à
+  /// la 1re connexion) : on affiche alors l'e-mail, sinon un libellé générique.
+  Widget _buildAccountTile(BuildContext context) {
+    final name = _userName?.trim() ?? '';
+    final email = _userEmail?.trim() ?? '';
+    final title = name.isNotEmpty
+        ? name
+        : (email.isNotEmpty ? email : AppLocalizations.of(context)!.profile);
+    final initial = name.isNotEmpty
+        ? name.characters.first.toUpperCase()
+        : (email.isNotEmpty ? email.characters.first.toUpperCase() : null);
+    return ListTile(
+      leading: CircleAvatar(
+        child: initial != null ? Text(initial) : const Icon(Icons.person),
+      ),
+      title: Text(title),
+      subtitle: name.isNotEmpty && email.isNotEmpty ? Text(email) : null,
+    );
   }
 
   String _getCurrencyName(BuildContext context, String currency) {
@@ -400,19 +447,12 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                   ),
                   const SizedBox(height: 16),
-                  if (_isSignedIn && _userName != null) ...[
-                    ListTile(
-                      leading: CircleAvatar(
-                        child: Text(_userName![0].toUpperCase()),
-                      ),
-                      title: Text(_userName!),
-                      subtitle: _userEmail != null ? Text(_userEmail!) : null,
-                    ),
+                  if (_isSignedIn) ...[
+                    _buildAccountTile(context),
                     const SizedBox(height: 8),
                     OutlinedButton.icon(
                       onPressed: () async {
-                        await UserPreferencesService.signOut();
-                        await _loadPreferences();
+                        await _signOut();
                         if (!context.mounted) return;
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(

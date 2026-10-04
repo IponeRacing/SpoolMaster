@@ -107,7 +107,9 @@ class _ManualAddSpoolPageState extends State<ManualAddSpoolPage> {
     _locationController = TextEditingController(text: spool?.location ?? '');
     _notesController = TextEditingController(text: spool?.notes ?? '');
     if (spool != null) {
-      _selectedColor = Color(spool.colorRgb);
+      // Les bobines scannées stockent un RGB 24 bits (alpha 0) : alpha forcé,
+      // comme partout ailleurs, sinon la couleur s'affiche transparente.
+      _selectedColor = Color(0xFF000000 | spool.colorRgb);
     }
   }
 
