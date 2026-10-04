@@ -6,6 +6,7 @@
 
 namespace NfcAnycubic\Middleware;
 
+use NfcAnycubic\Database;
 use NfcAnycubic\JWTHandler;
 use NfcAnycubic\Logger;
 
@@ -33,6 +34,13 @@ class AuthMiddleware {
         // Vérifier si le token est révoqué
         if (isset($decoded->jti) && $jwt->isTokenRevoked($decoded->jti)) {
             self::unauthorizedResponse('Token has been revoked');
+            return null;
+        }
+
+        // Compte supprimé : son JWT reste signé et non expiré, mais ne doit
+        // plus rien ouvrir (sinon écritures orphelines refusées par les FK).
+        if (!self::userExists($decoded->data->user_id ?? null)) {
+            self::unauthorizedResponse('Account no longer exists');
             return null;
         }
 
@@ -75,7 +83,19 @@ class AuthMiddleware {
         $decoded = $jwt->verifyToken($token);
         if (!$decoded) return null;
         if (isset($decoded->jti) && $jwt->isTokenRevoked($decoded->jti)) return null;
+        // Compte supprimé → traité comme anonyme
+        if (!self::userExists($decoded->data->user_id ?? null)) return null;
         Logger::setUserId($decoded->data->user_id ?? null);
         return $decoded->data->user_id ?? null;
+    }
+
+    /** true si le compte existe encore (requête indexée sur users.user_id). */
+    private static function userExists(?string $userId): bool {
+        if ($userId === null || $userId === '') return false;
+        $stmt = Database::getInstance()->getConnection()->prepare(
+            "SELECT 1 FROM users WHERE user_id = :user_id LIMIT 1"
+        );
+        $stmt->execute(['user_id' => $userId]);
+        return $stmt->fetchColumn() !== false;
     }
 }
