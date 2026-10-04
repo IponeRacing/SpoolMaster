@@ -51,8 +51,11 @@ class Router {
                 // Execute handler
                 $result = $this->executeHandler($route['handler'], $params);
 
+                // Ne pas forcer 200 : garder le code posé par le contrôleur
+                // (404, 400, 500…). Avant, toutes les erreurs métier sortaient
+                // en 200 + success:false → l'app prenait un PUT refusé pour un
+                // succès, et les webhooks Apple ne réessayaient jamais.
                 if ($result !== null) {
-                    http_response_code(200);
                     echo json_encode($result);
                 }
                 return;

@@ -246,6 +246,38 @@ class ReportController {
         ");
         $report['syncs_24h'] = $stmt->fetch();
 
+        // ── 15. Erreurs de sync remontées par l'app (24h) ──
+        // sync_error = push/pull/PUT/DELETE en échec ; sync_op_abandoned =
+        // opération abandonnée après N essais (= bobine non sauvegardée).
+        $stmt = $db->query("
+            SELECT
+                event_type,
+                JSON_UNQUOTE(JSON_EXTRACT(event_data, '$.op')) AS op,
+                JSON_UNQUOTE(JSON_EXTRACT(event_data, '$.http_status')) AS http_status,
+                JSON_UNQUOTE(JSON_EXTRACT(event_data, '$.error_type')) AS error_type,
+                COUNT(*) AS nb,
+                COUNT(DISTINCT COALESCE(user_id, JSON_UNQUOTE(JSON_EXTRACT(event_data, '$.install_id')))) AS users,
+                MAX(app_version) AS app_version
+            FROM analytics
+            WHERE event_type IN ('sync_error', 'sync_op_abandoned')
+              AND created_at >= DATE_SUB(NOW(), INTERVAL 24 HOUR)
+            GROUP BY event_type, op, http_status, error_type
+            ORDER BY nb DESC
+            LIMIT 10
+        ");
+        $report['sync_errors'] = $stmt->fetchAll();
+
+        // ── 16. Push serveur en échec / partiels (24h) ──
+        $stmt = $db->query("
+            SELECT created_at, user_id, sync_type, status, items_synced, error_message
+            FROM sync_history
+            WHERE status != 'success'
+              AND created_at >= DATE_SUB(NOW(), INTERVAL 24 HOUR)
+            ORDER BY created_at DESC
+            LIMIT 10
+        ");
+        $report['sync_failures'] = $stmt->fetchAll();
+
         return $report;
     }
 
@@ -356,6 +388,33 @@ class ReportController {
             $html .= "</table></div>";
         }
 
+        // Santé de la sync (erreurs app + push serveur en échec)
+        if (!empty($r['sync_errors'])) {
+            $html .= $this->tableSection('Erreurs de sync (app)', ['Événement / op', 'HTTP', 'Type', 'Nb', 'Users', 'Version'], array_map(function($row) {
+                $e = fn($v) => \htmlspecialchars((string)($v ?? '-'), ENT_QUOTES, 'UTF-8');
+                return [
+                    $e($row['event_type']) . ' / ' . $e($row['op']),
+                    $e($row['http_status']),
+                    $e($row['error_type']),
+                    (int)$row['nb'],
+                    (int)$row['users'],
+                    $e($row['app_version']),
+                ];
+            }, $r['sync_errors']));
+        }
+        if (!empty($r['sync_failures'])) {
+            $html .= $this->tableSection('Syncs serveur en échec', ['Heure', 'User', 'Statut', 'OK', 'Erreur'], array_map(function($row) {
+                $e = fn($v) => \htmlspecialchars((string)($v ?? '-'), ENT_QUOTES, 'UTF-8');
+                return [
+                    \substr($row['created_at'] ?? '', 11, 5),
+                    $e(\substr($row['user_id'] ?? '', 0, 8)),
+                    $e($row['sync_type'] . ' ' . $row['status']),
+                    (int)$row['items_synced'],
+                    $e(\mb_substr($row['error_message'] ?? '', 0, 120)),
+                ];
+            }, $r['sync_failures']));
+        }
+
         // Abonnements
         $subs = $r['subscriptions'];
         $html .= "<div style='background: white; padding: 20px; border-bottom: 1px solid #eee;'>";
@@ -428,6 +487,23 @@ class ReportController {
         $subject = "[Spool Master] Rapport {$report['date']} - {$today['total']} scans, {$today['success_rate']}% succes";
 
         return $this->smtpSend($host, $port, $user, $pass, $from, $to, $subject, $html);
+    }
+
+    /**
+     * Envoie une alerte ponctuelle à info@ via le même SMTP que le rapport
+     * journalier (mail() est désactivé chez Infomaniak).
+     */
+    public function sendAlert(string $subject, string $html): bool {
+        $to = \getenv('SMTP_FROM') ?: 'info@engageengine.ch';
+        $user = \getenv('SMTP_USER') ?: '';
+        $pass = \getenv('SMTP_PASS') ?: '';
+        if (empty($user) || empty($pass)) {
+            \error_log("⚠️ [ALERT] SMTP credentials not configured");
+            return false;
+        }
+        $host = \getenv('SMTP_HOST') ?: 'mail.infomaniak.com';
+        $port = (int)(\getenv('SMTP_PORT') ?: 587);
+        return $this->smtpSend($host, $port, $user, $pass, $to, $to, $subject, $html);
     }
 
     /**

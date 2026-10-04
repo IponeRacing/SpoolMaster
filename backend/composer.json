@@ -3,10 +3,10 @@
     "description": "NFC Anycubic Backend API - OAuth Apple & Google",
     "type": "project",
     "require": {
-        "php": ">=7.4",
+        "php": ">=8.0",
         "ext-pdo": "*",
         "ext-json": "*",
-        "firebase/php-jwt": "^6.10"
+        "firebase/php-jwt": "^7.2"
     },
     "autoload": {
         "psr-4": {

@@ -7,6 +7,7 @@
 namespace NfcAnycubic\Controllers;
 
 use NfcAnycubic\Database;
+use NfcAnycubic\Logger;
 use NfcAnycubic\Middleware\AuthMiddleware;
 
 class AnalyticsController {
@@ -47,16 +48,19 @@ class AnalyticsController {
 
         $eventId = $db->lastInsertId();
 
-        // Envoyer un mail quand un scan echoue ou qu'un user soumet un feedback
-        $eventData = $input['event_data'] ?? [];
-        $platform = $input['device_platform'] ?? 'ios';
-        $appVersion = $input['app_version'] ?? '?';
-
-        if (
-            (in_array($input['event_type'], ['scan_nfc', 'scan_nfc_auto_detect']) && isset($eventData['success']) && $eventData['success'] === false)
-            || $input['event_type'] === 'scan_feedback'
-        ) {
-            $this->notifyUnmatchedScan($userId, $eventData, $platform, $appVersion, $input['event_type']);
+        // E-mail uniquement pour un feedback utilisateur (rare, saisi à la main).
+        // Les scans ratés sont agrégés dans le rapport journalier : un e-mail
+        // par échec (timeouts compris, ~5/jour) serait du bruit.
+        if ($input['event_type'] === 'scan_feedback') {
+            $eventData = is_array($input['event_data'] ?? null) ? $input['event_data'] : [];
+            $platform = $input['device_platform'] ?? 'ios';
+            $appVersion = $input['app_version'] ?? '?';
+            try {
+                $this->notifyUnmatchedScan($userId, $eventData, $platform, $appVersion, $input['event_type']);
+            } catch (\Throwable $e) {
+                // L'événement est déjà enregistré : ne pas renvoyer 500 au client.
+                Logger::exception('analytics.feedback_mail', $e);
+            }
         }
 
         return [
@@ -69,7 +73,6 @@ class AnalyticsController {
      * Envoie un mail unique contenant les raw data ET le feedback utilisateur
      */
     private function notifyUnmatchedScan(?string $userId, array $eventData, string $platform, string $appVersion, string $eventType): void {
-        $to = 'info@engageengine.ch';
         $isFeedback = $eventType === 'scan_feedback';
         $subject = $isFeedback
             ? '[Spool Master] Scan NFC non reconnu + feedback utilisateur'
@@ -119,16 +122,12 @@ class AnalyticsController {
             if (!empty($eventData['batch_number'])) $body .= "Numero de lot: {$eventData['batch_number']}\n";
         }
 
-        $headers = "From: noreply@engageengine.ch\r\n";
-        $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
-
-        // mail() est désactivé sur Infomaniak (SMTP uniquement) → ne pas
-        // fataliser l'endpoint. On logge l'alerte ; l'INSERT analytics a déjà
-        // eu lieu en amont. (TODO: brancher sur le smtpSend du ReportController.)
-        if (\function_exists('mail')) {
-            @\mail($to, $subject, $body, $headers);
-        } else {
-            \error_log("⚠️ [scan non reconnu] " . str_replace("\n", " | ", $body));
+        // mail() est désactivé chez Infomaniak → SMTP du rapport journalier.
+        $html = '<pre style="font-family: monospace; font-size: 13px;">'
+            . \htmlspecialchars($body, ENT_QUOTES, 'UTF-8') . '</pre>';
+        if (!(new ReportController())->sendAlert($subject, $html)) {
+            // Envoi raté : garder le contenu dans le journal pour ne pas le perdre.
+            Logger::error('analytics.feedback_mail', 'Envoi SMTP échoué', ['body' => $body]);
         }
     }
 

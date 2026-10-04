@@ -7,6 +7,7 @@
 namespace NfcAnycubic\Middleware;
 
 use NfcAnycubic\JWTHandler;
+use NfcAnycubic\Logger;
 
 class AuthMiddleware {
 
@@ -34,6 +35,9 @@ class AuthMiddleware {
             self::unauthorizedResponse('Token has been revoked');
             return null;
         }
+
+        // Contexte de log : chaque erreur de cette requête porte l'user_id.
+        Logger::setUserId($decoded->data->user_id ?? null);
 
         return $decoded;
     }
@@ -71,6 +75,7 @@ class AuthMiddleware {
         $decoded = $jwt->verifyToken($token);
         if (!$decoded) return null;
         if (isset($decoded->jti) && $jwt->isTokenRevoked($decoded->jti)) return null;
+        Logger::setUserId($decoded->data->user_id ?? null);
         return $decoded->data->user_id ?? null;
     }
 }
