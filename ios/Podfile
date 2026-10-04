@@ -29,6 +29,21 @@ flutter_ios_podfile_setup
 target 'Runner' do
   use_frameworks!
 
+  # Plugins de test (dev_dependencies) : Debug / Profile uniquement, jamais
+  # dans l'app publiée. Flutter 3.44 ne les exclut pas encore des builds iOS
+  # release (flutter#163874) ; le registre généré est nettoyé en Release par
+  # la phase « Strip dev plugins (Release) » de la target Runner.
+  dev_only_plugins = ['integration_test']
+  install_pod = method(:pod)
+  define_singleton_method(:pod) do |name, *args|
+    if dev_only_plugins.include?(name)
+      options = args.last.is_a?(Hash) ? args.pop.dup : {}
+      install_pod.call(name, *args, options.merge(configurations: ['Debug', 'Profile']))
+    else
+      install_pod.call(name, *args)
+    end
+  end
+
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
   target 'RunnerTests' do
     inherit! :search_paths

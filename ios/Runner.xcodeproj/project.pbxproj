@@ -323,6 +323,7 @@
 			buildPhases = (
 				48F5EB651C855ACAD61CF2D5 /* [CP] Check Pods Manifest.lock */,
 				9740EEB61CF901F6004384FC /* Run Script */,
+				0A7BE9114401623BAF9F510A /* Strip dev plugins (Release) */,
 				97C146EA1CF9000F007C117D /* Sources */,
 				97C146EB1CF9000F007C117D /* Frameworks */,
 				97C146EC1CF9000F007C117D /* Resources */,
@@ -488,6 +489,25 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		0A7BE9114401623BAF9F510A /* Strip dev plugins (Release) */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Strip dev plugins (Release)";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Plugins de test (dev_dependencies, ex. integration_test) : jamais dans\n# l app publiee. Flutter 3.44 les garde dans le registre iOS genere\n# (flutter#163874) ; le Podfile ne les lie qu en Debug/Profile, donc en\n# Release on retire leur enregistrement avant la compilation.\nif [ \"${CONFIGURATION}\" = \"Release\" ]; then\n  REG=\"${SRCROOT}/Runner/GeneratedPluginRegistrant.m\"\n  if [ -f \"$REG\" ] && grep -q \"IntegrationTestPlugin\" \"$REG\"; then\n    /usr/bin/sed -i \"\"       -e \"/__has_include(<integration_test\\/IntegrationTestPlugin.h>)/,/^#endif$/d\"       -e \"/IntegrationTestPlugin registerWithRegistrar/d\" \"$REG\"\n    echo \"integration_test retire du registre (Release)\"\n  fi\nfi\n";
+		};
 		3B06AD1E1E4923F5004D2608 /* Thin Binary */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
