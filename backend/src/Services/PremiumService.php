@@ -44,6 +44,7 @@ class PremiumService {
     public static function activeSubscription(PDO $db, string $userId): ?array {
         $stmt = $db->prepare(
             "SELECT s.product_id, s.status, " . self::EFFECTIVE_EXPIRY_SQL . " AS expires_date,
+                    UNIX_TIMESTAMP(" . self::EFFECTIVE_EXPIRY_SQL . ") AS expires_ts,
                     s.auto_renew_enabled, s.environment, s.platform
                FROM subscriptions s
               WHERE s.user_id = ? AND " . self::ACTIVE_SQL . "
@@ -64,7 +65,7 @@ class PremiumService {
                 'subscription' => [
                     'product_id' => $prefs['subscription_type'] ?? 'lifetime',
                     'status' => 'active',
-                    'expires_date' => $prefs['vip_expires_at'],
+                    'expires_date' => self::isoUtc($prefs['vip_expires_ts']),
                     'auto_renew_enabled' => null,
                     'type' => 'vip',
                 ],
@@ -73,6 +74,8 @@ class PremiumService {
         $sub = self::activeSubscription($db, $userId);
         if ($sub) {
             $sub['auto_renew_enabled'] = $sub['auto_renew_enabled'] === null ? null : (bool)$sub['auto_renew_enabled'];
+            $sub['expires_date'] = self::isoUtc($sub['expires_ts']);
+            unset($sub['expires_ts']);
             $sub['type'] = 'subscription';
         }
         return ['is_premium' => $sub !== null, 'subscription' => $sub];
@@ -117,10 +120,20 @@ class PremiumService {
         return $userId ? self::refresh($db, (string)$userId) : null;
     }
 
+    /**
+     * Échéance envoyée à l'app en ISO 8601 UTC. Avant : chaîne MySQL à l'heure
+     * du serveur (Europe), lue comme heure locale par l'app → la date de fin
+     * affichée pouvait être décalée d'un jour hors d'Europe.
+     */
+    private static function isoUtc($timestamp): ?string {
+        return $timestamp === null ? null : gmdate('Y-m-d\\TH:i:s\\Z', (int)$timestamp);
+    }
+
     private static function prefs(PDO $db, string $userId): ?array {
         $stmt = $db->prepare(
             "SELECT is_vip, vip_expires_at, vip_manual, subscription_type,
-                    (vip_expires_at IS NULL OR vip_expires_at > NOW()) AS vip_current
+                    (vip_expires_at IS NULL OR vip_expires_at > NOW()) AS vip_current,
+                    UNIX_TIMESTAMP(vip_expires_at) AS vip_expires_ts
                FROM user_preferences WHERE user_id = ?"
         );
         $stmt->execute([$userId]);
