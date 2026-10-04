@@ -144,13 +144,19 @@ class JWTHandler {
     public function revokeToken(string $jti, string $userId, string $reason = 'user_logout'): bool {
         $db = Database::getInstance()->getConnection();
 
+        // Fournisseur réel du compte (avant : 'apple' en dur, y compris pour
+        // les comptes Google). Le compte existe forcément (clé étrangère) ;
+        // le COALESCE ne sert que de garde-fou.
         $stmt = $db->prepare(
             "INSERT INTO token_revocations (user_id, provider, token_identifier, reason)
-             VALUES (:user_id, 'apple', :jti, :reason)"
+             VALUES (:user_id,
+                     COALESCE((SELECT u.provider FROM users u WHERE u.user_id = :user_id_lookup), 'apple'),
+                     :jti, :reason)"
         );
 
         return $stmt->execute([
             'user_id' => $userId,
+            'user_id_lookup' => $userId,
             'jti' => $jti,
             'reason' => $reason
         ]);
