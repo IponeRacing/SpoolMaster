@@ -83,7 +83,7 @@ class ConsentManager {
             }
           }));
         },
-        (FormError error) {
+        (error) {
           // Erreur lors de la mise à jour
           debugPrint('❌ [UMP] Error updating consent info: ${error.message}');
           completer.complete(false);

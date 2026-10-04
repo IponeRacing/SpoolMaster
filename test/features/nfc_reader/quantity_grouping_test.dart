@@ -62,7 +62,7 @@ void main() {
   });
 
   group('groupIdentical (regroupement)', () {
-    test('regroupe les bobines identiques et préserve l\'ordre', () {
+    test("regroupe les bobines identiques et préserve l'ordre", () {
       final spools = [
         makeSpool(id: '1'),
         makeSpool(id: '2', material: 'PETG', colorName: 'Black', colorRgb: 0),
@@ -81,7 +81,7 @@ void main() {
 
     test('même couleur RGB mais matériau différent = groupes séparés', () {
       final groups = SpoolStorageService.groupIdentical([
-        makeSpool(id: '1', material: 'PLA'),
+        makeSpool(id: '1'),
         makeSpool(id: '2', material: 'PETG'),
       ]);
       expect(groups.length, 2);

@@ -270,7 +270,7 @@ class _GoogleSignInButton extends StatelessWidget {
           'https://www.google.com/favicon.ico',
           width: 24,
           height: 24,
-          errorBuilder: (_, __, ___) => const Icon(Icons.g_mobiledata, size: 24),
+          errorBuilder: (_, _, _) => const Icon(Icons.g_mobiledata, size: 24),
         ),
         label: Text(
           label,

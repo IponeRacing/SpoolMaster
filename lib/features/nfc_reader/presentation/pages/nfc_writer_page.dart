@@ -36,7 +36,7 @@ class _NfcWriterPageState extends State<NfcWriterPage> {
   List<String> _materialKeys = [];
 
   // Liste des 25 matériaux avec paramètres de température
-  final _materials = {
+  final Map<String, Map<String, Object>> _materials = {
     'ABS': {'code': 'ABS', 'extruderMin': 220, 'extruderMax': 250, 'bedMin': 90, 'bedMax': 100},
     'ASA': {'code': 'ASA', 'extruderMin': 240, 'extruderMax': 280, 'bedMin': 90, 'bedMax': 100},
     'HIPS': {'code': 'HIPS', 'extruderMin': 230, 'extruderMax': 245, 'bedMin': 80, 'bedMax': 100},
@@ -391,7 +391,7 @@ class _NfcWriterPageState extends State<NfcWriterPage> {
                         ),
                       ],
                       selected: {_tagFormat},
-                      onSelectionChanged: (Set<String> selection) {
+                      onSelectionChanged: (selection) {
                         setState(() {
                           _tagFormat = selection.first;
                           if (_tagFormat == 'prusa' && _selectedBrand == 'Anycubic') {
@@ -443,13 +443,13 @@ class _NfcWriterPageState extends State<NfcWriterPage> {
                         labelText: AppLocalizations.of(context)!.brand,
                         border: const OutlineInputBorder(),
                       ),
-                      items: _brands.map((String brand) {
+                      items: _brands.map((brand) {
                         return DropdownMenuItem<String>(
                           value: brand,
                           child: Text(brand),
                         );
                       }).toList(),
-                      onChanged: (String? newValue) {
+                      onChanged: (newValue) {
                         setState(() {
                           _selectedBrand = newValue!;
                         });
@@ -464,7 +464,7 @@ class _NfcWriterPageState extends State<NfcWriterPage> {
                         labelText: AppLocalizations.of(context)!.materialType,
                         border: const OutlineInputBorder(),
                       ),
-                      items: _materialKeys.map((String material) {
+                      items: _materialKeys.map((material) {
                         return DropdownMenuItem<String>(
                           value: material,
                           child: Text(material),
@@ -556,7 +556,7 @@ class _NfcWriterPageState extends State<NfcWriterPage> {
                         DropdownMenuItem(value: 500, child: Text(AppLocalizations.of(context)!.weight500g)),
                         DropdownMenuItem(value: 1000, child: Text(AppLocalizations.of(context)!.weight1000g)),
                       ],
-                      onChanged: (double? newValue) {
+                      onChanged: (newValue) {
                         setState(() {
                           _weight = newValue!;
                         });

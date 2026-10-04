@@ -3,7 +3,7 @@ import 'package:injectable/injectable.dart';
 import 'package:nfc_filament/dependency_injection.config.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-final getIt = GetIt.instance;
+final GetIt getIt = GetIt.instance;
 
 @InjectableInit()
 Future<void> configureDependencies() async {

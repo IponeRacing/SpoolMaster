@@ -4,12 +4,11 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:nfc_filament/core/api/api_config.dart';
+import 'package:nfc_filament/l10n/app_localizations.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-import 'package:nfc_filament/core/api/api_config.dart';
-import 'package:nfc_filament/l10n/app_localizations.dart';
 
 /// Prompt de mise à jour in-app, piloté par le serveur.
 ///

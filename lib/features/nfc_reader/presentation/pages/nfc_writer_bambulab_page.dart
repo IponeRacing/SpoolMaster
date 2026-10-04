@@ -189,13 +189,13 @@ class _NfcWriterBambuLabPageState extends State<NfcWriterBambuLabPage> {
                         labelText: l10n.materialTypeLabel,
                         border: const OutlineInputBorder(),
                       ),
-                      items: _materials.keys.map((String material) {
+                      items: _materials.keys.map((material) {
                         return DropdownMenuItem<String>(
                           value: material,
                           child: Text('$material (${_materials[material]})'),
                         );
                       }).toList(),
-                      onChanged: (String? newValue) {
+                      onChanged: (newValue) {
                         setState(() {
                           _selectedMaterial = newValue!;
                         });
@@ -210,7 +210,7 @@ class _NfcWriterBambuLabPageState extends State<NfcWriterBambuLabPage> {
                         labelText: l10n.color,
                         border: const OutlineInputBorder(),
                       ),
-                      items: _colors.keys.map((String color) {
+                      items: _colors.keys.map((color) {
                         return DropdownMenuItem<String>(
                           value: color,
                           child: Row(
@@ -235,7 +235,7 @@ class _NfcWriterBambuLabPageState extends State<NfcWriterBambuLabPage> {
                           ),
                         );
                       }).toList(),
-                      onChanged: (String? newValue) {
+                      onChanged: (newValue) {
                         setState(() {
                           _selectedColor = newValue!;
                         });
@@ -289,7 +289,7 @@ class _NfcWriterBambuLabPageState extends State<NfcWriterBambuLabPage> {
                         DropdownMenuItem(value: 2000, child: Text(l10n.weight2000g)),
                         DropdownMenuItem(value: 3000, child: Text(l10n.weight3000g)),
                       ],
-                      onChanged: (double? newValue) {
+                      onChanged: (newValue) {
                         setState(() {
                           _weight = newValue!;
                         });
