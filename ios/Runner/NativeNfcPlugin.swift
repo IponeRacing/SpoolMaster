@@ -570,7 +570,8 @@ extension NativeNfcPlugin: NFCTagReaderSessionDelegate {
             print("🔍 Hex: \(allData.map { String(format: "%02x", $0) }.joined(separator: " "))")
 
             var resultData: [String: Any] = [
-                "rawBytes": [UInt8](allData)
+                "rawBytes": [UInt8](allData),
+                "tag_tech": self.lastTagTech
             ]
             if self.isAutoDetectMode {
                 resultData["tagType"] = "prusa"
@@ -593,7 +594,8 @@ extension NativeNfcPlugin: NFCTagReaderSessionDelegate {
                     print("🔍 Hex: \(allData.map { String(format: "%02x", $0) }.joined(separator: " "))")
 
                     let resultData: [String: Any] = [
-                        "rawBytes": [UInt8](allData)
+                        "rawBytes": [UInt8](allData),
+                        "tag_tech": self.lastTagTech
                     ]
 
                     session.alertMessage = "Lecture Prusa réussie ✓"
@@ -623,7 +625,8 @@ extension NativeNfcPlugin: NFCTagReaderSessionDelegate {
                 print("🔍 Hex: \(newData.map { String(format: "%02x", $0) }.joined(separator: " "))")
 
                 var resultData: [String: Any] = [
-                    "rawBytes": [UInt8](newData)
+                    "rawBytes": [UInt8](newData),
+                    "tag_tech": self.lastTagTech
                 ]
                 if self.isAutoDetectMode {
                     resultData["tagType"] = "prusa"
@@ -668,6 +671,7 @@ extension NativeNfcPlugin: NFCTagReaderSessionDelegate {
             let resultData: [String: Any] = [
                 "data": dataString,
                 "rawBytes": [UInt8](allData),
+                "tag_tech": self.lastTagTech,
                 "tagType": tagType  // Retourner le type de tag détecté
             ]
 
@@ -713,7 +717,8 @@ extension NativeNfcPlugin: NFCTagReaderSessionDelegate {
 
             let resultData: [String: Any] = [
                 "data": dataString,
-                "rawBytes": [UInt8](allData)
+                "rawBytes": [UInt8](allData),
+                "tag_tech": self.lastTagTech
             ]
 
             session.alertMessage = "Lecture réussie ✓"

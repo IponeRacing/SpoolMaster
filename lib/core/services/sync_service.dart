@@ -121,34 +121,6 @@ class SyncService {
     ));
   }
 
-  /// Synchroniser tout le stock vers le backend
-  static Future<void> pushSpoolsToBackend() async {
-    try {
-      final isSignedIn = await UserPreferencesService.isSignedIn();
-      if (!isSignedIn) return;
-
-      final spools = await SpoolStorageService.loadSpools();
-
-      final response = await _authService.authenticatedRequest((token) =>
-        http.post(
-          Uri.parse('${ApiConfig.baseUrl}${ApiConfig.syncPush}'),
-          headers: _headers(token),
-          body: jsonEncode({
-            'spools': spools.map(_spoolPayload).toList(),
-          }),
-        ).timeout(ApiConfig.connectTimeout),
-      );
-
-      if (response.statusCode == 200) {
-        debugPrint('✅ ${spools.length} spools synced to backend');
-      } else {
-        _reportSyncError('push', response: response, spoolCount: spools.length);
-      }
-    } catch (e, stack) {
-      _reportSyncError('push', error: e, stack: stack);
-    }
-  }
-
   /// Récupérer le stock depuis le backend et remplacer le stock local.
   ///
   /// Les bobines locales dont la sauvegarde serveur n'est pas confirmée

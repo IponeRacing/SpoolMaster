@@ -6,9 +6,13 @@
 //  - dates au format explicite yyyy-mm-dd (le format date système s'affichait
 //    en m/d/yy dans Numbers, quelle que soit la région)
 //  - colonnes assez larges pour l'en-tête traduit (CJK/hangul comptés double)
+//  - classeur ré-écrit par un outil tiers (chemins absolus, cellule texte
+//    inline vide, comme openpyxl) : relu après normalisation
 
+import 'dart:convert';
 import 'dart:ui';
 
+import 'package:archive/archive.dart';
 import 'package:excel/excel.dart' as xl;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:nfc_filament/core/models/spool_inventory_item.dart';
@@ -127,5 +131,34 @@ void main() {
             reason: '$code : colonne « $title » trop étroite');
       }
     }
+  });
+
+  test('classeur écrit par un outil tiers (style openpyxl) : relu après normalisation', () {
+    final l = lookupAppLocalizations(const Locale('fr'));
+    final archive = ZipDecoder().decodeBytes(exportIn(l, [original]));
+    final thirdParty = Archive();
+    for (final f in archive.files.where((f) => f.isFile)) {
+      var text = utf8.decode(f.content as List<int>);
+      if (f.name == 'xl/_rels/workbook.xml.rels') {
+        text = text.replaceAll('Target="', 'Target="/xl/');
+      } else if (f.name == '_rels/.rels') {
+        text = text.replaceAll('Target="', 'Target="/');
+      } else if (f.name == 'xl/worksheets/sheet1.xml') {
+        // Cellule texte inline vide, comme openpyxl l'écrit pour ''.
+        text = text.replaceFirst('</row>', '<c r="Z1" t="inlineStr"></c></row>');
+      }
+      final bytes = utf8.encode(text);
+      thirdParty.addFile(ArchiveFile(f.name, bytes.length, bytes));
+    }
+    final bytes = ZipEncoder().encode(thirdParty)!;
+
+    expect(() => xl.Excel.decodeBytes(bytes), throwsA(anything),
+        reason: 'le package excel seul ne sait pas lire ce classeur');
+    final rows = SpoolImportService.parseFile(bytes);
+    final result = SpoolImportService.buildSpools(rows,
+        existing: const [], appLabels: stockColumnLabels(l));
+    expect(result.spools, hasLength(1));
+    expect(result.spools.single.location, original.location);
+    expect(result.spools.single.remainingWeight, original.remainingWeight);
   });
 }

@@ -2,13 +2,14 @@ name: nfc_filament
 description: "Application Flutter pour lire/écrire les puces NFC des bobines de filament"
 publish_to: 'none'
 
-version: 1.4.10+87
+version: 1.4.11+88
 
 environment:
   sdk: ^3.10.7
 
 dependencies:
   app_tracking_transparency: ^2.0.6+1
+  archive: ^3.6.1
   cupertino_icons: ^1.0.9
   dartz: ^0.10.1
   device_info_plus: ^11.3.0

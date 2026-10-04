@@ -272,6 +272,9 @@ class SubscriptionService {
   /// Synchronise le statut d'abonnement avec le serveur
   /// Appelé au démarrage et périodiquement
   Future<void> syncSubscriptionStatusWithServer() async {
+    // Invité (pas de token) : rien à synchroniser. Avant, chaque lancement en
+    // mode local loggait « Not authenticated » (exception attrapée).
+    if (await AuthService().getAccessToken() == null) return;
     try {
       // Demander le statut au serveur
       final response = await AuthService().authenticatedRequest((token) =>

@@ -1,6 +1,8 @@
 import 'dart:convert';
 
+import 'package:archive/archive.dart';
 import 'package:excel/excel.dart' as xl;
+import 'package:flutter/foundation.dart';
 import 'package:nfc_filament/core/models/spool_inventory_item.dart';
 import 'package:nfc_filament/core/services/spool_export_service.dart';
 
@@ -192,7 +194,15 @@ class SpoolImportService {
 
   /// Lit la première feuille d'un classeur .xlsx en lignes de texte.
   static List<List<String>> parseXlsx(List<int> bytes) {
-    final excel = xl.Excel.decodeBytes(bytes);
+    xl.Excel excel;
+    try {
+      excel = xl.Excel.decodeBytes(bytes);
+    } on Object {
+      // Classeur valide mais écrit par un outil tiers (openpyxl, scripts…)
+      // que le package excel ne sait pas lire tel quel : on normalise
+      // l'archive puis on réessaie. Un nouvel échec remonte (import impossible).
+      excel = xl.Excel.decodeBytes(normalizeXlsx(bytes));
+    }
     final sheetName = excel.getDefaultSheet() ?? excel.tables.keys.first;
     final sheet = excel.tables[sheetName] ?? excel.tables.values.first;
     return [
@@ -213,6 +223,37 @@ class SpoolImportService {
         xl.BoolCellValue() => v.value.toString(),
         _ => v.toString(),
       };
+
+  /// Rend lisible par le package excel un classeur valide mais écrit
+  /// autrement qu'Excel :
+  /// - cibles absolues dans les relations (« /xl/worksheets/sheet1.xml ») :
+  ///   le package les préfixe une 2e fois (« xl//xl/… ») et plante ;
+  /// - cellules texte inline vides (`<c t="inlineStr"></c>`, sans `<is>`) :
+  ///   le package attend un `<t>` et plante.
+  @visibleForTesting
+  static List<int> normalizeXlsx(List<int> bytes) {
+    final input = ZipDecoder().decodeBytes(bytes);
+    final output = Archive();
+    final emptyInline = RegExp(r'<c([^>]*?)\s+t="inlineStr"([^>]*?)(/>|>\s*</c>)');
+    for (final file in input.files) {
+      if (!file.isFile) continue;
+      var content = file.content as List<int>;
+      final name = file.name;
+      if (name == '_rels/.rels' || name.startsWith('xl/_rels/')) {
+        // Base de résolution : racine pour _rels/.rels, xl/ pour xl/_rels/.
+        final prefix = name == '_rels/.rels' ? '/' : '/xl/';
+        content = utf8.encode(utf8
+            .decode(content)
+            .replaceAll('Target="$prefix', 'Target="'));
+      } else if (name.startsWith('xl/worksheets/') && name.endsWith('.xml')) {
+        content = utf8.encode(utf8
+            .decode(content)
+            .replaceAllMapped(emptyInline, (m) => '<c${m[1]}${m[2]}${m[3]}'));
+      }
+      output.addFile(ArchiveFile(name, content.length, content));
+    }
+    return ZipEncoder().encode(output) ?? bytes;
+  }
 
   /// Décode un fichier (xlsx si signature ZIP, sinon CSV UTF-8 / Latin-1).
   static List<List<String>> parseFile(List<int> bytes) {
