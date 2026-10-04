@@ -1,11 +1,11 @@
 {
   "_comment": "Config de version app pour le prompt de mise à jour in-app. Éditable sans redéployer l'app. 'latest' = derniere version publiee sur le store (ne l'annoncer qu'une fois le rollout large). 'min' = version minimale supportee : en dessous, maj FORCEE (bloquante). Mettre min = latest pour un killswitch total.",
   "ios": {
-    "latest": "1.4.6",
+    "latest": "1.4.9",
     "min": "1.0.0"
   },
   "android": {
-    "latest": "1.4.6",
+    "latest": "1.4.9",
     "min": "1.0.0"
   },
   "store_url_ios": "https://apps.apple.com/app/id6757678949",
