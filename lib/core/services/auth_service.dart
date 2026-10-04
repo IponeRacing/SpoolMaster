@@ -231,9 +231,14 @@ class AuthService {
       // Supprimer les données locales
       await _clearTokens();
 
-      // Déconnecter Google
+      // Déconnecter Google sans bloquer l'écran plus de 800 ms : signOut prend
+      // ~3 s sur Android (A55, 1.4.10+93) et le profil restait affiché
+      // « connecté » pendant ce temps, alors que la session est déjà effacée.
+      // Au-delà, il se termine en arrière-plan.
       try {
-        await _googleSignIn.signOut();
+        await _googleSignIn.signOut().timeout(const Duration(milliseconds: 800));
+      } on TimeoutException {
+        debugPrint('Google sign out: poursuivi en arrière-plan');
       } catch (e) {
         debugPrint('Google sign out error: $e');
       }
