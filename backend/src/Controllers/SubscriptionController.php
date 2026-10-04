@@ -198,7 +198,6 @@ class SubscriptionController
             $response = curl_exec($ch);
             $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
             $curlError = curl_error($ch);
-            curl_close($ch);
 
             if ($curlError) {
                 error_log("❌ cURL error: " . $curlError);
@@ -307,7 +306,6 @@ class SubscriptionController
 
             $response = curl_exec($ch);
             $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-            curl_close($ch);
 
             if ($httpCode !== 200) {
                 error_log("❌ Google OAuth token request failed: $httpCode - $response");
@@ -450,8 +448,6 @@ class SubscriptionController
     public function checkExpiredSubscriptions()
     {
         try {
-            error_log("🕐 [MANUAL] Starting subscription expiration check...");
-
             // 1. Mettre à jour les abonnements expirés
             $stmt = $this->db->prepare("
                 UPDATE subscriptions
@@ -483,7 +479,11 @@ class SubscriptionController
             $stmt->execute();
             $deactivatedCount = $stmt->rowCount();
 
-            error_log("✅ [MANUAL] Expiration check completed - Expired: $expiredCount, Deactivated: $deactivatedCount");
+            // Journalisé seulement s'il s'est passé quelque chose (cron horaire :
+            // avant, 2 lignes par heure noyaient les vraies erreurs).
+            if ($expiredCount > 0 || $deactivatedCount > 0) {
+                error_log("✅ [CRON] Expiration check - Expired: $expiredCount, Deactivated: $deactivatedCount");
+            }
 
             return [
                 'success' => true,
@@ -638,7 +638,6 @@ class SubscriptionController
             $response = curl_exec($ch);
             $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
             $curlError = curl_error($ch);
-            curl_close($ch);
 
             if ($curlError) {
                 error_log("❌ cURL error: $curlError");
