@@ -148,6 +148,20 @@ class MyAppState extends State<MyApp> {
     return MaterialApp(
       title: 'Spool Master',
       debugShowCheckedModeBanner: false,
+      // Bord à bord (Android 15+ / SystemUiMode.edgeToEdge) : réserve la place
+      // de la barre de navigation système sous TOUS les écrans (pages, sheets,
+      // dialogues). Avant, les boutons du bas passaient sous les touches
+      // Android (ex. « Ajouter une bobine » inaccessible). SafeArea retire ce
+      // padding du MediaQuery : pas de double marge dans les NavigationBar.
+      builder: (context, child) => ColoredBox(
+        color: Theme.of(context).scaffoldBackgroundColor,
+        child: SafeArea(
+          top: false,
+          left: false,
+          right: false,
+          child: child ?? const SizedBox.shrink(),
+        ),
+      ),
       theme: AppTheme.darkTheme,
       darkTheme: AppTheme.darkTheme,
       themeMode: ThemeMode.dark,

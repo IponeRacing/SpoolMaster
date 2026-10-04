@@ -12,7 +12,7 @@ class NativeNfcPlugin: NSObject, FlutterPlugin {
 
     private var session: NFCTagReaderSession?
     private var result: FlutterResult?
-    private var pagesToWrite: [[String: Any]]?
+    private var pagesToWrite: [UltralightPage]?
     private var isBambuLabMode = false
     private var isOpenPrintTagMode = false
     private var isAutoDetectMode = false
@@ -26,6 +26,13 @@ class NativeNfcPlugin: NSObject, FlutterPlugin {
     // « Tag connection lost » qui arrivaient sans aucune info).
     private var lastTagTech = ""
 
+    /// Page MiFare Ultralight à écrire, validée AVANT l'ouverture de la session
+    /// (numéro 0-255 + exactement 4 octets) : plus aucune page sautée en silence.
+    private struct UltralightPage {
+        let page: UInt8
+        let bytes: [UInt8]
+    }
+
     // Retry sur code 202 (iOS 26 « session terminée inopinément »). Best practice :
     // restartPolling ne marche pas sur une session invalidée → recréer une NOUVELLE
     // session, après un délai (éviter le 203 « système occupé »), 1 seule fois.
@@ -34,18 +41,42 @@ class NativeNfcPlugin: NSObject, FlutterPlugin {
     private var session202Retries = 0
     private let maxSession202Retries = 1
 
+    // « Tag connection lost » pendant une LECTURE : 1 seul restartPolling sur la
+    // MÊME session (result + mode conservés), puis relecture au prochain didDetect.
+    // Jamais pour une écriture : une écriture interrompue échoue franchement.
+    private var connectionLostRetries = 0
+    private let maxConnectionLostRetries = 1
+
     /// Démarre (ou redémarre) une session NFC en mémorisant sa config pour un
-    /// éventuel retry sur code 202. `isNewScan` remet le compteur de retry à zéro.
+    /// éventuel retry sur code 202. `isNewScan` remet les compteurs de retry à zéro.
     private func beginSession(pollingOption: NFCTagReaderSession.PollingOption,
                               alertMessage: String,
                               isNewScan: Bool) {
-        if isNewScan { session202Retries = 0 }
+        if isNewScan {
+            session202Retries = 0
+            connectionLostRetries = 0
+        }
         currentPolling = pollingOption
         currentAlert = alertMessage
-        session = NFCTagReaderSession(pollingOption: pollingOption, delegate: self)
-        session?.alertMessage = alertMessage
+        // queue: .main → les callbacks du délégué ET les completions des commandes
+        // tag (connect/read/write, cf. NFCReaderSession.sessionQueue) arrivent sur
+        // le thread principal, comme handle() et FlutterResult : plus aucune
+        // mutation d'état concurrente.
+        guard NFCTagReaderSession.readingAvailable,
+              let newSession = NFCTagReaderSession(pollingOption: pollingOption,
+                                                   delegate: self,
+                                                   queue: .main) else {
+            // Sans réponse ici, le Future Dart resterait pendu indéfiniment
+            print("❌ Impossible de créer la session NFC (NFC indisponible sur cet appareil)")
+            complete(with: FlutterError(code: "NFC_NOT_AVAILABLE",
+                                        message: "Le NFC n'est pas disponible sur cet appareil.",
+                                        details: buildSessionDiagnostics()))
+            return
+        }
+        session = newSession
+        newSession.alertMessage = alertMessage
         startSessionTracking()
-        session?.begin()
+        newSession.begin()
     }
 
     func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
@@ -58,11 +89,19 @@ class NativeNfcPlugin: NSObject, FlutterPlugin {
             stopSession(result: result)
         case "startWriteSession":
             guard let args = call.arguments as? [String: Any],
-                  let pages = args["pages"] as? [[String: Any]] else {
+                  let rawPages = args["pages"] as? [[String: Any]] else {
                 result(FlutterError(code: "INVALID_ARGS", message: "Missing pages argument", details: nil))
                 return
             }
-            startWriteSession(pages: pages, result: result)
+            // Validation de TOUTES les pages AVANT d'ouvrir la session : une page
+            // invalide ne doit plus être sautée (écriture partielle silencieuse).
+            let parsed = parseUltralightPages(rawPages)
+            if let message = parsed.error {
+                print("❌ Pages à écrire invalides: \(message)")
+                result(FlutterError(code: "INVALID_ARGS", message: message, details: nil))
+                return
+            }
+            startWriteSession(pages: parsed.pages, result: result)
         case "readBambuLabTag":
             startBambuLabReadSession(result: result)
         case "readOpenPrintTag":
@@ -81,12 +120,19 @@ class NativeNfcPlugin: NSObject, FlutterPlugin {
             }
             startBambuLabWriteSession(blocks: blocks, result: result)
         case "writeOpenPrintTag":
+            // Accepte Uint8List (FlutterStandardTypedData) ET List<int> ; refuse
+            // une valeur hors 0-255 au lieu de la tronquer en silence.
             guard let args = call.arguments as? [String: Any],
-                  let data = args["data"] as? [Int] else {
-                result(FlutterError(code: "INVALID_ARGS", message: "Missing data argument", details: nil))
+                  let data = byteArray(from: args["data"]), !data.isEmpty else {
+                result(FlutterError(code: "INVALID_ARGS", message: "Missing or invalid data argument (octets 0-255 attendus)", details: nil))
                 return
             }
-            startOpenPrintTagWriteSession(data: data.map { UInt8($0 & 0xFF) }, result: result)
+            // Adressage ISO 15693 sur 1 octet (UInt8) : 256 blocs de 4 octets max
+            guard data.count <= 256 * 4 else {
+                result(FlutterError(code: "INVALID_ARGS", message: "Données trop longues pour le tag (\(data.count) octets, max \(256 * 4))", details: nil))
+                return
+            }
+            startOpenPrintTagWriteSession(data: data, result: result)
         case "readCrealityTag", "writeCrealityTag":
             // MiFare Classic (Crypto1) n'est pas supporté par Apple CoreNFC
             result(FlutterError(
@@ -99,7 +145,13 @@ class NativeNfcPlugin: NSObject, FlutterPlugin {
         }
     }
 
+    // Chaque start*Session : 1) répond à un éventuel scan encore en attente
+    // (SESSION_REPLACED) et invalide son ancienne session, 2) remet TOUS les
+    // modes à zéro, 3) positionne SEULEMENT le mode voulu.
+
     private func startReadSession(result: @escaping FlutterResult) {
+        replacePendingScan()
+        resetModes()
         self.result = result
 
         beginSession(pollingOption: .iso14443,
@@ -112,27 +164,17 @@ class NativeNfcPlugin: NSObject, FlutterPlugin {
         if let activeSession = session {
             activeSession.invalidate()
         }
-        // Notifier le callback en attente si il y en a un
-        if let pendingResult = self.result {
-            pendingResult(FlutterError(code: "USER_CANCELLED", message: "Session arrêtée", details: buildSessionDiagnostics()))
-        }
-        self.result = nil
-        self.session = nil
-        self.isBambuLabMode = false
-        self.isOpenPrintTagMode = false
-        self.isAutoDetectMode = false
-        self.isOpenPrintTagWriteMode = false
-        self.pagesToWrite = nil
-        self.bambuBlocksToWrite = nil
-        self.openPrintTagDataToWrite = nil
-        resetSessionTracking()
+        // Notifier le callback en attente s'il y en a un, puis tout remettre à zéro
+        // (session oubliée → ses callbacks tardifs seront ignorés)
+        complete(with: FlutterError(code: "USER_CANCELLED", message: "Session arrêtée", details: buildSessionDiagnostics()))
         result(true)
     }
 
-    private func startWriteSession(pages: [[String: Any]], result: @escaping FlutterResult) {
+    private func startWriteSession(pages: [UltralightPage], result: @escaping FlutterResult) {
+        replacePendingScan()
+        resetModes()
         self.result = result
         self.pagesToWrite = pages
-        self.isBambuLabMode = false
 
         beginSession(pollingOption: .iso14443,
                      alertMessage: "Maintenez votre téléphone près du tag NFC pour écriture",
@@ -140,6 +182,8 @@ class NativeNfcPlugin: NSObject, FlutterPlugin {
     }
 
     private func startBambuLabReadSession(result: @escaping FlutterResult) {
+        replacePendingScan()
+        resetModes()
         self.result = result
         self.isBambuLabMode = true
 
@@ -149,6 +193,8 @@ class NativeNfcPlugin: NSObject, FlutterPlugin {
     }
 
     private func startOpenPrintTagReadSession(result: @escaping FlutterResult) {
+        replacePendingScan()
+        resetModes()
         self.result = result
         self.isOpenPrintTagMode = true
 
@@ -158,6 +204,8 @@ class NativeNfcPlugin: NSObject, FlutterPlugin {
     }
 
     private func startAutoDetectReadSession(iso14443Only: Bool = false, result: @escaping FlutterResult) {
+        replacePendingScan()
+        resetModes()
         self.result = result
         self.isAutoDetectMode = true
 
@@ -169,6 +217,8 @@ class NativeNfcPlugin: NSObject, FlutterPlugin {
     }
 
     private func startOpenPrintTagWriteSession(data: [UInt8], result: @escaping FlutterResult) {
+        replacePendingScan()
+        resetModes()
         self.result = result
         self.openPrintTagDataToWrite = data
         self.isOpenPrintTagWriteMode = true
@@ -179,6 +229,8 @@ class NativeNfcPlugin: NSObject, FlutterPlugin {
     }
 
     private func startBambuLabWriteSession(blocks: [String: [UInt8]], result: @escaping FlutterResult) {
+        replacePendingScan()
+        resetModes()
         self.result = result
         self.bambuBlocksToWrite = blocks
 
@@ -232,6 +284,178 @@ class NativeNfcPlugin: NSObject, FlutterPlugin {
         self.tagDetected = false
         self.lastTagTech = ""
     }
+
+    // MARK: - Cycle de vie de session
+
+    /// Remet à zéro TOUS les drapeaux de mode et toutes les données à écrire.
+    /// Appelée au début de chaque start*Session et à CHAQUE fin de session
+    /// (succès, erreur, invalidation) : une écriture annulée ne peut plus
+    /// « fuir » dans la lecture suivante.
+    private func resetModes() {
+        isBambuLabMode = false
+        isOpenPrintTagMode = false
+        isAutoDetectMode = false
+        isOpenPrintTagWriteMode = false
+        pagesToWrite = nil
+        bambuBlocksToWrite = nil
+        openPrintTagDataToWrite = nil
+    }
+
+    /// Vrai si la session courante écrit sur le tag (aucune reprise automatique).
+    private var isWriteMode: Bool {
+        return isOpenPrintTagWriteMode || openPrintTagDataToWrite != nil
+            || pagesToWrite != nil || bambuBlocksToWrite != nil
+    }
+
+    /// Un scan est encore en attente au démarrage d'un nouveau : on lui répond
+    /// d'abord (SESSION_REPLACED) pour qu'aucun Future Dart ne reste pendu, puis
+    /// on invalide l'ancienne session (oubliée → ses callbacks tardifs ignorés).
+    private func replacePendingScan() {
+        if let pending = self.result {
+            print("⚠️ Nouveau scan alors qu'un scan est en cours → SESSION_REPLACED")
+            self.result = nil
+            pending(FlutterError(code: "SESSION_REPLACED",
+                                 message: "Session NFC remplacée par un nouveau scan",
+                                 details: buildSessionDiagnostics()))
+        }
+        if let oldSession = self.session {
+            self.session = nil
+            oldSession.invalidate()
+        }
+        resetSessionTracking()
+    }
+
+    /// Fin de session (succès, erreur ou invalidation) : répond UNE seule fois à
+    /// Dart, oublie la session et remet modes + suivi à zéro.
+    /// Les diagnostics doivent être construits AVANT l'appel (remis à zéro ici).
+    private func complete(with value: Any?) {
+        let pending = self.result
+        self.result = nil
+        self.session = nil
+        resetModes()
+        resetSessionTracking()
+        pending?(value)
+    }
+
+    /// Faux pour un callback tardif d'une ancienne session (remplacée, arrêtée
+    /// ou déjà terminée) : il ne doit jamais toucher l'état du scan courant.
+    private func isCurrent(_ session: NFCTagReaderSession) -> Bool {
+        return session === self.session && self.result != nil
+    }
+
+    /// « Tag connection lost » pendant une LECTURE : relance le polling UNE seule
+    /// fois sur la même session (result et mode conservés) ; la relecture repart
+    /// de zéro au prochain didDetect. Jamais pour une écriture (échec franc).
+    /// Retourne true si la relance a eu lieu (l'appelant ne renvoie alors rien).
+    private func restartPollingAfterConnectionLost(_ error: Error, session: NFCTagReaderSession) -> Bool {
+        guard !isWriteMode,
+              let nfcError = error as? NFCReaderError,
+              nfcError.code == .readerTransceiveErrorTagConnectionLost,
+              connectionLostRetries < maxConnectionLostRetries else {
+            return false
+        }
+        connectionLostRetries += 1
+        print("🔄 Connexion au tag perdue → restartPolling \(connectionLostRetries)/\(maxConnectionLostRetries) (\(lastTagTech))")
+        session.alertMessage = "Connexion perdue : maintenez le téléphone immobile près du tag"
+        session.restartPolling()
+        return true
+    }
+
+    // MARK: - Validation des arguments Dart
+
+    /// Octets envoyés par Dart : Uint8List (FlutterStandardTypedData) OU
+    /// List<int> ([UInt8] / [NSNumber]). nil si une valeur sort de 0-255.
+    private func byteArray(from value: Any?) -> [UInt8]? {
+        if let typed = value as? FlutterStandardTypedData {
+            guard typed.type == .uInt8 else { return nil }
+            return [UInt8](typed.data)
+        }
+        if let bytes = value as? [UInt8] {
+            return bytes
+        }
+        if let numbers = value as? [NSNumber] {
+            var bytes: [UInt8] = []
+            bytes.reserveCapacity(numbers.count)
+            for number in numbers {
+                let byte = number.intValue
+                guard (0...255).contains(byte) else { return nil }
+                bytes.append(UInt8(byte))
+            }
+            return bytes
+        }
+        return nil
+    }
+
+    /// Valide les pages à écrire (numéro 0-255 + exactement 4 octets).
+    /// `error` décrit la première page invalide (→ INVALID_ARGS côté Dart).
+    private func parseUltralightPages(_ rawPages: [[String: Any]]) -> (pages: [UltralightPage], error: String?) {
+        guard !rawPages.isEmpty else {
+            return ([], "Aucune page à écrire")
+        }
+        var pages: [UltralightPage] = []
+        pages.reserveCapacity(rawPages.count)
+        for (index, pageInfo) in rawPages.enumerated() {
+            guard let pageNumber = pageInfo["page"] as? Int, (0...255).contains(pageNumber) else {
+                return ([], "Page #\(index) invalide : numéro de page manquant ou hors 0-255")
+            }
+            guard let bytes = byteArray(from: pageInfo["data"]), bytes.count == 4 else {
+                return ([], "Page \(pageNumber) invalide : 4 octets (0-255) attendus")
+            }
+            pages.append(UltralightPage(page: UInt8(pageNumber), bytes: bytes))
+        }
+        return (pages, nil)
+    }
+
+    // MARK: - En-tête NDEF ISO 15693 (Type 5)
+
+    /// Ce que l'en-tête NDEF (CC puis TLV) dit de la lecture à faire.
+    private enum NdefReadPlan {
+        /// En-tête incomplet : lire le bloc suivant
+        case needMoreData
+        /// Nombre total d'octets (depuis le bloc 0) couvrant le TLV NDEF 0x03
+        case totalBytes(Int)
+        /// Pas de message NDEF sur ce tag (raison pour les logs)
+        case noNdefMessage(String)
+    }
+
+    /// Analyse le Capability Container puis les TLV jusqu'au TLV NDEF (0x03) et
+    /// en déduit EXACTEMENT le nombre d'octets à lire (au lieu de s'arrêter sur le
+    /// premier 0xFE venu, qui peut très bien être une donnée du payload).
+    private func ndefReadPlan(_ bytes: [UInt8]) -> NdefReadPlan {
+        guard bytes.count >= 4 else { return .needMoreData }
+        // CC : E1 (adressage 1 octet) ou E2 (adressage 2 octets)
+        guard bytes[0] == 0xE1 || bytes[0] == 0xE2 else {
+            return .noNdefMessage(String(format: "CC invalide (0x%02x)", bytes[0]))
+        }
+        // CC sur 8 octets si MLEN (octet 2) vaut 0, sinon 4 octets
+        var offset = bytes[2] == 0x00 ? 8 : 4
+        while true {
+            guard offset < bytes.count else { return .needMoreData }
+            let tlvType = bytes[offset]
+            if tlvType == 0x00 {
+                // NULL TLV : 1 octet, pas de longueur
+                offset += 1
+                continue
+            }
+            if tlvType == 0xFE {
+                return .noNdefMessage("terminateur 0xFE avant le TLV NDEF")
+            }
+            // Longueur : 1 octet, ou 0xFF suivi de 2 octets (big-endian)
+            guard offset + 1 < bytes.count else { return .needMoreData }
+            var length = Int(bytes[offset + 1])
+            var valueStart = offset + 2
+            if length == 0xFF {
+                guard offset + 3 < bytes.count else { return .needMoreData }
+                length = (Int(bytes[offset + 2]) << 8) | Int(bytes[offset + 3])
+                valueStart = offset + 4
+            }
+            if tlvType == 0x03 {
+                return .totalBytes(valueStart + length)
+            }
+            // Lock/Memory Control, propriétaire… : sauter ce TLV
+            offset = valueStart + length
+        }
+    }
 }
 
 extension NativeNfcPlugin: NFCTagReaderSessionDelegate {
@@ -240,9 +464,17 @@ extension NativeNfcPlugin: NFCTagReaderSessionDelegate {
     }
 
     func tagReaderSession(_ session: NFCTagReaderSession, didInvalidateWithError error: Error) {
+        // Callback d'une ANCIENNE session (remplacée, arrêtée ou déjà terminée) :
+        // ne jamais l'appliquer au scan courant
+        guard session === self.session else {
+            print("ℹ️ Invalidation d'une ancienne session ignorée: \(error.localizedDescription)")
+            return
+        }
         // Ignorer si le résultat a déjà été envoyé (invalidation volontaire après succès)
         guard self.result != nil else {
             print("ℹ️ Session invalidée (ignorée - résultat déjà envoyé): \(error.localizedDescription)")
+            self.session = nil
+            resetModes()
             return
         }
 
@@ -251,28 +483,14 @@ extension NativeNfcPlugin: NFCTagReaderSessionDelegate {
         // Code 200: Annulation par l'utilisateur
         if nsError.domain == "NFCError" && nsError.code == 200 {
             print("ℹ️ Session annulée par l'utilisateur")
-            result?(FlutterError(code: "USER_CANCELLED", message: "Scan annulé par l'utilisateur", details: buildSessionDiagnostics()))
-            self.result = nil
-            self.isBambuLabMode = false
-            self.isOpenPrintTagMode = false
-            self.isAutoDetectMode = false
-            self.pagesToWrite = nil
-            self.bambuBlocksToWrite = nil
-            resetSessionTracking()
+            complete(with: FlutterError(code: "USER_CANCELLED", message: "Scan annulé par l'utilisateur", details: buildSessionDiagnostics()))
             return
         }
 
         // Code 201: Timeout - aucun tag détecté dans le délai
         if nsError.domain == "NFCError" && nsError.code == 201 {
             print("⏱️ Session timeout - aucun tag NFC détecté")
-            result?(FlutterError(code: "TAG_NOT_DETECTED", message: "Aucun tag NFC détecté. Le tag est peut-être mort ou incompatible.", details: buildSessionDiagnostics()))
-            self.result = nil
-            self.isBambuLabMode = false
-            self.isOpenPrintTagMode = false
-            self.isAutoDetectMode = false
-            self.pagesToWrite = nil
-            self.bambuBlocksToWrite = nil
-            resetSessionTracking()
+            complete(with: FlutterError(code: "TAG_NOT_DETECTED", message: "Aucun tag NFC détecté. Le tag est peut-être mort ou incompatible.", details: buildSessionDiagnostics()))
             return
         }
 
@@ -284,8 +502,11 @@ extension NativeNfcPlugin: NFCTagReaderSessionDelegate {
             if session202Retries < maxSession202Retries {
                 session202Retries += 1
                 print("⚠️ Session 202 → retry \(session202Retries)/\(maxSession202Retries) (nouvelle session)")
+                // La session expirée sert de jeton : si un autre scan a démarré ou si
+                // stopSession a été appelé pendant le délai, on abandonne ce retry.
+                let expiredSession = session
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) { [weak self] in
-                    guard let self = self, self.result != nil else { return }
+                    guard let self = self, self.result != nil, self.session === expiredSession else { return }
                     self.beginSession(pollingOption: self.currentPolling,
                                       alertMessage: self.currentAlert,
                                       isNewScan: false)
@@ -293,43 +514,33 @@ extension NativeNfcPlugin: NFCTagReaderSessionDelegate {
                 return
             }
             print("⚠️ Session NFC interrompue par le système (code 202) — retry épuisé")
-            result?(FlutterError(code: "SESSION_TERMINATED", message: "Session NFC interrompue par le système. Réessayez.", details: buildSessionDiagnostics()))
-            self.result = nil
-            self.isBambuLabMode = false
-            self.isOpenPrintTagMode = false
-            self.isAutoDetectMode = false
-            self.pagesToWrite = nil
-            self.bambuBlocksToWrite = nil
-            resetSessionTracking()
+            complete(with: FlutterError(code: "SESSION_TERMINATED", message: "Session NFC interrompue par le système. Réessayez.", details: buildSessionDiagnostics()))
             return
         }
 
         // Code 203: Système occupé
         if nsError.domain == "NFCError" && nsError.code == 203 {
             print("⚠️ Système NFC occupé")
-            result?(FlutterError(code: "SYSTEM_BUSY", message: "Le lecteur NFC est occupé. Réessayez.", details: buildSessionDiagnostics()))
-            self.result = nil
-            self.isBambuLabMode = false
-            self.isOpenPrintTagMode = false
-            self.isAutoDetectMode = false
-            self.pagesToWrite = nil
-            self.bambuBlocksToWrite = nil
-            resetSessionTracking()
+            complete(with: FlutterError(code: "SYSTEM_BUSY", message: "Le lecteur NFC est occupé. Réessayez.", details: buildSessionDiagnostics()))
             return
         }
 
         print("❌ Session invalidée: \(error.localizedDescription) (domain: \(nsError.domain), code: \(nsError.code))")
-        result?(FlutterError(code: "SESSION_ERROR", message: error.localizedDescription, details: buildSessionDiagnostics()))
-        self.result = nil
-        resetSessionTracking()
+        complete(with: FlutterError(code: "SESSION_ERROR", message: error.localizedDescription, details: buildSessionDiagnostics()))
     }
 
     func tagReaderSession(_ session: NFCTagReaderSession, didDetect tags: [NFCTag]) {
+        // didDetect d'une ANCIENNE session (remplacée, arrêtée ou déjà terminée) : ignorer
+        guard isCurrent(session) else {
+            print("ℹ️ didDetect d'une ancienne session ignoré")
+            return
+        }
         self.tagDetected = true
         self.tagDetectedTime = Date()
 
         guard let tag = tags.first else {
-            result?(FlutterError(code: "NO_TAG", message: "Aucun tag détecté", details: buildSessionDiagnostics()))
+            session.invalidate(errorMessage: "Aucun tag détecté")
+            complete(with: FlutterError(code: "NO_TAG", message: "Aucun tag détecté", details: buildSessionDiagnostics()))
             return
         }
         self.lastTagTech = describeTag(tag)
@@ -341,13 +552,12 @@ extension NativeNfcPlugin: NFCTagReaderSessionDelegate {
             // Si on est en mode écriture OpenPrintTag
             if self.isOpenPrintTagWriteMode, let dataToWrite = self.openPrintTagDataToWrite {
                 session.connect(to: tag) { error in
+                    guard self.isCurrent(session) else { return }
                     if let error = error {
+                        // Écriture : pas de reprise automatique, échec franc
                         print("❌ Erreur connexion ISO 15693: \(error.localizedDescription)")
                         session.invalidate(errorMessage: "Erreur de connexion au tag")
-                        self.result?(FlutterError(code: "CONNECTION_ERROR", message: error.localizedDescription, details: self.buildSessionDiagnostics()))
-                        self.result = nil
-                        self.isOpenPrintTagWriteMode = false
-                        self.openPrintTagDataToWrite = nil
+                        self.complete(with: FlutterError(code: "CONNECTION_ERROR", message: error.localizedDescription, details: self.buildSessionDiagnostics()))
                         return
                     }
                     self.writeOpenPrintTag(iso15693Tag: iso15693Tag, data: dataToWrite, session: session)
@@ -358,12 +568,13 @@ extension NativeNfcPlugin: NFCTagReaderSessionDelegate {
             // Si on est en mode OpenPrintTag ou Auto-Detect, lire le tag ISO 15693
             if self.isOpenPrintTagMode || self.isAutoDetectMode {
                 session.connect(to: tag) { error in
+                    guard self.isCurrent(session) else { return }
                     if let error = error {
+                        // Tag bougé : 1 restartPolling puis relecture au prochain didDetect
+                        if self.restartPollingAfterConnectionLost(error, session: session) { return }
                         print("❌ Erreur connexion ISO 15693: \(error.localizedDescription)")
                         session.invalidate(errorMessage: "Erreur de connexion au tag")
-                        self.result?(FlutterError(code: "CONNECTION_ERROR", message: error.localizedDescription, details: self.buildSessionDiagnostics()))
-                        self.result = nil
-                        self.isOpenPrintTagMode = false
+                        self.complete(with: FlutterError(code: "CONNECTION_ERROR", message: error.localizedDescription, details: self.buildSessionDiagnostics()))
                         return
                     }
                     self.readOpenPrintTag(iso15693Tag: iso15693Tag, session: session)
@@ -374,26 +585,23 @@ extension NativeNfcPlugin: NFCTagReaderSessionDelegate {
             // Sinon, signaler un tag incompatible
             let tagInfo = "ISO 15693 (NFC-V) - ID: \(iso15693Tag.identifier.map { String(format: "%02x", $0) }.joined(separator: ":"))"
             session.invalidate(errorMessage: "Tag ISO 15693 détecté (non compatible)")
-            self.result?(FlutterError(
+            complete(with: FlutterError(
                 code: "INCOMPATIBLE_TAG",
                 message: "Tag NFC détecté mais de type ISO 15693 (NFC-V). Ce type est utilisé par Prusa (OpenPrintTag) et n'est pas encore supporté dans ce mode. Sélectionnez le mode Prusa.",
                 details: buildSessionDiagnostics(tagType: tagInfo)
             ))
-            self.result = nil
-            self.isBambuLabMode = false
-            self.isOpenPrintTagMode = false
-            self.isAutoDetectMode = false
-            self.pagesToWrite = nil
-            self.bambuBlocksToWrite = nil
             return
         }
 
         // Connecter au tag
         session.connect(to: tag) { error in
+            guard self.isCurrent(session) else { return }
             if let error = error {
+                // Lecture : 1 restartPolling si tag bougé (jamais pour une écriture)
+                if self.restartPollingAfterConnectionLost(error, session: session) { return }
                 print("❌ Erreur connexion: \(error.localizedDescription)")
                 session.invalidate(errorMessage: "Erreur de connexion au tag")
-                self.result?(FlutterError(code: "CONNECTION_ERROR", message: error.localizedDescription, details: self.buildSessionDiagnostics()))
+                self.complete(with: FlutterError(code: "CONNECTION_ERROR", message: error.localizedDescription, details: self.buildSessionDiagnostics()))
                 return
             }
 
@@ -413,14 +621,11 @@ extension NativeNfcPlugin: NFCTagReaderSessionDelegate {
                 }
                 print("⚠️ Tag détecté mais type non supporté: \(tagTypeDesc)")
                 session.invalidate(errorMessage: "Tag de type \(tagTypeDesc) non compatible")
-                self.result?(FlutterError(
+                self.complete(with: FlutterError(
                     code: "INCOMPATIBLE_TAG",
                     message: "Tag NFC détecté mais de type \(tagTypeDesc). L'app supporte les tags MiFare (Anycubic, Bambu Lab, Creality).",
                     details: self.buildSessionDiagnostics(tagType: tagTypeDesc)
                 ))
-                self.result = nil
-                self.isBambuLabMode = false
-                self.isAutoDetectMode = false
                 return
             }
 
@@ -444,14 +649,11 @@ extension NativeNfcPlugin: NFCTagReaderSessionDelegate {
                     // MiFare Classic/Plus détecté - Crypto1 non supporté par CoreNFC
                     print("⚠️ Tag MiFare Classic/Plus détecté - non supporté sur iOS")
                     session.invalidate(errorMessage: "MiFare Classic non supporté sur iOS")
-                    self.result?(FlutterError(
+                    self.complete(with: FlutterError(
                         code: "PLATFORM_NOT_SUPPORTED",
                         message: "Tag MiFare Classic détecté (Bambu Lab / Creality). Apple CoreNFC ne supporte pas le protocole Crypto1 requis. Utilisez un appareil Android.",
                         details: self.buildSessionDiagnostics(tagType: "mifare_classic")
                     ))
-                    self.result = nil
-                    self.isBambuLabMode = false
-                    self.isAutoDetectMode = false
                 default:
                     // Un tag .unknown est TRÈS souvent un NTAG Anycubic/Elegoo/TigerTag
                     // que CoreNFC n'a pas su classer .ultralight (fréquent sur iPhone
@@ -507,10 +709,7 @@ extension NativeNfcPlugin: NFCTagReaderSessionDelegate {
             print("✅ Écriture OpenPrintTag terminée: \(totalBlocks) blocs écrits")
             session.alertMessage = "Écriture OpenPrintTag réussie ✓"
             session.invalidate()
-            self.result?(true)
-            self.result = nil
-            self.isOpenPrintTagWriteMode = false
-            self.openPrintTagDataToWrite = nil
+            complete(with: true)
             return
         }
 
@@ -518,13 +717,12 @@ extension NativeNfcPlugin: NFCTagReaderSessionDelegate {
         let blockData = Data(data[startIdx..<(startIdx + blockSize)])
 
         iso15693Tag.writeSingleBlock(requestFlags: [.highDataRate, .address], blockNumber: UInt8(currentBlock), dataBlock: blockData) { error in
+            guard self.isCurrent(session) else { return }
             if let error = error {
+                // Écriture interrompue : échec franc (pas de reprise automatique)
                 print("❌ Erreur écriture bloc \(currentBlock): \(error.localizedDescription)")
                 session.invalidate(errorMessage: "Erreur écriture bloc \(currentBlock)")
-                self.result?(FlutterError(code: "WRITE_ERROR", message: "Erreur écriture bloc \(currentBlock): \(error.localizedDescription)", details: self.buildSessionDiagnostics()))
-                self.result = nil
-                self.isOpenPrintTagWriteMode = false
-                self.openPrintTagDataToWrite = nil
+                self.complete(with: FlutterError(code: "WRITE_ERROR", message: "Erreur écriture bloc \(currentBlock): \(error.localizedDescription)", details: self.buildSessionDiagnostics()))
                 return
             }
 
@@ -546,110 +744,115 @@ extension NativeNfcPlugin: NFCTagReaderSessionDelegate {
     private func readOpenPrintTag(iso15693Tag: NFCISO15693Tag, session: NFCTagReaderSession) {
         print("📖 Lecture OpenPrintTag ISO 15693...")
 
-        // Read blocks sequentially (4 bytes per block for ISO 15693)
-        // Read up to 64 blocks (256 bytes) to cover NDEF + OpenPrintTag data
+        // Lecture pilotée par l'en-tête NDEF : CC (bloc 0) puis TLV 0x03, dont la
+        // longueur donne EXACTEMENT le nombre de blocs à lire (taille de bloc
+        // déduite de la réponse du tag, 4 octets en général).
         readISO15693BlocksSequentially(
             iso15693Tag: iso15693Tag,
             currentBlock: 0,
-            maxBlocks: 64,
             allData: Data(),
             session: session
         )
     }
 
+    /// Adressage readSingleBlock sur 1 octet : blocs 0 à 255
+    private static let maxISO15693Blocks = 256
+
     private func readISO15693BlocksSequentially(
         iso15693Tag: NFCISO15693Tag,
         currentBlock: Int,
-        maxBlocks: Int,
         allData: Data,
         session: NFCTagReaderSession
     ) {
-        if currentBlock >= maxBlocks {
-            // Done reading, return raw bytes
-            print("📄 OpenPrintTag: \(allData.count) bytes lus")
-            print("🔍 Hex: \(allData.map { String(format: "%02x", $0) }.joined(separator: " "))")
-
-            var resultData: [String: Any] = [
-                "rawBytes": [UInt8](allData),
-                "tag_tech": self.lastTagTech
-            ]
-            if self.isAutoDetectMode {
-                resultData["tagType"] = "prusa"
-            }
-
-            session.alertMessage = "Lecture Prusa réussie ✓"
-            session.invalidate()
-            self.result?(resultData)
-            self.result = nil
-            self.isOpenPrintTagMode = false
-            self.isAutoDetectMode = false
-            return
-        }
-
         iso15693Tag.readSingleBlock(requestFlags: [.highDataRate, .address], blockNumber: UInt8(currentBlock)) { data, error in
+            guard self.isCurrent(session) else { return }
             if let error = error {
-                // If we get an error on a block, we've reached the end of readable memory
-                if currentBlock > 0 {
-                    print("📄 OpenPrintTag: fin de lecture au bloc \(currentBlock), \(allData.count) bytes lus")
-                    print("🔍 Hex: \(allData.map { String(format: "%02x", $0) }.joined(separator: " "))")
+                // Tag bougé : 1 restartPolling, relecture complète au prochain didDetect
+                if self.restartPollingAfterConnectionLost(error, session: session) { return }
 
-                    let resultData: [String: Any] = [
-                        "rawBytes": [UInt8](allData),
-                        "tag_tech": self.lastTagTech
-                    ]
-
-                    session.alertMessage = "Lecture Prusa réussie ✓"
-                    session.invalidate()
-                    self.result?(resultData)
-                    self.result = nil
-                    self.isOpenPrintTagMode = false
+                if currentBlock == 0 {
+                    // Erreur sur le premier bloc
+                    print("❌ Erreur lecture ISO 15693 bloc \(currentBlock): \(error.localizedDescription)")
+                    session.invalidate(errorMessage: "Erreur de lecture ISO 15693")
+                    self.complete(with: FlutterError(code: "READ_ERROR", message: error.localizedDescription, details: self.buildSessionDiagnostics()))
                     return
                 }
 
-                // Error on first block
-                print("❌ Erreur lecture ISO 15693 bloc \(currentBlock): \(error.localizedDescription)")
-                session.invalidate(errorMessage: "Erreur de lecture ISO 15693")
-                self.result?(FlutterError(code: "READ_ERROR", message: error.localizedDescription, details: self.buildSessionDiagnostics()))
-                self.result = nil
-                self.isOpenPrintTagMode = false
-                self.isAutoDetectMode = false
+                // Erreur AVANT la fin du message NDEF : échec (plus de succès partiel)
+                print("❌ OpenPrintTag: lecture interrompue au bloc \(currentBlock) (\(allData.count) bytes lus): \(error.localizedDescription)")
+                self.failPartialOpenPrintTagRead(
+                    session: session,
+                    message: "Lecture du tag Prusa incomplète (bloc \(currentBlock)) : \(error.localizedDescription). Maintenez le téléphone immobile et réessayez.",
+                    bytesRead: allData
+                )
                 return
             }
 
             var newData = allData
             newData.append(data)
 
-            // Check for NDEF terminator TLV (0xFE)
-            if data.contains(0xFE) && currentBlock > 4 {
-                print("📄 OpenPrintTag: terminateur NDEF trouvé au bloc \(currentBlock)")
-                print("🔍 Hex: \(newData.map { String(format: "%02x", $0) }.joined(separator: " "))")
-
-                var resultData: [String: Any] = [
-                    "rawBytes": [UInt8](newData),
-                    "tag_tech": self.lastTagTech
-                ]
-                if self.isAutoDetectMode {
-                    resultData["tagType"] = "prusa"
-                }
-
-                session.alertMessage = "Lecture Prusa réussie ✓"
-                session.invalidate()
-                self.result?(resultData)
-                self.result = nil
-                self.isOpenPrintTagMode = false
-                self.isAutoDetectMode = false
+            switch self.ndefReadPlan([UInt8](newData)) {
+            case .totalBytes(let total) where newData.count >= total:
+                print("📄 OpenPrintTag: message NDEF complet (\(total) bytes attendus, \(currentBlock + 1) blocs lus)")
+                self.finishOpenPrintTagRead(session: session, data: newData)
                 return
+            case .noNdefMessage(let reason):
+                // Tag lu entièrement mais sans message NDEF : Dart signalera
+                // « format non identifié » à partir de ces octets
+                print("ℹ️ OpenPrintTag: pas de message NDEF (\(reason))")
+                self.finishOpenPrintTagRead(session: session, data: newData)
+                return
+            case .totalBytes, .needMoreData:
+                break
             }
 
-            // Read next block
+            // Lire le bloc suivant
+            let nextBlock = currentBlock + 1
+            guard nextBlock < NativeNfcPlugin.maxISO15693Blocks else {
+                print("❌ OpenPrintTag: longueur NDEF au-delà des \(NativeNfcPlugin.maxISO15693Blocks) blocs adressables")
+                self.failPartialOpenPrintTagRead(
+                    session: session,
+                    message: "Lecture du tag Prusa incomplète : message NDEF plus long que la mémoire adressable.",
+                    bytesRead: newData
+                )
+                return
+            }
             self.readISO15693BlocksSequentially(
                 iso15693Tag: iso15693Tag,
-                currentBlock: currentBlock + 1,
-                maxBlocks: maxBlocks,
+                currentBlock: nextBlock,
                 allData: newData,
                 session: session
             )
         }
+    }
+
+    /// Succès de lecture Prusa : même forme de résultat sur tous les chemins
+    /// (tagType "prusa" en auto-détection), puis remise à zéro des modes.
+    private func finishOpenPrintTagRead(session: NFCTagReaderSession, data: Data) {
+        print("🔍 Hex: \(data.map { String(format: "%02x", $0) }.joined(separator: " "))")
+
+        var resultData: [String: Any] = [
+            "rawBytes": [UInt8](data),
+            "tag_tech": self.lastTagTech
+        ]
+        if self.isAutoDetectMode {
+            resultData["tagType"] = "prusa"
+        }
+
+        session.alertMessage = "Lecture Prusa réussie ✓"
+        session.invalidate()
+        complete(with: resultData)
+    }
+
+    /// Échec PARTIAL_READ : le message NDEF n'a pas pu être lu jusqu'au bout.
+    private func failPartialOpenPrintTagRead(session: NFCTagReaderSession, message: String, bytesRead: Data) {
+        var details = buildSessionDiagnostics()
+        details["bytes_read"] = bytesRead.count
+        if case .totalBytes(let total) = ndefReadPlan([UInt8](bytesRead)) {
+            details["bytes_expected"] = total
+        }
+        session.invalidate(errorMessage: "Lecture incomplète, réessayez")
+        complete(with: FlutterError(code: "PARTIAL_READ", message: message, details: details))
     }
 
     private func readAllPages(mifareTag: NFCMiFareTag, session: NFCTagReaderSession) {
@@ -677,10 +880,7 @@ extension NativeNfcPlugin: NFCTagReaderSessionDelegate {
 
             session.alertMessage = "Lecture réussie ✓"
             session.invalidate()
-            self.result?(resultData)
-            self.result = nil
-            self.isBambuLabMode = false
-            self.isAutoDetectMode = false
+            complete(with: resultData)
             return
         }
 
@@ -688,14 +888,13 @@ extension NativeNfcPlugin: NFCTagReaderSessionDelegate {
         let command = Data([0x30, UInt8(startPage)])
 
         mifareTag.sendMiFareCommand(commandPacket: command) { data, error in
+            guard self.isCurrent(session) else { return }
             if let error = error {
+                // Tag bougé : 1 restartPolling, relecture complète au prochain didDetect
+                if self.restartPollingAfterConnectionLost(error, session: session) { return }
                 print("⚠️ Erreur lecture page \(startPage): \(error.localizedDescription)")
                 session.invalidate(errorMessage: "Erreur de lecture")
-                self.result?(FlutterError(code: "READ_ERROR", message: error.localizedDescription, details: self.buildSessionDiagnostics()))
-                self.result = nil
-                self.isAutoDetectMode = false
-                self.isBambuLabMode = false
-                self.isAutoDetectMode = false
+                self.complete(with: FlutterError(code: "READ_ERROR", message: error.localizedDescription, details: self.buildSessionDiagnostics()))
                 return
             }
 
@@ -723,8 +922,7 @@ extension NativeNfcPlugin: NFCTagReaderSessionDelegate {
 
             session.alertMessage = "Lecture réussie ✓"
             session.invalidate()
-            self.result?(resultData)
-            self.result = nil
+            complete(with: resultData)
             return
         }
 
@@ -732,11 +930,13 @@ extension NativeNfcPlugin: NFCTagReaderSessionDelegate {
         let command = Data([0x30, UInt8(startPage)])
 
         mifareTag.sendMiFareCommand(commandPacket: command) { data, error in
+            guard self.isCurrent(session) else { return }
             if let error = error {
+                // Tag bougé : 1 restartPolling, relecture complète au prochain didDetect
+                if self.restartPollingAfterConnectionLost(error, session: session) { return }
                 print("⚠️ Erreur lecture page \(startPage): \(error.localizedDescription)")
                 session.invalidate(errorMessage: "Erreur de lecture")
-                self.result?(FlutterError(code: "READ_ERROR", message: error.localizedDescription, details: self.buildSessionDiagnostics()))
-                self.result = nil
+                self.complete(with: FlutterError(code: "READ_ERROR", message: error.localizedDescription, details: self.buildSessionDiagnostics()))
                 return
             }
 
@@ -750,45 +950,36 @@ extension NativeNfcPlugin: NFCTagReaderSessionDelegate {
         }
     }
 
-    private func writePages(mifareTag: NFCMiFareTag, pages: [[String: Any]], session: NFCTagReaderSession) {
-        // Écrire toutes les pages séquentiellement
+    private func writePages(mifareTag: NFCMiFareTag, pages: [UltralightPage], session: NFCTagReaderSession) {
+        // Écrire toutes les pages séquentiellement (déjà validées dans handle())
         writePageSequentially(mifareTag: mifareTag, pages: pages, currentIndex: 0, session: session)
     }
 
-    private func writePageSequentially(mifareTag: NFCMiFareTag, pages: [[String: Any]], currentIndex: Int, session: NFCTagReaderSession) {
+    private func writePageSequentially(mifareTag: NFCMiFareTag, pages: [UltralightPage], currentIndex: Int, session: NFCTagReaderSession) {
         // Si on a fini d'écrire toutes les pages
         if currentIndex >= pages.count {
             session.alertMessage = "Écriture réussie ✓"
             session.invalidate()
-            self.result?(true)
-            self.result = nil
-            self.pagesToWrite = nil  // Réinitialiser pour la prochaine session
+            complete(with: true)  // Réinitialise aussi pagesToWrite pour la prochaine session
             return
         }
 
-        let pageInfo = pages[currentIndex]
-        guard let pageNumber = pageInfo["page"] as? Int,
-              let dataArray = pageInfo["data"] as? [UInt8],
-              dataArray.count == 4 else {
-            print("⚠️ Page invalide: \(pageInfo)")
-            // Passer à la page suivante
-            self.writePageSequentially(mifareTag: mifareTag, pages: pages, currentIndex: currentIndex + 1, session: session)
-            return
-        }
+        let pageNumber = pages[currentIndex].page
+        let dataArray = pages[currentIndex].bytes
 
         // Commande WRITE MiFare Ultralight: 0xA2 + page number + 4 bytes
-        var command = Data([0xA2, UInt8(pageNumber)])
+        var command = Data([0xA2, pageNumber])
         command.append(contentsOf: dataArray)
 
         print("📤 Écriture page \(pageNumber): \(dataArray.map { String(format: "%02x", $0) }.joined(separator: " "))")
 
-        mifareTag.sendMiFareCommand(commandPacket: command) { data, error in
+        mifareTag.sendMiFareCommand(commandPacket: command) { _, error in
+            guard self.isCurrent(session) else { return }
             if let error = error {
+                // Écriture interrompue : échec franc (pas de reprise automatique)
                 print("❌ Erreur écriture page \(pageNumber): \(error.localizedDescription)")
                 session.invalidate(errorMessage: "Erreur lors de l'écriture")
-                self.result?(FlutterError(code: "WRITE_ERROR", message: "Échec de l'écriture", details: self.buildSessionDiagnostics()))
-                self.result = nil
-                self.pagesToWrite = nil  // Réinitialiser aussi en cas d'erreur
+                self.complete(with: FlutterError(code: "WRITE_ERROR", message: "Échec de l'écriture", details: self.buildSessionDiagnostics()))
                 return
             }
 
@@ -872,14 +1063,11 @@ extension NativeNfcPlugin: NFCTagReaderSessionDelegate {
         // ne peut pas effectuer l'authentification sectorielle requise.
         print("⚠️ Tentative de lecture Bambu Lab (MiFare Classic) sur iOS - non supporté")
         session.invalidate(errorMessage: "MiFare Classic non supporté sur iOS")
-        self.result?(FlutterError(
+        complete(with: FlutterError(
             code: "PLATFORM_NOT_SUPPORTED",
             message: "Les tags Bambu Lab utilisent MiFare Classic qui n'est pas supporté par Apple CoreNFC. Cette fonctionnalité est disponible sur Android uniquement.",
             details: nil
         ))
-        self.result = nil
-        self.isBambuLabMode = false
-        self.isAutoDetectMode = false
         return
 
         // --- Code original conservé pour référence (ne s'exécute jamais) ---
@@ -927,10 +1115,7 @@ extension NativeNfcPlugin: NFCTagReaderSessionDelegate {
             }
             session.alertMessage = "Lecture Bambu Lab réussie ✓"
             session.invalidate()
-            self.result?(parsedData)
-            self.result = nil
-            self.isBambuLabMode = false
-            self.isAutoDetectMode = false
+            complete(with: parsedData)
             return
         }
 
@@ -944,17 +1129,15 @@ extension NativeNfcPlugin: NFCTagReaderSessionDelegate {
             derivedKey: derivedKeys[sector],
             defaultKey: defaultKey
         ) { success, error in
+            guard self.isCurrent(session) else { return }
             if !success {
                 print("❌ Échec authentification secteur \(sector) (les deux clés)")
                 session.invalidate(errorMessage: "Échec d'authentification")
-                self.result?(FlutterError(
+                self.complete(with: FlutterError(
                     code: "AUTH_ERROR",
                     message: "Impossible d'authentifier le secteur \(sector)",
                     details: nil
                 ))
-                self.result = nil
-                self.isBambuLabMode = false
-                self.isAutoDetectMode = false
                 return
             }
 
@@ -963,16 +1146,15 @@ extension NativeNfcPlugin: NFCTagReaderSessionDelegate {
                 mifareTag: mifareTag,
                 blockNumber: UInt8(blockNumber)
             ) { data, error in
+                guard self.isCurrent(session) else { return }
                 if let error = error {
                     print("❌ Erreur lecture bloc \(blockNumber): \(error)")
                     session.invalidate(errorMessage: "Erreur de lecture")
-                    self.result?(FlutterError(
+                    self.complete(with: FlutterError(
                         code: "READ_ERROR",
                         message: "Échec lecture bloc \(blockNumber)",
                         details: nil
                     ))
-                    self.result = nil
-                    self.isBambuLabMode = false
                     return
                 }
 
@@ -1183,9 +1365,7 @@ extension NativeNfcPlugin: NFCTagReaderSessionDelegate {
         if currentIndex >= blockNumbers.count {
             session.alertMessage = "Clone Bambu Lab écrit avec succès ✓"
             session.invalidate()
-            self.result?(true)
-            self.result = nil
-            self.bambuBlocksToWrite = nil
+            complete(with: true)
             return
         }
 
@@ -1225,16 +1405,15 @@ extension NativeNfcPlugin: NFCTagReaderSessionDelegate {
 
         // Authentifier le secteur
         authenticateSector(mifareTag: mifareTag, sector: UInt8(sector), key: key) { success, error in
+            guard self.isCurrent(session) else { return }
             if !success {
                 print("❌ Échec authentification secteur \(sector)")
                 session.invalidate(errorMessage: "Erreur d'authentification")
-                self.result?(FlutterError(
+                self.complete(with: FlutterError(
                     code: "AUTH_ERROR",
                     message: "Impossible d'authentifier le secteur \(sector)",
                     details: nil
                 ))
-                self.result = nil
-                self.bambuBlocksToWrite = nil
                 return
             }
 
@@ -1244,16 +1423,15 @@ extension NativeNfcPlugin: NFCTagReaderSessionDelegate {
                 blockNumber: UInt8(blockNumber),
                 data: blockData
             ) { success, error in
+                guard self.isCurrent(session) else { return }
                 if !success {
                     print("❌ Erreur écriture bloc \(blockNumber)")
                     session.invalidate(errorMessage: "Erreur d'écriture")
-                    self.result?(FlutterError(
+                    self.complete(with: FlutterError(
                         code: "WRITE_ERROR",
                         message: "Échec écriture bloc \(blockNumber)",
                         details: nil
                     ))
-                    self.result = nil
-                    self.bambuBlocksToWrite = nil
                     return
                 }
 

@@ -55,10 +55,8 @@ class NfcRepositoryImpl implements NfcRepository {
       // (0 octet, connexion perdue…) partaient sans tag_tech ni read_attempts.
       NfcScanDiagnostics.updateFromNativeError(e.code, e.details);
       final diag = _extractDiagnostics(e.details);
-      // Gérer l'annulation par l'utilisateur
-      if (e.code == 'USER_CANCELLED') {
-        return const Left(NfcSessionCancelledFailure());
-      }
+      final mapped = _mapCommonNativeError(e, diag);
+      if (mapped != null) return Left(mapped);
       // Tag non détecté (timeout)
       if (e.code == 'TAG_NOT_DETECTED') {
         return Left(NfcTagNotDetectedFailure(
@@ -129,9 +127,8 @@ class NfcRepositoryImpl implements NfcRepository {
       // (0 octet, connexion perdue…) partaient sans tag_tech ni read_attempts.
       NfcScanDiagnostics.updateFromNativeError(e.code, e.details);
       final diag = _extractDiagnostics(e.details);
-      if (e.code == 'USER_CANCELLED') {
-        return const Left(NfcSessionCancelledFailure());
-      }
+      final mapped = _mapCommonNativeError(e, diag);
+      if (mapped != null) return Left(mapped);
       if (e.code == 'TAG_NOT_DETECTED') {
         return Left(NfcTagNotDetectedFailure(
           message: e.message ?? 'Aucun tag NFC détecté',
@@ -199,6 +196,28 @@ class NfcRepositoryImpl implements NfcRepository {
         NfcTagReadFailure(message: "Erreur lors de l'écriture du tag NFC"),
       );
     }
+  }
+
+  /// Codes natifs communs aux deux lectures (Android/iOS).
+  Failure? _mapCommonNativeError(PlatformException e, _NfcDiagnostics diag) {
+    switch (e.code) {
+      // Annulation, ou scan remplacé par un nouveau (double appui) : silencieux.
+      case 'USER_CANCELLED':
+      case 'SESSION_REPLACED':
+      case 'SESSION_BUSY':
+        return const NfcSessionCancelledFailure();
+      case 'NFC_NOT_AVAILABLE':
+        return const NfcNotAvailableFailure();
+      // Tag retiré pendant la lecture : le bloc reconnaît « tag was lost » et
+      // affiche l'écran « tag bougé » (au lieu d'une erreur générique).
+      case 'TAG_MOVED':
+        return NfcTagReadFailure(
+          message: 'Tag was lost (TAG_MOVED): ${e.message ?? ''}',
+          sessionDurationMs: diag.sessionDurationMs,
+          tagWasDetected: true,
+        );
+    }
+    return null;
   }
 
   /// Extraire les données de diagnostic depuis e.details (Map ou String)
