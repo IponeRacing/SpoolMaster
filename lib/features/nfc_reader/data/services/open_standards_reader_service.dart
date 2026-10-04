@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer' as developer;
+import 'dart:math' as math;
 
 import 'package:nfc_filament/core/errors/failures.dart';
 import 'package:nfc_filament/core/services/nfc_scan_diagnostics.dart';
@@ -233,6 +234,13 @@ class OpenStandardsReaderService {
   /// Spec : opentag3d.info/spec.html (section Core, offsets relatifs au
   /// payload).
   static BobbinData? _parseOpenTag3DPayload(List<int> p) {
+    if (p.length >= 2) {
+      final version = (p[0] << 8) | p[1];
+      // v2.x : nouvelle disposition (toutes les adresses ont changé). Une
+      // version mineure plus récente reste lisible (spec, « Reader
+      // Implementation Guidelines ») ; une majeure inconnue est refusée.
+      if (version >= 2000 && version <= 2999) return _parseOpenTag3DV2(p, version);
+    }
     if (p.length < 0x64) return null; // Section Core minimale
 
     int u16(int off) => (p[off] << 8) | p[off + 1];
@@ -299,6 +307,68 @@ class OpenStandardsReaderService {
       bedTempMax: maxBed ?? (bedTemp > 0 ? bedTemp : null),
       diameter: diameterUm > 0 ? diameterUm / 1000.0 : null,
       brand: manufacturer.isEmpty ? 'OpenTag3D' : manufacturer,
+    );
+  }
+
+  /// OpenTag3D v2.x (mêmes conventions que la v1 : big-endian, températures
+  /// ÷ 5, octets absents = 0x00). Adresses : spec.json de
+  /// GooborgStudios/OpenTag3D (2.003). Validé sur une vraie bobine Polar
+  /// Filament PLA Pure Light Blue (OpenRFID test/tags).
+  static BobbinData? _parseOpenTag3DV2(List<int> payload, int version) {
+    // « Missing bytes … treat them as 0x00 » (spec 2.001).
+    final p = [...payload, ...List<int>.filled(math.max(0, 0xE0 - payload.length), 0)];
+    int u16(int off) => (p[off] << 8) | p[off + 1];
+    String str(int off, int len) => utf8
+        .decode(p.sublist(off, off + len).takeWhile((b) => b != 0).toList(), allowMalformed: true)
+        .trim();
+    int? temp(int off) => p[off] > 0 ? p[off] * 5 : null;
+
+    final materialBase = str(0x02, 5);
+    final materialMod = str(0x07, 5);
+    final manufacturer = str(0x0C, 16);
+    final colorName = str(0x1C, 32);
+    final r = p[0x3C];
+    final g = p[0x3D];
+    final b = p[0x3E];
+    final serial = str(0x4C, 32);
+    final year = u16(0x84);
+    final month = p[0x86];
+    final day = p[0x87];
+    final diameterUm = u16(0x8C);
+    final nozzle = p[0x8F] / 10;
+    final printTemp = temp(0x90);
+    final bedTemp = temp(0x94);
+    final maxDryTemp = temp(0x9A);
+    final dryHours = p[0x9B];
+    final weight = u16(0x9E);
+    final lengthM = u16(0xA2);
+
+    if (materialBase.isEmpty && manufacturer.isEmpty) return null;
+    final materialType =
+        materialMod.isNotEmpty ? '$materialBase $materialMod' : materialBase;
+
+    developer.log('✅ Tag OpenTag3D v${version / 1000} détecté: $manufacturer $materialType');
+
+    return BobbinData(
+      filamentType: materialType.isEmpty ? 'Unknown' : materialType,
+      color: colorName.isNotEmpty ? colorName : colorNameFromRgb(r, g, b),
+      weightGrams: (weight > 0 ? weight : 1000).toDouble(),
+      manufactureDate: year >= 2015 && month >= 1 && month <= 12 && day >= 1 && day <= 31
+          ? DateTime(year, month, day)
+          : null,
+      batchNumber: serial.isNotEmpty ? serial : null,
+      colorRgb: (r << 16) | (g << 8) | b,
+      extruderTempMin: temp(0x91) ?? printTemp,
+      extruderTempMax: temp(0x92) ?? printTemp,
+      bedTempMin: temp(0x95) ?? bedTemp,
+      bedTempMax: temp(0x96) ?? bedTemp,
+      diameter: diameterUm > 0 ? diameterUm / 1000.0 : null,
+      spoolLength: lengthM > 0 ? lengthM : null,
+      brand: manufacturer.isEmpty ? 'OpenTag3D' : manufacturer,
+      detailedType: materialMod.isNotEmpty ? materialType : null,
+      dryingTemp: maxDryTemp,
+      dryingTime: dryHours > 0 ? dryHours : null,
+      nozzleSize: nozzle > 0 ? nozzle : null,
     );
   }
 

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:nfc_filament/core/errors/failures.dart';
+import 'package:nfc_filament/features/nfc_reader/data/services/cbor_lite.dart';
 import 'package:nfc_filament/features/nfc_reader/data/services/open_standards_reader_service.dart';
 import 'package:nfc_filament/features/nfc_reader/data/services/prusa_reader_service.dart';
 
@@ -178,9 +179,52 @@ void main() {
       expect(result.bedTempMin, 60);
     });
 
+    // v2 (spec.json de GooborgStudios/OpenTag3D 2.003) : toutes les adresses
+    // changent. Valeurs d'une vraie bobine Polar Filament PLA Pure Light Blue.
+    test('OpenTag3D v2.000 : nouvelle disposition', () {
+      final p = List<int>.filled(0xB0, 0);
+      void put(int off, List<int> bytes) => p.setRange(off, off + bytes.length, bytes);
+      put(0x00, [0x07, 0xD0]); // 2000
+      put(0x02, 'PLA'.codeUnits);
+      put(0x07, 'Pure'.codeUnits);
+      put(0x0C, 'Polar Filament'.codeUnits);
+      put(0x1C, 'Light Blue'.codeUnits);
+      put(0x3C, [20, 173, 219, 255]);
+      put(0x4C, '50017-FYG5'.codeUnits);
+      put(0x84, [0x07, 0xEA, 4, 3]); // 2026-04-03
+      put(0x8C, [0x06, 0xD6]); // 1750 µm
+      p[0x8F] = 4; // buse 0.4
+      put(0x90, [43, 41, 49, 0, 12, 10, 13]); // 215, 205-245, chambre 0, plateau 60, 50-65
+      put(0x9A, [13, 0]); // séchage max 65 °C
+      put(0x9E, [0x03, 0xE8]); // 1000 g
+      put(0xA2, [0x00, 0x24]); // 36 m mesurés
+      final dump = buildType2Dump(
+        recordType: 'application/opentag3d',
+        payload: p,
+        asMime: true,
+      );
+
+      final result = OpenStandardsReaderService.tryParse(dump)!;
+
+      expect(result.brand, 'Polar Filament');
+      expect(result.filamentType, 'PLA Pure');
+      expect(result.color, 'Light Blue');
+      expect(result.colorRgb, 0x14ADDB);
+      expect(result.extruderTempMin, 205);
+      expect(result.extruderTempMax, 245);
+      expect(result.bedTempMin, 50);
+      expect(result.bedTempMax, 65);
+      expect(result.diameter, closeTo(1.75, 0.001));
+      expect(result.weightGrams, 1000);
+      expect(result.nozzleSize, closeTo(0.4, 0.001));
+      expect(result.dryingTemp, 65);
+      expect(result.manufactureDate, DateTime(2026, 4, 3));
+      expect(result.batchNumber, '50017-FYG5');
+    });
+
     test('version non supportée → erreur explicite (pas de fallthrough ACE)', () {
       final payload = buildOpenTag3DPayload();
-      payload[0x00] = 0x30; // version 12345 → hors plage v1.x
+      payload[0x00] = 0x30; // version 12345 → hors plage v1.x / v2.x
       payload[0x01] = 0x39;
       final dump = buildType2Dump(
         recordType: 'application/opentag3d',
@@ -303,7 +347,10 @@ void main() {
     test('parse un Prusament OpenPrintTag CBOR', () {
       final result = PrusaReaderService.parseFromRawBytes(buildOpenPrintTagDump());
 
-      expect(result.filamentType, 'Prusament PLA');
+      // Matériau = type (enum), nom commercial en type détaillé ; le nom ne
+      // commence pas par le type → couleur générique tirée du RGB.
+      expect(result.filamentType, 'PLA');
+      expect(result.detailedType, 'Prusament PLA');
       expect(result.brand, 'Prusa');
       expect(result.weightGrams, 970);
       expect(result.colorRgb, 0xFF0000);
@@ -314,6 +361,74 @@ void main() {
       expect(result.bedTempMax, 60);
       // remaining = 970 - 120 consommés
       expect(result.remainingWeight, 850);
+    });
+
+    // Disposition des vrais tags Prusament (dumps réels du 04.10.2026) : record
+    // URI avant le record OpenPrintTag, meta sans main_offset (la main region
+    // suit le meta), main map de longueur INDÉFINIE (0xBF … 0xFF). Avant :
+    // CborLite refusait l'indéfini → ancien format → « Unknown » partout.
+    test('vrai tag Prusament : map indéfinie, meta sans main_offset, record URI devant', () {
+      final mainMap = [
+        0xBF, // map indéfinie
+        ...cUint(9), ...cUint(0), // PLA
+        ...cUint(10), ...cText('PLA Galaxy Red'),
+        ...cUint(11), ...cText('Prusament'),
+        ...cUint(17), ...cUint(1065),
+        ...cUint(19), ...cBytes([0xBF, 0x1D, 0x2D]),
+        ...cUint(34), ...cUint(205),
+        ...cUint(35), ...cUint(225),
+        ...cUint(37), ...cUint(40),
+        ...cUint(38), ...cUint(60),
+        ...cUint(57), ...cUint(45), // séchage 45 °C
+        ...cUint(58), ...cUint(240), // 240 min = 4 h
+        0xFF, // fin de la map
+      ];
+      final auxMap = [0xBF, 0xFF];
+      final meta = cMap({2: cUint(4 + mainMap.length)}); // aux_offset seul
+      expect(meta.length, 4); // A1 02 18 xx : la main region commence à 4
+      final payload = [...meta, ...mainMap, ...auxMap];
+
+      const uri = '3dtag.org/s/c20204c985';
+      final uriRecord = [0x91, 0x01, uri.length + 1, 0x55, 0x04, ...uri.codeUnits];
+      const mime = 'application/vnd.openprinttag';
+      final optRecord = [0x52, mime.length, payload.length, ...mime.codeUnits, ...payload];
+      final message = [...uriRecord, ...optRecord];
+      final dump = [
+        0xE1, 0x40, 0x27, 0x01, // CC
+        0x03, 0xFF, message.length >> 8, message.length & 0xFF, ...message, 0xFE,
+      ];
+
+      final result = PrusaReaderService.parseFromRawBytes(dump);
+
+      expect(result.brand, 'Prusament');
+      expect(result.filamentType, 'PLA');
+      expect(result.detailedType, 'PLA Galaxy Red');
+      expect(result.color, 'Galaxy Red');
+      expect(result.colorRgb, 0xBF1D2D);
+      expect(result.weightGrams, 1065);
+      expect(result.extruderTempMin, 205);
+      expect(result.extruderTempMax, 225);
+      expect(result.bedTempMin, 40);
+      expect(result.bedTempMax, 60);
+      expect(result.dryingTemp, 45);
+      expect(result.dryingTime, 4);
+    });
+  });
+
+  group('CborLite - longueurs indéfinies', () {
+    test('map, array et chaîne découpée indéfinis', () {
+      final (map, end) = CborLite.decode([
+        0xBF, 0x01, 0x9F, 0x01, 0x02, 0xFF, // 1: [1, 2]
+        0x02, 0x7F, 0x62, 0x61, 0x62, 0x61, 0x63, 0xFF, // 2: "ab" + "c"
+        0xFF,
+      ]);
+      expect(map, {1: [1, 2], 2: 'abc'});
+      expect(end, 15);
+    });
+
+    test('0xFF hors conteneur ou map non terminée → FormatException', () {
+      expect(() => CborLite.decode([0xFF]), throwsFormatException);
+      expect(() => CborLite.decode([0xBF, 0x01, 0x02]), throwsFormatException);
     });
   });
 

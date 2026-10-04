@@ -38,10 +38,23 @@ class BambuTagParser {
     return blocks;
   }
 
-  /// Données de la bobine, ou null sans bloc 5 (couleur, poids, diamètre).
+  /// Identifiant de filament Bambu (bloc 1, octets 8-15) : « GFA00 », « GFG02 »…
+  /// Vrai sur les 5959 tags de Bambu-Lab-RFID-Library.
+  static final RegExp _bambuMaterialId = RegExp(r'^GF[A-Z]\d{2}$');
+
+  /// Le tag est-il un tag Bambu Lab ? Un MIFARE Classic d'une autre marque
+  /// ouvert avec les clés par défaut (Qidi Box, Creality lu en mode Bambu)
+  /// devenait une fausse bobine « Bambu Lab » au matériau illisible.
+  static bool isBambuTag(Map<int, List<int>> blocks) {
+    final b1 = _block(blocks, 1);
+    return b1 != null && _bambuMaterialId.hasMatch(_ascii(b1.sublist(8, 16)));
+  }
+
+  /// Données de la bobine, ou null sans bloc 5 (couleur, poids, diamètre) ou
+  /// si ce n'est pas un tag Bambu Lab ([isBambuTag]).
   static BobbinData? parse(Map<int, List<int>> blocks) {
     final b5 = _block(blocks, 5);
-    if (b5 == null) return null;
+    if (b5 == null || !isBambuTag(blocks)) return null;
     final b1 = _block(blocks, 1);
     final b6 = _block(blocks, 6);
     final b8 = _block(blocks, 8);

@@ -5,8 +5,10 @@
 import 'dart:typed_data';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:nfc_filament/core/errors/failures.dart';
 import 'package:nfc_filament/core/utils/color_naming.dart';
 import 'package:nfc_filament/features/nfc_reader/data/models/cloned_tag_model.dart';
+import 'package:nfc_filament/features/nfc_reader/data/services/bambu_lab_reader_service.dart';
 import 'package:nfc_filament/features/nfc_reader/data/services/bambu_tag_parser.dart';
 
 List<int> _ascii(String s) => [...s.codeUnits, ...List.filled(16 - s.length, 0)];
@@ -200,6 +202,19 @@ void main() {
           ))!.color;
       expect(colorOf('G00-B0', 0x0069B1FF), 'Blue');
       expect(colorOf('G00-B00', 0x001489FF), 'Reflex Blue');
+    });
+
+    test('MIFARE Classic d’une autre marque (Qidi) : pas une bobine Bambu', () {
+      // Tag Qidi lu avec les clés par défaut : bloc 1 vide, bloc 5 rempli.
+      final blocks = bambuBlocks()..[1] = List.filled(16, 0);
+      expect(BambuTagParser.isBambuTag(blocks), isFalse);
+      expect(BambuTagParser.parse(blocks), isNull);
+      expect(
+        () => BambuLabReaderService.parseFromNativeData({
+          'rawBlocks': blocks.map((k, v) => MapEntry('block_$k', v)),
+        }),
+        throwsA(isA<NfcTagIncompatibleFailure>()),
+      );
     });
 
     test('variante absente du catalogue BambuStudio : complément du générateur', () {

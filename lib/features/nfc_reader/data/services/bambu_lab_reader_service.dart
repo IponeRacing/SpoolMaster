@@ -58,6 +58,8 @@ class BambuLabReaderService {
       rethrow;
     } on NfcTagReadFailure {
       rethrow;
+    } on NfcTagIncompatibleFailure {
+      rethrow; // tag d'une autre marque : message explicite, pas « erreur de parsing »
     } catch (e) {
       debugPrint('❌ Erreur parsing Bambu Lab: $e\n${e is Error ? e.stackTrace : ""}');
       throw NfcTagReadFailure(
@@ -211,9 +213,16 @@ class BambuLabReaderService {
 
   /// Décode les blocs bruts du tag (format officiel : voir [BambuTagParser]).
   static BobbinData _parseNativeData(Map<String, dynamic> data) {
-    final parsed = BambuTagParser.parse(
-      BambuTagParser.blocksFromNative(data['rawBlocks']),
-    );
+    final blocks = BambuTagParser.blocksFromNative(data['rawBlocks']);
+    if (blocks.containsKey(5) && !BambuTagParser.isBambuTag(blocks)) {
+      throw const NfcTagIncompatibleFailure(
+        message: "Tag MIFARE Classic lu, mais ce n'est pas une bobine Bambu Lab "
+            '(ni Creality). Les tags Qidi et Snapmaker ne sont pas pris en charge.',
+        tagType: 'MifareClassic',
+        tagWasDetected: true,
+      );
+    }
+    final parsed = BambuTagParser.parse(blocks);
     if (parsed == null) {
       throw const NfcTagReadFailure(
         message: 'Données Bambu Lab incomplètes (bloc 5 illisible). Gardez le tag immobile et réessayez.',

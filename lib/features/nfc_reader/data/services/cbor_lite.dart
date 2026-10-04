@@ -1,7 +1,9 @@
 /// Décodeur CBOR minimal (RFC 8949) pour OpenPrintTag.
 /// Supporte : uint, negint, byte string, text string, array, map,
-/// tags (ignorés), half/float32/float64, bool/null. Longueurs définies
-/// uniquement (la spec OpenPrintTag n'utilise pas l'indéfini).
+/// tags (ignorés), half/float32/float64, bool/null, longueurs définies et
+/// indéfinies. La spec OpenPrintTag recommande (« SHOULD ») une map racine de
+/// longueur indéfinie (0xBF … 0xFF) : c'est le cas des vrais tags Prusament,
+/// que l'ancienne version (longueurs définies seulement) ne savait pas lire.
 library;
 
 import 'dart:convert';
@@ -18,6 +20,8 @@ class CborLite {
     final majorType = initial >> 5;
     final additionalInfo = initial & 0x1F;
     var cursor = offset + 1;
+
+    if (additionalInfo == 31) return _decodeIndefinite(bytes, majorType, cursor);
 
     // Longueur/valeur selon additional info
     int argument;
@@ -37,7 +41,7 @@ class CborLite {
         argument = _readUint(bytes, cursor, 8);
         cursor += 8;
       default:
-        throw FormatException('CBOR: additional info $additionalInfo non supporté (indéfini?)');
+        throw FormatException('CBOR: additional info $additionalInfo réservé');
     }
 
     switch (majorType) {
@@ -103,6 +107,56 @@ class CborLite {
         throw FormatException('CBOR: major type $majorType invalide');
     }
   }
+
+  /// Valeur de longueur indéfinie (additional info 31), terminée par 0xFF.
+  static (dynamic, int) _decodeIndefinite(List<int> bytes, int majorType, int start) {
+    var cursor = start;
+    bool atBreak() {
+      if (cursor >= bytes.length) {
+        throw const FormatException('CBOR: fin de données avant 0xFF');
+      }
+      return bytes[cursor] == _break;
+    }
+
+    switch (majorType) {
+      case 2 || 3: // chaîne découpée en morceaux de longueur définie
+        final chunks = <int>[];
+        while (!atBreak()) {
+          if (bytes[cursor] >> 5 != majorType || bytes[cursor] & 0x1F == 31) {
+            throw const FormatException('CBOR: morceau de chaîne invalide');
+          }
+          final (chunk, next) = decode(bytes, cursor);
+          chunks.addAll(chunk is String ? utf8.encode(chunk) : chunk as List<int>);
+          cursor = next;
+        }
+        final value = majorType == 2 ? chunks : utf8.decode(chunks, allowMalformed: true);
+        return (value, cursor + 1);
+
+      case 4: // array
+        final list = <dynamic>[];
+        while (!atBreak()) {
+          final (value, next) = decode(bytes, cursor);
+          list.add(value);
+          cursor = next;
+        }
+        return (list, cursor + 1);
+
+      case 5: // map
+        final map = <dynamic, dynamic>{};
+        while (!atBreak()) {
+          final (key, afterKey) = decode(bytes, cursor);
+          final (value, afterValue) = decode(bytes, afterKey);
+          map[key] = value;
+          cursor = afterValue;
+        }
+        return (map, cursor + 1);
+
+      default: // 0xFF hors conteneur, ou entier/tag « indéfini »
+        throw FormatException('CBOR: longueur indéfinie invalide (major type $majorType)');
+    }
+  }
+
+  static const int _break = 0xFF;
 
   static int _readUint(List<int> bytes, int offset, int length) {
     _checkBounds(bytes, offset, length);

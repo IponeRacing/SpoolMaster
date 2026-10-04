@@ -131,17 +131,16 @@ class PrusaReaderService {
 
   // ==================== OpenPrintTag officiel (CBOR, oct. 2025+) ====================
 
-  /// Enum material_type de la spec OpenPrintTag (clé 9 du main map).
-  /// Valeurs confirmées depuis prusa3d/OpenPrintTag data/*_fields.yaml.
+  /// Enum material_type de la spec OpenPrintTag (clé 9 du main map), complet
+  /// (data/material_type_enum.yaml de openprinttag-specification, 43 valeurs).
   static const Map<int, String> _openPrintTagMaterials = {
-    0: 'PLA',
-    1: 'PETG',
-    2: 'TPU',
-    3: 'ABS',
-    4: 'ASA',
-    5: 'PC',
-    6: 'PCTG',
-    42: 'PA612',
+    0: 'PLA', 1: 'PETG', 2: 'TPU', 3: 'ABS', 4: 'ASA', 5: 'PC', 6: 'PCTG',
+    7: 'PP', 8: 'PA6', 9: 'PA11', 10: 'PA12', 11: 'PA66', 12: 'CPE', 13: 'TPE',
+    14: 'HIPS', 15: 'PHA', 16: 'PET', 17: 'PEI', 18: 'PBT', 19: 'PVB', 20: 'PVA',
+    21: 'PEKK', 22: 'PEEK', 23: 'BVOH', 24: 'TPC', 25: 'PPS', 26: 'PPSU',
+    27: 'PVC', 28: 'PEBA', 29: 'PVDF', 30: 'PPA', 31: 'PCL', 32: 'PES',
+    33: 'PMMA', 34: 'POM', 35: 'PPE', 36: 'PS', 37: 'PSU', 38: 'TPI', 39: 'SBS',
+    40: 'OBC', 41: 'EVA', 42: 'PA612',
   };
 
   /// Cherche un record NDEF d'un type MIME donné dans un dump ISO 15693
@@ -239,15 +238,17 @@ class PrusaReaderService {
   /// [meta map][main region][aux region] — maps CBOR à clés entières.
   /// Spec : prusa3d/OpenPrintTag docs_src/nfc_data_format.md
   static BobbinData _parseOpenPrintTagCbor(List<int> payload) {
-    // Meta map (offset 0) : 0=main_offset, 1=main_size, 2=aux_offset, 3=aux_size
-    final (metaRaw, _) = CborLite.decode(payload);
+    // Meta map (offset 0) : 0=main_offset, 1=main_size, 2=aux_offset, 3=aux_size.
+    // Sans main_offset, la main region suit le meta (spec nfc_data_format.md) :
+    // c'est le cas des vrais tags Prusament (meta = {2: aux_offset}).
+    final (metaRaw, metaEnd) = CborLite.decode(payload);
     if (metaRaw is! Map) {
       throw const NfcTagReadFailure(message: 'OpenPrintTag: meta map CBOR invalide');
     }
     final meta = metaRaw;
 
-    final mainOffset = (meta[0] as num?)?.toInt();
-    if (mainOffset == null || mainOffset < 0 || mainOffset >= payload.length) {
+    final mainOffset = (meta[0] as num?)?.toInt() ?? metaEnd;
+    if (mainOffset < 0 || mainOffset >= payload.length) {
       throw const NfcTagReadFailure(message: 'OpenPrintTag: offset main region invalide');
     }
 
@@ -285,7 +286,9 @@ class PrusaReaderService {
     final minBedTemp = asInt(main[37]);
     final maxBedTemp = asInt(main[38]);
     final dryingTemp = asInt(main[57]);
-    final dryingTime = asInt(main[58]);
+    // drying_time en minutes dans la spec ; l'app stocke des heures.
+    final dryingMinutes = asInt(main[58]);
+    final dryingTime = dryingMinutes == null ? null : (dryingMinutes / 60).round();
 
     // primary_color (clé 19) : byte string RGB(A)
     int? colorRgb;
@@ -299,13 +302,19 @@ class PrusaReaderService {
       colorName = colorNameFromRgb(r, g, b);
     }
 
-    // Matériau : nom explicite > abréviation > enum
-    var filamentType = materialName?.trim() ?? '';
-    if (filamentType.isEmpty) filamentType = materialAbbrev?.trim() ?? '';
+    // Matériau : type (abréviation > enum), le nom commercial complet
+    // (« PLA Galaxy Red ») allant dans detailedType ; à défaut, le nom.
+    final name = materialName?.trim() ?? '';
+    var filamentType = materialAbbrev?.trim() ?? '';
     if (filamentType.isEmpty && materialTypeEnum != null) {
-      filamentType = _openPrintTagMaterials[materialTypeEnum] ?? 'Unknown';
+      filamentType = _openPrintTagMaterials[materialTypeEnum] ?? '';
     }
-    if (filamentType.isEmpty) filamentType = 'Unknown';
+    if (filamentType.isEmpty) filamentType = name.isNotEmpty ? name : 'Unknown';
+
+    // Couleur : nom commercial sans le type ni la marque (« PLA Galaxy Red »
+    // → « Galaxy Red », comme les noms officiels Bambu), sinon nom générique.
+    final officialColor = _colorFromMaterialName(name, filamentType, brandName);
+    if (officialColor != null) colorName = officialColor;
 
     // Poids restant = actual_netto_full_weight - consumed_weight (aux clé 0)
     final fullWeight = actualWeight ?? nominalWeight;
@@ -332,9 +341,26 @@ class PrusaReaderService {
       diameter: diameter,
       remainingWeight: remainingWeight,
       brand: brandName ?? 'Prusa',
+      detailedType: name.isNotEmpty && name != filamentType ? name : null,
       dryingTemp: dryingTemp,
       dryingTime: dryingTime,
     );
+  }
+
+  /// Nom de couleur tiré du nom commercial : « PLA Galaxy Red » → « Galaxy
+  /// Red », « PETG Prusa Galaxy Black » → « Galaxy Black ». Null si le nom ne
+  /// commence pas par le type (on ne devine pas) ou s'il ne reste rien.
+  static String? _colorFromMaterialName(String name, String type, String? brand) {
+    if (name.isEmpty || type.isEmpty) return null;
+    final words = name.split(RegExp(r'\s+'));
+    if (words.first.toUpperCase() != type.toUpperCase()) return null;
+    final brandWords = {
+      'prusa', 'prusament',
+      ...?brand?.toLowerCase().split(RegExp(r'\s+')),
+    };
+    final rest = words.skip(1).where((w) => !brandWords.contains(w.toLowerCase()));
+    final color = rest.join(' ').trim();
+    return color.isEmpty ? null : color;
   }
 
   /// Extraire le payload OpenPrintTag depuis les données brutes ISO 15693
