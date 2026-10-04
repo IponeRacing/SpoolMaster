@@ -11,6 +11,7 @@
 		1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */ = {isa = PBXBuildFile; fileRef = 1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */; };
 		24A6EA65E17BFE8D4D5B78DE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B3A33F92174817181DB420EB /* InfoPlist.strings */; };
 		25F0ACA6D2FE8DE5306F5D20 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BFD88170D6013D853F37874D /* InfoPlist.strings */; };
+		29E90D5C72F45753E42A10EE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 36BC6528AA8B3CC3DBDA2D45 /* InfoPlist.strings */; };
 		30E045192F12C668001E9E4D /* NativeNfcPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E045182F12C668001E9E4D /* NativeNfcPlugin.swift */; };
 		331C808B294A63AB00263BE5 /* RunnerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 331C807B294A618700263BE5 /* RunnerTests.swift */; };
 		33DA9FDADE50A855A0492D64 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F3AB76B10FF7B3FD385CF0F5 /* InfoPlist.strings */; };
@@ -24,6 +25,7 @@
 		611DA98847034B8E2719E01B /* NativeNfcPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = C895F29BAA7C567AA0A2A993 /* NativeNfcPlugin.swift */; };
 		61C0532659E77FE57FCB7FF4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C67AB78C8F0AA0FF0B6D839A /* InfoPlist.strings */; };
 		694134C17F0E0EBF0A1F2AA5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2977E31127419EA58BD3E382 /* InfoPlist.strings */; };
+		6DAD527D8E3EB8E97AFBD66C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 87223365A282A7BB4AE5E2FD /* InfoPlist.strings */; };
 		74434392F3E2743C6875A47D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A2F3C2D39ACA4F20B2944F04 /* InfoPlist.strings */; };
 		74858FAF1ED2DC5600515810 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74858FAE1ED2DC5600515810 /* AppDelegate.swift */; };
 		784C6CCA3D23E37BC9786894 /* Pods_Runner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B45BAF4CDDF3A36359C6829 /* Pods_Runner.framework */; };
@@ -102,6 +104,7 @@
 		30E045182F12C668001E9E4D /* NativeNfcPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativeNfcPlugin.swift; sourceTree = "<group>"; };
 		331C807B294A618700263BE5 /* RunnerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunnerTests.swift; sourceTree = "<group>"; };
 		331C8081294A63A400263BE5 /* RunnerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RunnerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		36BC6528AA8B3CC3DBDA2D45 /* InfoPlist.strings */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = InfoPlist.strings; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = AppFrameworkInfo.plist; path = Flutter/AppFrameworkInfo.plist; sourceTree = "<group>"; };
 		3E4E30BAFB715906D41E8AE0 /* Pods-Runner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.release.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.release.xcconfig"; sourceTree = "<group>"; };
 		45D1B6DC0A6F91A6612809F6 /* InfoPlist.strings */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = InfoPlist.strings; path = fi.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -121,6 +124,7 @@
 		78E0A7A72DC9AD7400C4905E /* FlutterGeneratedPluginSwiftPackage */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = FlutterGeneratedPluginSwiftPackage; path = Flutter/ephemeral/Packages/FlutterGeneratedPluginSwiftPackage; sourceTree = "<group>"; };
 		7A29037F151828D603E68E1C /* Pods-RunnerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RunnerTests.release.xcconfig"; path = "Target Support Files/Pods-RunnerTests/Pods-RunnerTests.release.xcconfig"; sourceTree = "<group>"; };
 		7AFA3C8E1D35360C0083082E /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Release.xcconfig; path = Flutter/Release.xcconfig; sourceTree = "<group>"; };
+		87223365A282A7BB4AE5E2FD /* InfoPlist.strings */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.strings; name = InfoPlist.strings; path = "zh-Hant.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		9740EEB21CF90195004384FC /* Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Debug.xcconfig; path = Flutter/Debug.xcconfig; sourceTree = "<group>"; };
 		9740EEB31CF90195004384FC /* Generated.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Generated.xcconfig; path = Flutter/Generated.xcconfig; sourceTree = "<group>"; };
 		97C146EE1CF9000F007C117D /* Runner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Runner.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -278,6 +282,8 @@
 				5A6FC6F0797AAD05BAA11B7C /* InfoPlist.strings */,
 				2D98F4EE049AFB5D2D23B3D5 /* InfoPlist.strings */,
 				5FC95BF956B3472F22F9D9DF /* PrivacyInfo.xcprivacy */,
+				36BC6528AA8B3CC3DBDA2D45 /* InfoPlist.strings */,
+				87223365A282A7BB4AE5E2FD /* InfoPlist.strings */,
 			);
 			path = Runner;
 			sourceTree = "<group>";
@@ -483,6 +489,8 @@
 				C574EDB8A6CF574F7F70A871 /* InfoPlist.strings in Resources */,
 				A23C432B238A04F9D4D5CA7F /* InfoPlist.strings in Resources */,
 				C239FCB70B90920C46EB26F5 /* PrivacyInfo.xcprivacy in Resources */,
+				29E90D5C72F45753E42A10EE /* InfoPlist.strings in Resources */,
+				6DAD527D8E3EB8E97AFBD66C /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
