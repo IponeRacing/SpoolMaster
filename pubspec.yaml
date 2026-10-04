@@ -2,25 +2,26 @@ name: nfc_filament
 description: "Application Flutter pour lire/écrire les puces NFC des bobines de filament"
 publish_to: 'none'
 
-version: 1.4.9+85
+version: 1.4.10+87
 
 environment:
   sdk: ^3.10.7
 
 dependencies:
-  flutter:
-    sdk: flutter
-  flutter_localizations:
-    sdk: flutter
-
   app_tracking_transparency: ^2.0.6+1
   cupertino_icons: ^1.0.9
   dartz: ^0.10.1
   device_info_plus: ^11.3.0
   equatable: ^2.0.5
+  excel: ^4.0.6
+  file_selector: ^1.1.0
   firebase_core: ^4.7.0
   firebase_crashlytics: ^5.2.0
+  flutter:
+    sdk: flutter
   flutter_bloc: ^9.1.1
+  flutter_localizations:
+    sdk: flutter
   flutter_secure_storage: ^10.0.0
   get_it: ^9.2.1
   google_mobile_ads: ^8.0.0
@@ -36,17 +37,20 @@ dependencies:
   json_annotation: ^4.11.0
   nfc_manager: ^4.2.1
   package_info_plus: ^9.0.1
+  path_provider: ^2.1.6
+  share_plus: ^12.0.2
   shared_preferences: ^2.5.5
   sign_in_with_apple: ^8.0.0
   url_launcher: ^6.3.1
 
 dev_dependencies:
-  flutter_test:
-    sdk: flutter
-
   bloc_test: ^10.0.0
   build_runner: ^2.15.0
+  flutter_test:
+    sdk: flutter
   injectable_generator: ^3.0.2
+  integration_test:
+    sdk: flutter
   json_serializable: ^6.13.2
   mocktail: ^1.0.5
   very_good_analysis: ^10.2.0
