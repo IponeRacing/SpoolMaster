@@ -62,3 +62,6 @@ ios/fastlane/report.xml
 
 # Graphify (graphe de code local, regénéré par `graphify update .`)
 graphify-out/
+
+# Claude Code (worktrees des sous-agents, dépôts git imbriqués)
+.claude/worktrees/
