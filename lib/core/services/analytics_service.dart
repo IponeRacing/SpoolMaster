@@ -9,6 +9,7 @@ import 'package:http/http.dart' as http;
 import 'package:nfc_filament/core/api/api_config.dart';
 import 'package:nfc_filament/core/services/auth_service.dart';
 import 'package:nfc_filament/core/services/nfc_scan_diagnostics.dart';
+import 'package:nfc_filament/core/services/user_preferences_service.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -115,9 +116,14 @@ class AnalyticsService {
       // le backend accepte l'anonyme (user_id null). Ajoute le token si dispo.
       // Injecte l'ID d'install anonyme dans event_data (queryable via JSON,
       // pas de changement de schéma) → distingue les invités + corrélation.
+      // Langue de l'appareil (« fr-CH ») et langue affichée par l'app : un
+      // écart (appareil « lt-LT », app « en ») = langue non traduite. Sert à
+      // décider quelles langues ajouter.
       final enrichedData = <String, dynamic>{
         ...?eventData,
         'install_id': _installId,
+        'device_locale': PlatformDispatcher.instance.locale.toLanguageTag(),
+        'app_language': await UserPreferencesService.getLanguage(),
       };
 
       final token = await _authService.getAccessToken();

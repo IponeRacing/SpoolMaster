@@ -296,6 +296,30 @@ class ReportController {
         ");
         $report['sync_failures'] = $stmt->fetchAll();
 
+        // ── 17. Langues des appareils (30 j, depuis la 1.4.12) ──
+        // Appareils distincts par langue du système ; « app dans une autre
+        // langue » = langue non traduite (repli sur l'anglais). Sert à
+        // décider quelles langues ajouter. « nb » (norvégien) = « no » dans l'app.
+        $stmt = $db->query("
+            SELECT lang,
+                   COUNT(DISTINCT who) AS appareils,
+                   COUNT(DISTINCT CASE WHEN app_lang <> lang THEN who END) AS autre_langue
+            FROM (
+                SELECT COALESCE(user_id, JSON_UNQUOTE(JSON_EXTRACT(event_data, '$.install_id'))) AS who,
+                       CASE SUBSTRING_INDEX(JSON_UNQUOTE(JSON_EXTRACT(event_data, '$.device_locale')), '-', 1)
+                            WHEN 'nb' THEN 'no' WHEN 'nn' THEN 'no'
+                            ELSE SUBSTRING_INDEX(JSON_UNQUOTE(JSON_EXTRACT(event_data, '$.device_locale')), '-', 1) END AS lang,
+                       SUBSTRING_INDEX(JSON_UNQUOTE(JSON_EXTRACT(event_data, '$.app_language')), '_', 1) AS app_lang
+                FROM analytics
+                WHERE created_at >= DATE_SUB(NOW(), INTERVAL 30 DAY)
+                  AND JSON_EXTRACT(event_data, '$.device_locale') IS NOT NULL
+            ) t
+            GROUP BY lang
+            ORDER BY appareils DESC
+            LIMIT 20
+        ");
+        $report['device_languages'] = $stmt->fetchAll();
+
         return $report;
     }
 
@@ -395,6 +419,12 @@ class ReportController {
             $html .= $this->tableSection('Top appareils', ['Device', 'Plateforme', 'Scans'], array_map(function($row) {
                 return [$row['device'] ?? 'N/A', strtoupper($row['device_platform'] ?? ''), $row['nb']];
             }, $r['top_devices']));
+        }
+
+        if (!empty($r['device_languages'])) {
+            $html .= $this->tableSection('Langues des appareils (30 j)', ['Langue', 'Appareils', 'App dans une autre langue'], array_map(function($row) {
+                return [$row['lang'] ?? '?', $row['appareils'], $row['autre_langue']];
+            }, $r['device_languages']));
         }
 
         // Derniers scans réussis (détails)
