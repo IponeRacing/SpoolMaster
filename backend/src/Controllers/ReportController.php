@@ -41,6 +41,12 @@ class ReportController {
             } catch (\Throwable $e) {
                 \error_log("⚠️ [DAILY-REPORT] Account purge failed: " . $e->getMessage());
             }
+            // Durées de conservation de la politique de confidentialité
+            try {
+                \NfcAnycubic\Services\RetentionService::apply($db);
+            } catch (\Throwable $e) {
+                Logger::exception('retention', $e);
+            }
 
             $report = $this->generateReport($db);
             $html = $this->renderHtml($report);
@@ -52,8 +58,9 @@ class ReportController {
                 \error_log("⚠️ [DAILY-REPORT] Email failed: " . $e->getMessage());
             }
 
-            $report['email_sent'] = $emailSent;
-            return ['success' => true, 'data' => $report];
+            // Le rapport part par e-mail : l'appelant (planificateur, dont
+            // l'URL contient le secret) n'a pas à recevoir les données.
+            return ['success' => true, 'email_sent' => $emailSent];
         } catch (\Exception $e) {
             // Détail dans le log seulement (pas de message SQL renvoyé).
             Logger::exception('report', $e);
@@ -301,12 +308,14 @@ class ReportController {
     }
 
     /**
-     * Outils de support : secret dans l'en-tête X-Admin-Secret (même valeur que
-     * CRON_SECRET), jamais dans l'URL (sinon il finit dans les logs d'accès).
+     * Outils de support : secret dans l'en-tête X-Admin-Secret, jamais dans
+     * l'URL. ADMIN_SECRET est distinct de CRON_SECRET : ce dernier figure
+     * dans les URL planifiées, donc dans les logs d'accès, et ne doit pas
+     * ouvrir la recherche d'utilisateurs (e-mails).
      */
     private function adminAuthorized(): bool {
         $config = require __DIR__ . '/../../config/app.php';
-        $validSecret = (string)($config['cron_secret'] ?? '');
+        $validSecret = (string)($config['admin_secret'] ?? '');
         $given = (string)($_SERVER['HTTP_X_ADMIN_SECRET'] ?? '');
         return $validSecret !== '' && \hash_equals($validSecret, $given);
     }

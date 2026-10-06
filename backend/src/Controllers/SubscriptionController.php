@@ -469,8 +469,8 @@ class SubscriptionController
                 });
                 $latest = $latestReceipt[0];
 
-                error_log("📋 Latest transaction: " . json_encode($latest));
-
+                // Pas de transaction complète dans le log (identifiants de reçu) :
+                // produit et échéance seulement, ci-dessous.
                 // Convert to our standard format
                 $transaction = (object)[
                     'transactionId' => $latest->transaction_id ?? null,
@@ -507,7 +507,7 @@ class SubscriptionController
                 });
                 $latest = $inApp[0];
 
-                error_log("📋 Using in_app fallback: " . json_encode($latest));
+                error_log("📋 Using in_app fallback (product: " . ($latest->product_id ?? '?') . ")");
 
                 $transaction = (object)[
                     'transactionId' => $latest->transaction_id ?? null,
@@ -523,7 +523,8 @@ class SubscriptionController
                 return $transaction;
             }
 
-            error_log("⚠️ No subscription info in receipt - full response: " . json_encode($result));
+            // Statut Apple seul : la réponse complète contient le reçu (latest_receipt)
+            error_log("⚠️ No subscription info in receipt (Apple status: " . ($result->status ?? '?') . ")");
             return null;
         }
 

@@ -52,6 +52,18 @@ class AnalyticsController {
 
         $db = Database::getInstance()->getConnection();
 
+        // Statistiques désactivées par l'utilisateur (préférence
+        // analytics_enabled) : rien n'est enregistré. Le feedback, écrit
+        // volontairement par l'utilisateur, passe quand même.
+        if ($userId !== null && $eventType !== 'scan_feedback') {
+            $pref = $db->prepare("SELECT analytics_enabled FROM user_preferences WHERE user_id = :user_id LIMIT 1");
+            $pref->execute(['user_id' => $userId]);
+            $enabled = $pref->fetchColumn();
+            if ($enabled !== false && !(bool)$enabled) {
+                return ['success' => true, 'data' => ['recorded' => false]];
+            }
+        }
+
         $stmt = $db->prepare(
             "INSERT INTO analytics (user_id, event_type, event_data, device_platform, app_version)
              VALUES (:user_id, :event_type, :event_data, :device_platform, :app_version)"

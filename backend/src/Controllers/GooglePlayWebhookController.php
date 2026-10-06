@@ -23,13 +23,25 @@ use NfcAnycubic\Services\PremiumService;
  * sont traités : un jeton inconnu est ignoré, ce qui borne les appels à
  * l'API Google même en cas de notifications forgées.
  *
+ * Depuis le 06.10.2026 :
+ *  - le push Pub/Sub doit être authentifié (jeton OIDC signé par Google, pour
+ *    le compte de service et l'audience configurés) ; sinon 401 ;
+ *  - le type de notification (« révoqué », « remboursé ») ne décide plus de
+ *    rien : avant, un message forgé avec un purchaseToken connu révoquait
+ *    l'abonnement pour toujours. L'état vient de l'API Google seule (un
+ *    abonnement révoqué y a une échéance passée).
+ *
  * @see https://developer.android.com/google/play/billing/rtdn-reference
  */
 class GooglePlayWebhookController
 {
-    private const TYPE_REVOKED = 12;
-
     private $db;
+
+    /**
+     * Vérification du jeton OIDC, remplaçable dans les tests :
+     * fn(string $jwt): ?array (revendications) ; null = jeton invalide.
+     */
+    public static $tokenVerifier = null;
 
     public function __construct()
     {
@@ -41,6 +53,11 @@ class GooglePlayWebhookController
      */
     public function handleNotification()
     {
+        if (!$this->isAuthenticatedPush()) {
+            http_response_code(401);
+            return ['success' => false, 'error' => 'Unauthorized'];
+        }
+
         $data = json_decode((string)file_get_contents('php://input'), true);
         if (!is_array($data) || !isset($data['message']['data'])) {
             return ['success' => false, 'error' => 'Invalid format'];
@@ -59,8 +76,7 @@ class GooglePlayWebhookController
             $n = $message['subscriptionNotification'];
             return $this->refreshFromGoogle(
                 (string)($n['purchaseToken'] ?? ''),
-                (string)($n['subscriptionId'] ?? ''),
-                (int)($n['notificationType'] ?? 0) === self::TYPE_REVOKED
+                (string)($n['subscriptionId'] ?? '')
             );
         }
 
@@ -68,7 +84,7 @@ class GooglePlayWebhookController
             $n = $message['voidedPurchaseNotification'];
             // productType 1 = abonnement (remboursement / rétrofacturation)
             if ((int)($n['productType'] ?? 0) === 1) {
-                return $this->refreshFromGoogle((string)($n['purchaseToken'] ?? ''), '', true);
+                return $this->refreshFromGoogle((string)($n['purchaseToken'] ?? ''), '');
             }
             return ['success' => true, 'message' => 'One-time product voided (ignored)'];
         }
@@ -82,10 +98,64 @@ class GooglePlayWebhookController
     }
 
     /**
-     * Relit l'abonnement dans l'API Google Play et met à jour la base.
-     * $revoked : remboursé / révoqué (le jeton ne redevient jamais actif).
+     * Push Pub/Sub authentifié : en-tête « Authorization: Bearer <jeton OIDC> »
+     * signé par Google, émis pour le compte de service et l'audience
+     * configurés (GOOGLE_PUBSUB_SERVICE_ACCOUNT / GOOGLE_PUBSUB_AUDIENCE).
+     * Non configuré = tout refusé (aucune notification n'est attendue).
      */
-    private function refreshFromGoogle(string $purchaseToken, string $productId, bool $revoked): array
+    private function isAuthenticatedPush(): bool
+    {
+        $config = require __DIR__ . '/../../config/app.php';
+        $audience = (string)($config['google_pubsub']['audience'] ?? '');
+        $account = (string)($config['google_pubsub']['service_account'] ?? '');
+        if ($audience === '' || $account === '') {
+            Logger::warningOnce('google.rtdn', 'Notification refusée : GOOGLE_PUBSUB_AUDIENCE / SERVICE_ACCOUNT non configurés');
+            return false;
+        }
+        $header = (string)($_SERVER['HTTP_AUTHORIZATION'] ?? $_SERVER['REDIRECT_HTTP_AUTHORIZATION'] ?? '');
+        if (!preg_match('/^Bearer\s+(\S+)$/', $header, $m)) {
+            return false;
+        }
+        $claims = self::$tokenVerifier !== null
+            ? (self::$tokenVerifier)($m[1])
+            : self::verifyWithGoogle($m[1]);
+        $ok = is_array($claims)
+            && in_array($claims['iss'] ?? '', ['accounts.google.com', 'https://accounts.google.com'], true)
+            && ($claims['aud'] ?? '') === $audience
+            && ($claims['email'] ?? '') === $account
+            && in_array($claims['email_verified'] ?? false, [true, 'true'], true)
+            && (int)($claims['exp'] ?? 0) > time();
+        if (!$ok) {
+            Logger::warning('google.rtdn', 'Notification refusée : jeton OIDC invalide');
+        }
+        return $ok;
+    }
+
+    /** Signature et expiration vérifiées par Google (endpoint tokeninfo). */
+    private static function verifyWithGoogle(string $jwt): ?array
+    {
+        $ch = curl_init('https://oauth2.googleapis.com/tokeninfo?id_token=' . urlencode($jwt));
+        curl_setopt_array($ch, [
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_TIMEOUT => 10,
+            CURLOPT_SSL_VERIFYPEER => true,
+            CURLOPT_SSL_VERIFYHOST => 2,
+        ]);
+        $body = curl_exec($ch);
+        $status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        if ($body === false || $status !== 200) {
+            return null;
+        }
+        $claims = json_decode((string)$body, true);
+        return is_array($claims) && !isset($claims['error']) ? $claims : null;
+    }
+
+    /**
+     * Relit l'abonnement dans l'API Google Play et met à jour la base.
+     * Le statut vient de l'API seule : un abonnement révoqué ou remboursé y
+     * a une échéance passée, il passe donc en « expired ».
+     */
+    private function refreshFromGoogle(string $purchaseToken, string $productId): array
     {
         if ($purchaseToken === '') {
             return ['success' => false, 'error' => 'Missing purchase token'];
@@ -128,13 +198,10 @@ class GooglePlayWebhookController
         $tx = SubscriptionController::googleTransaction($productId, $purchaseToken, $data);
         $expiresTs = intdiv($tx->expiresDate, 1000);
 
-        if ($revoked || $row['status'] === 'revoked') {
-            $status = 'revoked';
-        } else {
-            // Google prolonge l'échéance pendant la période de grâce ; en
-            // suspension (account hold) ou en pause, elle est passée.
-            $status = $expiresTs > time() ? 'active' : 'expired';
-        }
+        // Google prolonge l'échéance pendant la période de grâce ; en
+        // suspension (account hold), en pause ou après une révocation /
+        // un remboursement, elle est passée.
+        $status = $expiresTs > time() ? 'active' : 'expired';
 
         $stmt = $this->db->prepare("
             UPDATE subscriptions

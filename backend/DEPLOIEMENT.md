@@ -23,6 +23,40 @@ Si le service account manque : `scp ~/.private_keys/google-play-service-account.
 
 Rappel : DNS géré chez **Cloudflare** (pas Infomaniak), IP serveur actuel = 185.176.225.13.
 
+### Variables `.env` ajoutées le 06.10.2026
+
+| Variable | Rôle | Si absente |
+|---|---|---|
+| `ADMIN_SECRET` | En-tête `X-Admin-Secret` des outils `/admin/*` (distinct de `CRON_SECRET`, qui est dans les URL du planificateur donc dans les logs) | outils admin fermés |
+| `APP_ENCRYPTION_KEY` | Chiffrement AES-256-GCM du jeton Sign in with Apple (`php -r 'echo base64_encode(random_bytes(32));'`) | jeton Apple non enregistré à la connexion (révocation impossible à la suppression du compte) |
+| `GOOGLE_PUBSUB_AUDIENCE`, `GOOGLE_PUBSUB_SERVICE_ACCOUNT` | Push Pub/Sub des notifications Google Play, authentifié (OIDC) | toute notification Google refusée (401) |
+
+**Ne jamais changer `APP_ENCRYPTION_KEY`** une fois des jetons chiffrés : ils deviendraient illisibles.
+
+### Migrations à passer (une seule fois, idempotentes)
+
+```bash
+cd ~/sites/engageengine.ch/api
+mysql -h ly9x5.myd.infomaniak.com -u ly9x5_nfcuser -p ly9x5_nfcscan < database/migrations/010_fk_set_null.sql
+php database/migrations/011_encrypt_apple_refresh_tokens.php   # après APP_ENCRYPTION_KEY
+```
+
+### Tests backend (en local, avant tout déploiement)
+
+```bash
+backend/tests/run.sh            # MariaDB jetable + certificats de test, ~10 s
+```
+Prérequis : `mariadb` et `php` (Homebrew), `composer`. Vraies transactions App Store en option :
+`APPLE_REAL_JWS_TSV=fichier.tsv` (jamais dans le dépôt).
+
+### Notifications Google Play (RTDN)
+
+Non configurées à ce jour. Pour les activer : abonnement **push** Pub/Sub vers
+`https://api.engageengine.ch/webhooks/google-play` avec **authentification activée**
+(compte de service dédié, audience = cette URL), puis ces deux valeurs dans `.env`
+(`GOOGLE_PUBSUB_SERVICE_ACCOUNT`, `GOOGLE_PUBSUB_AUDIENCE`). Sans authentification, le
+serveur refuse tout : une notification non signée pouvait modifier un abonnement.
+
 ---
 
 ## Étape 1 : Générer la clé JWT

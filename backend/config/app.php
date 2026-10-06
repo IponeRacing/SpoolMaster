@@ -73,6 +73,22 @@ return [
     // CRON Security
     'cron_secret' => EnvLoader::get('CRON_SECRET', ''),
 
+    // Outils de support (/admin/*, en-tête X-Admin-Secret). Distinct de
+    // CRON_SECRET, qui figure dans les URL planifiées et donc dans les logs
+    // d'accès : vide = outils désactivés.
+    'admin_secret' => EnvLoader::get('ADMIN_SECRET', ''),
+
+    // Chiffrement des jetons stockés (AES-256-GCM), clé base64 de 32 octets :
+    // php -r 'echo base64_encode(random_bytes(32));'
+    'encryption_key' => EnvLoader::get('APP_ENCRYPTION_KEY', ''),
+
+    // Notifications Google Play (RTDN) : push Pub/Sub authentifié (OIDC).
+    // Sans ces deux valeurs, toute notification est refusée.
+    'google_pubsub' => [
+        'audience' => EnvLoader::get('GOOGLE_PUBSUB_AUDIENCE', ''),
+        'service_account' => EnvLoader::get('GOOGLE_PUBSUB_SERVICE_ACCOUNT', ''),
+    ],
+
     // Rate Limiting
     'rate_limit' => [
         'enabled' => EnvLoader::get('RATE_LIMIT_ENABLED', true),

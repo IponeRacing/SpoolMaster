@@ -28,7 +28,7 @@ engageengine.ch/
 Via SSH ou le terminal Infomaniak :
 
 ```bash
-cd /home/clients/ad4b552196d8fbd055d5f05a33f4a625/api
+cd ~/sites/engageengine.ch/api
 composer install --no-dev --optimize-autoloader
 ```
 
@@ -52,14 +52,12 @@ php composer.phar install --no-dev
 php -r "echo bin2hex(random_bytes(32)) . PHP_EOL;"
 ```
 
-Ou utiliser : `a7f8e9d4b2c1f6a8e3d5b9c2f1a4e7d8b3c6f2a9e1d4b7c3f6a2e8d5b1c9f4a7e3`
-
 ### 5. Configurer le DocumentRoot Apache
 
 Dans le panneau Infomaniak, configurer le DocumentRoot du site vers :
 
 ```
-/home/clients/ad4b552196d8fbd055d5f05a33f4a625/api/public
+/home/clients/ad4b552196d8fbd055d50f5a33f4a625/sites/engageengine.ch/api/public
 ```
 
 Ou créer un sous-domaine :

@@ -124,7 +124,8 @@ if ($allowAllOrigins) {
 
 header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With');
-header('Access-Control-Allow-Credentials: true');
+// Pas d'Access-Control-Allow-Credentials : l'API n'utilise aucun cookie
+// (jeton Bearer), et « * » + credentials est refusé par les navigateurs.
 header('Access-Control-Max-Age: 86400');
 header('Content-Type: application/json; charset=utf-8');
 

@@ -9,9 +9,13 @@
  * Purge = révocation du jeton Apple (si connu) puis DELETE de la ligne users :
  * toutes les tables liées sont en ON DELETE CASCADE (bobines, conso, liste de
  * courses, préférences, abonnements, analytics, historique de synchro,
- * sessions, révocations). apple_notifications / subscription_events passent
- * en user_id NULL (pièces comptables). Une trace minimale reste dans
- * audit_logs (id pseudonyme, sans email ni nom).
+ * sessions, révocations). Les pièces comptables (apple_notifications,
+ * subscription_events) et les journaux restent, mais détachés du compte :
+ * user_id, IP et user agent effacés ICI, explicitement — les clés étrangères
+ * ON DELETE SET NULL de la migration 003 manquaient en prod jusqu'à la
+ * migration 010 (06.10.2026), et IP / user agent n'en relèvent pas.
+ * Une trace minimale reste dans audit_logs (id pseudonyme,
+ * sans email, nom, IP ni user agent).
  */
 
 namespace NfcAnycubic\Services;
@@ -32,21 +36,25 @@ class AccountPurgeService {
 
         // 1. Révocation Sign in with Apple (best effort : ne bloque pas la purge)
         $appleRevoked = null;
-        if (($user['provider'] ?? '') === 'apple' && !empty($user['apple_refresh_token'])) {
+        $appleToken = TokenCipher::decrypt($user['apple_refresh_token'] ?? null);
+        if (($user['provider'] ?? '') === 'apple' && $appleToken !== null) {
             try {
-                $appleRevoked = ($apple ?? new AppleSignInService())->revoke($user['apple_refresh_token']);
+                $appleRevoked = ($apple ?? new AppleSignInService())->revoke($appleToken);
             } catch (\Throwable $e) {
                 $appleRevoked = false;
                 Logger::exception('account.purge', $e, ['step' => 'apple_revoke']);
             }
         }
 
-        // 2. Suppression (cascade sur toutes les données liées)
+        // 2. Données conservées sans lien avec le compte
+        self::detachUser($db, $userId);
+
+        // 3. Suppression (cascade sur toutes les données liées)
         $stmt = $db->prepare("DELETE FROM users WHERE user_id = :user_id");
         $stmt->execute(['user_id' => $userId]);
         $deleted = $stmt->rowCount() > 0;
 
-        // 3. Trace d'audit minimale (pas de donnée personnelle)
+        // 4. Trace d'audit minimale (pas de donnée personnelle)
         $stmt = $db->prepare(
             "INSERT INTO audit_logs (user_id, action, resource_type, success, error_message)
              VALUES (:user_id, 'account_deleted', 'user', :success, :detail)"
@@ -65,6 +73,23 @@ class AccountPurgeService {
             Logger::warning('account.purge', 'Compte supprimé mais jeton Apple non révoqué', ['reason' => $reason]);
         }
         return $deleted;
+    }
+
+    /**
+     * Détache un compte des données qu'on garde : transactions (sans
+     * user_id), journaux (sans IP ni user agent ; audit_logs garde l'id
+     * pseudonyme pour la preuve de suppression). Appelé aussi par la
+     * rétention pour les comptes supprimés avant ce correctif.
+     */
+    public static function detachUser(PDO $db, string $userId): void {
+        $db->prepare("UPDATE subscription_events SET user_id = NULL, ip_address = NULL, user_agent = NULL WHERE user_id = ?")
+            ->execute([$userId]);
+        $db->prepare("UPDATE apple_notifications SET user_id = NULL WHERE user_id = ?")
+            ->execute([$userId]);
+        $db->prepare("UPDATE subscription_validation_failures SET user_id = NULL, ip_address = NULL, user_agent = NULL, jws_payload = NULL WHERE user_id = ?")
+            ->execute([$userId]);
+        $db->prepare("UPDATE audit_logs SET ip_address = NULL, user_agent = NULL WHERE user_id = ?")
+            ->execute([$userId]);
     }
 
     /**

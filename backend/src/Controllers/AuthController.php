@@ -12,6 +12,7 @@ use NfcAnycubic\JWTHandler;
 use NfcAnycubic\Middleware\RateLimiter;
 use NfcAnycubic\Logger;
 use NfcAnycubic\Services\AppleSignInService;
+use NfcAnycubic\Services\TokenCipher;
 
 class AuthController {
 
@@ -64,10 +65,11 @@ class AuthController {
                 try {
                     $appleRefresh = (new AppleSignInService())->exchangeCode((string)$input['authorizationCode']);
                     if ($appleRefresh !== null) {
+                        // Chiffré au repos (politique : « tokens chiffrés »)
                         $stmt = Database::getInstance()->getConnection()->prepare(
                             "UPDATE users SET apple_refresh_token = :token WHERE user_id = :user_id"
                         );
-                        $stmt->execute(['token' => $appleRefresh, 'user_id' => $user['user_id']]);
+                        $stmt->execute(['token' => TokenCipher::encrypt($appleRefresh), 'user_id' => $user['user_id']]);
                     }
                 } catch (\Throwable $e) {
                     Logger::exception('apple.siwa', $e, ['step' => 'code_exchange']);
