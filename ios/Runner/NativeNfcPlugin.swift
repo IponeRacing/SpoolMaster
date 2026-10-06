@@ -349,8 +349,7 @@ class NativeNfcPlugin: NSObject, FlutterPlugin {
     /// Retourne true si la relance a eu lieu (l'appelant ne renvoie alors rien).
     private func restartPollingAfterConnectionLost(_ error: Error, session: NFCTagReaderSession) -> Bool {
         guard !isWriteMode,
-              let nfcError = error as? NFCReaderError,
-              nfcError.code == .readerTransceiveErrorTagConnectionLost,
+              isTagLostError(error),
               connectionLostRetries < maxConnectionLostRetries else {
             return false
         }
@@ -359,6 +358,26 @@ class NativeNfcPlugin: NSObject, FlutterPlugin {
         session.alertMessage = "Connexion perdue : maintenez le téléphone immobile près du tag"
         session.restartPolling()
         return true
+    }
+
+    /// Tag sorti du champ : « Tag connection lost » (100) ou « Tag is not
+    /// connected » (104, vu en prod le 05.10.2026 sur iOS 27).
+    private func isTagLostError(_ error: Error) -> Bool {
+        guard let nfcError = error as? NFCReaderError else { return false }
+        return nfcError.code == .readerTransceiveErrorTagConnectionLost
+            || nfcError.code == .readerTransceiveErrorTagNotConnected
+    }
+
+    /// Échec d'une LECTURE : tag perdu → TAG_MOVED, message commençant par
+    /// « Tag was lost » comme sur Android (le Dart affiche « reposez le tag sans
+    /// bouger ») ; sinon [code]. Avant : READ_ERROR → message d'erreur générique.
+    private func readFailure(_ error: Error, code: String) -> FlutterError {
+        if !isWriteMode && isTagLostError(error) {
+            return FlutterError(code: "TAG_MOVED",
+                                message: "Tag was lost — \(error.localizedDescription)",
+                                details: buildSessionDiagnostics())
+        }
+        return FlutterError(code: code, message: error.localizedDescription, details: buildSessionDiagnostics())
     }
 
     // MARK: - Validation des arguments Dart
@@ -574,7 +593,7 @@ extension NativeNfcPlugin: NFCTagReaderSessionDelegate {
                         if self.restartPollingAfterConnectionLost(error, session: session) { return }
                         print("❌ Erreur connexion ISO 15693: \(error.localizedDescription)")
                         session.invalidate(errorMessage: "Erreur de connexion au tag")
-                        self.complete(with: FlutterError(code: "CONNECTION_ERROR", message: error.localizedDescription, details: self.buildSessionDiagnostics()))
+                        self.complete(with: self.readFailure(error, code: "CONNECTION_ERROR"))
                         return
                     }
                     self.readOpenPrintTag(iso15693Tag: iso15693Tag, session: session)
@@ -601,7 +620,7 @@ extension NativeNfcPlugin: NFCTagReaderSessionDelegate {
                 if self.restartPollingAfterConnectionLost(error, session: session) { return }
                 print("❌ Erreur connexion: \(error.localizedDescription)")
                 session.invalidate(errorMessage: "Erreur de connexion au tag")
-                self.complete(with: FlutterError(code: "CONNECTION_ERROR", message: error.localizedDescription, details: self.buildSessionDiagnostics()))
+                self.complete(with: self.readFailure(error, code: "CONNECTION_ERROR"))
                 return
             }
 
@@ -774,7 +793,7 @@ extension NativeNfcPlugin: NFCTagReaderSessionDelegate {
                     // Erreur sur le premier bloc
                     print("❌ Erreur lecture ISO 15693 bloc \(currentBlock): \(error.localizedDescription)")
                     session.invalidate(errorMessage: "Erreur de lecture ISO 15693")
-                    self.complete(with: FlutterError(code: "READ_ERROR", message: error.localizedDescription, details: self.buildSessionDiagnostics()))
+                    self.complete(with: self.readFailure(error, code: "READ_ERROR"))
                     return
                 }
 
@@ -924,7 +943,7 @@ extension NativeNfcPlugin: NFCTagReaderSessionDelegate {
                 if self.restartPollingAfterConnectionLost(error, session: session) { return }
                 print("⚠️ Erreur lecture page \(startPage): \(error.localizedDescription)")
                 session.invalidate(errorMessage: "Erreur de lecture")
-                self.complete(with: FlutterError(code: "READ_ERROR", message: error.localizedDescription, details: self.buildSessionDiagnostics()))
+                self.complete(with: self.readFailure(error, code: "READ_ERROR"))
                 return
             }
 
@@ -966,7 +985,7 @@ extension NativeNfcPlugin: NFCTagReaderSessionDelegate {
                 if self.restartPollingAfterConnectionLost(error, session: session) { return }
                 print("⚠️ Erreur lecture page \(startPage): \(error.localizedDescription)")
                 session.invalidate(errorMessage: "Erreur de lecture")
-                self.complete(with: FlutterError(code: "READ_ERROR", message: error.localizedDescription, details: self.buildSessionDiagnostics()))
+                self.complete(with: self.readFailure(error, code: "READ_ERROR"))
                 return
             }
 
