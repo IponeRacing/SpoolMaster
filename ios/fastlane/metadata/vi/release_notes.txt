@@ -1,1 +1,1 @@
-Mới: xuất Excel kho, danh sách mua sắm và mức tiêu thụ, cùng nhập từ tệp CSV hoặc Excel. Tìm kiếm theo hãng, màu, vị trí hoặc ghi chú. Vị trí và ghi chú cho từng cuộn. Công cụ tính chi phí in có thể trừ vào kho. Theo dõi tiêu thụ trong thống kê. Chia sẻ danh sách mua sắm.
+Cải tiến: tên màu chính xác hơn cho cuộn Anycubic (be, nâu, tím, hồng, vàng kim, bạc, xanh lơ) và nhận diện PETG trong suốt. Thông báo rõ ràng hơn khi thẻ bị dịch chuyển trong lúc quét. Xóa tài khoản: nội dung nay ghi rõ việc xóa diễn ra ngay lập tức. Sửa lỗi và tăng độ ổn định.
