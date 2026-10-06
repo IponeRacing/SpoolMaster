@@ -128,6 +128,9 @@ class NfcDataSourceImpl implements NfcDataSource {
           'PETGCF': 'PETG Carbon Fiber',
           'HPETG': 'PETG',
           'PETG': 'PETG',
+          // SKU réels « AHPEBK », « AHPECL » (prod, 09-10.2026) : sans ce code,
+          // la couleur du SKU n'était jamais lue (PETG transparent « Unknown »)
+          'HPE': 'PETG',
           // ABS variants
           'HABS': 'ABS',
           'ABS': 'ABS',
@@ -156,6 +159,8 @@ class NfcDataSourceImpl implements NfcDataSource {
           'GY': 'Gray',
           'PR': 'Purple',
           'BR': 'Brown',
+          // PETG transparent (prod, 05.10.2026) : RGB du tag à 0, sans sens
+          'CL': 'Transparent',
         };
 
         // Try longest material codes first (ligne 512)
@@ -239,6 +244,8 @@ class NfcDataSourceImpl implements NfcDataSource {
         'Gray': 0x808080,
         'Purple': 0x8000FF,
         'Brown': 0x8B4513,
+        // Pastille hachurée au lieu d'un noir (comme les transparents Bambu)
+        'Transparent': kClearFilamentRgb,
       };
       if (colorNameToRgb.containsKey(color)) {
         colorRgb = colorNameToRgb[color];

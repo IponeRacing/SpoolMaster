@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:nfc_filament/core/errors/failures.dart';
 import 'package:nfc_filament/core/services/cloned_tags_storage_service.dart';
+import 'package:nfc_filament/core/utils/color_naming.dart';
 import 'package:nfc_filament/features/nfc_reader/data/models/cloned_tag_model.dart';
 import 'package:nfc_filament/features/nfc_reader/data/services/bambu_tag_parser.dart';
 import 'package:nfc_filament/features/nfc_reader/domain/entities/bobbin_data.dart';
@@ -123,6 +124,7 @@ class BambuLabReaderService {
           'PLA': 'PLA',
           'HPETG': 'PETG',
           'PETG': 'PETG',
+          'HPE': 'PETG', // SKU réels « AHPEBK », « AHPECL »
           'HABS': 'ABS',
           'ABS': 'ABS',
           'TPU': 'TPU',
@@ -142,6 +144,7 @@ class BambuLabReaderService {
           'GY': 'Gray',
           'PR': 'Purple',
           'BR': 'Brown',
+          'CL': 'Transparent', // PETG transparent, RGB du tag à 0
         };
 
         // Try longest material codes first
@@ -167,6 +170,10 @@ class BambuLabReaderService {
       final g = rawBytes[82];
       final r = rawBytes[83];
       colorRgb = (r << 16) | (g << 8) | b;
+    }
+    // Transparent : pastille hachurée au lieu d'un noir (RGB 0 sans sens)
+    if (color == 'Transparent' && (colorRgb == null || colorRgb == 0)) {
+      colorRgb = kClearFilamentRgb;
     }
 
     // Parse temperatures and advanced settings

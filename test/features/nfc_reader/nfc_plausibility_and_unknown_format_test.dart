@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:nfc_filament/core/errors/failures.dart';
 import 'package:nfc_filament/core/services/nfc_scan_diagnostics.dart';
+import 'package:nfc_filament/core/utils/color_naming.dart';
 import 'package:nfc_filament/features/nfc_reader/data/datasources/nfc_datasource_impl.dart';
 import 'package:nfc_filament/features/nfc_reader/data/repositories/nfc_repository_impl.dart';
 import 'package:nfc_filament/features/nfc_reader/domain/bobbin_data_sanity.dart';
@@ -294,6 +295,32 @@ void main() {
       _mockNative({'rawBytes': _skuDumpWithField('AHPLBW-107', 'PLA')});
       final m = await NfcDataSourceImpl().readBobbinData(nfcMode: 'anycubic');
       expect(m.filamentType, 'PLA High Speed');
+    });
+  });
+
+  // Prod 05.10.2026 (iPhone, 1.4.10+95) : PETG transparent « AHPECL-101 »,
+  // RGB du tag à 0 → couleur « Unknown » et pastille noire.
+  group('Anycubic PETG : codes SKU HPE / CL', () {
+    test('AHPECL (RGB 0) → PETG « Transparent », pastille hachurée', () async {
+      _mockNative({'rawBytes': _skuDumpWithField('AHPECL-101', 'PETG')});
+      final m = await NfcDataSourceImpl().readBobbinData(nfcMode: 'anycubic');
+      expect(m.filamentType, 'PETG');
+      expect(m.color, 'Transparent');
+      expect(m.colorRgb, kClearFilamentRgb);
+    });
+
+    test('auto-détection : même résultat', () async {
+      _mockNative({'tagType': 'ultralight', 'rawBytes': _skuDumpWithField('AHPECL-101', 'PETG')});
+      final m = await NfcDataSourceImpl().readBobbinDataAutoDetect();
+      expect(m.color, 'Transparent');
+      expect(m.colorRgb, kClearFilamentRgb);
+    });
+
+    test('AHPEBK (RGB 0) → PETG « Black » (avant : « Unknown »)', () async {
+      _mockNative({'rawBytes': _skuDumpWithField('AHPEBK-102', 'PETG')});
+      final m = await NfcDataSourceImpl().readBobbinData(nfcMode: 'anycubic');
+      expect(m.filamentType, 'PETG');
+      expect(m.color, 'Black');
     });
   });
 }
