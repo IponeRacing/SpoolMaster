@@ -144,13 +144,23 @@ class UserController {
             Logger::exception('account.delete', $e);
         }
 
+        // Échec de la purge immédiate : erreur (l'app affiche « échec,
+        // réessayez » et non « Compte supprimé », annoncé depuis la 1.4.11).
+        // Le drapeau posé plus haut laisse la purge quotidienne finir le travail.
+        if (!$deleted) {
+            http_response_code(500);
+            return [
+                'success' => false,
+                'error' => 'Account deletion failed, please retry. It will also be completed automatically.',
+                'request_id' => Logger::requestId(),
+            ];
+        }
+
         return [
             'success' => true,
             'data' => [
-                'deleted' => $deleted,
-                'message' => $deleted
-                    ? 'Account and data deleted.'
-                    : 'Account deletion requested. Your data will be deleted within 30 days.'
+                'deleted' => true,
+                'message' => 'Account and data deleted.'
             ]
         ];
     }

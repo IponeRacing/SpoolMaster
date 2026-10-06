@@ -160,6 +160,15 @@ check('ADMIN_SECRET vide → outils fermés', http_response_code() === 403, $r);
 putenv('ADMIN_SECRET=test-admin-secret');
 unset($_SERVER['HTTP_X_ADMIN_SECRET'], $_GET['email']);
 
+echo "\n== DELETE /user/account (contrôleur) ==\n";
+$db->exec("INSERT INTO users (user_id, email, provider, provider_id) VALUES ('t-priv-del', 't-priv-del@test.local', 'google', 'p-del')");
+$_SERVER['HTTP_AUTHORIZATION'] = 'Bearer ' . $jwt->generateToken(['user_id' => 't-priv-del', 'email' => 't-priv-del@test.local', 'provider' => 'google']);
+http_response_code(200);
+$r = (new \NfcAnycubic\Controllers\UserController())->deleteAccount();
+check('suppression réussie → 200, deleted = true', http_response_code() === 200 && ($r['data']['deleted'] ?? null) === true, $r);
+check('compte effacé en base', (int)$q("SELECT COUNT(*) FROM users WHERE user_id='t-priv-del'") === 0);
+$db->exec("DELETE FROM audit_logs WHERE user_id='t-priv-del'");
+
 echo "\n== Webhook Google sans configuration OIDC ==\n";
 putenv('GOOGLE_PUBSUB_AUDIENCE=');
 GooglePlayWebhookController::$tokenVerifier = fn(string $t) => ['iss' => 'https://accounts.google.com', 'aud' => '', 'email' => '', 'email_verified' => true, 'exp' => time() + 60];
