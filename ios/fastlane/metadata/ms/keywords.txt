@@ -1,1 +1,1 @@
-NFC,filamen,3D,cetak,gelendong,Anycubic,Bambu Lab,Prusa,stok,inventori,Creality
+NFC,filamen,3D,cetak,gelendong,Anycubic,OpenPrintTag,Prusa,stok,inventori

@@ -1,1 +1,1 @@
-NFC,filament,3D,tlač,cievka,Anycubic,Bambu Lab,Prusa,sklad,inventár,Creality
+NFC,filament,3D,tlač,cievka,Anycubic,OpenPrintTag,Prusa,sklad,inventár

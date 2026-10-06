@@ -1,1 +1,1 @@
-NFC,Filament,3D,Druck,Spule,Anycubic,Bambu Lab,Prusa,Bestand,Inventar,Creality
+NFC,Filament,3D,Druck,Spule,Anycubic,OpenPrintTag,Prusa,Bestand,Inventar

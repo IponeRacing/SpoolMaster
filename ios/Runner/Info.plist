@@ -35,7 +35,7 @@
 	<key>NFCReaderUsageDescription</key>
 	<string>This app uses NFC to read and write filament spool tags (Anycubic, Prusa).</string>
 	<key>NSUserTrackingUsageDescription</key>
-	<string>Cette app utilise votre identifiant publicitaire pour vous offrir des publicités personnalisées et améliorer votre expérience.</string>
+	<string>This app uses your advertising identifier to provide personalized ads and improve your experience.</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>

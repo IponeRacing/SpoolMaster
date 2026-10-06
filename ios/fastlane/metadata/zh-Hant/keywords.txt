@@ -1,1 +1,1 @@
-NFC,耗材,3D,列印,線軸,Anycubic,Bambu Lab,Prusa,庫存,Creality
+NFC,耗材,3D,列印,線軸,Anycubic,OpenPrintTag,Prusa,庫存

@@ -1,1 +1,1 @@
-NFC,νήμα,3D,εκτύπωση,μπομπίνα,Anycubic,Bambu Lab,Prusa,απόθεμα,Creality
+NFC,νήμα,3D,εκτύπωση,μπομπίνα,Anycubic,OpenPrintTag,Prusa,απόθεμα

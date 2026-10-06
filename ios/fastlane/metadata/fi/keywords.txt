@@ -1,1 +1,1 @@
-NFC,filamentti,3D,tulostus,kela,Anycubic,Bambu Lab,Prusa,varasto,Creality
+NFC,filamentti,3D,tulostus,kela,Anycubic,OpenPrintTag,Prusa,varasto

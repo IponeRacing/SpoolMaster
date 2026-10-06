@@ -1,1 +1,1 @@
-NFC,філамент,3D,друк,котушка,Anycubic,Bambu Lab,Prusa,запас,інвентар,Creality
+NFC,філамент,3D,друк,котушка,Anycubic,OpenPrintTag,Prusa,запас,інвентар

@@ -1,1 +1,1 @@
-NFC,filament,3D,baskı,makara,Anycubic,Bambu Lab,Prusa,stok,envanter,Creality
+NFC,filament,3D,baskı,makara,Anycubic,OpenPrintTag,Prusa,stok,envanter

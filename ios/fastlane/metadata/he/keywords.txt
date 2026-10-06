@@ -1,1 +1,1 @@
-NFC,פילמנט,3D,הדפסה,סליל,Anycubic,Bambu Lab,Prusa,מלאי,Creality
+NFC,פילמנט,3D,הדפסה,סליל,Anycubic,OpenPrintTag,Prusa,מלאי

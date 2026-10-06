@@ -1,1 +1,1 @@
-NFC,filament,3D,printer,spoel,Anycubic,Bambu Lab,Prusa,voorraad,inventaris,Creality
+NFC,filament,3D,printer,spoel,Anycubic,OpenPrintTag,Prusa,voorraad,inventaris

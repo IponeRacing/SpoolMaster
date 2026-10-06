@@ -1,1 +1,1 @@
-NFC,filament,3D,ispis,kalem,Anycubic,Bambu Lab,Prusa,zaliha,inventar,Creality
+NFC,filament,3D,ispis,kalem,Anycubic,OpenPrintTag,Prusa,zaliha,inventar

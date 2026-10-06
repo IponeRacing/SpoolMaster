@@ -1,1 +1,1 @@
-NFC,filament,3D,tiskanje,tuljava,Anycubic,Bambu Lab,Prusa,zaloga,inventar,Creality
+NFC,filament,3D,tiskanje,tuljava,Anycubic,OpenPrintTag,Prusa,zaloga,inventar

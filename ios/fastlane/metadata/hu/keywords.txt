@@ -1,1 +1,1 @@
-NFC,filament,3D,nyomtatás,orsó,Anycubic,Bambu Lab,Prusa,készlet,leltár,Creality
+NFC,filament,3D,nyomtatás,orsó,Anycubic,OpenPrintTag,Prusa,készlet,leltár

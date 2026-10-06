@@ -1,1 +1,1 @@
-NFC,filament,3D,skrivare,spole,Anycubic,Bambu Lab,Prusa,lager,inventering,Creality
+NFC,filament,3D,skrivare,spole,Anycubic,OpenPrintTag,Prusa,lager,inventering

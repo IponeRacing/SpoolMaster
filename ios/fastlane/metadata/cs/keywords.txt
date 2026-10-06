@@ -1,1 +1,1 @@
-NFC,filament,3D,tisk,cívka,Anycubic,Bambu Lab,Prusa,zásoby,inventář,Creality
+NFC,filament,3D,tisk,cívka,Anycubic,OpenPrintTag,Prusa,zásoby,inventář

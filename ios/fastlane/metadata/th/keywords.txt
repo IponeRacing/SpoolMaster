@@ -1,1 +1,1 @@
-NFC,ฟิลาเมนต์,3D,พิมพ์,ม้วน,Anycubic,Bambu Lab,Prusa,สต็อก,คลัง,Creality
+NFC,ฟิลาเมนต์,3D,พิมพ์,ม้วน,Anycubic,OpenPrintTag,Prusa,สต็อก,คลัง
