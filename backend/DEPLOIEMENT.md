@@ -41,14 +41,14 @@ Copie la clé générée et colle-la dans `config/app.php` ligne 11.
 ### Via FTP (FileZilla / Cyberduck)
 
 Connecte-toi avec :
-- **Host** : ftp.infomaniak.com
+- **Host** : ly9x5.ftp.infomaniak.com
 - **User** : ton login Infomaniak
 - **Password** : ton mot de passe
 
-Upload tous les fichiers dans `/api/` :
+Upload tous les fichiers dans `~/sites/engageengine.ch/api/` :
 
 ```
-/home/clients/ad4b552196d8fbd055d5f05a33f4a625/
+/home/clients/ad4b552196d8fbd055d50f5a33f4a625/sites/engageengine.ch/
 └── api/
     ├── config/
     ├── database/
@@ -66,8 +66,8 @@ Upload tous les fichiers dans `/api/` :
 Connecte-toi en SSH à ton serveur Infomaniak :
 
 ```bash
-ssh ton_user@ton_serveur.infomaniak.com
-cd /home/clients/ad4b552196d8fbd055d5f05a33f4a625/api
+ssh ton_user@ly9x5.ftp.infomaniak.com
+cd ~/sites/engageengine.ch/api
 ```
 
 Télécharge Composer :
@@ -92,7 +92,7 @@ Dans le panneau Infomaniak :
 4. Change le **Document Root** vers :
 
 ```
-/home/clients/ad4b552196d8fbd055d5f05a33f4a625/api/public
+/home/clients/ad4b552196d8fbd055d50f5a33f4a625/sites/engageengine.ch/api/public
 ```
 
 **OU** crée un sous-domaine `api.engageengine.ch` pointant vers ce dossier.
