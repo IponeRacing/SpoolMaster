@@ -193,6 +193,7 @@ class AnalyticsService {
         if (NfcScanDiagnostics.sessionRetries != null) 'session_retries': NfcScanDiagnostics.sessionRetries,
         if (NfcScanDiagnostics.detectDelayMs != null) 'detect_delay_ms': NfcScanDiagnostics.detectDelayMs,
         'native_error_code': ?NfcScanDiagnostics.nativeErrorCode,
+        'fallback_native_error_code': ?NfcScanDiagnostics.fallbackNativeErrorCode,
         'error_detail': ?NfcScanDiagnostics.errorDetail,
         // Lecture suspecte (valeur hors bornes, format non reconnu) : octets
         // bruts du tag pour corriger le décodeur concerné.

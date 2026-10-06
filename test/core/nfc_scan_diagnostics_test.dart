@@ -51,4 +51,24 @@ void main() {
     NfcScanDiagnostics.reset();
     expect(NfcScanDiagnostics.nativeErrorCode, isNull);
   });
+
+  // Prod 05.10.2026 : « Tag is not connected » (lecture) journalisé avec
+  // SESSION_TERMINATED, le code de l'auto-détection de secours.
+  test('snapshot / restore : le secours raté ne remplace plus le premier échec', () {
+    NfcScanDiagnostics.reset();
+    NfcScanDiagnostics.updateFromNativeError('READ_ERROR', {'tag_tech': 'MiFareUnknown'});
+    final first = NfcScanDiagnostics.snapshot();
+    NfcScanDiagnostics.nativeErrorCode = null;
+    NfcScanDiagnostics.updateFromNativeError('SESSION_TERMINATED', {'tag_tech': 'ISO15693'});
+
+    final fallbackCode = NfcScanDiagnostics.nativeErrorCode;
+    NfcScanDiagnostics.restore(first);
+    NfcScanDiagnostics.fallbackNativeErrorCode = fallbackCode;
+
+    expect(NfcScanDiagnostics.nativeErrorCode, 'READ_ERROR');
+    expect(NfcScanDiagnostics.tagTech, 'MiFareUnknown');
+    expect(NfcScanDiagnostics.fallbackNativeErrorCode, 'SESSION_TERMINATED');
+    NfcScanDiagnostics.reset();
+    expect(NfcScanDiagnostics.fallbackNativeErrorCode, isNull);
+  });
 }

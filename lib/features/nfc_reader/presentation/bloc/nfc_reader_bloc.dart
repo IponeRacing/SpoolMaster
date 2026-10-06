@@ -227,12 +227,18 @@ class NfcReaderBloc extends Bloc<NfcReaderEvent, NfcReaderState> {
         // Fallback A : si tag incompatible ou erreur de lecture, tenter auto-detect
         if (failure is NfcTagReadFailure || failure is NfcTagIncompatibleFailure) {
           developer.log('🔄 [BLOC] Échec mode $nfcMode, tentative auto-detect...');
+          // Diagnostics du premier échec, gardés à part : le code natif mis à
+          // jour par le secours est bien le sien (null s'il n'en remonte pas).
+          final firstDiagnostics = NfcScanDiagnostics.snapshot();
+          NfcScanDiagnostics.nativeErrorCode = null;
           final fallbackResult = await readBobbinDataAutoDetect();
           final didFallback = fallbackResult.fold(
             (fallbackFailure) => false,
             (bobbinData) => true,
           );
           if (didFallback) {
+            // Succès : garder le code du premier échec (pourquoi le secours)
+            NfcScanDiagnostics.nativeErrorCode = firstDiagnostics.nativeErrorCode;
             final bobbinData = fallbackResult.fold((_) => throw Exception(), (d) => d);
             final detectedMode = _detectModeFromBrand(bobbinData.brand);
             developer.log('✅ [BLOC] Fallback auto-detect réussi → mode $detectedMode');
@@ -270,6 +276,11 @@ class NfcReaderBloc extends Bloc<NfcReaderEvent, NfcReaderState> {
             return;
           }
           developer.log('❌ [BLOC] Fallback auto-detect aussi échoué');
+          // Échec : l'événement porte le message du PREMIER échec → ses
+          // diagnostics, et le code natif du secours à part.
+          final fallbackNativeErrorCode = NfcScanDiagnostics.nativeErrorCode;
+          NfcScanDiagnostics.restore(firstDiagnostics);
+          NfcScanDiagnostics.fallbackNativeErrorCode = fallbackNativeErrorCode;
         }
 
         // Déterminer le type d'échec et extraire les diagnostics session

@@ -1,3 +1,14 @@
+typedef NfcDiagnosticsSnapshot = ({
+  int? readAttempts,
+  String? tagTech,
+  int? sessionRetries,
+  int? detectDelayMs,
+  String? nativeErrorCode,
+  String? errorDetail,
+  String? lastRawHex,
+  String? outOfRange,
+});
+
 /// Diagnostics du dernier scan NFC, renseignés par la couche datasource depuis
 /// le résultat natif, puis lus par le bloc au moment du logging analytics.
 ///
@@ -34,6 +45,12 @@ class NfcScanDiagnostics {
   /// Champs écartés par le contrôle de plausibilité (ex. « extruder_temp_min »).
   static String? outOfRange;
 
+  /// Code natif de l'auto-détection de secours quand elle échoue elle aussi.
+  /// Les autres champs restent ceux du PREMIER échec, dont le message est
+  /// journalisé (avant, le secours les écrasait : « Tag is not connected »
+  /// remonté avec SESSION_TERMINATED, prod 05.10.2026).
+  static String? fallbackNativeErrorCode;
+
   /// Lecture suspecte : valeur hors bornes ou format non reconnu → l'événement
   /// de scan embarque les octets bruts du tag (données de filament seulement).
   static bool get wantsRawDump =>
@@ -52,6 +69,30 @@ class NfcScanDiagnostics {
     errorDetail = null;
     lastRawHex = null;
     outOfRange = null;
+    fallbackNativeErrorCode = null;
+  }
+
+  /// Copie des diagnostics, à restaurer après une lecture de secours ratée.
+  static NfcDiagnosticsSnapshot snapshot() => (
+        readAttempts: readAttempts,
+        tagTech: tagTech,
+        sessionRetries: sessionRetries,
+        detectDelayMs: detectDelayMs,
+        nativeErrorCode: nativeErrorCode,
+        errorDetail: errorDetail,
+        lastRawHex: lastRawHex,
+        outOfRange: outOfRange,
+      );
+
+  static void restore(NfcDiagnosticsSnapshot s) {
+    readAttempts = s.readAttempts;
+    tagTech = s.tagTech;
+    sessionRetries = s.sessionRetries;
+    detectDelayMs = s.detectDelayMs;
+    nativeErrorCode = s.nativeErrorCode;
+    errorDetail = s.errorDetail;
+    lastRawHex = s.lastRawHex;
+    outOfRange = s.outOfRange;
   }
 
   /// Vrai si la zone utilisateur (à partir de la page 4) est vierge : tout à
