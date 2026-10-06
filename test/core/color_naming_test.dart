@@ -26,4 +26,33 @@ void main() {
     expect(colorNameFromRgb(0x80, 0x30, 0xC0), 'Purple');
     expect(colorNameFromRgb(0xFF, 0x69, 0xB4), 'Pink');
   });
+
+  // Vrais tags Anycubic (corpus du 04.10.2026) : nommés « Orange » / « Red »
+  // avant le 06.10.2026.
+  test('vrais tags Anycubic : beige, marron foncé, roses', () {
+    expect(colorNameFromRgb(0xD4, 0xB9, 0x96), 'Beige');
+    expect(colorNameFromRgb(0x96, 0x5D, 0x3E), 'Brown'); // Dark Brown
+    expect(colorNameFromRgb(0xF7, 0x80, 0x92), 'Pink'); // Strawberry Pink
+    expect(colorNameFromRgb(0xFF, 0x8D, 0xA1), 'Pink');
+    // inchangés : rouges vifs, orange, jaune or, pêche
+    expect(colorNameFromRgb(0xE1, 0x06, 0x00), 'Red');
+    expect(colorNameFromRgb(0xC8, 0x10, 0x2E), 'Red');
+    expect(colorNameFromRgb(0xFE, 0x72, 0x37), 'Orange');
+    expect(colorNameFromRgb(0xFE, 0xC1, 0x96), 'Orange'); // Peach Fuzz
+  });
+
+  test('codes couleur des SKU Anycubic', () {
+    expect(anycubicSkuColorName('LB'), 'Beige');
+    expect(anycubicSkuColorName('KB'), 'Brown');
+    expect(anycubicSkuColorName('PO'), 'Purple');
+    expect(anycubicSkuColorName('SP'), 'Pink');
+    expect(anycubicSkuColorName('GD'), 'Gold');
+    expect(anycubicSkuColorName('CL'), 'Transparent');
+    // PLA+ : « PBR » = Bright Red (vrai tag), pas « BR » ; inconnu → sans le P
+    expect(anycubicSkuColorName('PBR'), 'Red');
+    expect(anycubicSkuColorName('PVO'), 'Orange');
+    // « BR » ambigu → null : le nom vient du RGB du tag
+    expect(anycubicSkuColorName('BR'), isNull);
+    expect(anycubicSkuColorName('XX'), isNull);
+  });
 }

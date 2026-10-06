@@ -1342,6 +1342,18 @@ class AppLocalizationsTh extends AppLocalizations {
   String get transparent => 'โปร่งใส';
 
   @override
+  String get beige => 'เบจ';
+
+  @override
+  String get gold => 'ทอง';
+
+  @override
+  String get silver => 'เงิน';
+
+  @override
+  String get cyan => 'ฟ้าอมเขียว';
+
+  @override
   String get nfcActiveApproachTag => 'NFC ทำงานอยู่ — นำแท็กเข้าใกล้';
 
   @override

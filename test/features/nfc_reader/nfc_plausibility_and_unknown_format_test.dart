@@ -107,6 +107,10 @@ List<int> _skuDumpWithField(String sku, String field) {
   return d;
 }
 
+/// Tag Anycubic avec SKU et couleur ABGR aux octets 80-83 ([rgb] = 0xRRGGBB).
+List<int> _skuDumpWithRgb(String sku, int rgb) => _skuDumpWithField(sku, 'PLA')
+  ..setRange(80, 84, [0xFF, rgb & 0xFF, (rgb >> 8) & 0xFF, rgb >> 16]);
+
 /// Ancien tag ACE (page 4 = 7B 00 64 00, SKU « HPL17-102 » sans « AH »,
 /// page 0x0A vide) : aucune marque écrite.
 List<int> _oldAceDumpWithoutBrand() {
@@ -322,5 +326,30 @@ void main() {
       expect(m.filamentType, 'PETG');
       expect(m.color, 'Black');
     });
+  });
+
+  // Corpus du 04.10.2026 (SKU et RGB de vrais tags) : la moitié des noms
+  // étaient faux (Beige → « Orange », Purple → « Blue », Pink → « Red »).
+  group('Anycubic : noms de couleur des vrais tags', () {
+    const cases = {
+      'AHPLLB-107': (0xD4B996, 'Beige'),
+      'AHPLKB-103': (0x965D3E, 'Brown'),
+      'AHPLPO-103': (0x695FA1, 'Purple'),
+      'AHPLSP-103': (0xF78092, 'Pink'),
+      'AHPLGD-107': (0xFFB81C, 'Gold'),
+      'AHPLSL-107': (0x8A8D8F, 'Silver'),
+      'AHPLCY-107': (0x23A3C7, 'Cyan'),
+      'AHPLPBR-102': (0xE10600, 'Red'),
+      'AHPLPDB-102': (0x3D54AA, 'Blue'),
+      'AHPLVY-103': (0xFDDB26, 'Yellow'),
+    };
+    for (final e in cases.entries) {
+      test('${e.key} → ${e.value.$2}, RGB du tag conservé', () async {
+        _mockNative({'rawBytes': _skuDumpWithRgb(e.key, e.value.$1)});
+        final m = await NfcDataSourceImpl().readBobbinData(nfcMode: 'anycubic');
+        expect(m.color, e.value.$2);
+        expect(m.colorRgb, e.value.$1);
+      });
+    }
   });
 }

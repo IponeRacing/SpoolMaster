@@ -1344,6 +1344,18 @@ class AppLocalizationsMs extends AppLocalizations {
   String get transparent => 'Lutsinar';
 
   @override
+  String get beige => 'Kuning air';
+
+  @override
+  String get gold => 'Emas';
+
+  @override
+  String get silver => 'Perak';
+
+  @override
+  String get cyan => 'Sian';
+
+  @override
   String get nfcActiveApproachTag => 'NFC aktif — dekatkan tag';
 
   @override

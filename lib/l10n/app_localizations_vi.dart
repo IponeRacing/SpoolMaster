@@ -1345,6 +1345,18 @@ class AppLocalizationsVi extends AppLocalizations {
   String get transparent => 'Trong suốt';
 
   @override
+  String get beige => 'Be';
+
+  @override
+  String get gold => 'Vàng kim';
+
+  @override
+  String get silver => 'Bạc';
+
+  @override
+  String get cyan => 'Xanh lơ';
+
+  @override
   String get nfcActiveApproachTag => 'NFC đang hoạt động — đưa thẻ lại gần';
 
   @override

@@ -1343,6 +1343,18 @@ class AppLocalizationsSl extends AppLocalizations {
   String get transparent => 'Prozorna';
 
   @override
+  String get beige => 'Bež';
+
+  @override
+  String get gold => 'Zlata';
+
+  @override
+  String get silver => 'Srebrna';
+
+  @override
+  String get cyan => 'Cian';
+
+  @override
   String get nfcActiveApproachTag => 'NFC aktiven — približajte značko';
 
   @override

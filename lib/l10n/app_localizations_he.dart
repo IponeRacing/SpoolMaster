@@ -1336,6 +1336,18 @@ class AppLocalizationsHe extends AppLocalizations {
   String get transparent => 'שקוף';
 
   @override
+  String get beige => 'בז׳';
+
+  @override
+  String get gold => 'זהב';
+
+  @override
+  String get silver => 'כסף';
+
+  @override
+  String get cyan => 'ציאן';
+
+  @override
   String get nfcActiveApproachTag => 'NFC פעיל — קרב את התג';
 
   @override

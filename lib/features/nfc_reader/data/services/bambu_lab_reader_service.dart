@@ -130,23 +130,6 @@ class BambuLabReaderService {
           'TPU': 'TPU',
         };
 
-        // Color code mapping
-        final colorMap = {
-          'BW': 'White',
-          'BK': 'Black',
-          'RD': 'Red',
-          'BL': 'Blue',
-          'GR': 'Green',
-          'YL': 'Yellow',
-          'OR': 'Orange',
-          'VO': 'Orange',
-          'PK': 'Pink',
-          'GY': 'Gray',
-          'PR': 'Purple',
-          'BR': 'Brown',
-          'CL': 'Transparent', // PETG transparent, RGB du tag à 0
-        };
-
         // Try longest material codes first
         final sortedMaterials = materialMap.entries.toList()
           ..sort((a, b) => b.key.length.compareTo(a.key.length));
@@ -155,9 +138,7 @@ class BambuLabReaderService {
           if (code.startsWith(entry.key)) {
             filamentType = entry.value;
             final remaining = code.substring(entry.key.length);
-            if (colorMap.containsKey(remaining)) {
-              color = colorMap[remaining]!;
-            }
+            color = anycubicSkuColorName(remaining) ?? color;
             break;
           }
         }

@@ -1346,6 +1346,18 @@ class AppLocalizationsUk extends AppLocalizations {
   String get transparent => 'Прозорий';
 
   @override
+  String get beige => 'Бежевий';
+
+  @override
+  String get gold => 'Золотий';
+
+  @override
+  String get silver => 'Сріблястий';
+
+  @override
+  String get cyan => 'Ціан';
+
+  @override
   String get nfcActiveApproachTag => 'NFC активний — піднесіть мітку';
 
   @override

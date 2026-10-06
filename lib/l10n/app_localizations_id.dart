@@ -1343,6 +1343,18 @@ class AppLocalizationsId extends AppLocalizations {
   String get transparent => 'Transparan';
 
   @override
+  String get beige => 'Krem';
+
+  @override
+  String get gold => 'Emas';
+
+  @override
+  String get silver => 'Perak';
+
+  @override
+  String get cyan => 'Sian';
+
+  @override
   String get nfcActiveApproachTag => 'NFC aktif — dekatkan tag';
 
   @override

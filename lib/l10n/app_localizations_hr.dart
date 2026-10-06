@@ -1345,6 +1345,18 @@ class AppLocalizationsHr extends AppLocalizations {
   String get transparent => 'Prozirna';
 
   @override
+  String get beige => 'Bež';
+
+  @override
+  String get gold => 'Zlatna';
+
+  @override
+  String get silver => 'Srebrna';
+
+  @override
+  String get cyan => 'Cijan';
+
+  @override
   String get nfcActiveApproachTag => 'NFC aktivan — približite tag';
 
   @override

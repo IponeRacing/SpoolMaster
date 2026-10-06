@@ -1358,6 +1358,18 @@ class AppLocalizationsDe extends AppLocalizations {
   String get transparent => 'Transparent';
 
   @override
+  String get beige => 'Beige';
+
+  @override
+  String get gold => 'Gold';
+
+  @override
+  String get silver => 'Silber';
+
+  @override
+  String get cyan => 'Cyan';
+
+  @override
   String get nfcActiveApproachTag => 'NFC aktiv — Tag annähern';
 
   @override

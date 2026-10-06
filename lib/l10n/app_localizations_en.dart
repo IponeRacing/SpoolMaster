@@ -1344,6 +1344,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get transparent => 'Transparent';
 
   @override
+  String get beige => 'Beige';
+
+  @override
+  String get gold => 'Gold';
+
+  @override
+  String get silver => 'Silver';
+
+  @override
+  String get cyan => 'Cyan';
+
+  @override
   String get nfcActiveApproachTag => 'NFC active — hold the tag close';
 
   @override
@@ -2849,6 +2861,18 @@ class AppLocalizationsEnAu extends AppLocalizationsEn {
 
   @override
   String get transparent => 'Transparent';
+
+  @override
+  String get beige => 'Beige';
+
+  @override
+  String get gold => 'Gold';
+
+  @override
+  String get silver => 'Silver';
+
+  @override
+  String get cyan => 'Cyan';
 
   @override
   String get nfcActiveApproachTag => 'NFC active — hold the tag close';
@@ -4358,6 +4382,18 @@ class AppLocalizationsEnCa extends AppLocalizationsEn {
   String get transparent => 'Transparent';
 
   @override
+  String get beige => 'Beige';
+
+  @override
+  String get gold => 'Gold';
+
+  @override
+  String get silver => 'Silver';
+
+  @override
+  String get cyan => 'Cyan';
+
+  @override
   String get nfcActiveApproachTag => 'NFC active — hold the tag close';
 
   @override
@@ -5863,6 +5899,18 @@ class AppLocalizationsEnGb extends AppLocalizationsEn {
 
   @override
   String get transparent => 'Transparent';
+
+  @override
+  String get beige => 'Beige';
+
+  @override
+  String get gold => 'Gold';
+
+  @override
+  String get silver => 'Silver';
+
+  @override
+  String get cyan => 'Cyan';
 
   @override
   String get nfcActiveApproachTag => 'NFC active — hold the tag close';

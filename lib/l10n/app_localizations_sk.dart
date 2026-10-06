@@ -1342,6 +1342,18 @@ class AppLocalizationsSk extends AppLocalizations {
   String get transparent => 'Priehľadná';
 
   @override
+  String get beige => 'Béžová';
+
+  @override
+  String get gold => 'Zlatá';
+
+  @override
+  String get silver => 'Strieborná';
+
+  @override
+  String get cyan => 'Azúrová';
+
+  @override
   String get nfcActiveApproachTag => 'NFC aktívne — priblížte tag';
 
   @override

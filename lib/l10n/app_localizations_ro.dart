@@ -1345,6 +1345,18 @@ class AppLocalizationsRo extends AppLocalizations {
   String get transparent => 'Transparent';
 
   @override
+  String get beige => 'Bej';
+
+  @override
+  String get gold => 'Auriu';
+
+  @override
+  String get silver => 'Argintiu';
+
+  @override
+  String get cyan => 'Cyan';
+
+  @override
   String get nfcActiveApproachTag => 'NFC activ — apropiați tagul';
 
   @override

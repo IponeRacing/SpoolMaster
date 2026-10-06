@@ -1340,6 +1340,18 @@ class AppLocalizationsCs extends AppLocalizations {
   String get transparent => 'Průhledná';
 
   @override
+  String get beige => 'Béžová';
+
+  @override
+  String get gold => 'Zlatá';
+
+  @override
+  String get silver => 'Stříbrná';
+
+  @override
+  String get cyan => 'Azurová';
+
+  @override
   String get nfcActiveApproachTag => 'NFC aktivní — přibližte tag';
 
   @override

@@ -1344,6 +1344,18 @@ class AppLocalizationsRu extends AppLocalizations {
   String get transparent => 'Прозрачный';
 
   @override
+  String get beige => 'Бежевый';
+
+  @override
+  String get gold => 'Золотой';
+
+  @override
+  String get silver => 'Серебристый';
+
+  @override
+  String get cyan => 'Циан';
+
+  @override
   String get nfcActiveApproachTag => 'NFC активен — поднесите метку';
 
   @override

@@ -1349,6 +1349,18 @@ class AppLocalizationsFr extends AppLocalizations {
   String get transparent => 'Transparent';
 
   @override
+  String get beige => 'Beige';
+
+  @override
+  String get gold => 'Doré';
+
+  @override
+  String get silver => 'Argenté';
+
+  @override
+  String get cyan => 'Cyan';
+
+  @override
   String get nfcActiveApproachTag => 'NFC actif — approchez le tag';
 
   @override
@@ -2860,6 +2872,18 @@ class AppLocalizationsFrCa extends AppLocalizationsFr {
 
   @override
   String get transparent => 'Transparent';
+
+  @override
+  String get beige => 'Beige';
+
+  @override
+  String get gold => 'Doré';
+
+  @override
+  String get silver => 'Argenté';
+
+  @override
+  String get cyan => 'Cyan';
 
   @override
   String get nfcActiveApproachTag => 'NFC actif — approchez le tag';

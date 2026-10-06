@@ -1345,6 +1345,18 @@ class AppLocalizationsSr extends AppLocalizations {
   String get transparent => 'Провидна';
 
   @override
+  String get beige => 'Беж';
+
+  @override
+  String get gold => 'Златна';
+
+  @override
+  String get silver => 'Сребрна';
+
+  @override
+  String get cyan => 'Цијан';
+
+  @override
   String get nfcActiveApproachTag => 'NFC активан — приближите таг';
 
   @override

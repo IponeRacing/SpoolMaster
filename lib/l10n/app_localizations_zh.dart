@@ -1308,6 +1308,18 @@ class AppLocalizationsZh extends AppLocalizations {
   String get transparent => '透明';
 
   @override
+  String get beige => '米色';
+
+  @override
+  String get gold => '金色';
+
+  @override
+  String get silver => '银色';
+
+  @override
+  String get cyan => '青色';
+
+  @override
   String get nfcActiveApproachTag => 'NFC已激活 — 请靠近标签';
 
   @override
@@ -2773,6 +2785,18 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
 
   @override
   String get transparent => '透明';
+
+  @override
+  String get beige => '米色';
+
+  @override
+  String get gold => '金色';
+
+  @override
+  String get silver => '銀色';
+
+  @override
+  String get cyan => '青色';
 
   @override
   String get nfcActiveApproachTag => 'NFC已啟用 — 請靠近標籤';

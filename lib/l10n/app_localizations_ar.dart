@@ -1337,6 +1337,18 @@ class AppLocalizationsAr extends AppLocalizations {
   String get transparent => 'شفاف';
 
   @override
+  String get beige => 'بيج';
+
+  @override
+  String get gold => 'ذهبي';
+
+  @override
+  String get silver => 'فضي';
+
+  @override
+  String get cyan => 'سماوي';
+
+  @override
   String get nfcActiveApproachTag => 'NFC نشط — قرّب البطاقة';
 
   @override

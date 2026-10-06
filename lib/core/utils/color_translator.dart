@@ -32,6 +32,14 @@ String translateColorName(BuildContext context, String englishColorName) {
       return l10n.brown;
     case 'light blue':
       return l10n.lightBlue;
+    case 'beige':
+      return l10n.beige;
+    case 'gold':
+      return l10n.gold;
+    case 'silver':
+      return l10n.silver;
+    case 'cyan':
+      return l10n.cyan;
     case 'transparent':
       return l10n.transparent;
     case 'unknown':

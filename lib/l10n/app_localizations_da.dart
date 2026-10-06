@@ -1344,6 +1344,18 @@ class AppLocalizationsDa extends AppLocalizations {
   String get transparent => 'Transparent';
 
   @override
+  String get beige => 'Beige';
+
+  @override
+  String get gold => 'Guld';
+
+  @override
+  String get silver => 'Sølv';
+
+  @override
+  String get cyan => 'Cyan';
+
+  @override
   String get nfcActiveApproachTag => 'NFC aktiv — hold tagget tæt på';
 
   @override

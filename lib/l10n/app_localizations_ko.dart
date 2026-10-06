@@ -1323,6 +1323,18 @@ class AppLocalizationsKo extends AppLocalizations {
   String get transparent => '투명';
 
   @override
+  String get beige => '베이지';
+
+  @override
+  String get gold => '골드';
+
+  @override
+  String get silver => '실버';
+
+  @override
+  String get cyan => '시안';
+
+  @override
   String get nfcActiveApproachTag => 'NFC 활성 — 태그를 가까이 대세요';
 
   @override

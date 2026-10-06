@@ -2701,6 +2701,30 @@ abstract class AppLocalizations {
   /// **'Transparent'**
   String get transparent;
 
+  /// No description provided for @beige.
+  ///
+  /// In fr, this message translates to:
+  /// **'Beige'**
+  String get beige;
+
+  /// No description provided for @gold.
+  ///
+  /// In fr, this message translates to:
+  /// **'Doré'**
+  String get gold;
+
+  /// No description provided for @silver.
+  ///
+  /// In fr, this message translates to:
+  /// **'Argenté'**
+  String get silver;
+
+  /// No description provided for @cyan.
+  ///
+  /// In fr, this message translates to:
+  /// **'Cyan'**
+  String get cyan;
+
   /// No description provided for @nfcActiveApproachTag.
   ///
   /// In fr, this message translates to:

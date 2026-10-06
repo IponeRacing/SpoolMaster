@@ -1346,6 +1346,18 @@ class AppLocalizationsHu extends AppLocalizations {
   String get transparent => 'Átlátszó';
 
   @override
+  String get beige => 'Bézs';
+
+  @override
+  String get gold => 'Arany';
+
+  @override
+  String get silver => 'Ezüst';
+
+  @override
+  String get cyan => 'Cián';
+
+  @override
   String get nfcActiveApproachTag => 'NFC aktív — közelítse a taget';
 
   @override

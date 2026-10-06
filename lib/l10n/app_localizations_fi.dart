@@ -1344,6 +1344,18 @@ class AppLocalizationsFi extends AppLocalizations {
   String get transparent => 'Läpinäkyvä';
 
   @override
+  String get beige => 'Beige';
+
+  @override
+  String get gold => 'Kulta';
+
+  @override
+  String get silver => 'Hopea';
+
+  @override
+  String get cyan => 'Syaani';
+
+  @override
   String get nfcActiveApproachTag => 'NFC aktiivinen — vie tagi lähelle';
 
   @override

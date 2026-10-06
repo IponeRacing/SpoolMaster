@@ -1344,6 +1344,18 @@ class AppLocalizationsHi extends AppLocalizations {
   String get transparent => 'पारदर्शी';
 
   @override
+  String get beige => 'बेज';
+
+  @override
+  String get gold => 'सुनहरा';
+
+  @override
+  String get silver => 'चांदी';
+
+  @override
+  String get cyan => 'सियान';
+
+  @override
   String get nfcActiveApproachTag => 'NFC सक्रिय — टैग पास लाएँ';
 
   @override

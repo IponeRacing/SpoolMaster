@@ -1322,6 +1322,18 @@ class AppLocalizationsJa extends AppLocalizations {
   String get transparent => '透明';
 
   @override
+  String get beige => 'ベージュ';
+
+  @override
+  String get gold => 'ゴールド';
+
+  @override
+  String get silver => 'シルバー';
+
+  @override
+  String get cyan => 'シアン';
+
+  @override
   String get nfcActiveApproachTag => 'NFC作動中 — タグを近づけてください';
 
   @override

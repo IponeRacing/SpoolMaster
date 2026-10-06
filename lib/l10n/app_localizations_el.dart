@@ -1353,6 +1353,18 @@ class AppLocalizationsEl extends AppLocalizations {
   String get transparent => 'Διαφανές';
 
   @override
+  String get beige => 'Μπεζ';
+
+  @override
+  String get gold => 'Χρυσό';
+
+  @override
+  String get silver => 'Ασημί';
+
+  @override
+  String get cyan => 'Κυανό';
+
+  @override
   String get nfcActiveApproachTag => 'NFC ενεργό — πλησιάστε την ετικέτα';
 
   @override

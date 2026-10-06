@@ -145,24 +145,6 @@ class NfcDataSourceImpl implements NfcDataSource {
           'PVA': 'PVA',
         };
 
-        // Color code mapping (EXACTEMENT comme dans mmu_ace.py ligne 490-503)
-        final colorMap = {
-          'BW': 'White',
-          'BK': 'Black',
-          'RD': 'Red',
-          'BL': 'Blue',
-          'GR': 'Green',
-          'YL': 'Yellow',
-          'OR': 'Orange',
-          'VO': 'Orange', // Code non documenté trouvé sur tags Anycubic réels
-          'PK': 'Pink',
-          'GY': 'Gray',
-          'PR': 'Purple',
-          'BR': 'Brown',
-          // PETG transparent (prod, 05.10.2026) : RGB du tag à 0, sans sens
-          'CL': 'Transparent',
-        };
-
         // Try longest material codes first (ligne 512)
         final sortedMaterials = materialMap.entries.toList()
           ..sort((a, b) => b.key.length.compareTo(a.key.length));
@@ -176,14 +158,13 @@ class NfcDataSourceImpl implements NfcDataSource {
               '🔍 Material: ${entry.key} → $filamentType, Remaining: "$remaining"',
             );
 
-            // Check if remaining part is a color code (ligne 518-521)
-            if (colorMap.containsKey(remaining)) {
-              color = colorMap[remaining]!;
+            // Code couleur du SKU (table commune, relevée sur de vrais tags)
+            final skuColor = anycubicSkuColorName(remaining);
+            if (skuColor != null) {
+              color = skuColor;
               developer.log('✅ Couleur trouvée: $remaining → $color');
             } else {
-              developer.log(
-                '⚠️ Code couleur "$remaining" non reconnu (codes valides: ${colorMap.keys.join(", ")})',
-              );
+              developer.log('⚠️ Code couleur "$remaining" non reconnu → nom tiré du RGB');
             }
             break;
           }
@@ -244,6 +225,11 @@ class NfcDataSourceImpl implements NfcDataSource {
         'Gray': 0x808080,
         'Purple': 0x8000FF,
         'Brown': 0x8B4513,
+        // Valeurs des vrais tags Anycubic correspondants
+        'Beige': 0xD4B996,
+        'Gold': 0xFFB81C,
+        'Silver': 0x8A8D8F,
+        'Cyan': 0x23A3C7,
         // Pastille hachurée au lieu d'un noir (comme les transparents Bambu)
         'Transparent': kClearFilamentRgb,
       };

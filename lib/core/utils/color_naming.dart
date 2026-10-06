@@ -21,6 +21,9 @@ String colorNameFromRgb(int r, int g, int b) {
     if (value <= 60) return 'Black';
     return 'Gray';
   }
+  // Ces seuils et ceux ci-dessous ont été recalés le 06.10.2026 sur de vrais
+  // tags Anycubic : beige, marron foncé et roses étaient nommés « Orange » /
+  // « Red ».
 
   // Teinte en degrés (0-360)
   double hue;
@@ -35,8 +38,13 @@ String colorNameFromRgb(int r, int g, int b) {
   if (hue < 0) hue += 360;
 
   // Segmentation par teinte (cyan replié sur Blue, magenta sur Pink/Purple)
-  if (hue < 15 || hue >= 345) return 'Red';
-  if (hue < 45) return value < 150 ? 'Brown' : 'Orange';
+  // Rouge clair peu saturé = rose (Strawberry Pink F78092 ; un rouge vif est
+  // saturé à plus de 0,8).
+  if (hue < 15 || hue >= 345) return sat < 0.55 && value >= 200 ? 'Pink' : 'Red';
+  // Orangé/jaune clair peu saturé = beige (D4B996), avant orange et jaune
+  if (hue < 68 && sat < 0.35 && value >= 170) return 'Beige';
+  // Marron foncé réel à 150 de luminosité (965D3E) : seuil 150 → 170
+  if (hue < 45) return value < 170 ? 'Brown' : 'Orange';
   if (hue < 68) return 'Yellow';
   if (hue < 168) return 'Green';
   if (hue < 258) return 'Blue';
@@ -50,3 +58,52 @@ String colorNameFromRgb(int r, int g, int b) {
 /// (avant, la pastille d'un PETG Clear était noire). La pastille l'affiche
 /// hachurée (voir `filamentSwatchGradient`).
 const int kClearFilamentRgb = 0xE6EAEE;
+
+/// Codes couleur des SKU Anycubic (« AHPLLB-107 » → « LB »), relevés sur de
+/// vrais tags (corpus du 04.10.2026 : Retrofall59, DnG-Crafts, OpenRFID ; prod).
+/// Noms génériques traduits par `translateColorName`. « BR » n'y est plus :
+/// Brown d'après mmu_ace.py, mais « PBR » est un rouge vif sur un vrai tag →
+/// le nom vient alors du RGB du tag.
+const Map<String, String> anycubicSkuColors = {
+  'BW': 'White',
+  'BK': 'Black',
+  'RD': 'Red',
+  'BL': 'Blue',
+  'GR': 'Green',
+  'YL': 'Yellow',
+  'OR': 'Orange',
+  'VO': 'Orange',
+  'PK': 'Pink',
+  'GY': 'Gray',
+  'PR': 'Purple',
+  'LB': 'Beige',
+  'KB': 'Brown', // Dark Brown
+  'GD': 'Gold',
+  'PO': 'Purple', // Purple Opulence
+  'SP': 'Pink', // Strawberry Pink
+  'CY': 'Cyan',
+  'SL': 'Silver', // Texture Silver
+  'CG': 'Green', // Classic Green
+  'DB': 'Blue',
+  'RR': 'Red',
+  'VY': 'Yellow', // Vibrant Yellow
+  'CL': 'Transparent', // PETG transparent, RGB du tag à 0
+  // PLA+ : code couleur préfixé d'un « P » (AHPLPBR = Bright Red)
+  'PBR': 'Red',
+  'PBW': 'White',
+  'PBK': 'Black', // Pearl Black
+  'PDB': 'Blue', // Dazzling Blue
+  'PGY': 'Gray', // Texture Grey
+};
+
+/// Nom générique du code couleur d'un SKU Anycubic, ou null s'il est inconnu
+/// (le nom vient alors du RGB du tag). Un code PLA+ inconnu (« PVO ») est
+/// essayé sans son « P ».
+String? anycubicSkuColorName(String code) {
+  final name = anycubicSkuColors[code];
+  if (name != null) return name;
+  if (code.length == 3 && code.startsWith('P')) {
+    return anycubicSkuColors[code.substring(1)];
+  }
+  return null;
+}

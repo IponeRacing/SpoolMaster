@@ -1348,6 +1348,18 @@ class AppLocalizationsPt extends AppLocalizations {
   String get transparent => 'Transparente';
 
   @override
+  String get beige => 'Bege';
+
+  @override
+  String get gold => 'Dourado';
+
+  @override
+  String get silver => 'Prateado';
+
+  @override
+  String get cyan => 'Ciano';
+
+  @override
   String get nfcActiveApproachTag => 'NFC ativo — aproxime a etiqueta';
 
   @override

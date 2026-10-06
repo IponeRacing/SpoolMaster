@@ -1345,6 +1345,18 @@ class AppLocalizationsPl extends AppLocalizations {
   String get transparent => 'Przezroczysty';
 
   @override
+  String get beige => 'Beżowy';
+
+  @override
+  String get gold => 'Złoty';
+
+  @override
+  String get silver => 'Srebrny';
+
+  @override
+  String get cyan => 'Cyjan';
+
+  @override
   String get nfcActiveApproachTag => 'NFC aktywne — zbliż tag';
 
   @override

@@ -1344,6 +1344,18 @@ class AppLocalizationsSv extends AppLocalizations {
   String get transparent => 'Transparent';
 
   @override
+  String get beige => 'Beige';
+
+  @override
+  String get gold => 'Guld';
+
+  @override
+  String get silver => 'Silver';
+
+  @override
+  String get cyan => 'Cyan';
+
+  @override
   String get nfcActiveApproachTag => 'NFC aktiv — håll taggen nära';
 
   @override

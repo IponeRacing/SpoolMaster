@@ -1344,6 +1344,18 @@ class AppLocalizationsTr extends AppLocalizations {
   String get transparent => 'Şeffaf';
 
   @override
+  String get beige => 'Bej';
+
+  @override
+  String get gold => 'Altın';
+
+  @override
+  String get silver => 'Gümüş';
+
+  @override
+  String get cyan => 'Camgöbeği';
+
+  @override
   String get nfcActiveApproachTag => 'NFC etkin — etiketi yaklaştırın';
 
   @override

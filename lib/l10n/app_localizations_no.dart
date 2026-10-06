@@ -1344,6 +1344,18 @@ class AppLocalizationsNo extends AppLocalizations {
   String get transparent => 'Gjennomsiktig';
 
   @override
+  String get beige => 'Beige';
+
+  @override
+  String get gold => 'Gull';
+
+  @override
+  String get silver => 'Sølv';
+
+  @override
+  String get cyan => 'Cyan';
+
+  @override
   String get nfcActiveApproachTag => 'NFC aktiv — hold taggen nær';
 
   @override
