@@ -7,10 +7,12 @@
     # Rediriger vers HTTPS : seulement GET/HEAD (un POST redirigé devient un
     # GET et casserait un webhook) et hors /cron/ (planificateur Infomaniak,
     # protocole inconnu). X-Forwarded-Proto : pas de boucle derrière un proxy.
+    # THE_REQUEST (ligne de requête d'origine), pas REQUEST_URI : après la
+    # réécriture vers index.php, les règles sont relues avec /index.php.
     RewriteCond %{HTTPS} !=on
     RewriteCond %{HTTP:X-Forwarded-Proto} !=https
     RewriteCond %{REQUEST_METHOD} ^(GET|HEAD)$
-    RewriteCond %{REQUEST_URI} !^/cron/
+    RewriteCond %{THE_REQUEST} !^[A-Z]+\s/cron/
     RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
     # Handle Authorization Header
