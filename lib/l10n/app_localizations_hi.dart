@@ -920,10 +920,10 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get deleteAccountConfirmation =>
-      'यह क्रिया अपरिवर्तनीय है। आपका खाता और सभी डेटा 30 दिनों के भीतर हटा दिया जाएगा।';
+      'यह क्रिया अपरिवर्तनीय है। आपका खाता और सभी डेटा तुरंत हटा दिया जाएगा।';
 
   @override
-  String get accountDeletionRequested => 'हटाने का अनुरोध दर्ज किया गया';
+  String get accountDeletionRequested => 'खाता हटा दिया गया';
 
   @override
   String get clearShoppingList => 'सूची साफ़ करें';

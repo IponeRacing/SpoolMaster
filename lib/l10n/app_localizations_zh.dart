@@ -903,10 +903,10 @@ class AppLocalizationsZh extends AppLocalizations {
   String get deleteAccount => '删除我的账户';
 
   @override
-  String get deleteAccountConfirmation => '此操作不可撤销。您的账户和所有数据将在30天内删除。';
+  String get deleteAccountConfirmation => '此操作不可撤销。您的账户和所有数据将立即删除。';
 
   @override
-  String get accountDeletionRequested => '删除请求已登记';
+  String get accountDeletionRequested => '账户已删除';
 
   @override
   String get clearShoppingList => '清空列表';
@@ -2382,10 +2382,10 @@ class AppLocalizationsZhTw extends AppLocalizationsZh {
   String get deleteAccount => '刪除我的帳戶';
 
   @override
-  String get deleteAccountConfirmation => '此操作不可撤銷。您的帳戶和所有資料將在30天內刪除。';
+  String get deleteAccountConfirmation => '此操作不可撤銷。您的帳戶和所有資料將立即刪除。';
 
   @override
-  String get accountDeletionRequested => '刪除請求已登記';
+  String get accountDeletionRequested => '帳戶已刪除';
 
   @override
   String get clearShoppingList => '清空清單';

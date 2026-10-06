@@ -918,10 +918,10 @@ class AppLocalizationsNo extends AppLocalizations {
 
   @override
   String get deleteAccountConfirmation =>
-      'Denne handlingen er irreversibel. Kontoen din og alle data slettes innen 30 dager.';
+      'Denne handlingen er irreversibel. Kontoen din og alle data slettes umiddelbart.';
 
   @override
-  String get accountDeletionRequested => 'Forespørsel om sletting registrert';
+  String get accountDeletionRequested => 'Konto slettet';
 
   @override
   String get clearShoppingList => 'Tøm listen';

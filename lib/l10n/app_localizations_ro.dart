@@ -920,10 +920,10 @@ class AppLocalizationsRo extends AppLocalizations {
 
   @override
   String get deleteAccountConfirmation =>
-      'Această acțiune este ireversibilă. Contul și toate datele vor fi șterse în 30 de zile.';
+      'Această acțiune este ireversibilă. Contul și toate datele vor fi șterse imediat.';
 
   @override
-  String get accountDeletionRequested => 'Cerere de ștergere înregistrată';
+  String get accountDeletionRequested => 'Cont șters';
 
   @override
   String get clearShoppingList => 'Golește lista';

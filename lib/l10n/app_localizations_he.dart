@@ -915,10 +915,10 @@ class AppLocalizationsHe extends AppLocalizations {
 
   @override
   String get deleteAccountConfirmation =>
-      'פעולה זו בלתי הפיכה. החשבון וכל הנתונים שלך יימחקו תוך 30 יום.';
+      'פעולה זו בלתי הפיכה. החשבון וכל הנתונים שלך יימחקו מיד.';
 
   @override
-  String get accountDeletionRequested => 'בקשת המחיקה נרשמה';
+  String get accountDeletionRequested => 'החשבון נמחק';
 
   @override
   String get clearShoppingList => 'נקה רשימה';

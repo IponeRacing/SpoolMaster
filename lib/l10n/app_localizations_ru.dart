@@ -921,10 +921,10 @@ class AppLocalizationsRu extends AppLocalizations {
 
   @override
   String get deleteAccountConfirmation =>
-      'Это действие необратимо. Ваш аккаунт и все данные будут удалены в течение 30 дней.';
+      'Это действие необратимо. Ваш аккаунт и все данные будут удалены немедленно.';
 
   @override
-  String get accountDeletionRequested => 'Запрос на удаление зарегистрирован';
+  String get accountDeletionRequested => 'Аккаунт удалён';
 
   @override
   String get clearShoppingList => 'Очистить список';

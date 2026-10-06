@@ -920,10 +920,10 @@ class AppLocalizationsBg extends AppLocalizations {
 
   @override
   String get deleteAccountConfirmation =>
-      'Това действие е необратимо. Вашият акаунт и всички данни ще бъдат изтрити в рамките на 30 дни.';
+      'Това действие е необратимо. Вашият акаунт и всички данни ще бъдат изтрити веднага.';
 
   @override
-  String get accountDeletionRequested => 'Заявката за изтриване е регистрирана';
+  String get accountDeletionRequested => 'Акаунтът е изтрит';
 
   @override
   String get clearShoppingList => 'Изчисти списъка';

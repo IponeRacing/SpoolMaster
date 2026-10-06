@@ -924,10 +924,10 @@ class AppLocalizationsEl extends AppLocalizations {
 
   @override
   String get deleteAccountConfirmation =>
-      'Αυτή η ενέργεια είναι μη αναστρέψιμη. Ο λογαριασμός και όλα τα δεδομένα θα διαγραφούν εντός 30 ημερών.';
+      'Αυτή η ενέργεια είναι μη αναστρέψιμη. Ο λογαριασμός και όλα τα δεδομένα θα διαγραφούν αμέσως.';
 
   @override
-  String get accountDeletionRequested => 'Αίτημα διαγραφής καταχωρήθηκε';
+  String get accountDeletionRequested => 'Ο λογαριασμός διαγράφηκε';
 
   @override
   String get clearShoppingList => 'Εκκαθάριση λίστας';

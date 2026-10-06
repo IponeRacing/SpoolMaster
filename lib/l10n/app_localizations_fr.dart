@@ -923,10 +923,10 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get deleteAccountConfirmation =>
-      'Cette action est irréversible. Votre compte et toutes vos données seront supprimés dans un délai de 30 jours.';
+      'Cette action est irréversible. Votre compte et toutes vos données seront supprimés immédiatement.';
 
   @override
-  String get accountDeletionRequested => 'Demande de suppression enregistrée';
+  String get accountDeletionRequested => 'Compte supprimé';
 
   @override
   String get clearShoppingList => 'Vider la liste';
@@ -2447,10 +2447,10 @@ class AppLocalizationsFrCa extends AppLocalizationsFr {
 
   @override
   String get deleteAccountConfirmation =>
-      'Cette action est irréversible. Votre compte et toutes vos données seront supprimés dans un délai de 30 jours.';
+      'Cette action est irréversible. Votre compte et toutes vos données seront supprimés immédiatement.';
 
   @override
-  String get accountDeletionRequested => 'Demande de suppression enregistrée';
+  String get accountDeletionRequested => 'Compte supprimé';
 
   @override
   String get clearShoppingList => 'Vider la liste';

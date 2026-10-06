@@ -919,10 +919,10 @@ class AppLocalizationsSr extends AppLocalizations {
 
   @override
   String get deleteAccountConfirmation =>
-      'Ова радња је неповратна. Ваш налог и сви подаци биће обрисани у року од 30 дана.';
+      'Ова радња је неповратна. Ваш налог и сви подаци биће одмах обрисани.';
 
   @override
-  String get accountDeletionRequested => 'Захтев за брисање регистрован';
+  String get accountDeletionRequested => 'Налог обрисан';
 
   @override
   String get clearShoppingList => 'Испразни листу';

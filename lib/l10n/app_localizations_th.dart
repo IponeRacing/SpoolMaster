@@ -919,10 +919,10 @@ class AppLocalizationsTh extends AppLocalizations {
 
   @override
   String get deleteAccountConfirmation =>
-      'การดำเนินการนี้ไม่สามารถยกเลิกได้ บัญชีและข้อมูลทั้งหมดของคุณจะถูกลบภายใน 30 วัน';
+      'การดำเนินการนี้ไม่สามารถยกเลิกได้ บัญชีและข้อมูลทั้งหมดของคุณจะถูกลบทันที';
 
   @override
-  String get accountDeletionRequested => 'บันทึกคำขอลบแล้ว';
+  String get accountDeletionRequested => 'ลบบัญชีแล้ว';
 
   @override
   String get clearShoppingList => 'ล้างรายการ';

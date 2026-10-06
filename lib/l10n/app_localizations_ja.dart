@@ -909,10 +909,10 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get deleteAccountConfirmation =>
-      'この操作は取り消せません。アカウントとすべてのデータは30日以内に削除されます。';
+      'この操作は取り消せません。アカウントとすべてのデータは直ちに削除されます。';
 
   @override
-  String get accountDeletionRequested => '削除リクエストが登録されました';
+  String get accountDeletionRequested => 'アカウントを削除しました';
 
   @override
   String get clearShoppingList => 'リストをクリア';

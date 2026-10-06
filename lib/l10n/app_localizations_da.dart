@@ -918,10 +918,10 @@ class AppLocalizationsDa extends AppLocalizations {
 
   @override
   String get deleteAccountConfirmation =>
-      'Denne handling er uigenkaldelig. Din konto og alle data slettes inden for 30 dage.';
+      'Denne handling er uigenkaldelig. Din konto og alle data slettes med det samme.';
 
   @override
-  String get accountDeletionRequested => 'Anmodning om sletning registreret';
+  String get accountDeletionRequested => 'Konto slettet';
 
   @override
   String get clearShoppingList => 'Ryd listen';

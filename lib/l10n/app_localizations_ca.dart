@@ -924,10 +924,10 @@ class AppLocalizationsCa extends AppLocalizations {
 
   @override
   String get deleteAccountConfirmation =>
-      'Aquesta acció és irreversible. El teu compte i totes les dades s\'eliminaran en 30 dies.';
+      'Aquesta acció és irreversible. El teu compte i totes les dades s\'eliminaran immediatament.';
 
   @override
-  String get accountDeletionRequested => 'Sol·licitud d\'eliminació registrada';
+  String get accountDeletionRequested => 'Compte eliminat';
 
   @override
   String get clearShoppingList => 'Buidar llista';

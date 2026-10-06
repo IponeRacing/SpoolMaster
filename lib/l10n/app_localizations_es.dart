@@ -921,10 +921,10 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get deleteAccountConfirmation =>
-      'Esta acción es irreversible. Tu cuenta y todos los datos se eliminarán en 30 días.';
+      'Esta acción es irreversible. Tu cuenta y todos los datos se eliminarán de inmediato.';
 
   @override
-  String get accountDeletionRequested => 'Solicitud de eliminación registrada';
+  String get accountDeletionRequested => 'Cuenta eliminada';
 
   @override
   String get clearShoppingList => 'Vaciar lista';

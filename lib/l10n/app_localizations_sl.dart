@@ -920,10 +920,10 @@ class AppLocalizationsSl extends AppLocalizations {
 
   @override
   String get deleteAccountConfirmation =>
-      'To dejanje je nepovratno. Vaš račun in vsi podatki bodo izbrisani v 30 dneh.';
+      'To dejanje je nepovratno. Vaš račun in vsi podatki bodo takoj izbrisani.';
 
   @override
-  String get accountDeletionRequested => 'Zahteva za izbris registrirana';
+  String get accountDeletionRequested => 'Račun izbrisan';
 
   @override
   String get clearShoppingList => 'Izprazni seznam';

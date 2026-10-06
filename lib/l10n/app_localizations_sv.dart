@@ -919,10 +919,10 @@ class AppLocalizationsSv extends AppLocalizations {
 
   @override
   String get deleteAccountConfirmation =>
-      'Denna åtgärd är oåterkallelig. Ditt konto och all data raderas inom 30 dagar.';
+      'Denna åtgärd är oåterkallelig. Ditt konto och all data raderas omedelbart.';
 
   @override
-  String get accountDeletionRequested => 'Begäran om radering registrerad';
+  String get accountDeletionRequested => 'Kontot har raderats';
 
   @override
   String get clearShoppingList => 'Rensa listan';

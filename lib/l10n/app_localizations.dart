@@ -1930,13 +1930,13 @@ abstract class AppLocalizations {
   /// No description provided for @deleteAccountConfirmation.
   ///
   /// In fr, this message translates to:
-  /// **'Cette action est irréversible. Votre compte et toutes vos données seront supprimés dans un délai de 30 jours.'**
+  /// **'Cette action est irréversible. Votre compte et toutes vos données seront supprimés immédiatement.'**
   String get deleteAccountConfirmation;
 
   /// No description provided for @accountDeletionRequested.
   ///
   /// In fr, this message translates to:
-  /// **'Demande de suppression enregistrée'**
+  /// **'Compte supprimé'**
   String get accountDeletionRequested;
 
   /// No description provided for @clearShoppingList.

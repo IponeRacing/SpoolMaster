@@ -928,10 +928,10 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get deleteAccountConfirmation =>
-      'Diese Aktion ist unwiderruflich. Ihr Konto und alle Daten werden innerhalb von 30 Tagen gelöscht.';
+      'Diese Aktion ist unwiderruflich. Ihr Konto und alle Daten werden sofort gelöscht.';
 
   @override
-  String get accountDeletionRequested => 'Löschanfrage registriert';
+  String get accountDeletionRequested => 'Konto gelöscht';
 
   @override
   String get clearShoppingList => 'Liste leeren';

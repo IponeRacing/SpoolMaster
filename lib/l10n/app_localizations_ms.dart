@@ -920,10 +920,10 @@ class AppLocalizationsMs extends AppLocalizations {
 
   @override
   String get deleteAccountConfirmation =>
-      'Tindakan ini tidak boleh dibatalkan. Akaun dan semua data anda akan dipadamkan dalam 30 hari.';
+      'Tindakan ini tidak boleh dibatalkan. Akaun dan semua data anda akan dipadamkan serta-merta.';
 
   @override
-  String get accountDeletionRequested => 'Permintaan pemadaman didaftarkan';
+  String get accountDeletionRequested => 'Akaun dipadamkan';
 
   @override
   String get clearShoppingList => 'Kosongkan senarai';

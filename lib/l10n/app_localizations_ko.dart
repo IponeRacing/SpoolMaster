@@ -909,10 +909,10 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get deleteAccountConfirmation =>
-      '이 작업은 되돌릴 수 없습니다. 계정과 모든 데이터는 30일 이내에 삭제됩니다.';
+      '이 작업은 되돌릴 수 없습니다. 계정과 모든 데이터가 즉시 삭제됩니다.';
 
   @override
-  String get accountDeletionRequested => '삭제 요청이 등록되었습니다';
+  String get accountDeletionRequested => '계정이 삭제되었습니다';
 
   @override
   String get clearShoppingList => '목록 지우기';

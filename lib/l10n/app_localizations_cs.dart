@@ -917,10 +917,10 @@ class AppLocalizationsCs extends AppLocalizations {
 
   @override
   String get deleteAccountConfirmation =>
-      'Tato akce je nevratná. Váš účet a všechna data budou smazána do 30 dnů.';
+      'Tato akce je nevratná. Váš účet a všechna data budou okamžitě smazána.';
 
   @override
-  String get accountDeletionRequested => 'Žádost o smazání zaregistrována';
+  String get accountDeletionRequested => 'Účet smazán';
 
   @override
   String get clearShoppingList => 'Vymazat seznam';

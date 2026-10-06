@@ -915,10 +915,10 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get deleteAccountConfirmation =>
-      'هذا الإجراء لا رجعة فيه. سيتم حذف حسابك وجميع البيانات خلال 30 يومًا.';
+      'هذا الإجراء لا رجعة فيه. سيتم حذف حسابك وجميع البيانات فورًا.';
 
   @override
-  String get accountDeletionRequested => 'تم تسجيل طلب الحذف';
+  String get accountDeletionRequested => 'تم حذف الحساب';
 
   @override
   String get clearShoppingList => 'مسح القائمة';

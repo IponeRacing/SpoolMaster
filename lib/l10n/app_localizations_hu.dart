@@ -920,10 +920,10 @@ class AppLocalizationsHu extends AppLocalizations {
 
   @override
   String get deleteAccountConfirmation =>
-      'Ez a művelet visszafordíthatatlan. A fiókod és minden adat 30 napon belül törlődik.';
+      'Ez a művelet visszafordíthatatlan. A fiókod és minden adat azonnal törlődik.';
 
   @override
-  String get accountDeletionRequested => 'Törlési kérelem rögzítve';
+  String get accountDeletionRequested => 'Fiók törölve';
 
   @override
   String get clearShoppingList => 'Lista törlése';

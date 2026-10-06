@@ -919,10 +919,10 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get deleteAccountConfirmation =>
-      'Tindakan ini tidak dapat dibatalkan. Akun dan semua data Anda akan dihapus dalam 30 hari.';
+      'Tindakan ini tidak dapat dibatalkan. Akun dan semua data Anda akan segera dihapus.';
 
   @override
-  String get accountDeletionRequested => 'Permintaan penghapusan terdaftar';
+  String get accountDeletionRequested => 'Akun dihapus';
 
   @override
   String get clearShoppingList => 'Hapus daftar';

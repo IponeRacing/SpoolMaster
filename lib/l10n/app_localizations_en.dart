@@ -917,10 +917,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get deleteAccountConfirmation =>
-      'This action is irreversible. Your account and all data will be deleted within 30 days.';
+      'This action is irreversible. Your account and all data will be deleted immediately.';
 
   @override
-  String get accountDeletionRequested => 'Account deletion requested';
+  String get accountDeletionRequested => 'Account deleted';
 
   @override
   String get clearShoppingList => 'Clear list';
@@ -2436,10 +2436,10 @@ class AppLocalizationsEnAu extends AppLocalizationsEn {
 
   @override
   String get deleteAccountConfirmation =>
-      'This action is irreversible. Your account and all data will be deleted within 30 days.';
+      'This action is irreversible. Your account and all data will be deleted immediately.';
 
   @override
-  String get accountDeletionRequested => 'Account deletion requested';
+  String get accountDeletionRequested => 'Account deleted';
 
   @override
   String get clearShoppingList => 'Clear list';
@@ -3955,10 +3955,10 @@ class AppLocalizationsEnCa extends AppLocalizationsEn {
 
   @override
   String get deleteAccountConfirmation =>
-      'This action is irreversible. Your account and all data will be deleted within 30 days.';
+      'This action is irreversible. Your account and all data will be deleted immediately.';
 
   @override
-  String get accountDeletionRequested => 'Account deletion requested';
+  String get accountDeletionRequested => 'Account deleted';
 
   @override
   String get clearShoppingList => 'Clear list';
@@ -5474,10 +5474,10 @@ class AppLocalizationsEnGb extends AppLocalizationsEn {
 
   @override
   String get deleteAccountConfirmation =>
-      'This action is irreversible. Your account and all data will be deleted within 30 days.';
+      'This action is irreversible. Your account and all data will be deleted immediately.';
 
   @override
-  String get accountDeletionRequested => 'Account deletion requested';
+  String get accountDeletionRequested => 'Account deleted';
 
   @override
   String get clearShoppingList => 'Clear list';

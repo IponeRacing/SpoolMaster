@@ -922,10 +922,10 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get deleteAccountConfirmation =>
-      'Esta ação é irreversível. Sua conta e todos os dados serão excluídos em 30 dias.';
+      'Esta ação é irreversível. Sua conta e todos os dados serão excluídos imediatamente.';
 
   @override
-  String get accountDeletionRequested => 'Solicitação de exclusão registrada';
+  String get accountDeletionRequested => 'Conta excluída';
 
   @override
   String get clearShoppingList => 'Limpar lista';

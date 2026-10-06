@@ -919,10 +919,10 @@ class AppLocalizationsFi extends AppLocalizations {
 
   @override
   String get deleteAccountConfirmation =>
-      'Tämä toiminto on peruuttamaton. Tilisi ja kaikki tiedot poistetaan 30 päivän kuluessa.';
+      'Tämä toiminto on peruuttamaton. Tilisi ja kaikki tiedot poistetaan välittömästi.';
 
   @override
-  String get accountDeletionRequested => 'Poistopyyntö rekisteröity';
+  String get accountDeletionRequested => 'Tili poistettu';
 
   @override
   String get clearShoppingList => 'Tyhjennä lista';

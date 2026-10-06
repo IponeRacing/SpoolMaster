@@ -921,10 +921,10 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get deleteAccountConfirmation =>
-      'Hành động này không thể hoàn tác. Tài khoản và tất cả dữ liệu sẽ bị xóa trong vòng 30 ngày.';
+      'Hành động này không thể hoàn tác. Tài khoản và tất cả dữ liệu sẽ bị xóa ngay lập tức.';
 
   @override
-  String get accountDeletionRequested => 'Yêu cầu xóa đã được ghi nhận';
+  String get accountDeletionRequested => 'Đã xóa tài khoản';
 
   @override
   String get clearShoppingList => 'Xóa danh sách';

@@ -922,10 +922,10 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get deleteAccountConfirmation =>
-      'Ця дія незворотна. Ваш акаунт і всі дані будуть видалені протягом 30 днів.';
+      'Ця дія незворотна. Ваш акаунт і всі дані буде видалено негайно.';
 
   @override
-  String get accountDeletionRequested => 'Запит на видалення зареєстровано';
+  String get accountDeletionRequested => 'Акаунт видалено';
 
   @override
   String get clearShoppingList => 'Очистити список';

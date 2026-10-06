@@ -917,10 +917,10 @@ class AppLocalizationsNl extends AppLocalizations {
 
   @override
   String get deleteAccountConfirmation =>
-      'Deze actie is onomkeerbaar. Je account en alle gegevens worden binnen 30 dagen verwijderd.';
+      'Deze actie is onomkeerbaar. Je account en alle gegevens worden direct verwijderd.';
 
   @override
-  String get accountDeletionRequested => 'Verwijderingsverzoek geregistreerd';
+  String get accountDeletionRequested => 'Account verwijderd';
 
   @override
   String get clearShoppingList => 'Lijst wissen';

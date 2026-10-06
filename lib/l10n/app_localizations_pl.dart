@@ -918,10 +918,10 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get deleteAccountConfirmation =>
-      'Ta akcja jest nieodwracalna. Twoje konto i wszystkie dane zostaną usunięte w ciągu 30 dni.';
+      'Ta akcja jest nieodwracalna. Twoje konto i wszystkie dane zostaną natychmiast usunięte.';
 
   @override
-  String get accountDeletionRequested => 'Prośba o usunięcie zarejestrowana';
+  String get accountDeletionRequested => 'Konto usunięte';
 
   @override
   String get clearShoppingList => 'Wyczyść listę';

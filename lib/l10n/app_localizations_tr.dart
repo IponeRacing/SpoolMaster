@@ -919,10 +919,10 @@ class AppLocalizationsTr extends AppLocalizations {
 
   @override
   String get deleteAccountConfirmation =>
-      'Bu işlem geri alınamaz. Hesabınız ve tüm veriler 30 gün içinde silinecektir.';
+      'Bu işlem geri alınamaz. Hesabınız ve tüm veriler hemen silinecektir.';
 
   @override
-  String get accountDeletionRequested => 'Silme isteği kaydedildi';
+  String get accountDeletionRequested => 'Hesap silindi';
 
   @override
   String get clearShoppingList => 'Listeyi temizle';
